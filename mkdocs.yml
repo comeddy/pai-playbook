@@ -1,10 +1,11 @@
 # Physical AI Playbook — MkDocs Material 구성
 # 배포: GitHub Actions(.github/workflows/deploy-docs.yml) → GitHub Pages
-# ⚠️ site_url: 저장소 생성 후 실제 Pages URL로 교체할 것
 
 site_name: Physical AI Playbook
 site_description: AWS Korea SA용 Physical AI 참조 자산 — 아키텍처 방향·AWS 매핑·다음 액션을 5분 안에
-site_url: https://REPLACE-ME.github.io/pai-playbook/
+site_url: https://comeddy.github.io/pai-playbook/
+repo_url: https://github.com/comeddy/pai-playbook
+edit_uri: edit/main/docs/
 docs_dir: docs
 
 nav:
