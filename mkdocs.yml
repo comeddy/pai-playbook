@@ -1,0 +1,72 @@
+# Physical AI Playbook — MkDocs Material 구성
+# 배포: GitHub Actions(.github/workflows/deploy-docs.yml) → GitHub Pages
+# ⚠️ site_url: 저장소 생성 후 실제 Pages URL로 교체할 것
+
+site_name: Physical AI Playbook
+site_description: AWS Korea SA용 Physical AI 참조 자산 — 아키텍처 방향·AWS 매핑·다음 액션을 5분 안에
+site_url: https://REPLACE-ME.github.io/pai-playbook/
+docs_dir: docs
+
+nav:
+  - 홈: index.md
+  - "P1 · 데이터 수집 & 처리": pillar-1.md
+  - "P2 · 모델 학습 (VLA)": pillar-2.md
+  - "P3 · 시뮬레이션": pillar-3.md
+  - "P4 · Sim-to-Real": pillar-4.md
+  - "P5 · 에이전트 오케스트레이션": pillar-5.md
+  - "의사결정 트리": decisions.md
+  - "Radar (대기열)": radar.md
+  - "유지보수 규칙": maintenance.md
+
+theme:
+  name: material
+  language: ko
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: 다크 모드로
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep orange
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: 라이트 모드로
+  features:
+    - navigation.instant
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - toc.follow
+    - content.code.copy
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - md_in_html            # <details markdown="1"> 내부 마크다운(표) 렌더링에 필수
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+      # 한국어 헤딩 앵커 유지 (기본 slugify는 비ASCII를 제거해 페이지 내 링크가 깨짐)
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+plugins:
+  - search:
+      lang:
+        - ko
+        - en
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn

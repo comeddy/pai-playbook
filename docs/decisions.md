@@ -1,0 +1,159 @@
+# Decisions — 교차 의사결정 트리
+
+_최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 중간_
+[← index로](index.md)
+
+> **L0 TL;DR**: 고객이 자주 부딪히는 4개 갈림길을 산문 대신 **결정 표/트리**로. 각 결정은 필러를 가로지른다. 급하면 해당 표만 보고 방향을 잡으라.
+
+목차: [1) Cloud vs Edge](#1-cloud-training-vs-edge-inference-경계) · [2) NVIDIA vs 오픈소스](#2-nvidia-풀스택-vs-오픈소스) · [3) GPU 확보 전략](#3-gpu-확보-전략) · [4) Build vs Buy](#4-build-vs-buy-파운데이션-모델)
+
+---
+
+## 1) Cloud training vs Edge inference 경계
+
+**핵심 질문: "이 추론을 클라우드에 둘 수 있나, 엣지에 둬야 하나?"**
+
+가장 중요한 판별자는 **제어 주파수**다.
+
+```
+추론 주파수 요구는?
+├─ 30~100Hz+ 반응형 제어 (균형·힘·파지·보행·회피)
+│     → 🔴 반드시 엣지 온보드 (Jetson Thor/Orin). 클라우드 왕복 불가.
+│        System 1 (경량 diffusion/flow-matching 정책, sub-20ms)
+│
+├─ few-Hz ~ sub-1Hz 고수준 계획·재계획·툴 선택·씬 이해
+│     → 🟢 클라우드/비동기 가능 (Bedrock AgentCore, 큰 VLM).
+│        System 2 (무거운 VLM 플래너, 5~10Hz 또는 그 이하)
+│
+└─ 둘 다 필요 (거의 모든 실로봇)
+      → 🟡 분리 배포: System 2=클라우드, System 1=엣지.
+         action chunking 으로 두 rate 연결. ← 표준 아키텍처
+```
+
+| 구분 | System 2 (계획) | System 1 (제어) |
+|---|---|---|
+| 주파수 | 5~10Hz 이하 | 50~200Hz |
+| 지연 허용 | 있음(비동기) | 없음(sub-20ms) |
+| 위치 | **클라우드** (AgentCore) 또는 온보드 | **엣지 온보드** (Jetson) |
+| 모델 | 큰 VLM/LLM | 경량 diffusion/flow-matching |
+| AWS | Bedrock AgentCore, EC2 | IoT Greengrass V2, SageMaker Neo, ONNX/TensorRT |
+
+> **판정 원칙**: "실시간 안전·반응이 걸린 루프면 엣지, 생각할 시간이 있으면 클라우드." action chunking이 다리.
+> 근거: [pillar-4 엣지](pillar-4.md), [pillar-2 System1/System2](pillar-2.md), [pillar-5](pillar-5.md).
+
+---
+
+## 2) NVIDIA 풀스택 vs 오픈소스
+
+**핵심 질문: "Isaac에 다 걸까, 오픈소스로 갈까?"**
+
+```
+워크로드 성격은?
+├─ 포토리얼 렌더 + 합성 데이터 생성(SDG) + 풀스택 통합
+│     → Isaac Sim/Lab (🟢 GA 5.1). GPU는 RTX 필수 (G6e/G7e).
+│
+├─ 빠른 RL 반복 · 미분가능 물리 · 크로스벤더 GPU · 경량
+│     → MuJoCo/MJX (🟢). 컴퓨트 GPU(P5 A100/H100)도 활용 → 비용 이점.
+│        Unitree 실사용 [1] (프로덕션 검증 → pillar-3).
+│
+├─ ROS 2 네이티브 통합 · CPU · 전통 로보틱스
+│     → Gazebo (🟢 Jetty/Harmonic). ⚠️ Classic 11은 EOL. GPU 병렬 RL엔 부적합.
+│
+└─ "화제성" Genesis?
+      → ⚪ PoC/실험만. "430,000배" 반박됨 [1] (→ pillar-3). 프로덕션 의존 금지.
+```
+
+| 기준 | Isaac Sim/Lab | MuJoCo/MJX | Gazebo |
+|---|---|---|---|
+| 성숙도 | 🟢 GA 5.1 | 🟢 GA (Warp는 Alpha) | 🟢 GA (Classic EOL) |
+| GPU | **RTX 필수**(A100/H100 ✗) | 컴퓨트 GPU 가능(P5 ✓) | CPU 중심 |
+| 렌더/SDG | 최상 | 제한적 | 제한적 |
+| 미분가능 | △ | ✓ (JAX) | ✗ |
+| ROS 통합 | 가능 | 보조 | **네이티브** |
+| 라이선스 | Apache(소스)+AI Enterprise(재배포/SaaS) | Apache | Apache |
+| AWS | G6e/G7e + AMI + Batch | EC2(P5 포함) + Batch | EC2 + Batch |
+
+> **판정 원칙**: 워크로드로 고르면 된다. **"AWS는 셋 다 잘 돌린다"** — NVIDIA 종속 우려 고객에게 중립 포지션. MuJoCo면 컴퓨트 GPU 재활용 비용 이점.
+> 근거: [pillar-3](pillar-3.md).
+
+---
+
+## 3) GPU 확보 전략
+
+**핵심 질문: "GPU를 어떻게 확보하나? On-Demand가 안 잡힌다."**
+
+```
+학습 규모·기간은?
+├─ 소수 GPU · 단발 · LoRA 파인튜닝 (대부분의 시작점)
+│     → On-Demand G7e/G6e. 즉시, 유연. 충분.
+│
+├─ 대규모 · 미래 시점 확정 · 초대형 클러스터(P6e-GB200 등)
+│     → Capacity Blocks for ML. 미리 예약, UltraServer 확보.
+│
+├─ 유연한 일정 · 비용 최적 · 며칠~주 단위 학습 창
+│     → Flexible Training Plans (SageMaker HyperPod).
+│
+└─ RTX 렌더 필요 (Isaac Sim) vs 컴퓨트만 (MuJoCo/VLA 학습)
+      → 렌더=G6e/G7e (RTX), 컴퓨트=P5/P6 (A100/H100/B200) 또는 MuJoCo면 P5 재활용.
+```
+
+| 전략 | 언제 | AWS |
+|---|---|---|
+| On-Demand | 소수·단발·탐색 | EC2 G7e/G6e/P6 |
+| Capacity Blocks for ML | 대규모·시점 확정·UltraServer | P6e-GB200, 예약 |
+| Flexible Training Plans | 유연 일정·비용 최적 | SageMaker HyperPod |
+| Trainium | LLM 학습 비용 절감 | Trn2/Trn3 ⚠️ **VLA는 공개 사례 없음 [4]** (→ pillar-2) |
+
+> **판정 원칙**: 시작은 On-Demand G7e. 못 잡히거나 대규모면 Capacity Blocks/Flexible Training Plans. **Trainium은 LLM엔 안전하나 VLA/로보틱스는 검증 사례 없음** — 제안 시 리스크 명시.
+> 근거: [pillar-2 학습 스택](pillar-2.md), [pillar-3](pillar-3.md).
+
+---
+
+## 4) Build vs Buy (파운데이션 모델)
+
+**핵심 질문: "파운데이션 모델을 파인튜닝할까, 자체 학습할까?"**
+
+```
+데이터·목표·자원은?
+├─ 실데모 100~수천 개 · 특정 태스크 · 빠른 결과
+│     → 오픈 VLA 파인튜닝 (LoRA). 단일 G7e, 1일 PoC. ← 99%의 현실
+│        상용이면 라이선스 확인: π=Apache-2.0 ✅, OpenVLA=MIT ✅, GR00T=확인필요 ⚠️
+│
+├─ 다중 embodiment · 대규모 실데이터 · 백본까지 조정
+│     → 풀 파인튜닝 (P6/HyperPod). 70~100GB+ GPU.
+│
+├─ 밑바닥 사전학습 (프런티어 VLA 자체 개발)
+│     → 🔴 극소수만. 멀티노드 Blackwell 클러스터·대규모 실데이터.
+│        대부분 고객에게 비권장 — 파인튜닝으로 충분.
+│
+└─ 추론·계획 레이어만 필요 (저수준 제어 불필요)
+      → Gemini Robotics-ER(API) 또는 AgentCore로 오케스트레이션.
+```
+
+| 옵션 | 데이터 | GPU | 언제 |
+|---|---|---|---|
+| LoRA 파인튜닝 | 100~수천 데모 | 단일 24~40GB | **기본 시작점** |
+| 풀 파인튜닝 | 대규모 실데이터 | 70~100GB+ / 멀티노드 | 다중 embodiment |
+| 사전학습(Build) | 초대규모 | Blackwell 클러스터 | 극소수 프런티어 |
+| 추론 레이어 Buy | — | — | 제어는 오픈모델, 계획은 API |
+
+> **판정 원칙**: **거의 항상 파인튜닝(Buy+adapt)이 답.** 밑바닥 사전학습은 극소수. 상용은 라이선스가 첫 게이트(GR00T 비상업 주의). "시뮬레이션만으로 조작 정책"은 함정 — 실데이터 필수([pillar-4](pillar-4.md)).
+> 근거: [pillar-2](pillar-2.md), [pillar-1 데이터·라이선스](pillar-1.md), [pillar-4](pillar-4.md).
+
+---
+
+## 부록 — 리전/데이터 레지던시 빠른 판정
+
+_(아래 표는 휘발성 — 2026-07, AWS 공식 리전 표 `[1]` 직접 확인 기준. 인용 전 최신 리전 표 재확인)_
+
+| 서비스 | 서울(ap-northeast-2) | 비고 |
+|---|---|---|
+| Bedrock AgentCore (코어+Policy+Evaluations) | ✅ | Agent Registry·Payments는 ✗ (도쿄는 Registry ✅) — 2026-07 리전 표 기준 |
+| EC2 G7e / G6e / P6 | ✅(리전별 확인) | Capacity Blocks 활용 |
+| SageMaker HyperPod | ✅ | Flexible Training Plans 리전 확장 중 |
+| IoT Greengrass V2 | ✅ | V1은 2026-06 EOL |
+
+> 데이터 레지던시 우려 고객: **AgentCore 서울 GA** 를 먼저 확인시켜 안심(오래된 "서울 미지원" 정보 정정). → [pillar-5](pillar-5.md).
+
+---
+_owner: 미정 ⚠️ · updated: 2026-07 · volatility: 중간 (트리 원리는 낮음, 인스턴스/리전 세부는 높음)_
