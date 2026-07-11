@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # 매주 월요일 00:00 UTC 재배포 — 푸시가 없어도 staleness 배지가 갱신되도록
+    - cron: "0 0 * * 1"
 
 permissions:
   contents: read
@@ -23,6 +26,10 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
+      # staleness 리포트 + 기준 초과 페이지에 '⏳ 검토 필요' 배지 주입
+      # (워크스페이스에만 적용 — 저장소에 커밋되지 않음. 메타데이터 누락 시 빌드 실패)
+      - run: python scripts/check_staleness.py --check
+      - run: python scripts/check_staleness.py --inject
       - run: mkdocs build --strict
       - uses: actions/upload-pages-artifact@v3
         with:

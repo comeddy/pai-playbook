@@ -48,6 +48,8 @@ _owner: {이름} · updated: {YYYY-MM} · volatility: 높음/중간/낮음_
 
 > 휘발성 '높음' 항목(pillar-2/3/5, radar)은 더 짧은 주기. 특히 **AgentCore 리전·기능, 모델 라이선스, EC2 인스턴스 GA**는 변화가 빠르다.
 
+**⚙️ 자동화됨**: 배지는 수동으로 붙이지 않는다. CI(`scripts/check_staleness.py`)가 **빌드 직전에 자동 주입**하고, **매주 월요일 cron 재배포**가 푸시 없이도 배지를 갱신한다. 페이지의 `updated`/`volatility` 메타데이터가 누락되면 빌드가 실패한다 — 메타데이터가 곧 계약이다.
+
 ---
 
 ## 포함 기준 (THE FILTER)
@@ -103,6 +105,7 @@ _owner: {이름} · updated: {YYYY-MM} · volatility: 높음/낮음_
         │
         ▼
    ① 캡처 ──── 지정 채널 + 이모지 반응(예: 📌)으로 후보 수집
+   │            또는 GitHub 이슈 폼 "📌 Playbook 후보 제보" (THE FILTER 체크리스트 내장)
         │
         ▼
    ② 필터 ──── 2.5 게이트 (4개 중 2개 이상?)

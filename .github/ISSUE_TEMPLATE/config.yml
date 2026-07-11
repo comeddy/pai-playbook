@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "📖 Physical AI Playbook (배포 사이트)"
+    url: "https://comeddy.github.io/pai-playbook/"
+    about: "후보 제보 전 Radar 페이지에 이미 있는지 확인하세요."
+  - name: "🛠️ 유지보수 규칙 (승격 파이프라인·staleness)"
+    url: "https://comeddy.github.io/pai-playbook/maintenance/"
+    about: "포함 기준·표준 템플릿·갱신 주기 전체 규칙."

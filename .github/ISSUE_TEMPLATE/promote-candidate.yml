@@ -1,0 +1,98 @@
+name: "📌 Playbook 후보 제보 (슬랙 → playbook 승격)"
+description: "THE FILTER 게이트 내장 제출 양식 — 4개 중 2개 이상 충족 시 필러 승격, 미달 시 Radar"
+title: "[후보] "
+labels: ["candidate"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **승격 파이프라인**: 이 이슈 → 담당 필러 owner가 게이트 판정 → **2개 이상 충족 시** 표준 템플릿으로 필러 편입 / **미달 시** [Radar](https://comeddy.github.io/pai-playbook/radar/)에 한 줄 기록.
+        제출 전 [Radar](https://comeddy.github.io/pai-playbook/radar/)에 이미 있는지 먼저 확인하세요.
+
+  - type: input
+    id: item-name
+    attributes:
+      label: 항목명
+      placeholder: "예: NVIDIA Isaac Lab 3.0 / Newton 물리엔진"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: pillar
+    attributes:
+      label: 담당 필러
+      options:
+        - "P1 · 데이터 수집 & 처리"
+        - "P2 · 모델 학습 (VLA)"
+        - "P3 · 시뮬레이션"
+        - "P4 · Sim-to-Real"
+        - "P5 · 에이전트 오케스트레이션"
+        - "decisions (교차 의사결정)"
+        - "모르겠음 (owner가 판정)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: maturity
+    attributes:
+      label: 성숙도 라벨
+      description: "⚠️ '인상적 데모'와 '배포 가능'을 분리할 것 — 데모만 있으면 ⚪"
+      options:
+        - "🟢 GA"
+        - "🟡 Preview"
+        - "🔵 Research-only"
+        - "⚪ Hype (데모만)"
+    validations:
+      required: true
+
+  - type: input
+    id: source-url
+    attributes:
+      label: 출처 URL
+      placeholder: "https://..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: source-tier
+    attributes:
+      label: 출처 등급
+      options:
+        - "[1] 공식 문서/논문"
+        - "[2] AWS 내부 검증 (직접 돌려봄)"
+        - "[3] 벤더 공식 블로그"
+        - "[4] 미검증 (슬랙/소문)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: the-filter
+    attributes:
+      label: "THE FILTER — 포함 기준 (최소 2개 충족해야 필러 본문 승격)"
+      description: "정직하게 체크할 것. 2개 미만이면 이 항목은 Radar에 한 줄로만 기록됩니다."
+      options:
+        - label: "ⓐ production 또는 실제 고객 배포에서 검증됨 (데모 영상만으로는 불충분)"
+        - label: "ⓑ AWS 서비스/인프라와 구체적으로 매핑 가능"
+        - label: "ⓒ 실제 고객 또는 SA가 물어본 이력이 있음"
+        - label: "ⓓ GA이거나 명확한 GA 로드맵이 있음"
+
+  - type: textarea
+    id: l0-tldr
+    attributes:
+      label: "L0 TL;DR (1~2문장)"
+      description: "이게 무엇이고 언제 쓰는지. 수치·벤치마크 인용 시 날짜+출처+측정 조건 병기."
+    validations:
+      required: true
+
+  - type: textarea
+    id: customer-context
+    attributes:
+      label: "고객/SA 문의 맥락 (있으면)"
+      description: "어떤 고객 상황에서 나온 질문인지, 슬랙 스레드 링크 등 — ⓒ 체크의 근거"
+
+  - type: input
+    id: proposed-owner
+    attributes:
+      label: "승격 시 owner"
+      description: "소유자 없는 항목은 본문에 생성하지 않는다(maintenance 규칙). 미정이면 비워두기."
+      placeholder: "SA 이름"
