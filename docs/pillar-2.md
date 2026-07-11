@@ -1,6 +1,6 @@
 # Pillar 2 — 모델 학습 (Model Training · VLA)
 
-_최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 높음(모델 버전·라이선스·인스턴스가 자주 바뀜)_
+_최종 갱신: 2026-07 · owner: comeddy · volatility: 높음(모델 버전·라이선스·인스턴스가 자주 바뀜)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -180,4 +180,4 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - **Trainium-for-VLA는 미검증.** 전체 VLA 툴체인이 CUDA. 제안 시 리스크 명시.
 
 ---
-_owner: 미정 ⚠️ · updated: 2026-07 · volatility: 높음 (모델 버전·라이선스·GPU 요구·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증_
+_owner: comeddy · updated: 2026-07 · volatility: 높음 (모델 버전·라이선스·GPU 요구·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증_

@@ -1,6 +1,6 @@
 # Pillar 1 — 데이터 수집 & 처리 (Data Collection & Processing)
 
-_최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 중간(데이터셋 버전·크기는 높음)_
+_최종 갱신: 2026-07 · owner: comeddy · volatility: 중간(데이터셋 버전·크기는 높음)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -188,4 +188,4 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 - **라이선스가 첫 리스크.** AgiBot World(최대 규모)가 비상업이라는 사실 하나만 짚어도 고객 신뢰를 얻는다.
 
 ---
-_owner: 미정 ⚠️ · updated: 2026-07 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
+_owner: comeddy · updated: 2026-07 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_

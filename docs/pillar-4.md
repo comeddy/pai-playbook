@@ -1,6 +1,6 @@
 # Pillar 4 — Sim-to-Real
 
-_최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 중간(엣지 HW·모델은 높음)_
+_최종 갱신: 2026-07 · owner: comeddy · volatility: 중간(엣지 HW·모델은 높음)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -172,4 +172,4 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - **휴머노이드 "프로덕션" 지표는 대부분 벤더 PR** — 독립 자율성 감사 없음. Digit@GXO·Figure@BMW만 고객 교차확인. 1X Neo는 "제품이지만 실제론 원격조작".
 
 ---
-_owner: 미정 ⚠️ · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 지표는 높음) · sources: [1] 공식/논문, [2] AWS 내부 검증, [3] 벤더/PR, [4] 미검증. 2026 arXiv 프리프린트는 비심사(illustrative)._
+_owner: comeddy · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 지표는 높음) · sources: [1] 공식/논문, [2] AWS 내부 검증, [3] 벤더/PR, [4] 미검증. 2026 arXiv 프리프린트는 비심사(illustrative)._
