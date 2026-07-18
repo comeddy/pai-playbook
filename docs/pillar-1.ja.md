@@ -1,5 +1,5 @@
 ---
-ko_hash: 9b8dbba9fe55061e429c5959c9e10760a2278556
+ko_hash: 2e29d7e26fa8f69f17361c8ddfe2f062cb16be27
 ---
 # Pillar 1 — データ収集 & 処理 (Data Collection & Processing)
 
@@ -20,6 +20,15 @@ _個別項目は別途表記が無い限りページメタデータ（owner/upda
 
 > **安定原理（あまり変わらない）**: ロボットデータは (1) **テレオペレーション/実データ** — 高品質・高コスト・低多様性、(2) **合成/シミュレーションデータ** — 低コスト・高多様性・ドメインギャップ存在、(3) **オープン/Web データ** — 事前学習用・ライセンス注意。実戦レシピはほぼ常に **「オープンデータセット事前学習 → 合成データ拡張 → 少量の実デモでファインチューニング」** の3段混合です。
 
+```mermaid
+graph LR
+    O["オープン/Web データ<br>事前学習"] --> LAKE[(S3 データレイク)]
+    SYN["合成/シミュレーション<br>拡張"] --> LAKE
+    TEL["テレオペレーション/実データ<br>ファインチューニング"] --> LAKE
+    LAKE --> PIPE["変換 · 品質検査<br>Glue / Batch"]
+    PIPE --> TRAIN["学習パイプライン<br>SageMaker / HyperPod"]
+```
+
 ---
 
 ## 1. オープンロボットデータセット  🟢 GA
@@ -30,10 +39,10 @@ _個別項目は別途表記が無い限りページメタデータ（owner/upda
 
 **ソリューション概要** `[1]`:
 
-- **Open X-Embodiment (OXE)** — ~1M+ エピソード、22 embodiment、60余のデータセットを統合。OpenVLA・RT-2-X・π0・GR00T の標準事前学習コーパス。⚠️ **ライセンスはコンポーネントごとに異なる**（多くは CC-BY-4.0/Apache-2.0、一部は research-only）→ 商用ならコンポーネント単位の法務監査が必須。`[1]` arxiv 2310.08864
-- **DROID** — 76,000 テレオペレーション軌跡、350時間、Franka。ライセンス **CC-BY-4.0**（商業フレンドリー）。ファインチューニング段階の標準。`[1]` droid-dataset.github.io
-- **AgiBot World** — ~1,003,672 軌跡（~43.8TB）で最大規模。⚠️ **ライセンス CC BY-NC-SA 4.0 = 非商業**。研究・ベンチマークは可能だが **商用派生重みの配布は不可**。`[1]` arxiv 2503.06669
-- **RoboMIND** — 107k 軌跡、4 embodiment、失敗デモ 5k を含む（貴重）。ライセンスは HF で再確認が必要。`[1]` arxiv 2412.13877
+- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** — ~1M+ エピソード、22 embodiment、60余のデータセットを統合。OpenVLA・RT-2-X・π0・GR00T の標準事前学習コーパス。⚠️ **ライセンスはコンポーネントごとに異なる**（多くは CC-BY-4.0/Apache-2.0、一部は research-only）→ 商用ならコンポーネント単位の法務監査が必須。`[1]` arxiv 2310.08864
+- **[DROID](https://droid-dataset.github.io/)** — 76,000 テレオペレーション軌跡、350時間、Franka。ライセンス **CC-BY-4.0**（商業フレンドリー）。ファインチューニング段階の標準。`[1]` droid-dataset.github.io
+- **[AgiBot World](https://agibot-world.com/)** — ~1,003,672 軌跡（~43.8TB）で最大規模。⚠️ **ライセンス CC BY-NC-SA 4.0 = 非商業**。研究・ベンチマークは可能だが **商用派生重みの配布は不可**。`[1]` arxiv 2503.06669
+- **[RoboMIND](https://arxiv.org/abs/2412.13877)** — 107k 軌跡、4 embodiment、失敗デモ 5k を含む（貴重）。ライセンスは HF で再確認が必要。`[1]` arxiv 2412.13877
 
 **AWS マッピング**: S3（データレイク）+ FSx for Lustre（学習時にダウンロード不要の高速チャネル）+ SageMaker/HyperPod。データセットは Hugging Face Hub または原本から S3 にミラーリング後に使用。
 
@@ -42,6 +51,15 @@ _個別項目は別途表記が無い限りページメタデータ（owner/upda
 - 商用製品が目標 → **DROID / RoboMIND（ライセンス確認）中心**、AgiBot World は除外、OXE は商用可能なコンポーネントのみフィルタリング。
 - 研究・PoC・内部ベンチマーク → 全て使用可能（AgiBot World 含む）。
 - 特定の embodiment（自社ロボット）と形態が異なる場合は事前学習用にのみ使い、実デモでファインチューニングする前提。
+
+```mermaid
+graph TD
+    Q{商用デプロイ計画?} -- はい --> C{データセットライセンス}
+    Q -- 研究 · PoC · ベンチマーク --> ALL["全て使用可能<br>AgiBot World 含む"]
+    C -- CC-BY-4.0 --> DROID["DROID 🟢<br>商業フレンドリー"]
+    C -- コンポーネント別に混在 --> OXE["OXE ⚪<br>商用可分のみフィルタ"]
+    C -- CC BY-NC-SA 4.0 --> AGI["AgiBot World ⛔<br>商用配布は不可"]
+```
 
 **顧客事例**: 事例待ち（国内の公開事例は未確認 — 国内ロボット企業の多くが現在 NVIDIA アライン）。
 
@@ -69,7 +87,7 @@ _注意: 一部のアグリゲーターが DROID を「92,233 ep/Apache-2.0」�
 
 **顧客ニーズ/課題**: 「自社の工場/倉庫環境のデータがほとんど無い。ラベリングコストも負担できない。シミュレーションで作れるのか?」
 
-**ソリューション概要** `[1]`: Isaac Sim の **Replicator** でドメインランダマイゼーション（照明・質感・ポーズ・カメラ）ベースの合成画像/セグメンテーション/バウンディングボックスをプログラム的に（Replicator Functional API）生成。Isaac Sim **5.0 GA（2025-08 SIGGRAPH）**、オープンソース（GitHub）、5.1 GA、6.0 は GTC'26 早期開発者リリース（2026-03/06）。`[1]` developer.nvidia.com, github.com/isaac-sim
+**ソリューション概要** `[1]`: [Isaac Sim](https://developer.nvidia.com/isaac/sim) の **Replicator** でドメインランダマイゼーション（照明・質感・ポーズ・カメラ）ベースの合成画像/セグメンテーション/バウンディングボックスをプログラム的に（Replicator Functional API）生成。Isaac Sim **5.0 GA（2025-08 SIGGRAPH）**、オープンソース（GitHub）、5.1 GA、6.0 は GTC'26 早期開発者リリース（2026-03/06）。`[1]` developer.nvidia.com, github.com/isaac-sim
 
 **AWS マッピング**: EC2 **G6e**(L40S)・**G7e**(RTX PRO 6000 Blackwell) GPU インスタンスで Isaac Sim を実行 + **AWS Batch** で大規模オフラインデータ生成ジョブを並列化 + S3 保存。NICE DCV でリモートストリーミング（→ [pillar-3](pillar-3.md) 参照）。
 
@@ -125,6 +143,15 @@ _注意: 一部のアグリゲーターが DROID を「92,233 ep/Apache-2.0」�
 - **学習チャネル**: FSx for Lustre を SageMaker 学習チャネルとしてマウント → ダウンロード不要で高速 read
 - **学習**: SageMaker HyperPod（→ [pillar-2](pillar-2.md)）
 
+```mermaid
+graph LR
+    SRC["テレオペレーション · センサー<br>ROS bag"] --> S3[(S3 データレイク)]
+    S3 --> CONV["変換 · 品質検査<br>Glue / Batch"]
+    CONV --> FSX["FSx for Lustre<br>学習チャネル"]
+    FSX --> HP["SageMaker HyperPod<br>学習"]
+    HP --> VAL["検証"]
+```
+
 **AWS マッピング**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod。（全て GA）
 
 **意思決定基準**:
@@ -149,8 +176,8 @@ _注意: 一部のアグリゲーターが DROID を「92,233 ep/Apache-2.0」�
 
 **ソリューション概要** `[1]`:
 
-- **LeRobotDataset v3.0** — エピソード多数を単一の Parquet にまとめ、MP4 ビデオ + メタデータで境界を管理、Hub ネイティブストリーミング。`lerobot >= 0.4.0`、最新は **v0.6.0（2026-07-06）**。NVIDIA もデータセットを LeRobot v3 で再配布中（相互交換の標準化が進行中）。`[1]` github.com/huggingface/lerobot
-- **RLDS** — OpenVLA・RT-2-X・π0・GR00T がネイティブに消費。依然として VLA 学習の標準。
+- **[LeRobotDataset v3.0](https://github.com/huggingface/lerobot)** — エピソード多数を単一の Parquet にまとめ、MP4 ビデオ + メタデータで境界を管理、Hub ネイティブストリーミング。`lerobot >= 0.4.0`、最新は **v0.6.0（2026-07-06）**。NVIDIA もデータセットを LeRobot v3 で再配布中（相互交換の標準化が進行中）。`[1]` github.com/huggingface/lerobot
+- **[RLDS](https://github.com/google-research/rlds)** — OpenVLA・RT-2-X・π0・GR00T がネイティブに消費。依然として VLA 学習の標準。
 - ⚠️ **ギャップ**: lerobot リポジトリに **ネイティブな ROS 2 bag コンバーターが無い**。rosbag2 → LeRobot/RLDS の大規模変換は DIY。
 
 **AWS マッピング**: **カスタム rosbag2→LeRobot/RLDS コンバーター** をコンテナとして **AWS Glue/Batch** に載せて大規模並列変換 + S3 保存。HyperPod/学習段階は S3 ストリーミングまたは FSx。
@@ -177,7 +204,7 @@ _注意: 一部のアグリゲーターが DROID を「92,233 ep/Apache-2.0」�
 
 **ソリューション概要** `[1]/[4]`:
 
-- オープン HW: **ALOHA/Mobile ALOHA**（両腕の低価格テレオペレーション）、**GELLO**（<$300 のリーダーアーム、MIT ライセンス）— ラボで広範に複製されるが商用製品 SKU は無く、**Research-only**。`[1]`
+- オープン HW: **[ALOHA/Mobile ALOHA](https://tonyzhaozh.github.io/aloha/)**（両腕の低価格テレオペレーション）、**[GELLO](https://wuphilipp.github.io/gello_site/)**（<$300 のリーダーアーム、MIT ライセンス）— ラボで広範に複製されるが商用製品 SKU は無く、**Research-only**。`[1]`
 - 実戦: Figure・1X・Physical Intelligence・Tesla が VR リグのテレオペレーションファームを運営（1日数時間）。⚠️ **証拠はメディア・デモレベル、公開パイプラインは無し** `[4]`。
 - SA の焦点: テレオペレーションのテレメトリストリーム → S3 収集 → 自動ラベル（成功/失敗、タスクタグ）→ 学習データセット化。
 

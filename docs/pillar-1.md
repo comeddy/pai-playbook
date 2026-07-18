@@ -16,6 +16,15 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 > **안정 원리 (잘 안 바뀜)**: 로봇 데이터는 (1) **텔레옵/실데이터** — 고품질·고비용·저다양성, (2) **합성/시뮬레이션 데이터** — 저비용·고다양성·도메인 갭 존재, (3) **오픈/웹 데이터** — 사전학습용·라이선스 주의. 실전 레시피는 거의 항상 **"오픈 데이터셋 사전학습 → 합성 데이터 증강 → 소량 실데모 파인튜닝"** 의 3단 혼합이다.
 
+```mermaid
+graph LR
+    O["오픈/웹 데이터<br>사전학습"] --> LAKE[(S3 데이터 레이크)]
+    SYN["합성/시뮬레이션<br>증강"] --> LAKE
+    TEL["텔레옵/실데이터<br>파인튜닝"] --> LAKE
+    LAKE --> PIPE["변환 · 품질검사<br>Glue / Batch"]
+    PIPE --> TRAIN["학습 파이프라인<br>SageMaker / HyperPod"]
+```
+
 ---
 
 ## 1. 오픈 로봇 데이터셋  🟢 GA
@@ -26,10 +35,10 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **솔루션 개요** `[1]`:
 
-- **Open X-Embodiment (OXE)** — ~1M+ 에피소드, 22개 embodiment, 60여 데이터셋 통합. OpenVLA·RT-2-X·π0·GR00T의 표준 사전학습 코퍼스. ⚠️ **라이선스가 컴포넌트별로 다름**(대부분 CC-BY-4.0/Apache-2.0, 일부 research-only) → 상용이면 컴포넌트 단위 법무 감사 필수. `[1]` arxiv 2310.08864
-- **DROID** — 76,000 텔레옵 궤적, 350시간, Franka. 라이선스 **CC-BY-4.0** (상업 친화적). 파인튜닝 단계 표준. `[1]` droid-dataset.github.io
-- **AgiBot World** — ~1,003,672 궤적(~43.8TB)로 최대 규모. ⚠️ **라이선스 CC BY-NC-SA 4.0 = 비상업**. 연구·벤치마크는 되지만 **상용 파생 가중치 배포 불가**. `[1]` arxiv 2503.06669
-- **RoboMIND** — 107k 궤적, 4개 embodiment, 실패 데모 5k 포함(귀함). 라이선스는 HF에서 재확인 필요. `[1]` arxiv 2412.13877
+- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** — ~1M+ 에피소드, 22개 embodiment, 60여 데이터셋 통합. OpenVLA·RT-2-X·π0·GR00T의 표준 사전학습 코퍼스. ⚠️ **라이선스가 컴포넌트별로 다름**(대부분 CC-BY-4.0/Apache-2.0, 일부 research-only) → 상용이면 컴포넌트 단위 법무 감사 필수. `[1]` arxiv 2310.08864
+- **[DROID](https://droid-dataset.github.io/)** — 76,000 텔레옵 궤적, 350시간, Franka. 라이선스 **CC-BY-4.0** (상업 친화적). 파인튜닝 단계 표준. `[1]` droid-dataset.github.io
+- **[AgiBot World](https://agibot-world.com/)** — ~1,003,672 궤적(~43.8TB)로 최대 규모. ⚠️ **라이선스 CC BY-NC-SA 4.0 = 비상업**. 연구·벤치마크는 되지만 **상용 파생 가중치 배포 불가**. `[1]` arxiv 2503.06669
+- **[RoboMIND](https://arxiv.org/abs/2412.13877)** — 107k 궤적, 4개 embodiment, 실패 데모 5k 포함(귀함). 라이선스는 HF에서 재확인 필요. `[1]` arxiv 2412.13877
 
 **AWS 매핑**: S3(데이터 레이크) + FSx for Lustre(학습 시 다운로드 없이 고속 채널) + SageMaker/HyperPod. 데이터셋은 Hugging Face Hub 또는 원본에서 S3로 미러링 후 사용.
 
@@ -38,6 +47,15 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - 상용 제품 목표 → **DROID / RoboMIND(라이선스 확인) 중심**, AgiBot World 제외, OXE는 상업 가능 컴포넌트만 필터링.
 - 연구·PoC·내부 벤치마크 → 전체 사용 가능(AgiBot World 포함).
 - 특정 embodiment(자사 로봇)와 형태가 다르면 사전학습용으로만 쓰고 실데모로 파인튜닝 전제.
+
+```mermaid
+graph TD
+    Q{상용 배포 계획?} -- 예 --> C{데이터셋 라이선스}
+    Q -- 연구 · PoC · 벤치마크 --> ALL["전체 사용 가능<br>AgiBot World 포함"]
+    C -- CC-BY-4.0 --> DROID["DROID 🟢<br>상업 친화"]
+    C -- 컴포넌트별 혼합 --> OXE["OXE ⚪<br>상업 가능분만 필터"]
+    C -- CC BY-NC-SA 4.0 --> AGI["AgiBot World ⛔<br>상용 배포 불가"]
+```
 
 **고객 사례**: 사례 대기 (국내 공개 사례 미확인 — 국내 로봇 기업 다수가 현재 NVIDIA 정렬).
 
@@ -65,7 +83,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 **고객 니즈/문제**: "우리 공장/창고 환경 데이터가 거의 없다. 라벨링 비용도 감당 안 된다. 시뮬레이션으로 만들 수 있나?"
 
-**솔루션 개요** `[1]`: Isaac Sim의 **Replicator**로 도메인 랜덤화(조명·질감·포즈·카메라) 기반 합성 이미지/세그멘테이션/바운딩박스를 프로그래밍 방식(Replicator Functional API)으로 생성. Isaac Sim **5.0 GA(2025-08 SIGGRAPH)**, 오픈소스(GitHub), 5.1 GA, 6.0은 GTC'26 얼리 개발자 릴리스(2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
+**솔루션 개요** `[1]`: [Isaac Sim](https://developer.nvidia.com/isaac/sim)의 **Replicator**로 도메인 랜덤화(조명·질감·포즈·카메라) 기반 합성 이미지/세그멘테이션/바운딩박스를 프로그래밍 방식(Replicator Functional API)으로 생성. Isaac Sim **5.0 GA(2025-08 SIGGRAPH)**, 오픈소스(GitHub), 5.1 GA, 6.0은 GTC'26 얼리 개발자 릴리스(2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
 
 **AWS 매핑**: EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 인스턴스에서 Isaac Sim 실행 + **AWS Batch**로 대규모 오프라인 데이터 생성 잡 병렬화 + S3 저장. NICE DCV로 원격 스트리밍(→ [pillar-3](pillar-3.md) 참조).
 
@@ -121,6 +139,15 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 - **학습 채널**: FSx for Lustre를 SageMaker 학습 채널로 마운트 → 다운로드 없이 고속 read
 - **학습**: SageMaker HyperPod (→ [pillar-2](pillar-2.md))
 
+```mermaid
+graph LR
+    SRC["텔레옵 · 센서<br>ROS bag"] --> S3[(S3 데이터 레이크)]
+    S3 --> CONV["변환 · 품질검사<br>Glue / Batch"]
+    CONV --> FSX["FSx for Lustre<br>학습 채널"]
+    FSX --> HP["SageMaker HyperPod<br>학습"]
+    HP --> VAL["검증"]
+```
+
 **AWS 매핑**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod. (전부 GA)
 
 **의사결정 기준**:
@@ -145,8 +172,8 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 **솔루션 개요** `[1]`:
 
-- **LeRobotDataset v3.0** — 에피소드 다수를 Parquet 하나로 묶고 MP4 비디오 + 메타데이터로 경계 관리, Hub 네이티브 스트리밍. `lerobot >= 0.4.0`, 최신 **v0.6.0(2026-07-06)**. NVIDIA도 데이터셋을 LeRobot v3로 재배포 중(상호교환 표준화 진행). `[1]` github.com/huggingface/lerobot
-- **RLDS** — OpenVLA·RT-2-X·π0·GR00T가 네이티브 소비. 여전히 VLA 학습 표준.
+- **[LeRobotDataset v3.0](https://github.com/huggingface/lerobot)** — 에피소드 다수를 Parquet 하나로 묶고 MP4 비디오 + 메타데이터로 경계 관리, Hub 네이티브 스트리밍. `lerobot >= 0.4.0`, 최신 **v0.6.0(2026-07-06)**. NVIDIA도 데이터셋을 LeRobot v3로 재배포 중(상호교환 표준화 진행). `[1]` github.com/huggingface/lerobot
+- **[RLDS](https://github.com/google-research/rlds)** — OpenVLA·RT-2-X·π0·GR00T가 네이티브 소비. 여전히 VLA 학습 표준.
 - ⚠️ **갭**: lerobot 레포에 **네이티브 ROS 2 bag 컨버터 없음**. rosbag2 → LeRobot/RLDS 대규모 변환은 DIY.
 
 **AWS 매핑**: **AWS Glue/Batch에 커스텀 rosbag2→LeRobot/RLDS 컨버터**를 컨테이너로 올려 대규모 병렬 변환 + S3 저장. HyperPod/학습 단계는 S3 스트리밍 또는 FSx.
@@ -173,7 +200,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 **솔루션 개요** `[1]/[4]`:
 
-- 오픈 HW: **ALOHA/Mobile ALOHA**(양팔 저가 텔레옵), **GELLO**(<$300 리더암, MIT 라이선스) — 랩에서 광범위 복제되나 상용 제품 SKU 없음, **Research-only**. `[1]`
+- 오픈 HW: **[ALOHA/Mobile ALOHA](https://tonyzhaozh.github.io/aloha/)**(양팔 저가 텔레옵), **[GELLO](https://wuphilipp.github.io/gello_site/)**(<$300 리더암, MIT 라이선스) — 랩에서 광범위 복제되나 상용 제품 SKU 없음, **Research-only**. `[1]`
 - 실전: Figure·1X·Physical Intelligence·Tesla가 VR 리그 텔레옵 팜을 운영(하루 수시간). ⚠️ **증거는 언론·데모 수준, 공개 파이프라인 없음** `[4]`.
 - SA 초점: 텔레옵 원격측정 스트림 → S3 수집 → 자동 라벨(성공/실패, 태스크 태그) → 학습 데이터셋화.
 

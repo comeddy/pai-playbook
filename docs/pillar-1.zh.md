@@ -1,5 +1,5 @@
 ---
-ko_hash: 9b8dbba9fe55061e429c5959c9e10760a2278556
+ko_hash: 2e29d7e26fa8f69f17361c8ddfe2f062cb16be27
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -19,6 +19,15 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 > **稳定原理（几乎不变）**: 机器人数据分为 (1) **遥操作/真实数据** —— 高质量·高成本·低多样性，(2) **合成/仿真数据** —— 低成本·高多样性·存在域间差异，(3) **开放/网络数据** —— 用于预训练·注意许可证。实战配方几乎总是 **"开放数据集预训练 → 合成数据增强 → 少量真实演示微调"** 的三段混合。
 
+```mermaid
+graph LR
+    O["开放/网络数据<br>预训练"] --> LAKE[(S3 数据湖)]
+    SYN["合成/仿真<br>增强"] --> LAKE
+    TEL["遥操作/真实数据<br>微调"] --> LAKE
+    LAKE --> PIPE["转换 · 质检<br>Glue / Batch"]
+    PIPE --> TRAIN["训练管道<br>SageMaker / HyperPod"]
+```
+
 ---
 
 ## 1. 开放机器人数据集  🟢 GA
@@ -29,10 +38,10 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]`:
 
-- **Open X-Embodiment (OXE)** —— ~1M+ 回合(episode)、22 个 embodiment、整合了 60 余个数据集。OpenVLA·RT-2-X·π0·GR00T 的标准预训练语料库。⚠️ **许可证按组件不同**（多为 CC-BY-4.0/Apache-2.0，部分为 research-only）→ 商用则必须按组件进行法务审计。`[1]` arxiv 2310.08864
-- **DROID** —— 76,000 条遥操作轨迹、350 小时、Franka。许可证 **CC-BY-4.0**（对商业友好）。微调阶段的标准。`[1]` droid-dataset.github.io
-- **AgiBot World** —— ~1,003,672 条轨迹（~43.8TB），规模最大。⚠️ **许可证 CC BY-NC-SA 4.0 = 非商业**。研究·基准测试可以，但**不可分发商用衍生权重**。`[1]` arxiv 2503.06669
-- **RoboMIND** —— 107k 条轨迹、4 个 embodiment、含 5k 失败演示（珍贵）。许可证需在 HF 上再次确认。`[1]` arxiv 2412.13877
+- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** —— ~1M+ 回合(episode)、22 个 embodiment、整合了 60 余个数据集。OpenVLA·RT-2-X·π0·GR00T 的标准预训练语料库。⚠️ **许可证按组件不同**（多为 CC-BY-4.0/Apache-2.0，部分为 research-only）→ 商用则必须按组件进行法务审计。`[1]` arxiv 2310.08864
+- **[DROID](https://droid-dataset.github.io/)** —— 76,000 条遥操作轨迹、350 小时、Franka。许可证 **CC-BY-4.0**（对商业友好）。微调阶段的标准。`[1]` droid-dataset.github.io
+- **[AgiBot World](https://agibot-world.com/)** —— ~1,003,672 条轨迹（~43.8TB），规模最大。⚠️ **许可证 CC BY-NC-SA 4.0 = 非商业**。研究·基准测试可以，但**不可分发商用衍生权重**。`[1]` arxiv 2503.06669
+- **[RoboMIND](https://arxiv.org/abs/2412.13877)** —— 107k 条轨迹、4 个 embodiment、含 5k 失败演示（珍贵）。许可证需在 HF 上再次确认。`[1]` arxiv 2412.13877
 
 **AWS 映射**: S3（数据湖）+ FSx for Lustre（训练时无需下载的高速通道）+ SageMaker/HyperPod。数据集从 Hugging Face Hub 或原始来源镜像到 S3 后使用。
 
@@ -41,6 +50,15 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - 目标为商用产品 → **以 DROID / RoboMIND（确认许可证）为主**，排除 AgiBot World，OXE 仅筛选可商用的组件。
 - 研究·PoC·内部基准测试 → 可全部使用（含 AgiBot World）。
 - 若与特定 embodiment（自家机器人）形态不同，则仅用于预训练，前提是用真实演示微调。
+
+```mermaid
+graph TD
+    Q{商业部署计划？} -- 是 --> C{数据集许可证}
+    Q -- 研究 · PoC · 基准测试 --> ALL["全部可用<br>含 AgiBot World"]
+    C -- CC-BY-4.0 --> DROID["DROID 🟢<br>对商业友好"]
+    C -- 按组件混合 --> OXE["OXE ⚪<br>仅筛选可商用组件"]
+    C -- CC BY-NC-SA 4.0 --> AGI["AgiBot World ⛔<br>不可商业分发"]
+```
 
 **客户案例**: 案例待定（未确认国内公开案例 —— 目前多数国内机器人企业为 NVIDIA 阵营）。
 
@@ -68,7 +86,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 **客户需求/问题**: "我们工厂/仓库环境的数据几乎没有。标注成本也承受不起。能用仿真生成吗？"
 
-**解决方案概览** `[1]`: 用 Isaac Sim 的 **Replicator** 以域随机化（光照·纹理·姿态·相机）为基础，通过编程方式（Replicator Functional API）生成合成图像/分割/边界框。Isaac Sim **5.0 GA（2025-08 SIGGRAPH）**、开源（GitHub）、5.1 GA，6.0 为 GTC'26 早期开发者版本（2026-03/06）。`[1]` developer.nvidia.com, github.com/isaac-sim
+**解决方案概览** `[1]`: 用 [Isaac Sim](https://developer.nvidia.com/isaac/sim) 的 **Replicator** 以域随机化（光照·纹理·姿态·相机）为基础，通过编程方式（Replicator Functional API）生成合成图像/分割/边界框。Isaac Sim **5.0 GA（2025-08 SIGGRAPH）**、开源（GitHub）、5.1 GA，6.0 为 GTC'26 早期开发者版本（2026-03/06）。`[1]` developer.nvidia.com, github.com/isaac-sim
 
 **AWS 映射**: 在 EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 实例上运行 Isaac Sim + 用 **AWS Batch** 并行化大规模离线数据生成作业 + 存入 S3。用 NICE DCV 进行远程流传输（→ 参见 [pillar-3](pillar-3.md)）。
 
@@ -124,6 +142,15 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 - **训练通道**: 将 FSx for Lustre 挂载为 SageMaker 训练通道 → 无需下载即可高速 read
 - **训练**: SageMaker HyperPod（→ [pillar-2](pillar-2.md)）
 
+```mermaid
+graph LR
+    SRC["遥操作 · 传感器<br>ROS bag"] --> S3[(S3 数据湖)]
+    S3 --> CONV["转换 · 质检<br>Glue / Batch"]
+    CONV --> FSX["FSx for Lustre<br>训练通道"]
+    FSX --> HP["SageMaker HyperPod<br>训练"]
+    HP --> VAL["验证"]
+```
+
 **AWS 映射**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod。（全部 GA）
 
 **决策标准**:
@@ -148,8 +175,8 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 **解决方案概览** `[1]`:
 
-- **LeRobotDataset v3.0** —— 将多个回合打包进单个 Parquet，用 MP4 视频 + 元数据管理边界，Hub 原生流式。`lerobot >= 0.4.0`，最新为 **v0.6.0（2026-07-06）**。NVIDIA 也正将数据集以 LeRobot v3 重新分发（互换标准化推进中）。`[1]` github.com/huggingface/lerobot
-- **RLDS** —— OpenVLA·RT-2-X·π0·GR00T 原生消费。仍是 VLA 训练标准。
+- **[LeRobotDataset v3.0](https://github.com/huggingface/lerobot)** —— 将多个回合打包进单个 Parquet，用 MP4 视频 + 元数据管理边界，Hub 原生流式。`lerobot >= 0.4.0`，最新为 **v0.6.0（2026-07-06）**。NVIDIA 也正将数据集以 LeRobot v3 重新分发（互换标准化推进中）。`[1]` github.com/huggingface/lerobot
+- **[RLDS](https://github.com/google-research/rlds)** —— OpenVLA·RT-2-X·π0·GR00T 原生消费。仍是 VLA 训练标准。
 - ⚠️ **缺口**: lerobot 仓库中**没有原生 ROS 2 bag 转换器**。rosbag2 → LeRobot/RLDS 的大规模转换要 DIY。
 
 **AWS 映射**: 将**定制的 rosbag2→LeRobot/RLDS 转换器**以容器形式放到 **AWS Glue/Batch** 上做大规模并行转换 + 存入 S3。HyperPod/训练阶段用 S3 流式或 FSx。
@@ -176,7 +203,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 **解决方案概览** `[1]/[4]`:
 
-- 开放 HW: **ALOHA/Mobile ALOHA**（双臂低价遥操作）、**GELLO**（<$300 主导臂，MIT 许可证）—— 在实验室被广泛复制但无商用产品 SKU，**Research-only**。`[1]`
+- 开放 HW: **[ALOHA/Mobile ALOHA](https://tonyzhaozh.github.io/aloha/)**（双臂低价遥操作）、**[GELLO](https://wuphilipp.github.io/gello_site/)**（<$300 主导臂，MIT 许可证）—— 在实验室被广泛复制但无商用产品 SKU，**Research-only**。`[1]`
 - 实战: Figure·1X·Physical Intelligence·Tesla 运营 VR 装置遥操作场（每天数小时）。⚠️ **证据仅为媒体·演示级别，无公开管道** `[4]`。
 - SA 焦点: 遥操作遥测流 → S3 采集 → 自动标注（成功/失败、任务标签）→ 制作成训练数据集。
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 9b8dbba9fe55061e429c5959c9e10760a2278556
+ko_hash: 2e29d7e26fa8f69f17361c8ddfe2f062cb16be27
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -19,6 +19,15 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 > **Stable principle (rarely changes)**: robot data is (1) **teleoperation/real data** — high quality, high cost, low diversity; (2) **synthetic/simulation data** — low cost, high diversity, with a domain gap; (3) **open/web data** — for pretraining, mind the license. The practical recipe is almost always a 3-stage mix: **"open-dataset pretraining → synthetic-data augmentation → small-batch real-demo fine-tuning."**
 
+```mermaid
+graph LR
+    O["Open/web data<br>pretraining"] --> LAKE[(S3 data lake)]
+    SYN["Synthetic/simulation<br>augmentation"] --> LAKE
+    TEL["Teleoperation/real data<br>fine-tuning"] --> LAKE
+    LAKE --> PIPE["Conversion · quality checks<br>Glue / Batch"]
+    PIPE --> TRAIN["Training pipeline<br>SageMaker / HyperPod"]
+```
+
 ---
 
 ## 1. Open robot datasets  🟢 GA
@@ -29,10 +38,10 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Solution overview** `[1]`:
 
-- **Open X-Embodiment (OXE)** — ~1M+ episodes, 22 embodiments, integrating ~60 datasets. The standard pretraining corpus for OpenVLA · RT-2-X · π0 · GR00T. ⚠️ **Licenses differ per component** (mostly CC-BY-4.0/Apache-2.0, some research-only) → for commercial use, a component-level legal audit is mandatory. `[1]` arxiv 2310.08864
-- **DROID** — 76,000 teleoperation trajectories, 350 hours, Franka. License **CC-BY-4.0** (commercial-friendly). The standard for the fine-tuning stage. `[1]` droid-dataset.github.io
-- **AgiBot World** — ~1,003,672 trajectories (~43.8TB), the largest scale. ⚠️ **License CC BY-NC-SA 4.0 = non-commercial**. Fine for research/benchmarks, but **commercial derivative weights cannot be distributed**. `[1]` arxiv 2503.06669
-- **RoboMIND** — 107k trajectories, 4 embodiments, includes 5k failure demos (valuable). License needs re-confirmation on HF. `[1]` arxiv 2412.13877
+- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** — ~1M+ episodes, 22 embodiments, integrating ~60 datasets. The standard pretraining corpus for OpenVLA · RT-2-X · π0 · GR00T. ⚠️ **Licenses differ per component** (mostly CC-BY-4.0/Apache-2.0, some research-only) → for commercial use, a component-level legal audit is mandatory. `[1]` arxiv 2310.08864
+- **[DROID](https://droid-dataset.github.io/)** — 76,000 teleoperation trajectories, 350 hours, Franka. License **CC-BY-4.0** (commercial-friendly). The standard for the fine-tuning stage. `[1]` droid-dataset.github.io
+- **[AgiBot World](https://agibot-world.com/)** — ~1,003,672 trajectories (~43.8TB), the largest scale. ⚠️ **License CC BY-NC-SA 4.0 = non-commercial**. Fine for research/benchmarks, but **commercial derivative weights cannot be distributed**. `[1]` arxiv 2503.06669
+- **[RoboMIND](https://arxiv.org/abs/2412.13877)** — 107k trajectories, 4 embodiments, includes 5k failure demos (valuable). License needs re-confirmation on HF. `[1]` arxiv 2412.13877
 
 **AWS mapping**: S3 (data lake) + FSx for Lustre (high-speed channel without downloading during training) + SageMaker/HyperPod. Datasets are mirrored to S3 from the Hugging Face Hub or the source before use.
 
@@ -41,6 +50,15 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 - Commercial-product goal → **centered on DROID / RoboMIND (confirm license)**, exclude AgiBot World, and filter OXE to commercially usable components only.
 - Research/PoC/internal benchmark → all usable (including AgiBot World).
 - If the target embodiment (your own robot) differs in form, use them only for pretraining and assume real-demo fine-tuning.
+
+```mermaid
+graph TD
+    Q{Commercial deployment plan?} -- Yes --> C{Dataset license}
+    Q -- Research · PoC · benchmark --> ALL["All usable<br>incl. AgiBot World"]
+    C -- CC-BY-4.0 --> DROID["DROID 🟢<br>commercial-friendly"]
+    C -- Mixed per component --> OXE["OXE ⚪<br>filter commercial-usable only"]
+    C -- CC BY-NC-SA 4.0 --> AGI["AgiBot World ⛔<br>no commercial distribution"]
+```
 
 **Customer case**: case pending (no public domestic case confirmed — many domestic robotics companies are currently NVIDIA-aligned).
 
@@ -68,7 +86,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer need/problem**: "We have almost no data for our factory/warehouse environment, and can't afford the labeling cost. Can we create it with simulation?"
 
-**Solution overview** `[1]`: With Isaac Sim's **Replicator**, generate synthetic images/segmentation/bounding boxes based on domain randomization (lighting, texture, pose, camera) programmatically (Replicator Functional API). Isaac Sim **5.0 GA (2025-08 SIGGRAPH)**, open source (GitHub), 5.1 GA, and 6.0 is the GTC'26 early developer release (2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
+**Solution overview** `[1]`: With [Isaac Sim](https://developer.nvidia.com/isaac/sim)'s **Replicator**, generate synthetic images/segmentation/bounding boxes based on domain randomization (lighting, texture, pose, camera) programmatically (Replicator Functional API). Isaac Sim **5.0 GA (2025-08 SIGGRAPH)**, open source (GitHub), 5.1 GA, and 6.0 is the GTC'26 early developer release (2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
 
 **AWS mapping**: run Isaac Sim on EC2 **G6e** (L40S) · **G7e** (RTX PRO 6000 Blackwell) GPU instances + parallelize large-scale offline data-generation jobs with **AWS Batch** + store in S3. Remote streaming via NICE DCV (→ see [pillar-3](pillar-3.md)).
 
@@ -124,6 +142,15 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 - **Training channel**: mount FSx for Lustre as a SageMaker training channel → high-speed reads without downloading
 - **Training**: SageMaker HyperPod (→ [pillar-2](pillar-2.md))
 
+```mermaid
+graph LR
+    SRC["Teleoperation · sensor<br>ROS bag"] --> S3[(S3 data lake)]
+    S3 --> CONV["Conversion · quality checks<br>Glue / Batch"]
+    CONV --> FSX["FSx for Lustre<br>training channel"]
+    FSX --> HP["SageMaker HyperPod<br>training"]
+    HP --> VAL["Validation"]
+```
+
 **AWS mapping**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod. (all GA)
 
 **Decision criteria**:
@@ -148,8 +175,8 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Solution overview** `[1]`:
 
-- **LeRobotDataset v3.0** — bundles many episodes into a single Parquet, manages boundaries with MP4 video + metadata, Hub-native streaming. `lerobot >= 0.4.0`, latest **v0.6.0 (2026-07-06)**. NVIDIA is also redistributing datasets as LeRobot v3 (interchange standardization is progressing). `[1]` github.com/huggingface/lerobot
-- **RLDS** — consumed natively by OpenVLA · RT-2-X · π0 · GR00T. Still the VLA training standard.
+- **[LeRobotDataset v3.0](https://github.com/huggingface/lerobot)** — bundles many episodes into a single Parquet, manages boundaries with MP4 video + metadata, Hub-native streaming. `lerobot >= 0.4.0`, latest **v0.6.0 (2026-07-06)**. NVIDIA is also redistributing datasets as LeRobot v3 (interchange standardization is progressing). `[1]` github.com/huggingface/lerobot
+- **[RLDS](https://github.com/google-research/rlds)** — consumed natively by OpenVLA · RT-2-X · π0 · GR00T. Still the VLA training standard.
 - ⚠️ **Gap**: the lerobot repo has **no native ROS 2 bag converter**. Large-scale rosbag2 → LeRobot/RLDS conversion is DIY.
 
 **AWS mapping**: put a **custom rosbag2→LeRobot/RLDS converter on AWS Glue/Batch** as a container for large-scale parallel conversion + S3 storage. The HyperPod/training stage uses S3 streaming or FSx.
@@ -176,7 +203,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Solution overview** `[1]/[4]`:
 
-- Open HW: **ALOHA/Mobile ALOHA** (dual-arm low-cost teleoperation), **GELLO** (<$300 leader arm, MIT license) — widely replicated in labs but no commercial product SKU, **Research-only**. `[1]`
+- Open HW: **[ALOHA/Mobile ALOHA](https://tonyzhaozh.github.io/aloha/)** (dual-arm low-cost teleoperation), **[GELLO](https://wuphilipp.github.io/gello_site/)** (<$300 leader arm, MIT license) — widely replicated in labs but no commercial product SKU, **Research-only**. `[1]`
 - Practical: Figure · 1X · Physical Intelligence · Tesla operate VR-rig teleoperation farms (several hours a day). ⚠️ **Evidence is press/demo level, no public pipeline** `[4]`.
 - SA focus: teleoperation telemetry stream → S3 collection → auto-labeling (success/failure, task tags) → into a training dataset.
 
