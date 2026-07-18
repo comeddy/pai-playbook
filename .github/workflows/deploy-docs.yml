@@ -28,6 +28,8 @@ jobs:
       - run: pip install -r requirements.txt
       # staleness 리포트 + 기준 초과 페이지에 '⏳ 검토 필요' 배지 주입
       # (워크스페이스에만 적용 — 저장소에 커밋되지 않음. 메타데이터 누락 시 빌드 실패)
+      # 번역 동기화 검사 — 뒤처진 번역은 warning annotation만 (배포 차단 없음)
+      - run: python scripts/check_translation_sync.py
       - run: python scripts/check_staleness.py --check
       - run: python scripts/check_staleness.py --inject
       - run: mkdocs build --strict

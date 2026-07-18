@@ -38,7 +38,7 @@ theme:
         icon: material/brightness-4
         name: 라이트 모드로
   features:
-    - navigation.instant
+    # navigation.instant 제거 — mkdocs-static-i18n 언어 전환기와 문서화된 비호환 (strict 빌드 게이트)
     - navigation.top
     - navigation.footer
     - search.suggest
@@ -65,6 +65,55 @@ plugins:
       lang:
         - ko
         - en
+        - ja
+        # zh 형태소 분리는 v1 범위 외 (spec YAGNI) — lunr 기본 토크나이저로 수용
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      languages:
+        - locale: ko
+          name: 한국어
+          default: true
+          build: true
+        - locale: en
+          name: English
+          build: true
+          site_description: "Physical AI reference asset for AWS Korea SA — architecture direction, AWS mapping, next actions in 5 minutes"
+          nav_translations:
+            홈: Home
+            "P1 · 데이터 수집 & 처리": "P1 · Data Collection & Processing"
+            "P2 · 모델 학습 (VLA)": "P2 · Model Training (VLA)"
+            "P3 · 시뮬레이션": "P3 · Simulation"
+            "P5 · 에이전트 오케스트레이션": "P5 · Agent Orchestration"
+            "의사결정 트리": "Decision Trees"
+            "Radar (대기열)": "Radar (Queue)"
+            "유지보수 규칙": "Maintenance Rules"
+        - locale: zh
+          name: 中文
+          build: true
+          site_description: "面向 AWS Korea SA 的 Physical AI 参考资产 — 5 分钟内掌握架构方向、AWS 映射与后续行动"
+          nav_translations:
+            홈: 首页
+            "P1 · 데이터 수집 & 처리": "P1 · 数据采集与处理"
+            "P2 · 모델 학습 (VLA)": "P2 · 模型训练 (VLA)"
+            "P3 · 시뮬레이션": "P3 · 仿真"
+            "P5 · 에이전트 오케스트레이션": "P5 · 智能体编排"
+            "의사결정 트리": "决策树"
+            "Radar (대기열)": "Radar（队列）"
+            "유지보수 규칙": "维护规则"
+        - locale: ja
+          name: 日本語
+          build: true
+          site_description: "AWS Korea SA 向け Physical AI リファレンス資産 — アーキテクチャの方向性・AWS マッピング・次のアクションを5分で"
+          nav_translations:
+            홈: ホーム
+            "P1 · 데이터 수집 & 처리": "P1 · データ収集と処理"
+            "P2 · 모델 학습 (VLA)": "P2 · モデル学習 (VLA)"
+            "P3 · 시뮬레이션": "P3 · シミュレーション"
+            "P5 · 에이전트 오케스트레이션": "P5 · エージェントオーケストレーション"
+            "의사결정 트리": "意思決定ツリー"
+            "Radar (대기열)": "Radar（キュー）"
+            "유지보수 규칙": "メンテナンスルール"
 
 validation:
   omitted_files: warn
