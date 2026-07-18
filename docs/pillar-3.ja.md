@@ -1,5 +1,5 @@
 ---
-ko_hash: d56fc0404667e24ebeac85a55baf2c1c42c946b9
+ko_hash: 934ac850d8e183fcdc6c25a6ac634ba9a08b9b25
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -47,7 +47,7 @@ _特に別途表記がない限り、各項目はページメタデータ（owne
 
 **➡️ SA の次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
 
-**🔗 関連資産**: [pillar-2 学習スタック](pillar-2.md) · [pillar-1 合成データ](pillar-1.md) · [decisions](decisions.md)
+**🔗 関連資産**: [pillar-2 学習スタック](pillar-2.md) · [pillar-1 合成データ](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS ワークショップ（Batch MNP ヘッドレス RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) — 要確認 ⚠️
 
 <details markdown="1"><summary>🔄 揮発性データ（バージョン —— 2026-07 確認、一部の年は GitHub で再確認が必要）</summary>
 

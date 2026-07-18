@@ -1,5 +1,5 @@
 ---
-ko_hash: d56fc0404667e24ebeac85a55baf2c1c42c946b9
+ko_hash: 934ac850d8e183fcdc6c25a6ac634ba9a08b9b25
 ---
 # Pillar 3 — Simulation
 
@@ -46,7 +46,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **➡️ SA next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal. If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
-**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md)
+**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) — live check needed ⚠️
 
 <details markdown="1"><summary>🔄 Volatile data (versions — checked 2026-07, some years to be re-confirmed on GitHub)</summary>
 
