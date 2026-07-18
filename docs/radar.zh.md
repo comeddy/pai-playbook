@@ -1,5 +1,5 @@
 ---
-ko_hash: 8f1c9251974b3496312dd4109d86fc717ebacb66
+ko_hash: 8c431a6a146eb28dee5b5dd90f6a974aab20f0da
 ---
 # Radar — 队列 / 观察列表
 
@@ -59,14 +59,14 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 项目 | 标签 | 为何等待 | 晋升条件 |
 |---|---|---|---|
-| **World Action Models**（MotionWAM · DSWAM） | 🔵 Research | 2026-06~07 预印本，单一实验室。VLA 替代（视频世界模型监督）`[4]` | peer-review + 复现 |
-| **Qwen-VLA**（统一 VLA） | 🔵 Research | 2026-05 预印本，声称任务·embodiment 统一 `[4]` | 一手确认 + 基准复现 |
-| **Ψ₀（Psi-Zero）** | 🔵 Research | 2026-03 开源人形 loco-manip 基础模型，研究阶段 `[4]` | 实机部署案例 + AWS 映射 |
-| **WholeBodyVLA** | 🔵 Research（ICLR'26） | 已录用，声称较 GR00T +21.3% `[4]`，非生产 | 生产部署证据 |
-| **RoboDojo**（Sim+Real 操作基准） | 🔵 Research | 2026-07 多机构基准，标准化前 `[4]` | 社区标准采纳 |
-| **Isaac GR00T Reference Humanoid**（Unitree H2 Plus + Jetson Thor） | ⚪ 路线图 | GTC Taipei 发布，计划 2026 年末出货 `[4]` | 实际出货 + 部署案例 |
-| **Google Gemini Robotics On-Device** | 🟡 Preview | 端侧 VLA（竞争），未映射到 AWS `[4]` | 确认 AWS 集成路径 |
-| **AgiBot World 2026「部署元年」** | 🟡 已发布 | 声称部署 1 万台 `[4]`；数据集 CC BY-NC-SA（非商用）→ [pillar-1](pillar-1.md) | 生产验证 + 许可证再确认 |
+| **Boston Dynamics Atlas 第五代**（全电动、"生产就绪"） | ⚪ Hype·路线图 | 2026-07-02 发布 `[4]`，Hyundai 宣称年产 3 万台计划、2026 产能"已全部预订"，但实际运行未确认 —— 与现有"Hyundai 25,000 Atlas"（2028 目标）条目相冲突，需一手确认 | 实际运行出货验证 + 对现有条目重新评估 |
+| **Apptronik Apollo 2 + Robot Park**（Google DeepMind Gemini Robotics 数据合作） | ⚪ Hype·路线图 | 2026-06-30~07-06 发布，9 万平方英尺数据采集设施 `[4]`，Apollo 2 商用部署·自主性成果未经验证 | 商用部署案例 + 学习成果验证 |
+| **AgiBot 1.5 万台量产**（Longcheer 工厂） | 🟡 已发布 | 6 天演示声称 99.99% 成功率 `[4]`，无独立验证；数据集许可证问题见 [pillar-1](pillar-1.md) | 独立生产力验证 |
+| **DSWAM**（双系统 World Action Foundation Model） | 🔵 Research | 2026-07 预印本，单一实验室。声称面向精细操作的双系统架构 `[4]` | peer-review + 复现 |
+| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 预印本，声称弥合致动器动力学差距（腿式机器人·人形）`[4]` | peer-review + 复现 |
+| **Kairos**（Regret-aware World-Action Model 技术栈） | 🔵 Research | 2026-06 预印本，声称面向 Physical AI 的全栈方案 `[4]` | 一手确认 + 独立复现 |
+| **1X NEO 25-DoF 腱驱动手** | 🟡 Preview | 2026-07 发布，声称消除"硬件天花板" `[4]`；关于是否已开始客户交付，各来源相互矛盾 | 实际交付验证 + 自主操作验证案例 |
+| **ULTRA**（统一多模态人形全身 loco-manipulation） | 🔵 Research | 2026-03 预印本，声称在不依赖预定义运动参考的情况下基于感知生成行为 `[4]` | peer-review + 复现 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 

@@ -56,14 +56,14 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 
 | 항목 | 라벨 | 왜 대기인가 | 승격 조건 |
 |---|---|---|---|
-| **World Action Models** (MotionWAM · DSWAM) | 🔵 Research | 2026-06~07 프리프린트, 단일 랩. VLA 대안(비디오 월드모델 감독) `[4]` | peer-review + 재현 |
-| **Qwen-VLA** (통합 VLA) | 🔵 Research | 2026-05 프리프린트, 태스크·embodiment 통합 주장 `[4]` | 1차 확인 + 벤치 재현 |
-| **Ψ₀ (Psi-Zero)** | 🔵 Research | 2026-03 오픈 휴머노이드 loco-manip 파운데이션, 연구 단계 `[4]` | 실배포 사례 + AWS 매핑 |
-| **WholeBodyVLA** | 🔵 Research (ICLR'26) | 채택·GR00T 대비 +21.3% 주장 `[4]`, 프로덕션 아님 | 프로덕션 배포 증거 |
-| **RoboDojo** (Sim+Real 조작 벤치마크) | 🔵 Research | 2026-07 다기관 벤치마크, 표준화 전 `[4]` | 커뮤니티 표준 채택 |
-| **Isaac GR00T Reference Humanoid** (Unitree H2 Plus + Jetson Thor) | ⚪ 로드맵 | GTC Taipei 발표, late 2026 출시 예정 `[4]` | 실출시 + 배포 사례 |
-| **Google Gemini Robotics On-Device** | 🟡 Preview | 온디바이스 VLA(경쟁), AWS 미매핑 `[4]` | AWS 통합 경로 확인 |
-| **AgiBot World 2026 "배포 원년"** | 🟡 발표 | 1만 대 배포 주장 `[4]`; 데이터셋 CC BY-NC-SA(비상업) → [pillar-1](pillar-1.md) | 프로덕션 검증 + 라이선스 재확인 |
+| **Boston Dynamics Atlas 5세대** (all-electric, "프로덕션 레디") | ⚪ Hype·로드맵 | 2026-07-02 발표 `[4]`, Hyundai 연 3만 대 계획·2026 물량 "완전 예약" 주장이나 실가동 미확인 — 기존 "Hyundai 25,000 Atlas"(2028 목표) 항목과 상충, 1차 확인 필요 | 실가동 출하 검증 + 기존 항목 재평가 |
+| **Apptronik Apollo 2 + Robot Park** (Google DeepMind Gemini Robotics 데이터 파트너십) | ⚪ Hype·로드맵 | 2026-06-30~07-06 발표, 9만 sqft 데이터 수집 시설 `[4]`, Apollo 2 상용 배포·자율성 성과 미검증 | 상용 배포 사례 + 학습 성과 검증 |
+| **AgiBot 15,000대 양산** (Longcheer 공장) | 🟡 발표 | 6일 데모 99.99% 성공률 주장 `[4]`, 독립 검증 없음; 데이터셋 라이선스 이슈는 [pillar-1](pillar-1.md) 참고 | 독립 생산성 검증 |
+| **DSWAM** (Dual-System World Action Foundation Model) | 🔵 Research | 2026-07 프리프린트, 단일 랩. 정밀 조작용 dual-system 구조 주장 `[4]` | peer-review + 재현 |
+| **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 프리프린트, 액추에이터 동역학 격차 해소 주장(보행 로봇·휴머노이드) `[4]` | peer-review + 재현 |
+| **Kairos** (Regret-aware World-Action Model 스택) | 🔵 Research | 2026-06 프리프린트, Physical AI 풀스택 주장 `[4]` | 1차 확인 + 독립 재현 |
+| **1X NEO 25-DoF 텐던 구동 핸드** | 🟡 Preview | 2026-07 발표, "하드웨어 천장 제거" 주장 `[4]`; 고객 배송 여부 소스 간 상충 | 실배송 검증 + 자율 매니퓰레이션 사례 |
+| **ULTRA** (통합 멀티모달 휴머노이드 전신 loco-manipulation) | 🔵 Research | 2026-03 프리프린트, 사전정의 모션 참조 없이 지각 기반 행동 생성 주장 `[4]` | peer-review + 재현 |
 
 ## ⚰️ 폐기됨 — 제안 금지 (기록 보존용)
 

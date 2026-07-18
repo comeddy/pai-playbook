@@ -1,5 +1,5 @@
 ---
-ko_hash: 8f1c9251974b3496312dd4109d86fc717ebacb66
+ko_hash: 8c431a6a146eb28dee5b5dd90f6a974aab20f0da
 ---
 # Radar — Queue / Watchlist
 
@@ -59,14 +59,14 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 
 | Item | Label | Why waiting | Promotion criteria |
 |---|---|---|---|
-| **World Action Models** (MotionWAM · DSWAM) | 🔵 Research | 2026-06~07 preprints, single lab. VLA alternative (video world-model supervision) `[4]` | peer review + reproduction |
-| **Qwen-VLA** (unified VLA) | 🔵 Research | 2026-05 preprint, claims task/embodiment unification `[4]` | primary confirmation + benchmark reproduction |
-| **Ψ₀ (Psi-Zero)** | 🔵 Research | 2026-03 open humanoid loco-manip foundation, research stage `[4]` | real deployment case + AWS mapping |
-| **WholeBodyVLA** | 🔵 Research (ICLR'26) | accepted, claims +21.3% over GR00T `[4]`, not production | production deployment evidence |
-| **RoboDojo** (Sim+Real manipulation benchmark) | 🔵 Research | 2026-07 multi-institution benchmark, pre-standardization `[4]` | community-standard adoption |
-| **Isaac GR00T Reference Humanoid** (Unitree H2 Plus + Jetson Thor) | ⚪ Roadmap | announced at GTC Taipei, ship planned late 2026 `[4]` | actual launch + deployment case |
-| **Google Gemini Robotics On-Device** | 🟡 Preview | on-device VLA (competitor), not AWS-mapped `[4]` | AWS integration path confirmed |
-| **AgiBot World 2026 "deployment year one"** | 🟡 Announced | claims 10,000 robots deployed `[4]`; dataset CC BY-NC-SA (non-commercial) → [pillar-1](pillar-1.md) | production validation + license re-confirmation |
+| **Boston Dynamics Atlas Gen 5** (all-electric, "production-ready") | ⚪ Hype/roadmap | Announced 2026-07-02 `[4]`, Hyundai claims 30k units/year plan and 2026 volume "fully booked," but real operation unconfirmed — conflicts with the existing "Hyundai 25,000 Atlas" (2028 target) entry; needs primary confirmation | Verified real-operation shipments + re-assessment of the existing entry |
+| **Apptronik Apollo 2 + Robot Park** (Google DeepMind Gemini Robotics data partnership) | ⚪ Hype/roadmap | Announced 2026-06-30~07-06, 90,000 sq ft data-collection facility `[4]`, Apollo 2 commercial deployment and autonomy results unverified | Commercial deployment case + validated training outcomes |
+| **AgiBot 15,000-unit production milestone** (Longcheer factory) | 🟡 Announced | Claims 99.99% success rate over a 6-day demo `[4]`, no independent validation; see [pillar-1](pillar-1.md) for the dataset licensing issue | Independent productivity validation |
+| **DSWAM** (Dual-System World Action Foundation Model) | 🔵 Research | 2026-07 preprint, single lab. Claims a dual-system architecture for fine-grained manipulation `[4]` | peer review + reproduction |
+| **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 preprint, claims to close the actuator-dynamics gap (legged robots and humanoids) `[4]` | peer review + reproduction |
+| **Kairos** (regret-aware world-action model stack) | 🔵 Research | 2026-06 preprint, claims a full-stack Physical AI approach `[4]` | primary confirmation + independent reproduction |
+| **1X NEO 25-DoF tendon-driven hand** | 🟡 Preview | Announced 2026-07, claims to remove the "hardware ceiling" `[4]`; sources conflict on whether customer shipments have started | Verified shipments + validated autonomous manipulation case |
+| **ULTRA** (unified multimodal humanoid whole-body loco-manipulation) | 🔵 Research | 2026-03 preprint, claims perception-driven behavior generation without predefined motion references `[4]` | peer review + reproduction |
 
 ## ⚰️ Retired — do not propose (kept for the record)
 

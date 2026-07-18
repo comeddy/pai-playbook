@@ -1,5 +1,5 @@
 ---
-ko_hash: 8f1c9251974b3496312dd4109d86fc717ebacb66
+ko_hash: 8c431a6a146eb28dee5b5dd90f6a974aab20f0da
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -60,14 +60,14 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 項目 | ラベル | なぜ待機か | 昇格条件 |
 |---|---|---|---|
-| **World Action Models**（MotionWAM · DSWAM） | 🔵 Research | 2026-06~07 プレプリント、単一ラボ。VLA 代替（動画ワールドモデル教師）`[4]` | peer-review + 再現 |
-| **Qwen-VLA**（統合 VLA） | 🔵 Research | 2026-05 プレプリント、タスク・embodiment 統合を主張 `[4]` | 一次確認 + ベンチ再現 |
-| **Ψ₀（Psi-Zero）** | 🔵 Research | 2026-03 オープン人型 loco-manip 基盤、研究段階 `[4]` | 実機デプロイ事例 + AWS マッピング |
-| **WholeBodyVLA** | 🔵 Research（ICLR'26） | 採択・GR00T 比 +21.3% を主張 `[4]`、本番ではない | 本番デプロイの証拠 |
-| **RoboDojo**（Sim+Real 操作ベンチマーク） | 🔵 Research | 2026-07 複数機関ベンチマーク、標準化前 `[4]` | コミュニティ標準の採用 |
-| **Isaac GR00T Reference Humanoid**（Unitree H2 Plus + Jetson Thor） | ⚪ ロードマップ | GTC Taipei で発表、2026 年末出荷予定 `[4]` | 実出荷 + デプロイ事例 |
-| **Google Gemini Robotics On-Device** | 🟡 Preview | オンデバイス VLA（競合）、AWS 未マッピング `[4]` | AWS 統合経路の確認 |
-| **AgiBot World 2026「デプロイ元年」** | 🟡 発表 | 1 万台デプロイを主張 `[4]`；データセットは CC BY-NC-SA（非商用）→ [pillar-1](pillar-1.md) | 本番検証 + ライセンス再確認 |
+| **Boston Dynamics Atlas 第 5 世代**（オールエレクトリック、「プロダクションレディ」） | ⚪ Hype·ロードマップ | 2026-07-02 発表 `[4]`、Hyundai は年 3 万台計画・2026 年分「完全予約済み」と主張するが実稼働は未確認 — 既存の「Hyundai Atlas 2.5 万台」（2028 目標）項目と矛盾、一次確認が必要 | 実稼働出荷の検証 + 既存項目の再評価 |
+| **Apptronik Apollo 2 + Robot Park**（Google DeepMind Gemini Robotics データ提携） | ⚪ Hype·ロードマップ | 2026-06-30~07-06 発表、9 万平方フィートのデータ収集施設 `[4]`、Apollo 2 の商用デプロイ・自律性の成果は未検証 | 商用デプロイ事例 + 学習成果の検証 |
+| **AgiBot 1.5 万台量産**（Longcheer 工場） | 🟡 発表 | 6 日間のデモで 99.99% の成功率を主張 `[4]`、独立検証なし；データセットのライセンス問題は [pillar-1](pillar-1.md) を参照 | 独立した生産性検証 |
+| **DSWAM**（デュアルシステム World Action Foundation Model） | 🔵 Research | 2026-07 プレプリント、単一ラボ。精密操作向けデュアルシステム構造を主張 `[4]` | peer-review + 再現 |
+| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 プレプリント、アクチュエータ動力学ギャップの解消を主張（脚式ロボット・ヒューマノイド）`[4]` | peer-review + 再現 |
+| **Kairos**（Regret-aware World-Action Model スタック） | 🔵 Research | 2026-06 プレプリント、Physical AI のフルスタックを主張 `[4]` | 一次確認 + 独立再現 |
+| **1X NEO 25-DoF テンダー駆動ハンド** | 🟡 Preview | 2026-07 発表、「ハードウェアの天井」の解消を主張 `[4]`；顧客への出荷開始について情報源間で矛盾 | 実出荷の検証 + 自律マニピュレーション事例 |
+| **ULTRA**（統合マルチモーダル ヒューマノイド全身 loco-manipulation） | 🔵 Research | 2026-03 プレプリント、事前定義された動作参照なしで知覚駆動の行動生成を主張 `[4]` | peer-review + 再現 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 
