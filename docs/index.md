@@ -1,4 +1,4 @@
-# Physical AI Playbook — AWS Korea SA
+# Physical AI Playbook 안내
 
 _최종 갱신: 2026-07 · owner: comeddy · 상태: 초기 구축 중_
 

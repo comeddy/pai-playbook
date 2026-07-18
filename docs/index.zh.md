@@ -1,7 +1,7 @@
 ---
-ko_hash: c6c614576fad53450cec520e227f48064ee2f1c7
+ko_hash: e7b0b46f0789240c6019befde7597801f5d0ea5b
 ---
-# Physical AI Playbook — AWS Korea SA
+# Physical AI Playbook 介绍
 
 _最终更新: 2026-07 · owner: comeddy · 状态: 初期构建中_
 
