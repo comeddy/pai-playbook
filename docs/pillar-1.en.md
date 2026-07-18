@@ -1,5 +1,5 @@
 ---
-ko_hash: 2ed0dd05cd64c82b55e907af90435f10141b200c
+ko_hash: 3b1f0299d8f425b9135281e2cddb769d85b4e8bb
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -28,6 +28,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "We can't afford to collect data from scratch and want to start with what's public. But can we use this in a commercial product?"
 
 **Solution overview** `[1]`:
+
 - **Open X-Embodiment (OXE)** — ~1M+ episodes, 22 embodiments, integrating ~60 datasets. The standard pretraining corpus for OpenVLA · RT-2-X · π0 · GR00T. ⚠️ **Licenses differ per component** (mostly CC-BY-4.0/Apache-2.0, some research-only) → for commercial use, a component-level legal audit is mandatory. `[1]` arxiv 2310.08864
 - **DROID** — 76,000 teleoperation trajectories, 350 hours, Franka. License **CC-BY-4.0** (commercial-friendly). The standard for the fine-tuning stage. `[1]` droid-dataset.github.io
 - **AgiBot World** — ~1,003,672 trajectories (~43.8TB), the largest scale. ⚠️ **License CC BY-NC-SA 4.0 = non-commercial**. Fine for research/benchmarks, but **commercial derivative weights cannot be distributed**. `[1]` arxiv 2503.06669
@@ -36,6 +37,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping**: S3 (data lake) + FSx for Lustre (high-speed channel without downloading during training) + SageMaker/HyperPod. Datasets are mirrored to S3 from the Hugging Face Hub or the source before use.
 
 **Decision criteria**:
+
 - Commercial-product goal → **centered on DROID / RoboMIND (confirm license)**, exclude AgiBot World, and filter OXE to commercially usable components only.
 - Research/PoC/internal benchmark → all usable (including AgiBot World).
 - If the target embodiment (your own robot) differs in form, use them only for pretraining and assume real-demo fine-tuning.
@@ -71,6 +73,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **AWS mapping**: run Isaac Sim on EC2 **G6e** (L40S) · **G7e** (RTX PRO 6000 Blackwell) GPU instances + parallelize large-scale offline data-generation jobs with **AWS Batch** + store in S3. Remote streaming via NICE DCV (→ see [pillar-3](pillar-3.md)).
 
 **Decision criteria**:
+
 - Perception tasks (detection/segmentation/pose estimation) → very high ROI for synthetic data (labels are free).
 - Manipulation policy → synthetic-only leaves a large domain gap. Always pair with real-demo fine-tuning + sim-to-real methodology (→ [pillar-4](pillar-4.md)).
 - Isaac Sim vs open source (Genesis/MuJoCo) choice → [decisions](decisions.md).
@@ -90,11 +93,13 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **Customer need/problem**: "We can't build simulator scenes one by one. We want to auto-generate diverse realistic scenarios."
 
 **Solution overview** `[1]/[3]`: Cosmos WFM provides synthetic world generation + vision reasoning + behavior simulation. **Cosmos 3** is the latest (released 2026-05-31, announced at GTC Taipei 2026-06). FieldAI · Skild AI · Generalist AI and others use it for data generation. `[1]` nvidianews.nvidia.com
+
 - ⚠️ **Hype boundary**: an "impressive generation demo" is different from "a policy trained on this data is in real deployment." The latter currently exists only in a handful of early-adopter cases → treat its real-world maturity as **Preview level**.
 
 **AWS mapping** `[3]`: a **self-hosted reference architecture** — the customer runs Cosmos NIM containers themselves on **Amazon EKS** (real time) or **AWS Batch** (large-scale offline synthetic data generation). What is GA is the AWS compute services (EKS/Batch/G7e), not a "Cosmos-on-AWS product." `[3]` aws.amazon.com/blogs/hpc/running-nvidia-cosmos-world-foundation-models-on-aws
 
 **Decision criteria**:
+
 - Perception/navigation data needing large-scale diversity → worth trying.
 - Making it the sole data source for precise manipulation policies → still risky. Position it as supplementary augmentation.
 
@@ -113,6 +118,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **Customer need/problem**: "Our source data (robot logs, cameras, ROS bags) is just piling up in S3. We want to make it flow into a trainable form."
 
 **Solution overview** `[1]`:
+
 - **Collection/storage**: S3 (source data lake, with tiering for cost management)
 - **Conversion/labeling**: AWS Glue/Batch (format conversion, quality filtering), and if needed SageMaker Ground Truth (labeling — though there is no public robot-specific case)
 - **Training channel**: mount FSx for Lustre as a SageMaker training channel → high-speed reads without downloading
@@ -121,6 +127,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **AWS mapping**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod. (all GA)
 
 **Decision criteria**:
+
 - Dataset < a few TB, simple access pattern → S3 direct streaming (HyperPod/LeRobot streaming) is enough; FSx can be skipped.
 - Repeated epochs, large scale, random-access bottleneck → adopt **FSx for Lustre**.
 - Large labeling volume needing human review → Ground Truth. But robot data is usually auto-labeled (simulation/teleoperation records), so the need is low.
@@ -140,6 +147,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **Customer need/problem**: "Our data is ROS 2 bags, but the VLA training code wants RLDS/LeRobot. How do we convert?"
 
 **Solution overview** `[1]`:
+
 - **LeRobotDataset v3.0** — bundles many episodes into a single Parquet, manages boundaries with MP4 video + metadata, Hub-native streaming. `lerobot >= 0.4.0`, latest **v0.6.0 (2026-07-06)**. NVIDIA is also redistributing datasets as LeRobot v3 (interchange standardization is progressing). `[1]` github.com/huggingface/lerobot
 - **RLDS** — consumed natively by OpenVLA · RT-2-X · π0 · GR00T. Still the VLA training standard.
 - ⚠️ **Gap**: the lerobot repo has **no native ROS 2 bag converter**. Large-scale rosbag2 → LeRobot/RLDS conversion is DIY.
@@ -147,6 +155,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **AWS mapping**: put a **custom rosbag2→LeRobot/RLDS converter on AWS Glue/Batch** as a container for large-scale parallel conversion + S3 storage. The HyperPod/training stage uses S3 streaming or FSx.
 
 **Decision criteria**:
+
 - Training framework is the LeRobot family → LeRobotDataset v3.
 - Official recipes for the OpenVLA/GR00T/π family → RLDS.
 - Source is ROS 2 bags → design the conversion job early in the pipeline (adding it later is costly).
@@ -166,6 +175,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **Customer need/problem**: "We want to collect and store, in real time, demos gathered by humans remotely operating a robot, and feed them into a training queue."
 
 **Solution overview** `[1]/[4]`:
+
 - Open HW: **ALOHA/Mobile ALOHA** (dual-arm low-cost teleoperation), **GELLO** (<$300 leader arm, MIT license) — widely replicated in labs but no commercial product SKU, **Research-only**. `[1]`
 - Practical: Figure · 1X · Physical Intelligence · Tesla operate VR-rig teleoperation farms (several hours a day). ⚠️ **Evidence is press/demo level, no public pipeline** `[4]`.
 - SA focus: teleoperation telemetry stream → S3 collection → auto-labeling (success/failure, task tags) → into a training dataset.
@@ -173,6 +183,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **AWS mapping**: IoT Core/Kinesis (stream ingestion) → S3 → Glue (refinement/labeling) → [item 5 format conversion] → training. (Edge connectivity is [pillar-4](pillar-4.md))
 
 **Decision criteria**:
+
 - Goal is a small batch of high-quality demos (fine-tuning) → high value in investing in teleoperation.
 - Goal is large-scale diversity (pretraining) → synthetic/open data is more cost-efficient. Limit teleoperation to the final fine-tuning stage.
 

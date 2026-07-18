@@ -1,5 +1,5 @@
 ---
-ko_hash: 9b4254a4567f566d9a7380f1098b5e2675dbfca0
+ko_hash: c679f188ada3164087904f8a4cd082ec324cf050
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -28,6 +28,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "想引入面向人形/机械臂的 VLA。哪个开放模型好，能商用在我们产品上吗？"
 
 **解决方案概览** `[1]`:
+
 - **NVIDIA Isaac GR00T** —— 开放人形基础模型。N1(2B)、N1.5(3B, flow-matching DiT action head)、N1.6(CES 2026, Cosmos Reason 2 骨干)、N1.7（GitHub 上声称 GA）。⚠️ **许可证注意**: N1.5 模型卡为**非商业（NVIDIA license, non-commercial）**。N1.6/N1.7 允许商用的说法**仅来自二手来源，未经验证** → 做商用判断前**务必直接查看实时模型卡**。`[1]` github.com/NVIDIA/Isaac-GR00T
 - **Physical Intelligence π (openpi)** —— π0、π0-FAST、π0.5 全部为 **Apache-2.0**（可商用）。提供 DROID/ALOHA/LIBERO 微调检查点。`[1]` github.com/Physical-Intelligence/openpi。⚠️ π0.7 仅存在于二手来源（未经验证）。
 - **OpenVLA** —— 7B、**MIT 许可证**（可商用），基于 Llama2 的 VLM 骨干。提供官方微调脚本。`[1]` github.com/openvla/openvla（LICENSE 文件 2026-07 直接确认）
@@ -35,6 +36,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射**: 将模型权重从 HF 镜像到 S3 → 在 EC2 GPU(P6/G7e) 或 SageMaker HyperPod 上微调（下方第 2·3 项）。可用 LeRobot（`groot` policy type）对 GR00T 做 post-train/eval。
 
 **决策标准**:
+
 - **发布商用产品** → 优先 π（Apache-2.0）或 OpenVLA（MIT）。GR00T 仅在确定许可证后使用。
 - **人形全身控制** → GR00T 最完整（SONIC controller、Cosmos Reason 骨干），但需确认许可证。
 - **研究·PoC** → 全部可用，按性能/embodiment 适配性选择。
@@ -68,6 +70,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "想按我们的任务调整 VLA，需要准备多少 GPU、需要多少数据？"
 
 **解决方案概览** `[1]`:
+
 - **OpenVLA**: LoRA(rank 32) ~24GB 单 GPU(A100/RTX 4090)。48GB→batch 12，80GB→batch 24。全量微调 ~100GB。官方 `vla-scripts/finetune.py`。
 - **openpi (π0/π0.5)**: 推理 >8GB，LoRA >22.5GB(RTX 4090)，**全量微调 >70GB(A100/H100)**。官方 LoRA/full 配方，2025-09 新增 PyTorch 支持。数据 1~20 小时即可满足多数任务。
 - **GR00T (N1.5/N1.7)**: 微调 40GB+ GPU（推荐 H100/L40），推理 16GB+。NVIDIA 官方 post-training 配方。
@@ -76,6 +79,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射**: LoRA 用 **EC2 G6e(L40S)·G7e(RTX PRO 6000)** 单/少数 GPU 即可。全量微调·多 embodiment 则用 **P6-B200 / HyperPod 多节点**（下方第 3 项）。
 
 **决策标准**:
+
 - 任务特化·数据少 → **LoRA + 单张 G7e**。最便宜·最快。大多从这里开始。
 - 多 embodiment·大规模·连骨干一起调 → **全量微调 + P6/HyperPod**。
 - 数据 <1 小时 → 优先考虑 few-shot/提示而非微调。
@@ -104,6 +108,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "需要能稳定跑微调/训练的基础设施。节点挂了要从头再来吗？"
 
 **解决方案概览** `[1]`:
+
 - **SageMaker HyperPod** —— 支持 Slurm + **EKS** + Training Jobs。**Checkpointless training**（故障时数分钟内自动恢复，无需人工介入）、**Elastic training**（按可用量·优先级自动伸缩，自动检查点/恢复）。**2026-04 新增 G7e + r5d.16xlarge 支持**。提供 HyperPod CLI/SDK。
 - **EC2 GPU 阶梯** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **P6e-GB200 UltraServers**(GB200 NVL72, 最多 72 Blackwell/NVLink 域, 用 Capacity Blocks 获取)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 已公布。⚠️ **没有用 Trainium 训练 VLA/机器人的公开案例** —— 整个 VLA 工具链都是 CUDA/NVIDIA。Trainium-for-VLA 未经验证。
@@ -111,12 +116,14 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射**: 上述服务本身即映射。GPU 获取策略（On-Demand vs Capacity Blocks vs Flexible Training Plans）→ [decisions](decisions.md)。
 
 **决策标准**:
+
 - 单/少数 GPU LoRA → 无需 HyperPod，直接用 EC2 G7e。
 - 多节点·长时间·需要容错 → **HyperPod(EKS)** + checkpointless。
 - 超大规模预训练 → P6e-GB200 UltraServers + Capacity Blocks。
 - 提议 Trainium 时 → 明示**当前对 LLM 场景安全，VLA 未经验证**并共享风险。
 
 **客户案例** `[1]`:
+
 - **在 Isaac Lab + SageMaker(HyperPod) 上训练 Unitree H1 人形 RL** —— AWS 官方博客(2026-06-09)。演示了 19 关节 velocity tracking、PPO(skrl)、HyperPod 健康监控·自动替换·检查点恢复。⚠️ **是 RL locomotion 而非 VLA 微调** —— 仅作为参考架构引用。
 - **Zoox** —— 用 HyperPod 训练多模态 AV 基础模型，64+ GPU 达 95% 利用率。⚠️ AV。
 
@@ -133,6 +140,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "实时控制场景下，大模型怎么跑？云延迟不成问题吗？"
 
 **解决方案概览** `[1]/[4]`:
+
 - **Figure Helix**: System 2 = 板载互联网预训练 VLM @ 7~9Hz（场景/语言），System 1 = 反应式 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 延迟，System 2 = LLM 规划器（任务分解）。
 - **通用模式**: 重型 VLM 以 5~10Hz 重新规划，轻量 flow-matching/diffusion "action expert" 以最新计划为条件，以 50~200Hz 发出动作。用 **action chunking**（GR00T=40 timestep horizon）预测未来动作块。
@@ -157,6 +165,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "用 Gemini Robotics 不就行了吗？它和 AWS 怎么关联？"
 
 **解决方案概览** `[1]`:
+
 - **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) —— 智能体式 embodied reasoning: 任务分解、工具调用（含 Search）、VLA 调用、模拟仪表读数。**是推理/VLM 层而非低层控制**。谷歌官方文档明示 "currently in preview" `[1]`。
 - **Gemini Robotics On-Device** (2025-06) —— 首个可本地部署的 VLA，支持微调（50~100 个演示）。**waitlist/trusted-tester(Preview)**。
 - **Gemini Robotics 1.5 VLA** —— 仅限合作伙伴。
@@ -164,6 +173,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射（竞品栈 → AWS 补充）**: Gemini Robotics-ER 承担 **规划器（System 2）角色** —— 即使客户使用它，**机器人机群编排·工具网关·策略护栏也可以用 Bedrock AgentCore 包裹**（→ [pillar-5](pillar-5.md)）。低层控制 VLA 则提议在 AWS 上微调开放模型（π/OpenVLA/GR00T）作为替代。
 
 **决策标准**:
+
 - 需要快速的高层推理且能接受谷歌生态·预览风险 → 可尝试 ER 1.6 API（但为 Preview —— 禁止生产承诺）。
 - 商用·本地部署·数据主权·低层控制定制 → **在 AWS 上微调开放 VLA** 更灵活。
 

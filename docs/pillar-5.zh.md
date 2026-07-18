@@ -1,5 +1,5 @@
 ---
-ko_hash: 80b7b2fd7ad0574df30285a2af0e3ae1450c3213
+ko_hash: 779a55a5c99476b47ed3dc18d8147d61dffe277b
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -28,6 +28,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "想把智能体从 PoC 推进到生产。不想每次都自己搭建会话管理、工具连接、权限·安全、可观测性。"
 
 **解决方案概览** `[1]`:
+
 - **GA 历程**: 预览 2025-07 → **GA 2025-10-13**。组件: **Runtime、Memory、Gateway、Identity、Observability、Built-in Tools（Browser·Code Interpreter）**。re:Invent 2025-12 新增 Policy·Evaluations 预览、episodic Memory GA、面向语音的双向流式 Runtime GA。**Policy 于 2026-03-03 GA**。
 - **Policy（核心）**: 与 Gateway 整合，**实时拦截所有 智能体→工具 调用**，以 ms 级评估策略(allow/deny)。用自然语言编写 → 编译为 **Cedar**（AWS 开源策略语言）。**含首尔在内 13 个区域 GA**。→ 约束物理系统工具调用的直接原语（第 5 项安全）。
 - **Strands Agents SDK**（配套）: 模型·云中立的编排 SDK，**已达 1.0（GA 级）**。Amazon Q Developer·Glue 内部使用。与 AgentCore 配对。（版本·指标见折叠块）
@@ -36,6 +37,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射**: 服务本身即映射。将机器人技能作为工具注册到 Gateway → 智能体以自然语言计划调用，用 Policy 门控，用 Memory 维持会话，用 Observability 追踪。
 
 **决策标准**:
+
 - 生产智能体（需要会话·工具·权限·可观测性）→ **AgentCore Runtime + Gateway + Policy**。
 - 简单一次性推理 → 直接调用 Bedrock 即够，AgentCore 过重。
 - 多智能体·A2A → Strands 1.0。
@@ -112,6 +114,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "怎么从中央协调·监控数百~数千台机器人？"
 
 **解决方案概览** `[1]/[3]`:
+
 - **Amazon DeepFleet** 🟢 —— Amazon 仓库机器人机群协调的生成式基础模型（"交通管制"），移动时间效率提升 ~10%，与第 100 万台机器人一同公布(2025-07)。**生产（Amazon 内部）**。⚠️ **不是 LLM 智能体编排器** —— 是多机器人 RL 意义上的"多智能体"。禁止错误归类。
 - **NVIDIA Isaac OSMO** 🟢 —— 机器人**开发/数据/训练工作负载**编排（合成数据·训练·RL·SIL）。GTC 2026 整合编码智能体(Claude Code/Codex/Cursor)。⚠️ **不是现场机器人机群的实时控制** —— 是开发管道编排。
 - **Formant** 🟡 —— 机群管理 SaaS。在数百个组织中运行但规模较小（具体指标以 `[3]` PitchBook/Crunchbase 为准 —— 644 个组织·<$5M ARR, 2026-05, 变动频繁），未被收购。
@@ -136,6 +139,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "智能体判断错误导致机器人做出危险行为怎么办？怎么阻止？"
 
 **解决方案概览** `[1]/[4]`:
+
 - **智能体层（AWS 原生）**: **AgentCore Policy** —— 用 Cedar 实时 allow/deny 所有 智能体→工具 调用(ms)。约束物理动作工具调用的实用层。**Bedrock Guardrails** —— 过滤 LLM 输入输出（内容·主题·PII）（本身不是执行动作）。
 - **机器人层（功能安全）**: **ISO 10218-1/2**（机器人·集成系统）、**ISO/TS 15066**（协作机器人）、**ISO 13482**（个人辅助机器人）。⚠️ 这些**只涉及物理安全** —— 不覆盖 LLM 语义滥用/幻觉。
 - **研究**: RoboGuard（安全规则 grounding）、BadRobot（嵌入式 LLM 越狱攻击）、LLM 语义 DoS —— 🔵 研究阶段。标准无法连接功能安全(ISO) 与 LLM 风险的**开放 gap**。

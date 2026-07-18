@@ -1,5 +1,5 @@
 ---
-ko_hash: 2ed0dd05cd64c82b55e907af90435f10141b200c
+ko_hash: 3b1f0299d8f425b9135281e2cddb769d85b4e8bb
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -28,6 +28,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "没有从零收集数据的余力，想用公开的先起步。但这个用在商用产品上可以吗？"
 
 **解决方案概览** `[1]`:
+
 - **Open X-Embodiment (OXE)** —— ~1M+ 回合(episode)、22 个 embodiment、整合了 60 余个数据集。OpenVLA·RT-2-X·π0·GR00T 的标准预训练语料库。⚠️ **许可证按组件不同**（多为 CC-BY-4.0/Apache-2.0，部分为 research-only）→ 商用则必须按组件进行法务审计。`[1]` arxiv 2310.08864
 - **DROID** —— 76,000 条遥操作轨迹、350 小时、Franka。许可证 **CC-BY-4.0**（对商业友好）。微调阶段的标准。`[1]` droid-dataset.github.io
 - **AgiBot World** —— ~1,003,672 条轨迹（~43.8TB），规模最大。⚠️ **许可证 CC BY-NC-SA 4.0 = 非商业**。研究·基准测试可以，但**不可分发商用衍生权重**。`[1]` arxiv 2503.06669
@@ -36,6 +37,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射**: S3（数据湖）+ FSx for Lustre（训练时无需下载的高速通道）+ SageMaker/HyperPod。数据集从 Hugging Face Hub 或原始来源镜像到 S3 后使用。
 
 **决策标准**:
+
 - 目标为商用产品 → **以 DROID / RoboMIND（确认许可证）为主**，排除 AgiBot World，OXE 仅筛选可商用的组件。
 - 研究·PoC·内部基准测试 → 可全部使用（含 AgiBot World）。
 - 若与特定 embodiment（自家机器人）形态不同，则仅用于预训练，前提是用真实演示微调。
@@ -71,6 +73,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **AWS 映射**: 在 EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 实例上运行 Isaac Sim + 用 **AWS Batch** 并行化大规模离线数据生成作业 + 存入 S3。用 NICE DCV 进行远程流传输（→ 参见 [pillar-3](pillar-3.md)）。
 
 **决策标准**:
+
 - 感知任务（检测·分割·姿态估计）→ 合成数据 ROI 极高（标注免费）。
 - 操作策略(manipulation policy) → 仅靠合成域间差异大。务必并行真实演示微调 + sim-to-real 方法论（→ [pillar-4](pillar-4.md)）。
 - Isaac Sim vs 开源（Genesis/MuJoCo）的选择 → [decisions](decisions.md)。
@@ -90,11 +93,13 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **客户需求/问题**: "无法逐一制作仿真器场景。想自动生成多样的现实场景。"
 
 **解决方案概览** `[1]/[3]`: Cosmos WFM 提供合成世界生成 + 视觉推理 + 行为仿真。**Cosmos 3** 为最新（2026-05-31 发布，GTC Taipei 2026-06 公布）。FieldAI·Skild AI·Generalist AI 等用于数据生成。`[1]` nvidianews.nvidia.com
+
 - ⚠️ **Hype 警戒**: "令人印象深刻的生成演示"与"用该数据训练的策略已实际部署"是两回事。后者目前仅有少数早期采用者案例 → 实战成熟度**按 Preview 级别对待**。
 
 **AWS 映射** `[3]`: **自托管参考架构** —— 客户自行在 **Amazon EKS**（实时）或 **AWS Batch**（大规模离线合成数据生成）上运行 Cosmos NIM 容器。GA 的是 AWS 算力服务（EKS/Batch/G7e），而非"Cosmos-on-AWS 产品"。`[3]` aws.amazon.com/blogs/hpc/running-nvidia-cosmos-world-foundation-models-on-aws
 
 **决策标准**:
+
 - 需要大量多样性的感知·导航数据 → 值得尝试。
 - 将其作为精密操作策略的唯一数据源 → 仍有风险。定位为辅助增强。
 
@@ -113,6 +118,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **客户需求/问题**: "我们收集的原始数据（机器人日志、相机、ROS bag）只是堆在 S3 里。想让它流动成可训练的形态。"
 
 **解决方案概览** `[1]`:
+
 - **采集/存储**: S3（原始数据湖，用分层管理成本）
 - **转换/标注**: AWS Glue/Batch（格式转换·质量过滤），必要时 SageMaker Ground Truth（标注 —— 但无机器人专用公开案例）
 - **训练通道**: 将 FSx for Lustre 挂载为 SageMaker 训练通道 → 无需下载即可高速 read
@@ -121,6 +127,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **AWS 映射**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod。（全部 GA）
 
 **决策标准**:
+
 - 数据集 < 数 TB、访问模式简单 → S3 直接流式（HyperPod/LeRobot streaming）即够，可省略 FSx。
 - 反复 epoch·大规模·随机访问瓶颈 → 引入 **FSx for Lustre**。
 - 标注量大且需人工检查 → Ground Truth。但机器人数据大多为自动标注（仿真/遥操作记录），必要性低。
@@ -140,6 +147,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **客户需求/问题**: "我们的数据是 ROS 2 bag，但 VLA 训练代码要 RLDS/LeRobot。怎么转换？"
 
 **解决方案概览** `[1]`:
+
 - **LeRobotDataset v3.0** —— 将多个回合打包进单个 Parquet，用 MP4 视频 + 元数据管理边界，Hub 原生流式。`lerobot >= 0.4.0`，最新为 **v0.6.0（2026-07-06）**。NVIDIA 也正将数据集以 LeRobot v3 重新分发（互换标准化推进中）。`[1]` github.com/huggingface/lerobot
 - **RLDS** —— OpenVLA·RT-2-X·π0·GR00T 原生消费。仍是 VLA 训练标准。
 - ⚠️ **缺口**: lerobot 仓库中**没有原生 ROS 2 bag 转换器**。rosbag2 → LeRobot/RLDS 的大规模转换要 DIY。
@@ -147,6 +155,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **AWS 映射**: 将**定制的 rosbag2→LeRobot/RLDS 转换器**以容器形式放到 **AWS Glue/Batch** 上做大规模并行转换 + 存入 S3。HyperPod/训练阶段用 S3 流式或 FSx。
 
 **决策标准**:
+
 - 训练框架为 LeRobot 系 → LeRobotDataset v3。
 - OpenVLA/GR00T/π 系官方配方 → RLDS。
 - 源头为 ROS 2 bag → 在管道初期就设计转换作业（事后追加成本大）。
@@ -166,6 +175,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **客户需求/问题**: "想把人远程操控机器人收集的演示实时采集·存储并送入训练队列。"
 
 **解决方案概览** `[1]/[4]`:
+
 - 开放 HW: **ALOHA/Mobile ALOHA**（双臂低价遥操作）、**GELLO**（<$300 主导臂，MIT 许可证）—— 在实验室被广泛复制但无商用产品 SKU，**Research-only**。`[1]`
 - 实战: Figure·1X·Physical Intelligence·Tesla 运营 VR 装置遥操作场（每天数小时）。⚠️ **证据仅为媒体·演示级别，无公开管道** `[4]`。
 - SA 焦点: 遥操作遥测流 → S3 采集 → 自动标注（成功/失败、任务标签）→ 制作成训练数据集。
@@ -173,6 +183,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **AWS 映射**: IoT Core/Kinesis（流采集）→ S3 → Glue（净化·标注）→ [第 5 项格式转换] → 训练。（边缘连接见 [pillar-4](pillar-4.md)）
 
 **决策标准**:
+
 - 目标为少量·高质量演示（微调）→ 遥操作投资价值高。
 - 目标为大量多样性（预训练）→ 合成/开放数据更具成本效益。遥操作仅限用于最后的微调。
 

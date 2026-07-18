@@ -1,5 +1,5 @@
 ---
-ko_hash: 1f6a5eb7c094472b0c0651bd62b897fd8e2952fe
+ko_hash: bf3dbec91ebf5416ed0579ee049bd62bb700c305
 ---
 # Pillar 3 — Simulation
 
@@ -28,16 +28,19 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "A local workstation GPU isn't enough. I want to use Isaac Sim in the cloud with a GUI, and run training headless at large scale."
 
 **Solution overview** `[1]`:
+
 - **Versions**: latest Isaac Sim **GA = 5.1.0 (2025-10-30)**. **6.0 is Preview** ("Early Developer Release," GTC'26) — even if the GitHub patch tag is mislabeled "GA," **do not call 6.0 GA**. Isaac Lab stable is 2.3.x; 3.0 is beta (introduces the Newton physics engine).
 - **License**: Isaac Sim **source is Apache 2.0** (free for commercial). But redistributing/offering-as-SaaS/turnkey-installing the **Omniverse Kit runtime** to third parties requires an **NVIDIA AI Enterprise license**. Not needed for internal R&D or selling only the output. Isaac Lab is BSD-3.
 - **GPU requirement**: **RTX (RT Core) required**. Minimum RTX 4080 (16GB), ideal RTX PRO 6000 Blackwell (48GB). **A100/H100 not supported** (no RT Core).
 
 **AWS mapping** `[1]`:
+
 - **Instances**: G6e (L40S 48GB) / **G7e (RTX PRO 6000 Blackwell 96GB, GA 2026-01)**. The official **Isaac Sim Development Workstation AMI** (build 2026.1.1, Ubuntu 24.04, free) supports G6e/G7e, with `g6e.4xlarge` recommended.
 - **Access**: remote GUI streaming via NICE DCV (= Amazon DCV) client/web.
 - **Reference architecture**: the **AWS Solutions Guidance "Physical AI for Robotics on AWS"** (Isaac Sim on GPU EC2 + Isaac Lab + SageMaker + IoT Greengrass edge). AWS has a **dedicated Physical AI blog channel** (aws.amazon.com/blogs/physical-ai/).
 
 **Decision criteria**:
+
 - GUI scene editing · SDG → G6e (cost) or G7e (performance, large scenes).
 - Large-scale headless RL → item 2 (AWS Batch).
 - Whether open source suffices → item 3 / [decisions](decisions.md).
@@ -68,6 +71,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "Training a single policy takes days. I want to mass-parallelize environments and scale across multiple nodes."
 
 **Solution overview** `[1]/[3]`:
+
 - Isaac Lab **simulates thousands~8,000 environments at once on a single GPU** and scales near-linearly across multiple nodes (concrete numbers in the collapsed block below — always cite with measurement conditions).
 - **AWS Batch Multi-Node Parallel Jobs** is the AWS-recommended orchestrator (also the RoboMaker migration path). The AWS HPC/Physical AI blog has an Isaac Lab on G6e + Batch MNP + EFS + ECR reference.
 
@@ -86,6 +90,7 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 **AWS mapping** `[1]`: **AWS Batch (MNP)** + EFS (shared storage) + ECR (containers) + G6e/G5. On the NVIDIA side, OSMO handles multi-node orchestration. ⚠️ **There is no official Isaac reference architecture for EKS · ParallelCluster** — Batch is the documented path.
 
 **Decision criteria**:
+
 - Single GPU with thousands of environments is enough (most locomotion) → single EC2 instance.
 - Multi-node needed (ultra-large, pixel observations) → **AWS Batch MNP**.
 - Want to integrate the training loop with SageMaker → the Isaac Lab on SageMaker blog in [pillar-2](pillar-2.md).
@@ -105,6 +110,7 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 **Customer need/problem**: "NVIDIA lock-in is a burden" / "ROS integration comes first" / "I need differentiable physics."
 
 **Solution overview** `[1]`:
+
 - **MuJoCo / MJX** — the C engine is GA (v3.10), **MJX-JAX** is a mature RL workhorse (differentiable, cross-vendor), and **MuJoCo Warp is Alpha** (not production). **Unitree maintains its own MuJoCo repo for Go2/G1/H1 RL = real vendor adoption**. MuJoCo Playground is RSS 2025 validated, sim-to-real on 6 platforms.
 - **Gazebo** — latest LTS **Jetty** (2025-09), **Harmonic** is the most widely deployed. ROS 2 native. ⚠️ **Gazebo Classic 11 is EOL as of 2025-01** — no Classic for new projects. CPU-based, so unsuited for GPU parallel RL (an Isaac complement).
 - **Genesis** — Apache 2.0, active, but the **"43M FPS / 430,000×" claim is refuted on realistic workloads** (actually 3~10× slower than ManiSkill on contact-rich manipulation). Not validated as an Isaac replacement → **⚪ hype caution**.
@@ -112,6 +118,7 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 **AWS mapping**: all runnable on EC2. MuJoCo/MJX (JAX) can **also use A100/H100 (P4/P5)** (no RTX rendering needed) — unlike Isaac, being able to use compute GPUs is an advantage. Large scale via AWS Batch.
 
 **Decision criteria** (details → [decisions](decisions.md)):
+
 - Photoreal rendering · SDG · full stack → **Isaac Sim**.
 - Differentiable · lightweight · cross-vendor GPU · fast RL iteration → **MuJoCo/MJX**.
 - ROS 2 integration · CPU · traditional robotics → **Gazebo**.
@@ -152,6 +159,7 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 **Customer need/problem**: "We want to build a digital twin of our equipment/factory and connect it to robot simulation and monitoring."
 
 **Solution overview** `[1]`:
+
 - **AWS IoT TwinMaker** — GA, official product page active, no discontinuation banner (confirmed 2026-07-11). ⚠️ The "discontinued" claim from innfactory.de/oneuptime.com etc. is an **unverified rumor**; do not repeat. But with no major new features in 2025~26, it is **low velocity**.
 - **NVIDIA Omniverse on AWS** — Marketplace AMI (Developer/Production, Linux/Windows). Runs on **EC2 G6e/G7e**. The Production AMI is a paid subscription bundling an AI Enterprise license + support. ⚠️ **There is no dedicated "OVX" instance family** — Omniverse on AWS = G6e/G7e + AMI. There is no clear basis for a managed "Omniverse Enterprise on AWS."
 

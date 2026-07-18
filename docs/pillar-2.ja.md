@@ -1,5 +1,5 @@
 ---
-ko_hash: 9b4254a4567f566d9a7380f1098b5e2675dbfca0
+ko_hash: c679f188ada3164087904f8a4cd082ec324cf050
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -29,6 +29,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **顧客ニーズ/課題**: 「ヒューマノイド/マニピュレーター向けの VLA を導入したい。どのオープンモデルが良く、当社の製品に商用で使えるか？」
 
 **ソリューション概要** `[1]`:
+
 - **NVIDIA Isaac GR00T** —— オープンなヒューマノイド基盤モデル。N1(2B)、N1.5(3B, flow-matching DiT action head)、N1.6(CES 2026, Cosmos Reason 2 バックボーン)、N1.7（GitHub 上で GA と主張）。⚠️ **ライセンス注意**: N1.5 モデルカードは **非商用（NVIDIA license, non-commercial）**。N1.6/N1.7 が商用許可だという主張は **2次出典のみで未検証** → 商用判断の前に **ライブモデルカードを直接確認することが必須**。`[1]` github.com/NVIDIA/Isaac-GR00T
 - **Physical Intelligence π (openpi)** —— π0、π0-FAST、π0.5 すべて **Apache-2.0**（商用可）。DROID/ALOHA/LIBERO ファインチューニングチェックポイントを提供。`[1]` github.com/Physical-Intelligence/openpi。⚠️ π0.7 は2次出典のみ存在（未検証）。
 - **OpenVLA** —— 7B、**MIT ライセンス**（商用可）、Llama2 ベースの VLM バックボーン。公式ファインチューニングスクリプトを提供。`[1]` github.com/openvla/openvla（LICENSE ファイルを 2026-07 に直接確認）
@@ -36,6 +37,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **AWS マッピング**: モデル重みを HF から S3 へミラーリング → EC2 GPU(P6/G7e) または SageMaker HyperPod でファインチューニング（下記 2・3 番）。LeRobot（`groot` policy type）で GR00T の post-train/eval が可能。
 
 **意思決定基準**:
+
 - **商用製品リリース** → π（Apache-2.0）または OpenVLA（MIT）を優先。GR00T はライセンス確定後のみ。
 - **ヒューマノイド全身制御** → GR00T が最も完成型（SONIC controller、Cosmos Reason バックボーン）、ただしライセンス確認。
 - **研究・PoC** → すべて使用可能、性能/embodiment 適合性で選択。
@@ -69,6 +71,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **顧客ニーズ/課題**: 「当社のタスクに合わせて VLA を調整したいが、GPU をどれだけ確保すべきで、データはどれだけ必要か？」
 
 **ソリューション概要** `[1]`:
+
 - **OpenVLA**: LoRA(rank 32) ~24GB 単一 GPU(A100/RTX 4090)。48GB→batch 12、80GB→batch 24。フルファインチューニング ~100GB。公式 `vla-scripts/finetune.py`。
 - **openpi (π0/π0.5)**: 推論 >8GB、LoRA >22.5GB(RTX 4090)、**フルファインチューニング >70GB(A100/H100)**。公式 LoRA/full レシピ、2025-09 に PyTorch サポート追加。データ 1~20 時間あれば多数のタスクに十分。
 - **GR00T (N1.5/N1.7)**: ファインチューニング 40GB+ GPU（H100/L40 推奨）、推論 16GB+。NVIDIA 公式 post-training レシピ。
@@ -77,6 +80,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **AWS マッピング**: LoRA なら **EC2 G6e(L40S)・G7e(RTX PRO 6000)** 単一/少数 GPU で十分。フルファインチューニング・マルチ embodiment なら **P6-B200 / HyperPod マルチノード**（下記 3 番）。
 
 **意思決定基準**:
+
 - タスク特化・データ少量 → **LoRA + 単一 G7e**。最も安価・高速。多くはここから始める。
 - 多 embodiment・大規模・バックボーンまで調整 → **フルファインチューニング + P6/HyperPod**。
 - データ <1 時間 → ファインチューニングより few-shot/プロンプトを優先検討。
@@ -105,6 +109,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **顧客ニーズ/課題**: 「ファインチューニング/学習を安定して回すインフラが必要だ。ノードが死んだら最初からやり直しか？」
 
 **ソリューション概要** `[1]`:
+
 - **SageMaker HyperPod** —— Slurm + **EKS** + Training Jobs をサポート。**Checkpointless training**（障害時に数分内で自動復旧、手動介入なし）、**Elastic training**（可用量・優先度に応じて自動スケール、自動チェックポイント/再開）。**2026-04 に G7e + r5d.16xlarge サポート追加**。HyperPod CLI/SDK を提供。
 - **EC2 GPU の梯子** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **P6e-GB200 UltraServers**(GB200 NVL72, 最大 72 Blackwell/NVLink ドメイン, Capacity Blocks で確保)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 発表。⚠️ **Trainium で VLA/ロボティクスを学習した公開事例なし** —— VLA ツールチェーン全体が CUDA/NVIDIA。Trainium-for-VLA は未検証。
@@ -112,12 +117,14 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **AWS マッピング**: 上記サービス自体がマッピング。GPU 確保戦略（On-Demand vs Capacity Blocks vs Flexible Training Plans）は → [decisions](decisions.md)。
 
 **意思決定基準**:
+
 - 単一/少数 GPU LoRA → HyperPod なしで EC2 G7e を直接。
 - マルチノード・長時間・耐障害性が必要 → **HyperPod(EKS)** + checkpointless。
 - 超大規模事前学習 → P6e-GB200 UltraServers + Capacity Blocks。
 - Trainium 提案時 → **現在は LLM 対象には安全、VLA は未検証**と明示しリスクを共有。
 
 **顧客事例** `[1]`:
+
 - **Unitree H1 ヒューマノイド RL を Isaac Lab + SageMaker(HyperPod) で学習** —— AWS 公式ブログ(2026-06-09)。19 関節 velocity tracking、PPO(skrl)、HyperPod ヘルスモニタリング・自動交換・チェックポイント再開をデモ。⚠️ **RL locomotion であって VLA ファインチューニングではない** —— リファレンスアーキテクチャとしてのみ引用。
 - **Zoox** —— HyperPod でマルチモーダル AV 基盤モデル、64+ GPU で 95% 稼働率。⚠️ AV。
 
@@ -134,6 +141,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **顧客ニーズ/課題**: 「リアルタイム制御なのに大きなモデルをどう回す？クラウド遅延が問題では？」
 
 **ソリューション概要** `[1]/[4]`:
+
 - **Figure Helix**: System 2 = オンボードのインターネット事前学習 VLM @ 7~9Hz（シーン/言語）、System 1 = 反応型 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 遅延、System 2 = LLM プランナー（タスク分解）。
 - **一般パターン**: 重量級 VLM が 5~10Hz で再計画し、軽量な flow-matching/diffusion "action expert" が最新の計画を条件として 50~200Hz でアクションを放出。**action chunking**（GR00T=40 timestep horizon）で未来のアクションチャンクを予測。
@@ -158,6 +166,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **顧客ニーズ/課題**: 「Gemini Robotics を使えばいいのでは？AWS とどう関係する？」
 
 **ソリューション概要** `[1]`:
+
 - **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) —— エージェンティックな embodied reasoning: タスク分解、ツールコール（Search 含む）、VLA 呼び出し、アナログゲージ読み取り。**推論/VLM レイヤーであって低レベル制御ではない**。Google 公式ドキュメントが "currently in preview" と明示 `[1]`。
 - **Gemini Robotics On-Device** (2025-06) —— ローカルデプロイ可能な最初の VLA、ファインチューニング対応（50~100 デモ）。**waitlist/trusted-tester(Preview)**。
 - **Gemini Robotics 1.5 VLA** —— パートナー限定。
@@ -165,6 +174,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 **AWS マッピング（競合スタック → AWS 補完）**: Gemini Robotics-ER は **プランナー（System 2）の役割** —— 顧客がこれを使うとしても、**ロボットフリートのオーケストレーション・ツールゲートウェイ・ポリシーガードレールは Bedrock AgentCore で包める**（→ [pillar-5](pillar-5.md)）。低レベル制御 VLA はオープンモデル（π/OpenVLA/GR00T）を AWS でファインチューニングする代替を提示。
 
 **意思決定基準**:
+
 - 速い高レベル推論が必要で Google エコシステム・プレビューリスクを受容可能 → ER 1.6 API を試せる（ただし Preview —— 本番コミット禁止）。
 - 商用・オンプレ・データ主権・低レベル制御のカスタマイズ → **オープン VLA を AWS でファインチューニング** の方が柔軟。
 

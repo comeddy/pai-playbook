@@ -1,5 +1,5 @@
 ---
-ko_hash: 09f7fe157cefdbb21f6cd9c1d5f74d6723a1f04a
+ko_hash: 019ab4e07f9951add4f0595235c018424018dc26
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -28,6 +28,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "训练在云上做了，怎么部署到机器人并用 OTA 管理？实时场景下云端往返不是不行吗？"
 
 **解决方案概览** `[1]/[3]`:
+
 - **边缘 HW**: **Jetson Thor(Blackwell) GA**，T5000 生产模块已流通。Jetson Orin 系列仍在生产（低功耗）。规格·价格见下方折叠块。
 - **部署/管理**: **AWS IoT Greengrass V2**(GA) —— Lambda/Docker/自定义组件、ML 推理组件、MQTT 遥测。⚠️ **Greengrass V1 于 2026-06-01 支持终止** —— 只有 V2 是现行的。
 - **模型路径**: PyTorch 策略 → **ONNX** → 编译 **TensorRT** 引擎（端侧加速）以满足实时控制的延迟预算（sub-20~30ms 级）是标准路径。SageMaker Neo（边缘编译）仍在，可与 Greengrass 组合。
@@ -46,6 +47,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射**: IoT Greengrass V2 + IoT Core(MQTT) + SageMaker Neo（编译）+ S3（模型工件）+ IoT Jobs(OTA)。用 Model Monitor 采集边缘遥测。
 
 **决策标准**（详情 → [decisions Cloud vs Edge](decisions.md)）:
+
 - **30~100Hz+ 反应式控制**（平衡·力·抓取·行走）→ **必须板载 Jetson**。不能云端往返。
 - **sub-1Hz~few-Hz 高层规划·VLA 推理** → 可放云/异步。**action chunking** 是连接两种 rate 的桥梁。
 - 想要托管的边缘服务 → 诚实说明没有，并提供 ONNX+Greengrass V2 设计。
@@ -65,6 +67,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "sim-to-real 不就是营销吗？真的有拿钱干活的机器人吗？"
 
 **解决方案概览** `[1]/[3]`:
+
 - **ANYmal (ANYbotics)** 🟢 —— 用大规模并行仿真 RL 训练的行走，**数百台部署于全球工业巡检（石油·天然气·矿山·化工）**。ETH RL-walking 谱系（peer-reviewed）。**生产 + 证据**。
 - **Agility Digit @ GXO** 🟢 —— **在多年 RaaS 合同下付费商业作业**，截至 2025-11 **移动 10 万+ 料箱**、约 1 年连续全职、6.5 万+ 运行小时。**验证最充分的付费人形作业**（客户 GXO 交叉确认）。但仅限狭窄的结构化料箱搬运任务。
 - ⚠️ **Boston Dynamics Spot 产品搭载 MPC（经典控制）—— 不是 RL**。Spot 的 RL 行走(5.2m/s) 只存在于研究套件(BD+NVIDIA+RAI)。**这是本行业最常搞错的事实** —— 不要说反了。
@@ -99,6 +102,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "实际上怎么缩小 sim-to-real gap？哪些技法在生产中管用？"
 
 **解决方案概览** `[1]/[3]`:
+
 - **选择性域随机化(DR)** 🟢 —— locomotion 标准。但**过度随机化会导致训练不稳定** → 要选择性地做。
 - **系统辨识(SysID) + 选择性 DR** 🟢 —— 对核心动力学参数做实测校准后再做选择性 DR。当前最佳实践。
 - **RL over MPC 混合** 🟢 —— 不是纯 end-to-end RL，而是经典 MPC 基础 + 学习策略来增强鲁棒性。**Boston Dynamics 也用这种混合 = 最接近实际部署**。
@@ -123,6 +127,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "我们需要装配/抓取这样的操作。用仿真训练能行吗？"
 
 **解决方案概览** `[1]`:
+
 - **为什么落后**: 操作的**接触动力学不匹配**很大，报告的 sim-to-real 性能下降 ~24~30%，仅光照/相机姿态变化就使成功率下降 30~50%。
 - **核心洞察 —— VLA 依赖真实数据**: **OpenVLA**(7B) 用约 97 万个**真实机体**演示(Open X-Embodiment)训练。**π0/π0.5**、**RT-2**、**Gemini Robotics** 全部以大规模**真实机器人数据**为中心，仿真作为评估/适配的辅助。Gemini Robotics 在 SDK 中捆绑 MuJoCo 用于评估。
 - **成熟度**: 精密·多指接触操作、开放世界 VLA 家务(π0.5) → **令人印象深刻的演示/trusted-tester Preview**。**截至 2026-07，没有把接触丰富操作验证为 GA 生产的通用 VLA**。
@@ -130,6 +135,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **AWS 映射**: 真实数据管道是关键 → [pillar-1](pillar-1.md)。仿真为评估辅助（第 5 项）。
 
 **决策标准**:
+
 - 狭窄结构化抓取·搬运 → 可行（Digit 级）。
 - 通用·精密·接触丰富操作 → **目前未解决**，前提是大量收集真实数据 + 管理预期。
 - "仅靠仿真做操作策略" → 有风险，必须用真实演示微调。
@@ -149,6 +155,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **客户需求/问题**: "上真机之前，怎么确信策略真的可行？"
 
 **解决方案概览** `[1]`:
+
 - **sim 评估套件**: SimplerEnv、LIBERO、Meta-World 等存在但暴露局限。2026-06 审计: 无语言编码器的 90M 探针在 LIBERO 3/4 上匹配 SOTA（shortcut），报告的"进步"仅 ~20% 有统计支撑，CALVIN 仅重采样布置姿态就下降 25%。**sim↔real 相关性低**。
 - **真实世界评估**: **RoboArena** —— 分布式双盲 A/B（只给策略 IP 并隐藏其身份），7 机构 4,284 回合，Bradley-Terry/Elo。是研究框架但指明了方向。
 - **新方向**: real-to-sim（Gaussian Splatting/世界模型场景重建）+ 分布式真实 A/B。单一 sim 套件 = 不是可信门禁。

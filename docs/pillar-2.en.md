@@ -1,5 +1,5 @@
 ---
-ko_hash: 9b4254a4567f566d9a7380f1098b5e2675dbfca0
+ko_hash: c679f188ada3164087904f8a4cd082ec324cf050
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -28,6 +28,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "We want to adopt a VLA for humanoids/manipulators. Which open models are good, and can we use them commercially in our product?"
 
 **Solution overview** `[1]`:
+
 - **NVIDIA Isaac GR00T** — open humanoid foundation model. N1 (2B), N1.5 (3B, flow-matching DiT action head), N1.6 (CES 2026, Cosmos Reason 2 backbone), N1.7 (claimed GA on GitHub). ⚠️ **License caution**: the N1.5 model card is **non-commercial (NVIDIA license, non-commercial)**. The claim that N1.6/N1.7 permit commercial use is **secondary-source only and unverified** → before any commercial judgment, **check the live model card directly**. `[1]` github.com/NVIDIA/Isaac-GR00T
 - **Physical Intelligence π (openpi)** — π0, π0-FAST, π0.5 are all **Apache-2.0** (commercial OK). Provides DROID/ALOHA/LIBERO fine-tuning checkpoints. `[1]` github.com/Physical-Intelligence/openpi. ⚠️ π0.7 exists in secondary sources only (unverified).
 - **OpenVLA** — 7B, **MIT license** (commercial OK), Llama2-based VLM backbone. Provides official fine-tuning scripts. `[1]` github.com/openvla/openvla (LICENSE file checked directly 2026-07)
@@ -35,6 +36,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping**: mirror the model weights from HF to S3 → fine-tune on EC2 GPU (P6/G7e) or SageMaker HyperPod (items 2 · 3 below). GR00T post-train/eval is possible with LeRobot (`groot` policy type).
 
 **Decision criteria**:
+
 - **Commercial product launch** → prefer π (Apache-2.0) or OpenVLA (MIT). GR00T only after the license is confirmed.
 - **Full-body humanoid control** → GR00T is the most complete (SONIC controller, Cosmos Reason backbone), but confirm the license.
 - **Research/PoC** → all usable; choose by performance/embodiment fit.
@@ -68,6 +70,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "We want to adapt a VLA to our task — how many GPUs do we need to secure, and how much data?"
 
 **Solution overview** `[1]`:
+
 - **OpenVLA**: LoRA (rank 32) ~24GB single GPU (A100/RTX 4090). 48GB→batch 12, 80GB→batch 24. Full fine-tuning ~100GB. Official `vla-scripts/finetune.py`.
 - **openpi (π0/π0.5)**: inference >8GB, LoRA >22.5GB (RTX 4090), **full fine-tuning >70GB (A100/H100)**. Official LoRA/full recipes, PyTorch support added 2025-09. 1~20 hours of data is enough for many tasks.
 - **GR00T (N1.5/N1.7)**: fine-tuning 40GB+ GPU (H100/L40 recommended), inference 16GB+. NVIDIA official post-training recipe.
@@ -76,6 +79,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping**: for LoRA, **EC2 G6e (L40S) · G7e (RTX PRO 6000)** single/few GPUs suffice. For full fine-tuning / multi-embodiment, **P6-B200 / HyperPod multi-node** (item 3 below).
 
 **Decision criteria**:
+
 - Task-specific, small data → **LoRA + single G7e**. Cheapest, fastest. Most start here.
 - Multiple embodiments, large scale, tuning down to the backbone → **full fine-tuning + P6/HyperPod**.
 - Data <1 hour → consider few-shot/prompting before fine-tuning.
@@ -104,6 +108,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "We need infrastructure to run fine-tuning/training reliably. If a node dies, do we start over from scratch?"
 
 **Solution overview** `[1]`:
+
 - **SageMaker HyperPod** — supports Slurm + **EKS** + Training Jobs. **Checkpointless training** (auto-recovery within minutes on failure, no manual intervention), **Elastic training** (auto-scale by availability/priority, auto checkpoint/resume). **G7e + r5d.16xlarge support added 2026-04**. HyperPod CLI/SDK provided.
 - **EC2 GPU ladder** `[1]`: **G7** (RTX PRO 4500, GA 2026-06) · **G7e** (RTX PRO 6000 Blackwell, GA 2026-01) · **G6e** (L40S) → **P6-B200** (8×B200, 1440GB HBM) · **P6e-GB200 UltraServers** (GB200 NVL72, up to 72 Blackwell/NVLink domain, secured via Capacity Blocks).
 - **Trainium**: Trn2 GA (2024-12), **Trn3 UltraServers GA (2025-12 re:Invent)**, Trn4 announced. ⚠️ **No public case of training VLA/robotics on Trainium** — the whole VLA toolchain is CUDA/NVIDIA. Trainium-for-VLA is unverified.
@@ -111,12 +116,14 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping**: the services above are themselves the mapping. GPU-securing strategy (On-Demand vs Capacity Blocks vs Flexible Training Plans) → [decisions](decisions.md).
 
 **Decision criteria**:
+
 - Single/few-GPU LoRA → EC2 G7e directly, without HyperPod.
 - Multi-node, long-running, needs fault tolerance → **HyperPod (EKS)** + checkpointless.
 - Ultra-large pretraining → P6e-GB200 UltraServers + Capacity Blocks.
 - Proposing Trainium → state that it is **currently safe for LLM targets, but unverified for VLA** and share the risk.
 
 **Customer case** `[1]`:
+
 - **Trained Unitree H1 humanoid RL on Isaac Lab + SageMaker (HyperPod)** — AWS official blog (2026-06-09). 19-joint velocity tracking, PPO (skrl), demonstrated HyperPod health monitoring, auto-replacement, and checkpoint resume. ⚠️ **This is RL locomotion, not VLA fine-tuning** — cite only as a reference architecture.
 - **Zoox** — multimodal AV foundation model on HyperPod, 95% utilization on 64+ GPUs. ⚠️ AV.
 
@@ -133,6 +140,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "It's real-time control — how do we run a large model? Isn't cloud latency a problem?"
 
 **Solution overview** `[1]/[4]`:
+
 - **Figure Helix**: System 2 = on-board internet-pretrained VLM @ 7~9Hz (scene/language), System 1 = reactive visuomotor @ 200Hz. `[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms latency, System 2 = LLM planner (task decomposition).
 - **General pattern**: a heavy VLM replans at 5~10Hz, and a lightweight flow-matching/diffusion "action expert" emits actions at 50~200Hz conditioned on the latest plan. Predict future action chunks via **action chunking** (GR00T = 40 timestep horizon).
@@ -157,6 +165,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "Can't we just use Gemini Robotics? How does it relate to AWS?"
 
 **Solution overview** `[1]`:
+
 - **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) — agentic embodied reasoning: task decomposition, tool-calling (including Search), VLA invocation, reading analog gauges. **A reasoning/VLM layer, not low-level control**. Google's official docs state it is "currently in preview" `[1]`.
 - **Gemini Robotics On-Device** (2025-06) — the first locally deployable VLA, supports fine-tuning (50~100 demos). **waitlist/trusted-tester (Preview)**.
 - **Gemini Robotics 1.5 VLA** — partner-only.
@@ -164,6 +173,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping (competing stack → complemented by AWS)**: Gemini Robotics-ER plays the **planner (System 2) role** — even if a customer uses it, **robot fleet orchestration, tool gateway, and policy guardrails can be wrapped with Bedrock AgentCore** (→ [pillar-5](pillar-5.md)). For low-level control VLA, offer the alternative of fine-tuning open models (π/OpenVLA/GR00T) on AWS.
 
 **Decision criteria**:
+
 - Need fast high-level reasoning and can accept the Google ecosystem / preview risk → trying the ER 1.6 API is fine (but it is Preview — no production commitment).
 - Commercial / on-prem / data sovereignty / low-level control customization → **fine-tuning open VLAs on AWS** is more flexible.
 

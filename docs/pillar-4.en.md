@@ -1,5 +1,5 @@
 ---
-ko_hash: 09f7fe157cefdbb21f6cd9c1d5f74d6723a1f04a
+ko_hash: 019ab4e07f9951add4f0595235c018424018dc26
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -28,6 +28,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "We trained in the cloud — how do we deploy to the robot and manage it OTA? It's real-time, so a cloud round-trip won't work, right?"
 
 **Solution overview** `[1]/[3]`:
+
 - **Edge HW**: **Jetson Thor (Blackwell) GA**, T5000 production module in distribution. The Jetson Orin line is still produced (low power). Specs/prices in the collapsed block below.
 - **Deployment/management**: **AWS IoT Greengrass V2** (GA) — Lambda/Docker/custom components, ML inference components, MQTT telemetry. ⚠️ **Greengrass V1 support ended 2026-06-01** — only V2 is current.
 - **Model path**: PyTorch policy → **ONNX** → **TensorRT** engine compilation (on-device acceleration) is the standard path to meet the real-time control latency budget (sub-20~30ms class). SageMaker Neo (edge compilation) survives and combines with Greengrass.
@@ -46,6 +47,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping**: IoT Greengrass V2 + IoT Core (MQTT) + SageMaker Neo (compilation) + S3 (model artifacts) + IoT Jobs (OTA). Collect edge telemetry with Model Monitor.
 
 **Decision criteria** (details → [decisions Cloud vs Edge](decisions.md)):
+
 - **30~100Hz+ reactive control** (balance · force · grasp · walking) → **must be on-board Jetson**. Cloud round-trip not viable.
 - **sub-1Hz~few-Hz high-level planning · VLA inference** → cloud/async possible. **action chunking** is the bridge between the two rates.
 - Want a managed edge service → honestly say there is none, and provide an ONNX+Greengrass V2 design.
@@ -65,6 +67,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "Isn't sim-to-real marketing? Is there a robot actually getting paid to work?"
 
 **Solution overview** `[1]/[3]`:
+
 - **ANYmal (ANYbotics)** 🟢 — walking trained with large-scale parallel simulation RL, **hundreds of units deployed to industrial inspection worldwide (oil & gas, mining, chemical)**. ETH RL-walking lineage (peer-reviewed). **Production + evidence**.
 - **Agility Digit @ GXO** 🟢 — **paid commercial work under a multi-year RaaS contract**, **100k+ tote moves** as of 2025-11, ~1 year continuous full-time, 65k+ operating hours. **The best-validated paid humanoid work** (cross-confirmed by customer GXO). But a narrow, structured tote-moving task.
 - ⚠️ **Boston Dynamics Spot ships with MPC (classical control) in the product — not RL**. Spot's RL walking (5.2m/s) exists only in a research kit (BD+NVIDIA+RAI). **The most frequently mis-stated fact in this industry** — do not say the opposite.
@@ -99,6 +102,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "How do you actually close the sim-to-real gap? Which techniques work in production?"
 
 **Solution overview** `[1]/[3]`:
+
 - **Selective domain randomization (DR)** 🟢 — the locomotion standard. But **excessive randomization destabilizes training** → do it selectively.
 - **System identification (SysID) + selective DR** 🟢 — measure and calibrate the key dynamics parameters, then apply selective DR. The current best practice.
 - **RL-over-MPC hybrid** 🟢 — not pure end-to-end RL but a classical MPC base + a learned policy for robustness. **Boston Dynamics uses this hybrid too = closest to real deployment**.
@@ -123,6 +127,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "We need manipulation like assembly/grasping. Can we train it with simulation?"
 
 **Solution overview** `[1]`:
+
 - **Why it lags**: manipulation has a large **contact-dynamics mismatch**, with reported sim-to-real performance drops of ~24~30%, and success rates falling 30~50% from lighting/camera-pose changes alone.
 - **Key insight — VLAs depend on real data**: **OpenVLA** (7B) is trained on ~970k **real-hardware** demos (Open X-Embodiment). **π0/π0.5**, **RT-2**, and **Gemini Robotics** all center on large-scale **real-robot data**, with simulation as an evaluation/adaptation aid. Gemini Robotics bundles MuJoCo in its SDK for evaluation.
 - **Maturity**: precise, multi-finger contact manipulation and open-world VLA housework (π0.5) → **impressive demo / trusted-tester Preview**. **As of 2026-07, there is no general-purpose VLA that has validated contact-rich manipulation as GA production.**
@@ -130,6 +135,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping**: the real-data pipeline is the crux → [pillar-1](pillar-1.md). Simulation is an evaluation aid (item 5).
 
 **Decision criteria**:
+
 - Narrow, structured grasp/move → possible (Digit class).
 - General, precise, contact-rich manipulation → **currently unsolved**, assumes large-scale real-data collection + expectation management.
 - "A manipulation policy from simulation alone" → risky; real-demo fine-tuning is essential.
@@ -149,6 +155,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "Before putting it on real hardware, how do I gain confidence that the policy really works?"
 
 **Solution overview** `[1]`:
+
 - **Sim evaluation suites**: SimplerEnv, LIBERO, Meta-World, etc. exist but exposed limits. A 2026-06 audit: a 90M probe with no language encoder matched SOTA on LIBERO 3/4 (shortcut), only ~20% of reported "progress" was statistically substantiated, and CALVIN dropped 25% from placement-pose resampling alone. **sim↔real correlation is low**.
 - **Real-world evaluation**: **RoboArena** — distributed double-blind A/B (giving only the policy IP and hiding its identity), 7 institutions, 4,284 episodes, Bradley-Terry/Elo. A research framework, but it points the direction.
 - **New direction**: real-to-sim (Gaussian Splatting/world-model scene reconstruction) + distributed real A/B. A single sim suite ≠ a trusted gate.

@@ -25,6 +25,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **고객 니즈/문제**: "휴머노이드/매니퓰레이터용 VLA를 도입하고 싶다. 어떤 오픈 모델이 좋고, 우리 제품에 상업적으로 써도 되나?"
 
 **솔루션 개요** `[1]`:
+
 - **NVIDIA Isaac GR00T** — 오픈 휴머노이드 파운데이션 모델. N1(2B), N1.5(3B, flow-matching DiT action head), N1.6(CES 2026, Cosmos Reason 2 백본), N1.7(GitHub상 GA 주장). ⚠️ **라이선스 주의**: N1.5 모델 카드는 **비상업(NVIDIA license, non-commercial)**. N1.6/N1.7이 상업 허용이라는 주장은 **2차 출처뿐이라 미검증** → 상용 판단 전 **라이브 모델 카드 직접 확인 필수**. `[1]` github.com/NVIDIA/Isaac-GR00T
 - **Physical Intelligence π (openpi)** — π0, π0-FAST, π0.5 전부 **Apache-2.0**(상업 가능). DROID/ALOHA/LIBERO 파인튜닝 체크포인트 제공. `[1]` github.com/Physical-Intelligence/openpi. ⚠️ π0.7은 2차 출처만 존재(미검증).
 - **OpenVLA** — 7B, **MIT 라이선스**(상업 가능), Llama2 기반 VLM 백본. 공식 파인튜닝 스크립트 제공. `[1]` github.com/openvla/openvla (LICENSE 파일 2026-07 직접 확인)
@@ -32,6 +33,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **AWS 매핑**: 모델 가중치를 HF에서 S3로 미러링 → EC2 GPU(P6/G7e) 또는 SageMaker HyperPod에서 파인튜닝(아래 2·3번). LeRobot(`groot` policy type)으로 GR00T post-train/eval 가능.
 
 **의사결정 기준**:
+
 - **상용 제품 출시** → π(Apache-2.0) 또는 OpenVLA(MIT) 우선. GR00T는 라이선스 확정 후에만.
 - **휴머노이드 전신 제어** → GR00T가 가장 완성형(SONIC controller, Cosmos Reason 백본), 단 라이선스 확인.
 - **연구·PoC** → 전부 사용 가능, 성능/embodiment 적합성으로 선택.
@@ -65,6 +67,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **고객 니즈/문제**: "우리 태스크에 맞게 VLA를 조정하고 싶은데, GPU를 얼마나 확보해야 하고 데이터는 얼마나 필요한가?"
 
 **솔루션 개요** `[1]`:
+
 - **OpenVLA**: LoRA(rank 32) ~24GB 단일 GPU(A100/RTX 4090). 48GB→batch 12, 80GB→batch 24. 풀 파인튜닝 ~100GB. 공식 `vla-scripts/finetune.py`.
 - **openpi (π0/π0.5)**: 추론 >8GB, LoRA >22.5GB(RTX 4090), **풀 파인튜닝 >70GB(A100/H100)**. 공식 LoRA/full 레시피, 2025-09 PyTorch 지원 추가. 데이터 1~20시간이면 다수 태스크 충분.
 - **GR00T (N1.5/N1.7)**: 파인튜닝 40GB+ GPU(H100/L40 권장), 추론 16GB+. NVIDIA 공식 post-training 레시피.
@@ -73,6 +76,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **AWS 매핑**: LoRA면 **EC2 G6e(L40S)·G7e(RTX PRO 6000)** 단일/소수 GPU로 충분. 풀 파인튜닝·멀티 embodiment면 **P6-B200 / HyperPod 멀티노드**(아래 3번).
 
 **의사결정 기준**:
+
 - 태스크 특화·데이터 소량 → **LoRA + 단일 G7e**. 가장 저렴·빠름. 대부분 여기서 시작.
 - 다중 embodiment·대규모·백본까지 조정 → **풀 파인튜닝 + P6/HyperPod**.
 - 데이터 <1시간 → 파인튜닝보다 few-shot/프롬프트 우선 검토.
@@ -101,6 +105,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **고객 니즈/문제**: "파인튜닝/학습을 안정적으로 돌릴 인프라가 필요하다. 노드 죽으면 처음부터 다시 하나?"
 
 **솔루션 개요** `[1]`:
+
 - **SageMaker HyperPod** — Slurm + **EKS** + Training Jobs 지원. **Checkpointless training**(장애 시 수분 내 자동복구, 수동개입 없음), **Elastic training**(가용량·우선순위 따라 자동 스케일, 자동 체크포인트/재개). **2026-04 G7e + r5d.16xlarge 지원 추가**. HyperPod CLI/SDK 제공.
 - **EC2 GPU 사다리** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **P6e-GB200 UltraServers**(GB200 NVL72, 최대 72 Blackwell/NVLink 도메인, Capacity Blocks로 확보).
 - **Trainium**: Trn2 GA(2024-12), **Trn3 UltraServers GA(2025-12 re:Invent)**, Trn4 발표. ⚠️ **VLA/로보틱스를 Trainium으로 학습한 공개 사례 없음** — 전체 VLA 툴체인이 CUDA/NVIDIA. Trainium-for-VLA는 미검증.
@@ -108,12 +113,14 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **AWS 매핑**: 위 서비스 자체가 매핑. GPU 확보 전략(On-Demand vs Capacity Blocks vs Flexible Training Plans)은 → [decisions](decisions.md).
 
 **의사결정 기준**:
+
 - 단일/소수 GPU LoRA → HyperPod 없이 EC2 G7e 직접.
 - 멀티노드·장시간·내결함성 필요 → **HyperPod(EKS)** + checkpointless.
 - 초대형 사전학습 → P6e-GB200 UltraServers + Capacity Blocks.
 - Trainium 제안 → **현재는 LLM 대상에 안전, VLA는 미검증**이라 명시하고 리스크 공유.
 
 **고객 사례** `[1]`:
+
 - **Unitree H1 휴머노이드 RL을 Isaac Lab + SageMaker(HyperPod)에서 학습** — AWS 공식 블로그(2026-06-09). 19관절 velocity tracking, PPO(skrl), HyperPod 헬스모니터링·자동교체·체크포인트 재개 시연. ⚠️ **RL locomotion이지 VLA 파인튜닝 아님** — 참조 아키텍처로만 인용.
 - **Zoox** — HyperPod로 멀티모달 AV 파운데이션 모델, 64+ GPU 95% 활용률. ⚠️ AV.
 
@@ -130,6 +137,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **고객 니즈/문제**: "실시간 제어인데 큰 모델을 어떻게 돌리나? 클라우드 지연이 문제 아닌가?"
 
 **솔루션 개요** `[1]/[4]`:
+
 - **Figure Helix**: System 2 = 온보드 인터넷 사전학습 VLM @ 7~9Hz(장면/언어), System 1 = 반응형 visuomotor @ 200Hz. `[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 지연, System 2 = LLM 플래너(태스크 분해).
 - **일반 패턴**: 무거운 VLM이 5~10Hz로 재계획, 경량 flow-matching/diffusion "action expert"가 최신 계획 조건으로 50~200Hz 액션 방출. **action chunking**(GR00T=40 timestep horizon)으로 미래 액션 청크 예측.
@@ -154,6 +162,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **고객 니즈/문제**: "Gemini Robotics 쓰면 되는 거 아닌가요? AWS랑 어떻게 관계되죠?"
 
 **솔루션 개요** `[1]`:
+
 - **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) — 에이전틱 embodied reasoning: 태스크 분해, 툴콜(Search 포함), VLA 호출, 아날로그 게이지 판독. **추론/VLM 레이어이지 저수준 제어 아님**. Google 공식 문서가 "currently in preview" 명시 `[1]`.
 - **Gemini Robotics On-Device** (2025-06) — 로컬 배포 가능한 첫 VLA, 파인튜닝 지원(50~100 데모). **waitlist/trusted-tester(Preview)**.
 - **Gemini Robotics 1.5 VLA** — 파트너 한정.
@@ -161,6 +170,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **AWS 매핑 (경쟁 스택 → AWS 보완)**: Gemini Robotics-ER는 **플래너(System 2) 역할** — 고객이 이를 쓰더라도 **로봇 플릿 오케스트레이션·툴 게이트웨이·정책 가드레일은 Bedrock AgentCore로 감쌀 수 있다**(→ [pillar-5](pillar-5.md)). 저수준 제어 VLA는 오픈 모델(π/OpenVLA/GR00T)을 AWS에서 파인튜닝하는 대안 제시.
 
 **의사결정 기준**:
+
 - 빠른 고수준 추론이 필요하고 구글 생태계·프리뷰 리스크 수용 가능 → ER 1.6 API 시도 가능(단 Preview — 프로덕션 약정 금지).
 - 상용·온프렘·데이터 주권·저수준 제어 커스터마이즈 → **오픈 VLA를 AWS에서 파인튜닝**이 더 유연.
 

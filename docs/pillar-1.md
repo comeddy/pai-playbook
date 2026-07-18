@@ -25,6 +25,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **고객 니즈/문제**: "밑바닥부터 데이터를 모을 여력은 없고, 공개된 걸로 시작하고 싶다. 그런데 이걸 상용 제품에 써도 되나?"
 
 **솔루션 개요** `[1]`:
+
 - **Open X-Embodiment (OXE)** — ~1M+ 에피소드, 22개 embodiment, 60여 데이터셋 통합. OpenVLA·RT-2-X·π0·GR00T의 표준 사전학습 코퍼스. ⚠️ **라이선스가 컴포넌트별로 다름**(대부분 CC-BY-4.0/Apache-2.0, 일부 research-only) → 상용이면 컴포넌트 단위 법무 감사 필수. `[1]` arxiv 2310.08864
 - **DROID** — 76,000 텔레옵 궤적, 350시간, Franka. 라이선스 **CC-BY-4.0** (상업 친화적). 파인튜닝 단계 표준. `[1]` droid-dataset.github.io
 - **AgiBot World** — ~1,003,672 궤적(~43.8TB)로 최대 규모. ⚠️ **라이선스 CC BY-NC-SA 4.0 = 비상업**. 연구·벤치마크는 되지만 **상용 파생 가중치 배포 불가**. `[1]` arxiv 2503.06669
@@ -33,6 +34,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **AWS 매핑**: S3(데이터 레이크) + FSx for Lustre(학습 시 다운로드 없이 고속 채널) + SageMaker/HyperPod. 데이터셋은 Hugging Face Hub 또는 원본에서 S3로 미러링 후 사용.
 
 **의사결정 기준**:
+
 - 상용 제품 목표 → **DROID / RoboMIND(라이선스 확인) 중심**, AgiBot World 제외, OXE는 상업 가능 컴포넌트만 필터링.
 - 연구·PoC·내부 벤치마크 → 전체 사용 가능(AgiBot World 포함).
 - 특정 embodiment(자사 로봇)와 형태가 다르면 사전학습용으로만 쓰고 실데모로 파인튜닝 전제.
@@ -68,6 +70,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **AWS 매핑**: EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 인스턴스에서 Isaac Sim 실행 + **AWS Batch**로 대규모 오프라인 데이터 생성 잡 병렬화 + S3 저장. NICE DCV로 원격 스트리밍(→ [pillar-3](pillar-3.md) 참조).
 
 **의사결정 기준**:
+
 - 인식 태스크(감지·분할·포즈추정) → 합성 데이터 ROI 매우 높음(라벨 공짜).
 - 조작 정책(manipulation policy) → 합성만으로는 도메인 갭 큼. 반드시 실데모 파인튜닝 + sim-to-real 방법론 병행(→ [pillar-4](pillar-4.md)).
 - Isaac Sim vs 오픈소스(Genesis/MuJoCo) 선택 → [decisions](decisions.md).
@@ -87,11 +90,13 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **고객 니즈/문제**: "시뮬레이터 씬을 일일이 만들 수 없다. 다양한 현실적 시나리오를 자동 생성하고 싶다."
 
 **솔루션 개요** `[1]/[3]`: Cosmos WFM이 합성 월드 생성 + 비전 추론 + 행동 시뮬레이션 제공. **Cosmos 3**가 최신(2026-05-31 릴리스, GTC Taipei 2026-06 발표). FieldAI·Skild AI·Generalist AI 등이 데이터 생성에 사용. `[1]` nvidianews.nvidia.com
+
 - ⚠️ **Hype 경계**: "인상적 생성 데모"와 "이 데이터로 학습한 정책이 실배포됨"은 다르다. 후자는 현재 소수 얼리어답터 사례만 존재 → 실전 성숙도는 **Preview 수준으로 취급**.
 
 **AWS 매핑** `[3]`: **셀프호스팅 참조 아키텍처** — Cosmos NIM 컨테이너를 **Amazon EKS**(실시간) 또는 **AWS Batch**(대규모 오프라인 합성 데이터 생성)에서 고객이 직접 실행. GA인 것은 AWS 컴퓨트 서비스(EKS/Batch/G7e)이지 "Cosmos-on-AWS 제품"이 아니다. `[3]` aws.amazon.com/blogs/hpc/running-nvidia-cosmos-world-foundation-models-on-aws
 
 **의사결정 기준**:
+
 - 대량 다양성이 필요한 인식·내비게이션 데이터 → 시도 가치 높음.
 - 정밀 조작 정책의 유일 데이터원으로 삼는 것 → 아직 위험. 보조 증강으로 위치.
 
@@ -110,6 +115,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **고객 니즈/문제**: "우리가 모은 원천 데이터(로봇 로그, 카메라, ROS bag)가 S3에 쌓여만 있다. 이걸 학습 가능한 형태로 흐르게 하고 싶다."
 
 **솔루션 개요** `[1]`:
+
 - **수집/저장**: S3(원천 데이터 레이크, 티어링으로 비용 관리)
 - **변환/라벨**: AWS Glue/Batch(포맷 변환·품질 필터), 필요 시 SageMaker Ground Truth(라벨링 — 단 로봇 특화 공개 사례 없음)
 - **학습 채널**: FSx for Lustre를 SageMaker 학습 채널로 마운트 → 다운로드 없이 고속 read
@@ -118,6 +124,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **AWS 매핑**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod. (전부 GA)
 
 **의사결정 기준**:
+
 - 데이터셋 < 수 TB, 접근 패턴 단순 → S3 직접 스트리밍(HyperPod/LeRobot streaming)으로 충분, FSx 생략 가능.
 - 반복 에폭·대규모·랜덤 액세스 병목 → **FSx for Lustre** 도입.
 - 라벨링 물량 크고 사람 검수 필요 → Ground Truth. 다만 로봇 데이터는 대개 자동 라벨(시뮬레이션/텔레옵 기록)이라 필요성 낮음.
@@ -137,6 +144,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **고객 니즈/문제**: "우리 데이터는 ROS 2 bag인데 VLA 학습 코드는 RLDS/LeRobot를 원한다. 어떻게 변환하지?"
 
 **솔루션 개요** `[1]`:
+
 - **LeRobotDataset v3.0** — 에피소드 다수를 Parquet 하나로 묶고 MP4 비디오 + 메타데이터로 경계 관리, Hub 네이티브 스트리밍. `lerobot >= 0.4.0`, 최신 **v0.6.0(2026-07-06)**. NVIDIA도 데이터셋을 LeRobot v3로 재배포 중(상호교환 표준화 진행). `[1]` github.com/huggingface/lerobot
 - **RLDS** — OpenVLA·RT-2-X·π0·GR00T가 네이티브 소비. 여전히 VLA 학습 표준.
 - ⚠️ **갭**: lerobot 레포에 **네이티브 ROS 2 bag 컨버터 없음**. rosbag2 → LeRobot/RLDS 대규모 변환은 DIY.
@@ -144,6 +152,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **AWS 매핑**: **AWS Glue/Batch에 커스텀 rosbag2→LeRobot/RLDS 컨버터**를 컨테이너로 올려 대규모 병렬 변환 + S3 저장. HyperPod/학습 단계는 S3 스트리밍 또는 FSx.
 
 **의사결정 기준**:
+
 - 학습 프레임워크가 LeRobot 계열 → LeRobotDataset v3.
 - OpenVLA/GR00T/π 계열 공식 레시피 → RLDS.
 - 원천이 ROS 2 bag → 변환 잡을 파이프라인 초기에 설계(사후 추가는 비용 큼).
@@ -163,6 +172,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **고객 니즈/문제**: "사람이 로봇을 원격조종해 모은 데모를 실시간으로 수집·저장하고 학습 큐에 넣고 싶다."
 
 **솔루션 개요** `[1]/[4]`:
+
 - 오픈 HW: **ALOHA/Mobile ALOHA**(양팔 저가 텔레옵), **GELLO**(<$300 리더암, MIT 라이선스) — 랩에서 광범위 복제되나 상용 제품 SKU 없음, **Research-only**. `[1]`
 - 실전: Figure·1X·Physical Intelligence·Tesla가 VR 리그 텔레옵 팜을 운영(하루 수시간). ⚠️ **증거는 언론·데모 수준, 공개 파이프라인 없음** `[4]`.
 - SA 초점: 텔레옵 원격측정 스트림 → S3 수집 → 자동 라벨(성공/실패, 태스크 태그) → 학습 데이터셋화.
@@ -170,6 +180,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **AWS 매핑**: IoT Core/Kinesis(스트림 수집) → S3 → Glue(정제·라벨) → [5번 포맷 변환] → 학습. (엣지 연결은 [pillar-4](pillar-4.md))
 
 **의사결정 기준**:
+
 - 소량·고품질 데모가 목표(파인튜닝) → 텔레옵 투자 가치 높음.
 - 대량 다양성이 목표(사전학습) → 합성/오픈 데이터가 비용 효율. 텔레옵은 마지막 파인튜닝용으로 한정.
 

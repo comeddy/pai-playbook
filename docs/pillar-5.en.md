@@ -1,5 +1,5 @@
 ---
-ko_hash: 80b7b2fd7ad0574df30285a2af0e3ae1450c3213
+ko_hash: 779a55a5c99476b47ed3dc18d8147d61dffe277b
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -28,6 +28,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "We want to take our agent beyond PoC to production. We don't want to build session management, tool connectivity, permissions/security, and observability from scratch every time."
 
 **Solution overview** `[1]`:
+
 - **GA history**: preview 2025-07 → **GA 2025-10-13**. Components: **Runtime, Memory, Gateway, Identity, Observability, Built-in Tools (Browser · Code Interpreter)**. At re:Invent 2025-12, Policy · Evaluations preview, episodic Memory GA, and bidirectional streaming Runtime GA for voice were added. **Policy is GA as of 2026-03-03**.
 - **Policy (core)**: integrated with Gateway to **intercept every agent→tool call in real time** and evaluate a policy (allow/deny) in milliseconds. Authored in natural language → compiled to **Cedar** (AWS's open-source policy language). **GA in 13 regions including Seoul**. → a direct primitive for constraining physical-system tool calls (item 5, safety).
 - **Strands Agents SDK** (companion): a model- and cloud-neutral orchestration SDK, **reached 1.0 (GA-class)**. Used internally by Amazon Q Developer · Glue. Pairs with AgentCore. (Versions/metrics in the collapsed block)
@@ -36,6 +37,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **AWS mapping**: the services themselves are the mapping. Register robot skills as tools on Gateway → the agent invokes them via natural-language planning, gated by Policy, session maintained by Memory, traced by Observability.
 
 **Decision criteria**:
+
 - Production agent (needs sessions · tools · permissions · observability) → **AgentCore Runtime + Gateway + Policy**.
 - Simple one-off inference → a direct Bedrock call suffices; AgentCore is overkill.
 - Multi-agent · A2A → Strands 1.0.
@@ -112,6 +114,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "How do I centrally coordinate and monitor hundreds~thousands of robots?"
 
 **Solution overview** `[1]/[3]`:
+
 - **Amazon DeepFleet** 🟢 — a generative foundation model for coordinating Amazon warehouse robot fleets ("traffic control"), ~10% travel-time efficiency improvement, announced with the 1-millionth robot (2025-07). **Production (Amazon internal)**. ⚠️ **Not an LLM agent orchestrator** — "multi-agent" in the multi-robot RL sense. Do not misclassify.
 - **NVIDIA Isaac OSMO** 🟢 — orchestration of robotics **development/data/training workloads** (synthetic data · training · RL · SIL). At GTC 2026, integrated coding agents (Claude Code/Codex/Cursor). ⚠️ **Not real-time control of a field robot fleet** — development-pipeline orchestration.
 - **Formant** 🟡 — fleet management SaaS. Running in hundreds of organizations but small-scale (concrete metrics per `[3]` PitchBook/Crunchbase — 644 organizations · <$5M ARR, 2026-05, changes often), not acquired.
@@ -136,6 +139,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Customer need/problem**: "What if the agent misjudges and the robot takes a dangerous action? How do we prevent it?"
 
 **Solution overview** `[1]/[4]`:
+
 - **Agent layer (AWS-native)**: **AgentCore Policy** — real-time allow/deny (ms) via Cedar on every agent→tool call. A practical layer for constraining physical-action tool calls. **Bedrock Guardrails** — filters LLM input/output (content · topic · PII) (not the actuation itself).
 - **Robot layer (functional safety)**: **ISO 10218-1/2** (robots · integrated systems), **ISO/TS 15066** (collaborative robots), **ISO 13482** (personal care robots). ⚠️ These cover **physical safety only** — LLM semantic misuse/hallucination is not covered.
 - **Research**: RoboGuard (safety-rule grounding), BadRobot (embedded-LLM jailbreak attacks), LLM semantic DoS — 🔵 research stage. An **open gap** where standards don't bridge functional safety (ISO) and LLM risk.
