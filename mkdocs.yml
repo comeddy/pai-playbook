@@ -10,6 +10,7 @@ docs_dir: docs
 
 nav:
   - 홈: index.md
+  - 가이드: guide.md
   - "P1 · 데이터 수집 & 처리": pillar-1.md
   - "P2 · 모델 학습 (VLA)": pillar-2.md
   - "P3 · 시뮬레이션": pillar-3.md
@@ -38,6 +39,7 @@ theme:
         icon: material/brightness-4
         name: 라이트 모드로
   features:
+    - navigation.tabs      # 상단 가로 탭바 — 가이드 등 전 페이지를 헤더에 노출
     # navigation.instant 제거 — mkdocs-static-i18n 언어 전환기와 문서화된 비호환 (strict 빌드 게이트)
     - navigation.top
     - navigation.footer
@@ -81,6 +83,7 @@ plugins:
           site_description: "Physical AI reference asset for AWS Korea SA — architecture direction, AWS mapping, next actions in 5 minutes"
           nav_translations:
             홈: Home
+            가이드: Guide
             "P1 · 데이터 수집 & 처리": "P1 · Data Collection & Processing"
             "P2 · 모델 학습 (VLA)": "P2 · Model Training (VLA)"
             "P3 · 시뮬레이션": "P3 · Simulation"
@@ -94,6 +97,7 @@ plugins:
           site_description: "面向 AWS Korea SA 的 Physical AI 参考资产 — 5 分钟内掌握架构方向、AWS 映射与后续行动"
           nav_translations:
             홈: 首页
+            가이드: 指南
             "P1 · 데이터 수집 & 처리": "P1 · 数据采集与处理"
             "P2 · 모델 학습 (VLA)": "P2 · 模型训练 (VLA)"
             "P3 · 시뮬레이션": "P3 · 仿真"
@@ -107,6 +111,7 @@ plugins:
           site_description: "AWS Korea SA 向け Physical AI リファレンス資産 — アーキテクチャの方向性・AWS マッピング・次のアクションを5分で"
           nav_translations:
             홈: ホーム
+            가이드: ガイド
             "P1 · 데이터 수집 & 처리": "P1 · データ収集と処理"
             "P2 · 모델 학습 (VLA)": "P2 · モデル学習 (VLA)"
             "P3 · 시뮬레이션": "P3 · シミュレーション"
