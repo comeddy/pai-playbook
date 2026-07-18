@@ -15,19 +15,12 @@ _최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 중간_
 
 가장 중요한 판별자는 **제어 주파수**다.
 
-```
-추론 주파수 요구는?
-├─ 30~100Hz+ 반응형 제어 (균형·힘·파지·보행·회피)
-│     → 🔴 반드시 엣지 온보드 (Jetson Thor/Orin). 클라우드 왕복 불가.
-│        System 1 (경량 diffusion/flow-matching 정책, sub-20ms)
-│
-├─ few-Hz ~ sub-1Hz 고수준 계획·재계획·툴 선택·씬 이해
-│     → 🟢 클라우드/비동기 가능 (Bedrock AgentCore, 큰 VLM).
-│        System 2 (무거운 VLM 플래너, 5~10Hz 또는 그 이하)
-│
-└─ 둘 다 필요 (거의 모든 실로봇)
-      → 🟡 분리 배포: System 2=클라우드, System 1=엣지.
-         action chunking 으로 두 rate 연결. ← 표준 아키텍처
+```mermaid
+graph TD
+    Q{추론 주파수 요구는?}
+    Q -- "30~100Hz+ 반응형 제어<br>(균형·힘·파지·보행·회피)" --> EDGE["🔴 반드시 엣지 온보드 (Jetson Thor/Orin)<br>클라우드 왕복 불가<br>System 1 (경량 diffusion/flow-matching 정책, sub-20ms)"]
+    Q -- "few-Hz ~ sub-1Hz<br>고수준 계획·재계획·툴 선택·씬 이해" --> CLOUD["🟢 클라우드/비동기 가능 (Bedrock AgentCore, 큰 VLM)<br>System 2 (무거운 VLM 플래너, 5~10Hz 또는 그 이하)"]
+    Q -- "둘 다 필요 (거의 모든 실로봇)" --> SPLIT["🟡 분리 배포: System 2=클라우드, System 1=엣지<br>action chunking 으로 두 rate 연결 ← 표준 아키텍처"]
 ```
 
 | 구분 | System 2 (계획) | System 1 (제어) |
@@ -47,20 +40,13 @@ _최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 중간_
 
 **핵심 질문: "Isaac에 다 걸까, 오픈소스로 갈까?"**
 
-```
-워크로드 성격은?
-├─ 포토리얼 렌더 + 합성 데이터 생성(SDG) + 풀스택 통합
-│     → Isaac Sim/Lab (🟢 GA 5.1). GPU는 RTX 필수 (G6e/G7e).
-│
-├─ 빠른 RL 반복 · 미분가능 물리 · 크로스벤더 GPU · 경량
-│     → MuJoCo/MJX (🟢). 컴퓨트 GPU(P5 A100/H100)도 활용 → 비용 이점.
-│        Unitree 실사용 [1] (프로덕션 검증 → pillar-3).
-│
-├─ ROS 2 네이티브 통합 · CPU · 전통 로보틱스
-│     → Gazebo (🟢 Jetty/Harmonic). ⚠️ Classic 11은 EOL. GPU 병렬 RL엔 부적합.
-│
-└─ "화제성" Genesis?
-      → ⚪ PoC/실험만. "430,000배" 반박됨 [1] (→ pillar-3). 프로덕션 의존 금지.
+```mermaid
+graph TD
+    Q{워크로드 성격은?}
+    Q -- "포토리얼 렌더 + 합성 데이터 생성(SDG) + 풀스택 통합" --> ISAAC["Isaac Sim/Lab (🟢 GA 5.1)<br>GPU는 RTX 필수 (G6e/G7e)"]
+    Q -- "빠른 RL 반복 · 미분가능 물리 · 크로스벤더 GPU · 경량" --> MUJOCO["MuJoCo/MJX (🟢)<br>컴퓨트 GPU(P5 A100/H100)도 활용 → 비용 이점<br>Unitree 실사용 [1] (프로덕션 검증 → pillar-3)"]
+    Q -- "ROS 2 네이티브 통합 · CPU · 전통 로보틱스" --> GAZEBO["Gazebo (🟢 Jetty/Harmonic)<br>⚠️ Classic 11은 EOL · GPU 병렬 RL엔 부적합"]
+    Q -- "'화제성' Genesis?" --> GENESIS["⚪ PoC/실험만<br>'430,000배' 반박됨 [1] (→ pillar-3) · 프로덕션 의존 금지"]
 ```
 
 | 기준 | Isaac Sim/Lab | MuJoCo/MJX | Gazebo |
@@ -82,19 +68,13 @@ _최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 중간_
 
 **핵심 질문: "GPU를 어떻게 확보하나? On-Demand가 안 잡힌다."**
 
-```
-학습 규모·기간은?
-├─ 소수 GPU · 단발 · LoRA 파인튜닝 (대부분의 시작점)
-│     → On-Demand G7e/G6e. 즉시, 유연. 충분.
-│
-├─ 대규모 · 미래 시점 확정 · 초대형 클러스터(P6e-GB200 등)
-│     → Capacity Blocks for ML. 미리 예약, UltraServer 확보.
-│
-├─ 유연한 일정 · 비용 최적 · 며칠~주 단위 학습 창
-│     → Flexible Training Plans (SageMaker HyperPod).
-│
-└─ RTX 렌더 필요 (Isaac Sim) vs 컴퓨트만 (MuJoCo/VLA 학습)
-      → 렌더=G6e/G7e (RTX), 컴퓨트=P5/P6 (A100/H100/B200) 또는 MuJoCo면 P5 재활용.
+```mermaid
+graph TD
+    Q{학습 규모·기간은?}
+    Q -- "소수 GPU · 단발 · LoRA 파인튜닝 (대부분의 시작점)" --> OD["On-Demand G7e/G6e<br>즉시, 유연 · 충분"]
+    Q -- "대규모 · 미래 시점 확정 · 초대형 클러스터(P6e-GB200 등)" --> CB["Capacity Blocks for ML<br>미리 예약, UltraServer 확보"]
+    Q -- "유연한 일정 · 비용 최적 · 며칠~주 단위 학습 창" --> FTP["Flexible Training Plans (SageMaker HyperPod)"]
+    Q -- "RTX 렌더 필요 (Isaac Sim) vs 컴퓨트만 (MuJoCo/VLA 학습)" --> RC["렌더=G6e/G7e (RTX)<br>컴퓨트=P5/P6 (A100/H100/B200) 또는 MuJoCo면 P5 재활용"]
 ```
 
 | 전략 | 언제 | AWS |
@@ -113,21 +93,13 @@ _최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 중간_
 
 **핵심 질문: "파운데이션 모델을 파인튜닝할까, 자체 학습할까?"**
 
-```
-데이터·목표·자원은?
-├─ 실데모 100~수천 개 · 특정 태스크 · 빠른 결과
-│     → 오픈 VLA 파인튜닝 (LoRA). 단일 G7e, 1일 PoC. ← 99%의 현실
-│        상용이면 라이선스 확인: π=Apache-2.0 ✅, OpenVLA=MIT ✅, GR00T=확인필요 ⚠️
-│
-├─ 다중 embodiment · 대규모 실데이터 · 백본까지 조정
-│     → 풀 파인튜닝 (P6/HyperPod). 70~100GB+ GPU.
-│
-├─ 밑바닥 사전학습 (프런티어 VLA 자체 개발)
-│     → 🔴 극소수만. 멀티노드 Blackwell 클러스터·대규모 실데이터.
-│        대부분 고객에게 비권장 — 파인튜닝으로 충분.
-│
-└─ 추론·계획 레이어만 필요 (저수준 제어 불필요)
-      → Gemini Robotics-ER(API) 또는 AgentCore로 오케스트레이션.
+```mermaid
+graph TD
+    Q{데이터·목표·자원은?}
+    Q -- "실데모 100~수천 개 · 특정 태스크 · 빠른 결과" --> LORA["오픈 VLA 파인튜닝 (LoRA)<br>단일 G7e, 1일 PoC ← 99%의 현실<br>상용이면 라이선스 확인: π=Apache-2.0 ✅, OpenVLA=MIT ✅, GR00T=확인필요 ⚠️"]
+    Q -- "다중 embodiment · 대규모 실데이터 · 백본까지 조정" --> FULL["풀 파인튜닝 (P6/HyperPod)<br>70~100GB+ GPU"]
+    Q -- "밑바닥 사전학습 (프런티어 VLA 자체 개발)" --> PRE["🔴 극소수만 · 멀티노드 Blackwell 클러스터·대규모 실데이터<br>대부분 고객에게 비권장 — 파인튜닝으로 충분"]
+    Q -- "추론·계획 레이어만 필요 (저수준 제어 불필요)" --> INFER["Gemini Robotics-ER(API) 또는 AgentCore로 오케스트레이션"]
 ```
 
 | 옵션 | 데이터 | GPU | 언제 |

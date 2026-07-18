@@ -1,5 +1,5 @@
 ---
-ko_hash: be63066cfda3cea2fe37cf8958b3837afac82b48
+ko_hash: 2d9089e64ca908421f0f2c97d624ef4f0f50ddb0
 ---
 # Decisions — 横断的な意思決定ツリー
 
@@ -19,19 +19,12 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 中_
 
 最も重要な判別要素は**制御周波数**です。
 
-```
-推論周波数の要求は？
-├─ 30~100Hz+ 反応型制御（バランス·力·把持·歩行·回避）
-│     → 🔴 必ずエッジオンボード (Jetson Thor/Orin)。クラウド往復は不可。
-│        System 1（軽量 diffusion/flow-matching ポリシー, sub-20ms）
-│
-├─ few-Hz ~ sub-1Hz 高レベルの計画·再計画·ツール選択·シーン理解
-│     → 🟢 クラウド/非同期が可能 (Bedrock AgentCore, 大型 VLM)。
-│        System 2（重量級 VLM プランナー, 5~10Hz またはそれ以下）
-│
-└─ 両方が必要（ほぼすべての実ロボット）
-      → 🟡 分離デプロイ: System 2=クラウド, System 1=エッジ。
-         action chunking で 2 つの rate を接続。← 標準アーキテクチャ
+```mermaid
+graph TD
+    Q{推論周波数の要求は？}
+    Q -- "30~100Hz+ 反応型制御<br>（バランス·力·把持·歩行·回避）" --> EDGE["🔴 必ずエッジオンボード (Jetson Thor/Orin)<br>クラウド往復は不可<br>System 1（軽量 diffusion/flow-matching ポリシー, sub-20ms）"]
+    Q -- "few-Hz ~ sub-1Hz<br>高レベルの計画·再計画·ツール選択·シーン理解" --> CLOUD["🟢 クラウド/非同期が可能 (Bedrock AgentCore, 大型 VLM)<br>System 2（重量級 VLM プランナー, 5~10Hz またはそれ以下）"]
+    Q -- "両方が必要（ほぼすべての実ロボット）" --> SPLIT["🟡 分離デプロイ: System 2=クラウド, System 1=エッジ<br>action chunking で 2 つの rate を接続 ← 標準アーキテクチャ"]
 ```
 
 | 区分 | System 2（計画） | System 1（制御） |
@@ -51,20 +44,13 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 中_
 
 **核心的な問い: 「Isaac に全賭けするか、それともオープンソースで行くか？」**
 
-```
-ワークロードの性質は？
-├─ フォトリアルなレンダリング + 合成データ生成(SDG) + フルスタック統合
-│     → Isaac Sim/Lab (🟢 GA 5.1)。GPU は RTX 必須 (G6e/G7e)。
-│
-├─ 高速な RL 反復 · 微分可能物理 · クロスベンダー GPU · 軽量
-│     → MuJoCo/MJX (🟢)。コンピュート GPU(P5 A100/H100) も活用可 → コスト優位。
-│        Unitree 実使用 [1]（本番検証 → pillar-3）。
-│
-├─ ROS 2 ネイティブ統合 · CPU · 従来型ロボティクス
-│     → Gazebo (🟢 Jetty/Harmonic)。⚠️ Classic 11 は EOL。GPU 並列 RL には不適。
-│
-└─ 「話題性」の Genesis？
-      → ⚪ PoC/実験のみ。「430,000 倍」は反論済み [1]（→ pillar-3）。本番依存は禁止。
+```mermaid
+graph TD
+    Q{ワークロードの性質は？}
+    Q -- "フォトリアルなレンダリング + 合成データ生成(SDG) + フルスタック統合" --> ISAAC["Isaac Sim/Lab (🟢 GA 5.1)<br>GPU は RTX 必須 (G6e/G7e)"]
+    Q -- "高速な RL 反復 · 微分可能物理 · クロスベンダー GPU · 軽量" --> MUJOCO["MuJoCo/MJX (🟢)<br>コンピュート GPU(P5 A100/H100) も活用可 → コスト優位<br>Unitree 実使用 [1]（本番検証 → pillar-3）"]
+    Q -- "ROS 2 ネイティブ統合 · CPU · 従来型ロボティクス" --> GAZEBO["Gazebo (🟢 Jetty/Harmonic)<br>⚠️ Classic 11 は EOL · GPU 並列 RL には不適"]
+    Q -- "「話題性」の Genesis？" --> GENESIS["⚪ PoC/実験のみ<br>「430,000 倍」は反論済み [1]（→ pillar-3）· 本番依存は禁止"]
 ```
 
 | 基準 | Isaac Sim/Lab | MuJoCo/MJX | Gazebo |
@@ -86,19 +72,13 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 中_
 
 **核心的な問い: 「GPU をどう確保するか？On-Demand が取れない。」**
 
-```
-学習の規模·期間は？
-├─ 少数 GPU · 単発 · LoRA ファインチューニング（多くの出発点）
-│     → On-Demand G7e/G6e。即時·柔軟。十分。
-│
-├─ 大規模 · 将来時点が確定 · 超大型クラスター(P6e-GB200 など)
-│     → Capacity Blocks for ML。事前予約し、UltraServer を確保。
-│
-├─ 柔軟な日程 · コスト最適 · 数日~数週単位の学習ウィンドウ
-│     → Flexible Training Plans (SageMaker HyperPod)。
-│
-└─ RTX レンダリングが必要 (Isaac Sim) vs コンピュートのみ (MuJoCo/VLA 学習)
-      → レンダリング=G6e/G7e (RTX)、コンピュート=P5/P6 (A100/H100/B200) または MuJoCo なら P5 を再活用。
+```mermaid
+graph TD
+    Q{学習の規模·期間は？}
+    Q -- "少数 GPU · 単発 · LoRA ファインチューニング（多くの出発点）" --> OD["On-Demand G7e/G6e<br>即時·柔軟 · 十分"]
+    Q -- "大規模 · 将来時点が確定 · 超大型クラスター(P6e-GB200 など)" --> CB["Capacity Blocks for ML<br>事前予約し、UltraServer を確保"]
+    Q -- "柔軟な日程 · コスト最適 · 数日~数週単位の学習ウィンドウ" --> FTP["Flexible Training Plans (SageMaker HyperPod)"]
+    Q -- "RTX レンダリングが必要 (Isaac Sim) vs コンピュートのみ (MuJoCo/VLA 学習)" --> RC["レンダリング=G6e/G7e (RTX)<br>コンピュート=P5/P6 (A100/H100/B200) または MuJoCo なら P5 を再活用"]
 ```
 
 | 戦略 | いつ | AWS |
@@ -117,21 +97,13 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 中_
 
 **核心的な問い: 「基盤モデルをファインチューニングするか、それとも自前で学習するか？」**
 
-```
-データ·目標·リソースは？
-├─ 実デモ 100~数千個 · 特定タスク · 迅速な結果
-│     → オープン VLA のファインチューニング (LoRA)。単一 G7e、1 日 PoC。← 99% の現実
-│        商用ならライセンス確認: π=Apache-2.0 ✅, OpenVLA=MIT ✅, GR00T=要確認 ⚠️
-│
-├─ 複数 embodiment · 大規模な実データ · バックボーンまで調整
-│     → フルファインチューニング (P6/HyperPod)。70~100GB+ GPU。
-│
-├─ ゼロからの事前学習（フロンティア VLA を自社開発）
-│     → 🔴 ごく少数のみ。マルチノード Blackwell クラスター·大規模な実データ。
-│        大半の顧客には非推奨 —— ファインチューニングで十分。
-│
-└─ 推論·計画レイヤーのみ必要（低レベル制御は不要）
-      → Gemini Robotics-ER(API) または AgentCore でオーケストレーション。
+```mermaid
+graph TD
+    Q{データ·目標·リソースは？}
+    Q -- "実デモ 100~数千個 · 特定タスク · 迅速な結果" --> LORA["オープン VLA のファインチューニング (LoRA)<br>単一 G7e、1 日 PoC ← 99% の現実<br>商用ならライセンス確認: π=Apache-2.0 ✅, OpenVLA=MIT ✅, GR00T=要確認 ⚠️"]
+    Q -- "複数 embodiment · 大規模な実データ · バックボーンまで調整" --> FULL["フルファインチューニング (P6/HyperPod)<br>70~100GB+ GPU"]
+    Q -- "ゼロからの事前学習（フロンティア VLA を自社開発）" --> PRE["🔴 ごく少数のみ · マルチノード Blackwell クラスター·大規模な実データ<br>大半の顧客には非推奨 —— ファインチューニングで十分"]
+    Q -- "推論·計画レイヤーのみ必要（低レベル制御は不要）" --> INFER["Gemini Robotics-ER(API) または AgentCore でオーケストレーション"]
 ```
 
 | オプション | データ | GPU | いつ |
