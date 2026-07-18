@@ -1,5 +1,5 @@
 ---
-ko_hash: 3883ffcd27d6249a10b244013ef901558c12b514
+ko_hash: 63066d46602fcdf7313522f209d5100eaf3ac0b6
 ---
 # 指南 — 本 Playbook 如何运作
 
@@ -12,31 +12,19 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 低（流程页面 — �
 
 ## 全流程一览
 
-```
-[候选发现]
- ├─ 🤖 每周自动扫描 (每周一 02:00 UTC — arXiv·网络)
- ├─ 💬 SA 提报 (晋升管道)
- └─ 🔍 手动调研
-        │
-        ▼
-[Radar 队列]  ← 全部标注为"未验证 [4]"，禁止用于客户提案
-        │
-        ▼
-[一手来源验证]  ← 人 + 验证 agent (对照官方发布·论文原文)
-        │
-        ▼
-[THE FILTER]  ⓐ production 验证  ⓑ AWS 映射  ⓒ 实际问询  ⓓ GA
-        │                                          │
-        │ 满足 2 个及以上                           │ 未达标
-        ▼                                          ▼
-[晋升至支柱正文]                          [在 Radar 中保留一行]
- (由 owner 以标准模板)                     (注明晋升条件)
-        │
-        ▼
-[登上正文之后]
- ├─ ⏳ 新鲜度自动监控 (按 volatility 超过 1/3/6 个月时加徽章)
- ├─ 🌐 4 种语言同步 (ko 原文 → ko_hash → en/zh/ja)
- └─ ✅ strict 构建关卡 (锚点·链接验证) → 自动部署至 GitHub Pages
+```mermaid
+graph TD
+    A1["🤖 每周自动扫描<br>(每周一 02:00 UTC — arXiv·网络)"] --> R
+    A2["💬 SA 提报<br>(晋升管道)"] --> R
+    A3[🔍 手动调研] --> R
+    R["Radar 队列<br>全部标注为'未验证 [4]' — 禁止用于客户提案"] --> V["一手来源验证<br>人 + 验证 agent (对照官方发布·论文原文)"]
+    V --> F{"THE FILTER<br>ⓐ production 验证 ⓑ AWS 映射 ⓒ 实际问询 ⓓ GA"}
+    F -- 满足 2 个及以上 --> P["晋升至支柱正文<br>(由 owner 以标准模板)"]
+    F -- 未达标 --> K["在 Radar 中保留一行<br>(注明晋升条件)"]
+    P --> AFTER[登上正文之后]
+    AFTER --> M1["⏳ 新鲜度自动监控<br>(按 volatility 超过 1/3/6 个月时加徽章)"]
+    AFTER --> M2["🌐 4 种语言同步<br>(ko 原文 → ko_hash → en/zh/ja)"]
+    AFTER --> M3["✅ strict 构建关卡 (锚点·链接验证)<br>→ 自动部署至 GitHub Pages"]
 ```
 
 ---

@@ -1,5 +1,5 @@
 ---
-ko_hash: 3883ffcd27d6249a10b244013ef901558c12b514
+ko_hash: 63066d46602fcdf7313522f209d5100eaf3ac0b6
 ---
 # Guide — How This Playbook Works
 
@@ -12,31 +12,19 @@ _Last updated: 2026-07 · owner: comeddy · volatility: low (process page — up
 
 ## The full process at a glance
 
-```
-[Candidate discovery]
- ├─ 🤖 Weekly automated scan (every Mon 02:00 UTC — arXiv·web)
- ├─ 💬 SA tips (promotion pipeline)
- └─ 🔍 Manual research
-        │
-        ▼
-[Radar queue]  ← all labeled "unverified [4]", not for customer proposals
-        │
-        ▼
-[Primary-source verification]  ← human + verification agent (against official announcements·paper originals)
-        │
-        ▼
-[THE FILTER]  ⓐ production-verified  ⓑ AWS mapping  ⓒ real inquiry  ⓓ GA
-        │                                          │
-        │ 2 or more met                            │ not met
-        ▼                                          ▼
-[Promotion to pillar body]                [kept as one line in Radar]
- (by owner, via standard template)        (with promotion criteria noted)
-        │
-        ▼
-[Even after publishing]
- ├─ ⏳ Automated freshness monitoring (badge when the 1/3/6-month threshold per volatility is exceeded)
- ├─ 🌐 4-language sync (ko original → ko_hash → en/zh/ja)
- └─ ✅ strict build gate (anchor·link validation) → auto-deploy to GitHub Pages
+```mermaid
+graph TD
+    A1["🤖 Weekly automated scan<br>(every Mon 02:00 UTC — arXiv·web)"] --> R
+    A2["💬 SA tips<br>(promotion pipeline)"] --> R
+    A3[🔍 Manual research] --> R
+    R["Radar queue<br>all labeled 'unverified [4]' — not for customer proposals"] --> V["Primary-source verification<br>human + verification agent (against official announcements·paper originals)"]
+    V --> F{"THE FILTER<br>ⓐ production-verified ⓑ AWS mapping ⓒ real inquiry ⓓ GA"}
+    F -- 2 or more met --> P["Promotion to pillar body<br>(by owner, via standard template)"]
+    F -- not met --> K["Kept as one line in Radar<br>(with promotion criteria noted)"]
+    P --> AFTER[Even after publishing]
+    AFTER --> M1["⏳ Automated freshness monitoring<br>(badge when the 1/3/6-month threshold per volatility is exceeded)"]
+    AFTER --> M2["🌐 4-language sync<br>(ko original → ko_hash → en/zh/ja)"]
+    AFTER --> M3["✅ strict build gate (anchor·link validation)<br>→ auto-deploy to GitHub Pages"]
 ```
 
 ---
