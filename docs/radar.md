@@ -85,7 +85,7 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 3. **통과 시**: 담당 필러 owner가 [표준 템플릿](maintenance.md#표준-템플릿)으로 편입, Radar에서 제거
 4. **미달 시**: 여기 한 줄로 유지, 승격 조건 명시
 
-전체 파이프라인 → [maintenance](maintenance.md#슬랙--playbook-승격-파이프라인).
+전체 파이프라인 → [maintenance](maintenance.md#playbook-승격-파이프라인).
 
 ---
 _owner: comeddy · updated: 2026-07 · volatility: 높음 (Radar는 본질적으로 빠르게 변함 — 월 단위 검토 권장)_

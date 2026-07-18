@@ -1,5 +1,5 @@
 ---
-ko_hash: b87551077c1075ca506f3cbe80f3dedff86c50e5
+ko_hash: d9959d1d0901ab61aec1b8d5c46a0d625be7a048
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -101,30 +101,15 @@ _owner: {name} · updated: {YYYY-MM} · volatility: high/low_
 
 ---
 
-## Slack → playbook promotion pipeline
+## playbook promotion pipeline
 
-```
-[Slack/blog/paper/demo]  candidate arises
-        │
-        ▼
-   ① Capture ──── collect candidates via a designated channel + emoji reaction (e.g., 📌)
-   │            or the GitHub issue form "📌 Playbook candidate submission" (THE FILTER checklist built in)
-        │
-        ▼
-   ② Filter ──── the 2.5 gate (2 or more of 4?)
-        │
-        ├─ falls short ──► one line on the Radar page (label + why on hold + promotion condition)
-        │
-        └─ passes ──► ③ Promote
-                        │
-                        ▼
-                  the owning pillar's owner incorporates it via the standard template
-                  · attach maturity label + source grade
-                  · isolate volatile info in a collapsed block
-                  · fill in owner/updated
-                        │
-                        ▼
-                  ④ merge after passing the pre-creation self-check (below)
+```mermaid
+graph TD
+    S["Slack/blog/paper/demo<br>candidate arises"] --> C["① Capture<br>collect candidates via a designated channel + emoji reaction (e.g., 📌)<br>or the GitHub issue form '📌 Playbook candidate submission' (THE FILTER checklist built in)"]
+    C --> F{"② Filter<br>the 2.5 gate (2 or more of 4?)"}
+    F -- falls short --> RD["one line on the Radar page<br>(label + why on hold + promotion condition)"]
+    F -- passes --> PR["③ Promote — the owning pillar's owner incorporates it via the standard template<br>· attach maturity label + source grade<br>· isolate volatile info in a collapsed block<br>· fill in owner/updated"]
+    PR --> M["④ merge after passing the pre-creation self-check (below)"]
 ```
 
 ### Roles

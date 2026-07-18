@@ -1,5 +1,5 @@
 ---
-ko_hash: 41fdadccb4258028b6ae3d4a31d1b814fa5dd769
+ko_hash: a0371a51b08ec4fdde1085e51939e6ee9a061ec9
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -89,7 +89,7 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 3. **通過時**: 担当ピラーの owner が[標準テンプレート](maintenance.md#標準テンプレート)で編入し、Radar から削除
 4. **未達時**: ここに一行で保持し、昇格条件を明示
 
-パイプライン全体 → [maintenance](maintenance.md#slack--playbook-昇格パイプライン)。
+パイプライン全体 → [maintenance](maintenance.md#playbook-昇格パイプライン)。
 
 ---
 _owner: comeddy · updated: 2026-07 · volatility: 高（Radar は本質的に急速に変化します — 月次レビューを推奨）_

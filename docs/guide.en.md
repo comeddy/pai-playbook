@@ -1,5 +1,5 @@
 ---
-ko_hash: 63066d46602fcdf7313522f209d5100eaf3ac0b6
+ko_hash: b224cf141ac14162581df61cee9dfc477f9d7b01
 ---
 # Guide — How This Playbook Works
 
@@ -43,7 +43,7 @@ Items that haven't passed the filter yet live as a single line in the [Radar (qu
 
 ## ④ Verification and promotion — the human's job
 
-Primary-source verification of intake items (official announcements, paper originals, license checks) and the promotion decision are made by a **human (owner)**. The automated scan can produce plausible errors (e.g., a nonexistent product-generation name), so nothing is promoted without verification. Once it passes, the owner folds it into the relevant pillar via the [standard template](maintenance.md#standard-template) and removes it from the Radar. For the full procedure see the [promotion pipeline](maintenance.md#slack--playbook-promotion-pipeline).
+Primary-source verification of intake items (official announcements, paper originals, license checks) and the promotion decision are made by a **human (owner)**. The automated scan can produce plausible errors (e.g., a nonexistent product-generation name), so nothing is promoted without verification. Once it passes, the owner folds it into the relevant pillar via the [standard template](maintenance.md#standard-template) and removes it from the Radar. For the full procedure see the [promotion pipeline](maintenance.md#playbook-promotion-pipeline).
 
 ## ⑤ Automated freshness monitoring
 
@@ -64,5 +64,5 @@ When something is pushed to `main`, CI runs the freshness check and the translat
 | I'm… | Here's how to use it |
 |---|---|
 | **just a reader** | Enter via the FAQ Top 20 or a pillar on the [home](index.md) page. If you just know the labels (🟢🟡🔵⚪) and source grades (`[1]`~`[4]`), you can read the trust level at a glance |
-| **someone who wants to submit an item** | Submit via the [promotion pipeline](maintenance.md#slack--playbook-promotion-pipeline). It's faster if you also note how many of the 4 in THE FILTER it meets |
+| **someone who wants to submit an item** | Submit via the [promotion pipeline](maintenance.md#playbook-promotion-pipeline). It's faster if you also note how many of the 4 in THE FILTER it meets |
 | **owner** | Review the weekly automated intake → primary verification → promote/keep decision. See the full [maintenance rules](maintenance.md) |

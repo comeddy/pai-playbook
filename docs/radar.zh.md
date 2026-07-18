@@ -1,5 +1,5 @@
 ---
-ko_hash: 41fdadccb4258028b6ae3d4a31d1b814fa5dd769
+ko_hash: a0371a51b08ec4fdde1085e51939e6ee9a061ec9
 ---
 # Radar — 队列 / 观察列表
 
@@ -88,7 +88,7 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 3. **通过时**: 由负责的支柱 owner 用[标准模板](maintenance.md#标准模板)编入，并从 Radar 移除
 4. **未达时**: 在此保留一句话，明示晋升条件
 
-完整管道 → [maintenance](maintenance.md#slack--playbook-晋升管道)。
+完整管道 → [maintenance](maintenance.md#playbook-晋升管道)。
 
 ---
 _owner: comeddy · updated: 2026-07 · volatility: 高（Radar 本质上快速变化 —— 建议月度评审）_

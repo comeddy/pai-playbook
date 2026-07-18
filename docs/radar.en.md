@@ -1,5 +1,5 @@
 ---
-ko_hash: 41fdadccb4258028b6ae3d4a31d1b814fa5dd769
+ko_hash: a0371a51b08ec4fdde1085e51939e6ee9a061ec9
 ---
 # Radar — Queue / Watchlist
 
@@ -88,7 +88,7 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 3. **If it passes**: the owning pillar's owner incorporates it via the [standard template](maintenance.md#standard-template) and removes it from the Radar
 4. **If it falls short**: keep it here as a one-liner, with the promotion condition stated
 
-Full pipeline → [maintenance](maintenance.md#slack--playbook-promotion-pipeline).
+Full pipeline → [maintenance](maintenance.md#playbook-promotion-pipeline).
 
 ---
 _owner: comeddy · updated: 2026-07 · volatility: high (the Radar changes fast by nature — monthly review recommended)_
