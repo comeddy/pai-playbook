@@ -1,0 +1,170 @@
+---
+ko_hash: 1290b645404550ea545f9e1233551ad0de552466
+---
+# Maintenance — Ownership · Update Rules · Promotion Pipeline
+
+_Last updated: 2026-07 · owner: TBD ⚠️ · volatility: low_
+[← back to index](index.md)
+
+> **L0 TL;DR**: This defines the **structure that keeps this playbook from going stale**. It separates volatile from stable information, attaches an owner, update date, and volatility to every item, and filters Slack candidates through a gate before promotion. **This page is itself the operating rules.**
+
+---
+
+## Volatile / stable separation
+
+A playbook goes stale because it mixes volatile and stable information. We isolate them structurally.
+
+| Layer | Content | Where | Update cadence |
+|---|---|---|---|
+| **Stable layer** | Principles · architecture patterns · sim-to-real methodology · decision trees | Pillar body (L0/L1) | Rarely |
+| **Volatile layer** | Model versions · GPU price/availability · Preview→GA transitions · benchmark numbers · regions | Each item's `<details>` collapsed block or the [Radar](radar.md) | Often (monthly–quarterly) |
+
+> **Rule**: Volatile information **must be isolated in collapsed blocks/tables**. Do not embed version numbers in the body (stable layer). Updating should touch only the collapsed block.
+
+---
+
+## Required metadata
+
+**Do not create an item without an owner.** At the bottom of every page and item:
+
+```
+_owner: {name} · updated: {YYYY-MM} · volatility: high/medium/low_
+```
+
+- `owner`: if undecided, mark as `TBD ⚠️` to **keep it on the books as debt** (do not hide it).
+- `updated`: the year-month of last actual review. An absolute date (no relative dates).
+- `volatility`: high/medium/low. Determines the staleness cadence.
+
+> ✅ **Pillars P1–P5 owner: comeddy** (assigned 2026-07). Cross-cutting pages (index/decisions/radar/maintenance) are still `TBD ⚠️` — remaining debt.
+
+---
+
+## Staleness rules
+
+When `updated` exceeds the threshold number of months, a **⏳ review needed** badge is placed at the top of the page.
+
+| volatility | Review cadence | When exceeded |
+|---|---|---|
+| high | **1 month** | ⏳ review needed (model versions · GPU · regions · benchmarks) |
+| medium | 3 months | ⏳ review needed |
+| low | 6 months | ⏳ review needed (principles · trees) |
+
+> High-volatility items (pillar-2/3/5, radar) get a shorter cadence. In particular, **AgentCore regions/features, model licenses, and EC2 instance GA** change quickly.
+
+**⚙️ Automated**: badges are not placed manually. CI (`scripts/check_staleness.py`) **injects them automatically just before the build**, and a **weekly Monday cron redeploy** refreshes the badges without any push. If a page's `updated`/`volatility` metadata is missing, the build fails — the metadata is the contract.
+
+---
+
+## Inclusion Criteria (THE FILTER)
+
+A candidate must meet **at least 2 of the 4** below to go into the body. If it falls short, it gets only a one-liner in the [Radar](radar.md).
+
+- [ ] ⓐ **Validated in production or an actual customer deployment** (a demo video alone is insufficient)
+- [ ] ⓑ **Concretely mappable to an AWS service/infrastructure**
+- [ ] ⓒ **Has a history of an actual customer or SA asking about it**
+- [ ] ⓓ **Is GA or has a clear GA roadmap**
+
+> **Hype boundary**: a flashy humanoid demo masks a "mature capability." **Always separate "impressive demo" from "deployable."** (e.g., Figure 03 "8-hour autonomy" = demo vs Digit@GXO = validated)
+
+### Maturity labels (required on every item)
+
+`🟢 GA` / `🟡 Preview` / `🔵 Research-only` / `⚪ Hype (demo only)`
+
+### Source grades (attached to every claim)
+
+`[1] Official docs/paper` > `[2] AWS internal validation` > `[3] Vendor official blog` > `[4] Unverified (Slack/rumor)`
+
+- For numbers/benchmarks, cite **date + source + measurement conditions**. (e.g., "humanoid 82,000 FPS — 4,096 envs · 1×RTX 4090, NVIDIA, 2026")
+- Delete unverified claims or mark them clearly as `[4]`. **Do not state them as fact.**
+
+---
+
+## Standard Template
+
+Promoted items are written in this format.
+
+```
+### {item name}  {maturity label}
+**L0 TL;DR**: (1–2 sentences, what it is and when to use it)
+**Customer need/problem**: (in what situation does it come up)
+**Solution overview**: (core approach + source grade)
+**AWS mapping**: (specific services)
+**Decision criteria**: (when to use this / when to use the alternative — state conditions)
+**Customer case**: (if any; otherwise "case pending")
+**➡️ SA next action**: (demo/workshop/asset link — always filled in)
+**🔗 Related assets**: (internal skill/workshop/deck deep link)
+---
+_owner: {name} · updated: {YYYY-MM} · volatility: high/low_
+```
+
+**Enforce the depth hierarchy**: L0 at the very top. L2 deep-dives are separated into `<details>` folds/links to keep the body short.
+
+---
+
+## Slack → playbook promotion pipeline
+
+```
+[Slack/blog/paper/demo]  candidate arises
+        │
+        ▼
+   ① Capture ──── collect candidates via a designated channel + emoji reaction (e.g., 📌)
+   │            or the GitHub issue form "📌 Playbook candidate submission" (THE FILTER checklist built in)
+        │
+        ▼
+   ② Filter ──── the 2.5 gate (2 or more of 4?)
+        │
+        ├─ falls short ──► one line on the Radar page (label + why on hold + promotion condition)
+        │
+        └─ passes ──► ③ Promote
+                        │
+                        ▼
+                  the owning pillar's owner incorporates it via the standard template
+                  · attach maturity label + source grade
+                  · isolate volatile info in a collapsed block
+                  · fill in owner/updated
+                        │
+                        ▼
+                  ④ merge after passing the pre-creation self-check (below)
+```
+
+### Roles
+
+| Role | Responsibility |
+|---|---|
+| **Capture owner** | Monitor the channel, collect emoji candidates |
+| **Pillar owner** | Gate judgment, promote/Radar decision, template authoring, updates |
+| **Playbook maintainer (TBD ⚠️)** | Staleness badges, structural consistency, quarterly review |
+
+---
+
+## Pre-creation self-check (before merging each page)
+
+- [ ] Do all included items pass 2 or more inclusion criteria? Did you avoid putting anything that falls short into the body?
+- [ ] Does every item have a maturity label + source grade?
+- [ ] Does every item end with "➡️ SA next action"?
+- [ ] Did you avoid describing something demo-only as if it were deployable?
+- [ ] Did you avoid mixing volatile information into the stable layer?
+- [ ] Does every item have owner/updated?
+- [ ] Did you avoid stating unverified information as fact?
+
+> If any one fails, rewrite that page.
+
+---
+
+## Known technical debt (as of 2026-07)
+
+1. ~~All items have no owner~~ → **P1–P5 owner: comeddy assigned (2026-07)**. Cross-cutting pages (index/decisions/radar/maintenance) owners are TBD ⚠️.
+2. **FAQ Top 10 is a seed** — needs replacement/re-ranking with actual customer inquiry history ([index](index.md)).
+3. **Internal asset deep links not connected** — workshop/deck/skill links are in "confirm needed ⚠️" state.
+4. **Insufficient domestic (Korea) customer cases** — mostly "case pending." Domestic robotics companies are NVIDIA-aligned, so this is AWS whitespace.
+5. **Some GitHub release years to be re-confirmed** — Isaac Sim 6.0.1 (🟡 Preview/Early Developer Release — latest GA is 5.1.0), Isaac Lab 2.3.2/3.0 tag years.
+6. **Re-confirm single-source numbers** — Lotte 30%, DROID episode count, some vendor metrics.
+
+---
+
+## This prompt is itself a living document
+
+Look at the actual generation results and **adjust the inclusion criteria, template, and pillar weighting**. Master prompt: `physical-ai-playbook-master-prompt.md`.
+
+---
+_owner: TBD ⚠️ · updated: 2026-07 · volatility: low (operating rules — updated only when the rules change)_
