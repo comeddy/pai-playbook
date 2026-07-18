@@ -1,7 +1,7 @@
 ---
 ko_hash: 9b4254a4567f566d9a7380f1098b5e2675dbfca0
 ---
-# Pillar 2 — Model Training (Model Training · VLA)
+# Pillar 2 — Model Training (VLA)
 
 _Last updated: 2026-07 · owner: comeddy · volatility: high (model versions/licenses/instances change often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
