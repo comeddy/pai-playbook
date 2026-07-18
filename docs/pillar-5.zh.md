@@ -1,5 +1,5 @@
 ---
-ko_hash: 3cf84fbe23c4799507db95dd94973d47610ceb13
+ko_hash: 05f1c794e7d1627a563a529dc22045da3519cd02
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -7,7 +7,7 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高（AgentCore 功能·
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: LLM 智能体指挥机器人·设备的层。这里是 **AWS 最强的支柱** —— **Amazon Bedrock AgentCore 已 GA(2025-10) 且首尔区域完全支持**，实时拦截工具调用的 **Policy(Cedar) 也已 GA(2026-03)**。结构上以 **System 2（慢速 LLM 规划器，云）+ System 1（快速控制，边缘）** 分离为正统。⚠️ Amazon DeepFleet 不是"LLM 智能体"，而是仓库机器人协调的基础模型，切勿混淆。
+> **L0 TL;DR**: LLM 智能体指挥机器人·设备的层。这里是 **AWS 最强的支柱** —— **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) 已 GA(2025-10) 且首尔区域完全支持**，实时拦截工具调用的 **Policy(Cedar) 也已 GA(2026-03)**。结构上以 **System 2（慢速 LLM 规划器，云）+ System 1（快速控制，边缘）** 分离为正统。⚠️ Amazon DeepFleet 不是"LLM 智能体"，而是仓库机器人协调的基础模型，切勿混淆。
 
 ---
 
@@ -30,9 +30,9 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **解决方案概览** `[1]`:
 
 - **GA 历程**: 预览 2025-07 → **GA 2025-10-13**。组件: **Runtime、Memory、Gateway、Identity、Observability、Built-in Tools（Browser·Code Interpreter）**。re:Invent 2025-12 新增 Policy·Evaluations 预览、episodic Memory GA、面向语音的双向流式 Runtime GA。**Policy 于 2026-03-03 GA**。
-- **Policy（核心）**: 与 Gateway 整合，**实时拦截所有 智能体→工具 调用**，以 ms 级评估策略(allow/deny)。用自然语言编写 → 编译为 **Cedar**（AWS 开源策略语言）。**含首尔在内 13 个区域 GA**。→ 约束物理系统工具调用的直接原语（第 5 项安全）。
-- **Strands Agents SDK**（配套）: 模型·云中立的编排 SDK，**已达 1.0（GA 级）**。Amazon Q Developer·Glue 内部使用。与 AgentCore 配对。（版本·指标见折叠块）
-- **Nova Act**（相关）: 浏览器/UI 自动化智能体，re:Invent 2025 **GA**。厂商声称高任务可靠性（数值见折叠块 —— 测量条件未公开）。
+- **Policy（核心）**: 与 Gateway 整合，**实时拦截所有 智能体→工具 调用**，以 ms 级评估策略(allow/deny)。用自然语言编写 → 编译为 **[Cedar](https://www.cedarpolicy.com/)**（AWS 开源策略语言）。**含首尔在内 13 个区域 GA**。→ 约束物理系统工具调用的直接原语（第 5 项安全）。
+- **[Strands Agents SDK](https://strandsagents.com/)**（配套）: 模型·云中立的编排 SDK，**已达 1.0（GA 级）**。Amazon Q Developer·Glue 内部使用。与 AgentCore 配对。（版本·指标见折叠块）
+- **[Nova Act](https://nova.amazon.com/act)**（相关）: 浏览器/UI 自动化智能体，re:Invent 2025 **GA**。厂商声称高任务可靠性（数值见折叠块 —— 测量条件未公开）。
 
 **AWS 映射**: 服务本身即映射。将机器人技能作为工具注册到 Gateway → 智能体以自然语言计划调用，用 Policy 门控，用 Memory 维持会话，用 Observability 追踪。
 
@@ -77,6 +77,20 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **AWS 映射**: **System 2 = 云端 Bedrock AgentCore**（规划·工具编排·护栏），**System 1 = 边缘 Jetson**（实时控制，→ [pillar-4](pillar-4.md)）。能容忍延迟则 System 2 放云上，否则边缘板载。
 
+```mermaid
+graph TD
+    subgraph CLOUD["云（可容忍延迟 · 秒级）"]
+        S2["System 2 · 慢速 LLM 规划器<br>5~10Hz 规划/重规划 · 工具调用<br>Bedrock AgentCore"]
+        POL["Policy(Cedar) · 工具调用门禁"]
+        S2 --> POL
+    end
+    subgraph EDGE["边缘板载（实时 · 毫秒级）"]
+        S1["System 1 · 快速动作策略<br>50~200Hz 实时控制<br>Jetson"]
+    end
+    POL -. 高层规划 · action chunking .-> S1
+    S1 --> ROB["机器人 · 设备"]
+```
+
 **决策标准**: 参见 [decisions Cloud vs Edge](decisions.md)。实时控制回路 → 无条件边缘。规划·重规划 → 可放云/异步。
 
 **客户案例**: Figure、GR00T（开放）。经过验证的生产环境有限。
@@ -93,7 +107,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户需求/问题**: "工厂离线/低带宽。想让智能体不依赖云也能在现场做判断。"
 
-**解决方案概览** `[1]/[3]`: AWS Guidance = **在 IoT Greengrass 设备上部署 Strands Agents + 本地 SLM(Ollama)**。把 GGUF 模型推送到 S3，用 IoT Core MQTT 查询，Orchestrator Agent 向专门智能体（文档·OPC-UA 等）扇出。联网后切换到 Bedrock 云模型。目标行业明示含**机器人**。2026 模式: 训练模型 → 用 Greengrass 部署到 Jetson Thor，通过 VDA 5050 协议转换协调 AMR 机群。
+**解决方案概览** `[1]/[3]`: AWS Guidance = **在 [IoT Greengrass](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html) 设备上部署 Strands Agents + 本地 SLM([Ollama](https://ollama.com/))**。把 GGUF 模型推送到 S3，用 IoT Core MQTT 查询，Orchestrator Agent 向专门智能体（文档·OPC-UA 等）扇出。联网后切换到 Bedrock 云模型。目标行业明示含**机器人**。2026 模式: 训练模型 → 用 Greengrass 部署到 Jetson Thor，通过 VDA 5050 协议转换协调 AMR 机群。
 
 **AWS 映射**: IoT Greengrass V2 + Strands + 本地 SLM(Ollama) + IoT Core(MQTT) + S3（模型）。在线时晋升到 Bedrock/AgentCore。
 
@@ -115,12 +129,26 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]/[3]`:
 
-- **Amazon DeepFleet** 🟢 —— Amazon 仓库机器人机群协调的生成式基础模型（"交通管制"），移动时间效率提升 ~10%，与第 100 万台机器人一同公布(2025-07)。**生产（Amazon 内部）**。⚠️ **不是 LLM 智能体编排器** —— 是多机器人 RL 意义上的"多智能体"。禁止错误归类。
-- **NVIDIA Isaac OSMO** 🟢 —— 机器人**开发/数据/训练工作负载**编排（合成数据·训练·RL·SIL）。GTC 2026 整合编码智能体(Claude Code/Codex/Cursor)。⚠️ **不是现场机器人机群的实时控制** —— 是开发管道编排。
+- **[Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model)** 🟢 —— Amazon 仓库机器人机群协调的生成式基础模型（"交通管制"），移动时间效率提升 ~10%，与第 100 万台机器人一同公布(2025-07)。**生产（Amazon 内部）**。⚠️ **不是 LLM 智能体编排器** —— 是多机器人 RL 意义上的"多智能体"。禁止错误归类。
+- **[NVIDIA Isaac OSMO](https://developer.nvidia.com/osmo)** 🟢 —— 机器人**开发/数据/训练工作负载**编排（合成数据·训练·RL·SIL）。GTC 2026 整合编码智能体(Claude Code/Codex/Cursor)。⚠️ **不是现场机器人机群的实时控制** —— 是开发管道编排。
 - **Formant** 🟡 —— 机群管理 SaaS。在数百个组织中运行但规模较小（具体指标以 `[3]` PitchBook/Crunchbase 为准 —— 644 个组织·<$5M ARR, 2026-05, 变动频繁），未被收购。
 - **CoEvolution** —— Lotte Global Logistics 417 家超级门店的多机群协调，声称 30% 效率（⚠️ 单一 [3] 来源，需再确认）。
 
 **AWS 映射**: IoT Core/Greengrass（机群连接）+ AgentCore（编排逻辑）+ IoT FleetWise/SiteWise（遥测）。DeepFleet 式协调模型用 SageMaker 训练。
+
+```mermaid
+graph TD
+    ORCH["编排逻辑<br>AgentCore"]
+    CONN["连接层<br>IoT Core / Greengrass"]
+    TEL["遥测<br>IoT FleetWise / SiteWise"]
+    TRAIN["协调模型训练<br>SageMaker"]
+    FLEET["机器人机群（仓库 · AMR）"]
+    ORCH --> CONN
+    CONN --> FLEET
+    FLEET -. 状态 · 位置 .-> TEL
+    TEL --> ORCH
+    TRAIN -. DeepFleet 式协调模型 .-> ORCH
+```
 
 **决策标准**: 仓库/AMR 机群协调 → 已验证领域（参考 DeepFleet 式方法）。人形智能体机群 → 仍处早期。开发工作负载 → OSMO(NVIDIA) 或 AWS Batch/Step Functions。
 
@@ -140,8 +168,8 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]/[4]`:
 
-- **智能体层（AWS 原生）**: **AgentCore Policy** —— 用 Cedar 实时 allow/deny 所有 智能体→工具 调用(ms)。约束物理动作工具调用的实用层。**Bedrock Guardrails** —— 过滤 LLM 输入输出（内容·主题·PII）（本身不是执行动作）。
-- **机器人层（功能安全）**: **ISO 10218-1/2**（机器人·集成系统）、**ISO/TS 15066**（协作机器人）、**ISO 13482**（个人辅助机器人）。⚠️ 这些**只涉及物理安全** —— 不覆盖 LLM 语义滥用/幻觉。
+- **智能体层（AWS 原生）**: **AgentCore Policy** —— 用 Cedar 实时 allow/deny 所有 智能体→工具 调用(ms)。约束物理动作工具调用的实用层。**[Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)** —— 过滤 LLM 输入输出（内容·主题·PII）（本身不是执行动作）。
+- **机器人层（功能安全）**: **[ISO 10218-1/2](https://www.iso.org/standard/73933.html)**（机器人·集成系统）、**ISO/TS 15066**（协作机器人）、**ISO 13482**（个人辅助机器人）。⚠️ 这些**只涉及物理安全** —— 不覆盖 LLM 语义滥用/幻觉。
 - **研究**: RoboGuard（安全规则 grounding）、BadRobot（嵌入式 LLM 越狱攻击）、LLM 语义 DoS —— 🔵 研究阶段。标准无法连接功能安全(ISO) 与 LLM 风险的**开放 gap**。
 
 **AWS 映射**: AgentCore Policy(Cedar) + Bedrock Guardrails（智能体层）+ 机器人板载确定性安全（依据 ISO，在 AWS 之外）。

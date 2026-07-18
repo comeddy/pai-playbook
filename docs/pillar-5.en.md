@@ -1,5 +1,5 @@
 ---
-ko_hash: 3cf84fbe23c4799507db95dd94973d47610ceb13
+ko_hash: 05f1c794e7d1627a563a529dc22045da3519cd02
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -7,7 +7,7 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high (AgentCore features
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: The layer where an LLM agent directs robots/equipment. This is **the pillar where AWS is strongest** — **Amazon Bedrock AgentCore is GA (2025-10) with full Seoul region support**, and **Policy (Cedar), which intercepts tool calls in real time, is also GA (2026-03)**. The canonical structure is the **System 2 (slow LLM planner, cloud) + System 1 (fast control, edge)** split. ⚠️ Amazon DeepFleet is not an "LLM agent" but a warehouse robot coordination foundation model, so don't confuse them.
+> **L0 TL;DR**: The layer where an LLM agent directs robots/equipment. This is **the pillar where AWS is strongest** — **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) is GA (2025-10) with full Seoul region support**, and **Policy (Cedar), which intercepts tool calls in real time, is also GA (2026-03)**. The canonical structure is the **System 2 (slow LLM planner, cloud) + System 1 (fast control, edge)** split. ⚠️ Amazon DeepFleet is not an "LLM agent" but a warehouse robot coordination foundation model, so don't confuse them.
 
 ---
 
@@ -30,9 +30,9 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Solution overview** `[1]`:
 
 - **GA history**: preview 2025-07 → **GA 2025-10-13**. Components: **Runtime, Memory, Gateway, Identity, Observability, Built-in Tools (Browser · Code Interpreter)**. At re:Invent 2025-12, Policy · Evaluations preview, episodic Memory GA, and bidirectional streaming Runtime GA for voice were added. **Policy is GA as of 2026-03-03**.
-- **Policy (core)**: integrated with Gateway to **intercept every agent→tool call in real time** and evaluate a policy (allow/deny) in milliseconds. Authored in natural language → compiled to **Cedar** (AWS's open-source policy language). **GA in 13 regions including Seoul**. → a direct primitive for constraining physical-system tool calls (item 5, safety).
-- **Strands Agents SDK** (companion): a model- and cloud-neutral orchestration SDK, **reached 1.0 (GA-class)**. Used internally by Amazon Q Developer · Glue. Pairs with AgentCore. (Versions/metrics in the collapsed block)
-- **Nova Act** (related): a browser/UI automation agent, **GA at re:Invent 2025**. The vendor claims high task reliability (the number is in the collapsed block — measurement conditions undisclosed).
+- **Policy (core)**: integrated with Gateway to **intercept every agent→tool call in real time** and evaluate a policy (allow/deny) in milliseconds. Authored in natural language → compiled to **[Cedar](https://www.cedarpolicy.com/)** (AWS's open-source policy language). **GA in 13 regions including Seoul**. → a direct primitive for constraining physical-system tool calls (item 5, safety).
+- **[Strands Agents SDK](https://strandsagents.com/)** (companion): a model- and cloud-neutral orchestration SDK, **reached 1.0 (GA-class)**. Used internally by Amazon Q Developer · Glue. Pairs with AgentCore. (Versions/metrics in the collapsed block)
+- **[Nova Act](https://nova.amazon.com/act)** (related): a browser/UI automation agent, **GA at re:Invent 2025**. The vendor claims high task reliability (the number is in the collapsed block — measurement conditions undisclosed).
 
 **AWS mapping**: the services themselves are the mapping. Register robot skills as tools on Gateway → the agent invokes them via natural-language planning, gated by Policy, session maintained by Memory, traced by Observability.
 
@@ -77,6 +77,20 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **AWS mapping**: **System 2 = cloud Bedrock AgentCore** (planning · tool orchestration · guardrails), **System 1 = edge Jetson** (real-time control, → [pillar-4](pillar-4.md)). If latency is tolerable, System 2 in the cloud; otherwise edge on-board.
 
+```mermaid
+graph TD
+    subgraph CLOUD["Cloud (latency-tolerant · seconds)"]
+        S2["System 2 · slow LLM planner<br>5~10Hz plan/replan · tool-call<br>Bedrock AgentCore"]
+        POL["Policy(Cedar) · tool-call gate"]
+        S2 --> POL
+    end
+    subgraph EDGE["Edge on-board (real-time · milliseconds)"]
+        S1["System 1 · fast action policy<br>50~200Hz real-time control<br>Jetson"]
+    end
+    POL -. high-level plan · action chunking .-> S1
+    S1 --> ROB["Robot · equipment"]
+```
+
 **Decision criteria**: see [decisions Cloud vs Edge](decisions.md). Real-time control loop → edge unconditionally. Planning/replanning → cloud/async possible.
 
 **Customer case**: Figure, GR00T (open). Validated production is limited.
@@ -93,7 +107,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer need/problem**: "The factory is offline/low-bandwidth. We want the agent to make decisions in the field even without the cloud."
 
-**Solution overview** `[1]/[3]`: The AWS Guidance = deploy **Strands Agents + a local SLM (Ollama) to IoT Greengrass devices**. Push a GGUF model to S3, query over IoT Core MQTT, and an Orchestrator Agent fans out to specialist agents (documents, OPC-UA, etc.). When connected, switch to a Bedrock cloud model. **Robotics** is explicitly listed among target industries. 2026 pattern: trained model → deployed to Jetson Thor via Greengrass, coordinating AMR fleets via VDA 5050 protocol conversion.
+**Solution overview** `[1]/[3]`: The AWS Guidance = deploy **Strands Agents + a local SLM ([Ollama](https://ollama.com/)) to [IoT Greengrass](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html) devices**. Push a GGUF model to S3, query over IoT Core MQTT, and an Orchestrator Agent fans out to specialist agents (documents, OPC-UA, etc.). When connected, switch to a Bedrock cloud model. **Robotics** is explicitly listed among target industries. 2026 pattern: trained model → deployed to Jetson Thor via Greengrass, coordinating AMR fleets via VDA 5050 protocol conversion.
 
 **AWS mapping**: IoT Greengrass V2 + Strands + local SLM (Ollama) + IoT Core (MQTT) + S3 (models). When online, promote to Bedrock/AgentCore.
 
@@ -115,12 +129,26 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Solution overview** `[1]/[3]`:
 
-- **Amazon DeepFleet** 🟢 — a generative foundation model for coordinating Amazon warehouse robot fleets ("traffic control"), ~10% travel-time efficiency improvement, announced with the 1-millionth robot (2025-07). **Production (Amazon internal)**. ⚠️ **Not an LLM agent orchestrator** — "multi-agent" in the multi-robot RL sense. Do not misclassify.
-- **NVIDIA Isaac OSMO** 🟢 — orchestration of robotics **development/data/training workloads** (synthetic data · training · RL · SIL). At GTC 2026, integrated coding agents (Claude Code/Codex/Cursor). ⚠️ **Not real-time control of a field robot fleet** — development-pipeline orchestration.
+- **[Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model)** 🟢 — a generative foundation model for coordinating Amazon warehouse robot fleets ("traffic control"), ~10% travel-time efficiency improvement, announced with the 1-millionth robot (2025-07). **Production (Amazon internal)**. ⚠️ **Not an LLM agent orchestrator** — "multi-agent" in the multi-robot RL sense. Do not misclassify.
+- **[NVIDIA Isaac OSMO](https://developer.nvidia.com/osmo)** 🟢 — orchestration of robotics **development/data/training workloads** (synthetic data · training · RL · SIL). At GTC 2026, integrated coding agents (Claude Code/Codex/Cursor). ⚠️ **Not real-time control of a field robot fleet** — development-pipeline orchestration.
 - **Formant** 🟡 — fleet management SaaS. Running in hundreds of organizations but small-scale (concrete metrics per `[3]` PitchBook/Crunchbase — 644 organizations · <$5M ARR, 2026-05, changes often), not acquired.
 - **CoEvolution** — coordinates multi-fleet across Lotte Global Logistics 417 superstores, claims 30% efficiency (⚠️ single [3] source, re-confirmation needed).
 
 **AWS mapping**: IoT Core/Greengrass (fleet connectivity) + AgentCore (orchestration logic) + IoT FleetWise/SiteWise (telemetry). Train a DeepFleet-style coordination model with SageMaker.
+
+```mermaid
+graph TD
+    ORCH["Orchestration logic<br>AgentCore"]
+    CONN["Connectivity layer<br>IoT Core / Greengrass"]
+    TEL["Telemetry<br>IoT FleetWise / SiteWise"]
+    TRAIN["Coordination-model training<br>SageMaker"]
+    FLEET["Robot fleet (warehouse · AMR)"]
+    ORCH --> CONN
+    CONN --> FLEET
+    FLEET -. state · location .-> TEL
+    TEL --> ORCH
+    TRAIN -. DeepFleet-style coordination model .-> ORCH
+```
 
 **Decision criteria**: warehouse/AMR fleet coordination → a validated area (reference the DeepFleet-style approach). Humanoid agent fleet → still early. Development workload → OSMO (NVIDIA) or AWS Batch/Step Functions.
 
@@ -140,8 +168,8 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Solution overview** `[1]/[4]`:
 
-- **Agent layer (AWS-native)**: **AgentCore Policy** — real-time allow/deny (ms) via Cedar on every agent→tool call. A practical layer for constraining physical-action tool calls. **Bedrock Guardrails** — filters LLM input/output (content · topic · PII) (not the actuation itself).
-- **Robot layer (functional safety)**: **ISO 10218-1/2** (robots · integrated systems), **ISO/TS 15066** (collaborative robots), **ISO 13482** (personal care robots). ⚠️ These cover **physical safety only** — LLM semantic misuse/hallucination is not covered.
+- **Agent layer (AWS-native)**: **AgentCore Policy** — real-time allow/deny (ms) via Cedar on every agent→tool call. A practical layer for constraining physical-action tool calls. **[Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)** — filters LLM input/output (content · topic · PII) (not the actuation itself).
+- **Robot layer (functional safety)**: **[ISO 10218-1/2](https://www.iso.org/standard/73933.html)** (robots · integrated systems), **ISO/TS 15066** (collaborative robots), **ISO 13482** (personal care robots). ⚠️ These cover **physical safety only** — LLM semantic misuse/hallucination is not covered.
 - **Research**: RoboGuard (safety-rule grounding), BadRobot (embedded-LLM jailbreak attacks), LLM semantic DoS — 🔵 research stage. An **open gap** where standards don't bridge functional safety (ISO) and LLM risk.
 
 **AWS mapping**: AgentCore Policy (Cedar) + Bedrock Guardrails (agent layer) + robot on-board deterministic safety (ISO-conformant, outside AWS).

@@ -4,7 +4,7 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음(AgentCore 기능
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
-> **L0 TL;DR**: LLM 에이전트가 로봇·설비를 지휘하는 계층. 여기가 **AWS가 가장 강한 필러**다 — **Amazon Bedrock AgentCore가 GA(2025-10)이고 서울 리전 완전 지원**, 툴 호출을 실시간 가로채는 **Policy(Cedar)도 GA(2026-03)**. 구조는 **System 2(느린 LLM 플래너, 클라우드) + System 1(빠른 제어, 엣지)** 분리가 정석. ⚠️ Amazon DeepFleet은 "LLM 에이전트"가 아니라 창고 로봇 조율 파운데이션 모델이니 혼동 금지.
+> **L0 TL;DR**: LLM 에이전트가 로봇·설비를 지휘하는 계층. 여기가 **AWS가 가장 강한 필러**다 — **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/)가 GA(2025-10)이고 서울 리전 완전 지원**, 툴 호출을 실시간 가로채는 **Policy(Cedar)도 GA(2026-03)**. 구조는 **System 2(느린 LLM 플래너, 클라우드) + System 1(빠른 제어, 엣지)** 분리가 정석. ⚠️ Amazon DeepFleet은 "LLM 에이전트"가 아니라 창고 로봇 조율 파운데이션 모델이니 혼동 금지.
 
 ---
 
@@ -27,9 +27,9 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **솔루션 개요** `[1]`:
 
 - **GA 이력**: 프리뷰 2025-07 → **GA 2025-10-13**. 컴포넌트: **Runtime, Memory, Gateway, Identity, Observability, Built-in Tools(Browser·Code Interpreter)**. re:Invent 2025-12에 Policy·Evaluations 프리뷰, episodic Memory GA, 음성용 양방향 스트리밍 Runtime GA 추가. **Policy는 2026-03-03 GA**.
-- **Policy(핵심)**: Gateway와 통합해 **모든 에이전트→툴 호출을 실시간 가로채** 정책(allow/deny)을 ms 단위 평가. 자연어로 작성 → **Cedar**(AWS 오픈소스 정책 언어)로 컴파일. **서울 포함 13개 리전 GA**. → 물리 시스템 툴 호출을 제약하는 직접 프리미티브(5번 안전).
-- **Strands Agents SDK**(동반): 모델·클라우드 중립 오케스트레이션 SDK, **1.0 도달(GA급)**. Amazon Q Developer·Glue가 내부 사용. AgentCore와 페어링. (버전·지표는 접힌 블록)
-- **Nova Act**(관련): 브라우저/UI 자동화 에이전트, re:Invent 2025 **GA**. 벤더가 높은 태스크 신뢰성을 주장(수치는 접힌 블록 — 측정 조건 미공개).
+- **Policy(핵심)**: Gateway와 통합해 **모든 에이전트→툴 호출을 실시간 가로채** 정책(allow/deny)을 ms 단위 평가. 자연어로 작성 → **[Cedar](https://www.cedarpolicy.com/)**(AWS 오픈소스 정책 언어)로 컴파일. **서울 포함 13개 리전 GA**. → 물리 시스템 툴 호출을 제약하는 직접 프리미티브(5번 안전).
+- **[Strands Agents SDK](https://strandsagents.com/)**(동반): 모델·클라우드 중립 오케스트레이션 SDK, **1.0 도달(GA급)**. Amazon Q Developer·Glue가 내부 사용. AgentCore와 페어링. (버전·지표는 접힌 블록)
+- **[Nova Act](https://nova.amazon.com/act)**(관련): 브라우저/UI 자동화 에이전트, re:Invent 2025 **GA**. 벤더가 높은 태스크 신뢰성을 주장(수치는 접힌 블록 — 측정 조건 미공개).
 
 **AWS 매핑**: 서비스 자체가 매핑. 로봇 스킬을 Gateway에 툴로 등록 → 에이전트가 자연어 계획으로 호출, Policy로 게이팅, Memory로 세션 유지, Observability로 추적.
 
@@ -74,6 +74,20 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **AWS 매핑**: **System 2 = 클라우드 Bedrock AgentCore**(계획·툴 오케스트레이션·가드레일), **System 1 = 엣지 Jetson**(실시간 제어, → [pillar-4](pillar-4.md)). 지연 허용되면 System 2 클라우드, 아니면 엣지 온보드.
 
+```mermaid
+graph TD
+    subgraph CLOUD["클라우드 (지연 허용 · 초 단위)"]
+        S2["System 2 · 느린 LLM 플래너<br>5~10Hz 계획·재계획·툴콜<br>Bedrock AgentCore"]
+        POL["Policy(Cedar) · 툴 호출 게이트"]
+        S2 --> POL
+    end
+    subgraph EDGE["엣지 온보드 (실시간 · 밀리초)"]
+        S1["System 1 · 빠른 액션 정책<br>50~200Hz 실시간 제어<br>Jetson"]
+    end
+    POL -. 고수준 계획 · action chunking .-> S1
+    S1 --> ROB["로봇 · 설비"]
+```
+
 **의사결정 기준**: [decisions Cloud vs Edge](decisions.md) 참조. 실시간 제어 루프 → 무조건 엣지. 계획·재계획 → 클라우드/비동기 가능.
 
 **고객 사례**: Figure, GR00T(오픈). 검증 프로덕션 제한적.
@@ -90,7 +104,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **고객 니즈/문제**: "공장이 오프라인/저대역이다. 클라우드 없이도 에이전트가 현장에서 판단하게 하고 싶다."
 
-**솔루션 개요** `[1]/[3]`: AWS Guidance = **IoT Greengrass 디바이스에 Strands Agents + 로컬 SLM(Ollama)** 배포. GGUF 모델을 S3로 푸시, IoT Core MQTT로 질의, Orchestrator Agent가 전문 에이전트(문서·OPC-UA 등)로 팬아웃. 연결되면 Bedrock 클라우드 모델로 전환. 대상 산업에 **로보틱스** 명시. 2026 패턴: 학습 모델 → Jetson Thor에 Greengrass로 배포, VDA 5050 프로토콜 변환으로 AMR 플릿 조율.
+**솔루션 개요** `[1]/[3]`: AWS Guidance = **[IoT Greengrass](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html) 디바이스에 Strands Agents + 로컬 SLM([Ollama](https://ollama.com/))** 배포. GGUF 모델을 S3로 푸시, IoT Core MQTT로 질의, Orchestrator Agent가 전문 에이전트(문서·OPC-UA 등)로 팬아웃. 연결되면 Bedrock 클라우드 모델로 전환. 대상 산업에 **로보틱스** 명시. 2026 패턴: 학습 모델 → Jetson Thor에 Greengrass로 배포, VDA 5050 프로토콜 변환으로 AMR 플릿 조율.
 
 **AWS 매핑**: IoT Greengrass V2 + Strands + 로컬 SLM(Ollama) + IoT Core(MQTT) + S3(모델). 온라인 시 Bedrock/AgentCore로 승격.
 
@@ -112,12 +126,26 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **솔루션 개요** `[1]/[3]`:
 
-- **Amazon DeepFleet** 🟢 — Amazon 창고 로봇 플릿 조율 생성형 파운데이션 모델("교통 관제"), ~10% 이동시간 효율 개선, 100만 번째 로봇과 함께 발표(2025-07). **프로덕션(Amazon 내부)**. ⚠️ **LLM 에이전트 오케스트레이터 아님** — 멀티로봇 RL 의미의 "멀티에이전트". 잘못 분류 금지.
-- **NVIDIA Isaac OSMO** 🟢 — 로보틱스 **개발/데이터/학습 워크로드** 오케스트레이션(합성데이터·학습·RL·SIL). GTC 2026에 코딩 에이전트(Claude Code/Codex/Cursor) 통합. ⚠️ **현장 로봇 플릿 실시간 제어가 아님** — 개발 파이프라인 오케스트레이션.
+- **[Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model)** 🟢 — Amazon 창고 로봇 플릿 조율 생성형 파운데이션 모델("교통 관제"), ~10% 이동시간 효율 개선, 100만 번째 로봇과 함께 발표(2025-07). **프로덕션(Amazon 내부)**. ⚠️ **LLM 에이전트 오케스트레이터 아님** — 멀티로봇 RL 의미의 "멀티에이전트". 잘못 분류 금지.
+- **[NVIDIA Isaac OSMO](https://developer.nvidia.com/osmo)** 🟢 — 로보틱스 **개발/데이터/학습 워크로드** 오케스트레이션(합성데이터·학습·RL·SIL). GTC 2026에 코딩 에이전트(Claude Code/Codex/Cursor) 통합. ⚠️ **현장 로봇 플릿 실시간 제어가 아님** — 개발 파이프라인 오케스트레이션.
 - **Formant** 🟡 — 플릿 관리 SaaS. 수백 개 조직에서 운영 중이나 소규모(구체 지표는 `[3]` PitchBook/Crunchbase 기준 — 644개 조직·<$5M ARR, 2026-05, 변동 잦음), 미인수.
 - **CoEvolution** — Lotte Global Logistics 417 슈퍼스토어 멀티플릿 조율, 30% 효율 주장(⚠️ 단일 [3] 출처, 재확인 필요).
 
 **AWS 매핑**: IoT Core/Greengrass(플릿 연결) + AgentCore(오케스트레이션 로직) + IoT FleetWise/SiteWise(텔레메트리). DeepFleet식 조율 모델은 SageMaker로 학습.
+
+```mermaid
+graph TD
+    ORCH["조율 로직<br>AgentCore"]
+    CONN["연결 계층<br>IoT Core / Greengrass"]
+    TEL["텔레메트리<br>IoT FleetWise / SiteWise"]
+    TRAIN["조율 모델 학습<br>SageMaker"]
+    FLEET["로봇 플릿 (창고 · AMR)"]
+    ORCH --> CONN
+    CONN --> FLEET
+    FLEET -. 상태 · 위치 .-> TEL
+    TEL --> ORCH
+    TRAIN -. DeepFleet식 조율 모델 .-> ORCH
+```
 
 **의사결정 기준**: 창고/AMR 플릿 조율 → 검증된 영역(DeepFleet식 접근 참조). 휴머노이드 에이전트 플릿 → 아직 초기. 개발 워크로드 → OSMO(NVIDIA) 또는 AWS Batch/Step Functions.
 
@@ -137,8 +165,8 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **솔루션 개요** `[1]/[4]`:
 
-- **에이전트층(AWS 네이티브)**: **AgentCore Policy** — 모든 에이전트→툴 호출을 Cedar로 실시간 allow/deny(ms). 물리 액션 툴 호출을 제약하는 실용 계층. **Bedrock Guardrails** — LLM 입출력(콘텐츠·주제·PII) 필터(액추에이션 자체는 아님).
-- **로봇층(기능 안전)**: **ISO 10218-1/2**(로봇·통합시스템), **ISO/TS 15066**(협동로봇), **ISO 13482**(개인지원로봇). ⚠️ 이들은 **물리 안전만** — LLM 의미적 악용/환각은 미커버.
+- **에이전트층(AWS 네이티브)**: **AgentCore Policy** — 모든 에이전트→툴 호출을 Cedar로 실시간 allow/deny(ms). 물리 액션 툴 호출을 제약하는 실용 계층. **[Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)** — LLM 입출력(콘텐츠·주제·PII) 필터(액추에이션 자체는 아님).
+- **로봇층(기능 안전)**: **[ISO 10218-1/2](https://www.iso.org/standard/73933.html)**(로봇·통합시스템), **ISO/TS 15066**(협동로봇), **ISO 13482**(개인지원로봇). ⚠️ 이들은 **물리 안전만** — LLM 의미적 악용/환각은 미커버.
 - **연구**: RoboGuard(안전규칙 grounding), BadRobot(임베디드 LLM 탈옥 공격), LLM 의미적 DoS — 🔵 연구단계. 표준이 기능안전(ISO)과 LLM 위험을 잇지 못하는 **열린 갭**.
 
 **AWS 매핑**: AgentCore Policy(Cedar) + Bedrock Guardrails(에이전트층) + 로봇 온보드 결정적 안전(ISO 준거, AWS 밖).
