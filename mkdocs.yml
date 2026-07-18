@@ -54,7 +54,11 @@ markdown_extensions:
   - md_in_html            # <details markdown="1"> 내부 마크다운(표) 렌더링에 필수
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - toc:
       permalink: true
       # 한국어 헤딩 앵커 유지 (기본 slugify는 비ASCII를 제거해 페이지 내 링크가 깨짐)

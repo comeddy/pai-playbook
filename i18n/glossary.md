@@ -65,6 +65,7 @@ AWS 서비스명 전부(SageMaker, S3, Batch, ...), 모델·데이터셋·라이
   heading에 맞춰 반드시 함께 갱신. 게이트는 `mkdocs build --strict`.
   strict가 통과 못 하면 빌드 산출물의 실제 `<h2 id>`를 읽어 링크를 맞춘다
   (이모지 포함 heading은 사전 계산 슬러그가 자주 틀린다 — 2026-07-11 실측).
+- **mermaid 코드 펜스**: 내부 라벨 텍스트는 번역하되, 노드 ID·화살표·방향 선언(graph LR/TD)·구조는 4개 언어 동일하게 유지.
 - **유지**: 상태 배지(🟢 GA 등)·이모지·인용 마커 `[1]`·코드 블록·URL·표 구조·
   admonition 구문(`!!! warning "..."`)·`<details markdown="1">` 블록은 그대로.
 - **페이지 메타데이터 라인**: `_최종 갱신: ... · owner: ... · volatility: ..._`은
