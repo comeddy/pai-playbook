@@ -27,14 +27,23 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **솔루션 개요** `[1]`:
 
 - **버전**: Isaac Sim 최신 **GA = 5.1.0(2025-10-30)**. **6.0은 Preview**("Early Developer Release", GTC'26) — GitHub 패치태그가 "GA"로 잘못 붙어있어도 **6.0을 GA로 말하지 말 것**. Isaac Lab 안정판 2.3.x, 3.0은 beta(Newton 물리엔진 도입).
-- **라이선스**: Isaac Sim **소스는 Apache 2.0**(상업 무료). 단 **Omniverse Kit 런타임**을 3자 재배포/SaaS 제공/턴키 설치하면 **NVIDIA AI Enterprise 라이선스 필요**. 내부 R&D나 결과물만 판매하면 불필요. Isaac Lab은 BSD-3.
+- **라이선스**: Isaac Sim **소스는 Apache 2.0**(상업 무료). 단 **Omniverse Kit 런타임**을 3자 재배포/SaaS 제공/턴키 설치하면 **NVIDIA AI Enterprise 라이선스 필요**. 내부 R&D나 결과물만 판매하면 불필요. [Isaac Lab](https://github.com/isaac-sim/IsaacLab)은 BSD-3.
 - **GPU 요구**: **RTX(RT Core) 필수**. 최소 RTX 4080(16GB), 이상적 RTX PRO 6000 Blackwell(48GB). **A100/H100 미지원**(RT Core 없음).
 
 **AWS 매핑** `[1]`:
 
-- **인스턴스**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**. 공식 **Isaac Sim Development Workstation AMI**(build 2026.1.1, Ubuntu 24.04, 무료)가 G6e·G7e 지원, `g6e.4xlarge` 권장.
-- **접속**: NICE DCV(=Amazon DCV) 클라이언트/웹으로 원격 GUI 스트리밍.
+- **인스턴스**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**. 공식 **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)**(build 2026.1.1, Ubuntu 24.04, 무료)가 G6e·G7e 지원, `g6e.4xlarge` 권장.
+- **접속**: [NICE DCV](https://aws.amazon.com/hpc/dcv/)(=Amazon DCV) 클라이언트/웹으로 원격 GUI 스트리밍.
 - **참조 아키텍처**: **AWS Solutions Guidance "Physical AI for Robotics on AWS"**(Isaac Sim on GPU EC2 + Isaac Lab + SageMaker + IoT Greengrass 엣지). AWS에 **Physical AI 전용 블로그 채널**(aws.amazon.com/blogs/physical-ai/) 존재.
+
+```mermaid
+graph LR
+    U[SA / 개발자] -- NICE DCV 원격 GUI --> WS["EC2 G6e/G7e<br>Isaac Sim AMI (GUI)"]
+    WS -- 씬 편집 · SDG --> D[(USD 자산 · 데이터)]
+    U -- 잡 제출 --> B["AWS Batch MNP<br>헤드리스 Isaac Lab"]
+    D --> B
+    B --> P[(학습된 정책)]
+```
 
 **의사결정 기준**:
 
@@ -70,7 +79,16 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **솔루션 개요** `[1]/[3]`:
 
 - Isaac Lab은 **GPU 한 장에서 수천~8천 환경을 동시 시뮬레이션**하고, 멀티노드로 선형에 가깝게 스케일한다(구체 수치는 아래 접힌 블록 — 인용 시 반드시 측정조건 병기).
-- **AWS Batch Multi-Node Parallel Jobs**가 AWS 권장 오케스트레이터(RoboMaker 마이그레이션 경로이기도). AWS HPC/Physical AI 블로그에 Isaac Lab on G6e + Batch MNP + EFS + ECR 레퍼런스 존재.
+- **[AWS Batch Multi-Node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)**가 AWS 권장 오케스트레이터(RoboMaker 마이그레이션 경로이기도). AWS HPC/Physical AI 블로그에 Isaac Lab on G6e + Batch MNP + EFS + ECR 레퍼런스 존재.
+
+```mermaid
+graph TD
+    S[정책 학습] --> Q{관측 유형 · 규모?}
+    Q -- 상태 관측 · 대부분 로코모션 --> ONE["단일 EC2 GPU<br>수천~8,192 환경 동시"]
+    Q -- 픽셀 관측 · 초대형 --> MNP[AWS Batch Multi-Node Parallel]
+    MNP --- EFS[(EFS 공유 스토리지)]
+    MNP --- ECR[(ECR 컨테이너)]
+```
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (벤치마크 — NVIDIA 공식 성능 벤치, "with training" 기준, 2026-07 확인)</summary>
 
@@ -108,9 +126,9 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **솔루션 개요** `[1]`:
 
-- **MuJoCo / MJX** — C 엔진 GA(v3.10), **MJX-JAX**는 성숙한 RL 워크호스(미분가능, 크로스벤더), **MuJoCo Warp는 Alpha**(프로덕션 아님). **Unitree가 Go2/G1/H1 RL에 자체 MuJoCo 레포 유지 = 실제 벤더 채택**. MuJoCo Playground는 RSS 2025 검증, 6개 플랫폼 sim-to-real.
-- **Gazebo** — 최신 LTS **Jetty**(2025-09), **Harmonic**이 가장 널리 배포. ROS 2 네이티브. ⚠️ **Gazebo Classic 11은 2025-01 EOL** — 신규 프로젝트에 Classic 금지. CPU 기반이라 GPU 병렬 RL엔 부적합(Isaac 보완재).
-- **Genesis** — Apache 2.0, 활발하나 **"43M FPS/430,000배" 주장은 현실 워크로드에서 반박됨**(접촉 많은 조작에서 오히려 ManiSkill보다 3~10배 느림). Isaac 대체재로 검증 안 됨 → **⚪ 과장 주의**.
+- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** — C 엔진 GA(v3.10), **MJX-JAX**는 성숙한 RL 워크호스(미분가능, 크로스벤더), **MuJoCo Warp는 Alpha**(프로덕션 아님). **Unitree가 Go2/G1/H1 RL에 자체 MuJoCo 레포 유지 = 실제 벤더 채택**. [MuJoCo Playground](https://playground.mujoco.org/)는 RSS 2025 검증, 6개 플랫폼 sim-to-real.
+- **[Gazebo](https://gazebosim.org/)** — 최신 LTS **Jetty**(2025-09), **Harmonic**이 가장 널리 배포. ROS 2 네이티브. ⚠️ **Gazebo Classic 11은 2025-01 EOL** — 신규 프로젝트에 Classic 금지. CPU 기반이라 GPU 병렬 RL엔 부적합(Isaac 보완재).
+- **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** — Apache 2.0, 활발하나 **"43M FPS/430,000배" 주장은 현실 워크로드에서 반박됨**(접촉 많은 조작에서 오히려 ManiSkill보다 3~10배 느림). Isaac 대체재로 검증 안 됨 → **⚪ 과장 주의**.
 
 **AWS 매핑**: 전부 EC2에서 실행 가능. MuJoCo/MJX(JAX)는 **A100/H100(P4/P5)도 활용 가능**(RTX 렌더링 불필요) — Isaac과 달리 컴퓨트 GPU 사용 가능한 게 장점. 대규모는 AWS Batch.
 
@@ -120,6 +138,14 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 - 미분가능·경량·크로스벤더 GPU·빠른 RL 반복 → **MuJoCo/MJX**.
 - ROS 2 통합·CPU·전통 로보틱스 → **Gazebo**.
 - Genesis → PoC/실험만, 프로덕션 의존 금지.
+
+```mermaid
+graph TD
+    Q{무엇이 우선인가?} -- 포토리얼 렌더 · SDG · 풀스택 --> I["Isaac Sim 🟢<br>(G6e/G7e 필요)"]
+    Q -- 미분가능 · 크로스벤더 GPU · 빠른 RL 반복 --> M["MuJoCo / MJX 🟢<br>(P4/P5도 가능)"]
+    Q -- ROS 2 통합 · CPU · 전통 로보틱스 --> G[Gazebo 🟢]
+    Q -- 최신 화제성 검증 --> X["Genesis ⚪<br>PoC만 · 프로덕션 금지"]
+```
 
 **고객 사례**: **Unitree**(MuJoCo, 프로덕션 HW 학습).
 
@@ -135,7 +161,7 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **고객 니즈/문제**: "다양한 현실 시나리오를 생성해 학습/평가에 쓰고 싶다." (데이터 생성 관점은 [pillar-1](pillar-1.md))
 
-**솔루션 개요** `[1]`: **Cosmos 3**(2026-05-31 GTC Taipei GA)가 현 플래그십 — Reasoner(VLM) + Generator(diffusion), MoT 아키텍처. **Super 64B**(데이터센터), **Nano 16B**(RTX PRO 6000, 실시간 로보틱스, Nano-Policy-DROID 포함), **Edge**(Jetson, 예정 — 파라미터 미공개). 라이선스 **OpenMDW-1.1(상업 가능)**. HF/GitHub/NGC 배포. ⚠️ 구 Predict/Transfer/Reason 라인업은 유지보수 모드(Cosmos 3로 이전 권고).
+**솔루션 개요** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)**(2026-05-31 GTC Taipei GA)가 현 플래그십 — Reasoner(VLM) + Generator(diffusion), MoT 아키텍처. **Super 64B**(데이터센터), **Nano 16B**(RTX PRO 6000, 실시간 로보틱스, Nano-Policy-DROID 포함), **Edge**(Jetson, 예정 — 파라미터 미공개). 라이선스 **OpenMDW-1.1(상업 가능)**. HF/GitHub/NGC 배포. ⚠️ 구 Predict/Transfer/Reason 라인업은 유지보수 모드(Cosmos 3로 이전 권고).
 
 **AWS 매핑**: **직접 매핑 약함** — Cosmos 3는 AWS가 명시 호스트가 아님. 다만 오픈 가중치(HF/GitHub)라 **EC2 G7e(Nano 16B, RTX PRO 6000)에서 셀프 호스팅 가능**. 이게 AWS의 각도: "매니지드 호스트는 아니어도 최적 GPU로 직접 돌릴 수 있다".
 
@@ -157,7 +183,7 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **솔루션 개요** `[1]`:
 
-- **AWS IoT TwinMaker** — GA, 공식 제품 페이지 활성, 폐기 배너 없음(2026-07-11 확인). ⚠️ innfactory.de/oneuptime.com 등의 "discontinued" 주장은 **미검증 루머**로 반복 금지. 단 2025~26 주요 신기능 없어 **저속도**.
+- **[AWS IoT TwinMaker](https://aws.amazon.com/iot-twinmaker/)** — GA, 공식 제품 페이지 활성, 폐기 배너 없음(2026-07-11 확인). ⚠️ innfactory.de/oneuptime.com 등의 "discontinued" 주장은 **미검증 루머**로 반복 금지. 단 2025~26 주요 신기능 없어 **저속도**.
 - **NVIDIA Omniverse on AWS** — Marketplace AMI(Developer/Production, Linux/Windows). **EC2 G6e/G7e** 실행. Production AMI는 AI Enterprise 라이선스 + 지원이 번들된 유상 구독. ⚠️ **전용 "OVX" 인스턴스 패밀리 없음** — Omniverse on AWS = G6e/G7e + AMI. 매니지드 "Omniverse Enterprise on AWS"는 명확한 근거 없음.
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (AMI 버전·가격 — 2026-07 확인)</summary>
