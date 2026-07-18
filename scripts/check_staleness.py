@@ -12,6 +12,8 @@
 
 주입된 배지는 빌드 산출물에만 존재한다 — CI 워크스페이스에서 mkdocs build 직전에 실행되고
 저장소에는 커밋되지 않는다. 주간 cron 재배포가 푸시 없이도 배지를 최신으로 유지한다.
+
+번역 파일(`*.en.md`/`*.zh.md`/`*.ja.md`)은 검사하지 않으며, 배지는 존재하는 변형에 해당 언어로 함께 주입된다.
 """
 import argparse
 import datetime
@@ -24,10 +26,48 @@ DOCS = pathlib.Path(__file__).resolve().parent.parent / "docs"
 # maintenance.md의 주기 규칙과 반드시 일치시킬 것
 THRESHOLD_MONTHS = {"높음": 1, "중간": 3, "낮음": 6}
 
-BADGE_MARK = "⏳ 검토 필요"
-# 멱등성 가드는 admonition 전체 형태로 판별한다 — maintenance.md 본문(규칙 표)에
-# "⏳ 검토 필요" 리터럴이 존재하므로 BADGE_MARK 단독 검사는 영구 스킵 버그가 된다.
-BADGE_GUARD = f'!!! warning "{BADGE_MARK}"'
+# 번역 파일 언어 suffix — 검사·메타데이터 강제는 한국어 원본만, 배지는 변형에도 주입
+LANGS = ("en", "zh", "ja")
+
+# 언어별 배지 템플릿. 멱등성 가드는 admonition 첫 줄 전체 형태로 판별한다 —
+# maintenance.md 본문(규칙 표)에 "⏳ 검토 필요" 리터럴이 존재하므로 제목 단독 검사는
+# 영구 스킵 버그가 된다. ko 리터럴은 maintenance.md 규칙 표와의 계약이므로 변경 금지.
+BADGE_TITLE = {
+    "ko": "⏳ 검토 필요",
+    "en": "⏳ Review needed",
+    "zh": "⏳ 需要复核",
+    "ja": "⏳ 要レビュー",
+}
+VOL_LABEL = {
+    "ko": {"높음": "높음", "중간": "중간", "낮음": "낮음"},
+    "en": {"높음": "high", "중간": "medium", "낮음": "low"},
+    "zh": {"높음": "高", "중간": "中", "낮음": "低"},
+    "ja": {"높음": "高", "중간": "中", "낮음": "低"},
+}
+BADGE_BODY = {
+    "ko": (
+        "    이 페이지의 updated({u})가 volatility "
+        "'{v}' 기준({t}개월)을 {o}개월 초과했습니다. "
+        "내용 검토 후 `updated`를 갱신하세요. "
+        "([갱신 규칙](maintenance.md))\n"
+    ),
+    "en": (
+        "    This page's updated ({u}) exceeds the volatility '{v}' "
+        "threshold ({t} months) by {o} month(s). The Korean source needs review; "
+        "refresh `updated` after syncing. ([update rules](maintenance.md))\n"
+    ),
+    "zh": (
+        "    本页的 updated（{u}）已超出 volatility“{v}”标准（{t} 个月）{o} 个月。"
+        "请以韩文原文为准复核内容后更新 `updated`。（[更新规则](maintenance.md)）\n"
+    ),
+    "ja": (
+        "    このページの updated（{u}）は volatility「{v}」基準（{t}か月）を"
+        "{o}か月超過しています。韓国語原文を確認のうえ `updated` を更新してください。"
+        "（[更新ルール](maintenance.md)）\n"
+    ),
+}
+# 리포트 출력용 하위 호환 별칭
+BADGE_MARK = BADGE_TITLE["ko"]
 
 RE_UPDATED = re.compile(r"(?:updated|최종 갱신):\s*(\d{4})-(\d{2})")
 RE_VOLATILITY = re.compile(r"volatility:\s*(높음|중간|낮음)")
@@ -74,21 +114,27 @@ def parse_page(path: pathlib.Path):
     return updated, volatility
 
 
+def is_translation(path: pathlib.Path) -> bool:
+    """index.en.md처럼 언어 suffix가 붙은 번역 파일인지 판별."""
+    suf = path.suffixes
+    return len(suf) >= 2 and suf[-2].lstrip(".") in LANGS
+
+
 def months_elapsed(updated, today):
     return (today[0] - updated[0]) * 12 + (today[1] - updated[1])
 
 
-def inject_badge(path: pathlib.Path, volatility: str, updated, elapsed: int, threshold: int):
-    """H1 바로 아래에 Material admonition 배지 주입. 이미 있으면 건너뜀(멱등)."""
+def inject_badge(path: pathlib.Path, lang: str, volatility: str, updated, elapsed: int, threshold: int):
+    """H1 바로 아래에 해당 언어의 Material admonition 배지 주입. 이미 있으면 건너뜀(멱등)."""
     text = path.read_text(encoding="utf-8")
-    if BADGE_GUARD in text:
+    guard = f'!!! warning "{BADGE_TITLE[lang]}"'
+    if guard in text:
         return False
-    badge = (
-        f'\n!!! warning "{BADGE_MARK}"\n'
-        f"    이 페이지의 updated({updated[0]}-{updated[1]:02d})가 volatility "
-        f"'{volatility}' 기준({threshold}개월)을 {elapsed - threshold}개월 초과했습니다. "
-        f"내용 검토 후 `updated`를 갱신하세요. "
-        f"([갱신 규칙](maintenance.md))\n"
+    badge = f"\n{guard}\n" + BADGE_BODY[lang].format(
+        u=f"{updated[0]}-{updated[1]:02d}",
+        v=VOL_LABEL[lang][volatility],
+        t=threshold,
+        o=elapsed - threshold,
     )
     lines = text.splitlines(keepends=True)
     for i, (line, in_fence) in enumerate(iter_with_fence(lines)):
@@ -125,6 +171,8 @@ def main():
 
     rows, missing = [], []
     for path in sorted(DOCS.glob("*.md")):
+        if is_translation(path):
+            continue
         updated, volatility = parse_page(path)
         if not updated or not volatility:
             missing.append((path.name, "updated 누락" if not updated else "volatility 누락"))
@@ -134,7 +182,12 @@ def main():
         stale = elapsed > threshold
         rows.append((path.name, f"{updated[0]}-{updated[1]:02d}", volatility, threshold, elapsed, stale))
         if stale and args.inject:
-            inject_badge(path, volatility, updated, elapsed, threshold)
+            inject_badge(path, "ko", volatility, updated, elapsed, threshold)
+            # 존재하는 언어 변형에도 해당 언어 배지 주입 (독자가 어느 언어로 봐도 인지)
+            for lang in LANGS:
+                variant = path.with_name(f"{path.stem}.{lang}.md")
+                if variant.exists():
+                    inject_badge(variant, lang, volatility, updated, elapsed, threshold)
 
     print(f"기준일: {today[0]}-{today[1]:02d}")
     print(f"{'페이지':<18} {'updated':<9} {'volatility':<10} {'기준(월)':<8} {'경과(월)':<8} 상태")
