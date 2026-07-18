@@ -1,5 +1,5 @@
 ---
-ko_hash: 1290b645404550ea545f9e1233551ad0de552466
+ko_hash: c466355b4c75c484bbb06e77539749705c856724
 ---
 # Maintenance — 所有权 · 更新规则 · 晋升管道
 
@@ -35,7 +35,7 @@ _owner: {名字} · updated: {YYYY-MM} · volatility: 高/中/低_
 - `updated`: 最后实际复核的年月。绝对日期（禁止相对日期）。
 - `volatility`: 高/中/低。决定 staleness 周期。
 
-> ✅ **支柱 P1~P5 owner: comeddy**（2026-07 指定）。横向页面（index/decisions/radar/maintenance）仍为 `待定 ⚠️` —— 剩余债务。
+> ✅ **支柱 P1~P5·index·radar owner: comeddy**（2026-07 指定）。decisions/maintenance 仍为 `待定 ⚠️` —— 剩余债务。
 
 ---
 
@@ -153,12 +153,13 @@ _owner: {名字} · updated: {YYYY-MM} · volatility: 高/低_
 
 ## 已知技术债务（截至 2026-07）
 
-1. ~~全部条目 owner 未定~~ → **P1~P5 owner: comeddy 指定完成(2026-07)**。横向页面（index/decisions/radar/maintenance）owner 为待定 ⚠️。
-2. **FAQ Top 10 为种子** —— 需用实际客户问询记录替换·重新排序（[index](index.md)）。
+1. ~~全部条目 owner 未定~~ → **P1~P5·index·radar owner: comeddy 指定完成(2026-07)**。decisions/maintenance owner 为待定 ⚠️。
+2. ~~FAQ Top 10 为种子~~ → **扩展为 Top 20 并标注来源（2026-07）**。剩余：获取 Slack 实际问询记录后按频率重新排序（[index](index.md)）。
 3. **内部资产深链未连接** —— 研讨会/deck/skill 链接处于"需确认 ⚠️"状态。
 4. **国内客户案例不足** —— 大多为"案例待定"。国内机器人企业为 NVIDIA 阵营，故 AWS 存在空白地带。
 5. **建议再确认部分 GitHub 发布年份** —— Isaac Sim 6.0.1(🟡 Preview/Early Developer Release —— 最新 GA 为 5.1.0)、Isaac Lab 2.3.2/3.0 标签年份。
 6. **单一来源数值再确认** —— Lotte 30%、DROID 回合数、部分厂商指标。
+7. **Zensical 迁移待定** —— 构建栈（Material for MkDocs）的下一代。目前 `mkdocs-static-i18n` 尚未被 Zensical 支持（Tier 2 待办），现在迁移会破坏 4 语言构建。**迁移条件：Zensical 推出 static-i18n 支持（或原生多语言）+ 确认 strict 校验·韩文 slug 兼容。** 在此之前页脚标注保持真实。
 
 ---
 

@@ -32,7 +32,7 @@ _owner: {이름} · updated: {YYYY-MM} · volatility: 높음/중간/낮음_
 - `updated`: 마지막 실검토 연월. 절대 날짜(상대 날짜 금지).
 - `volatility`: 높음/중간/낮음. staleness 주기를 결정.
 
-> ✅ **필러 P1~P5 owner: comeddy** (2026-07 지정). 교차 페이지(index/decisions/radar/maintenance)는 아직 `미정 ⚠️` — 남은 부채.
+> ✅ **필러 P1~P5·index·radar owner: comeddy** (2026-07 지정). decisions/maintenance는 아직 `미정 ⚠️` — 남은 부채.
 
 ---
 
@@ -150,12 +150,13 @@ _owner: {이름} · updated: {YYYY-MM} · volatility: 높음/낮음_
 
 ## 알려진 기술 부채 (2026-07 시점)
 
-1. ~~전 항목 owner 미정~~ → **P1~P5 owner: comeddy 지정 완료(2026-07)**. 교차 페이지(index/decisions/radar/maintenance) owner는 미정 ⚠️.
-2. **FAQ Top 10이 시드** — 실제 고객 문의 이력으로 교체·재정렬 필요([index](index.md)).
+1. ~~전 항목 owner 미정~~ → **P1~P5·index·radar owner: comeddy 지정 완료(2026-07)**. decisions/maintenance owner는 미정 ⚠️.
+2. ~~FAQ Top 10이 시드~~ → **Top 20 확장 + 출처 표기 완료(2026-07)**. 잔여: Slack 실제 문의 이력 확보 시 빈도순 재정렬([index](index.md)).
 3. **사내 자산 딥링크 미연결** — 워크숍/deck/skill 링크가 "확인 필요 ⚠️" 상태.
 4. **국내 고객 사례 부족** — 대부분 "사례 대기". 국내 로봇 기업이 NVIDIA 정렬이라 AWS 화이트스페이스.
 5. **GitHub 릴리스 연도 일부 재확인 권고** — Isaac Sim 6.0.1(🟡 Preview/Early Developer Release — 최신 GA는 5.1.0), Isaac Lab 2.3.2/3.0 태그 연도.
 6. **단일 출처 수치 재확인** — Lotte 30%, DROID 에피소드 수, 일부 벤더 지표.
+7. **Zensical 전환 대기** — 빌드 스택(Material for MkDocs)의 후속 세대. 현재는 `mkdocs-static-i18n`이 Zensical 미지원(Tier 2 백로그)이라 전환 시 4개 언어가 깨짐. **전환 조건: Zensical의 static-i18n 지원(또는 네이티브 다국어) 출시 + strict 검증·한국어 슬러그 호환 확인.** 그때까지 푸터 표기는 사실대로 유지.
 
 ---
 

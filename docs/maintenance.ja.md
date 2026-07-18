@@ -1,5 +1,5 @@
 ---
-ko_hash: 1290b645404550ea545f9e1233551ad0de552466
+ko_hash: c466355b4c75c484bbb06e77539749705c856724
 ---
 # Maintenance — 所有権 · 更新ルール · 昇格パイプライン
 
@@ -36,7 +36,7 @@ _owner: {名前} · updated: {YYYY-MM} · volatility: 高/中/低_
 - `updated`: 最後に実際にレビューした年月。絶対日付（相対日付は禁止）。
 - `volatility`: 高/中/低。staleness 周期を決定します。
 
-> ✅ **ピラー P1～P5 owner: comeddy**（2026-07 指定）。横断ページ（index/decisions/radar/maintenance）はまだ `未定 ⚠️` — 残る負債です。
+> ✅ **ピラー P1～P5・index・radar owner: comeddy**（2026-07 指定）。decisions/maintenance はまだ `未定 ⚠️` — 残る負債です。
 
 ---
 
@@ -154,12 +154,13 @@ _owner: {名前} · updated: {YYYY-MM} · volatility: 高/低_
 
 ## 既知の技術的負債（2026-07 時点）
 
-1. ~~全項目 owner 未定~~ → **P1～P5 owner: comeddy 指定完了(2026-07)**。横断ページ（index/decisions/radar/maintenance）の owner は未定 ⚠️。
-2. **FAQ Top 10 がシード** — 実際の顧客問い合わせ履歴で置き換え·再整列が必要（[index](index.md)）。
+1. ~~全項目 owner 未定~~ → **P1～P5・index・radar owner: comeddy 指定完了(2026-07)**。decisions/maintenance の owner は未定 ⚠️。
+2. ~~FAQ Top 10 がシード~~ → **Top 20 へ拡張 + 出典列を追加（2026-07）**。残り：Slack の実際の問い合わせ履歴を入手したら頻度順に再整列（[index](index.md)）。
 3. **社内資産のディープリンク未接続** — ワークショップ/deck/skill リンクが「要確認 ⚠️」状態。
 4. **国内顧客事例の不足** — 大半が「事例待ち」。国内ロボット企業が NVIDIA 陣営のため AWS ホワイトスペース。
 5. **GitHub リリース年の一部再確認を推奨** — Isaac Sim 6.0.1(🟡 Preview/Early Developer Release — 最新 GA は 5.1.0)、Isaac Lab 2.3.2/3.0 タグの年。
 6. **単一出典の数値の再確認** — Lotte 30%、DROID エピソード数、一部ベンダー指標。
+7. **Zensical 移行待ち** — ビルドスタック（Material for MkDocs）の次世代。現在 `mkdocs-static-i18n` は Zensical 未対応（Tier 2 バックログ）のため、今移行すると 4 言語ビルドが壊れる。**移行条件：Zensical の static-i18n 対応（またはネイティブ多言語）のリリース + strict 検証・韓国語スラッグ互換の確認。** それまでフッター表記は事実のまま維持。
 
 ---
 

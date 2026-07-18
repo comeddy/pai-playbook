@@ -1,5 +1,5 @@
 ---
-ko_hash: 1290b645404550ea545f9e1233551ad0de552466
+ko_hash: c466355b4c75c484bbb06e77539749705c856724
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -35,7 +35,7 @@ _owner: {name} · updated: {YYYY-MM} · volatility: high/medium/low_
 - `updated`: the year-month of last actual review. An absolute date (no relative dates).
 - `volatility`: high/medium/low. Determines the staleness cadence.
 
-> ✅ **Pillars P1–P5 owner: comeddy** (assigned 2026-07). Cross-cutting pages (index/decisions/radar/maintenance) are still `TBD ⚠️` — remaining debt.
+> ✅ **Pillars P1–P5 · index · radar owner: comeddy** (assigned 2026-07). decisions/maintenance are still `TBD ⚠️` — remaining debt.
 
 ---
 
@@ -153,12 +153,13 @@ _owner: {name} · updated: {YYYY-MM} · volatility: high/low_
 
 ## Known technical debt (as of 2026-07)
 
-1. ~~All items have no owner~~ → **P1–P5 owner: comeddy assigned (2026-07)**. Cross-cutting pages (index/decisions/radar/maintenance) owners are TBD ⚠️.
-2. **FAQ Top 10 is a seed** — needs replacement/re-ranking with actual customer inquiry history ([index](index.md)).
+1. ~~All items have no owner~~ → **P1–P5 · index · radar owner: comeddy assigned (2026-07)**. decisions/maintenance owners are TBD ⚠️.
+2. ~~FAQ Top 10 is a seed~~ → **Expanded to Top 20 with a source column (2026-07)**. Remaining: re-rank by frequency once actual Slack inquiry history is available ([index](index.md)).
 3. **Internal asset deep links not connected** — workshop/deck/skill links are in "confirm needed ⚠️" state.
 4. **Insufficient domestic (Korea) customer cases** — mostly "case pending." Domestic robotics companies are NVIDIA-aligned, so this is AWS whitespace.
 5. **Some GitHub release years to be re-confirmed** — Isaac Sim 6.0.1 (🟡 Preview/Early Developer Release — latest GA is 5.1.0), Isaac Lab 2.3.2/3.0 tag years.
 6. **Re-confirm single-source numbers** — Lotte 30%, DROID episode count, some vendor metrics.
+7. **Zensical migration pending** — the successor to our build stack (Material for MkDocs). `mkdocs-static-i18n` is not yet supported by Zensical (Tier 2 backlog), so migrating now would break the 4-language build. **Migration condition: Zensical ships static-i18n support (or native multilingual) + strict validation & Korean slug compatibility confirmed.** Until then the footer notice stays truthful.
 
 ---
 
