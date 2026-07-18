@@ -1,5 +1,5 @@
 ---
-ko_hash: 8c431a6a146eb28dee5b5dd90f6a974aab20f0da
+ko_hash: 23985277c42e1755a63aea5eb2fdee295053d320
 ---
 # Radar — Queue / Watchlist
 
@@ -39,7 +39,8 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 | Item | Label | Why on hold | Promotion condition |
 |---|---|---|---|
 | **Tesla Optimus V3** | ⚪ Hype | Musk claims only, production not started | Validated deployment |
-| **Hyundai 25,000 Atlas** | ⚪ Roadmap | 2028 start target, 0 units operating, union opposition | Real operation begins |
+| **Hyundai·BD electric Atlas** | ⚪ Roadmap | Electric Atlas product version unveiled (2026-07, BD official `[3]`). Deployment 25k+ units & 30k/yr capacity both **start 2028**; ~0 in live production today. 2026 is a small pilot only (Hyundai RMAC + Google DeepMind). ⚠️ "Gen 5" is a misnomer | Verified real-operation shipments begin |
+| **Apptronik Apollo 2 + Robot Park** | 🟡 Pilot | Operational pilots at Mercedes-Benz & GXO `[3]` + Google DeepMind Gemini Robotics data partnership (90k sq ft). Autonomy/commercial scale unverified. AWS mapping is generic (data→S3/SageMaker); the partnership itself is Google `[4]` | Commercial deployment scale + validated autonomy |
 | **1X Neo** autonomy | 🟡 Preview | Product shipped but autonomy ~60–70%, rest is VR teleoperation | Validation of true autonomy |
 | **Figure 03 "8-hour autonomous shift"** | ⚪ Hype | CEO tweet, no independent validation (Figure 02@BMW is a validated pilot) | Third-party autonomy audit |
 | **Cosmos 3 adoption** (Doosan/LG/Samsung) | 🟢 GA(announced) | Adoption is "announced," not production-validated | Public production case |
@@ -59,8 +60,6 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 
 | Item | Label | Why waiting | Promotion criteria |
 |---|---|---|---|
-| **Boston Dynamics Atlas Gen 5** (all-electric, "production-ready") | ⚪ Hype/roadmap | Announced 2026-07-02 `[4]`, Hyundai claims 30k units/year plan and 2026 volume "fully booked," but real operation unconfirmed — conflicts with the existing "Hyundai 25,000 Atlas" (2028 target) entry; needs primary confirmation | Verified real-operation shipments + re-assessment of the existing entry |
-| **Apptronik Apollo 2 + Robot Park** (Google DeepMind Gemini Robotics data partnership) | ⚪ Hype/roadmap | Announced 2026-06-30~07-06, 90,000 sq ft data-collection facility `[4]`, Apollo 2 commercial deployment and autonomy results unverified | Commercial deployment case + validated training outcomes |
 | **AgiBot 15,000-unit production milestone** (Longcheer factory) | 🟡 Announced | Claims 99.99% success rate over a 6-day demo `[4]`, no independent validation; see [pillar-1](pillar-1.md) for the dataset licensing issue | Independent productivity validation |
 | **DSWAM** (Dual-System World Action Foundation Model) | 🔵 Research | 2026-07 preprint, single lab. Claims a dual-system architecture for fine-grained manipulation `[4]` | peer review + reproduction |
 | **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 preprint, claims to close the actuator-dynamics gap (legged robots and humanoids) `[4]` | peer review + reproduction |

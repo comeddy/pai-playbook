@@ -36,7 +36,8 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 | 항목 | 라벨 | 왜 대기인가 | 승격 조건 |
 |---|---|---|---|
 | **Tesla Optimus V3** | ⚪ Hype | Musk 주장뿐, 생산 미시작 | 검증된 배포 |
-| **Hyundai 25,000 Atlas** | ⚪ 로드맵 | 2028 시작 목표, 0대 가동, 노조 반대 | 실가동 시작 |
+| **Hyundai·BD 전기식 Atlas** | ⚪ 로드맵 | 전기식 Atlas 제품 버전 공개(2026-07, BD 공식 `[3]`). 배포 2.5만+대·양산능력 3만/년 모두 **2028 시작**, 현재 실가동 ~0. 2026은 소규모 파일럿만(현대 RMAC + Google DeepMind). ⚠️ "5세대"는 오칭 | 실가동 출하 시작 |
+| **Apptronik Apollo 2 + Robot Park** | 🟡 파일럿 | Mercedes-Benz·GXO 운영 파일럿 `[3]` + Google DeepMind Gemini Robotics 데이터 파트너십(9만 sqft). 자율·상용 확산 미검증. AWS 매핑은 일반적(데이터→S3/SageMaker), 파트너십 자체는 Google `[4]` | 상용 배포 규모 + 자율 성과 검증 |
 | **1X Neo** 자율성 | 🟡 Preview | 제품 출시했으나 자율 ~60~70%, 나머지 VR 원격조작 | 진짜 자율 검증 |
 | **Figure 03 "8시간 자율 시프트"** | ⚪ Hype | CEO 트윗, 독립 검증 없음 (Figure 02@BMW는 검증 파일럿) | 3자 자율성 감사 |
 | **Cosmos 3 채택** (Doosan/LG/Samsung) | 🟢 GA(발표) | 채택 "발표"지 프로덕션 검증 아님 | 프로덕션 사례 공개 |
@@ -56,8 +57,6 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 
 | 항목 | 라벨 | 왜 대기인가 | 승격 조건 |
 |---|---|---|---|
-| **Boston Dynamics Atlas 5세대** (all-electric, "프로덕션 레디") | ⚪ Hype·로드맵 | 2026-07-02 발표 `[4]`, Hyundai 연 3만 대 계획·2026 물량 "완전 예약" 주장이나 실가동 미확인 — 기존 "Hyundai 25,000 Atlas"(2028 목표) 항목과 상충, 1차 확인 필요 | 실가동 출하 검증 + 기존 항목 재평가 |
-| **Apptronik Apollo 2 + Robot Park** (Google DeepMind Gemini Robotics 데이터 파트너십) | ⚪ Hype·로드맵 | 2026-06-30~07-06 발표, 9만 sqft 데이터 수집 시설 `[4]`, Apollo 2 상용 배포·자율성 성과 미검증 | 상용 배포 사례 + 학습 성과 검증 |
 | **AgiBot 15,000대 양산** (Longcheer 공장) | 🟡 발표 | 6일 데모 99.99% 성공률 주장 `[4]`, 독립 검증 없음; 데이터셋 라이선스 이슈는 [pillar-1](pillar-1.md) 참고 | 독립 생산성 검증 |
 | **DSWAM** (Dual-System World Action Foundation Model) | 🔵 Research | 2026-07 프리프린트, 단일 랩. 정밀 조작용 dual-system 구조 주장 `[4]` | peer-review + 재현 |
 | **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 프리프린트, 액추에이터 동역학 격차 해소 주장(보행 로봇·휴머노이드) `[4]` | peer-review + 재현 |

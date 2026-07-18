@@ -1,5 +1,5 @@
 ---
-ko_hash: 8c431a6a146eb28dee5b5dd90f6a974aab20f0da
+ko_hash: 23985277c42e1755a63aea5eb2fdee295053d320
 ---
 # Radar — 队列 / 观察列表
 
@@ -39,7 +39,8 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 | 条目 | 标签 | 为何待定 | 晋升条件 |
 |---|---|---|---|
 | **Tesla Optimus V3** | ⚪ Hype | 仅 Musk 的主张，生产未启动 | 经过验证的部署 |
-| **Hyundai 25,000 Atlas** | ⚪ 路线图 | 目标 2028 启动，0 台运行，工会反对 | 实际运行启动 |
+| **Hyundai·BD 全电动 Atlas** | ⚪ 路线图 | 全电动 Atlas 产品版本公开（2026-07，BD 官方 `[3]`）。部署 2.5 万+台·产能 3 万/年均 **2028 启动**，当前实际运行 ~0。2026 仅小规模试点（现代 RMAC + Google DeepMind）。⚠️"第五代"为误称 | 实际运行出货启动 |
+| **Apptronik Apollo 2 + Robot Park** | 🟡 试点 | Mercedes-Benz·GXO 运营试点 `[3]` + Google DeepMind Gemini Robotics 数据合作（9 万平方英尺）。自主·商用扩散未验证。AWS 映射为通用（数据→S3/SageMaker），合作本身属 Google `[4]` | 商用部署规模 + 自主成果验证 |
 | **1X Neo** 自主性 | 🟡 Preview | 已发布产品但自主 ~60~70%，其余为 VR 远程操作 | 真正自主的验证 |
 | **Figure 03 "8 小时自主班次"** | ⚪ Hype | CEO 推文，无独立验证（Figure 02@BMW 为已验证试点） | 第三方自主性审计 |
 | **Cosmos 3 采用**（Doosan/LG/Samsung） | 🟢 GA（公布） | 采用为"公布"而非生产验证 | 公开生产案例 |
@@ -59,8 +60,6 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 项目 | 标签 | 为何等待 | 晋升条件 |
 |---|---|---|---|
-| **Boston Dynamics Atlas 第五代**（全电动、"生产就绪"） | ⚪ Hype·路线图 | 2026-07-02 发布 `[4]`，Hyundai 宣称年产 3 万台计划、2026 产能"已全部预订"，但实际运行未确认 —— 与现有"Hyundai 25,000 Atlas"（2028 目标）条目相冲突，需一手确认 | 实际运行出货验证 + 对现有条目重新评估 |
-| **Apptronik Apollo 2 + Robot Park**（Google DeepMind Gemini Robotics 数据合作） | ⚪ Hype·路线图 | 2026-06-30~07-06 发布，9 万平方英尺数据采集设施 `[4]`，Apollo 2 商用部署·自主性成果未经验证 | 商用部署案例 + 学习成果验证 |
 | **AgiBot 1.5 万台量产**（Longcheer 工厂） | 🟡 已发布 | 6 天演示声称 99.99% 成功率 `[4]`，无独立验证；数据集许可证问题见 [pillar-1](pillar-1.md) | 独立生产力验证 |
 | **DSWAM**（双系统 World Action Foundation Model） | 🔵 Research | 2026-07 预印本，单一实验室。声称面向精细操作的双系统架构 `[4]` | peer-review + 复现 |
 | **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 预印本，声称弥合致动器动力学差距（腿式机器人·人形）`[4]` | peer-review + 复现 |

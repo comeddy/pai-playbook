@@ -1,5 +1,5 @@
 ---
-ko_hash: 8c431a6a146eb28dee5b5dd90f6a974aab20f0da
+ko_hash: 23985277c42e1755a63aea5eb2fdee295053d320
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -40,7 +40,8 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 | 項目 | ラベル | なぜ待機か | 昇格条件 |
 |---|---|---|---|
 | **Tesla Optimus V3** | ⚪ Hype | Musk の主張のみ、生産未開始 | 検証されたデプロイ |
-| **Hyundai 25,000 Atlas** | ⚪ ロードマップ | 2028 開始目標、0 台稼働、労組の反対 | 実稼働開始 |
+| **Hyundai·BD オールエレクトリック Atlas** | ⚪ ロードマップ | オールエレクトリック Atlas 製品版を公開（2026-07、BD 公式 `[3]`）。展開 2.5 万+台・生産能力 3 万/年はいずれも **2028 開始**、現在の実稼働 ~0。2026 は小規模パイロットのみ（現代 RMAC + Google DeepMind）。⚠️「第 5 世代」は誤称 | 実稼働出荷の開始 |
+| **Apptronik Apollo 2 + Robot Park** | 🟡 パイロット | Mercedes-Benz・GXO で運用パイロット `[3]` + Google DeepMind Gemini Robotics データ提携（9 万平方フィート）。自律・商用拡大は未検証。AWS マッピングは一般的（データ→S3/SageMaker）、提携自体は Google `[4]` | 商用デプロイ規模 + 自律成果の検証 |
 | **1X Neo** 自律性 | 🟡 Preview | 製品は発売済みだが自律 ~60~70%、残りは VR 遠隔操作 | 真の自律性の検証 |
 | **Figure 03「8 時間自律シフト」** | ⚪ Hype | CEO のツイート、独立検証なし（Figure 02@BMW は検証済みパイロット） | 第三者による自律性監査 |
 | **Cosmos 3 採用**（Doosan/LG/Samsung） | 🟢 GA（発表） | 採用は「発表」であって本番検証ではない | 本番事例の公開 |
@@ -60,8 +61,6 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 項目 | ラベル | なぜ待機か | 昇格条件 |
 |---|---|---|---|
-| **Boston Dynamics Atlas 第 5 世代**（オールエレクトリック、「プロダクションレディ」） | ⚪ Hype·ロードマップ | 2026-07-02 発表 `[4]`、Hyundai は年 3 万台計画・2026 年分「完全予約済み」と主張するが実稼働は未確認 — 既存の「Hyundai Atlas 2.5 万台」（2028 目標）項目と矛盾、一次確認が必要 | 実稼働出荷の検証 + 既存項目の再評価 |
-| **Apptronik Apollo 2 + Robot Park**（Google DeepMind Gemini Robotics データ提携） | ⚪ Hype·ロードマップ | 2026-06-30~07-06 発表、9 万平方フィートのデータ収集施設 `[4]`、Apollo 2 の商用デプロイ・自律性の成果は未検証 | 商用デプロイ事例 + 学習成果の検証 |
 | **AgiBot 1.5 万台量産**（Longcheer 工場） | 🟡 発表 | 6 日間のデモで 99.99% の成功率を主張 `[4]`、独立検証なし；データセットのライセンス問題は [pillar-1](pillar-1.md) を参照 | 独立した生産性検証 |
 | **DSWAM**（デュアルシステム World Action Foundation Model） | 🔵 Research | 2026-07 プレプリント、単一ラボ。精密操作向けデュアルシステム構造を主張 `[4]` | peer-review + 再現 |
 | **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 プレプリント、アクチュエータ動力学ギャップの解消を主張（脚式ロボット・ヒューマノイド）`[4]` | peer-review + 再現 |
