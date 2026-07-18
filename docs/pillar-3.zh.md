@@ -1,5 +1,5 @@
 ---
-ko_hash: 746d1be3873c990db295a92517836c56615270e4
+ko_hash: be72670fb57f84caad01b43007c3b05e8e5fede7
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -205,7 +205,7 @@ graph TD
 
 **➡️ 后续行动**: 客户问"听说 TwinMaker 死了？"时**立即更正**（"GA、对新客户开放，只是低速度"）。想整合孪生+仿真则连接到 Omniverse AMI。问"有 OVX 吗"则准确回答"没有，是 G6e/G7e + AMI"。
 
-**🔗 相关资产**: [pillar-1](pillar-1.md) · （内部数字孪生研讨会 —— 需确认 ⚠️）
+**🔗 相关资产**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker 端到端研讨会](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) —— 需确认可用 ⚠️ · （内部数字孪生研讨会 —— 需确认 ⚠️）
 
 ---
 

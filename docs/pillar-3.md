@@ -202,7 +202,7 @@ graph TD
 
 **➡️ 다음 액션**: 고객이 "TwinMaker 죽었다던데?" 물으면 **즉시 정정**("GA, 신규 오픈, 다만 저속도"). 트윈+시뮬레이션 통합 원하면 Omniverse AMI로 연결. "OVX 있냐" 물으면 "없다, G6e/G7e + AMI" 로 정확히.
 
-**🔗 관련 자산**: [pillar-1](pillar-1.md) · (사내 디지털 트윈 워크숍 — 확인 필요 ⚠️)
+**🔗 관련 자산**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker E2E 워크샵](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) — 라이브 확인 필요 ⚠️ · (사내 디지털 트윈 워크숍 — 확인 필요 ⚠️)
 
 ---
 

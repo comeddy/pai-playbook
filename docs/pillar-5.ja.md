@@ -1,5 +1,5 @@
 ---
-ko_hash: 05f1c794e7d1627a563a529dc22045da3519cd02
+ko_hash: ea29889548fdfbad0ad2e95e0c18d91633c337a4
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -48,7 +48,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **➡️ 次のアクション**: 国内顧客にまず **「AgentCore はソウルリージョン GA — データレジデンシー問題なし」** を確認させ（古い「ソウル非対応」情報を訂正）、ロボットスキルを Gateway ツールとして登録する PoC を提案します。価格は「ハーネス無料、リソースのみ課金」で安心させます。
 
-**🔗 関連アセット**: [pillar-4 エッジ](pillar-4.md) · （社内 AgentCore ワークショップ — 要確認 ⚠️）
+**🔗 関連アセット**: [pillar-4 エッジ](pillar-4.md) · [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) — 要確認 ⚠️ · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US) — 要確認 ⚠️ · （社内 AgentCore ワークショップ — 要確認 ⚠️）
 
 <details markdown="1"><summary>🔄 揮発性データ（コンポーネント・リージョン・価格 — 2026-07 確認）</summary>
 
