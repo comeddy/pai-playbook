@@ -1,9 +1,9 @@
 ---
-ko_hash: 969975d261010e3f546159b61168181016c9d474
+ko_hash: c6c614576fad53450cec520e227f48064ee2f1c7
 ---
 # Physical AI Playbook — AWS Korea SA
 
-_最终更新: 2026-07 · owner: 待定 ⚠️ · 状态: 初期构建中_
+_最终更新: 2026-07 · owner: comeddy · 状态: 初期构建中_
 
 > **L0 TL;DR**: 当客户抛出 Physical AI 问题时，无需翻查 Slack，**仅凭这一份 playbook 就能在 5 分钟内**给出架构方向、AWS 映射与后续行动的参考资产。它既不是论文摘要集，也不是新闻归档。
 
@@ -11,7 +11,7 @@ _最终更新: 2026-07 · owner: 待定 ⚠️ · 状态: 初期构建中_
 
 ## 如何阅读本文档（30 秒）
 
-1. **赶时间**：直接跳到下方 [常见问题 Top 10](#常见问题-top-10) 中对应的条目。
+1. **赶时间**：直接跳到下方 [常见问题 Top 20](#常见问题-top-20) 中对应的条目。
 2. **主题明确后**：进入 5 个支柱之一。每个条目按 **L0（1~2 句）→ L1（1 页）→ L2（deep-dive 链接）** 分层——只读顶部即可确定方向。
 3. **面临岔路口**：[决策树](decisions.md) —— Cloud vs Edge、NVIDIA vs 开源、GPU 获取、Build vs Buy。
 4. **"这个为什么没有？"**：先查看 [Radar](radar.md)。因未达纳入标准而待定的条目在那里。新候选的上报走 [维护指南](maintenance.md) 的晋升管道。
@@ -48,22 +48,32 @@ _最终更新: 2026-07 · owner: 待定 ⚠️ · 状态: 初期构建中_
 
 ---
 
-## 常见问题 Top 10
+## 常见问题 Top 20
 
-<!-- ⚠️ 初期种子: 需用 SA 实际咨询记录替换/重新排序。支柱页面生成后需将链接收紧到章节锚点。 -->
+<!-- 1~10: 初期种子（master prompt 示例 + IA 结构）。11~20: 公开社区/博客深入调研（2026-07）。⚠️ 两者都不是 SA 实际咨询日志；获取 Slack 咨询记录后按频率重新排序。 -->
 
-| # | 问题 | 前往何处 |
-|---|---|---|
-| 1 | "Isaac Sim / Isaac Lab 在 AWS 上怎么跑？" | [pillar-3](pillar-3.md) |
-| 2 | "VLA 模型训练（微调）的基础设施该怎么搭？" | [pillar-2](pillar-2.md) |
-| 3 | "GPU 拿不到 —— On-Demand、Capacity Blocks、替代方案中该用哪个？" | [decisions](decisions.md) |
-| 4 | "sim-to-real gap 实际上怎么克服？有经过验证的方法吗？" | [pillar-4](pillar-4.md) |
-| 5 | "机器人实时控制（30–100Hz），推理能放到云上吗？" | [decisions](decisions.md) |
-| 6 | "基础模型（GR00T/π0 等）是微调好，还是自行训练好？" | [decisions](decisions.md) |
-| 7 | "机器人学习数据怎么采集、该存到哪里？（遥操作/合成数据）" | [pillar-1](pillar-1.md) |
-| 8 | "对 NVIDIA 全栈的依赖有多深？开源替代方案呢？" | [decisions](decisions.md) |
-| 9 | "边缘部署（Jetson 等）与 AWS 怎么连接？" | [pillar-4](pillar-4.md) |
-| 10 | "用 LLM 智能体指挥机器人/设备的架构实际可行吗？" | [pillar-5](pillar-5.md) |
+| # | 问题 | 前往何处 | 来源 |
+|---|---|---|---|
+| 1 | "Isaac Sim / Isaac Lab 在 AWS 上怎么跑？" | [pillar-3](pillar-3.md) | 种子 ⚠️ |
+| 2 | "VLA 模型训练（微调）的基础设施该怎么搭？" | [pillar-2](pillar-2.md) | 种子 ⚠️ |
+| 3 | "GPU 拿不到 —— On-Demand、Capacity Blocks、替代方案中该用哪个？" | [decisions](decisions.md) | 种子 ⚠️ |
+| 4 | "sim-to-real gap 实际上怎么克服？有经过验证的方法吗？" | [pillar-4](pillar-4.md) | 种子 ⚠️ |
+| 5 | "机器人实时控制（30–100Hz），推理能放到云上吗？" | [decisions](decisions.md) | 种子 ⚠️ |
+| 6 | "基础模型（GR00T/π0 等）是微调好，还是自行训练好？" | [decisions](decisions.md) | 种子 ⚠️ |
+| 7 | "机器人学习数据怎么采集、该存到哪里？（遥操作/合成数据）" | [pillar-1](pillar-1.md) | 种子 ⚠️ |
+| 8 | "对 NVIDIA 全栈的依赖有多深？开源替代方案呢？" | [decisions](decisions.md) | 种子 ⚠️ |
+| 9 | "边缘部署（Jetson 等）与 AWS 怎么连接？" | [pillar-4](pillar-4.md) | 种子 ⚠️ |
+| 10 | "用 LLM 智能体指挥机器人/设备的架构实际可行吗？" | [pillar-5](pillar-5.md) | 种子 ⚠️ |
+| 11 | "全部跑下来 GPU 要多少钱？预算怎么估？" | [decisions](decisions.md) | [AWS Embodied AI 博客](https://aws.amazon.com/blogs/physical-ai/embodied-ai-blog-series-part-1/) |
+| 12 | "如何把既有 ROS 2 栈·rosbag 数据接入 AWS？" | [pillar-1](pillar-1.md) | [AWS ROS 2 on Isaac 博客](https://aws.amazon.com/blogs/robotics/) |
+| 13 | "如何跨多节点扩展训练？AWS Batch vs SageMaker HyperPod？" | [pillar-2](pillar-2.md) | [Isaac Lab on SageMaker](https://aws.amazon.com/blogs/machine-learning/scale-robot-reinforcement-learning-with-nvidia-isaac-lab-on-amazon-sagemaker-ai/) |
+| 14 | "实机部署前如何验证·基准测试策略是否真的有效？" | [pillar-4](pillar-4.md) | [NVIDIA 策略评估](https://developer.nvidia.com/blog/how-to-evaluate-general-purpose-robot-policies-for-real-world-deployment/) |
+| 15 | "机器人/工厂数据敏感 —— 云端训练合规吗？本地/混合呢？" | [decisions](decisions.md) | [AWS AI 主权](https://aws.amazon.com/blogs/security/enabling-ai-sovereignty-on-aws/) |
+| 16 | "训练好的策略如何做版本管理·复现·检查点恢复？" | [pillar-2](pillar-2.md) | [Isaac Lab on SageMaker](https://aws.amazon.com/blogs/machine-learning/scale-robot-reinforcement-learning-with-nvidia-isaac-lab-on-amazon-sagemaker-ai/) |
+| 17 | "Isaac Sim·开源模型能用于商用产品吗？何时需要 NVIDIA AI Enterprise？" | [pillar-3](pillar-3.md) | [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) |
+| 18 | "如何为实时（低延迟）优化策略推理？TensorRT·量化·action chunking？" | [pillar-4](pillar-4.md) | [NVIDIA Jetson Edge AI](https://developer.nvidia.com/blog/getting-started-with-edge-ai-on-nvidia-jetson-llms-vlms-and-foundation-models-for-robotics/) |
+| 19 | "如何构建设备/工厂数字孪生并与机器人仿真连接？TwinMaker·Omniverse？" | [pillar-3](pillar-3.md) | [AWS Physical AI 博客](https://aws.amazon.com/blogs/physical-ai/) |
+| 20 | "没有 ML 专家 —— 从哪里开始？如何设计最小 PoC？" | [decisions](decisions.md) | [AWS Physical AI 博客](https://aws.amazon.com/blogs/physical-ai/) |
 
 ---
 
@@ -88,4 +98,4 @@ _最终更新: 2026-07 · owner: 待定 ⚠️ · 状态: 初期构建中_
 
 ---
 
-_owner: 待定 ⚠️ · updated: 2026-07 · volatility: 低（结构性页面 —— 仅 FAQ Top 10 排名按季度复核）_
+_owner: comeddy · updated: 2026-07 · volatility: 低（结构性页面 —— 仅 FAQ Top 20 排名按季度复核）_

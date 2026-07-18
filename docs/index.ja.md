@@ -1,10 +1,10 @@
 ---
-ko_hash: 969975d261010e3f546159b61168181016c9d474
+ko_hash: c6c614576fad53450cec520e227f48064ee2f1c7
 ---
 # Physical AI Playbook — AWS Korea SA
 
 
-_最終更新: 2026-07 · owner: 未定 ⚠️ · ステータス: 初期構築中_
+_最終更新: 2026-07 · owner: comeddy · ステータス: 初期構築中_
 
 > **L0 TL;DR**: 顧客が Physical AI の質問を投げかけたとき、Slack を掘り返さずに **この playbook 一つでアーキテクチャの方向性・AWS マッピング・次のアクションを5分以内に** 提示するための参照資産です。論文要約集でも、ニュースアーカイブでもありません。
 
@@ -12,7 +12,7 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · ステータス: 初期構築�
 
 ## このドキュメントの読み方（30秒）
 
-1. **急いでいるとき**: 下記の [よくある質問 Top 10](#よくある質問-top-10) から該当項目へ直接移動。
+1. **急いでいるとき**: 下記の [よくある質問 Top 20](#よくある質問-top-20) から該当項目へ直接移動。
 2. **テーマが定まったら**: 5つのピラーのいずれかに入る。各項目は **L0（1～2文）→ L1（1ページ）→ L2（deep-dive リンク）** に階層化されています — 上部だけ読んでも方向性がつかめます。
 3. **岐路に立ったら**: [意思決定ツリー](decisions.md) — Cloud vs Edge、NVIDIA vs オープンソース、GPU 確保、Build vs Buy。
 4. **「これはなぜ無いの?」**: まず [Radar](radar.md) を確認。包含基準未達で待機中の項目がそこにあります。新しい候補の報告は [メンテナンスガイド](maintenance.md) の昇格パイプラインへ。
@@ -49,22 +49,32 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · ステータス: 初期構築�
 
 ---
 
-## よくある質問 Top 10
+## よくある質問 Top 20
 
-<!-- ⚠️ 初期シード: SA の実際の問い合わせ履歴で置換/再ソートすること。ピラーページ生成後にセクションアンカーへリンクを締めること。 -->
+<!-- 1～10: 初期シード（マスタープロンプト例 + IA 構造）。11～20: 公開コミュニティ/ブログの深掘り調査（2026-07）。⚠️ どちらも SA の実際の問い合わせログではないため、Slack 問い合わせ履歴を入手したら頻度順に再ソートすること。 -->
 
-| # | 質問 | 行き先 |
-|---|---|---|
-| 1 | 「Isaac Sim / Isaac Lab を AWS でどう動かしますか?」 | [pillar-3](pillar-3.md) |
-| 2 | 「VLA モデル学習（ファインチューニング）のインフラはどう組めばよいですか?」 | [pillar-2](pillar-2.md) |
-| 3 | 「GPU が確保できません — On-Demand、Capacity Blocks、代替案のうち何を使うべきですか?」 | [decisions](decisions.md) |
-| 4 | 「sim-to-real gap は実際どう克服しますか? 検証済みの方法はありますか?」 | [pillar-4](pillar-4.md) |
-| 5 | 「ロボットのリアルタイム制御（30–100Hz）ですが、推論をクラウドに置けますか?」 | [decisions](decisions.md) |
-| 6 | 「基盤モデル（GR00T/π0 など）をファインチューニングしますか、自前で学習しますか?」 | [decisions](decisions.md) |
-| 7 | 「ロボット学習データをどう集め、どこに蓄積すべきですか?（テレオペレーション/合成データ）」 | [pillar-1](pillar-1.md) |
-| 8 | 「NVIDIA フルスタックにどれだけ依存しますか? オープンソース代替案は?」 | [decisions](decisions.md) |
-| 9 | 「エッジデプロイ（Jetson など）と AWS をどう連携しますか?」 | [pillar-4](pillar-4.md) |
-| 10 | 「LLM エージェントでロボット/設備を指揮するアーキテクチャは実際に成り立ちますか?」 | [pillar-5](pillar-5.md) |
+| # | 質問 | 行き先 | 出典 |
+|---|---|---|---|
+| 1 | 「Isaac Sim / Isaac Lab を AWS でどう動かしますか?」 | [pillar-3](pillar-3.md) | シード ⚠️ |
+| 2 | 「VLA モデル学習（ファインチューニング）のインフラはどう組めばよいですか?」 | [pillar-2](pillar-2.md) | シード ⚠️ |
+| 3 | 「GPU が確保できません — On-Demand、Capacity Blocks、代替案のうち何を使うべきですか?」 | [decisions](decisions.md) | シード ⚠️ |
+| 4 | 「sim-to-real gap は実際どう克服しますか? 検証済みの方法はありますか?」 | [pillar-4](pillar-4.md) | シード ⚠️ |
+| 5 | 「ロボットのリアルタイム制御（30–100Hz）ですが、推論をクラウドに置けますか?」 | [decisions](decisions.md) | シード ⚠️ |
+| 6 | 「基盤モデル（GR00T/π0 など）をファインチューニングしますか、自前で学習しますか?」 | [decisions](decisions.md) | シード ⚠️ |
+| 7 | 「ロボット学習データをどう集め、どこに蓄積すべきですか?（テレオペレーション/合成データ）」 | [pillar-1](pillar-1.md) | シード ⚠️ |
+| 8 | 「NVIDIA フルスタックにどれだけ依存しますか? オープンソース代替案は?」 | [decisions](decisions.md) | シード ⚠️ |
+| 9 | 「エッジデプロイ（Jetson など）と AWS をどう連携しますか?」 | [pillar-4](pillar-4.md) | シード ⚠️ |
+| 10 | 「LLM エージェントでロボット/設備を指揮するアーキテクチャは実際に成り立ちますか?」 | [pillar-5](pillar-5.md) | シード ⚠️ |
+| 11 | 「これを全部回すと GPU コストはどれくらい? 予算はどう見積もりますか?」 | [decisions](decisions.md) | [AWS Embodied AI ブログ](https://aws.amazon.com/blogs/physical-ai/embodied-ai-blog-series-part-1/) |
+| 12 | 「既存の ROS 2 スタック・rosbag データを AWS とどう連携しますか?」 | [pillar-1](pillar-1.md) | [AWS ROS 2 on Isaac ブログ](https://aws.amazon.com/blogs/robotics/) |
+| 13 | 「複数ノードに学習をスケールするには? AWS Batch vs SageMaker HyperPod?」 | [pillar-2](pillar-2.md) | [Isaac Lab on SageMaker](https://aws.amazon.com/blogs/machine-learning/scale-robot-reinforcement-learning-with-nvidia-isaac-lab-on-amazon-sagemaker-ai/) |
+| 14 | 「実機デプロイ前にポリシーが実際に動くかをどう検証・ベンチマークしますか?」 | [pillar-4](pillar-4.md) | [NVIDIA ポリシー評価](https://developer.nvidia.com/blog/how-to-evaluate-general-purpose-robot-policies-for-real-world-deployment/) |
+| 15 | 「ロボット/工場データが機微ですが、クラウド学習は規制上問題ないですか? オンプレ・ハイブリッドは?」 | [decisions](decisions.md) | [AWS AI 主権](https://aws.amazon.com/blogs/security/enabling-ai-sovereignty-on-aws/) |
+| 16 | 「学習したポリシーをどうバージョン管理・再現し、チェックポイントを復旧しますか?」 | [pillar-2](pillar-2.md) | [Isaac Lab on SageMaker](https://aws.amazon.com/blogs/machine-learning/scale-robot-reinforcement-learning-with-nvidia-isaac-lab-on-amazon-sagemaker-ai/) |
+| 17 | 「Isaac Sim・オープンモデルを商用製品に使えますか? NVIDIA AI Enterprise はいつ必要?」 | [pillar-3](pillar-3.md) | [NVIDIA Isaac Sim](https://developer.nvidia.com/isaac/sim) |
+| 18 | 「ポリシー推論をリアルタイム（低遅延）に最適化するには? TensorRT・量子化・action chunking?」 | [pillar-4](pillar-4.md) | [NVIDIA Jetson Edge AI](https://developer.nvidia.com/blog/getting-started-with-edge-ai-on-nvidia-jetson-llms-vlms-and-foundation-models-for-robotics/) |
+| 19 | 「設備/工場のデジタルツインを作りロボットシミュレーションと連携するには? TwinMaker・Omniverse?」 | [pillar-3](pillar-3.md) | [AWS Physical AI ブログ](https://aws.amazon.com/blogs/physical-ai/) |
+| 20 | 「ML の専門家がいません — どこから始めますか? 最小 PoC の設計は?」 | [decisions](decisions.md) | [AWS Physical AI ブログ](https://aws.amazon.com/blogs/physical-ai/) |
 
 ---
 
@@ -89,4 +99,4 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · ステータス: 初期構築�
 
 ---
 
-_owner: 未定 ⚠️ · updated: 2026-07 · volatility: 低（構造ページ — FAQ Top 10 の順位のみ四半期ごとに再検討）_
+_owner: comeddy · updated: 2026-07 · volatility: 低（構造ページ — FAQ Top 20 の順位のみ四半期ごとに再検討）_
