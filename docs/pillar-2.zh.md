@@ -1,5 +1,5 @@
 ---
-ko_hash: 202a8a3c3eb1b93262e382328d916291834e3bc0
+ko_hash: fe1eefd59b89c07307424de8b986b018ea82c233
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -29,17 +29,26 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]`:
 
-- **NVIDIA Isaac GR00T** —— 开放人形基础模型。N1(2B)、N1.5(3B, flow-matching DiT action head)、N1.6(CES 2026, Cosmos Reason 2 骨干)、N1.7（GitHub 上声称 GA）。⚠️ **许可证注意**: N1.5 模型卡为**非商业（NVIDIA license, non-commercial）**。N1.6/N1.7 允许商用的说法**仅来自二手来源，未经验证** → 做商用判断前**务必直接查看实时模型卡**。`[1]` github.com/NVIDIA/Isaac-GR00T
-- **Physical Intelligence π (openpi)** —— π0、π0-FAST、π0.5 全部为 **Apache-2.0**（可商用）。提供 DROID/ALOHA/LIBERO 微调检查点。`[1]` github.com/Physical-Intelligence/openpi。⚠️ π0.7 仅存在于二手来源（未经验证）。
-- **OpenVLA** —— 7B、**MIT 许可证**（可商用），基于 Llama2 的 VLM 骨干。提供官方微调脚本。`[1]` github.com/openvla/openvla（LICENSE 文件 2026-07 直接确认）
+- **[NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T)** —— 开放人形基础模型。N1(2B)、N1.5(3B, flow-matching DiT action head)、N1.6(CES 2026, Cosmos Reason 2 骨干)、N1.7（GitHub 上声称 GA）。⚠️ **许可证注意**: N1.5 模型卡为**非商业（NVIDIA license, non-commercial）**。N1.6/N1.7 允许商用的说法**仅来自二手来源，未经验证** → 做商用判断前**务必直接查看实时模型卡**。`[1]` github.com/NVIDIA/Isaac-GR00T
+- **[Physical Intelligence π (openpi)](https://github.com/Physical-Intelligence/openpi)** —— π0、π0-FAST、π0.5 全部为 **Apache-2.0**（可商用）。提供 DROID/ALOHA/LIBERO 微调检查点。`[1]` github.com/Physical-Intelligence/openpi。⚠️ π0.7 仅存在于二手来源（未经验证）。
+- **[OpenVLA](https://github.com/openvla/openvla)** —— 7B、**MIT 许可证**（可商用），基于 Llama2 的 VLM 骨干。提供官方微调脚本。`[1]` github.com/openvla/openvla（LICENSE 文件 2026-07 直接确认）
 
-**AWS 映射**: 将模型权重从 HF 镜像到 S3 → 在 EC2 GPU(P6/G7e) 或 SageMaker HyperPod 上微调（下方第 2·3 项）。可用 LeRobot（`groot` policy type）对 GR00T 做 post-train/eval。
+**AWS 映射**: 将模型权重从 HF 镜像到 S3 → 在 EC2 GPU(P6/G7e) 或 SageMaker HyperPod 上微调（下方第 2·3 项）。可用 [LeRobot](https://github.com/huggingface/lerobot)（`groot` policy type）对 GR00T 做 post-train/eval。
 
 **决策标准**:
 
 - **发布商用产品** → 优先 π（Apache-2.0）或 OpenVLA（MIT）。GR00T 仅在确定许可证后使用。
 - **人形全身控制** → GR00T 最完整（SONIC controller、Cosmos Reason 骨干），但需确认许可证。
 - **研究·PoC** → 全部可用，按性能/embodiment 适配性选择。
+
+```mermaid
+graph TD
+    Q{发布商用产品?} -- 是 --> L{许可证}
+    Q -- 研究 · PoC --> ALL["全部可用<br>按 embodiment 适配性选择"]
+    L -- Apache-2.0 --> PI["π (openpi) 🟢<br>可商用"]
+    L -- MIT --> OV["OpenVLA 🟢<br>可商用"]
+    L -- NVIDIA license --> GR["GR00T ⚠️<br>务必查看实时模型卡"]
+```
 
 **客户案例**: 案例待定（未确认国内公开的 VLA 微调案例）。
 
@@ -109,8 +118,8 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]`:
 
-- **SageMaker HyperPod** —— 支持 Slurm + **EKS** + Training Jobs。**Checkpointless training**（故障时数分钟内自动恢复，无需人工介入）、**Elastic training**（按可用量·优先级自动伸缩，自动检查点/恢复）。**2026-04 新增 G7e + r5d.16xlarge 支持**。提供 HyperPod CLI/SDK。
-- **EC2 GPU 阶梯** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **P6e-GB200 UltraServers**(GB200 NVL72, 最多 72 Blackwell/NVLink 域, 用 Capacity Blocks 获取)。
+- **[SageMaker HyperPod](https://aws.amazon.com/sagemaker/hyperpod/)** —— 支持 Slurm + **EKS** + Training Jobs。**Checkpointless training**（故障时数分钟内自动恢复，无需人工介入）、**Elastic training**（按可用量·优先级自动伸缩，自动检查点/恢复）。**2026-04 新增 G7e + r5d.16xlarge 支持**。提供 HyperPod CLI/SDK。
+- **EC2 GPU 阶梯** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 最多 72 Blackwell/NVLink 域, 用 [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/) 获取)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 已公布。⚠️ **没有用 Trainium 训练 VLA/机器人的公开案例** —— 整个 VLA 工具链都是 CUDA/NVIDIA。Trainium-for-VLA 未经验证。
 
 **AWS 映射**: 上述服务本身即映射。GPU 获取策略（On-Demand vs Capacity Blocks vs Flexible Training Plans）→ [decisions](decisions.md)。
@@ -121,6 +130,13 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - 多节点·长时间·需要容错 → **HyperPod(EKS)** + checkpointless。
 - 超大规模预训练 → P6e-GB200 UltraServers + Capacity Blocks。
 - 提议 Trainium 时 → 明示**当前对 LLM 场景安全，VLA 未经验证**并共享风险。
+
+```mermaid
+graph TD
+    A["单张 G7e<br>LoRA 微调"] --> B["HyperPod 多节点<br>容错 · 自动恢复"]
+    B --> C["P6e-GB200 UltraServers<br>超大规模预训练"]
+    A -. 未验证 ⚠️ .-> T["Trainium<br>无公开 VLA 案例"]
+```
 
 **客户案例** `[1]`:
 
@@ -141,7 +157,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]/[4]`:
 
-- **Figure Helix**: System 2 = 板载互联网预训练 VLM @ 7~9Hz（场景/语言），System 1 = 反应式 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
+- **[Figure Helix](https://www.figure.ai/news/helix)**: System 2 = 板载互联网预训练 VLM @ 7~9Hz（场景/语言），System 1 = 反应式 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 延迟，System 2 = LLM 规划器（任务分解）。
 - **通用模式**: 重型 VLM 以 5~10Hz 重新规划，轻量 flow-matching/diffusion "action expert" 以最新计划为条件，以 50~200Hz 发出动作。用 **action chunking**（GR00T=40 timestep horizon）预测未来动作块。
 - ⚠️ **成熟度要诚实**: 这个*模式本身*已是标准，但全身人形的全栈大多处于试点/演示阶段。

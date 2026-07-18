@@ -1,5 +1,5 @@
 ---
-ko_hash: 202a8a3c3eb1b93262e382328d916291834e3bc0
+ko_hash: fe1eefd59b89c07307424de8b986b018ea82c233
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -30,17 +30,26 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **ソリューション概要** `[1]`:
 
-- **NVIDIA Isaac GR00T** —— オープンなヒューマノイド基盤モデル。N1(2B)、N1.5(3B, flow-matching DiT action head)、N1.6(CES 2026, Cosmos Reason 2 バックボーン)、N1.7（GitHub 上で GA と主張）。⚠️ **ライセンス注意**: N1.5 モデルカードは **非商用（NVIDIA license, non-commercial）**。N1.6/N1.7 が商用許可だという主張は **2次出典のみで未検証** → 商用判断の前に **ライブモデルカードを直接確認することが必須**。`[1]` github.com/NVIDIA/Isaac-GR00T
-- **Physical Intelligence π (openpi)** —— π0、π0-FAST、π0.5 すべて **Apache-2.0**（商用可）。DROID/ALOHA/LIBERO ファインチューニングチェックポイントを提供。`[1]` github.com/Physical-Intelligence/openpi。⚠️ π0.7 は2次出典のみ存在（未検証）。
-- **OpenVLA** —— 7B、**MIT ライセンス**（商用可）、Llama2 ベースの VLM バックボーン。公式ファインチューニングスクリプトを提供。`[1]` github.com/openvla/openvla（LICENSE ファイルを 2026-07 に直接確認）
+- **[NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T)** —— オープンなヒューマノイド基盤モデル。N1(2B)、N1.5(3B, flow-matching DiT action head)、N1.6(CES 2026, Cosmos Reason 2 バックボーン)、N1.7（GitHub 上で GA と主張）。⚠️ **ライセンス注意**: N1.5 モデルカードは **非商用（NVIDIA license, non-commercial）**。N1.6/N1.7 が商用許可だという主張は **2次出典のみで未検証** → 商用判断の前に **ライブモデルカードを直接確認することが必須**。`[1]` github.com/NVIDIA/Isaac-GR00T
+- **[Physical Intelligence π (openpi)](https://github.com/Physical-Intelligence/openpi)** —— π0、π0-FAST、π0.5 すべて **Apache-2.0**（商用可）。DROID/ALOHA/LIBERO ファインチューニングチェックポイントを提供。`[1]` github.com/Physical-Intelligence/openpi。⚠️ π0.7 は2次出典のみ存在（未検証）。
+- **[OpenVLA](https://github.com/openvla/openvla)** —— 7B、**MIT ライセンス**（商用可）、Llama2 ベースの VLM バックボーン。公式ファインチューニングスクリプトを提供。`[1]` github.com/openvla/openvla（LICENSE ファイルを 2026-07 に直接確認）
 
-**AWS マッピング**: モデル重みを HF から S3 へミラーリング → EC2 GPU(P6/G7e) または SageMaker HyperPod でファインチューニング（下記 2・3 番）。LeRobot（`groot` policy type）で GR00T の post-train/eval が可能。
+**AWS マッピング**: モデル重みを HF から S3 へミラーリング → EC2 GPU(P6/G7e) または SageMaker HyperPod でファインチューニング（下記 2・3 番）。[LeRobot](https://github.com/huggingface/lerobot)（`groot` policy type）で GR00T の post-train/eval が可能。
 
 **意思決定基準**:
 
 - **商用製品リリース** → π（Apache-2.0）または OpenVLA（MIT）を優先。GR00T はライセンス確定後のみ。
 - **ヒューマノイド全身制御** → GR00T が最も完成型（SONIC controller、Cosmos Reason バックボーン）、ただしライセンス確認。
 - **研究・PoC** → すべて使用可能、性能/embodiment 適合性で選択。
+
+```mermaid
+graph TD
+    Q{商用製品リリース?} -- はい --> L{ライセンス}
+    Q -- 研究 · PoC --> ALL["すべて使用可能<br>embodiment 適合性で選択"]
+    L -- Apache-2.0 --> PI["π (openpi) 🟢<br>商用可"]
+    L -- MIT --> OV["OpenVLA 🟢<br>商用可"]
+    L -- NVIDIA license --> GR["GR00T ⚠️<br>ライブモデルカード確認必須"]
+```
 
 **顧客事例**: 事例待ち（国内公開の VLA ファインチューニング事例は未確認）。
 
@@ -110,8 +119,8 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **ソリューション概要** `[1]`:
 
-- **SageMaker HyperPod** —— Slurm + **EKS** + Training Jobs をサポート。**Checkpointless training**（障害時に数分内で自動復旧、手動介入なし）、**Elastic training**（可用量・優先度に応じて自動スケール、自動チェックポイント/再開）。**2026-04 に G7e + r5d.16xlarge サポート追加**。HyperPod CLI/SDK を提供。
-- **EC2 GPU の梯子** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **P6e-GB200 UltraServers**(GB200 NVL72, 最大 72 Blackwell/NVLink ドメイン, Capacity Blocks で確保)。
+- **[SageMaker HyperPod](https://aws.amazon.com/sagemaker/hyperpod/)** —— Slurm + **EKS** + Training Jobs をサポート。**Checkpointless training**（障害時に数分内で自動復旧、手動介入なし）、**Elastic training**（可用量・優先度に応じて自動スケール、自動チェックポイント/再開）。**2026-04 に G7e + r5d.16xlarge サポート追加**。HyperPod CLI/SDK を提供。
+- **EC2 GPU の梯子** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 最大 72 Blackwell/NVLink ドメイン, [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/) で確保)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 発表。⚠️ **Trainium で VLA/ロボティクスを学習した公開事例なし** —— VLA ツールチェーン全体が CUDA/NVIDIA。Trainium-for-VLA は未検証。
 
 **AWS マッピング**: 上記サービス自体がマッピング。GPU 確保戦略（On-Demand vs Capacity Blocks vs Flexible Training Plans）は → [decisions](decisions.md)。
@@ -122,6 +131,13 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 - マルチノード・長時間・耐障害性が必要 → **HyperPod(EKS)** + checkpointless。
 - 超大規模事前学習 → P6e-GB200 UltraServers + Capacity Blocks。
 - Trainium 提案時 → **現在は LLM 対象には安全、VLA は未検証**と明示しリスクを共有。
+
+```mermaid
+graph TD
+    A["単一 G7e<br>LoRA ファインチューニング"] --> B["HyperPod マルチノード<br>耐障害性 · 自動復旧"]
+    B --> C["P6e-GB200 UltraServers<br>超大規模事前学習"]
+    A -. 未検証 ⚠️ .-> T["Trainium<br>公開 VLA 事例なし"]
+```
 
 **顧客事例** `[1]`:
 
@@ -142,7 +158,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **ソリューション概要** `[1]/[4]`:
 
-- **Figure Helix**: System 2 = オンボードのインターネット事前学習 VLM @ 7~9Hz（シーン/言語）、System 1 = 反応型 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
+- **[Figure Helix](https://www.figure.ai/news/helix)**: System 2 = オンボードのインターネット事前学習 VLM @ 7~9Hz（シーン/言語）、System 1 = 反応型 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 遅延、System 2 = LLM プランナー（タスク分解）。
 - **一般パターン**: 重量級 VLM が 5~10Hz で再計画し、軽量な flow-matching/diffusion "action expert" が最新の計画を条件として 50~200Hz でアクションを放出。**action chunking**（GR00T=40 timestep horizon）で未来のアクションチャンクを予測。
 - ⚠️ **成熟度は正直に**: この*パターン自体*は標準だが、全身ヒューマノイドのフルスタックは大半がパイロット/デモ段階。
