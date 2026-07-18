@@ -1,5 +1,5 @@
 ---
-ko_hash: b8a6d8032e96d143d5c85f5ca5cb0a2f8863c504
+ko_hash: 2a3a48ccd7a27e08f6be00070d5e5df46029cecc
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -44,9 +44,9 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: 案例待定（Unitree H1 训练见 [pillar-2](pillar-2.md) 的 AWS 博客）。
 
-**➡️ SA 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
+**➡️ SA 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
 
-**🔗 相关资产**: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 研讨会（Batch MNP 无头 RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) —— 需确认可用 ⚠️ · [pai-sim-isaaclab 实操（Terraform + Isaac Lab 四足 PPO，约 2 小时/$12）](https://github.com/comeddy/pai-sim-isaaclab)
+**🔗 相关资产**: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 研讨会（Batch MNP 无头 RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) —— 需确认可用 ⚠️
 
 <details markdown="1"><summary>🔄 易变数据（版本 —— 2026-07 确认，部分年份需在 GitHub 再确认）</summary>
 
