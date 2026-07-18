@@ -1,6 +1,6 @@
 # Radar — 대기열 / 관찰 목록
 
-_최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 높음_
+_최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 [← index로](index.md)
 
 > **L0 TL;DR**: 포함 기준([2.5 THE FILTER](maintenance.md#포함-기준-the-filter))을 아직 통과 못했지만 **지켜볼 것들**. 각 항목은 한 줄 — 성숙도 라벨 + **왜 대기 중인지**. 게이트(4개 중 2개)를 통과하면 담당 필러 owner가 표준 템플릿으로 승격한다.
@@ -50,6 +50,21 @@ _최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 높음_
 | **에이전트 물리안전 표준** (RoboGuard 등) | 🔵 Research | ISO는 물리만, LLM 의미 위험 표준 부재 | 표준화 진전 |
 | **AgentCore Payments / Agent Registry (서울)** | 🟡 Preview/미제공 | 서울 리전 미제공 (도쿄 Agent Registry ✅) | 서울 리전 확장 |
 
+## 🆕 최신 스캔 유입 (2026-07 · 공개 조사 — 1차 검증 대기)
+
+<!-- 자동 스캔(arXiv/웹) 유입분. 전부 🔵/⚪/🟡 미검증 — THE FILTER 통과 전까지 고객 제안 사용 금지. 정기 갱신은 scripts/radar_scan.md 참고. -->
+
+| 항목 | 라벨 | 왜 대기인가 | 승격 조건 |
+|---|---|---|---|
+| **World Action Models** (MotionWAM · DSWAM) | 🔵 Research | 2026-06~07 프리프린트, 단일 랩. VLA 대안(비디오 월드모델 감독) `[4]` | peer-review + 재현 |
+| **Qwen-VLA** (통합 VLA) | 🔵 Research | 2026-05 프리프린트, 태스크·embodiment 통합 주장 `[4]` | 1차 확인 + 벤치 재현 |
+| **Ψ₀ (Psi-Zero)** | 🔵 Research | 2026-03 오픈 휴머노이드 loco-manip 파운데이션, 연구 단계 `[4]` | 실배포 사례 + AWS 매핑 |
+| **WholeBodyVLA** | 🔵 Research (ICLR'26) | 채택·GR00T 대비 +21.3% 주장 `[4]`, 프로덕션 아님 | 프로덕션 배포 증거 |
+| **RoboDojo** (Sim+Real 조작 벤치마크) | 🔵 Research | 2026-07 다기관 벤치마크, 표준화 전 `[4]` | 커뮤니티 표준 채택 |
+| **Isaac GR00T Reference Humanoid** (Unitree H2 Plus + Jetson Thor) | ⚪ 로드맵 | GTC Taipei 발표, late 2026 출시 예정 `[4]` | 실출시 + 배포 사례 |
+| **Google Gemini Robotics On-Device** | 🟡 Preview | 온디바이스 VLA(경쟁), AWS 미매핑 `[4]` | AWS 통합 경로 확인 |
+| **AgiBot World 2026 "배포 원년"** | 🟡 발표 | 1만 대 배포 주장 `[4]`; 데이터셋 CC BY-NC-SA(비상업) → [pillar-1](pillar-1.md) | 프로덕션 검증 + 라이선스 재확인 |
+
 ## ⚰️ 폐기됨 — 제안 금지 (기록 보존용)
 
 | 항목 | 상태 | 대체 |
@@ -74,4 +89,4 @@ _최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 높음_
 전체 파이프라인 → [maintenance](maintenance.md#슬랙--playbook-승격-파이프라인).
 
 ---
-_owner: 미정 ⚠️ · updated: 2026-07 · volatility: 높음 (Radar는 본질적으로 빠르게 변함 — 월 단위 검토 권장)_
+_owner: comeddy · updated: 2026-07 · volatility: 높음 (Radar는 본질적으로 빠르게 변함 — 월 단위 검토 권장)_

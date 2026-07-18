@@ -1,10 +1,10 @@
 ---
-ko_hash: 0f25aef6b593147b074982f677925d5b0fae9c1f
+ko_hash: 8f1c9251974b3496312dd4109d86fc717ebacb66
 ---
 # Radar — キュー / ウォッチリスト
 
 
-_最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 高_
+_最終更新: 2026-07 · owner: comeddy · volatility: 高_
 [← index へ](index.md)
 
 > **L0 TL;DR**: 包含基準（[2.5 THE FILTER](maintenance.md#包含基準-the-filter)）はまだ通過していないものの、**注目すべきもの**。各項目は一行 — 成熟度ラベル + **なぜ待機中か**。ゲート（4 項目中 2 項目）を通過すると、担当ピラーの owner が標準テンプレートで昇格します。
@@ -54,6 +54,21 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 高_
 | **エージェント物理安全標準**（RoboGuard など） | 🔵 Research | ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **AgentCore Payments / Agent Registry（ソウル）** | 🟡 Preview/未提供 | ソウルリージョン未提供（東京 Agent Registry ✅） | ソウルリージョン拡張 |
 
+## 🆕 最新スキャン流入（2026-07 · 公開調査 —— 一次検証待ち）
+
+<!-- 自動スキャン（arXiv/ウェブ）の流入分。すべて 🔵/⚪/🟡 未検証 —— THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
+
+| 項目 | ラベル | なぜ待機か | 昇格条件 |
+|---|---|---|---|
+| **World Action Models**（MotionWAM · DSWAM） | 🔵 Research | 2026-06~07 プレプリント、単一ラボ。VLA 代替（動画ワールドモデル教師）`[4]` | peer-review + 再現 |
+| **Qwen-VLA**（統合 VLA） | 🔵 Research | 2026-05 プレプリント、タスク・embodiment 統合を主張 `[4]` | 一次確認 + ベンチ再現 |
+| **Ψ₀（Psi-Zero）** | 🔵 Research | 2026-03 オープン人型 loco-manip 基盤、研究段階 `[4]` | 実機デプロイ事例 + AWS マッピング |
+| **WholeBodyVLA** | 🔵 Research（ICLR'26） | 採択・GR00T 比 +21.3% を主張 `[4]`、本番ではない | 本番デプロイの証拠 |
+| **RoboDojo**（Sim+Real 操作ベンチマーク） | 🔵 Research | 2026-07 複数機関ベンチマーク、標準化前 `[4]` | コミュニティ標準の採用 |
+| **Isaac GR00T Reference Humanoid**（Unitree H2 Plus + Jetson Thor） | ⚪ ロードマップ | GTC Taipei で発表、2026 年末出荷予定 `[4]` | 実出荷 + デプロイ事例 |
+| **Google Gemini Robotics On-Device** | 🟡 Preview | オンデバイス VLA（競合）、AWS 未マッピング `[4]` | AWS 統合経路の確認 |
+| **AgiBot World 2026「デプロイ元年」** | 🟡 発表 | 1 万台デプロイを主張 `[4]`；データセットは CC BY-NC-SA（非商用）→ [pillar-1](pillar-1.md) | 本番検証 + ライセンス再確認 |
+
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 
 | 項目 | 状態 | 代替 |
@@ -78,4 +93,4 @@ _最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 高_
 パイプライン全体 → [maintenance](maintenance.md#slack--playbook-昇格パイプライン)。
 
 ---
-_owner: 未定 ⚠️ · updated: 2026-07 · volatility: 高（Radar は本質的に急速に変化します — 月次レビューを推奨）_
+_owner: comeddy · updated: 2026-07 · volatility: 高（Radar は本質的に急速に変化します — 月次レビューを推奨）_

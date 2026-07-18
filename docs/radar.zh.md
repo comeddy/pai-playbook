@@ -1,9 +1,9 @@
 ---
-ko_hash: 0f25aef6b593147b074982f677925d5b0fae9c1f
+ko_hash: 8f1c9251974b3496312dd4109d86fc717ebacb66
 ---
 # Radar — 队列 / 观察列表
 
-_最终更新: 2026-07 · owner: 待定 ⚠️ · volatility: 高_
+_最终更新: 2026-07 · owner: comeddy · volatility: 高_
 [← 返回 index](index.md)
 
 > **L0 TL;DR**: 尚未通过纳入标准（[2.5 THE FILTER](maintenance.md#纳入标准-the-filter)）但**值得关注**的东西。每个条目一句话 —— 成熟度标签 + **为何待定**。一旦通过门禁（4 项中 2 项），由负责的支柱 owner 用标准模板晋升。
@@ -53,6 +53,21 @@ _最终更新: 2026-07 · owner: 待定 ⚠️ · volatility: 高_
 | **智能体物理安全标准**（RoboGuard 等） | 🔵 Research | ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **AgentCore Payments / Agent Registry（首尔）** | 🟡 Preview/未提供 | 首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
 
+## 🆕 最新扫描流入（2026-07 · 公开调研 —— 待一手验证）
+
+<!-- 自动扫描（arXiv/网络）流入项。全部 🔵/⚪/🟡 未验证 —— 在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
+
+| 项目 | 标签 | 为何等待 | 晋升条件 |
+|---|---|---|---|
+| **World Action Models**（MotionWAM · DSWAM） | 🔵 Research | 2026-06~07 预印本，单一实验室。VLA 替代（视频世界模型监督）`[4]` | peer-review + 复现 |
+| **Qwen-VLA**（统一 VLA） | 🔵 Research | 2026-05 预印本，声称任务·embodiment 统一 `[4]` | 一手确认 + 基准复现 |
+| **Ψ₀（Psi-Zero）** | 🔵 Research | 2026-03 开源人形 loco-manip 基础模型，研究阶段 `[4]` | 实机部署案例 + AWS 映射 |
+| **WholeBodyVLA** | 🔵 Research（ICLR'26） | 已录用，声称较 GR00T +21.3% `[4]`，非生产 | 生产部署证据 |
+| **RoboDojo**（Sim+Real 操作基准） | 🔵 Research | 2026-07 多机构基准，标准化前 `[4]` | 社区标准采纳 |
+| **Isaac GR00T Reference Humanoid**（Unitree H2 Plus + Jetson Thor） | ⚪ 路线图 | GTC Taipei 发布，计划 2026 年末出货 `[4]` | 实际出货 + 部署案例 |
+| **Google Gemini Robotics On-Device** | 🟡 Preview | 端侧 VLA（竞争），未映射到 AWS `[4]` | 确认 AWS 集成路径 |
+| **AgiBot World 2026「部署元年」** | 🟡 已发布 | 声称部署 1 万台 `[4]`；数据集 CC BY-NC-SA（非商用）→ [pillar-1](pillar-1.md) | 生产验证 + 许可证再确认 |
+
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
 | 条目 | 状态 | 替代 |
@@ -77,4 +92,4 @@ _最终更新: 2026-07 · owner: 待定 ⚠️ · volatility: 高_
 完整管道 → [maintenance](maintenance.md#slack--playbook-晋升管道)。
 
 ---
-_owner: 待定 ⚠️ · updated: 2026-07 · volatility: 高（Radar 本质上快速变化 —— 建议月度评审）_
+_owner: comeddy · updated: 2026-07 · volatility: 高（Radar 本质上快速变化 —— 建议月度评审）_

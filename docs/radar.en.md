@@ -1,9 +1,9 @@
 ---
-ko_hash: 0f25aef6b593147b074982f677925d5b0fae9c1f
+ko_hash: 8f1c9251974b3496312dd4109d86fc717ebacb66
 ---
 # Radar — Queue / Watchlist
 
-_Last updated: 2026-07 · owner: TBD ⚠️ · volatility: high_
+_Last updated: 2026-07 · owner: comeddy · volatility: high_
 [← back to index](index.md)
 
 > **L0 TL;DR**: Things **worth watching** that have not yet passed the inclusion criteria ([2.5 THE FILTER](maintenance.md#inclusion-criteria-the-filter)). Each item is one line — a maturity label + **why it is on hold**. Once it clears the gate (2 of 4), the owning pillar's owner promotes it using the standard template.
@@ -53,6 +53,21 @@ _Last updated: 2026-07 · owner: TBD ⚠️ · volatility: high_
 | **Agent physical-safety standards** (RoboGuard, etc.) | 🔵 Research | ISO covers physical only; no standard for LLM semantic risk | Progress on standardization |
 | **AgentCore Payments / Agent Registry (Seoul)** | 🟡 Preview/unavailable | Not available in Seoul region (Tokyo Agent Registry ✅) | Seoul region expansion |
 
+## 🆕 Latest scan intake (2026-07 · public research — pending primary verification)
+
+<!-- Intake from automated scan (arXiv/web). All 🔵/⚪/🟡 unverified — do not use in customer proposals until they pass THE FILTER. See scripts/radar_scan.md for the periodic refresh. -->
+
+| Item | Label | Why waiting | Promotion criteria |
+|---|---|---|---|
+| **World Action Models** (MotionWAM · DSWAM) | 🔵 Research | 2026-06~07 preprints, single lab. VLA alternative (video world-model supervision) `[4]` | peer review + reproduction |
+| **Qwen-VLA** (unified VLA) | 🔵 Research | 2026-05 preprint, claims task/embodiment unification `[4]` | primary confirmation + benchmark reproduction |
+| **Ψ₀ (Psi-Zero)** | 🔵 Research | 2026-03 open humanoid loco-manip foundation, research stage `[4]` | real deployment case + AWS mapping |
+| **WholeBodyVLA** | 🔵 Research (ICLR'26) | accepted, claims +21.3% over GR00T `[4]`, not production | production deployment evidence |
+| **RoboDojo** (Sim+Real manipulation benchmark) | 🔵 Research | 2026-07 multi-institution benchmark, pre-standardization `[4]` | community-standard adoption |
+| **Isaac GR00T Reference Humanoid** (Unitree H2 Plus + Jetson Thor) | ⚪ Roadmap | announced at GTC Taipei, ship planned late 2026 `[4]` | actual launch + deployment case |
+| **Google Gemini Robotics On-Device** | 🟡 Preview | on-device VLA (competitor), not AWS-mapped `[4]` | AWS integration path confirmed |
+| **AgiBot World 2026 "deployment year one"** | 🟡 Announced | claims 10,000 robots deployed `[4]`; dataset CC BY-NC-SA (non-commercial) → [pillar-1](pillar-1.md) | production validation + license re-confirmation |
+
 ## ⚰️ Retired — do not propose (kept for the record)
 
 | Item | Status | Replacement |
@@ -77,4 +92,4 @@ _Last updated: 2026-07 · owner: TBD ⚠️ · volatility: high_
 Full pipeline → [maintenance](maintenance.md#slack--playbook-promotion-pipeline).
 
 ---
-_owner: TBD ⚠️ · updated: 2026-07 · volatility: high (the Radar changes fast by nature — monthly review recommended)_
+_owner: comeddy · updated: 2026-07 · volatility: high (the Radar changes fast by nature — monthly review recommended)_
