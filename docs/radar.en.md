@@ -1,5 +1,5 @@
 ---
-ko_hash: 23985277c42e1755a63aea5eb2fdee295053d320
+ko_hash: 41fdadccb4258028b6ae3d4a31d1b814fa5dd769
 ---
 # Radar — Queue / Watchlist
 
@@ -60,11 +60,11 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 
 | Item | Label | Why waiting | Promotion criteria |
 |---|---|---|---|
-| **AgiBot 15,000-unit production milestone** (Longcheer factory) | 🟡 Announced | Claims 99.99% success rate over a 6-day demo `[4]`, no independent validation; see [pillar-1](pillar-1.md) for the dataset licensing issue | Independent productivity validation |
+| **AgiBot 15,000th unit total + Longcheer line deployment** | 🟡 Pilot | ⚠️ "15,000 units mass-produced" is inaccurate — actually the **15,000th robot delivered overall (own factories)** + **8 G2 robots on one Longcheer line** `[3]`. The 6-day 99.99% demo (64,828 operations) is real but not independently validated; dataset licensing → [pillar-1](pillar-1.md) | Independent productivity validation + line expansion |
 | **DSWAM** (Dual-System World Action Foundation Model) | 🔵 Research | 2026-07 preprint, single lab. Claims a dual-system architecture for fine-grained manipulation `[4]` | peer review + reproduction |
 | **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 preprint, claims to close the actuator-dynamics gap (legged robots and humanoids) `[4]` | peer review + reproduction |
 | **Kairos** (regret-aware world-action model stack) | 🔵 Research | 2026-06 preprint, claims a full-stack Physical AI approach `[4]` | primary confirmation + independent reproduction |
-| **1X NEO 25-DoF tendon-driven hand** | 🟡 Preview | Announced 2026-07, claims to remove the "hardware ceiling" `[4]`; sources conflict on whether customer shipments have started | Verified shipments + validated autonomous manipulation case |
+| **1X NEO 25-DoF tendon-driven hand** | 🟡 Pre-order | Hand is real `[3]`; claims pre-orders sold out (10k in 5 days) but **0 verified customer deliveries** — currently pre-order ($20k / $499-mo), consumer shipments "planned" for late 2026. "Shipping" wording is marketing | Verified deliveries + validated autonomous manipulation case |
 | **ULTRA** (unified multimodal humanoid whole-body loco-manipulation) | 🔵 Research | 2026-03 preprint, claims perception-driven behavior generation without predefined motion references `[4]` | peer review + reproduction |
 
 ## ⚰️ Retired — do not propose (kept for the record)

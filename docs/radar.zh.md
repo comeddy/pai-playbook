@@ -1,5 +1,5 @@
 ---
-ko_hash: 23985277c42e1755a63aea5eb2fdee295053d320
+ko_hash: 41fdadccb4258028b6ae3d4a31d1b814fa5dd769
 ---
 # Radar — 队列 / 观察列表
 
@@ -60,11 +60,11 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 项目 | 标签 | 为何等待 | 晋升条件 |
 |---|---|---|---|
-| **AgiBot 1.5 万台量产**（Longcheer 工厂） | 🟡 已发布 | 6 天演示声称 99.99% 成功率 `[4]`，无独立验证；数据集许可证问题见 [pillar-1](pillar-1.md) | 独立生产力验证 |
+| **AgiBot 累计第 1.5 万台 + Longcheer 产线部署** | 🟡 试点 | ⚠️"量产 1.5 万台"不准确 —— 实际为**累计交付第 1.5 万台（自有工厂）** + **Longcheer 一条产线部署 8 台 G2** `[3]`。6 天 99.99% 演示（64,828 次操作）属实但无独立验证；数据集许可证见 [pillar-1](pillar-1.md) | 独立生产力验证 + 产线扩展 |
 | **DSWAM**（双系统 World Action Foundation Model） | 🔵 Research | 2026-07 预印本，单一实验室。声称面向精细操作的双系统架构 `[4]` | peer-review + 复现 |
 | **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 预印本，声称弥合致动器动力学差距（腿式机器人·人形）`[4]` | peer-review + 复现 |
 | **Kairos**（Regret-aware World-Action Model 技术栈） | 🔵 Research | 2026-06 预印本，声称面向 Physical AI 的全栈方案 `[4]` | 一手确认 + 独立复现 |
-| **1X NEO 25-DoF 腱驱动手** | 🟡 Preview | 2026-07 发布，声称消除"硬件天花板" `[4]`；关于是否已开始客户交付，各来源相互矛盾 | 实际交付验证 + 自主操作验证案例 |
+| **1X NEO 25-DoF 腱驱动手** | 🟡 预订 | 手部为实物 `[3]`，声称预订售罄（5 天 1 万台），但**经验证的客户交付为 0** —— 目前为 pre-order 阶段（$20k/$499 月），消费者出货"计划"于 2026 下半年。"正在发货"为营销措辞 | 实际交付验证 + 自主操作验证案例 |
 | **ULTRA**（统一多模态人形全身 loco-manipulation） | 🔵 Research | 2026-03 预印本，声称在不依赖预定义运动参考的情况下基于感知生成行为 `[4]` | peer-review + 复现 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）

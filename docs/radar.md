@@ -57,11 +57,11 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 
 | 항목 | 라벨 | 왜 대기인가 | 승격 조건 |
 |---|---|---|---|
-| **AgiBot 15,000대 양산** (Longcheer 공장) | 🟡 발표 | 6일 데모 99.99% 성공률 주장 `[4]`, 독립 검증 없음; 데이터셋 라이선스 이슈는 [pillar-1](pillar-1.md) 참고 | 독립 생산성 검증 |
+| **AgiBot 통산 1.5만 호기 + Longcheer 라인 배치** | 🟡 파일럿 | ⚠️ "1.5만 대 양산"은 부정확 — 실제는 **통산 1.5만 호기 납품(자사 공장)** + Longcheer **1개 라인에 G2 8대** `[3]`. 6일 데모 99.99%(64,828회 작업)는 사실이나 독립 검증 없음; 데이터셋 라이선스는 [pillar-1](pillar-1.md) | 독립 생산성 검증 + 라인 확산 |
 | **DSWAM** (Dual-System World Action Foundation Model) | 🔵 Research | 2026-07 프리프린트, 단일 랩. 정밀 조작용 dual-system 구조 주장 `[4]` | peer-review + 재현 |
 | **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 프리프린트, 액추에이터 동역학 격차 해소 주장(보행 로봇·휴머노이드) `[4]` | peer-review + 재현 |
 | **Kairos** (Regret-aware World-Action Model 스택) | 🔵 Research | 2026-06 프리프린트, Physical AI 풀스택 주장 `[4]` | 1차 확인 + 독립 재현 |
-| **1X NEO 25-DoF 텐던 구동 핸드** | 🟡 Preview | 2026-07 발표, "하드웨어 천장 제거" 주장 `[4]`; 고객 배송 여부 소스 간 상충 | 실배송 검증 + 자율 매니퓰레이션 사례 |
+| **1X NEO 25-DoF 텐던 구동 핸드** | 🟡 예약 판매 | 핸드는 실물 `[3]`, 예약 완판(5일 1만 대) 주장이나 **검증된 고객 인도 0** — 현재 pre-order 단계($20k/$499월), 소비자 출하는 2026 후반 "계획". "배송 중" 표현은 마케팅 | 실인도 검증 + 자율 매니퓰레이션 사례 |
 | **ULTRA** (통합 멀티모달 휴머노이드 전신 loco-manipulation) | 🔵 Research | 2026-03 프리프린트, 사전정의 모션 참조 없이 지각 기반 행동 생성 주장 `[4]` | peer-review + 재현 |
 
 ## ⚰️ 폐기됨 — 제안 금지 (기록 보존용)
