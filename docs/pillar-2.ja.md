@@ -1,5 +1,5 @@
 ---
-ko_hash: c679f188ada3164087904f8a4cd082ec324cf050
+ko_hash: 202a8a3c3eb1b93262e382328d916291834e3bc0
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -44,7 +44,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **顧客事例**: 事例待ち（国内公開の VLA ファインチューニング事例は未確認）。
 
-**➡️ SA の次のアクション**: 顧客がモデル選定中なら **「ライセンスマトリクス（GR00T=確認必要 / π=Apache-2.0 / OpenVLA=MIT）を最初のスライドに」** 提示。商用なら π0.5 または OpenVLA ファインチューニング PoC を EC2 G7e 上で提案。
+**➡️ 次のアクション**: 顧客がモデル選定中なら **「ライセンスマトリクス（GR00T=確認必要 / π=Apache-2.0 / OpenVLA=MIT）を最初のスライドに」** 提示。商用なら π0.5 または OpenVLA ファインチューニング PoC を EC2 G7e 上で提案。
 
 **🔗 関連資産**: [pillar-1 データセットライセンス](pillar-1.md) · [pillar-4 エッジデプロイ](pillar-4.md)
 
@@ -87,7 +87,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **顧客事例**: 事例待ち（公式 AWS VLA ファインチューニング事例なし —— 3 番の Unitree H1 は RL locomotion であって VLA ではない）。
 
-**➡️ SA の次のアクション**: **「単一 G7e での LoRA ファインチューニング 1 日 PoC」** をデフォルトのエントリー提案に。顧客データが 100 デモ以上あれば、すぐに実測成功率を見せられる。GPU 確保が詰まったら → [decisions](decisions.md)。
+**➡️ 次のアクション**: **「単一 G7e での LoRA ファインチューニング 1 日 PoC」** をデフォルトのエントリー提案に。顧客データが 100 デモ以上あれば、すぐに実測成功率を見せられる。GPU 確保が詰まったら → [decisions](decisions.md)。
 
 **🔗 関連資産**: [pillar-1 データパイプライン](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
 
@@ -128,7 +128,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 - **Unitree H1 ヒューマノイド RL を Isaac Lab + SageMaker(HyperPod) で学習** —— AWS 公式ブログ(2026-06-09)。19 関節 velocity tracking、PPO(skrl)、HyperPod ヘルスモニタリング・自動交換・チェックポイント再開をデモ。⚠️ **RL locomotion であって VLA ファインチューニングではない** —— リファレンスアーキテクチャとしてのみ引用。
 - **Zoox** —— HyperPod でマルチモーダル AV 基盤モデル、64+ GPU で 95% 稼働率。⚠️ AV。
 
-**➡️ SA の次のアクション**: **AWS 公式「Isaac Lab on SageMaker」ブログをそのままワークショップ資産として活用**（再現可能な唯一の AWS ロボティクス学習リファレンス）。GPU 可用性の問題なら Capacity Blocks/Flexible Training Plans へ接続。
+**➡️ 次のアクション**: **AWS 公式「Isaac Lab on SageMaker」ブログをそのままワークショップ資産として活用**（再現可能な唯一の AWS ロボティクス学習リファレンス）。GPU 可用性の問題なら Capacity Blocks/Flexible Training Plans へ接続。
 
 **🔗 関連資産**: [pillar-3 シミュレーション(Isaac Lab)](pillar-3.md) · [decisions: GPU 確保](decisions.md)
 
@@ -153,7 +153,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **顧客事例**: Figure（デモ/PR）、GR00T（オープンモデル）。検証済みの本番環境は限定的。
 
-**➡️ SA の次のアクション**: 顧客が「リアルタイムなのにクラウドで大丈夫？」と尋ねたら **System1/System2 の図を描いて「制御ループはエッジ、計画はクラウド」と整理**。これだけでアーキテクチャの会話が整う。
+**➡️ 次のアクション**: 顧客が「リアルタイムなのにクラウドで大丈夫？」と尋ねたら **System1/System2 の図を描いて「制御ループはエッジ、計画はクラウド」と整理**。これだけでアーキテクチャの会話が整う。
 
 **🔗 関連資産**: [pillar-4 エッジ推論](pillar-4.md) · [pillar-5 オーケストレーション](pillar-5.md) · [decisions](decisions.md)
 
@@ -180,7 +180,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **顧客事例**: パートナーデプロイ（非公開が多数）。
 
-**➡️ SA の次のアクション**: 顧客が Gemini Robotics を検討中なら **「推論レイヤーはそれを使うとしても、オーケストレーション・ガードレール・低レベル制御モデルは AWS で所有」** するハイブリッドを提案（競争ではなく補完の角度）。
+**➡️ 次のアクション**: 顧客が Gemini Robotics を検討中なら **「推論レイヤーはそれを使うとしても、オーケストレーション・ガードレール・低レベル制御モデルは AWS で所有」** するハイブリッドを提案（競争ではなく補完の角度）。
 
 **🔗 関連資産**: [pillar-5 AgentCore](pillar-5.md)
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: e7b0b46f0789240c6019befde7597801f5d0ea5b
+ko_hash: 556a053d08d8b34241de83e2e1ce2be884cabe35
 ---
 # Physical AI Playbook — Introduction
 
@@ -94,7 +94,7 @@ _Last updated: 2026-07 · owner: comeddy · status: initial build in progress_
 
 - **Items that fall short of the inclusion criteria**: ⓐ production-validated ⓑ mappable to AWS ⓒ actual inquiry history ⓓ GA (or roadmap) — if **fewer than 2** of these hold, it is not in the body. It exists only as a one-liner in the [Radar](radar.md).
 - **Breaking news**: "it just came out" is not a reason for inclusion.
-- **Items that end at conceptual explanation**: every item ends with "➡️ SA next action." If there is no action, it is incomplete.
+- **Items that end at conceptual explanation**: every item ends with "➡️ Next action." If there is no action, it is incomplete.
 
 ---
 

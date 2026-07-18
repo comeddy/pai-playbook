@@ -1,5 +1,5 @@
 ---
-ko_hash: 019ab4e07f9951add4f0595235c018424018dc26
+ko_hash: 2f34b046b852e0ca2015bda12068c028c75527b7
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -54,7 +54,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: (public AWS robot cases of edge deployment itself are limited — centered on reference architectures)
 
-**➡️ SA next action**: **draw the "Jetson Thor (on-board control) + Greengrass V2 (OTA/management) + ONNX→TensorRT" edge reference architecture**, and proactively inform the customer that "Edge Manager is gone" to correct wrong expectations. Ask the real-time Hz requirement to fix the edge/cloud boundary.
+**➡️ Next action**: **draw the "Jetson Thor (on-board control) + Greengrass V2 (OTA/management) + ONNX→TensorRT" edge reference architecture**, and proactively inform the customer that "Edge Manager is gone" to correct wrong expectations. Ask the real-time Hz requirement to fix the edge/cloud boundary.
 
 **🔗 Related assets**: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 orchestration](pillar-5.md) · [decisions](decisions.md)
 
@@ -78,7 +78,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: ANYmal (industrial inspection, production), Agility Digit@GXO (logistics, paid). ⚠️ **No independent third-party autonomy audit exists for any humanoid** — based on vendor/customer PR ([3]).
 
-**➡️ SA next action**: if the customer is skeptical of sim-to-real, **use ANYmal/Digit@GXO as evidence that "it works," but be clear that "it works because it's locomotion."** Knowing the Spot=MPC fact precisely earns trust.
+**➡️ Next action**: if the customer is skeptical of sim-to-real, **use ANYmal/Digit@GXO as evidence that "it works," but be clear that "it works because it's locomotion."** Knowing the Spot=MPC fact precisely earns trust.
 
 **🔗 Related assets**: [pillar-3 parallel RL](pillar-3.md) · [pillar-2 training](pillar-2.md)
 
@@ -114,7 +114,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: ANYmal · Digit (item 2 above) are products of this methodology.
 
-**➡️ SA next action**: if the customer's team is floundering with "indiscriminate DR," redirect them to **"selective DR + SysID + MPC hybrid."** Label research techniques (ASAP, etc.) honestly as "research stage."
+**➡️ Next action**: if the customer's team is floundering with "indiscriminate DR," redirect them to **"selective DR + SysID + MPC hybrid."** Label research techniques (ASAP, etc.) honestly as "research stage."
 
 **🔗 Related assets**: [pillar-3 Simulation](pillar-3.md)
 
@@ -142,7 +142,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: only narrow loco-manipulation (Digit, Figure 02) is in production. Precise manipulation is research/Preview.
 
-**➡️ SA next action**: for manipulation customers, **manage expectations honestly** — say first "it's not solved as well as locomotion, real data is key," then connect to the [pillar-1 real-data pipeline](pillar-1.md). No over-promising.
+**➡️ Next action**: for manipulation customers, **manage expectations honestly** — say first "it's not solved as well as locomotion, real data is key," then connect to the [pillar-1 real-data pipeline](pillar-1.md). No over-promising.
 
 **🔗 Related assets**: [pillar-1 teleoperation/real data](pillar-1.md) · [pillar-2 VLA fine-tuning](pillar-2.md)
 
@@ -166,7 +166,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: (evaluation itself is a research area)
 
-**➡️ SA next action**: if the customer wants to "deploy because sim got 95%," **advise them to design staged real-world validation on the basis of "recent research showing low sim↔real correlation."** This honesty prevents accidents.
+**➡️ Next action**: if the customer wants to "deploy because sim got 95%," **advise them to design staged real-world validation on the basis of "recent research showing low sim↔real correlation."** This honesty prevents accidents.
 
 **🔗 Related assets**: [pillar-3 Simulation](pillar-3.md) · [pillar-1 real data](pillar-1.md)
 

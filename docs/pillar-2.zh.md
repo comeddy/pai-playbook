@@ -1,5 +1,5 @@
 ---
-ko_hash: c679f188ada3164087904f8a4cd082ec324cf050
+ko_hash: 202a8a3c3eb1b93262e382328d916291834e3bc0
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -43,7 +43,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: 案例待定（未确认国内公开的 VLA 微调案例）。
 
-**➡️ SA 后续行动**: 若客户正在选型，则**将"许可证矩阵（GR00T=需确认 / π=Apache-2.0 / OpenVLA=MIT）作为第一张幻灯片"**呈现。若为商用，则提议在 EC2 G7e 上做 π0.5 或 OpenVLA 微调 PoC。
+**➡️ 后续行动**: 若客户正在选型，则**将"许可证矩阵（GR00T=需确认 / π=Apache-2.0 / OpenVLA=MIT）作为第一张幻灯片"**呈现。若为商用，则提议在 EC2 G7e 上做 π0.5 或 OpenVLA 微调 PoC。
 
 **🔗 相关资产**: [pillar-1 数据集许可证](pillar-1.md) · [pillar-4 边缘部署](pillar-4.md)
 
@@ -86,7 +86,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: 案例待定（无官方 AWS VLA 微调案例 —— 第 3 项的 Unitree H1 是 RL locomotion 而非 VLA）。
 
-**➡️ SA 后续行动**: **将"在单张 G7e 上做 LoRA 微调 1 天 PoC"作为默认入门提议**。若客户数据超过 100 个演示，即可立即展示实测成功率。GPU 获取受阻 → [decisions](decisions.md)。
+**➡️ 后续行动**: **将"在单张 G7e 上做 LoRA 微调 1 天 PoC"作为默认入门提议**。若客户数据超过 100 个演示，即可立即展示实测成功率。GPU 获取受阻 → [decisions](decisions.md)。
 
 **🔗 相关资产**: [pillar-1 数据管道](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
 
@@ -127,7 +127,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - **在 Isaac Lab + SageMaker(HyperPod) 上训练 Unitree H1 人形 RL** —— AWS 官方博客(2026-06-09)。演示了 19 关节 velocity tracking、PPO(skrl)、HyperPod 健康监控·自动替换·检查点恢复。⚠️ **是 RL locomotion 而非 VLA 微调** —— 仅作为参考架构引用。
 - **Zoox** —— 用 HyperPod 训练多模态 AV 基础模型，64+ GPU 达 95% 利用率。⚠️ AV。
 
-**➡️ SA 后续行动**: **直接把 AWS 官方"Isaac Lab on SageMaker"博客当作研讨会资产用**（唯一可复现的 AWS 机器人训练参考）。GPU 可用性有问题则连接到 Capacity Blocks/Flexible Training Plans。
+**➡️ 后续行动**: **直接把 AWS 官方"Isaac Lab on SageMaker"博客当作研讨会资产用**（唯一可复现的 AWS 机器人训练参考）。GPU 可用性有问题则连接到 Capacity Blocks/Flexible Training Plans。
 
 **🔗 相关资产**: [pillar-3 仿真(Isaac Lab)](pillar-3.md) · [decisions: GPU 获取](decisions.md)
 
@@ -152,7 +152,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: Figure（演示/PR）、GR00T（开放模型）。经过验证的生产环境有限。
 
-**➡️ SA 后续行动**: 客户问"实时场景能用云吗？"时，**画出 System1/System2 图，归纳为"控制回路在边缘、规划在云上"**。仅此一点就能理清架构对话。
+**➡️ 后续行动**: 客户问"实时场景能用云吗？"时，**画出 System1/System2 图，归纳为"控制回路在边缘、规划在云上"**。仅此一点就能理清架构对话。
 
 **🔗 相关资产**: [pillar-4 边缘推理](pillar-4.md) · [pillar-5 编排](pillar-5.md) · [decisions](decisions.md)
 
@@ -179,7 +179,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: 合作伙伴部署（多为非公开）。
 
-**➡️ SA 后续行动**: 若客户正在评估 Gemini Robotics，则**提议"推理层用它，但编排·护栏·低层控制模型由 AWS 拥有"** 的混合方案（以补充而非竞争的角度）。
+**➡️ 后续行动**: 若客户正在评估 Gemini Robotics，则**提议"推理层用它，但编排·护栏·低层控制模型由 AWS 拥有"** 的混合方案（以补充而非竞争的角度）。
 
 **🔗 相关资产**: [pillar-5 AgentCore](pillar-5.md)
 

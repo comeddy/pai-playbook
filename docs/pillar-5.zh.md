@@ -1,5 +1,5 @@
 ---
-ko_hash: 779a55a5c99476b47ed3dc18d8147d61dffe277b
+ko_hash: 3cf84fbe23c4799507db95dd94973d47610ceb13
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -45,7 +45,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: **AWS×SoftServe 自主生产线**(AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) —— Hannover Messe 2026 **演示/展示**([1]/[3])。
 
-**➡️ SA 后续行动**: 先让国内客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
+**➡️ 后续行动**: 先让国内客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
 
 **🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · （内部 AgentCore 研讨会 —— 需确认 ⚠️）
 
@@ -81,7 +81,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: Figure、GR00T（开放）。经过验证的生产环境有限。
 
-**➡️ SA 后续行动**: 针对"智能体实时控制机器人吗？"的误解，**用"智能体做规划，实时控制交给边缘策略"来理清图示**。提出 AgentCore（规划）+ Jetson（控制）的组合。
+**➡️ 后续行动**: 针对"智能体实时控制机器人吗？"的误解，**用"智能体做规划，实时控制交给边缘策略"来理清图示**。提出 AgentCore（规划）+ Jetson（控制）的组合。
 
 **🔗 相关资产**: [pillar-2 VLA 结构](pillar-2.md) · [pillar-4 边缘](pillar-4.md) · [decisions](decisions.md)
 
@@ -101,7 +101,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: AWS×SoftServe（上方第 1 项，演示）。
 
-**➡️ SA 后续行动**: 向离线客户**以 AWS Greengrass 智能体 Guidance + 示例代码作为起点**提出（诚实说明不是 GA 产品）。设计在线/离线混合（边缘 SLM ↔ 云端 AgentCore）。
+**➡️ 后续行动**: 向离线客户**以 AWS Greengrass 智能体 Guidance + 示例代码作为起点**提出（诚实说明不是 GA 产品）。设计在线/离线混合（边缘 SLM ↔ 云端 AgentCore）。
 
 **🔗 相关资产**: [pillar-4 边缘部署](pillar-4.md) · [pillar-1](pillar-1.md)
 
@@ -126,7 +126,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**（⚠️ 国内为早期/演示/公布）: **Lotte Global Logistics×CoEvolution**(30%，单一来源)、**LG CNS** 仓库演示（人形+机器狗+移动）、**Naver** AI Agent Platform 计划于 2026 下半年（NVIDIA 蓝图）。
 
-**➡️ SA 后续行动**: 向机群客户**以"协调逻辑用 AgentCore，连接用 IoT，训练用 SageMaker"三层来梳理**。准确说明，避免把 DeepFleet 误解为 LLM 智能体。
+**➡️ 后续行动**: 向机群客户**以"协调逻辑用 AgentCore，连接用 IoT，训练用 SageMaker"三层来梳理**。准确说明，避免把 DeepFleet 误解为 LLM 智能体。
 
 **🔗 相关资产**: [pillar-2 训练](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
 
@@ -150,7 +150,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: （生产安全案例为非公开/早期）
 
-**➡️ SA 后续行动**: 对安全问题**提出"智能体层用 AgentCore Policy/Cedar 门控工具调用，机器人层用 ISO 确定性安全 —— 双重防御"**。诚实承认"LLM 语义风险标准尚不存在"，并以分层防御来补足的角度。
+**➡️ 后续行动**: 对安全问题**提出"智能体层用 AgentCore Policy/Cedar 门控工具调用，机器人层用 ISO 确定性安全 —— 双重防御"**。诚实承认"LLM 语义风险标准尚不存在"，并以分层防御来补足的角度。
 
 **🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · （内部智能体安全指南 —— 新建需要 ⚠️）
 

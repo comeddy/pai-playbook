@@ -44,7 +44,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **고객 사례**: 사례 대기 (Unitree H1 학습은 [pillar-2](pillar-2.md)의 AWS 블로그 참조).
 
-**➡️ SA 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/comeddy/pai-sim-isaaclab)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
+**➡️ 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/comeddy/pai-sim-isaaclab)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
 
 **🔗 관련 자산**: [pillar-2 학습 스택](pillar-2.md) · [pillar-1 합성 데이터](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 워크샵 (Batch MNP 헤드리스 RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US)
 
@@ -94,7 +94,7 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **고객 사례**: **Unitree H1 RL(Isaac Lab on SageMaker)** — [pillar-2](pillar-2.md) 참조.
 
-**➡️ SA 다음 액션**: **"AWS Batch MNP로 Isaac Lab 병렬 RL 스케일" 아키텍처를 그려주고**, 고객 태스크가 픽셀 관측인지(→ 멀티노드 필요) 상태 관측인지(→ 단일 GPU 충분)로 스케일 판단. 벤치마크 인용 시 반드시 측정조건(환경 수·GPU) 병기.
+**➡️ 다음 액션**: **"AWS Batch MNP로 Isaac Lab 병렬 RL 스케일" 아키텍처를 그려주고**, 고객 태스크가 픽셀 관측인지(→ 멀티노드 필요) 상태 관측인지(→ 단일 GPU 충분)로 스케일 판단. 벤치마크 인용 시 반드시 측정조건(환경 수·GPU) 병기.
 
 **🔗 관련 자산**: [pillar-2 HyperPod](pillar-2.md) · [decisions: GPU 확보](decisions.md)
 
@@ -123,7 +123,7 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **고객 사례**: **Unitree**(MuJoCo, 프로덕션 HW 학습).
 
-**➡️ SA 다음 액션**: "NVIDIA 종속" 우려 고객에게 **"AWS는 Isaac도 MuJoCo/Gazebo도 다 잘 돌린다 — 워크로드로 고르면 된다"** 는 중립 포지션 제시. MuJoCo면 컴퓨트 GPU(P5) 재활용 가능하다는 비용 이점 강조.
+**➡️ 다음 액션**: "NVIDIA 종속" 우려 고객에게 **"AWS는 Isaac도 MuJoCo/Gazebo도 다 잘 돌린다 — 워크로드로 고르면 된다"** 는 중립 포지션 제시. MuJoCo면 컴퓨트 GPU(P5) 재활용 가능하다는 비용 이점 강조.
 
 **🔗 관련 자산**: [decisions: NVIDIA vs 오픈소스](decisions.md)
 
@@ -143,7 +143,7 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **고객 사례** (⚠️ 발표만, 프로덕션 미검증): Cosmos 3 채택사로 **Doosan Robotics, LG Electronics, Samsung Electronics** 등 한국 기업 다수 발표 — 국내 관련성 높으나 "발표된 채택"이지 검증된 프로덕션 아님.
 
-**➡️ SA 다음 액션**: 국내 고객이 Cosmos 3 관심 → **"AWS G7e에서 Cosmos 3 Nano 셀프호스팅" PoC**로 대응(매니지드 호스팅 부재를 셀프호스팅+데이터주권 강점으로 전환).
+**➡️ 다음 액션**: 국내 고객이 Cosmos 3 관심 → **"AWS G7e에서 Cosmos 3 Nano 셀프호스팅" PoC**로 대응(매니지드 호스팅 부재를 셀프호스팅+데이터주권 강점으로 전환).
 
 **🔗 관련 자산**: [pillar-1 Cosmos 데이터 생성](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 
@@ -174,7 +174,7 @@ _출처: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **고객 사례**: 사례 대기.
 
-**➡️ SA 다음 액션**: 고객이 "TwinMaker 죽었다던데?" 물으면 **즉시 정정**("GA, 신규 오픈, 다만 저속도"). 트윈+시뮬레이션 통합 원하면 Omniverse AMI로 연결. "OVX 있냐" 물으면 "없다, G6e/G7e + AMI" 로 정확히.
+**➡️ 다음 액션**: 고객이 "TwinMaker 죽었다던데?" 물으면 **즉시 정정**("GA, 신규 오픈, 다만 저속도"). 트윈+시뮬레이션 통합 원하면 Omniverse AMI로 연결. "OVX 있냐" 물으면 "없다, G6e/G7e + AMI" 로 정확히.
 
 **🔗 관련 자산**: [pillar-1](pillar-1.md) · (사내 디지털 트윈 워크숍 — 확인 필요 ⚠️)
 

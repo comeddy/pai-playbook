@@ -1,5 +1,5 @@
 ---
-ko_hash: bf3dbec91ebf5416ed0579ee049bd62bb700c305
+ko_hash: c2b0de09759218157f9c00ccdb86a99ea98e94f5
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -47,7 +47,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: 案例待定（Unitree H1 训练见 [pillar-2](pillar-2.md) 的 AWS 博客）。
 
-**➡️ SA 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
+**➡️ 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
 
 **🔗 相关资产**: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 研讨会（Batch MNP 无头 RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US)
 
@@ -97,7 +97,7 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **客户案例**: **Unitree H1 RL(Isaac Lab on SageMaker)** —— 见 [pillar-2](pillar-2.md)。
 
-**➡️ SA 后续行动**: **画出"用 AWS Batch MNP 扩展 Isaac Lab 并行 RL"架构**，用客户任务是像素观测（→ 需要多节点）还是状态观测（→ 单 GPU 即够）来判断扩展。引用基准时务必并列注明测量条件（环境数·GPU）。
+**➡️ 后续行动**: **画出"用 AWS Batch MNP 扩展 Isaac Lab 并行 RL"架构**，用客户任务是像素观测（→ 需要多节点）还是状态观测（→ 单 GPU 即够）来判断扩展。引用基准时务必并列注明测量条件（环境数·GPU）。
 
 **🔗 相关资产**: [pillar-2 HyperPod](pillar-2.md) · [decisions: GPU 获取](decisions.md)
 
@@ -126,7 +126,7 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **客户案例**: **Unitree**（MuJoCo，训练生产 HW）。
 
-**➡️ SA 后续行动**: 对担心"NVIDIA 依赖"的客户提出**"AWS 对 Isaac、MuJoCo/Gazebo 都能跑好 —— 按工作负载选即可"**的中立立场。若用 MuJoCo，强调可复用计算 GPU(P5) 的成本优势。
+**➡️ 后续行动**: 对担心"NVIDIA 依赖"的客户提出**"AWS 对 Isaac、MuJoCo/Gazebo 都能跑好 —— 按工作负载选即可"**的中立立场。若用 MuJoCo，强调可复用计算 GPU(P5) 的成本优势。
 
 **🔗 相关资产**: [decisions: NVIDIA vs 开源](decisions.md)
 
@@ -146,7 +146,7 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **客户案例**（⚠️ 仅为公布，未经生产验证）: 作为 Cosmos 3 采用方，**Doosan Robotics、LG Electronics、Samsung Electronics** 等多家韩国企业已公布 —— 国内相关性高，但为"已公布的采用"而非经过验证的生产。
 
-**➡️ SA 后续行动**: 国内客户对 Cosmos 3 感兴趣 → **以"在 AWS G7e 上自托管 Cosmos 3 Nano" PoC 应对**（把缺乏托管服务转化为自托管+数据主权的优势）。
+**➡️ 后续行动**: 国内客户对 Cosmos 3 感兴趣 → **以"在 AWS G7e 上自托管 Cosmos 3 Nano" PoC 应对**（把缺乏托管服务转化为自托管+数据主权的优势）。
 
 **🔗 相关资产**: [pillar-1 Cosmos 数据生成](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 
@@ -177,7 +177,7 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **客户案例**: 案例待定。
 
-**➡️ SA 后续行动**: 客户问"听说 TwinMaker 死了？"时**立即更正**（"GA、对新客户开放，只是低速度"）。想整合孪生+仿真则连接到 Omniverse AMI。问"有 OVX 吗"则准确回答"没有，是 G6e/G7e + AMI"。
+**➡️ 后续行动**: 客户问"听说 TwinMaker 死了？"时**立即更正**（"GA、对新客户开放，只是低速度"）。想整合孪生+仿真则连接到 Omniverse AMI。问"有 OVX 吗"则准确回答"没有，是 G6e/G7e + AMI"。
 
 **🔗 相关资产**: [pillar-1](pillar-1.md) · （内部数字孪生研讨会 —— 需确认 ⚠️）
 

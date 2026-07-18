@@ -1,5 +1,5 @@
 ---
-ko_hash: 3b1f0299d8f425b9135281e2cddb769d85b4e8bb
+ko_hash: 9b8dbba9fe55061e429c5959c9e10760a2278556
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -44,7 +44,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: case pending (no public domestic case confirmed — many domestic robotics companies are currently NVIDIA-aligned).
 
-**➡️ SA next action**: if the customer has a commercial plan, **① confirm the target embodiment → ② provide a dataset license audit sheet (per OXE component) → ③ propose an "S3 mirroring + FSx Lustre training channel" PoC**. Flagging the license risk in the first meeting alone builds trust.
+**➡️ Next action**: if the customer has a commercial plan, **① confirm the target embodiment → ② provide a dataset license audit sheet (per OXE component) → ③ propose an "S3 mirroring + FSx Lustre training channel" PoC**. Flagging the license risk in the first meeting alone builds trust.
 
 **🔗 Related assets**: (internal dataset license audit template — needs to be written ⚠️)
 
@@ -80,7 +80,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: case pending (no explicit domestic case confirmed).
 
-**➡️ SA next action**: **propose an "Isaac Sim SDG pipeline on EC2 G6e/G7e + AWS Batch" workshop**. If the customer has CAD/USD assets of their real environment, demo a synthetic-dataset sample generation in a 1-day PoC.
+**➡️ Next action**: **propose an "Isaac Sim SDG pipeline on EC2 G6e/G7e + AWS Batch" workshop**. If the customer has CAD/USD assets of their real environment, demo a synthetic-dataset sample generation in a 1-day PoC.
 
 **🔗 Related assets**: [pillar-3 Simulation](pillar-3.md) · (internal Isaac-on-AWS workshop deck — confirm needed ⚠️)
 
@@ -105,7 +105,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: **NAVER Labs** — uses Cosmos to build a "Seoul World Model" from street-view/spatial data (2026-06 NVIDIA agreement). ⚠️ **NVIDIA-aligned (not AWS)** `[3]`. **Doosan Robotics** — integrates Cosmos into its Agentic Robot OS (NVIDIA-aligned) `[3]`.
 
-**➡️ SA next action**: when a domestic robotics customer is interested in Cosmos → **propose from the angle of "open weights, so self-hostable on AWS EKS/Batch/G7e"** (drawing NVIDIA-aligned customers toward AWS compute). Be honest that it is not a managed host and that real-world training validation is at an early stage.
+**➡️ Next action**: when a domestic robotics customer is interested in Cosmos → **propose from the angle of "open weights, so self-hostable on AWS EKS/Batch/G7e"** (drawing NVIDIA-aligned customers toward AWS compute). Be honest that it is not a managed host and that real-world training validation is at an early stage.
 
 **🔗 Related assets**: [pillar-2 Model Training](pillar-2.md) · [pillar-3 Simulation](pillar-3.md)
 
@@ -134,7 +134,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: **Zoox** — trains a multimodal AV foundation model with SageMaker HyperPod, 95% utilization on 64+ GPUs `[1]/[3]`. ⚠️ **This is autonomous driving (AV), not a manipulation robot** — use only as a basis for the reference architecture; do not exaggerate it as a manipulation case.
 
-**➡️ SA next action**: **draw the reference architecture diagram (S3→FSx→HyperPod) on a whiteboard**, and judge the need for FSx by the customer's data scale and access pattern. If ROS bags are the source, connect to item 5 below (the conversion gap).
+**➡️ Next action**: **draw the reference architecture diagram (S3→FSx→HyperPod) on a whiteboard**, and judge the need for FSx by the customer's data scale and access pattern. If ROS bags are the source, connect to item 5 below (the conversion gap).
 
 **🔗 Related assets**: [pillar-2 Model Training](pillar-2.md) · [decisions: GPU-securing strategy](decisions.md)
 
@@ -162,7 +162,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: case pending.
 
-**➡️ SA next action**: if the customer's data is ROS bags, **propose including a "Glue/Batch-based rosbag2→LeRobot conversion job" on day 1 of the pipeline design** (an SA flagging this proactively builds great trust). Turn a reusable converter into an internal asset.
+**➡️ Next action**: if the customer's data is ROS bags, **propose including a "Glue/Batch-based rosbag2→LeRobot conversion job" on day 1 of the pipeline design** (an SA flagging this proactively builds great trust). Turn a reusable converter into an internal asset.
 
 **🔗 Related assets**: (internal rosbag2 conversion converter — new development opportunity ⚠️)
 
@@ -189,7 +189,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: case pending (no public pipeline).
 
-**➡️ SA next action**: if the customer is collecting teleoperation data, **standardize the "collection stream → S3 → auto-label → training queue" pipeline** for them. Be cautious about recommending open HW itself (state it is research-only).
+**➡️ Next action**: if the customer is collecting teleoperation data, **standardize the "collection stream → S3 → auto-label → training queue" pipeline** for them. Be cautious about recommending open HW itself (state it is research-only).
 
 **🔗 Related assets**: [pillar-4 edge deployment](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
 

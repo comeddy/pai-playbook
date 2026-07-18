@@ -1,5 +1,5 @@
 ---
-ko_hash: 019ab4e07f9951add4f0595235c018424018dc26
+ko_hash: 2f34b046b852e0ca2015bda12068c028c75527b7
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -54,7 +54,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: （边缘部署本身的公开 AWS 机器人案例有限 —— 以参考架构为主）
 
-**➡️ SA 后续行动**: **画出 "Jetson Thor（板载控制）+ Greengrass V2(OTA/管理) + ONNX→TensorRT" 边缘参考架构**，并主动告知"Edge Manager 已消失"以更正客户的错误预期。询问实时要求的 Hz 来确定边缘/云边界。
+**➡️ 后续行动**: **画出 "Jetson Thor（板载控制）+ Greengrass V2(OTA/管理) + ONNX→TensorRT" 边缘参考架构**，并主动告知"Edge Manager 已消失"以更正客户的错误预期。询问实时要求的 Hz 来确定边缘/云边界。
 
 **🔗 相关资产**: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 编排](pillar-5.md) · [decisions](decisions.md)
 
@@ -78,7 +78,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: ANYmal（工业巡检，生产），Agility Digit@GXO（物流，付费）。⚠️ **任何人形机器人都没有独立第三方自主性审计** —— 以厂商/客户 PR 为准([3])。
 
-**➡️ SA 后续行动**: 客户对 sim-to-real 持怀疑时，**用 ANYmal/Digit@GXO 作为"可以"的依据，但明确"是因为 locomotion 才可以"**。准确了解 Spot=MPC 的事实以建立信任。
+**➡️ 后续行动**: 客户对 sim-to-real 持怀疑时，**用 ANYmal/Digit@GXO 作为"可以"的依据，但明确"是因为 locomotion 才可以"**。准确了解 Spot=MPC 的事实以建立信任。
 
 **🔗 相关资产**: [pillar-3 并行 RL](pillar-3.md) · [pillar-2 训练](pillar-2.md)
 
@@ -114,7 +114,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: ANYmal·Digit（上方第 2 项）是此方法论的产物。
 
-**➡️ SA 后续行动**: 若客户团队在"盲目 DR"中迷失，则**用"选择性 DR + SysID + MPC 混合"进行方向纠正**。研究新技法(ASAP 等)诚实地标注为"研究阶段"。
+**➡️ 后续行动**: 若客户团队在"盲目 DR"中迷失，则**用"选择性 DR + SysID + MPC 混合"进行方向纠正**。研究新技法(ASAP 等)诚实地标注为"研究阶段"。
 
 **🔗 相关资产**: [pillar-3 仿真](pillar-3.md)
 
@@ -142,7 +142,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: 只有狭窄 loco-manipulation(Digit, Figure 02) 进入生产。精密操作为研究/Preview。
 
-**➡️ SA 后续行动**: 对操作客户要**诚实地管理预期** —— 先说明"没有像 locomotion 那样解决，真实数据是关键"，再连接到 [pillar-1 真实数据管道](pillar-1.md)。禁止过度承诺。
+**➡️ 后续行动**: 对操作客户要**诚实地管理预期** —— 先说明"没有像 locomotion 那样解决，真实数据是关键"，再连接到 [pillar-1 真实数据管道](pillar-1.md)。禁止过度承诺。
 
 **🔗 相关资产**: [pillar-1 遥操作/真实数据](pillar-1.md) · [pillar-2 VLA 微调](pillar-2.md)
 
@@ -166,7 +166,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: （评估本身属研究领域）
 
-**➡️ SA 后续行动**: 若客户想"sim 里达 95% 就部署"，则**以"sim↔real 相关性低的最新研究"为依据，建议设计分阶段的真实世界验证**。这份诚实能防止事故。
+**➡️ 后续行动**: 若客户想"sim 里达 95% 就部署"，则**以"sim↔real 相关性低的最新研究"为依据，建议设计分阶段的真实世界验证**。这份诚实能防止事故。
 
 **🔗 相关资产**: [pillar-3 仿真](pillar-3.md) · [pillar-1 真实数据](pillar-1.md)
 

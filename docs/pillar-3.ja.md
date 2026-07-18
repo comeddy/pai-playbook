@@ -1,5 +1,5 @@
 ---
-ko_hash: bf3dbec91ebf5416ed0579ee049bd62bb700c305
+ko_hash: c2b0de09759218157f9c00ccdb86a99ea98e94f5
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -48,7 +48,7 @@ _特に別途表記がない限り、各項目はページメタデータ（owne
 
 **顧客事例**: 事例待ち（Unitree H1 学習は [pillar-2](pillar-2.md) の AWS ブログを参照）。
 
-**➡️ SA の次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に、続いて **[pai-sim-isaaclab エンドツーエンドハンズオン](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform で g6e をプロビジョニング → Isaac Lab 四足歩行 PPO ヘッドレス学習 → ポリシー export、約2時間/$12）でヘッドレス学習まで接続。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
+**➡️ 次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に、続いて **[pai-sim-isaaclab エンドツーエンドハンズオン](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform で g6e をプロビジョニング → Isaac Lab 四足歩行 PPO ヘッドレス学習 → ポリシー export、約2時間/$12）でヘッドレス学習まで接続。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
 
 **🔗 関連資産**: [pillar-2 学習スタック](pillar-2.md) · [pillar-1 合成データ](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS ワークショップ（Batch MNP ヘッドレス RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US)
 
@@ -98,7 +98,7 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **顧客事例**: **Unitree H1 RL(Isaac Lab on SageMaker)** —— [pillar-2](pillar-2.md) を参照。
 
-**➡️ SA の次のアクション**: **「AWS Batch MNP で Isaac Lab 並列 RL をスケール」アーキテクチャを描き**、顧客のタスクがピクセル観測か（→ マルチノードが必要）状態観測か（→ 単一 GPU で十分）でスケールを判断。ベンチマーク引用時は必ず測定条件（環境数・GPU）を併記。
+**➡️ 次のアクション**: **「AWS Batch MNP で Isaac Lab 並列 RL をスケール」アーキテクチャを描き**、顧客のタスクがピクセル観測か（→ マルチノードが必要）状態観測か（→ 単一 GPU で十分）でスケールを判断。ベンチマーク引用時は必ず測定条件（環境数・GPU）を併記。
 
 **🔗 関連資産**: [pillar-2 HyperPod](pillar-2.md) · [decisions: GPU 確保](decisions.md)
 
@@ -127,7 +127,7 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **顧客事例**: **Unitree**（MuJoCo、本番 HW の学習）。
 
-**➡️ SA の次のアクション**: 「NVIDIA 依存」を懸念する顧客に **「AWS は Isaac も MuJoCo/Gazebo もどれもうまく動かせる —— ワークロードで選べばよい」** という中立ポジションを提示。MuJoCo ならコンピュート GPU(P5) を再活用できるというコスト面の利点を強調。
+**➡️ 次のアクション**: 「NVIDIA 依存」を懸念する顧客に **「AWS は Isaac も MuJoCo/Gazebo もどれもうまく動かせる —— ワークロードで選べばよい」** という中立ポジションを提示。MuJoCo ならコンピュート GPU(P5) を再活用できるというコスト面の利点を強調。
 
 **🔗 関連資産**: [decisions: NVIDIA vs オープンソース](decisions.md)
 
@@ -147,7 +147,7 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **顧客事例**（⚠️ 発表のみ、本番未検証）: Cosmos 3 の採用企業として **Doosan Robotics、LG Electronics、Samsung Electronics** など韓国企業が多数発表 —— 国内での関連性は高いものの、「発表された採用」であって検証された本番ではありません。
 
-**➡️ SA の次のアクション**: 国内顧客が Cosmos 3 に関心 → **「AWS G7e で Cosmos 3 Nano をセルフホスティング」PoC** で対応（マネージドホスティングの不在をセルフホスティング+データ主権の強みに転換）。
+**➡️ 次のアクション**: 国内顧客が Cosmos 3 に関心 → **「AWS G7e で Cosmos 3 Nano をセルフホスティング」PoC** で対応（マネージドホスティングの不在をセルフホスティング+データ主権の強みに転換）。
 
 **🔗 関連資産**: [pillar-1 Cosmos データ生成](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 
@@ -178,7 +178,7 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **顧客事例**: 事例待ち。
 
-**➡️ SA の次のアクション**: 顧客が「TwinMaker は死んだと聞いたが?」と聞いたら**即座に訂正**（「GA、新規開放、ただし低速度」）。ツイン+シミュレーション統合を望むなら Omniverse AMI に接続。「OVX はあるか」と聞かれたら「ない、G6e/G7e + AMI」と正確に。
+**➡️ 次のアクション**: 顧客が「TwinMaker は死んだと聞いたが?」と聞いたら**即座に訂正**（「GA、新規開放、ただし低速度」）。ツイン+シミュレーション統合を望むなら Omniverse AMI に接続。「OVX はあるか」と聞かれたら「ない、G6e/G7e + AMI」と正確に。
 
 **🔗 関連資産**: [pillar-1](pillar-1.md) · （社内デジタルツインワークショップ —— 要確認 ⚠️）
 

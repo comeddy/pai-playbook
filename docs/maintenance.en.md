@@ -1,5 +1,5 @@
 ---
-ko_hash: c466355b4c75c484bbb06e77539749705c856724
+ko_hash: b87551077c1075ca506f3cbe80f3dedff86c50e5
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -91,7 +91,7 @@ Promoted items are written in this format.
 **AWS mapping**: (specific services)
 **Decision criteria**: (when to use this / when to use the alternative — state conditions)
 **Customer case**: (if any; otherwise "case pending")
-**➡️ SA next action**: (demo/workshop/asset link — always filled in)
+**➡️ Next action**: (demo/workshop/asset link — always filled in)
 **🔗 Related assets**: (internal skill/workshop/deck deep link)
 ---
 _owner: {name} · updated: {YYYY-MM} · volatility: high/low_
@@ -141,7 +141,7 @@ _owner: {name} · updated: {YYYY-MM} · volatility: high/low_
 
 - [ ] Do all included items pass 2 or more inclusion criteria? Did you avoid putting anything that falls short into the body?
 - [ ] Does every item have a maturity label + source grade?
-- [ ] Does every item end with "➡️ SA next action"?
+- [ ] Does every item end with "➡️ Next action"?
 - [ ] Did you avoid describing something demo-only as if it were deployable?
 - [ ] Did you avoid mixing volatile information into the stable layer?
 - [ ] Does every item have owner/updated?

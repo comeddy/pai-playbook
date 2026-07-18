@@ -1,5 +1,5 @@
 ---
-ko_hash: 779a55a5c99476b47ed3dc18d8147d61dffe277b
+ko_hash: 3cf84fbe23c4799507db95dd94973d47610ceb13
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -45,7 +45,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: **AWS×SoftServe autonomous production line** (AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) — Hannover Messe 2026 **demo/showcase** ([1]/[3]).
 
-**➡️ SA next action**: first confirm for domestic customers that **"AgentCore is GA in the Seoul region — no data residency issue"** (correcting outdated "not supported in Seoul" info), then propose a PoC registering robot skills as Gateway tools. Reassure on pricing with "harness free, only resources billed."
+**➡️ Next action**: first confirm for domestic customers that **"AgentCore is GA in the Seoul region — no data residency issue"** (correcting outdated "not supported in Seoul" info), then propose a PoC registering robot skills as Gateway tools. Reassure on pricing with "harness free, only resources billed."
 
 **🔗 Related assets**: [pillar-4 edge](pillar-4.md) · (internal AgentCore workshop — confirm needed ⚠️)
 
@@ -81,7 +81,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: Figure, GR00T (open). Validated production is limited.
 
-**➡️ SA next action**: for the misconception "does the agent control the robot in real time?", clarify the picture as **"the agent plans, an edge policy does real-time control."** Present the AgentCore (planning) + Jetson (control) combination.
+**➡️ Next action**: for the misconception "does the agent control the robot in real time?", clarify the picture as **"the agent plans, an edge policy does real-time control."** Present the AgentCore (planning) + Jetson (control) combination.
 
 **🔗 Related assets**: [pillar-2 VLA structure](pillar-2.md) · [pillar-4 edge](pillar-4.md) · [decisions](decisions.md)
 
@@ -101,7 +101,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: AWS×SoftServe (item 1 above, demo).
 
-**➡️ SA next action**: for offline customers, **present the AWS Greengrass agent Guidance + sample code as a starting point** (honestly, not a GA product). Design an on/offline hybrid (edge SLM ↔ cloud AgentCore).
+**➡️ Next action**: for offline customers, **present the AWS Greengrass agent Guidance + sample code as a starting point** (honestly, not a GA product). Design an on/offline hybrid (edge SLM ↔ cloud AgentCore).
 
 **🔗 Related assets**: [pillar-4 edge deployment](pillar-4.md) · [pillar-1](pillar-1.md)
 
@@ -126,7 +126,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case** (⚠️ domestic is early/demo/announced): **Lotte Global Logistics×CoEvolution** (30%, single source), **LG CNS** warehouse demo (humanoid + robot dog + mobile), **Naver** AI Agent Platform planned H2 2026 (NVIDIA blueprint).
 
-**➡️ SA next action**: for fleet customers, organize into 3 layers — **"orchestration logic on AgentCore, connectivity on IoT, training on SageMaker."** Explain precisely so DeepFleet is not mistaken for an LLM agent.
+**➡️ Next action**: for fleet customers, organize into 3 layers — **"orchestration logic on AgentCore, connectivity on IoT, training on SageMaker."** Explain precisely so DeepFleet is not mistaken for an LLM agent.
 
 **🔗 Related assets**: [pillar-2 training](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
 
@@ -150,7 +150,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: (production safety cases are undisclosed/early)
 
-**➡️ SA next action**: for safety questions, present **"the agent layer gates tool calls with AgentCore Policy/Cedar, the robot layer has ISO deterministic safety — double defense."** Honestly acknowledge "there's no standard for LLM semantic risk yet," and take the angle of complementing it with layered defense.
+**➡️ Next action**: for safety questions, present **"the agent layer gates tool calls with AgentCore Policy/Cedar, the robot layer has ISO deterministic safety — double defense."** Honestly acknowledge "there's no standard for LLM semantic risk yet," and take the angle of complementing it with layered defense.
 
 **🔗 Related assets**: [pillar-4 edge](pillar-4.md) · (internal agent safety guide — newly needed ⚠️)
 

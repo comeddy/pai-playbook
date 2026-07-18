@@ -40,7 +40,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **고객 사례**: 사례 대기 (국내 공개 VLA 파인튜닝 사례 미확인).
 
-**➡️ SA 다음 액션**: 고객이 모델 선정 중이면 **"라이선스 매트릭스(GR00T=확인필요 / π=Apache-2.0 / OpenVLA=MIT)를 첫 슬라이드로"** 제시. 상용이면 π0.5 또는 OpenVLA 파인튜닝 PoC를 EC2 G7e 위에서 제안.
+**➡️ 다음 액션**: 고객이 모델 선정 중이면 **"라이선스 매트릭스(GR00T=확인필요 / π=Apache-2.0 / OpenVLA=MIT)를 첫 슬라이드로"** 제시. 상용이면 π0.5 또는 OpenVLA 파인튜닝 PoC를 EC2 G7e 위에서 제안.
 
 **🔗 관련 자산**: [pillar-1 데이터셋 라이선스](pillar-1.md) · [pillar-4 엣지 배포](pillar-4.md)
 
@@ -83,7 +83,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **고객 사례**: 사례 대기 (공식 AWS VLA 파인튜닝 사례 없음 — 3번의 Unitree H1은 RL locomotion이지 VLA 아님).
 
-**➡️ SA 다음 액션**: **"단일 G7e에서 LoRA 파인튜닝 1일 PoC"** 를 기본 엔트리 제안으로. 고객 데이터가 100 데모 이상이면 바로 실측 성공률을 보여줄 수 있다. GPU 확보가 막히면 → [decisions](decisions.md).
+**➡️ 다음 액션**: **"단일 G7e에서 LoRA 파인튜닝 1일 PoC"** 를 기본 엔트리 제안으로. 고객 데이터가 100 데모 이상이면 바로 실측 성공률을 보여줄 수 있다. GPU 확보가 막히면 → [decisions](decisions.md).
 
 **🔗 관련 자산**: [pillar-1 데이터 파이프라인](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
 
@@ -124,7 +124,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - **Unitree H1 휴머노이드 RL을 Isaac Lab + SageMaker(HyperPod)에서 학습** — AWS 공식 블로그(2026-06-09). 19관절 velocity tracking, PPO(skrl), HyperPod 헬스모니터링·자동교체·체크포인트 재개 시연. ⚠️ **RL locomotion이지 VLA 파인튜닝 아님** — 참조 아키텍처로만 인용.
 - **Zoox** — HyperPod로 멀티모달 AV 파운데이션 모델, 64+ GPU 95% 활용률. ⚠️ AV.
 
-**➡️ SA 다음 액션**: **AWS 공식 "Isaac Lab on SageMaker" 블로그를 그대로 워크숍 자산으로 활용**(재현 가능한 유일한 AWS 로보틱스 학습 레퍼런스). GPU 가용성 이슈면 Capacity Blocks/Flexible Training Plans로 연결.
+**➡️ 다음 액션**: **AWS 공식 "Isaac Lab on SageMaker" 블로그를 그대로 워크숍 자산으로 활용**(재현 가능한 유일한 AWS 로보틱스 학습 레퍼런스). GPU 가용성 이슈면 Capacity Blocks/Flexible Training Plans로 연결.
 
 **🔗 관련 자산**: [pillar-3 시뮬레이션(Isaac Lab)](pillar-3.md) · [decisions: GPU 확보](decisions.md)
 
@@ -149,7 +149,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **고객 사례**: Figure(데모/PR), GR00T(오픈 모델). 검증된 프로덕션은 제한적.
 
-**➡️ SA 다음 액션**: 고객이 "실시간인데 클라우드로 되나?"라고 물으면 **System1/System2 그림을 그려주고 "제어 루프는 엣지, 계획은 클라우드"로 정리**. 이것만으로 아키텍처 대화가 정돈된다.
+**➡️ 다음 액션**: 고객이 "실시간인데 클라우드로 되나?"라고 물으면 **System1/System2 그림을 그려주고 "제어 루프는 엣지, 계획은 클라우드"로 정리**. 이것만으로 아키텍처 대화가 정돈된다.
 
 **🔗 관련 자산**: [pillar-4 엣지 추론](pillar-4.md) · [pillar-5 오케스트레이션](pillar-5.md) · [decisions](decisions.md)
 
@@ -176,7 +176,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **고객 사례**: 파트너 배포(비공개 다수).
 
-**➡️ SA 다음 액션**: 고객이 Gemini Robotics를 검토 중이면 **"추론 레이어는 그걸 쓰더라도, 오케스트레이션·가드레일·저수준 제어 모델은 AWS에서 소유"** 하는 하이브리드를 제안(경쟁이 아니라 보완 각도).
+**➡️ 다음 액션**: 고객이 Gemini Robotics를 검토 중이면 **"추론 레이어는 그걸 쓰더라도, 오케스트레이션·가드레일·저수준 제어 모델은 AWS에서 소유"** 하는 하이브리드를 제안(경쟁이 아니라 보완 각도).
 
 **🔗 관련 자산**: [pillar-5 AgentCore](pillar-5.md)
 
