@@ -1,5 +1,5 @@
 ---
-ko_hash: c2b0de09759218157f9c00ccdb86a99ea98e94f5
+ko_hash: 746d1be3873c990db295a92517836c56615270e4
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -30,14 +30,23 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **解决方案概览** `[1]`:
 
 - **版本**: Isaac Sim 最新 **GA = 5.1.0(2025-10-30)**。**6.0 为 Preview**（"Early Developer Release", GTC'26）—— 即便 GitHub 补丁标签被错误标为 "GA"，也**不要把 6.0 说成 GA**。Isaac Lab 稳定版 2.3.x，3.0 为 beta（引入 Newton 物理引擎）。
-- **许可证**: Isaac Sim **源码为 Apache 2.0**（商用免费）。但若将 **Omniverse Kit 运行时**做第三方再分发/SaaS 提供/交钥匙安装，则**需要 NVIDIA AI Enterprise 许可证**。内部 R&D 或仅销售产出物则无需。Isaac Lab 为 BSD-3。
+- **许可证**: Isaac Sim **源码为 Apache 2.0**（商用免费）。但若将 **Omniverse Kit 运行时**做第三方再分发/SaaS 提供/交钥匙安装，则**需要 NVIDIA AI Enterprise 许可证**。内部 R&D 或仅销售产出物则无需。[Isaac Lab](https://github.com/isaac-sim/IsaacLab) 为 BSD-3。
 - **GPU 需求**: **必须 RTX(RT Core)**。最低 RTX 4080(16GB)，理想为 RTX PRO 6000 Blackwell(48GB)。**不支持 A100/H100**（无 RT Core）。
 
 **AWS 映射** `[1]`:
 
-- **实例**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**。官方 **Isaac Sim Development Workstation AMI**(build 2026.1.1, Ubuntu 24.04, 免费) 支持 G6e·G7e，推荐 `g6e.4xlarge`。
-- **接入**: 用 NICE DCV(=Amazon DCV) 客户端/网页进行远程 GUI 流传输。
+- **实例**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**。官方 **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)**(build 2026.1.1, Ubuntu 24.04, 免费) 支持 G6e·G7e，推荐 `g6e.4xlarge`。
+- **接入**: 用 [NICE DCV](https://aws.amazon.com/hpc/dcv/)(=Amazon DCV) 客户端/网页进行远程 GUI 流传输。
 - **参考架构**: **AWS Solutions Guidance "Physical AI for Robotics on AWS"**(Isaac Sim on GPU EC2 + Isaac Lab + SageMaker + IoT Greengrass 边缘)。AWS 上存在 **Physical AI 专属博客频道**(aws.amazon.com/blogs/physical-ai/)。
+
+```mermaid
+graph LR
+    U[SA / 开发者] -- NICE DCV 远程 GUI --> WS["EC2 G6e/G7e<br>Isaac Sim AMI (GUI)"]
+    WS -- 场景编辑 · SDG --> D[(USD 资产 · 数据)]
+    U -- 提交作业 --> B["AWS Batch MNP<br>无头 Isaac Lab"]
+    D --> B
+    B --> P[(训练好的策略)]
+```
 
 **决策标准**:
 
@@ -73,7 +82,16 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **解决方案概览** `[1]/[3]`:
 
 - Isaac Lab 在**一张 GPU 上同时仿真数千~8 千环境**，并可随多节点近乎线性扩展（具体数值见下方折叠块 —— 引用时务必并列注明测量条件）。
-- **AWS Batch Multi-Node Parallel Jobs** 是 AWS 推荐的编排器（也是 RoboMaker 的迁移路径）。AWS HPC/Physical AI 博客中存在 Isaac Lab on G6e + Batch MNP + EFS + ECR 的参考。
+- **[AWS Batch Multi-Node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)** 是 AWS 推荐的编排器（也是 RoboMaker 的迁移路径）。AWS HPC/Physical AI 博客中存在 Isaac Lab on G6e + Batch MNP + EFS + ECR 的参考。
+
+```mermaid
+graph TD
+    S[策略训练] --> Q{观测类型 · 规模?}
+    Q -- 状态观测 · 多数 locomotion --> ONE["单张 EC2 GPU<br>同时数千~8,192 环境"]
+    Q -- 像素观测 · 超大型 --> MNP[AWS Batch Multi-Node Parallel]
+    MNP --- EFS[(EFS 共享存储)]
+    MNP --- ECR[(ECR 容器)]
+```
 
 <details markdown="1"><summary>🔄 易变数据（基准 —— NVIDIA 官方性能基准, "with training" 为准, 2026-07 确认）</summary>
 
@@ -111,9 +129,9 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **解决方案概览** `[1]`:
 
-- **MuJoCo / MJX** —— C 引擎 GA(v3.10)，**MJX-JAX** 是成熟的 RL 主力（可微分、跨厂商），**MuJoCo Warp 为 Alpha**（非生产）。**Unitree 为 Go2/G1/H1 的 RL 维护自有 MuJoCo 仓库 = 实际厂商采用**。MuJoCo Playground 经 RSS 2025 验证，6 个平台 sim-to-real。
-- **Gazebo** —— 最新 LTS **Jetty**(2025-09)，**Harmonic** 部署最广。ROS 2 原生。⚠️ **Gazebo Classic 11 于 2025-01 EOL** —— 新项目禁用 Classic。基于 CPU，不适合 GPU 并行 RL（是 Isaac 的补充）。
-- **Genesis** —— Apache 2.0，活跃但**"43M FPS/430,000 倍"主张在现实工作负载中被反驳**（在接触多的操作中反而比 ManiSkill 慢 3~10 倍）。作为 Isaac 替代未获验证 → **⚪ 注意夸大**。
+- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** —— C 引擎 GA(v3.10)，**MJX-JAX** 是成熟的 RL 主力（可微分、跨厂商），**MuJoCo Warp 为 Alpha**（非生产）。**Unitree 为 Go2/G1/H1 的 RL 维护自有 MuJoCo 仓库 = 实际厂商采用**。[MuJoCo Playground](https://playground.mujoco.org/) 经 RSS 2025 验证，6 个平台 sim-to-real。
+- **[Gazebo](https://gazebosim.org/)** —— 最新 LTS **Jetty**(2025-09)，**Harmonic** 部署最广。ROS 2 原生。⚠️ **Gazebo Classic 11 于 2025-01 EOL** —— 新项目禁用 Classic。基于 CPU，不适合 GPU 并行 RL（是 Isaac 的补充）。
+- **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** —— Apache 2.0，活跃但**"43M FPS/430,000 倍"主张在现实工作负载中被反驳**（在接触多的操作中反而比 ManiSkill 慢 3~10 倍）。作为 Isaac 替代未获验证 → **⚪ 注意夸大**。
 
 **AWS 映射**: 全部可在 EC2 上运行。MuJoCo/MJX(JAX) **也可利用 A100/H100(P4/P5)**（无需 RTX 渲染）—— 与 Isaac 不同，能用计算 GPU 是其优势。大规模用 AWS Batch。
 
@@ -123,6 +141,14 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 - 可微分·轻量·跨厂商 GPU·快速 RL 迭代 → **MuJoCo/MJX**。
 - ROS 2 整合·CPU·传统机器人 → **Gazebo**。
 - Genesis → 仅限 PoC/实验，禁止生产依赖。
+
+```mermaid
+graph TD
+    Q{什么优先?} -- 照片级渲染 · SDG · 全栈 --> I["Isaac Sim 🟢<br>(需要 G6e/G7e)"]
+    Q -- 可微分 · 跨厂商 GPU · 快速 RL 迭代 --> M["MuJoCo / MJX 🟢<br>(P4/P5 也可)"]
+    Q -- ROS 2 整合 · CPU · 传统机器人 --> G[Gazebo 🟢]
+    Q -- 最新话题性验证 --> X["Genesis ⚪<br>仅 PoC · 禁止生产"]
+```
 
 **客户案例**: **Unitree**（MuJoCo，训练生产 HW）。
 
@@ -138,7 +164,7 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **客户需求/问题**: "想生成多样的现实场景用于训练/评估。"（数据生成视角见 [pillar-1](pillar-1.md)）
 
-**解决方案概览** `[1]`: **Cosmos 3**(2026-05-31 GTC Taipei GA) 是当前旗舰 —— Reasoner(VLM) + Generator(diffusion)，MoT 架构。**Super 64B**（数据中心）、**Nano 16B**（RTX PRO 6000，实时机器人，含 Nano-Policy-DROID）、**Edge**（Jetson，计划中 —— 参数未公开）。许可证 **OpenMDW-1.1（可商用）**。HF/GitHub/NGC 分发。⚠️ 旧的 Predict/Transfer/Reason 系列进入维护模式（建议迁移到 Cosmos 3）。
+**解决方案概览** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)**(2026-05-31 GTC Taipei GA) 是当前旗舰 —— Reasoner(VLM) + Generator(diffusion)，MoT 架构。**Super 64B**（数据中心）、**Nano 16B**（RTX PRO 6000，实时机器人，含 Nano-Policy-DROID）、**Edge**（Jetson，计划中 —— 参数未公开）。许可证 **OpenMDW-1.1（可商用）**。HF/GitHub/NGC 分发。⚠️ 旧的 Predict/Transfer/Reason 系列进入维护模式（建议迁移到 Cosmos 3）。
 
 **AWS 映射**: **直接映射较弱** —— Cosmos 3 不以 AWS 为指定托管方。但因是开放权重(HF/GitHub)，**可在 EC2 G7e(Nano 16B, RTX PRO 6000) 上自托管**。这就是 AWS 的角度: "即便不是托管主机，也能用最佳 GPU 自行运行"。
 
@@ -160,7 +186,7 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **解决方案概览** `[1]`:
 
-- **AWS IoT TwinMaker** —— GA，官方产品页面有效，无废弃横幅（2026-07-11 确认）。⚠️ innfactory.de/oneuptime.com 等的 "discontinued" 主张是**未经验证的传闻**，禁止重复。但 2025~26 无重大新功能，故为**低速度**。
+- **[AWS IoT TwinMaker](https://aws.amazon.com/iot-twinmaker/)** —— GA，官方产品页面有效，无废弃横幅（2026-07-11 确认）。⚠️ innfactory.de/oneuptime.com 等的 "discontinued" 主张是**未经验证的传闻**，禁止重复。但 2025~26 无重大新功能，故为**低速度**。
 - **NVIDIA Omniverse on AWS** —— Marketplace AMI(Developer/Production, Linux/Windows)。运行于 **EC2 G6e/G7e**。Production AMI 是捆绑 AI Enterprise 许可证 + 支持的付费订阅。⚠️ **没有专用的 "OVX" 实例家族** —— Omniverse on AWS = G6e/G7e + AMI。托管的 "Omniverse Enterprise on AWS" 无明确依据。
 
 <details markdown="1"><summary>🔄 易变数据（AMI 版本·价格 —— 2026-07 确认）</summary>

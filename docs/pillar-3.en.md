@@ -1,5 +1,5 @@
 ---
-ko_hash: c2b0de09759218157f9c00ccdb86a99ea98e94f5
+ko_hash: 746d1be3873c990db295a92517836c56615270e4
 ---
 # Pillar 3 — Simulation
 
@@ -30,14 +30,23 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Solution overview** `[1]`:
 
 - **Versions**: latest Isaac Sim **GA = 5.1.0 (2025-10-30)**. **6.0 is Preview** ("Early Developer Release," GTC'26) — even if the GitHub patch tag is mislabeled "GA," **do not call 6.0 GA**. Isaac Lab stable is 2.3.x; 3.0 is beta (introduces the Newton physics engine).
-- **License**: Isaac Sim **source is Apache 2.0** (free for commercial). But redistributing/offering-as-SaaS/turnkey-installing the **Omniverse Kit runtime** to third parties requires an **NVIDIA AI Enterprise license**. Not needed for internal R&D or selling only the output. Isaac Lab is BSD-3.
+- **License**: Isaac Sim **source is Apache 2.0** (free for commercial). But redistributing/offering-as-SaaS/turnkey-installing the **Omniverse Kit runtime** to third parties requires an **NVIDIA AI Enterprise license**. Not needed for internal R&D or selling only the output. [Isaac Lab](https://github.com/isaac-sim/IsaacLab) is BSD-3.
 - **GPU requirement**: **RTX (RT Core) required**. Minimum RTX 4080 (16GB), ideal RTX PRO 6000 Blackwell (48GB). **A100/H100 not supported** (no RT Core).
 
 **AWS mapping** `[1]`:
 
-- **Instances**: G6e (L40S 48GB) / **G7e (RTX PRO 6000 Blackwell 96GB, GA 2026-01)**. The official **Isaac Sim Development Workstation AMI** (build 2026.1.1, Ubuntu 24.04, free) supports G6e/G7e, with `g6e.4xlarge` recommended.
-- **Access**: remote GUI streaming via NICE DCV (= Amazon DCV) client/web.
+- **Instances**: G6e (L40S 48GB) / **G7e (RTX PRO 6000 Blackwell 96GB, GA 2026-01)**. The official **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)** (build 2026.1.1, Ubuntu 24.04, free) supports G6e/G7e, with `g6e.4xlarge` recommended.
+- **Access**: remote GUI streaming via [NICE DCV](https://aws.amazon.com/hpc/dcv/) (= Amazon DCV) client/web.
 - **Reference architecture**: the **AWS Solutions Guidance "Physical AI for Robotics on AWS"** (Isaac Sim on GPU EC2 + Isaac Lab + SageMaker + IoT Greengrass edge). AWS has a **dedicated Physical AI blog channel** (aws.amazon.com/blogs/physical-ai/).
+
+```mermaid
+graph LR
+    U[SA / developer] -- NICE DCV remote GUI --> WS["EC2 G6e/G7e<br>Isaac Sim AMI (GUI)"]
+    WS -- scene editing · SDG --> D[(USD assets · data)]
+    U -- job submission --> B["AWS Batch MNP<br>headless Isaac Lab"]
+    D --> B
+    B --> P[(trained policy)]
+```
 
 **Decision criteria**:
 
@@ -73,7 +82,16 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Solution overview** `[1]/[3]`:
 
 - Isaac Lab **simulates thousands~8,000 environments at once on a single GPU** and scales near-linearly across multiple nodes (concrete numbers in the collapsed block below — always cite with measurement conditions).
-- **AWS Batch Multi-Node Parallel Jobs** is the AWS-recommended orchestrator (also the RoboMaker migration path). The AWS HPC/Physical AI blog has an Isaac Lab on G6e + Batch MNP + EFS + ECR reference.
+- **[AWS Batch Multi-Node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)** is the AWS-recommended orchestrator (also the RoboMaker migration path). The AWS HPC/Physical AI blog has an Isaac Lab on G6e + Batch MNP + EFS + ECR reference.
+
+```mermaid
+graph TD
+    S[policy training] --> Q{observation type · scale?}
+    Q -- state observation · mostly locomotion --> ONE["single EC2 GPU<br>thousands~8,192 environments at once"]
+    Q -- pixel observation · ultra-large --> MNP[AWS Batch Multi-Node Parallel]
+    MNP --- EFS[(EFS shared storage)]
+    MNP --- ECR[(ECR containers)]
+```
 
 <details markdown="1"><summary>🔄 Volatile data (benchmarks — NVIDIA official performance benches, "with training" basis, checked 2026-07)</summary>
 
@@ -111,9 +129,9 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **Solution overview** `[1]`:
 
-- **MuJoCo / MJX** — the C engine is GA (v3.10), **MJX-JAX** is a mature RL workhorse (differentiable, cross-vendor), and **MuJoCo Warp is Alpha** (not production). **Unitree maintains its own MuJoCo repo for Go2/G1/H1 RL = real vendor adoption**. MuJoCo Playground is RSS 2025 validated, sim-to-real on 6 platforms.
-- **Gazebo** — latest LTS **Jetty** (2025-09), **Harmonic** is the most widely deployed. ROS 2 native. ⚠️ **Gazebo Classic 11 is EOL as of 2025-01** — no Classic for new projects. CPU-based, so unsuited for GPU parallel RL (an Isaac complement).
-- **Genesis** — Apache 2.0, active, but the **"43M FPS / 430,000×" claim is refuted on realistic workloads** (actually 3~10× slower than ManiSkill on contact-rich manipulation). Not validated as an Isaac replacement → **⚪ hype caution**.
+- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** — the C engine is GA (v3.10), **MJX-JAX** is a mature RL workhorse (differentiable, cross-vendor), and **MuJoCo Warp is Alpha** (not production). **Unitree maintains its own MuJoCo repo for Go2/G1/H1 RL = real vendor adoption**. [MuJoCo Playground](https://playground.mujoco.org/) is RSS 2025 validated, sim-to-real on 6 platforms.
+- **[Gazebo](https://gazebosim.org/)** — latest LTS **Jetty** (2025-09), **Harmonic** is the most widely deployed. ROS 2 native. ⚠️ **Gazebo Classic 11 is EOL as of 2025-01** — no Classic for new projects. CPU-based, so unsuited for GPU parallel RL (an Isaac complement).
+- **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** — Apache 2.0, active, but the **"43M FPS / 430,000×" claim is refuted on realistic workloads** (actually 3~10× slower than ManiSkill on contact-rich manipulation). Not validated as an Isaac replacement → **⚪ hype caution**.
 
 **AWS mapping**: all runnable on EC2. MuJoCo/MJX (JAX) can **also use A100/H100 (P4/P5)** (no RTX rendering needed) — unlike Isaac, being able to use compute GPUs is an advantage. Large scale via AWS Batch.
 
@@ -123,6 +141,14 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 - Differentiable · lightweight · cross-vendor GPU · fast RL iteration → **MuJoCo/MJX**.
 - ROS 2 integration · CPU · traditional robotics → **Gazebo**.
 - Genesis → PoC/experiment only, no production dependence.
+
+```mermaid
+graph TD
+    Q{What is the priority?} -- photoreal rendering · SDG · full stack --> I["Isaac Sim 🟢<br>(needs G6e/G7e)"]
+    Q -- differentiable · cross-vendor GPU · fast RL iteration --> M["MuJoCo / MJX 🟢<br>(P4/P5 also work)"]
+    Q -- ROS 2 integration · CPU · traditional robotics --> G[Gazebo 🟢]
+    Q -- latest hype validation --> X["Genesis ⚪<br>PoC only · no production"]
+```
 
 **Customer case**: **Unitree** (MuJoCo, training on production HW).
 
@@ -138,7 +164,7 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **Customer need/problem**: "We want to generate diverse real-world scenarios for training/evaluation." (For the data-generation angle, see [pillar-1](pillar-1.md).)
 
-**Solution overview** `[1]`: **Cosmos 3** (GA at GTC Taipei 2026-05-31) is the current flagship — Reasoner (VLM) + Generator (diffusion), MoT architecture. **Super 64B** (data center), **Nano 16B** (RTX PRO 6000, real-time robotics, includes Nano-Policy-DROID), **Edge** (Jetson, planned — parameters undisclosed). License **OpenMDW-1.1 (commercial OK)**. Distributed on HF/GitHub/NGC. ⚠️ The old Predict/Transfer/Reason lineup is in maintenance mode (advised to migrate to Cosmos 3).
+**Solution overview** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)** (GA at GTC Taipei 2026-05-31) is the current flagship — Reasoner (VLM) + Generator (diffusion), MoT architecture. **Super 64B** (data center), **Nano 16B** (RTX PRO 6000, real-time robotics, includes Nano-Policy-DROID), **Edge** (Jetson, planned — parameters undisclosed). License **OpenMDW-1.1 (commercial OK)**. Distributed on HF/GitHub/NGC. ⚠️ The old Predict/Transfer/Reason lineup is in maintenance mode (advised to migrate to Cosmos 3).
 
 **AWS mapping**: **weak direct mapping** — Cosmos 3 does not have AWS as a named host. But because the weights are open (HF/GitHub), it **can be self-hosted on EC2 G7e (Nano 16B, RTX PRO 6000)**. That's AWS's angle: "not a managed host, but you can run it directly on the optimal GPU."
 
@@ -160,7 +186,7 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **Solution overview** `[1]`:
 
-- **AWS IoT TwinMaker** — GA, official product page active, no discontinuation banner (confirmed 2026-07-11). ⚠️ The "discontinued" claim from innfactory.de/oneuptime.com etc. is an **unverified rumor**; do not repeat. But with no major new features in 2025~26, it is **low velocity**.
+- **[AWS IoT TwinMaker](https://aws.amazon.com/iot-twinmaker/)** — GA, official product page active, no discontinuation banner (confirmed 2026-07-11). ⚠️ The "discontinued" claim from innfactory.de/oneuptime.com etc. is an **unverified rumor**; do not repeat. But with no major new features in 2025~26, it is **low velocity**.
 - **NVIDIA Omniverse on AWS** — Marketplace AMI (Developer/Production, Linux/Windows). Runs on **EC2 G6e/G7e**. The Production AMI is a paid subscription bundling an AI Enterprise license + support. ⚠️ **There is no dedicated "OVX" instance family** — Omniverse on AWS = G6e/G7e + AMI. There is no clear basis for a managed "Omniverse Enterprise on AWS."
 
 <details markdown="1"><summary>🔄 Volatile data (AMI versions/pricing — checked 2026-07)</summary>

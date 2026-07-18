@@ -1,5 +1,5 @@
 ---
-ko_hash: c2b0de09759218157f9c00ccdb86a99ea98e94f5
+ko_hash: 746d1be3873c990db295a92517836c56615270e4
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -31,14 +31,23 @@ _特に別途表記がない限り、各項目はページメタデータ（owne
 **ソリューション概要** `[1]`:
 
 - **バージョン**: Isaac Sim の最新 **GA = 5.1.0(2025-10-30)**。**6.0 は Preview**（"Early Developer Release", GTC'26）—— たとえ GitHub のパッチタグが誤って "GA" と付いていても、**6.0 を GA と言わないでください**。Isaac Lab 安定版は 2.3.x、3.0 は beta（Newton 物理エンジンを導入）。
-- **ライセンス**: Isaac Sim の**ソースは Apache 2.0**（商用無料）。ただし **Omniverse Kit ランタイム**を第三者再配布/SaaS 提供/ターンキー設置する場合は、**NVIDIA AI Enterprise ライセンスが必要**です。社内 R&D や成果物のみを販売する場合は不要。Isaac Lab は BSD-3。
+- **ライセンス**: Isaac Sim の**ソースは Apache 2.0**（商用無料）。ただし **Omniverse Kit ランタイム**を第三者再配布/SaaS 提供/ターンキー設置する場合は、**NVIDIA AI Enterprise ライセンスが必要**です。社内 R&D や成果物のみを販売する場合は不要。[Isaac Lab](https://github.com/isaac-sim/IsaacLab) は BSD-3。
 - **GPU 要件**: **RTX(RT Core) 必須**。最低 RTX 4080(16GB)、理想は RTX PRO 6000 Blackwell(48GB)。**A100/H100 非対応**（RT Core なし）。
 
 **AWS マッピング** `[1]`:
 
-- **インスタンス**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**。公式 **Isaac Sim Development Workstation AMI**(build 2026.1.1, Ubuntu 24.04, 無料)が G6e・G7e に対応、`g6e.4xlarge` 推奨。
-- **接続**: NICE DCV(=Amazon DCV) クライアント/ウェブでリモート GUI ストリーミング。
+- **インスタンス**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**。公式 **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)**(build 2026.1.1, Ubuntu 24.04, 無料)が G6e・G7e に対応、`g6e.4xlarge` 推奨。
+- **接続**: [NICE DCV](https://aws.amazon.com/hpc/dcv/)(=Amazon DCV) クライアント/ウェブでリモート GUI ストリーミング。
 - **リファレンスアーキテクチャ**: **AWS Solutions Guidance "Physical AI for Robotics on AWS"**(Isaac Sim on GPU EC2 + Isaac Lab + SageMaker + IoT Greengrass エッジ)。AWS に **Physical AI 専用ブログチャンネル**(aws.amazon.com/blogs/physical-ai/) が存在します。
+
+```mermaid
+graph LR
+    U[SA / 開発者] -- NICE DCV リモート GUI --> WS["EC2 G6e/G7e<br>Isaac Sim AMI (GUI)"]
+    WS -- シーン編集 · SDG --> D[(USD 資産 · データ)]
+    U -- ジョブ投入 --> B["AWS Batch MNP<br>ヘッドレス Isaac Lab"]
+    D --> B
+    B --> P[(学習済みポリシー)]
+```
 
 **意思決定基準**:
 
@@ -74,7 +83,16 @@ _特に別途表記がない限り、各項目はページメタデータ（owne
 **ソリューション概要** `[1]/[3]`:
 
 - Isaac Lab は **GPU 1 枚で数千~8 千環境を同時にシミュレーション**し、マルチノードでほぼ線形にスケールします（具体的な数値は下の折りたたみブロック —— 引用時は必ず測定条件を併記）。
-- **AWS Batch Multi-Node Parallel Jobs** が AWS 推奨のオーケストレーター（RoboMaker の移行経路でもある）。AWS HPC/Physical AI ブログに Isaac Lab on G6e + Batch MNP + EFS + ECR のリファレンスが存在します。
+- **[AWS Batch Multi-Node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)** が AWS 推奨のオーケストレーター（RoboMaker の移行経路でもある）。AWS HPC/Physical AI ブログに Isaac Lab on G6e + Batch MNP + EFS + ECR のリファレンスが存在します。
+
+```mermaid
+graph TD
+    S[ポリシー学習] --> Q{観測タイプ · 規模?}
+    Q -- 状態観測 · 多くは locomotion --> ONE["単一 EC2 GPU<br>数千~8,192 環境を同時"]
+    Q -- ピクセル観測 · 超大型 --> MNP[AWS Batch Multi-Node Parallel]
+    MNP --- EFS[(EFS 共有ストレージ)]
+    MNP --- ECR[(ECR コンテナ)]
+```
 
 <details markdown="1"><summary>🔄 揮発性データ（ベンチマーク —— NVIDIA 公式性能ベンチ, "with training" 基準, 2026-07 確認）</summary>
 
@@ -112,9 +130,9 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **ソリューション概要** `[1]`:
 
-- **MuJoCo / MJX** —— C エンジンは GA(v3.10)、**MJX-JAX** は成熟した RL の主力（微分可能、クロスベンダー）、**MuJoCo Warp は Alpha**（本番ではない）。**Unitree が Go2/G1/H1 の RL に自前の MuJoCo リポジトリを維持 = 実際のベンダー採用**。MuJoCo Playground は RSS 2025 で検証、6 プラットフォームで sim-to-real。
-- **Gazebo** —— 最新 LTS は **Jetty**(2025-09)、**Harmonic** が最も広く展開。ROS 2 ネイティブ。⚠️ **Gazebo Classic 11 は 2025-01 に EOL** —— 新規プロジェクトでは Classic 禁止。CPU ベースのため GPU 並列 RL には不向き（Isaac の補完）。
-- **Genesis** —— Apache 2.0、活発だが**「43M FPS/430,000 倍」の主張は現実のワークロードで反論されている**（接触の多い操作ではむしろ ManiSkill より 3~10 倍遅い）。Isaac の代替としては未検証 → **⚪ 誇張に注意**。
+- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** —— C エンジンは GA(v3.10)、**MJX-JAX** は成熟した RL の主力（微分可能、クロスベンダー）、**MuJoCo Warp は Alpha**（本番ではない）。**Unitree が Go2/G1/H1 の RL に自前の MuJoCo リポジトリを維持 = 実際のベンダー採用**。[MuJoCo Playground](https://playground.mujoco.org/) は RSS 2025 で検証、6 プラットフォームで sim-to-real。
+- **[Gazebo](https://gazebosim.org/)** —— 最新 LTS は **Jetty**(2025-09)、**Harmonic** が最も広く展開。ROS 2 ネイティブ。⚠️ **Gazebo Classic 11 は 2025-01 に EOL** —— 新規プロジェクトでは Classic 禁止。CPU ベースのため GPU 並列 RL には不向き（Isaac の補完）。
+- **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** —— Apache 2.0、活発だが**「43M FPS/430,000 倍」の主張は現実のワークロードで反論されている**（接触の多い操作ではむしろ ManiSkill より 3~10 倍遅い）。Isaac の代替としては未検証 → **⚪ 誇張に注意**。
 
 **AWS マッピング**: すべて EC2 で実行可能。MuJoCo/MJX(JAX) は **A100/H100(P4/P5) も活用可能**（RTX レンダリング不要）—— Isaac と異なりコンピュート GPU を使えるのが利点。大規模は AWS Batch。
 
@@ -124,6 +142,14 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 - 微分可能・軽量・クロスベンダー GPU・高速な RL 反復 → **MuJoCo/MJX**。
 - ROS 2 統合・CPU・伝統的ロボティクス → **Gazebo**。
 - Genesis → PoC/実験のみ、本番依存は禁止。
+
+```mermaid
+graph TD
+    Q{何が優先か?} -- フォトリアルレンダリング · SDG · フルスタック --> I["Isaac Sim 🟢<br>(G6e/G7e が必要)"]
+    Q -- 微分可能 · クロスベンダー GPU · 高速な RL 反復 --> M["MuJoCo / MJX 🟢<br>(P4/P5 も可能)"]
+    Q -- ROS 2 統合 · CPU · 伝統的ロボティクス --> G[Gazebo 🟢]
+    Q -- 最新の話題性検証 --> X["Genesis ⚪<br>PoC のみ · 本番禁止"]
+```
 
 **顧客事例**: **Unitree**（MuJoCo、本番 HW の学習）。
 
@@ -139,7 +165,7 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **顧客ニーズ/課題**: 「多様な現実シナリオを生成して学習/評価に使いたい。」（データ生成の観点は [pillar-1](pillar-1.md)）
 
-**ソリューション概要** `[1]`: **Cosmos 3**(2026-05-31 GTC Taipei GA) が現行フラッグシップ —— Reasoner(VLM) + Generator(diffusion)、MoT アーキテクチャ。**Super 64B**（データセンター）、**Nano 16B**（RTX PRO 6000、リアルタイムロボティクス、Nano-Policy-DROID を含む）、**Edge**（Jetson、予定 —— パラメータ未公開）。ライセンスは **OpenMDW-1.1（商用可能）**。HF/GitHub/NGC で配布。⚠️ 旧 Predict/Transfer/Reason ラインナップはメンテナンスモード（Cosmos 3 への移行を推奨）。
+**ソリューション概要** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)**(2026-05-31 GTC Taipei GA) が現行フラッグシップ —— Reasoner(VLM) + Generator(diffusion)、MoT アーキテクチャ。**Super 64B**（データセンター）、**Nano 16B**（RTX PRO 6000、リアルタイムロボティクス、Nano-Policy-DROID を含む）、**Edge**（Jetson、予定 —— パラメータ未公開）。ライセンスは **OpenMDW-1.1（商用可能）**。HF/GitHub/NGC で配布。⚠️ 旧 Predict/Transfer/Reason ラインナップはメンテナンスモード（Cosmos 3 への移行を推奨）。
 
 **AWS マッピング**: **直接マッピングは弱い** —— Cosmos 3 は AWS を指定ホストとしていません。ただしオープンウェイト(HF/GitHub)なので、**EC2 G7e(Nano 16B, RTX PRO 6000) でセルフホスティング可能**です。これが AWS の角度: 「マネージドホストではなくとも、最適な GPU で自前で動かせる」。
 
@@ -161,7 +187,7 @@ _出典: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **ソリューション概要** `[1]`:
 
-- **AWS IoT TwinMaker** —— GA、公式製品ページは有効、廃止バナーなし（2026-07-11 確認）。⚠️ innfactory.de/oneuptime.com などの "discontinued" 主張は**未検証の噂**であり、繰り返し禁止。ただし 2025~26 に主要な新機能がないため**低速度**。
+- **[AWS IoT TwinMaker](https://aws.amazon.com/iot-twinmaker/)** —— GA、公式製品ページは有効、廃止バナーなし（2026-07-11 確認）。⚠️ innfactory.de/oneuptime.com などの "discontinued" 主張は**未検証の噂**であり、繰り返し禁止。ただし 2025~26 に主要な新機能がないため**低速度**。
 - **NVIDIA Omniverse on AWS** —— Marketplace AMI(Developer/Production, Linux/Windows)。**EC2 G6e/G7e** で実行。Production AMI は AI Enterprise ライセンス + サポートがバンドルされた有償サブスクリプション。⚠️ **専用の "OVX" インスタンスファミリーはない** —— Omniverse on AWS = G6e/G7e + AMI。マネージドの "Omniverse Enterprise on AWS" は明確な根拠がありません。
 
 <details markdown="1"><summary>🔄 揮発性データ（AMI バージョン・価格 —— 2026-07 確認）</summary>
