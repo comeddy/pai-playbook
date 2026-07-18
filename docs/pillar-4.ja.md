@@ -1,5 +1,5 @@
 ---
-ko_hash: 2f34b046b852e0ca2015bda12068c028c75527b7
+ko_hash: 44146473d26bc7f6421390815a34c4b4e9cc6a38
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -30,10 +30,19 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 
 **ソリューション概要** `[1]/[3]`:
 
-- **エッジ HW**: **Jetson Thor(Blackwell) GA**、T5000 本番モジュールが流通中。Jetson Orin 系列も引き続き生産（低消費電力）。スペック・価格は下の折りたたみブロック参照。
-- **デプロイ/管理**: **AWS IoT Greengrass V2**(GA) — Lambda/Docker/カスタムコンポーネント、ML 推論コンポーネント、MQTT テレメトリ。⚠️ **Greengrass V1 は 2026-06-01 にサポート終了** — V2 のみが現行です。
-- **モデル経路**: PyTorch ポリシー → **ONNX** → **TensorRT** エンジンのコンパイル（オンデバイス高速化）でリアルタイム制御の遅延予算（sub-20~30ms 級）を満たすのが標準経路です。SageMaker Neo（エッジコンパイル）は存続しており、Greengrass と組み合わせられます。
+- **エッジ HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**、T5000 本番モジュールが流通中。Jetson Orin 系列も引き続き生産（低消費電力）。スペック・価格は下の折りたたみブロック参照。
+- **デプロイ/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/カスタムコンポーネント、ML 推論コンポーネント、MQTT テレメトリ。⚠️ **Greengrass V1 は 2026-06-01 にサポート終了** — V2 のみが現行です。
+- **モデル経路**: PyTorch ポリシー → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** エンジンのコンパイル（オンデバイス高速化）でリアルタイム制御の遅延予算（sub-20~30ms 級）を満たすのが標準経路です。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（エッジコンパイル）は存続しており、Greengrass と組み合わせられます。
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — コンソール・API がすべて利用不可。**ドロップイン可能なマネージド後継サービスはありません**。AWS の推奨 = ONNX + Greengrass V2（+ オプションで SageMaker Neo）。
+
+```mermaid
+graph LR
+    PT["PyTorch ポリシー<br>（クラウド学習）"] --> ONNX[ONNX 変換]
+    ONNX --> TRT["TensorRT エンジン<br>オンデバイス高速化"]
+    TRT --> JET["Jetson Thor<br>オンボードリアルタイム制御"]
+    GG["AWS IoT Greengrass V2<br>OTA · コンポーネント · MQTT"] -. デプロイ · 管理 .-> JET
+    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x 後継なし .-> GG
+```
 
 <details markdown="1"><summary>🔄 揮発性データ（エッジ HW スペック・価格 — 2026-07 確認）</summary>
 
@@ -69,8 +78,8 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 
 **ソリューション概要** `[1]/[3]`:
 
-- **ANYmal (ANYbotics)** 🟢 — 大規模並列シミュレーション RL で学習した歩行、**数百台が世界中の産業点検（石油・ガス・鉱山・化学）にデプロイ**。ETH RL-walking 系譜（peer-reviewed）。**本番 + 証拠**。
-- **Agility Digit @ GXO** 🟢 — **複数年 RaaS 契約の下での有料商業作業**、2025-11 時点で **10 万+ トート移動**、約 1 年連続フルタイム、6.5 万+ 稼働時間。**最もよく検証された有料ヒューマノイド作業**（顧客 GXO がクロスチェック）。ただし狭い構造化トート移動タスクに限定。
+- **ANYmal ([ANYbotics](https://www.anybotics.com/anymal/))** 🟢 — 大規模並列シミュレーション RL で学習した歩行、**数百台が世界中の産業点検（石油・ガス・鉱山・化学）にデプロイ**。ETH RL-walking 系譜（peer-reviewed）。**本番 + 証拠**。
+- **[Agility Digit](https://agilityrobotics.com/robots) @ GXO** 🟢 — **複数年 RaaS 契約の下での有料商業作業**、2025-11 時点で **10 万+ トート移動**、約 1 年連続フルタイム、6.5 万+ 稼働時間。**最もよく検証された有料ヒューマノイド作業**（顧客 GXO がクロスチェック）。ただし狭い構造化トート移動タスクに限定。
 - ⚠️ **Boston Dynamics Spot は製品に MPC（古典制御）を搭載 — RL ではありません**。Spot の RL 歩行(5.2m/s) は研究キット(BD+NVIDIA+RAI)にのみ存在します。**この業界で最もよく間違えられる事実** — 逆に言わないこと。
 
 **AWS マッピング**: 学習(→[pillar-2](pillar-2.md)、[pillar-3](pillar-3.md)) + エッジデプロイ(→第 1 項)。ベンダーごとのインフラは非公開。
@@ -109,6 +118,15 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 - **RL over MPC ハイブリッド** 🟢 — 純粋な end-to-end RL ではなく、古典 MPC をベースに + 学習ポリシーで堅牢化。**Boston Dynamics もこのハイブリッド = 実際のデプロイに最も近い**。
 - **研究段階**（本番ではない）: 残差 real2sim2real(ASAP)、分布的 SysID(Spot 研究)、VLM ベースの SysID(Vid2Sid) — 🔵 印象的だが単一ラボのデモ。
 
+```mermaid
+graph LR
+    SIM["シミュレーション RL 学習"] --> SID["SysID<br>主要な動力学を実測補正"]
+    SID --> DR["選択的ドメインランダマイゼーション"]
+    DR --> MPC["RL over MPC ハイブリッド<br>古典制御 + 学習ポリシー"]
+    MPC --> VAL["実機体の少量検証"]
+    VAL --> DEP["本番デプロイ<br>（locomotion 検証済み）"]
+```
+
 **AWS マッピング**: 方法論自体はクラウド中立。大規模 DR/SysID スイープは AWS Batch で並列化(→[pillar-3](pillar-3.md))。
 
 **意思決定基準**: locomotion → DR+SysID+ハイブリッドを信頼。マニピュレーション → この処方だけでは不十分、実データの並行が必須（第 4 項）。
@@ -130,7 +148,7 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 **ソリューション概要** `[1]`:
 
 - **なぜ遅れているか**: マニピュレーションは**接触動力学の不一致**が大きく、報告された sim-to-real の性能低下 ~24~30%、照明/カメラポーズの変化だけで成功率が 30~50% 低下。
-- **核心的洞察 — VLA は実データに依存**: **OpenVLA**(7B) は約 97 万個の**実機体**デモ(Open X-Embodiment)で学習。**π0/π0.5**、**RT-2**、**Gemini Robotics** はすべて大規模な**実ロボットデータ**中心で、シミュレーションは評価/適応の補助です。Gemini Robotics は SDK に MuJoCo を評価用にバンドルしています。
+- **核心的洞察 — VLA は実データに依存**: **[OpenVLA](https://github.com/openvla/openvla)**(7B) は約 97 万個の**実機体**デモ(Open X-Embodiment)で学習。**π0/π0.5**、**RT-2**、**Gemini Robotics** はすべて大規模な**実ロボットデータ**中心で、シミュレーションは評価/適応の補助です。Gemini Robotics は SDK に MuJoCo を評価用にバンドルしています。
 - **成熟度**: 精密・多指接触マニピュレーション、オープンワールド VLA 家事(π0.5) → **印象的なデモ/trusted-tester Preview**。**2026-07 時点で接触の多いマニピュレーションを GA 本番として検証した汎用 VLA はありません**。
 
 **AWS マッピング**: 実データパイプラインが鍵 → [pillar-1](pillar-1.md)。シミュレーションは評価補助（第 5 項）。
@@ -158,7 +176,7 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 **ソリューション概要** `[1]`:
 
 - **sim 評価スイート**: SimplerEnv、LIBERO、Meta-World などが存在するが限界を露呈。2026-06 監査: 言語エンコーダのない 90M プローブが LIBERO 3/4 で SOTA に一致（shortcut）、報告された「進歩」のうち統計的裏付けがあるのは ~20% のみ、CALVIN は配置ポーズの再サンプルだけで 25% 低下。**sim↔real の相関が低い**。
-- **実世界評価**: **RoboArena** — 分散二重盲検 A/B（ポリシー IP のみを与え、その正体を隠す）、7 機関 4,284 エピソード、Bradley-Terry/Elo。研究フレームワークだが方向を示す。
+- **実世界評価**: **[RoboArena](https://robo-arena.github.io/)** — 分散二重盲検 A/B（ポリシー IP のみを与え、その正体を隠す）、7 機関 4,284 エピソード、Bradley-Terry/Elo。研究フレームワークだが方向を示す。
 - **新方向**: real-to-sim（Gaussian Splatting/ワールドモデルによるシーン再構成）+ 分散実 A/B。単一 sim スイート = 信頼できるゲートではない。
 
 **AWS マッピング**: 大規模評価スイープの並列化 → AWS Batch。実世界 A/B データ収集 → IoT/S3。（マネージドなロボット評価サービスはありません）

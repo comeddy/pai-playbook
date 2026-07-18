@@ -1,5 +1,5 @@
 ---
-ko_hash: 2f34b046b852e0ca2015bda12068c028c75527b7
+ko_hash: 44146473d26bc7f6421390815a34c4b4e9cc6a38
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -29,10 +29,19 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]/[3]`:
 
-- **边缘 HW**: **Jetson Thor(Blackwell) GA**，T5000 生产模块已流通。Jetson Orin 系列仍在生产（低功耗）。规格·价格见下方折叠块。
-- **部署/管理**: **AWS IoT Greengrass V2**(GA) —— Lambda/Docker/自定义组件、ML 推理组件、MQTT 遥测。⚠️ **Greengrass V1 于 2026-06-01 支持终止** —— 只有 V2 是现行的。
-- **模型路径**: PyTorch 策略 → **ONNX** → 编译 **TensorRT** 引擎（端侧加速）以满足实时控制的延迟预算（sub-20~30ms 级）是标准路径。SageMaker Neo（边缘编译）仍在，可与 Greengrass 组合。
+- **边缘 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**，T5000 生产模块已流通。Jetson Orin 系列仍在生产（低功耗）。规格·价格见下方折叠块。
+- **部署/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) —— Lambda/Docker/自定义组件、ML 推理组件、MQTT 遥测。⚠️ **Greengrass V1 于 2026-06-01 支持终止** —— 只有 V2 是现行的。
+- **模型路径**: PyTorch 策略 → **[ONNX](https://onnx.ai/)** → 编译 **[TensorRT](https://developer.nvidia.com/tensorrt)** 引擎（端侧加速）以满足实时控制的延迟预算（sub-20~30ms 级）是标准路径。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（边缘编译）仍在，可与 Greengrass 组合。
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** —— 控制台·API 全部不可用。**没有可直接替换的托管后续服务**。AWS 建议 = ONNX + Greengrass V2（+ 可选 SageMaker Neo）。
+
+```mermaid
+graph LR
+    PT["PyTorch 策略<br>（云端训练）"] --> ONNX[ONNX 转换]
+    ONNX --> TRT["TensorRT 引擎<br>端侧加速"]
+    TRT --> JET["Jetson Thor<br>板载实时控制"]
+    GG["AWS IoT Greengrass V2<br>OTA · 组件 · MQTT"] -. 部署 · 管理 .-> JET
+    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x 无后续 .-> GG
+```
 
 <details markdown="1"><summary>🔄 易变数据（边缘 HW 规格·价格 —— 2026-07 确认）</summary>
 
@@ -68,8 +77,8 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]/[3]`:
 
-- **ANYmal (ANYbotics)** 🟢 —— 用大规模并行仿真 RL 训练的行走，**数百台部署于全球工业巡检（石油·天然气·矿山·化工）**。ETH RL-walking 谱系（peer-reviewed）。**生产 + 证据**。
-- **Agility Digit @ GXO** 🟢 —— **在多年 RaaS 合同下付费商业作业**，截至 2025-11 **移动 10 万+ 料箱**、约 1 年连续全职、6.5 万+ 运行小时。**验证最充分的付费人形作业**（客户 GXO 交叉确认）。但仅限狭窄的结构化料箱搬运任务。
+- **ANYmal ([ANYbotics](https://www.anybotics.com/anymal/))** 🟢 —— 用大规模并行仿真 RL 训练的行走，**数百台部署于全球工业巡检（石油·天然气·矿山·化工）**。ETH RL-walking 谱系（peer-reviewed）。**生产 + 证据**。
+- **[Agility Digit](https://agilityrobotics.com/robots) @ GXO** 🟢 —— **在多年 RaaS 合同下付费商业作业**，截至 2025-11 **移动 10 万+ 料箱**、约 1 年连续全职、6.5 万+ 运行小时。**验证最充分的付费人形作业**（客户 GXO 交叉确认）。但仅限狭窄的结构化料箱搬运任务。
 - ⚠️ **Boston Dynamics Spot 产品搭载 MPC（经典控制）—— 不是 RL**。Spot 的 RL 行走(5.2m/s) 只存在于研究套件(BD+NVIDIA+RAI)。**这是本行业最常搞错的事实** —— 不要说反了。
 
 **AWS 映射**: 训练(→[pillar-2](pillar-2.md)、[pillar-3](pillar-3.md)) + 边缘部署(→第 1 项)。各厂商基础设施为非公开。
@@ -108,6 +117,15 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - **RL over MPC 混合** 🟢 —— 不是纯 end-to-end RL，而是经典 MPC 基础 + 学习策略来增强鲁棒性。**Boston Dynamics 也用这种混合 = 最接近实际部署**。
 - **研究阶段**（非生产）: 残差 real2sim2real(ASAP)、分布式 SysID(Spot 研究)、基于 VLM 的 SysID(Vid2Sid) —— 🔵 令人印象深刻但为单一实验室演示。
 
+```mermaid
+graph LR
+    SIM["仿真 RL 训练"] --> SID["SysID<br>实测校准关键动力学"]
+    SID --> DR["选择性域随机化"]
+    DR --> MPC["RL over MPC 混合<br>经典控制 + 学习策略"]
+    MPC --> VAL["真机小规模验证"]
+    VAL --> DEP["生产部署<br>（locomotion 已验证）"]
+```
+
 **AWS 映射**: 方法论本身对云中立。大规模 DR/SysID 扫描用 AWS Batch 并行化(→[pillar-3](pillar-3.md))。
 
 **决策标准**: locomotion → 信赖 DR+SysID+混合。操作 → 仅靠此处方不够，必须并行真实数据（第 4 项）。
@@ -129,7 +147,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **解决方案概览** `[1]`:
 
 - **为什么落后**: 操作的**接触动力学不匹配**很大，报告的 sim-to-real 性能下降 ~24~30%，仅光照/相机姿态变化就使成功率下降 30~50%。
-- **核心洞察 —— VLA 依赖真实数据**: **OpenVLA**(7B) 用约 97 万个**真实机体**演示(Open X-Embodiment)训练。**π0/π0.5**、**RT-2**、**Gemini Robotics** 全部以大规模**真实机器人数据**为中心，仿真作为评估/适配的辅助。Gemini Robotics 在 SDK 中捆绑 MuJoCo 用于评估。
+- **核心洞察 —— VLA 依赖真实数据**: **[OpenVLA](https://github.com/openvla/openvla)**(7B) 用约 97 万个**真实机体**演示(Open X-Embodiment)训练。**π0/π0.5**、**RT-2**、**Gemini Robotics** 全部以大规模**真实机器人数据**为中心，仿真作为评估/适配的辅助。Gemini Robotics 在 SDK 中捆绑 MuJoCo 用于评估。
 - **成熟度**: 精密·多指接触操作、开放世界 VLA 家务(π0.5) → **令人印象深刻的演示/trusted-tester Preview**。**截至 2026-07，没有把接触丰富操作验证为 GA 生产的通用 VLA**。
 
 **AWS 映射**: 真实数据管道是关键 → [pillar-1](pillar-1.md)。仿真为评估辅助（第 5 项）。
@@ -157,7 +175,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **解决方案概览** `[1]`:
 
 - **sim 评估套件**: SimplerEnv、LIBERO、Meta-World 等存在但暴露局限。2026-06 审计: 无语言编码器的 90M 探针在 LIBERO 3/4 上匹配 SOTA（shortcut），报告的"进步"仅 ~20% 有统计支撑，CALVIN 仅重采样布置姿态就下降 25%。**sim↔real 相关性低**。
-- **真实世界评估**: **RoboArena** —— 分布式双盲 A/B（只给策略 IP 并隐藏其身份），7 机构 4,284 回合，Bradley-Terry/Elo。是研究框架但指明了方向。
+- **真实世界评估**: **[RoboArena](https://robo-arena.github.io/)** —— 分布式双盲 A/B（只给策略 IP 并隐藏其身份），7 机构 4,284 回合，Bradley-Terry/Elo。是研究框架但指明了方向。
 - **新方向**: real-to-sim（Gaussian Splatting/世界模型场景重建）+ 分布式真实 A/B。单一 sim 套件 = 不是可信门禁。
 
 **AWS 映射**: 大规模评估扫描并行化 → AWS Batch。真实世界 A/B 数据采集 → IoT/S3。（没有托管的机器人评估服务）

@@ -26,10 +26,19 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **솔루션 개요** `[1]/[3]`:
 
-- **엣지 HW**: **Jetson Thor(Blackwell) GA**, T5000 프로덕션 모듈 유통. Jetson Orin 계열도 여전히 생산(저전력). 스펙·가격은 아래 접힌 블록.
-- **배포/관리**: **AWS IoT Greengrass V2**(GA) — Lambda/Docker/커스텀 컴포넌트, ML 추론 컴포넌트, MQTT 텔레메트리. ⚠️ **Greengrass V1은 2026-06-01 지원 종료** — V2만 현행.
-- **모델 경로**: PyTorch 정책 → **ONNX** → **TensorRT** 엔진 컴파일(온디바이스 가속)로 실시간 제어 지연 예산(sub-20~30ms급)을 맞추는 것이 표준 경로. SageMaker Neo(엣지 컴파일)는 존속하며 Greengrass와 조합.
+- **엣지 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**, T5000 프로덕션 모듈 유통. Jetson Orin 계열도 여전히 생산(저전력). 스펙·가격은 아래 접힌 블록.
+- **배포/관리**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/커스텀 컴포넌트, ML 추론 컴포넌트, MQTT 텔레메트리. ⚠️ **Greengrass V1은 2026-06-01 지원 종료** — V2만 현행.
+- **모델 경로**: PyTorch 정책 → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** 엔진 컴파일(온디바이스 가속)로 실시간 제어 지연 예산(sub-20~30ms급)을 맞추는 것이 표준 경로. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)(엣지 컴파일)는 존속하며 Greengrass와 조합.
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — 콘솔·API 전부 불가. **드롭인 매니지드 후속 서비스 없음**. AWS 권고 = ONNX + Greengrass V2 (+ 선택적 SageMaker Neo).
+
+```mermaid
+graph LR
+    PT["PyTorch 정책<br>(클라우드 학습)"] --> ONNX[ONNX 변환]
+    ONNX --> TRT["TensorRT 엔진<br>온디바이스 가속"]
+    TRT --> JET["Jetson Thor<br>온보드 실시간 제어"]
+    GG["AWS IoT Greengrass V2<br>OTA · 컴포넌트 · MQTT"] -. 배포 · 관리 .-> JET
+    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x 후속 없음 .-> GG
+```
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (엣지 HW 스펙·가격 — 2026-07 확인)</summary>
 
@@ -65,8 +74,8 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **솔루션 개요** `[1]/[3]`:
 
-- **ANYmal (ANYbotics)** 🟢 — 대규모 병렬 시뮬레이션 RL로 학습한 보행, **수백 대가 전 세계 산업 점검(석유·가스·광산·화학)에 배포**. ETH RL-walking 계보(peer-reviewed). **프로덕션 + 증거**.
-- **Agility Digit @ GXO** 🟢 — **다년 RaaS 계약 하에 유료 상업 작업**, 2025-11 기준 **10만+ 토트 이동**, ~1년 연속 풀타임, 6.5만+ 가동시간. **가장 잘 검증된 유료 휴머노이드 작업**(고객 GXO가 교차 확인). 단 좁은 구조화 토트 이동 태스크.
+- **ANYmal ([ANYbotics](https://www.anybotics.com/anymal/))** 🟢 — 대규모 병렬 시뮬레이션 RL로 학습한 보행, **수백 대가 전 세계 산업 점검(석유·가스·광산·화학)에 배포**. ETH RL-walking 계보(peer-reviewed). **프로덕션 + 증거**.
+- **[Agility Digit](https://agilityrobotics.com/robots) @ GXO** 🟢 — **다년 RaaS 계약 하에 유료 상업 작업**, 2025-11 기준 **10만+ 토트 이동**, ~1년 연속 풀타임, 6.5만+ 가동시간. **가장 잘 검증된 유료 휴머노이드 작업**(고객 GXO가 교차 확인). 단 좁은 구조화 토트 이동 태스크.
 - ⚠️ **Boston Dynamics Spot은 제품에 MPC(고전 제어) 탑재 — RL 아님**. Spot의 RL 보행(5.2m/s)은 연구킷(BD+NVIDIA+RAI)에만 존재. **이 업계에서 가장 자주 틀리는 사실** — 반대로 말하지 말 것.
 
 **AWS 매핑**: 학습(→[pillar-2](pillar-2.md), [pillar-3](pillar-3.md)) + 엣지 배포(→1번). 벤더별 인프라는 비공개.
@@ -105,6 +114,15 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - **RL over MPC 하이브리드** 🟢 — 순수 end-to-end RL이 아니라 고전 MPC 베이스 + 학습 정책으로 강건화. **Boston Dynamics도 이 하이브리드 = 실제 배포에 가장 근접**.
 - **연구 단계**(프로덕션 아님): 잔차 real2sim2real(ASAP), 분포적 SysID(Spot 연구), VLM 기반 SysID(Vid2Sid) — 🔵 인상적이나 단일 랩 데모.
 
+```mermaid
+graph LR
+    SIM["시뮬레이션 RL 학습"] --> SID["SysID<br>핵심 동역학 실측 보정"]
+    SID --> DR["선택적 도메인 랜덤화"]
+    DR --> MPC["RL over MPC 하이브리드<br>고전 제어 + 학습 정책"]
+    MPC --> VAL["실기체 소량 검증"]
+    VAL --> DEP["프로덕션 배포<br>(로코모션 검증됨)"]
+```
+
 **AWS 매핑**: 방법론 자체는 클라우드 중립. 대규모 DR/SysID 스윕은 AWS Batch 병렬화(→[pillar-3](pillar-3.md)).
 
 **의사결정 기준**: 로코모션 → DR+SysID+하이브리드 신뢰. 조작 → 이 처방만으론 부족, 실데이터 병행 필수(4번).
@@ -126,7 +144,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **솔루션 개요** `[1]`:
 
 - **왜 뒤처지나**: 조작은 **접촉 동역학 불일치**가 커서, 보고된 sim-to-real 성능 저하 ~24~30%, 조명/카메라 포즈 변화만으로 성공률 30~50% 하락.
-- **핵심 통찰 — VLA는 실데이터에 의존**: **OpenVLA**(7B)는 ~97만 개 **실기체** 데모(Open X-Embodiment)로 학습. **π0/π0.5**, **RT-2**, **Gemini Robotics** 전부 대규모 **실로봇 데이터** 중심, 시뮬레이션은 평가/적응 보조. Gemini Robotics는 SDK에 MuJoCo를 평가용으로 번들.
+- **핵심 통찰 — VLA는 실데이터에 의존**: **[OpenVLA](https://github.com/openvla/openvla)**(7B)는 ~97만 개 **실기체** 데모(Open X-Embodiment)로 학습. **π0/π0.5**, **RT-2**, **Gemini Robotics** 전부 대규모 **실로봇 데이터** 중심, 시뮬레이션은 평가/적응 보조. Gemini Robotics는 SDK에 MuJoCo를 평가용으로 번들.
 - **성숙도**: 정밀·다지 접촉 조작, 오픈월드 VLA 가사(π0.5) → **인상적 데모/trusted-tester Preview**. **2026-07 기준 접촉 풍부 조작을 GA 프로덕션으로 검증한 범용 VLA는 없음**.
 
 **AWS 매핑**: 실데이터 파이프라인이 관건 → [pillar-1](pillar-1.md). 시뮬레이션은 평가 보조(5번).
@@ -154,7 +172,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **솔루션 개요** `[1]`:
 
 - **sim 평가 스위트**: SimplerEnv, LIBERO, Meta-World 등 존재하나 한계 노출. 2026-06 감사: 언어 인코더 없는 90M 프로브가 LIBERO 3/4에서 SOTA 매칭(shortcut), 보고된 "진보"의 ~20%만 통계적 입증, CALVIN은 배치 포즈 리샘플만으로 25% 하락. **sim↔real 상관 낮음**.
-- **실세계 평가**: **RoboArena** — 분산 이중맹검 A/B(정책 IP만 주고 정체 숨김), 7기관 4,284 에피소드, Bradley-Terry/Elo. 연구 프레임워크지만 방향 제시.
+- **실세계 평가**: **[RoboArena](https://robo-arena.github.io/)** — 분산 이중맹검 A/B(정책 IP만 주고 정체 숨김), 7기관 4,284 에피소드, Bradley-Terry/Elo. 연구 프레임워크지만 방향 제시.
 - **신방향**: real-to-sim(Gaussian Splatting/월드모델 씬 재구성) + 분산 실 A/B. 단일 sim 스위트 = 신뢰 게이트 아님.
 
 **AWS 매핑**: 대규모 평가 스윕 병렬화 → AWS Batch. 실세계 A/B 데이터 수집 → IoT/S3. (매니지드 로봇 평가 서비스는 없음)

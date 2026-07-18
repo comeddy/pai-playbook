@@ -1,5 +1,5 @@
 ---
-ko_hash: 2f34b046b852e0ca2015bda12068c028c75527b7
+ko_hash: 44146473d26bc7f6421390815a34c4b4e9cc6a38
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -29,10 +29,19 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Solution overview** `[1]/[3]`:
 
-- **Edge HW**: **Jetson Thor (Blackwell) GA**, T5000 production module in distribution. The Jetson Orin line is still produced (low power). Specs/prices in the collapsed block below.
-- **Deployment/management**: **AWS IoT Greengrass V2** (GA) — Lambda/Docker/custom components, ML inference components, MQTT telemetry. ⚠️ **Greengrass V1 support ended 2026-06-01** — only V2 is current.
-- **Model path**: PyTorch policy → **ONNX** → **TensorRT** engine compilation (on-device acceleration) is the standard path to meet the real-time control latency budget (sub-20~30ms class). SageMaker Neo (edge compilation) survives and combines with Greengrass.
+- **Edge HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor (Blackwell) GA**, T5000 production module in distribution. The Jetson Orin line is still produced (low power). Specs/prices in the collapsed block below.
+- **Deployment/management**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)** (GA) — Lambda/Docker/custom components, ML inference components, MQTT telemetry. ⚠️ **Greengrass V1 support ended 2026-06-01** — only V2 is current.
+- **Model path**: PyTorch policy → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** engine compilation (on-device acceleration) is the standard path to meet the real-time control latency budget (sub-20~30ms class). [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html) (edge compilation) survives and combines with Greengrass.
 - ⚠️ **SageMaker Edge Manager EOL (2024-04-26)** — console/API all unavailable. **No drop-in managed successor service**. AWS recommendation = ONNX + Greengrass V2 (+ optionally SageMaker Neo).
+
+```mermaid
+graph LR
+    PT["PyTorch policy<br>(cloud training)"] --> ONNX[ONNX conversion]
+    ONNX --> TRT["TensorRT engine<br>on-device acceleration"]
+    TRT --> JET["Jetson Thor<br>on-board real-time control"]
+    GG["AWS IoT Greengrass V2<br>OTA · components · MQTT"] -. deploy · manage .-> JET
+    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x no successor .-> GG
+```
 
 <details markdown="1"><summary>🔄 Volatile data (edge HW specs/prices — checked 2026-07)</summary>
 
@@ -68,8 +77,8 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Solution overview** `[1]/[3]`:
 
-- **ANYmal (ANYbotics)** 🟢 — walking trained with large-scale parallel simulation RL, **hundreds of units deployed to industrial inspection worldwide (oil & gas, mining, chemical)**. ETH RL-walking lineage (peer-reviewed). **Production + evidence**.
-- **Agility Digit @ GXO** 🟢 — **paid commercial work under a multi-year RaaS contract**, **100k+ tote moves** as of 2025-11, ~1 year continuous full-time, 65k+ operating hours. **The best-validated paid humanoid work** (cross-confirmed by customer GXO). But a narrow, structured tote-moving task.
+- **ANYmal ([ANYbotics](https://www.anybotics.com/anymal/))** 🟢 — walking trained with large-scale parallel simulation RL, **hundreds of units deployed to industrial inspection worldwide (oil & gas, mining, chemical)**. ETH RL-walking lineage (peer-reviewed). **Production + evidence**.
+- **[Agility Digit](https://agilityrobotics.com/robots) @ GXO** 🟢 — **paid commercial work under a multi-year RaaS contract**, **100k+ tote moves** as of 2025-11, ~1 year continuous full-time, 65k+ operating hours. **The best-validated paid humanoid work** (cross-confirmed by customer GXO). But a narrow, structured tote-moving task.
 - ⚠️ **Boston Dynamics Spot ships with MPC (classical control) in the product — not RL**. Spot's RL walking (5.2m/s) exists only in a research kit (BD+NVIDIA+RAI). **The most frequently mis-stated fact in this industry** — do not say the opposite.
 
 **AWS mapping**: training (→[pillar-2](pillar-2.md), [pillar-3](pillar-3.md)) + edge deployment (→ item 1). Per-vendor infrastructure is undisclosed.
@@ -108,6 +117,15 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 - **RL-over-MPC hybrid** 🟢 — not pure end-to-end RL but a classical MPC base + a learned policy for robustness. **Boston Dynamics uses this hybrid too = closest to real deployment**.
 - **Research stage** (not production): residual real2sim2real (ASAP), distributional SysID (Spot research), VLM-based SysID (Vid2Sid) — 🔵 impressive but single-lab demos.
 
+```mermaid
+graph LR
+    SIM["Simulation RL training"] --> SID["SysID<br>measure & calibrate key dynamics"]
+    SID --> DR["Selective domain randomization"]
+    DR --> MPC["RL-over-MPC hybrid<br>classical control + learned policy"]
+    MPC --> VAL["Small-scale real-hardware validation"]
+    VAL --> DEP["Production deployment<br>(locomotion validated)"]
+```
+
 **AWS mapping**: the methodology itself is cloud-neutral. Parallelize large-scale DR/SysID sweeps with AWS Batch (→[pillar-3](pillar-3.md)).
 
 **Decision criteria**: locomotion → trust DR+SysID+hybrid. Manipulation → this prescription alone is insufficient; must pair with real data (item 4).
@@ -129,7 +147,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Solution overview** `[1]`:
 
 - **Why it lags**: manipulation has a large **contact-dynamics mismatch**, with reported sim-to-real performance drops of ~24~30%, and success rates falling 30~50% from lighting/camera-pose changes alone.
-- **Key insight — VLAs depend on real data**: **OpenVLA** (7B) is trained on ~970k **real-hardware** demos (Open X-Embodiment). **π0/π0.5**, **RT-2**, and **Gemini Robotics** all center on large-scale **real-robot data**, with simulation as an evaluation/adaptation aid. Gemini Robotics bundles MuJoCo in its SDK for evaluation.
+- **Key insight — VLAs depend on real data**: **[OpenVLA](https://github.com/openvla/openvla)** (7B) is trained on ~970k **real-hardware** demos (Open X-Embodiment). **π0/π0.5**, **RT-2**, and **Gemini Robotics** all center on large-scale **real-robot data**, with simulation as an evaluation/adaptation aid. Gemini Robotics bundles MuJoCo in its SDK for evaluation.
 - **Maturity**: precise, multi-finger contact manipulation and open-world VLA housework (π0.5) → **impressive demo / trusted-tester Preview**. **As of 2026-07, there is no general-purpose VLA that has validated contact-rich manipulation as GA production.**
 
 **AWS mapping**: the real-data pipeline is the crux → [pillar-1](pillar-1.md). Simulation is an evaluation aid (item 5).
@@ -157,7 +175,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Solution overview** `[1]`:
 
 - **Sim evaluation suites**: SimplerEnv, LIBERO, Meta-World, etc. exist but exposed limits. A 2026-06 audit: a 90M probe with no language encoder matched SOTA on LIBERO 3/4 (shortcut), only ~20% of reported "progress" was statistically substantiated, and CALVIN dropped 25% from placement-pose resampling alone. **sim↔real correlation is low**.
-- **Real-world evaluation**: **RoboArena** — distributed double-blind A/B (giving only the policy IP and hiding its identity), 7 institutions, 4,284 episodes, Bradley-Terry/Elo. A research framework, but it points the direction.
+- **Real-world evaluation**: **[RoboArena](https://robo-arena.github.io/)** — distributed double-blind A/B (giving only the policy IP and hiding its identity), 7 institutions, 4,284 episodes, Bradley-Terry/Elo. A research framework, but it points the direction.
 - **New direction**: real-to-sim (Gaussian Splatting/world-model scene reconstruction) + distributed real A/B. A single sim suite ≠ a trusted gate.
 
 **AWS mapping**: parallelize large-scale evaluation sweeps → AWS Batch. Real-world A/B data collection → IoT/S3. (There is no managed robot-evaluation service.)
