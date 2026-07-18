@@ -3,6 +3,12 @@
 정기 실행되는 "최신 Physical AI 기술·논문·뉴스 → Radar 유입" 자동화의 표준 절차.
 `docs/radar.md`의 **`## 🆕 최신 스캔 유입`** 섹션을 새 배치로 갱신한다.
 
+> **스케줄 소재 (이 저장소 밖):** 이 런북은 **claude.ai 스케줄 루틴**이 실행한다 —
+> `pai-playbook Radar 주간 자동 스캔`, cron `0 2 * * 1`(매주 월 02:00 UTC), 모델 claude-sonnet-5,
+> 루틴 ID `trig_01KWwHEnRP6Di1gYTnP5uxJ8`. `.github/workflows/`에는 없다(거기 있는 월요일 cron은
+> staleness 배지 재배포용 00:00 UTC — 별개). 관리·수동 실행·중지: https://claude.ai/code/routines
+> 루틴이 만든 커밋은 author가 `Claude Sonnet 5`로 찍힌다.
+
 ## 원칙 (반드시 준수)
 
 - **정직성**: 유입 항목은 전부 미검증이다. 라벨은 🔵 Research / ⚪ Hype·로드맵 / 🟡 Preview·발표 중 하나, 출처 등급은 `[4]`(미검증). THE FILTER(ⓐproduction ⓑAWS매핑 ⓒ실제문의 ⓓGA 중 2개 이상)를 **통과하기 전에는 본문(pillar) 승격 금지**.
