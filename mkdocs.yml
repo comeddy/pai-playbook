@@ -129,10 +129,8 @@ validation:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/comeddy
+      link: https://github.com/comeddy/pai-playbook
     - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/in/comeddy
-    - icon: fontawesome/brands/x-twitter
-      link: https://x.com/comeddy
+      link: https://www.linkedin.com/in/zerojin/
     - icon: fontawesome/brands/bluesky
-      link: https://bsky.app/profile/comeddy.bsky.social
+      link: https://bsky.app/profile/pai-playbook.bsky.social
