@@ -1,5 +1,5 @@
 ---
-ko_hash: ea29889548fdfbad0ad2e95e0c18d91633c337a4
+ko_hash: 64178b86a9641f989ec4628dbe4c6f5505b07495
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -47,7 +47,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **➡️ 后续行动**: 先让国内客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
 
-**🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) —— 需确认可用 ⚠️ · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US) —— 需确认可用 ⚠️ · （内部 AgentCore 研讨会 —— 需确认 ⚠️）
+**🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （内部 AgentCore 研讨会 —— 需确认 ⚠️）
 
 <details markdown="1"><summary>🔄 易变数据（组件·区域·价格 —— 2026-07 确认）</summary>
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: be72670fb57f84caad01b43007c3b05e8e5fede7
+ko_hash: b2e4771086fb3a4a28770ad700d3a37fecb1fb25
 ---
 # Pillar 3 — Simulation
 
@@ -205,7 +205,7 @@ graph TD
 
 **➡️ Next action**: if the customer asks "isn't TwinMaker dead?", **correct it immediately** ("GA, open to new customers, just low velocity"). If they want twin + simulation integration, connect to the Omniverse AMI. If they ask "is there OVX?", answer precisely "no, G6e/G7e + AMI."
 
-**🔗 Related assets**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker end-to-end workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) — live check needed ⚠️ · (internal digital twin workshop — confirm needed ⚠️)
+**🔗 Related assets**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker end-to-end workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · (internal digital twin workshop — confirm needed ⚠️)
 
 ---
 

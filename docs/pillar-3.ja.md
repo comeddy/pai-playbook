@@ -1,5 +1,5 @@
 ---
-ko_hash: be72670fb57f84caad01b43007c3b05e8e5fede7
+ko_hash: b2e4771086fb3a4a28770ad700d3a37fecb1fb25
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -206,7 +206,7 @@ graph TD
 
 **➡️ 次のアクション**: 顧客が「TwinMaker は死んだと聞いたが?」と聞いたら**即座に訂正**（「GA、新規開放、ただし低速度」）。ツイン+シミュレーション統合を望むなら Omniverse AMI に接続。「OVX はあるか」と聞かれたら「ない、G6e/G7e + AMI」と正確に。
 
-**🔗 関連資産**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker E2E ワークショップ](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) — 要確認 ⚠️ · （社内デジタルツインワークショップ —— 要確認 ⚠️）
+**🔗 関連資産**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker E2E ワークショップ](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · （社内デジタルツインワークショップ —— 要確認 ⚠️）
 
 ---
 

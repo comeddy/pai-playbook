@@ -1,5 +1,5 @@
 ---
-ko_hash: ea29889548fdfbad0ad2e95e0c18d91633c337a4
+ko_hash: 64178b86a9641f989ec4628dbe4c6f5505b07495
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -47,7 +47,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **➡️ Next action**: first confirm for domestic customers that **"AgentCore is GA in the Seoul region — no data residency issue"** (correcting outdated "not supported in Seoul" info), then propose a PoC registering robot skills as Gateway tools. Reassure on pricing with "harness free, only resources billed."
 
-**🔗 Related assets**: [pillar-4 edge](pillar-4.md) · [Getting started with AgentCore workshop](https://catalog.workshops.aws/agentcore-getting-started/en-US) — live check needed ⚠️ · [AgentCore Deep Dive workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US) — live check needed ⚠️ · (internal AgentCore workshop — confirm needed ⚠️)
+**🔗 Related assets**: [pillar-4 edge](pillar-4.md) · [Getting started with AgentCore workshop](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · (internal AgentCore workshop — confirm needed ⚠️)
 
 <details markdown="1"><summary>🔄 Volatile data (components · regions · pricing — checked 2026-07)</summary>
 
