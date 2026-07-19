@@ -170,9 +170,9 @@ graph TD
 
 **决策标准**: 需要托管 Cosmos NIM → 其他云。开放权重自托管·数据主权·整合既有 AWS 栈 → EC2 G7e。
 
-**客户案例**（⚠️ 仅为公布，未经生产验证）: 作为 Cosmos 3 采用方，**Doosan Robotics、LG Electronics、Samsung Electronics** 等多家韩国企业已公布 —— 国内相关性高，但为"已公布的采用"而非经过验证的生产。
+**客户案例**（⚠️ 仅为公布，未经生产验证）: 作为 Cosmos 3 采用方，**Doosan Robotics、LG Electronics、Samsung Electronics** 等多家韩国企业已公布 —— 韩国相关性高，但为"已公布的采用"而非经过验证的生产。
 
-**➡️ 后续行动**: 国内客户对 Cosmos 3 感兴趣 → **以"在 AWS G7e 上自托管 Cosmos 3 Nano" PoC 应对**（把缺乏托管服务转化为自托管+数据主权的优势）。
+**➡️ 后续行动**: 韩国客户对 Cosmos 3 感兴趣 → **以"在 AWS G7e 上自托管 Cosmos 3 Nano" PoC 应对**（把缺乏托管服务转化为自托管+数据主权的优势）。
 
 **🔗 相关资产**: [pillar-1 Cosmos 数据生成](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 

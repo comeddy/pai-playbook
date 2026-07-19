@@ -170,9 +170,9 @@ graph TD
 
 **Decision criteria**: need managed Cosmos NIM → another cloud. Open-weight self-hosting · data sovereignty · integration with an existing AWS stack → EC2 G7e.
 
-**Customer case** (⚠️ announced only, not production-validated): many Korean companies announced as Cosmos 3 adopters, including **Doosan Robotics, LG Electronics, Samsung Electronics** — high domestic relevance, but "announced adoption," not validated production.
+**Customer case** (⚠️ announced only, not production-validated): many Korean companies announced as Cosmos 3 adopters, including **Doosan Robotics, LG Electronics, Samsung Electronics** — high Korean relevance, but "announced adoption," not validated production.
 
-**➡️ Next action**: when a domestic customer is interested in Cosmos 3 → respond with a **"self-host Cosmos 3 Nano on AWS G7e" PoC** (turning the absence of managed hosting into a self-hosting + data-sovereignty strength).
+**➡️ Next action**: when a Korean customer is interested in Cosmos 3 → respond with a **"self-host Cosmos 3 Nano on AWS G7e" PoC** (turning the absence of managed hosting into a self-hosting + data-sovereignty strength).
 
 **🔗 Related assets**: [pillar-1 Cosmos data generation](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 

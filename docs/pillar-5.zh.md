@@ -45,7 +45,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **客户案例**: **AWS×SoftServe 自主生产线**(AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) —— Hannover Messe 2026 **演示/展示**([1]/[3])。
 
-**➡️ 后续行动**: 先让国内客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
+**➡️ 后续行动**: 先让韩国客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
 
 **🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （内部 AgentCore 研讨会 —— 需确认 ⚠️）
 
@@ -152,7 +152,7 @@ graph TD
 
 **决策标准**: 仓库/AMR 机群协调 → 已验证领域（参考 DeepFleet 式方法）。人形智能体机群 → 仍处早期。开发工作负载 → OSMO(NVIDIA) 或 AWS Batch/Step Functions。
 
-**客户案例**（⚠️ 国内为早期/演示/公布）: **Lotte Global Logistics×CoEvolution**(30%，单一来源)、**LG CNS** 仓库演示（人形+机器狗+移动）、**Naver** AI Agent Platform 计划于 2026 下半年（NVIDIA 蓝图）。
+**客户案例**（⚠️ 韩国为早期/演示/公布）: **Lotte Global Logistics×CoEvolution**(30%，单一来源)、**LG CNS** 仓库演示（人形+机器狗+移动）、**Naver** AI Agent Platform 计划于 2026 下半年（NVIDIA 蓝图）。
 
 **➡️ 后续行动**: 向机群客户**以"协调逻辑用 AgentCore，连接用 IoT，训练用 SageMaker"三层来梳理**。准确说明，避免把 DeepFleet 误解为 LLM 智能体。
 
@@ -191,7 +191,7 @@ graph TD
 - **DeepFleet ≠ LLM 智能体编排器。** 是仓库机器人协调基础模型（多机器人 RL）。禁止错误归类。
 - **真正的生产是机群协调(DeepFleet/CoEvolution) 与开发工作负载(OSMO)。** MCP-机器人连接与人形全栈智能体大多为研究/演示。
 - **没有 LLM 语义安全标准。** ISO 只管物理。分层防御(Cedar Policy + ISO 机器人层) 才是诚实的答案。
-- **Lotte 30% 等国内数值为单一来源** —— 硬引用前需再确认。
+- **Lotte 30% 等韩国数值为单一来源** —— 硬引用前需再确认。
 
 ---
 _owner: comeddy · updated: 2026-07 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_

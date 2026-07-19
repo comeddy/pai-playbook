@@ -60,7 +60,7 @@ graph TD
     C -- CC BY-NC-SA 4.0 --> AGI["AgiBot World ⛔<br>不可商业分发"]
 ```
 
-**客户案例**: 案例待定（未确认国内公开案例 —— 目前多数国内机器人企业为 NVIDIA 阵营）。
+**客户案例**: 案例待定（未确认韩国公开案例 —— 目前多数韩国机器人企业为 NVIDIA 阵营）。
 
 **➡️ 后续行动**: 若客户有商用计划，则 **① 确认目标 embodiment → ② 提供数据集许可证审计表（按 OXE 组件）→ ③ 提议"S3 镜像 + FSx Lustre 训练通道"PoC**。仅在首次会议就点出许可证风险，即可建立信任。
 
@@ -96,7 +96,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 - 操作策略(manipulation policy) → 仅靠合成域间差异大。务必并行真实演示微调 + sim-to-real 方法论（→ [pillar-4](pillar-4.md)）。
 - Isaac Sim vs 开源（Genesis/MuJoCo）的选择 → [decisions](decisions.md)。
 
-**客户案例**: 案例待定（未确认国内明确案例）。
+**客户案例**: 案例待定（未确认韩国明确案例）。
 
 **➡️ 后续行动**: **提议"EC2 G6e/G7e + AWS Batch 的 Isaac Sim SDG 管道"研讨会**。若客户有实际环境的 CAD/USD 资产，可用 1 天 PoC 演示合成数据集样本生成。
 
@@ -123,7 +123,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 **客户案例**: **NAVER Labs** —— 用街景·空间数据构建 "Seoul World Model" 时使用 Cosmos（2026-06 与 NVIDIA 签约）。⚠️ **NVIDIA 阵营（非 AWS）** `[3]`。**Doosan Robotics** —— 在 Agentic Robot OS 中整合 Cosmos（NVIDIA 阵营）`[3]`。
 
-**➡️ 后续行动**: 国内机器人客户对 Cosmos 感兴趣 → **以"因为是开放权重，可在 AWS EKS/Batch/G7e 上自托管"的角度提议**（把 NVIDIA 阵营客户引导到 AWS 算力）。要诚实地并列说明它并非托管主机、且实战训练验证尚处早期阶段。
+**➡️ 后续行动**: 韩国机器人客户对 Cosmos 感兴趣 → **以"因为是开放权重，可在 AWS EKS/Batch/G7e 上自托管"的角度提议**（把 NVIDIA 阵营客户引导到 AWS 算力）。要诚实地并列说明它并非托管主机、且实战训练验证尚处早期阶段。
 
 **🔗 相关资产**: [pillar-2 模型训练](pillar-2.md) · [pillar-3 仿真](pillar-3.md)
 
@@ -225,7 +225,7 @@ graph LR
 ## 本支柱的诚实现实（SA 必读）
 
 - **AWS 机械臂操作机器人数据管道没有公开的端到端案例。** 实际依据只有 (a) Cosmos 自托管 on EKS/Batch（参考架构）、(b) Zoox HyperPod（AV）、(c) Agility on EC2 G7e。机械臂操作的 S3/Glue/Ground Truth/FSx 管道是**设计模式/机会，而非经过验证的部署** —— 不要对客户说得好像已经存在。
-- **国内机器人领军者（NAVER、Doosan）目前为 NVIDIA 阵营。** 这既是威胁也是机会 —— AWS 定位为"运行 Cosmos/Isaac 的最佳算力·数据平台"才是诚实且有胜算的角度。
+- **韩国机器人领军者（NAVER、Doosan）目前为 NVIDIA 阵营。** 这既是威胁也是机会 —— AWS 定位为"运行 Cosmos/Isaac 的最佳算力·数据平台"才是诚实且有胜算的角度。
 - **许可证是首要风险。** 仅点出 AgiBot World（规模最大）为非商业这一事实，就能赢得客户信任。
 
 ---

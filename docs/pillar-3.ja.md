@@ -171,9 +171,9 @@ graph TD
 
 **意思決定基準**: マネージド Cosmos NIM が必要 → 他のクラウド。オープンウェイトのセルフホスティング・データ主権・既存の AWS スタック統合 → EC2 G7e。
 
-**顧客事例**（⚠️ 発表のみ、本番未検証）: Cosmos 3 の採用企業として **Doosan Robotics、LG Electronics、Samsung Electronics** など韓国企業が多数発表 —— 国内での関連性は高いものの、「発表された採用」であって検証された本番ではありません。
+**顧客事例**（⚠️ 発表のみ、本番未検証）: Cosmos 3 の採用企業として **Doosan Robotics、LG Electronics、Samsung Electronics** など韓国企業が多数発表 —— 韓国での関連性は高いものの、「発表された採用」であって検証された本番ではありません。
 
-**➡️ 次のアクション**: 国内顧客が Cosmos 3 に関心 → **「AWS G7e で Cosmos 3 Nano をセルフホスティング」PoC** で対応（マネージドホスティングの不在をセルフホスティング+データ主権の強みに転換）。
+**➡️ 次のアクション**: 韓国顧客が Cosmos 3 に関心 → **「AWS G7e で Cosmos 3 Nano をセルフホスティング」PoC** で対応（マネージドホスティングの不在をセルフホスティング+データ主権の強みに転換）。
 
 **🔗 関連資産**: [pillar-1 Cosmos データ生成](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 

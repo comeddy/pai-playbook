@@ -45,7 +45,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Customer case**: **AWS×SoftServe autonomous production line** (AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) — Hannover Messe 2026 **demo/showcase** ([1]/[3]).
 
-**➡️ Next action**: first confirm for domestic customers that **"AgentCore is GA in the Seoul region — no data residency issue"** (correcting outdated "not supported in Seoul" info), then propose a PoC registering robot skills as Gateway tools. Reassure on pricing with "harness free, only resources billed."
+**➡️ Next action**: first confirm for Korean customers that **"AgentCore is GA in the Seoul region — no data residency issue"** (correcting outdated "not supported in Seoul" info), then propose a PoC registering robot skills as Gateway tools. Reassure on pricing with "harness free, only resources billed."
 
 **🔗 Related assets**: [pillar-4 edge](pillar-4.md) · [Getting started with AgentCore workshop](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · (internal AgentCore workshop — confirm needed ⚠️)
 
@@ -152,7 +152,7 @@ graph TD
 
 **Decision criteria**: warehouse/AMR fleet coordination → a validated area (reference the DeepFleet-style approach). Humanoid agent fleet → still early. Development workload → OSMO (NVIDIA) or AWS Batch/Step Functions.
 
-**Customer case** (⚠️ domestic is early/demo/announced): **Lotte Global Logistics×CoEvolution** (30%, single source), **LG CNS** warehouse demo (humanoid + robot dog + mobile), **Naver** AI Agent Platform planned H2 2026 (NVIDIA blueprint).
+**Customer case** (⚠️ Korean cases are early/demo/announced): **Lotte Global Logistics×CoEvolution** (30%, single source), **LG CNS** warehouse demo (humanoid + robot dog + mobile), **Naver** AI Agent Platform planned H2 2026 (NVIDIA blueprint).
 
 **➡️ Next action**: for fleet customers, organize into 3 layers — **"orchestration logic on AgentCore, connectivity on IoT, training on SageMaker."** Explain precisely so DeepFleet is not mistaken for an LLM agent.
 
@@ -191,7 +191,7 @@ graph TD
 - **DeepFleet ≠ LLM agent orchestrator.** A warehouse robot coordination foundation model (multi-robot RL). No misclassification.
 - **Real production is fleet coordination (DeepFleet/CoEvolution) and development workloads (OSMO).** MCP-robot connections and full-stack humanoid agents are mostly research/demo.
 - **There is no LLM semantic safety standard.** ISO covers physical only. Layered defense (Cedar Policy + ISO robot layer) is the honest answer.
-- **Domestic numbers like Lotte 30% are single-source** — re-confirm before hard citation.
+- **Korean figures like Lotte 30% are single-source** — re-confirm before hard citation.
 
 ---
 _owner: comeddy · updated: 2026-07 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_

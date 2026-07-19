@@ -60,7 +60,7 @@ graph TD
     C -- CC BY-NC-SA 4.0 --> AGI["AgiBot World ⛔<br>no commercial distribution"]
 ```
 
-**Customer case**: case pending (no public domestic case confirmed — many domestic robotics companies are currently NVIDIA-aligned).
+**Customer case**: case pending (no public Korean case confirmed — many Korean robotics companies are currently NVIDIA-aligned).
 
 **➡️ Next action**: if the customer has a commercial plan, **① confirm the target embodiment → ② provide a dataset license audit sheet (per OXE component) → ③ propose an "S3 mirroring + FSx Lustre training channel" PoC**. Flagging the license risk in the first meeting alone builds trust.
 
@@ -96,7 +96,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 - Manipulation policy → synthetic-only leaves a large domain gap. Always pair with real-demo fine-tuning + sim-to-real methodology (→ [pillar-4](pillar-4.md)).
 - Isaac Sim vs open source (Genesis/MuJoCo) choice → [decisions](decisions.md).
 
-**Customer case**: case pending (no explicit domestic case confirmed).
+**Customer case**: case pending (no explicit Korean case confirmed).
 
 **➡️ Next action**: **propose an "Isaac Sim SDG pipeline on EC2 G6e/G7e + AWS Batch" workshop**. If the customer has CAD/USD assets of their real environment, demo a synthetic-dataset sample generation in a 1-day PoC.
 
@@ -123,7 +123,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: **NAVER Labs** — uses Cosmos to build a "Seoul World Model" from street-view/spatial data (2026-06 NVIDIA agreement). ⚠️ **NVIDIA-aligned (not AWS)** `[3]`. **Doosan Robotics** — integrates Cosmos into its Agentic Robot OS (NVIDIA-aligned) `[3]`.
 
-**➡️ Next action**: when a domestic robotics customer is interested in Cosmos → **propose from the angle of "open weights, so self-hostable on AWS EKS/Batch/G7e"** (drawing NVIDIA-aligned customers toward AWS compute). Be honest that it is not a managed host and that real-world training validation is at an early stage.
+**➡️ Next action**: when a Korean robotics customer is interested in Cosmos → **propose from the angle of "open weights, so self-hostable on AWS EKS/Batch/G7e"** (drawing NVIDIA-aligned customers toward AWS compute). Be honest that it is not a managed host and that real-world training validation is at an early stage.
 
 **🔗 Related assets**: [pillar-2 Model Training](pillar-2.md) · [pillar-3 Simulation](pillar-3.md)
 
@@ -225,7 +225,7 @@ graph LR
 ## The honest reality of this pillar (SA must-read)
 
 - **There is no public end-to-end case of an AWS manipulation-robot data pipeline.** The real evidence is only (a) Cosmos self-hosted on EKS/Batch (reference architecture), (b) Zoox HyperPod (AV), and (c) Agility on EC2 G7e. The manipulation S3/Glue/Ground Truth/FSx pipeline is a **design pattern/opportunity, not a validated deployment** — do not speak of it as if it exists for the customer.
-- **The domestic robotics leaders (NAVER, Doosan) are currently NVIDIA-aligned.** This is both a threat and an opportunity — positioning AWS as "the optimal compute/data platform to run Cosmos/Isaac" is the honest, winnable angle.
+- **The Korean robotics leaders (NAVER, Doosan) are currently NVIDIA-aligned.** This is both a threat and an opportunity — positioning AWS as "the optimal compute/data platform to run Cosmos/Isaac" is the honest, winnable angle.
 - **The license is the first risk.** Just pointing out that AgiBot World (the largest) is non-commercial earns customer trust.
 
 ---

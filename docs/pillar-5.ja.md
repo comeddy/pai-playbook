@@ -46,7 +46,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **顧客事例**: **AWS×SoftServe 自律生産ライン**(AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) — Hannover Messe 2026 **デモ/ショーケース**([1]/[3])。
 
-**➡️ 次のアクション**: 国内顧客にまず **「AgentCore はソウルリージョン GA — データレジデンシー問題なし」** を確認させ（古い「ソウル非対応」情報を訂正）、ロボットスキルを Gateway ツールとして登録する PoC を提案します。価格は「ハーネス無料、リソースのみ課金」で安心させます。
+**➡️ 次のアクション**: 韓国顧客にまず **「AgentCore はソウルリージョン GA — データレジデンシー問題なし」** を確認させ（古い「ソウル非対応」情報を訂正）、ロボットスキルを Gateway ツールとして登録する PoC を提案します。価格は「ハーネス無料、リソースのみ課金」で安心させます。
 
 **🔗 関連アセット**: [pillar-4 エッジ](pillar-4.md) · [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （社内 AgentCore ワークショップ — 要確認 ⚠️）
 
@@ -153,7 +153,7 @@ graph TD
 
 **意思決定基準**: 倉庫/AMR フリート協調 → 検証済み領域（DeepFleet 式アプローチを参照）。ヒューマノイドエージェントフリート → まだ初期。開発ワークロード → OSMO(NVIDIA) または AWS Batch/Step Functions。
 
-**顧客事例**（⚠️ 国内は初期/デモ/発表）: **Lotte Global Logistics×CoEvolution**(30%、単一出典)、**LG CNS** 倉庫デモ（ヒューマノイド+ロボット犬+モバイル）、**Naver** AI Agent Platform 2026 下半期予定（NVIDIA ブループリント）。
+**顧客事例**（⚠️ 韓国は初期/デモ/発表）: **Lotte Global Logistics×CoEvolution**(30%、単一出典)、**LG CNS** 倉庫デモ（ヒューマノイド+ロボット犬+モバイル）、**Naver** AI Agent Platform 2026 下半期予定（NVIDIA ブループリント）。
 
 **➡️ 次のアクション**: フリート顧客に **「協調ロジックは AgentCore、接続は IoT、学習は SageMaker」** の 3 階層として整理します。DeepFleet を LLM エージェントと誤解しないよう正確に説明します。
 
@@ -192,7 +192,7 @@ graph TD
 - **DeepFleet ≠ LLM エージェントオーケストレーター。** 倉庫ロボット協調の基盤モデル（マルチロボット RL）。誤分類は禁止。
 - **真の本番はフリート協調(DeepFleet/CoEvolution) と開発ワークロード(OSMO)。** MCP-ロボット連携とヒューマノイドのフルスタックエージェントは大半が研究/デモ。
 - **LLM の意味的安全標準はない。** ISO は物理のみ。階層防御(Cedar Policy + ISO ロボット層) が正直な答え。
-- **Lotte 30% など国内数値は単一出典** — ハード引用の前に要再確認。
+- **Lotte 30% など韓国数値は単一出典** — ハード引用の前に要再確認。
 
 ---
 _owner: comeddy · updated: 2026-07 · volatility: 高（AgentCore の機能・リージョンは折りたたみブロックで管理）· sources: [1] 公式, [3] ベンダー/press, [4] 研究/コミュニティ_

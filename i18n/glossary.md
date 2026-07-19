@@ -24,6 +24,7 @@ AWS 서비스명 전부(SageMaker, S3, Batch, ...), 모델·데이터셋·라이
 | 사전학습 | pretraining | 预训练 | 事前学習 |
 | 파인튜닝 | fine-tuning | 微调 | ファインチューニング |
 | 필러 | pillar | 支柱 | ピラー |
+| 국내(=한국) | Korean / in Korea (never bare 'domestic') | 韩国（禁用'国内'—读者会误解为中国） | 韓国（「国内」禁止—読者の自国と誤読） |
 | 파운데이션 모델 | foundation model | 基础模型 | 基盤モデル |
 | 시뮬레이션 | simulation | 仿真 | シミュレーション |
 | 시뮬레이터 | simulator | 仿真器 | シミュレーター |

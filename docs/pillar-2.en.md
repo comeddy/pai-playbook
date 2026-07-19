@@ -50,7 +50,7 @@ graph TD
     L -- NVIDIA license --> GR["GR00T ⚠️<br>check live model card"]
 ```
 
-**Customer case**: case pending (no public domestic VLA fine-tuning case confirmed).
+**Customer case**: case pending (no public Korean VLA fine-tuning case confirmed).
 
 **➡️ Next action**: if the customer is selecting a model, **present the "license matrix (GR00T=confirm needed / π=Apache-2.0 / OpenVLA=MIT) as the first slide."** For commercial use, propose a π0.5 or OpenVLA fine-tuning PoC on EC2 G7e.
 
