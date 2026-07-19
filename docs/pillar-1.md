@@ -221,7 +221,7 @@ graph LR
 
 ## 이 필러의 정직한 현실 (SA 필독)
 
-- **AWS 매니퓰레이션 로봇 데이터 파이프라인의 공개 엔드투엔드 사례는 없다.** 실재 근거는 (a) Cosmos 셀프호스팅 on EKS/Batch(참조 아키텍처), (b) Zoox HyperPod(AV), (c) Agility on EC2 G7e뿐. 매니퓰레이션 S3/Glue/Ground Truth/FSx 파이프라인은 **검증된 배포가 아니라 설계 패턴/기회**다 — 고객에게 있는 것처럼 말하지 말 것.
+- **AWS 매니퓰레이션 로봇 데이터 파이프라인의 공개 엔드투엔드 사례는 없다.** 실제 근거는 (a) Cosmos 셀프호스팅 on EKS/Batch(참조 아키텍처), (b) Zoox HyperPod(AV), (c) Agility on EC2 G7e뿐. 매니퓰레이션 S3/Glue/Ground Truth/FSx 파이프라인은 **검증된 배포가 아니라 설계 패턴/기회**다 — 고객에게 있는 것처럼 말하지 말 것.
 - **국내 로봇 리더(NAVER, Doosan)는 현재 NVIDIA 정렬.** 이건 위협이자 기회 — AWS는 "Cosmos/Isaac을 돌리는 최적 컴퓨트·데이터 플랫폼"으로 포지셔닝하는 게 정직하고 승산 있는 각도.
 - **라이선스가 첫 리스크.** AgiBot World(최대 규모)가 비상업이라는 사실 하나만 짚어도 고객 신뢰를 얻는다.
 

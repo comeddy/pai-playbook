@@ -1,5 +1,5 @@
 ---
-ko_hash: 4c50ebf6ddb783f2ac5b32dea8d71217003f8dd6
+ko_hash: 13f1742689dff5a80bee92fcd8991719da8dfdef
 ---
 # Pillar 1 — Data Collection & Processing
 
