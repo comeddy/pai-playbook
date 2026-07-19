@@ -1,5 +1,5 @@
 ---
-ko_hash: 72da5c5cefe0db5650fcd350e6f23daef73347c4
+ko_hash: d780f1925becf31c2552c3f4a6dec5c39a73910a
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 

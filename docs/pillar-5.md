@@ -100,7 +100,7 @@ graph TD
 
 ## 3. 엣지 에이전트 오케스트레이션  🟡 Preview (참조 아키텍처)
 
-**L0 TL;DR**: 오프라인·저지연 현장에서 에이전트를 엣지 디바이스에 배포하는 패턴. AWS **Solutions Guidance("AI Agents to Device Fleets via IoT Greengrass")** 가 실재하는 참조 아키텍처 — 단 **GA 제품이 아니라 가이던스/샘플코드**.
+**L0 TL;DR**: 오프라인·저지연 현장에서 에이전트를 엣지 디바이스에 배포하는 패턴. AWS **Solutions Guidance("AI Agents to Device Fleets via IoT Greengrass")** 가 실제 참조 아키텍처 — 단 **GA 제품이 아니라 가이던스/샘플코드**.
 
 **고객 니즈/문제**: "공장이 오프라인/저대역이다. 클라우드 없이도 에이전트가 현장에서 판단하게 하고 싶다."
 
