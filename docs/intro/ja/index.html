@@ -48,6 +48,10 @@ a{color:var(--accent-ink)}
 .nav-links a:hover{color:var(--ink-900)}
 .nav-cta{margin-left:8px;background:var(--ink-800);color:var(--paper)!important;padding:8px 16px;border-radius:999px;font-size:13.5px!important;text-decoration:none;white-space:nowrap}
 .nav-cta:hover{background:var(--ink-900)}
+.nav-langs{margin-left:8px;white-space:nowrap;font-size:13px;color:var(--ink-400)}
+.nav-langs a{font-size:13px;font-weight:600;color:var(--ink-400)}
+.nav-langs a:hover{color:var(--ink-900)}
+.nav-langs strong{font-size:13px;font-weight:700;color:var(--ink-900)}
 
 /* ---------- hero ---------- */
 .hero{padding:88px 0 72px;border-bottom:1px solid var(--line)}
@@ -144,6 +148,7 @@ footer a{color:var(--text-3)}
 @media (max-width:640px){
   .wrap{padding:0 18px}
   .nav-links a:not(.nav-cta){display:none}
+  .nav-links .nav-langs a{display:inline}
   .hero{padding:60px 0 52px}
   section{padding:56px 0}
   .pillars,.cards,.labels,.trust .cards{grid-template-columns:1fr}
@@ -186,6 +191,7 @@ footer a{color:var(--text-3)}
       <a href="#decisions">意思決定</a>
       <a href="#architecture">構造</a>
       <a href="#trust">信頼</a>
+      <span class="nav-langs" aria-label="Languages"><a href="../" hreflang="ko">한국어</a> · <a href="../en/" hreflang="en">English</a> · <a href="../zh/" hreflang="zh-Hans">中文</a> · <strong>日本語</strong></span>
       <a class="nav-cta" href="https://comeddy.github.io/pai-playbook/ja/">Playbook を開く</a>
     </div>
   </div>
