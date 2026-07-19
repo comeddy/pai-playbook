@@ -1,5 +1,5 @@
 ---
-ko_hash: 64178b86a9641f989ec4628dbe4c6f5505b07495
+ko_hash: 72da5c5cefe0db5650fcd350e6f23daef73347c4
 ---
 # Pillar 5 — Agentic Orchestration
 

@@ -44,7 +44,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **➡️ 다음 액션**: 국내 고객에게 **"AgentCore는 서울 리전 GA — 데이터 레지던시 문제 없다"** 를 먼저 확인시키고(오래된 "서울 미지원" 정보 정정), 로봇 스킬을 Gateway 툴로 등록하는 PoC 제안. 가격은 "하네스 무료, 리소스만 과금" 으로 안심시킴.
 
-**🔗 관련 자산**: [pillar-4 엣지](pillar-4.md) · [AgentCore 시작 워크샵](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 워크샵](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · (사내 AgentCore 워크숍 — 확인 필요 ⚠️)
+**🔗 관련 자산**: [pillar-4 엣지](pillar-4.md) · [AgentCore 시작 워크숍](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 워크숍](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · (사내 AgentCore 워크숍 — 확인 필요 ⚠️)
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (컴포넌트·리전·가격 — 2026-07 확인)</summary>
 

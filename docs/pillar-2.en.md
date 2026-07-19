@@ -1,5 +1,5 @@
 ---
-ko_hash: f5feb522a675a832028c1407f0452f95abaf47d4
+ko_hash: 0ae0c6b9693c7404456d88486dcea3b28b2ef687
 ---
 # Pillar 2 — Model Training (VLA)
 
