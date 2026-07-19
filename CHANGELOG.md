@@ -14,6 +14,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-07-19
+
+### Added
+
+- Add a standalone intro landing page at `/intro/` (self-contained HTML) and expand it to four languages (`/intro/en|zh|ja/`) with hreflang alternates and language switchers in both the header nav and the footer
+- Introduce a multi-verifier scheme for primary-source verification: an optional `verified by:` metadata field (the owner stays a single person), a "Verifiers (multiple allowed)" role in the promotion pipeline, and a verifier input on the promotion issue form — applied across all four languages
+- Add a bilingual CHANGELOG with git tags (v1.0.0–v1.3.0), GitHub Releases, and a README release badge
+- Add `docs/CNAME` groundwork for the `pai.zerojin.art` custom domain (domain not yet activated)
+
 ## [1.3.0] - 2026-07-19
 
 ### Added
@@ -72,7 +81,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Promotion issue form with the THE FILTER checklist built in
 - Owner assignment for pillar pages
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/comeddy/pai-playbook/compare/v1.0.0...v1.1.0
@@ -88,6 +98,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 형식은 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)를 따르고, [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다. 버전은 git 태그(v1.0.0+)로 관리합니다.
 
 ## [Unreleased]
+
+## [1.4.0] - 2026-07-19
+
+### Added
+
+- `/intro/` 독립 랜딩 페이지 추가(단일 HTML) 및 4개 언어 확장(`/intro/en|zh|ja/`) — hreflang 대체 링크와 header nav·footer 양쪽 언어 전환기 포함
+- 1차 출처 검증자 다인 체계 도입: 선택 `검증:` 메타데이터 필드(owner는 1명 유지), 승격 파이프라인 "검증 담당(복수 가능)" 역할, 승격 이슈 폼 검증자 입력 필드 — 4개 언어 반영
+- 이중 언어 CHANGELOG·git 태그(v1.0.0~v1.3.0)·GitHub Releases·README 릴리스 뱃지 추가
+- `pai.zerojin.art` 커스텀 도메인용 `docs/CNAME` 기반 작업 추가(도메인 미활성)
 
 ## [1.3.0] - 2026-07-19
 
@@ -147,7 +166,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - THE FILTER 체크리스트를 내장한 승격 이슈 폼 추가
 - 필러 페이지 owner 지정
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/comeddy/pai-playbook/compare/v1.0.0...v1.1.0
