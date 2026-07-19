@@ -3,6 +3,7 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/license-CC--BY--4.0-green)](LICENSE)
 [![Build](https://img.shields.io/github/actions/workflow/status/comeddy/pai-playbook/deploy-docs.yml?branch=main)](https://github.com/comeddy/pai-playbook/actions/workflows/deploy-docs.yml)
 [![Site](https://img.shields.io/badge/site-live-blue)](https://comeddy.github.io/pai-playbook/)
+[![Release](https://img.shields.io/github/v/release/comeddy/pai-playbook)](CHANGELOG.md)
 [![English](https://img.shields.io/badge/lang-English-blue)](#english)
 [![한국어](https://img.shields.io/badge/lang-%ED%95%9C%EA%B5%AD%EC%96%B4-red)](#한국어)
 
@@ -112,6 +113,7 @@ This project is licensed under the Creative Commons Attribution 4.0 Internationa
 - Maintainer: [comeddy](https://github.com/comeddy)
 - Issues: [github.com/comeddy/pai-playbook/issues](https://github.com/comeddy/pai-playbook/issues)
 - Email: comeddy@gmail.com
+- Changelog: [CHANGELOG.md](CHANGELOG.md) · [Releases](https://github.com/comeddy/pai-playbook/releases)
 
 ---
 
@@ -216,3 +218,4 @@ python3 -m pytest tests/ -q
 - 메인테이너: [comeddy](https://github.com/comeddy)
 - 이슈: [github.com/comeddy/pai-playbook/issues](https://github.com/comeddy/pai-playbook/issues)
 - 이메일: comeddy@gmail.com
+- 변경 이력: [CHANGELOG.md](CHANGELOG.md) · [Releases](https://github.com/comeddy/pai-playbook/releases)
