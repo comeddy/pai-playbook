@@ -1,5 +1,5 @@
 ---
-ko_hash: d9959d1d0901ab61aec1b8d5c46a0d625be7a048
+ko_hash: 30e0d35adaa8cc50c818c3cd9bc0749926010f03
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -28,10 +28,11 @@ A playbook goes stale because it mixes volatile and stable information. We isola
 **Do not create an item without an owner.** At the bottom of every page and item:
 
 ```
-_owner: {name} · updated: {YYYY-MM} · volatility: high/medium/low_
+_owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatility: high/medium/low_
 ```
 
-- `owner`: if undecided, mark as `TBD ⚠️` to **keep it on the books as debt** (do not hide it).
+- `owner`: **always exactly one person** (single-accountability principle). If undecided, mark as `TBD ⚠️` to **keep it on the books as debt** (do not hide it).
+- `verified by` (optional): the people who performed primary-source verification (cross-checking official announcements, original papers, licenses) — **multiple allowed**, comma-separated. Omit if identical to the owner.
 - `updated`: the year-month of last actual review. An absolute date (no relative dates).
 - `volatility`: high/medium/low. Determines the staleness cadence.
 
@@ -94,7 +95,7 @@ Promoted items are written in this format.
 **➡️ Next action**: (demo/workshop/asset link — always filled in)
 **🔗 Related assets**: (internal skill/workshop/deck deep link)
 ---
-_owner: {name} · updated: {YYYY-MM} · volatility: high/low_
+_owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatility: high/low_
 ```
 
 **Enforce the depth hierarchy**: L0 at the very top. L2 deep-dives are separated into `<details>` folds/links to keep the body short.
@@ -108,7 +109,7 @@ graph TD
     S["Slack/blog/paper/demo<br>candidate arises"] --> C["① Capture<br>collect candidates via a designated channel + emoji reaction (e.g., 📌)<br>or the GitHub issue form '📌 Playbook candidate submission' (THE FILTER checklist built in)"]
     C --> F{"② Filter<br>the 2.5 gate (2 or more of 4?)"}
     F -- falls short --> RD["one line on the Radar page<br>(label + why on hold + promotion condition)"]
-    F -- passes --> PR["③ Promote — the owning pillar's owner incorporates it via the standard template<br>· attach maturity label + source grade<br>· isolate volatile info in a collapsed block<br>· fill in owner/updated"]
+    F -- passes --> PR["③ Promote — the owning pillar's owner incorporates it via the standard template<br>· attach maturity label + source grade<br>· isolate volatile info in a collapsed block<br>· fill in owner/verifiers/updated"]
     PR --> M["④ merge after passing the pre-creation self-check (below)"]
 ```
 
@@ -117,6 +118,7 @@ graph TD
 | Role | Responsibility |
 |---|---|
 | **Capture owner** | Monitor the channel, collect emoji candidates |
+| **Verifiers (multiple allowed)** | Primary-source verification of intake items — cross-check official announcements, original papers, and licenses. Participants are recorded in the promotion issue and the item's `verified by:` field |
 | **Pillar owner** | Gate judgment, promote/Radar decision, template authoring, updates |
 | **Playbook maintainer (TBD ⚠️)** | Staleness badges, structural consistency, quarterly review |
 

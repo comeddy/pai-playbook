@@ -1,5 +1,5 @@
 ---
-ko_hash: b224cf141ac14162581df61cee9dfc477f9d7b01
+ko_hash: 424d698d766a386533731ed59e3b927675ad9be2
 ---
 # Guide — How This Playbook Works
 
@@ -43,7 +43,7 @@ Items that haven't passed the filter yet live as a single line in the [Radar (qu
 
 ## ④ Verification and promotion — the human's job
 
-Primary-source verification of intake items (official announcements, paper originals, license checks) and the promotion decision are made by a **human (owner)**. The automated scan can produce plausible errors (e.g., a nonexistent product-generation name), so nothing is promoted without verification. Once it passes, the owner folds it into the relevant pillar via the [standard template](maintenance.md#standard-template) and removes it from the Radar. For the full procedure see the [promotion pipeline](maintenance.md#playbook-promotion-pipeline).
+Primary-source verification of intake items (official announcements, paper originals, license checks) and the promotion decision are made by **humans**. The automated scan can produce plausible errors (e.g., a nonexistent product-generation name), so nothing is promoted without verification. Primary-source verification does not have to be done by the owner alone — **multiple people can share it**, and participants are recorded in the promotion issue and the item's `verified by:` field. Once it passes, the owner folds it into the relevant pillar via the [standard template](maintenance.md#standard-template) and removes it from the Radar. For the full procedure see the [promotion pipeline](maintenance.md#playbook-promotion-pipeline).
 
 ## ⑤ Automated freshness monitoring
 

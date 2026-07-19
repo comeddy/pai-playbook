@@ -94,5 +94,12 @@ body:
     id: proposed-owner
     attributes:
       label: "승격 시 owner"
-      description: "소유자 없는 항목은 본문에 생성하지 않는다(maintenance 규칙). 미정이면 비워두기."
+      description: "소유자 없는 항목은 본문에 생성하지 않는다(maintenance 규칙). owner는 항상 1명. 미정이면 비워두기."
       placeholder: "SA 이름"
+
+  - type: input
+    id: verifiers
+    attributes:
+      label: "1차 출처 검증자"
+      description: "공식 발표·논문 원문·라이선스를 대조한 사람 — 여러 명이면 쉼표로 나열. 승격 시 항목 메타데이터의 `검증:` 필드에 기록됩니다."
+      placeholder: "SA 이름, SA 이름"

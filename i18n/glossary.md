@@ -20,6 +20,8 @@ AWS 서비스명 전부(SageMaker, S3, Batch, ...), 모델·데이터셋·라이
 | 유지보수 규칙 | maintenance rules | 维护规则 | メンテナンスルール |
 | 갱신 규칙 | update rules | 更新规则 | 更新ルール |
 | 검토 필요 | review needed | 需要复核 | 要レビュー |
+| 검증: (메타데이터 필드) | verified by: | 验证: | 検証: |
+| 검증 담당 | verifiers | 验证负责人 | 検証担当 |
 | 참조 아키텍처 | reference architecture | 参考架构 | リファレンスアーキテクチャ |
 | 사전학습 | pretraining | 预训练 | 事前学習 |
 | 파인튜닝 | fine-tuning | 微调 | ファインチューニング |
