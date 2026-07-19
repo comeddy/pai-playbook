@@ -1,5 +1,5 @@
 ---
-ko_hash: bf1e7fa595b5c9cbbb0ace7579636b340d975fee
+ko_hash: 0ec81ad4bfa18a2f39b826f4e71e44a4cbc14d52
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -58,7 +58,7 @@ graph LR
 
 **➡️ 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
 
-**🔗 相关资产**: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 研讨会（Batch MNP 无头 RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E 研讨会（韩语 — Isaac Lab RL + Batch 轨道）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop)
+**🔗 相关资产**: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 研讨会（Batch MNP 无头 RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E 研讨会（韩语 — Isaac Lab RL + Batch 轨道）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [（内部）AWS·NVIDIA 机器人参考架构](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) —— 需 AWS 内网
 
 <details markdown="1"><summary>🔄 易变数据（版本 —— 2026-07 确认，部分年份需在 GitHub 再确认）</summary>
 
@@ -205,7 +205,7 @@ graph TD
 
 **➡️ 后续行动**: 客户问"听说 TwinMaker 死了？"时**立即更正**（"GA、对新客户开放，只是低速度"）。想整合孪生+仿真则连接到 Omniverse AMI。问"有 OVX 吗"则准确回答"没有，是 G6e/G7e + AMI"。
 
-**🔗 相关资产**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker 端到端研讨会](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · （内部数字孪生研讨会 —— 需确认 ⚠️）
+**🔗 相关资产**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker 端到端研讨会](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · [Omniverse 数字孪生实操（韩语 — Isaac Sim + Kinesis 实时数据，CDK）](https://github.com/kimjoonhyung/nvidia-omniverse-digital-twin) · （内部数字孪生研讨会 —— 需确认 ⚠️）
 
 ---
 

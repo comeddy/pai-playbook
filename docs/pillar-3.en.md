@@ -1,5 +1,5 @@
 ---
-ko_hash: bf1e7fa595b5c9cbbb0ace7579636b340d975fee
+ko_hash: 0ec81ad4bfa18a2f39b826f4e71e44a4cbc14d52
 ---
 # Pillar 3 — Simulation
 
@@ -58,7 +58,7 @@ graph LR
 
 **➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/comeddy/pai-sim-isaaclab)** (Terraform provisions g6e → Isaac Lab quadruped PPO headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
-**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E workshop (Korean — Isaac Lab RL + Batch track)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop)
+**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E workshop (Korean — Isaac Lab RL + Batch track)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [(internal) AWS·NVIDIA robotics reference architecture](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS internal network required
 
 <details markdown="1"><summary>🔄 Volatile data (versions — checked 2026-07, some years to be re-confirmed on GitHub)</summary>
 
@@ -205,7 +205,7 @@ graph TD
 
 **➡️ Next action**: if the customer asks "isn't TwinMaker dead?", **correct it immediately** ("GA, open to new customers, just low velocity"). If they want twin + simulation integration, connect to the Omniverse AMI. If they ask "is there OVX?", answer precisely "no, G6e/G7e + AMI."
 
-**🔗 Related assets**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker end-to-end workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · (internal digital twin workshop — confirm needed ⚠️)
+**🔗 Related assets**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker end-to-end workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · [Omniverse digital twin hands-on (Korean — Isaac Sim + Kinesis real-time data, CDK)](https://github.com/kimjoonhyung/nvidia-omniverse-digital-twin) · (internal digital twin workshop — confirm needed ⚠️)
 
 ---
 
