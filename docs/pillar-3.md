@@ -55,7 +55,7 @@ graph LR
 
 **➡️ 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/comeddy/pai-sim-isaaclab)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
 
-**🔗 관련 자산**: [pillar-2 학습 스택](pillar-2.md) · [pillar-1 합성 데이터](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 워크샵 (Batch MNP 헤드리스 RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US)
+**🔗 관련 자산**: [pillar-2 학습 스택](pillar-2.md) · [pillar-1 합성 데이터](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 워크샵 (Batch MNP 헤드리스 RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E 워크샵 (한국어 — Isaac Lab RL + Batch 트랙)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop)
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (버전 — 2026-07 확인, 연도 일부 GitHub 재확인 필요)</summary>
 

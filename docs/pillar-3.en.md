@@ -1,5 +1,5 @@
 ---
-ko_hash: b2e4771086fb3a4a28770ad700d3a37fecb1fb25
+ko_hash: bf1e7fa595b5c9cbbb0ace7579636b340d975fee
 ---
 # Pillar 3 — Simulation
 
@@ -58,7 +58,7 @@ graph LR
 
 **➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/comeddy/pai-sim-isaaclab)** (Terraform provisions g6e → Isaac Lab quadruped PPO headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
-**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US)
+**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E workshop (Korean — Isaac Lab RL + Batch track)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop)
 
 <details markdown="1"><summary>🔄 Volatile data (versions — checked 2026-07, some years to be re-confirmed on GitHub)</summary>
 
