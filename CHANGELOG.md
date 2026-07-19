@@ -10,7 +10,7 @@
 # English
 
 All notable changes to this project are documented in this file.
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions are not yet git-tagged; reference links use commit ranges.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Versions are git-tagged (v1.0.0+).
 
 ## [Unreleased]
 
@@ -72,11 +72,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Promotion issue form with the THE FILTER checklist built in
 - Owner assignment for pillar pages
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/5540d01...HEAD
-[1.3.0]: https://github.com/comeddy/pai-playbook/compare/3422743...5540d01
-[1.2.0]: https://github.com/comeddy/pai-playbook/compare/cd33298...3422743
-[1.1.0]: https://github.com/comeddy/pai-playbook/compare/ad996a8...cd33298
-[1.0.0]: https://github.com/comeddy/pai-playbook/commits/ad996a8
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/comeddy/pai-playbook/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/comeddy/pai-playbook/releases/tag/v1.0.0
 
 ---
 
@@ -85,7 +85,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 # 한국어
 
 이 프로젝트의 주요 변경 사항을 이 파일에 기록합니다.
-형식은 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)를 따르고, [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다. 아직 git 태그가 없어 참조 링크는 커밋 범위를 사용합니다.
+형식은 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)를 따르고, [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다. 버전은 git 태그(v1.0.0+)로 관리합니다.
 
 ## [Unreleased]
 
@@ -147,8 +147,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - THE FILTER 체크리스트를 내장한 승격 이슈 폼 추가
 - 필러 페이지 owner 지정
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/5540d01...HEAD
-[1.3.0]: https://github.com/comeddy/pai-playbook/compare/3422743...5540d01
-[1.2.0]: https://github.com/comeddy/pai-playbook/compare/cd33298...3422743
-[1.1.0]: https://github.com/comeddy/pai-playbook/compare/ad996a8...cd33298
-[1.0.0]: https://github.com/comeddy/pai-playbook/commits/ad996a8
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/comeddy/pai-playbook/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/comeddy/pai-playbook/releases/tag/v1.0.0
