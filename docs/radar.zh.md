@@ -1,5 +1,5 @@
 ---
-ko_hash: a0371a51b08ec4fdde1085e51939e6ee9a061ec9
+ko_hash: bb84db51b89397a9f8cabf91729675792601da38
 ---
 # Radar — 队列 / 观察列表
 
@@ -60,12 +60,14 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 项目 | 标签 | 为何等待 | 晋升条件 |
 |---|---|---|---|
-| **AgiBot 累计第 1.5 万台 + Longcheer 产线部署** | 🟡 试点 | ⚠️"量产 1.5 万台"不准确 —— 实际为**累计交付第 1.5 万台（自有工厂）** + **Longcheer 一条产线部署 8 台 G2** `[3]`。6 天 99.99% 演示（64,828 次操作）属实但无独立验证；数据集许可证见 [pillar-1](pillar-1.md) | 独立生产力验证 + 产线扩展 |
-| **DSWAM**（双系统 World Action Foundation Model） | 🔵 Research | 2026-07 预印本，单一实验室。声称面向精细操作的双系统架构 `[4]` | peer-review + 复现 |
-| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 预印本，声称弥合致动器动力学差距（腿式机器人·人形）`[4]` | peer-review + 复现 |
+| **RLWRLD RLDX-1**（灵巧手优先的基础模型） | 🟡 Preview | 2026-05 开源发布，81 亿参数，宣称在 RoboCasa/LIBERO/SIMPLER 上达到 SOTA `[4]` —— 自报基准，无独立复现。AWS 训练栈（数据存储·分布式 GPU）映射具体，但尚无真实客户部署案例 | 独立基准复现 + 验证过的部署案例 |
+| **NEURA Robotics × AWS 战略合作** | ⚪ Hype·路线图 | 2026-04 宣布 `[4]`。将 Neuraverse 托管于 AWS + NEURA Gym·SageMaker 集成具体，但"Amazon 将评估"履行中心部署仍处计划阶段 —— 实际部署为 0 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
+| **TACO**（作为 VLA 后训练自校正器的 Tactile World Model） | 🔵 Research | 2026-07 预印本，单一实验室。声称触觉世界模型可自我校正 VLA 策略 `[4]` | peer-review + 复现 |
+| **MotionWAM**（面向实时人形 loco-manipulation 的 Foundation World Action Model） | 🔵 Research | 2026-06 预印本，单一实验室。声称实时性，但实机验证范围不明 `[4]` | peer-review + 复现 |
 | **Kairos**（Regret-aware World-Action Model 技术栈） | 🔵 Research | 2026-06 预印本，声称面向 Physical AI 的全栈方案 `[4]` | 一手确认 + 独立复现 |
+| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 预印本，声称弥合致动器动力学差距（腿式机器人·人形）`[4]` | peer-review + 复现 |
+| **AgiBot 累计第 1.5 万台 + Longcheer 产线部署** | 🟡 试点 | ⚠️"量产 1.5 万台"不准确 —— 实际为**累计交付第 1.5 万台（自有工厂）** + **Longcheer 一条产线部署 8 台 G2** `[3]`。6 天 99.99% 演示（64,828 次操作）属实但无独立验证；数据集许可证见 [pillar-1](pillar-1.md) | 独立生产力验证 + 产线扩展 |
 | **1X NEO 25-DoF 腱驱动手** | 🟡 预订 | 手部为实物 `[3]`，声称预订售罄（5 天 1 万台），但**经验证的客户交付为 0** —— 目前为 pre-order 阶段（$20k/$499 月），消费者出货"计划"于 2026 下半年。"正在发货"为营销措辞 | 实际交付验证 + 自主操作验证案例 |
-| **ULTRA**（统一多模态人形全身 loco-manipulation） | 🔵 Research | 2026-03 预印本，声称在不依赖预定义运动参考的情况下基于感知生成行为 `[4]` | peer-review + 复现 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 

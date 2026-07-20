@@ -1,5 +1,5 @@
 ---
-ko_hash: a0371a51b08ec4fdde1085e51939e6ee9a061ec9
+ko_hash: bb84db51b89397a9f8cabf91729675792601da38
 ---
 # Radar — Queue / Watchlist
 
@@ -60,12 +60,14 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 
 | Item | Label | Why waiting | Promotion criteria |
 |---|---|---|---|
-| **AgiBot 15,000th unit total + Longcheer line deployment** | 🟡 Pilot | ⚠️ "15,000 units mass-produced" is inaccurate — actually the **15,000th robot delivered overall (own factories)** + **8 G2 robots on one Longcheer line** `[3]`. The 6-day 99.99% demo (64,828 operations) is real but not independently validated; dataset licensing → [pillar-1](pillar-1.md) | Independent productivity validation + line expansion |
-| **DSWAM** (Dual-System World Action Foundation Model) | 🔵 Research | 2026-07 preprint, single lab. Claims a dual-system architecture for fine-grained manipulation `[4]` | peer review + reproduction |
-| **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 preprint, claims to close the actuator-dynamics gap (legged robots and humanoids) `[4]` | peer review + reproduction |
+| **RLWRLD RLDX-1** (dexterity-first foundation model) | 🟡 Preview | Open-sourced 2026-05, 8.1B params, claims SOTA on RoboCasa/LIBERO/SIMPLER `[4]` — self-reported benchmarks, no independent reproduction. AWS training-stack mapping (data storage, distributed GPU) is concrete, but no real customer deployment yet | Independent benchmark reproduction + validated deployment case |
+| **NEURA Robotics × AWS strategic collaboration** | ⚪ Hype/roadmap | Announced 2026-04 `[4]`. Hosting Neuraverse on AWS + NEURA Gym/SageMaker integration is concrete, but "Amazon will explore" fulfillment-center deployment is still a plan — 0 live deployments | Public case of actual AWS infra use + validated fulfillment-center deployment |
+| **TACO** (Tactile World Model as Self-Corrector for VLA post-training) | 🔵 Research | 2026-07 preprint, single lab. Claims a tactile world model that self-corrects VLA policies `[4]` | peer review + reproduction |
+| **MotionWAM** (foundation world-action model for real-time humanoid loco-manipulation) | 🔵 Research | 2026-06 preprint, single lab. Claims real-time capability, but scope of real-hardware validation unclear `[4]` | peer review + reproduction |
 | **Kairos** (regret-aware world-action model stack) | 🔵 Research | 2026-06 preprint, claims a full-stack Physical AI approach `[4]` | primary confirmation + independent reproduction |
+| **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 preprint, claims to close the actuator-dynamics gap (legged robots and humanoids) `[4]` | peer review + reproduction |
+| **AgiBot 15,000th unit total + Longcheer line deployment** | 🟡 Pilot | ⚠️ "15,000 units mass-produced" is inaccurate — actually the **15,000th robot delivered overall (own factories)** + **8 G2 robots on one Longcheer line** `[3]`. The 6-day 99.99% demo (64,828 operations) is real but not independently validated; dataset licensing → [pillar-1](pillar-1.md) | Independent productivity validation + line expansion |
 | **1X NEO 25-DoF tendon-driven hand** | 🟡 Pre-order | Hand is real `[3]`; claims pre-orders sold out (10k in 5 days) but **0 verified customer deliveries** — currently pre-order ($20k / $499-mo), consumer shipments "planned" for late 2026. "Shipping" wording is marketing | Verified deliveries + validated autonomous manipulation case |
-| **ULTRA** (unified multimodal humanoid whole-body loco-manipulation) | 🔵 Research | 2026-03 preprint, claims perception-driven behavior generation without predefined motion references `[4]` | peer review + reproduction |
 
 ## ⚰️ Retired — do not propose (kept for the record)
 

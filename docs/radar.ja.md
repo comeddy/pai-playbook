@@ -1,5 +1,5 @@
 ---
-ko_hash: a0371a51b08ec4fdde1085e51939e6ee9a061ec9
+ko_hash: bb84db51b89397a9f8cabf91729675792601da38
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -61,12 +61,14 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 項目 | ラベル | なぜ待機か | 昇格条件 |
 |---|---|---|---|
-| **AgiBot 累計 1.5 万号機 + Longcheer ライン配備** | 🟡 パイロット | ⚠️「1.5 万台量産」は不正確 —— 実際は**累計 1.5 万号機の納品（自社工場）** + **Longcheer の 1 ラインに G2 を 8 台配備** `[3]`。6 日間 99.99% デモ（64,828 回の作業）は事実だが独立検証なし；データセットのライセンスは [pillar-1](pillar-1.md) | 独立した生産性検証 + ライン拡大 |
-| **DSWAM**（デュアルシステム World Action Foundation Model） | 🔵 Research | 2026-07 プレプリント、単一ラボ。精密操作向けデュアルシステム構造を主張 `[4]` | peer-review + 再現 |
-| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 プレプリント、アクチュエータ動力学ギャップの解消を主張（脚式ロボット・ヒューマノイド）`[4]` | peer-review + 再現 |
+| **RLWRLD RLDX-1**（デクステリティ優先のファウンデーションモデル） | 🟡 Preview | 2026-05 オープンソース公開、81 億パラメータ、RoboCasa/LIBERO/SIMPLER で SOTA を主張 `[4]` —— 自社発表ベンチマークで独立再現なし。AWS 学習スタック（データ保存・分散 GPU）へのマッピングは具体的だが、実顧客への展開事例はまだない | 独立ベンチマーク再現 + 検証済みの展開事例 |
+| **NEURA Robotics × AWS 戦略的協業** | ⚪ Hype・ロードマップ | 2026-04 発表 `[4]`。Neuraverse の AWS ホスティング + NEURA Gym・SageMaker 連携は具体的だが、「Amazon が検討する」フルフィルメントセンター展開はまだ計画段階 —— 実展開は 0 | AWS インフラの実使用事例公開 + フルフィルメントセンター展開の検証 |
+| **TACO**（VLA 後処理の自己修正器としての Tactile World Model） | 🔵 Research | 2026-07 プレプリント、単一ラボ。触覚ワールドモデルが VLA ポリシーを自己修正すると主張 `[4]` | peer-review + 再現 |
+| **MotionWAM**（リアルタイム ヒューマノイド loco-manipulation 向け Foundation World Action Model） | 🔵 Research | 2026-06 プレプリント、単一ラボ。リアルタイム性を主張するが実機検証の範囲は不明 `[4]` | peer-review + 再現 |
 | **Kairos**（Regret-aware World-Action Model スタック） | 🔵 Research | 2026-06 プレプリント、Physical AI のフルスタックを主張 `[4]` | 一次確認 + 独立再現 |
+| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 プレプリント、アクチュエータ動力学ギャップの解消を主張（脚式ロボット・ヒューマノイド）`[4]` | peer-review + 再現 |
+| **AgiBot 累計 1.5 万号機 + Longcheer ライン配備** | 🟡 パイロット | ⚠️「1.5 万台量産」は不正確 —— 実際は**累計 1.5 万号機の納品（自社工場）** + **Longcheer の 1 ラインに G2 を 8 台配備** `[3]`。6 日間 99.99% デモ（64,828 回の作業）は事実だが独立検証なし；データセットのライセンスは [pillar-1](pillar-1.md) | 独立した生産性検証 + ライン拡大 |
 | **1X NEO 25-DoF テンドン駆動ハンド** | 🟡 予約販売 | ハンドは実物 `[3]`、予約完売（5 日で 1 万台）を主張するが**検証済みの顧客納品は 0** —— 現在は pre-order 段階（$20k/$499 月）、消費者向け出荷は 2026 年後半「予定」。「出荷中」の表現はマーケティング | 実納品の検証 + 自律マニピュレーション事例 |
-| **ULTRA**（統合マルチモーダル ヒューマノイド全身 loco-manipulation） | 🔵 Research | 2026-03 プレプリント、事前定義された動作参照なしで知覚駆動の行動生成を主張 `[4]` | peer-review + 再現 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 
