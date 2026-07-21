@@ -20,19 +20,19 @@
 ## 절차
 
 1. **스캔** (여러 각도, WebSearch 위주 — 헤드리스에서 alphaXiv MCP는 없을 수 있음):
-   - arXiv/논문: "vision-language-action / humanoid manipulation / sim-to-real / world action model 최신"
-   - 뉴스·기술: "Physical AI robotics latest news <이번달> · NVIDIA Isaac/GR00T/Cosmos release · AWS Physical AI blog"
+   - arXiv/논문: "vision-language-action / humanoid manipulation / sim-to-real / world action model / physical AI data(로봇 데이터 수집·데이터셋·데이터 파이프라인) 최신"
+   - 뉴스·기술: "Physical AI robotics latest news <이번달> · NVIDIA Isaac/GR00T/Cosmos release · AWS Physical AI blog · The Robot Report Physical AI 최신 · IEEE Spectrum Robotics 최신"
    - 경쟁·하드웨어: "humanoid robot foundation model announcement · Gemini/Figure/1X/Tesla 최신"
 2. **선별 + 라벨링**: THE FILTER로 거르고 성숙도 라벨·`[4]`·"왜 대기"·"승격 조건" 4열을 채운다. 기존 radar 항목과 dedup.
 3. **한국어 갱신**: `docs/radar.md`의 `## 🆕 최신 스캔 유입` 섹션 표를 **통째로 교체**(누적 아님 — 오래된 미검증 항목은 매 배치마다 재평가). 승격됐거나 폐기된 항목은 적절한 섹션으로 이동/제거.
 4. **다국어 동기화**: `translate-sync` 스킬 절차로 en/zh/ja 반영 + `ko_hash` 갱신 (`i18n/glossary.md` 준수).
-5. **게이트**: `python3 scripts/check_translation_sync.py`(비동기 0/27) + `mkdocs build --strict`(exit 0).
+5. **게이트**: `python3 scripts/check_translation_sync.py`(비동기 0/30) + `mkdocs build --strict`(exit 0).
 6. **커밋·푸시**: 커밋 메시지에 스캔 날짜·건수·주요 출처를 남긴다. `main` 푸시 → CI가 배포.
 
 ## 검증 명령
 
 ```bash
-python3 scripts/check_translation_sync.py            # 비동기 0/27 확인
+python3 scripts/check_translation_sync.py            # 비동기 0/30 확인
 mkdocs build --strict --site-dir /tmp/radar-scan     # exit 0 확인
 ```
 
