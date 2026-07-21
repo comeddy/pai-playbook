@@ -1,5 +1,5 @@
 ---
-ko_hash: bb84db51b89397a9f8cabf91729675792601da38
+ko_hash: 9be33fd9be739aa4ef7a81822f962963a7e8ed6f
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,20 +54,20 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 | **智能体物理安全标准**（RoboGuard 等） | 🔵 Research | ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **AgentCore Payments / Agent Registry（首尔）** | 🟡 Preview/未提供 | 首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-07 · 公开调研 —— 待一手验证）
+## 🆕 最新扫描流入（2026-07 · 一手验证完成 2026-07-21）
 
-<!-- 自动扫描（arXiv/网络）流入项。全部 🔵/⚪/🟡 未验证 —— 在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
+<!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
 | 项目 | 标签 | 为何等待 | 晋升条件 |
 |---|---|---|---|
-| **RLWRLD RLDX-1**（灵巧手优先的基础模型） | 🟡 Preview | 2026-05 开源发布，81 亿参数，宣称在 RoboCasa/LIBERO/SIMPLER 上达到 SOTA `[4]` —— 自报基准，无独立复现。AWS 训练栈（数据存储·分布式 GPU）映射具体，但尚无真实客户部署案例 | 独立基准复现 + 验证过的部署案例 |
-| **NEURA Robotics × AWS 战略合作** | ⚪ Hype·路线图 | 2026-04 宣布 `[4]`。将 Neuraverse 托管于 AWS + NEURA Gym·SageMaker 集成具体，但"Amazon 将评估"履行中心部署仍处计划阶段 —— 实际部署为 0 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
-| **TACO**（作为 VLA 后训练自校正器的 Tactile World Model） | 🔵 Research | 2026-07 预印本，单一实验室。声称触觉世界模型可自我校正 VLA 策略 `[4]` | peer-review + 复现 |
-| **MotionWAM**（面向实时人形 loco-manipulation 的 Foundation World Action Model） | 🔵 Research | 2026-06 预印本，单一实验室。声称实时性，但实机验证范围不明 `[4]` | peer-review + 复现 |
-| **Kairos**（Regret-aware World-Action Model 技术栈） | 🔵 Research | 2026-06 预印本，声称面向 Physical AI 的全栈方案 `[4]` | 一手确认 + 独立复现 |
-| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 2026-07 预印本，声称弥合致动器动力学差距（腿式机器人·人形）`[4]` | peer-review + 复现 |
-| **AgiBot 累计第 1.5 万台 + Longcheer 产线部署** | 🟡 试点 | ⚠️"量产 1.5 万台"不准确 —— 实际为**累计交付第 1.5 万台（自有工厂）** + **Longcheer 一条产线部署 8 台 G2** `[3]`。6 天 99.99% 演示（64,828 次操作）属实但无独立验证；数据集许可证见 [pillar-1](pillar-1.md) | 独立生产力验证 + 产线扩展 |
-| **1X NEO 25-DoF 腱驱动手** | 🟡 预订 | 手部为实物 `[3]`，声称预订售罄（5 天 1 万台），但**经验证的客户交付为 0** —— 目前为 pre-order 阶段（$20k/$499 月），消费者出货"计划"于 2026 下半年。"正在发货"为营销措辞 | 实际交付验证 + 自主操作验证案例 |
+| **RLWRLD RLDX-1**（灵巧手优先的基础模型） | 🟡 Preview | 权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER SOTA 为自报，无独立复现。⚠️ 未发现 AWS 关联（基于 NVIDIA 技术栈）—— 更正此前表述。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
+| **NEURA Robotics × AWS 战略合作** | ⚪ Hype·路线图 | 经 AWS 官方新闻稿确认，2026-04-21 `[1]` —— AWS 为 primary cloud，明确写入 Neuraverse 托管 + NEURA Gym·SageMaker 集成。但履行中心在原文中为"探索部署机会（explore）"阶段 —— 实际部署为 0 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
+| **TACO**（作为 VLA 后训练自校正器的 Tactile World Model） | 🔵 Research | 确认实存（arXiv 2607.02840，2026-07-03）`[1]` —— 4 家机构合作（更正"单一实验室"表述），Franka 实机 6 项任务绝对提升 +44%p。未经 peer-review | peer-review + 独立复现 |
+| **MotionWAM**（面向实时人形 loco-manipulation 的 Foundation World Action Model） | 🔵 Research | 确认实存（arXiv 2606.09215，2026-06-08）`[1]` —— 3 家机构合作（更正"单一实验室"表述），Unitree G1 实机 9 项任务 76.1%（较 GR00T-N1.7 绝对 +32%p）。未经 peer-review | peer-review + 独立复现 |
+| **Kairos**（Regret-aware Native World-Action Model 技术栈） | 🔵 Research | 确认实存（arXiv 2606.16533，2026-06-15）`[1]`，代码已公开。⚠️"全栈"为夸大 —— 无实机闭环验证（作者自认列为后续工作），仅限仿真与基准测试 | 实机闭环验证 + 独立复现 |
+| **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 确认实存（arXiv 2607.02205，2026-07-02）`[1]` —— 在 4 种实物硬件（含人形行走）上验证，摘要与原文一致（无需更正）。未经 peer-review | peer-review + 独立复现 |
+| **AgiBot 累计第 1.5 万台 + Longcheer 产线部署** | 🟡 试点 | 为累计**量产下线 1.5 万台**，第 15,000 台**交付至客户 Longcheer 工厂**（更正"自有工厂"表述）+ 一条质检产线部署 8 台 G2 `[3]`。6 天 99.99% 演示（作业 64,828 次·产量 17,625 件）属实，但为厂商控制环境，无独立验证；数据集许可证见 [pillar-1](pillar-1.md) | 独立生产力验证 + 产线扩展 |
+| **1X NEO 25-DoF 腱驱动手** | 🟡 预订 | 手部规格（25-DoF·腱驱动·触觉皮肤）经官方确认 `[3]`，"5 天售罄 1 万台"为 1X 自述、无独立验证。**经验证的消费者交付为 0**（$20k 或 $499/月，出货计划于 2026 下半年）—— 早期家庭部署为遥操作试点，自主率为 1X 自估 60~70% | 实际交付验证 + 自主操作验证案例 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 

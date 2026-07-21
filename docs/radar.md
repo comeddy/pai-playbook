@@ -51,20 +51,20 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 | **에이전트 물리안전 표준** (RoboGuard 등) | 🔵 Research | ISO는 물리만, LLM 의미 위험 표준 부재 | 표준화 진전 |
 | **AgentCore Payments / Agent Registry (서울)** | 🟡 Preview/미제공 | 서울 리전 미제공 (도쿄 Agent Registry ✅) | 서울 리전 확장 |
 
-## 🆕 최신 스캔 유입 (2026-07 · 공개 조사 — 1차 검증 대기)
+## 🆕 최신 스캔 유입 (2026-07 · 1차 검증 완료 2026-07-21)
 
-<!-- 자동 스캔(arXiv/웹) 유입분. 전부 🔵/⚪/🟡 미검증 — THE FILTER 통과 전까지 고객 제안 사용 금지. 정기 갱신은 scripts/radar_scan.md 참고. -->
+<!-- 자동 스캔(arXiv/웹) 유입분. 2026-07-21 1차 출처 검증 완료(검증 에이전트 4식, 공식 발표·arXiv 원문 대조) — 승격 0건, 정정 6건. THE FILTER 통과 전까지 고객 제안 사용 금지. 정기 갱신은 scripts/radar_scan.md 참고. -->
 
 | 항목 | 라벨 | 왜 대기인가 | 승격 조건 |
 |---|---|---|---|
-| **RLWRLD RLDX-1** (손 dexterity 파운데이션 모델) | 🟡 Preview | 2026-05 오픈소스 공개, 81억 파라미터, RoboCasa/LIBERO/SIMPLER SOTA 주장 `[4]` — 자체 발표 벤치마크, 독립 재현 없음. AWS 학습 스택(데이터 저장·분산 GPU) 매핑은 구체적이나 실고객 배포 사례는 없음 | 독립 벤치마크 재현 + 실배포 사례 |
-| **NEURA Robotics × AWS 전략적 협력** | ⚪ Hype·로드맵 | 2026-04 발표 `[4]`. Neuraverse를 AWS 호스팅 + NEURA Gym·SageMaker 연동은 구체적이나, "Amazon이 풀필먼트센터 배포를 검토할 것"은 계획 단계 — 실배포 0 | 실제 AWS 인프라 사용 사례 공개 + 풀필먼트 배포 검증 |
-| **TACO** (Tactile World Model as Self-Corrector, VLA 후처리) | 🔵 Research | 2026-07 프리프린트, 단일 랩. 촉각 월드모델로 VLA 정책을 스스로 교정한다는 주장 `[4]` | peer-review + 재현 |
-| **MotionWAM** (실시간 휴머노이드 loco-manipulation용 Foundation World Action Model) | 🔵 Research | 2026-06 프리프린트, 단일 랩. 실시간성 주장이나 실기 검증 범위 불명 `[4]` | peer-review + 재현 |
-| **Kairos** (Regret-aware World-Action Model 스택) | 🔵 Research | 2026-06 프리프린트, Physical AI 풀스택 주장 `[4]` | 1차 확인 + 독립 재현 |
-| **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 2026-07 프리프린트, 액추에이터 동역학 격차 해소 주장(보행 로봇·휴머노이드) `[4]` | peer-review + 재현 |
-| **AgiBot 통산 1.5만 호기 + Longcheer 라인 배치** | 🟡 파일럿 | ⚠️ "1.5만 대 양산"은 부정확 — 실제는 **통산 1.5만 호기 납품(자사 공장)** + Longcheer **1개 라인에 G2 8대** `[3]`. 6일 데모 99.99%(64,828회 작업)는 사실이나 독립 검증 없음; 데이터셋 라이선스는 [pillar-1](pillar-1.md) | 독립 생산성 검증 + 라인 확산 |
-| **1X NEO 25-DoF 텐던 구동 핸드** | 🟡 예약 판매 | 핸드는 실물 `[3]`, 예약 완판(5일 1만 대) 주장이나 **검증된 고객 인도 0** — 현재 pre-order 단계($20k/$499월), 소비자 출하는 2026 후반 "계획". "배송 중" 표현은 마케팅 | 실인도 검증 + 자율 매니퓰레이션 사례 |
+| **RLWRLD RLDX-1** (손 dexterity 파운데이션 모델) | 🟡 Preview | 가중치 공개는 사실이나 ⚠️ "오픈소스" 아님 — RLWRLD Model License v1.0(비상업·상업 배포 금지) `[3]`, 7~9B 변형군(주력 8.1B). RoboCasa/LIBERO/SIMPLER SOTA는 자체 발표, 독립 재현 없음. ⚠️ AWS 연계 근거 없음(NVIDIA 스택 기반) — 이전 표기 정정. 실고객 배포 0 | 독립 벤치마크 재현 + 실배포 사례 |
+| **NEURA Robotics × AWS 전략적 협력** | ⚪ Hype·로드맵 | 2026-04-21 AWS 공식 프레스 확인 `[1]` — AWS가 primary cloud, Neuraverse 호스팅 + NEURA Gym·SageMaker 연동 명시. 단 풀필먼트센터는 원문상 "배포 기회 탐색(explore)" 단계 — 실배포 0 | 실제 AWS 인프라 사용 사례 공개 + 풀필먼트 배포 검증 |
+| **TACO** (Tactile World Model as Self-Corrector, VLA 후처리) | 🔵 Research | 실존 확인(arXiv 2607.02840, 2026-07-03) `[1]` — 4개 기관 공동("단일 랩" 표기 정정), Franka 실기 6개 태스크 절대 +44%p. peer-review 미채택 | peer-review + 독립 재현 |
+| **MotionWAM** (실시간 휴머노이드 loco-manipulation용 Foundation World Action Model) | 🔵 Research | 실존 확인(arXiv 2606.09215, 2026-06-08) `[1]` — 3개 기관 공동("단일 랩" 표기 정정), Unitree G1 실기 9개 태스크 76.1%(GR00T-N1.7 대비 절대 +32%p). peer-review 미채택 | peer-review + 독립 재현 |
+| **Kairos** (Regret-aware Native World-Action Model 스택) | 🔵 Research | 실존 확인(arXiv 2606.16533, 2026-06-15) `[1]`, 코드 공개. ⚠️ "풀스택"은 과장 — 실기 폐루프 검증 없음(저자 스스로 향후 과제로 인정), 시뮬·벤치마크 한정 | 실기 폐루프 검증 + 독립 재현 |
+| **Actuator Reality Shaping** (zero-shot sim-to-real) | 🔵 Research | 실존 확인(arXiv 2607.02205, 2026-07-02) `[1]` — 실물 하드웨어 4종(휴머노이드 보행 포함) 검증, 요약·초록 일치(정정 없음). peer-review 미채택 | peer-review + 독립 재현 |
+| **AgiBot 통산 1.5만 호기 + Longcheer 라인 배치** | 🟡 파일럿 | 누계 **양산 하선 1.5만 대**이며 15,000호기는 **고객 Longcheer 공장에 납품**("자사 공장" 표기 정정) + 품질검사 라인 1개에 G2 8대 `[3]`. 6일 데모 99.99%(작업 64,828회·생산 17,625개)는 사실이나 벤더 통제 환경, 독립 검증 없음; 데이터셋 라이선스는 [pillar-1](pillar-1.md) | 독립 생산성 검증 + 라인 확산 |
+| **1X NEO 25-DoF 텐던 구동 핸드** | 🟡 예약 판매 | 핸드 사양(25-DoF·텐던·촉각 스킨) 공식 확인 `[3]`, "5일 1만 대 완판"은 1X 자체 주장·독립 검증 없음. **검증된 소비자 인도 0**($20k 또는 $499/월, 출하 2026 후반 계획) — 초기 가정 배치는 텔레옵 파일럿, 자율률은 1X 추정 60~70% | 실인도 검증 + 자율 매니퓰레이션 사례 |
 
 ## ⚰️ 폐기됨 — 제안 금지 (기록 보존용)
 
