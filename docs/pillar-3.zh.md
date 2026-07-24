@@ -1,5 +1,5 @@
 ---
-ko_hash: 225618b4826e1ced38143d140f58f5f4f5cc5fa0
+ko_hash: 141fc9713045500908ccc7f56840855626a7cba5
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -58,7 +58,7 @@ graph LR
 
 **➡️ 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
 
-**🔗 相关资产**: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 研讨会（Batch MNP 无头 RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E 研讨会（韩语 — Isaac Lab RL + Batch 轨道）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [（内部）AWS·NVIDIA 机器人参考架构](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) —— 需 AWS 内网 · [Physical AI Scaffolding Kit — Isaac Sim 工作站（aws-samples — 在 EC2 上构建 Isaac Sim/Lab 开发环境）](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit)
+**🔗 相关资产**: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 研讨会（Batch MNP 无头 RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E 研讨会（韩语 — Isaac Lab RL + Batch 轨道）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [（内部）AWS·NVIDIA 机器人参考架构](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) —— 需 AWS 内网 · [Physical AI Scaffolding Kit — Isaac Sim 工作站（aws-samples — 在 EC2 上构建 Isaac Sim/Lab 开发环境）](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) · [VLA Simulator — 1-Click VLA 仿真 on AWS（aws-samples — 通过 CDK 一键部署到 EC2 GPU（g5/g6/g6e），在 LIBERO/RoboCasa/SimplerEnv/Isaac Lab 上演示·基准测试 GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1，结果以 MP4→S3+SNS 自动送达并自动终止 EC2。逐策略实测成功率·验证日期均有记录）](https://github.com/aws-samples/sample-vla-simulator-on-aws)
 
 <details markdown="1"><summary>🔄 易变数据（版本 —— 2026-07 确认，部分年份需在 GitHub 再确认）</summary>
 

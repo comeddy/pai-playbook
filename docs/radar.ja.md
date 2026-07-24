@@ -1,5 +1,5 @@
 ---
-ko_hash: 9be33fd9be739aa4ef7a81822f962963a7e8ed6f
+ko_hash: f92bea08e2a43cbb79d9595658208235f069ed52
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -61,7 +61,7 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 項目 | ラベル | なぜ待機か | 昇格条件 |
 |---|---|---|---|
-| **RLWRLD RLDX-1**（デクステリティ優先のファウンデーションモデル） | 🟡 Preview | 重み公開は事実だが ⚠️「オープンソース」ではない —— RLWRLD Model License v1.0（非商用・商用配布禁止）`[3]`、7~9B のバリアント群（主力 8.1B）。RoboCasa/LIBERO/SIMPLER の SOTA は自社発表で独立再現なし。⚠️ AWS との関連の根拠なし（NVIDIA スタックベース）—— 従来表記を訂正。実顧客への展開 0 | 独立ベンチマーク再現 + 検証済みの展開事例 |
+| **RLWRLD RLDX-1**（デクステリティ優先のファウンデーションモデル） | 🟡 Preview | 重み公開は事実だが ⚠️「オープンソース」ではない —— RLWRLD Model License v1.0（非商用・商用配布禁止）`[3]`、7~9B のバリアント群（主力 8.1B）。RoboCasa/LIBERO/SIMPLER の SOTA は自社発表で独立再現なし（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) が EC2 上で n=5 スモーク実測を提供 — 完全なベンチマーク再現ではありません）。AWS との関連はシミュレーションベンチマーキングに限定（非商用ライセンスが明示的に許可する用途、商用ポジショニング不可）—— 「関連の根拠なし」表記を更新（2026-07）。実顧客への展開 0 | 独立ベンチマーク再現 + 検証済みの展開事例 |
 | **NEURA Robotics × AWS 戦略的協業** | ⚪ Hype・ロードマップ | AWS 公式プレスで確認、2026-04-21 `[1]` —— AWS が primary cloud、Neuraverse ホスティング + NEURA Gym・SageMaker 連携を明記。ただしフルフィルメントセンターは原文で「展開機会を探る（explore）」段階 —— 実展開は 0 | AWS インフラの実使用事例公開 + フルフィルメントセンター展開の検証 |
 | **TACO**（VLA 後処理の自己修正器としての Tactile World Model） | 🔵 Research | 実在確認（arXiv 2607.02840、2026-07-03）`[1]` —— 4 機関の共同研究（「単一ラボ」表記を訂正）、Franka 実機 6 タスクで絶対 +44%p。peer-review 未採択 | peer-review + 独立再現 |
 | **MotionWAM**（リアルタイム ヒューマノイド loco-manipulation 向け Foundation World Action Model） | 🔵 Research | 実在確認（arXiv 2606.09215、2026-06-08）`[1]` —— 3 機関の共同研究（「単一ラボ」表記を訂正）、Unitree G1 実機 9 タスクで 76.1%（GR00T-N1.7 比で絶対 +32%p）。peer-review 未採択 | peer-review + 独立再現 |

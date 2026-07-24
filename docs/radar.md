@@ -57,7 +57,7 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 
 | 항목 | 라벨 | 왜 대기인가 | 승격 조건 |
 |---|---|---|---|
-| **RLWRLD RLDX-1** (손 dexterity 파운데이션 모델) | 🟡 Preview | 가중치 공개는 사실이나 ⚠️ "오픈소스" 아님 — RLWRLD Model License v1.0(비상업·상업 배포 금지) `[3]`, 7~9B 변형군(주력 8.1B). RoboCasa/LIBERO/SIMPLER SOTA는 자체 발표, 독립 재현 없음. ⚠️ AWS 연계 근거 없음(NVIDIA 스택 기반) — 이전 표기 정정. 실고객 배포 0 | 독립 벤치마크 재현 + 실배포 사례 |
+| **RLWRLD RLDX-1** (손 dexterity 파운데이션 모델) | 🟡 Preview | 가중치 공개는 사실이나 ⚠️ "오픈소스" 아님 — RLWRLD Model License v1.0(비상업·상업 배포 금지) `[3]`, 7~9B 변형군(주력 8.1B). RoboCasa/LIBERO/SIMPLER SOTA는 자체 발표, 독립 재현 없음([aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws)가 EC2에서 n=5 스모크 실측 제공 — 완전한 벤치 재현은 아님). AWS 연계는 시뮬 벤치마킹 한정(비상업 라이선스가 명시 허용하는 용도, 상업 포지셔닝 불가) — "연계 근거 없음" 표기 갱신(2026-07). 실고객 배포 0 | 독립 벤치마크 재현 + 실배포 사례 |
 | **NEURA Robotics × AWS 전략적 협력** | ⚪ Hype·로드맵 | 2026-04-21 AWS 공식 프레스 확인 `[1]` — AWS가 primary cloud, Neuraverse 호스팅 + NEURA Gym·SageMaker 연동 명시. 단 풀필먼트센터는 원문상 "배포 기회 탐색(explore)" 단계 — 실배포 0 | 실제 AWS 인프라 사용 사례 공개 + 풀필먼트 배포 검증 |
 | **TACO** (Tactile World Model as Self-Corrector, VLA 후처리) | 🔵 Research | 실존 확인(arXiv 2607.02840, 2026-07-03) `[1]` — 4개 기관 공동("단일 랩" 표기 정정), Franka 실기 6개 태스크 절대 +44%p. peer-review 미채택 | peer-review + 독립 재현 |
 | **MotionWAM** (실시간 휴머노이드 loco-manipulation용 Foundation World Action Model) | 🔵 Research | 실존 확인(arXiv 2606.09215, 2026-06-08) `[1]` — 3개 기관 공동("단일 랩" 표기 정정), Unitree G1 실기 9개 태스크 76.1%(GR00T-N1.7 대비 절대 +32%p). peer-review 미채택 | peer-review + 독립 재현 |

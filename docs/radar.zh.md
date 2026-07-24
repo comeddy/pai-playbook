@@ -1,5 +1,5 @@
 ---
-ko_hash: 9be33fd9be739aa4ef7a81822f962963a7e8ed6f
+ko_hash: f92bea08e2a43cbb79d9595658208235f069ed52
 ---
 # Radar — 队列 / 观察列表
 
@@ -60,7 +60,7 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 
 | 项目 | 标签 | 为何等待 | 晋升条件 |
 |---|---|---|---|
-| **RLWRLD RLDX-1**（灵巧手优先的基础模型） | 🟡 Preview | 权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER SOTA 为自报，无独立复现。⚠️ 未发现 AWS 关联（基于 NVIDIA 技术栈）—— 更正此前表述。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
+| **RLWRLD RLDX-1**（灵巧手优先的基础模型） | 🟡 Preview | 权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER SOTA 为自报，无独立复现（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) 在 EC2 上提供 n=5 冒烟实测 —— 并非完整基准复现）。AWS 关联仅限仿真基准测试（非商业许可证明确允许的用途，不可用于商业定位）—— "未发现关联"表述已更新（2026-07）。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
 | **NEURA Robotics × AWS 战略合作** | ⚪ Hype·路线图 | 经 AWS 官方新闻稿确认，2026-04-21 `[1]` —— AWS 为 primary cloud，明确写入 Neuraverse 托管 + NEURA Gym·SageMaker 集成。但履行中心在原文中为"探索部署机会（explore）"阶段 —— 实际部署为 0 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
 | **TACO**（作为 VLA 后训练自校正器的 Tactile World Model） | 🔵 Research | 确认实存（arXiv 2607.02840，2026-07-03）`[1]` —— 4 家机构合作（更正"单一实验室"表述），Franka 实机 6 项任务绝对提升 +44%p。未经 peer-review | peer-review + 独立复现 |
 | **MotionWAM**（面向实时人形 loco-manipulation 的 Foundation World Action Model） | 🔵 Research | 确认实存（arXiv 2606.09215，2026-06-08）`[1]` —— 3 家机构合作（更正"单一实验室"表述），Unitree G1 实机 9 项任务 76.1%（较 GR00T-N1.7 绝对 +32%p）。未经 peer-review | peer-review + 独立复现 |

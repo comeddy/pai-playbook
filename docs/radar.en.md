@@ -1,5 +1,5 @@
 ---
-ko_hash: 9be33fd9be739aa4ef7a81822f962963a7e8ed6f
+ko_hash: f92bea08e2a43cbb79d9595658208235f069ed52
 ---
 # Radar — Queue / Watchlist
 
@@ -60,7 +60,7 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 
 | Item | Label | Why waiting | Promotion criteria |
 |---|---|---|---|
-| **RLWRLD RLDX-1** (dexterity-first foundation model) | 🟡 Preview | Weight release is real but ⚠️ not open source — RLWRLD Model License v1.0 (non-commercial, commercial distribution prohibited) `[3]`; a 7–9B family (flagship 8.1B). RoboCasa/LIBERO/SIMPLER SOTA is self-reported, no independent reproduction. ⚠️ No AWS connection found (built on the NVIDIA stack) — earlier wording corrected. 0 real customer deployments | Independent benchmark reproduction + validated deployment case |
+| **RLWRLD RLDX-1** (dexterity-first foundation model) | 🟡 Preview | Weight release is real but ⚠️ not open source — RLWRLD Model License v1.0 (non-commercial, commercial distribution prohibited) `[3]`; a 7–9B family (flagship 8.1B). RoboCasa/LIBERO/SIMPLER SOTA is self-reported, no independent reproduction ([aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) provides measured n=5 smoke runs on EC2 — not a full benchmark reproduction). AWS connection is limited to simulation benchmarking (a use the non-commercial license explicitly permits; no commercial positioning) — "no connection" wording updated (2026-07). 0 real customer deployments | Independent benchmark reproduction + validated deployment case |
 | **NEURA Robotics × AWS strategic collaboration** | ⚪ Hype/roadmap | Confirmed via official AWS press release, 2026-04-21 `[1]` — AWS as primary cloud, Neuraverse hosting + NEURA Gym/SageMaker integration stated explicitly. But the fulfillment-center wording is "explore opportunities to deploy" — 0 live deployments | Public case of actual AWS infra use + validated fulfillment-center deployment |
 | **TACO** (Tactile World Model as Self-Corrector for VLA post-training) | 🔵 Research | Existence confirmed (arXiv 2607.02840, 2026-07-03) `[1]` — 4-institution collaboration ("single lab" corrected), real-robot Franka experiments on 6 tasks, +44%p absolute. Not peer-reviewed | peer review + independent reproduction |
 | **MotionWAM** (foundation world-action model for real-time humanoid loco-manipulation) | 🔵 Research | Existence confirmed (arXiv 2606.09215, 2026-06-08) `[1]` — 3-institution collaboration ("single lab" corrected), real Unitree G1 experiments on 9 tasks at 76.1% (+32%p absolute over GR00T-N1.7). Not peer-reviewed | peer review + independent reproduction |
