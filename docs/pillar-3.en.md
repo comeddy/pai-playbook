@@ -1,5 +1,5 @@
 ---
-ko_hash: 6969cbda4ee6a2b0e9bced1fe9665d5bdd6fcd89
+ko_hash: 225618b4826e1ced38143d140f58f5f4f5cc5fa0
 ---
 # Pillar 3 — Simulation
 
@@ -58,7 +58,7 @@ graph LR
 
 **➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/comeddy/pai-sim-isaaclab)** (Terraform provisions g6e → Isaac Lab quadruped PPO headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
-**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E workshop (Korean — Isaac Lab RL + Batch track)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [(internal) AWS·NVIDIA robotics reference architecture](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS internal network required
+**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E workshop (Korean — Isaac Lab RL + Batch track)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [(internal) AWS·NVIDIA robotics reference architecture](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS internal network required · [Physical AI Scaffolding Kit — Isaac Sim workstation (aws-samples — Isaac Sim/Lab dev environment on EC2)](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit)
 
 <details markdown="1"><summary>🔄 Volatile data (versions — checked 2026-07, some years to be re-confirmed on GitHub)</summary>
 

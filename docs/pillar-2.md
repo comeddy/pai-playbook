@@ -142,7 +142,7 @@ graph TD
 
 **➡️ 다음 액션**: **AWS 공식 "Isaac Lab on SageMaker" 블로그를 그대로 워크숍 자산으로 활용**(재현 가능한 유일한 AWS 로보틱스 학습 레퍼런스). GPU 가용성 이슈면 Capacity Blocks/Flexible Training Plans로 연결.
 
-**🔗 관련 자산**: [pillar-3 시뮬레이션(Isaac Lab)](pillar-3.md) · [decisions: GPU 확보](decisions.md) · [Physical AI E2E 워크숍 (한국어 — GR00T VLA 파인튜닝 + SageMaker 트랙)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop)
+**🔗 관련 자산**: [pillar-3 시뮬레이션(Isaac Lab)](pillar-3.md) · [decisions: GPU 확보](decisions.md) · [Physical AI E2E 워크숍 (한국어 — GR00T VLA 파인튜닝 + SageMaker 트랙)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [Physical AI Scaffolding Kit (aws-samples — HyperPod Slurm 클러스터 + π0·GR00T·Isaac Lab Newton RL 학습 샘플, 다국어 README(ko·ja·en). AWS Japan Physical AI 개발 지원 프로그램 공식 자산)](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit)
 
 ---
 

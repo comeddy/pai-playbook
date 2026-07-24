@@ -1,5 +1,5 @@
 ---
-ko_hash: d780f1925becf31c2552c3f4a6dec5c39a73910a
+ko_hash: 67122774be19f9e847db1fd6168c95934c98e77a
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -48,7 +48,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **➡️ 次のアクション**: 韓国顧客にまず **「AgentCore はソウルリージョン GA — データレジデンシー問題なし」** を確認させ（古い「ソウル非対応」情報を訂正）、ロボットスキルを Gateway ツールとして登録する PoC を提案します。価格は「ハーネス無料、リソースのみ課金」で安心させます。
 
-**🔗 関連アセット**: [pillar-4 エッジ](pillar-4.md) · [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （社内 AgentCore ワークショップ — 要確認 ⚠️）
+**🔗 関連アセット**: [pillar-4 エッジ](pillar-4.md) · [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （社内 AgentCore ワークショップ — 要確認 ⚠️） · [AWS Physical AI Toolchain（aws-samples — 4 ピラー・フライホイールのリファレンスアーキテクチャ。⚠️ 現在 Available なのは NVIDIA OSMO 6.3 on EKS オーケストレーションのみ、Cosmos·Isaac Lab·GR00T·Strands+AgentCore エージェンティックレイヤーは Planned）](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) · [Self-improving Physical AI（aws-samples — Bedrock エージェントが Isaac Sim と実機 SO-ARM101/XGO2/Zumi を IoT 経由で制御、エージェントメモリで sim-to-real 反復学習）](https://github.com/aws-samples/sample-self-improving-physical-AI)
 
 <details markdown="1"><summary>🔄 揮発性データ（コンポーネント・リージョン・価格 — 2026-07 確認）</summary>
 

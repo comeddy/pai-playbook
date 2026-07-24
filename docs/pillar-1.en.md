@@ -1,5 +1,5 @@
 ---
-ko_hash: 13f1742689dff5a80bee92fcd8991719da8dfdef
+ko_hash: 4c3e8bc89f1af826694331502c1eff9c68a7dc76
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -218,7 +218,7 @@ graph LR
 
 **➡️ Next action**: if the customer is collecting teleoperation data, **standardize the "collection stream → S3 → auto-label → training queue" pipeline** for them. Be cautious about recommending open HW itself (state it is research-only).
 
-**🔗 Related assets**: [pillar-4 edge deployment](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot teleop data collection on Greengrass sample (aws-samples — SO-ARM101→LeRobot v3→S3)](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass)
+**🔗 Related assets**: [pillar-4 edge deployment](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot teleop data collection on Greengrass sample (aws-samples — SO-ARM101→LeRobot v3→S3)](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI data collection app (aws-samples — field smartphone video+IMU→S3 offline-queue upload, ⚠️ early-stage sample)](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
 
 ---
 

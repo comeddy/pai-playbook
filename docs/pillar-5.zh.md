@@ -1,5 +1,5 @@
 ---
-ko_hash: d780f1925becf31c2552c3f4a6dec5c39a73910a
+ko_hash: 67122774be19f9e847db1fd6168c95934c98e77a
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -47,7 +47,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **➡️ 后续行动**: 先让韩国客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
 
-**🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （内部 AgentCore 研讨会 —— 需确认 ⚠️）
+**🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （内部 AgentCore 研讨会 —— 需确认 ⚠️） · [AWS Physical AI Toolchain（aws-samples — 4 支柱飞轮参考架构。⚠️ 目前仅 NVIDIA OSMO 6.3 on EKS 编排为 Available，Cosmos·Isaac Lab·GR00T·Strands+AgentCore 智能体层均为 Planned）](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) · [Self-improving Physical AI（aws-samples — Bedrock 智能体通过 IoT 控制 Isaac Sim 与实体机器人 SO-ARM101/XGO2/Zumi，借助智能体记忆进行 sim-to-real 迭代学习）](https://github.com/aws-samples/sample-self-improving-physical-AI)
 
 <details markdown="1"><summary>🔄 易变数据（组件·区域·价格 —— 2026-07 确认）</summary>
 

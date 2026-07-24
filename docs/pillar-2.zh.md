@@ -1,5 +1,5 @@
 ---
-ko_hash: 0ae0c6b9693c7404456d88486dcea3b28b2ef687
+ko_hash: 662854767e685e44ab96aa88d6a562f3572f4ede
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -145,7 +145,7 @@ graph TD
 
 **➡️ 后续行动**: **直接把 AWS 官方"Isaac Lab on SageMaker"博客当作研讨会资产用**（唯一可复现的 AWS 机器人训练参考）。GPU 可用性有问题则连接到 Capacity Blocks/Flexible Training Plans。
 
-**🔗 相关资产**: [pillar-3 仿真(Isaac Lab)](pillar-3.md) · [decisions: GPU 获取](decisions.md) · [Physical AI E2E 研讨会（韩语 — GR00T VLA 微调 + SageMaker 轨道）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop)
+**🔗 相关资产**: [pillar-3 仿真(Isaac Lab)](pillar-3.md) · [decisions: GPU 获取](decisions.md) · [Physical AI E2E 研讨会（韩语 — GR00T VLA 微调 + SageMaker 轨道）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [Physical AI Scaffolding Kit（aws-samples — HyperPod Slurm 集群 + π0·GR00T·Isaac Lab Newton RL 训练示例，多语言 README（韩·日·英）。AWS Japan Physical AI 开发支持计划官方资产）](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit)
 
 ---
 

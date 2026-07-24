@@ -1,5 +1,5 @@
 ---
-ko_hash: 6969cbda4ee6a2b0e9bced1fe9665d5bdd6fcd89
+ko_hash: 225618b4826e1ced38143d140f58f5f4f5cc5fa0
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -59,7 +59,7 @@ graph LR
 
 **➡️ 次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に、続いて **[pai-sim-isaaclab エンドツーエンドハンズオン](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform で g6e をプロビジョニング → Isaac Lab 四足歩行 PPO ヘッドレス学習 → ポリシー export、約2時間/$12）でヘッドレス学習まで接続。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
 
-**🔗 関連資産**: [pillar-2 学習スタック](pillar-2.md) · [pillar-1 合成データ](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS ワークショップ（Batch MNP ヘッドレス RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E ワークショップ（韓国語 — Isaac Lab RL + Batch トラック）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [（社内）AWS·NVIDIA ロボティクスリファレンスアーキテクチャ](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 社内ネットワークが必要
+**🔗 関連資産**: [pillar-2 学習スタック](pillar-2.md) · [pillar-1 合成データ](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS ワークショップ（Batch MNP ヘッドレス RL）](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E ワークショップ（韓国語 — Isaac Lab RL + Batch トラック）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [（社内）AWS·NVIDIA ロボティクスリファレンスアーキテクチャ](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 社内ネットワークが必要 · [Physical AI Scaffolding Kit — Isaac Sim ワークステーション（aws-samples — EC2 上に Isaac Sim/Lab 開発環境を構築）](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit)
 
 <details markdown="1"><summary>🔄 揮発性データ（バージョン —— 2026-07 確認、一部の年は GitHub で再確認が必要）</summary>
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 13f1742689dff5a80bee92fcd8991719da8dfdef
+ko_hash: 4c3e8bc89f1af826694331502c1eff9c68a7dc76
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -218,7 +218,7 @@ graph LR
 
 **➡️ 后续行动**: 若客户正在收集遥操作数据，则**为其标准化"采集流 → S3 → 自动标注 → 训练队列"管道**。谨慎推荐开放 HW 本身（明确标注 research-only）。
 
-**🔗 相关资产**: [pillar-4 边缘部署](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot 遥操作数据采集 on Greengrass 示例（aws-samples — SO-ARM101→LeRobot v3→S3）](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass)
+**🔗 相关资产**: [pillar-4 边缘部署](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot 遥操作数据采集 on Greengrass 示例（aws-samples — SO-ARM101→LeRobot v3→S3）](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI 数据采集应用（aws-samples — 现场智能手机视频+IMU→S3 离线队列上传，⚠️ 早期示例）](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
 
 ---
 

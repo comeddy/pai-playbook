@@ -215,7 +215,7 @@ graph LR
 
 **➡️ 다음 액션**: 고객이 텔레옵 데이터를 모으고 있다면 **"수집 스트림 → S3 → 자동 라벨 → 학습 큐" 파이프라인을 표준화**해 주라. 오픈 HW 자체 추천은 신중히(research-only 명시).
 
-**🔗 관련 자산**: [pillar-4 엣지 배포](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot 텔레옵 수집 on Greengrass 샘플 (aws-samples — SO-ARM101→LeRobot v3→S3)](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass)
+**🔗 관련 자산**: [pillar-4 엣지 배포](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot 텔레옵 수집 on Greengrass 샘플 (aws-samples — SO-ARM101→LeRobot v3→S3)](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI 데이터 수집 앱 (aws-samples — 현장 스마트폰 영상+IMU→S3 오프라인 큐 업로드, ⚠️ 초기 샘플)](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
 
 ---
 

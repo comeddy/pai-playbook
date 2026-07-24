@@ -1,5 +1,5 @@
 ---
-ko_hash: 13f1742689dff5a80bee92fcd8991719da8dfdef
+ko_hash: 4c3e8bc89f1af826694331502c1eff9c68a7dc76
 ---
 # Pillar 1 — データ収集 & 処理 (Data Collection & Processing)
 
@@ -219,7 +219,7 @@ graph LR
 
 **➡️ 次のアクション**: 顧客がテレオペレーションデータを集めているなら **「収集ストリーム → S3 → 自動ラベル → 学習キュー」パイプラインを標準化** してあげよ。オープン HW 自体の推奨は慎重に（research-only を明示）。
 
-**🔗 関連資産**: [pillar-4 エッジデプロイ](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot テレオペ収集 on Greengrass サンプル（aws-samples — SO-ARM101→LeRobot v3→S3）](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass)
+**🔗 関連資産**: [pillar-4 エッジデプロイ](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot テレオペ収集 on Greengrass サンプル（aws-samples — SO-ARM101→LeRobot v3→S3）](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI データ収集アプリ（aws-samples — 現場スマートフォン映像+IMU→S3 オフラインキューアップロード、⚠️ 初期サンプル）](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
 
 ---
 
