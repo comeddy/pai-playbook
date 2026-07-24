@@ -14,6 +14,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Register 8 verified AWS official Physical AI repos (7 aws-samples + 1 awslabs) as related assets across pillars, each with maturity caveats, in all four languages: AWS Physical AI Toolchain (OSMO on EKS) and Self-improving Physical AI and Agentic AI Robot (pillar 5), Physical AI Scaffolding Kit (pillars 2-3), Embodied AI Platform (pillar 2), VLA Simulator — 1-click benchmarking of 7 VLA models on EC2 (pillar 3), Android PAI data collector app and VAMS visual asset management (pillar 1)
+
+### Changed
+
+- Update the Radar RLDX-1 entry: replace "no AWS connection found" with a simulation-benchmarking-scoped connection (the aws-samples VLA Simulator runs RLDX-1 on EC2 within its non-commercial license; no commercial positioning)
+- Record the 2026-07-20 weekly scan intake in the Radar (8 items) and its primary-source verification results (0 promoted, 6 corrected), in all four languages
+- Expand the weekly scan runbook scope: add physical AI data (robot data collection and datasets) to the arXiv query, and The Robot Report and IEEE Spectrum Robotics to the news sources
+
 ## [1.4.0] - 2026-07-19
 
 ### Added
@@ -98,6 +108,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 형식은 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)를 따르고, [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다. 버전은 git 태그(v1.0.0+)로 관리합니다.
 
 ## [Unreleased]
+
+### Added
+
+- 검증된 AWS 공식 Physical AI 리포 8종(aws-samples 7 + awslabs 1)을 필러별 관련 자산으로 등재, 각각 성숙도 캐비앗 명시, 4개 언어 반영: AWS Physical AI Toolchain(OSMO on EKS)·Self-improving Physical AI·Agentic AI Robot(pillar 5), Physical AI Scaffolding Kit(pillar 2~3), Embodied AI Platform(pillar 2), VLA Simulator — 7개 VLA 모델 원클릭 EC2 벤치마킹(pillar 3), Android PAI 데이터 수집 앱·VAMS 시각 자산 관리(pillar 1)
+
+### Changed
+
+- Radar RLDX-1 항목 갱신: "AWS 연계 근거 없음" 표기를 시뮬레이션 벤치마킹 한정 연계로 교체(aws-samples VLA Simulator가 비상업 라이선스 허용 범위 내에서 RLDX-1을 EC2에서 구동, 상업 포지셔닝 불가)
+- Radar에 2026-07-20 주간 스캔 유입(8건)과 1차 출처 검증 결과(승격 0건, 정정 6건) 기록, 4개 언어 반영
+- 주간 스캔 런북 범위 확장: arXiv 쿼리에 physical AI data(로봇 데이터 수집·데이터셋) 추가, 뉴스 소스에 The Robot Report·IEEE Spectrum Robotics 추가
 
 ## [1.4.0] - 2026-07-19
 
