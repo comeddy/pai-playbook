@@ -1,5 +1,5 @@
 ---
-ko_hash: 71046738f5f1fb2be867c800b8d2a02d66a812c7
+ko_hash: 2d2e77c8b849d3bc85b542f1f1ff0f2787d48bf4
 ---
 # Guide — How This Playbook Works
 
@@ -47,7 +47,7 @@ Primary-source verification of intake items (official announcements, paper origi
 
 ## ⑤ Automated freshness monitoring
 
-Published items age too. Each page has a volatility grade — high 1 month / medium 3 months / low 6 months — and if it exceeds the threshold without an update, a **"⏳ review needed" badge is automatically injected** into that page (across all 4 languages) at deploy time. A redeploy runs every week, so the badge stays current even without a push. If you see the badge, that page is awaiting re-review.
+Published items age too. Each page has a volatility grade — high 1 month / medium 3 months / low 6 months — and if it exceeds the threshold without an update, a **"⏳ review needed" badge is automatically injected** into that page (across all 4 languages) at deploy time. A redeploy runs every day, so the badge stays current even without a push. If you see the badge, that page is awaiting re-review.
 
 ## ⑥ 4-language sync
 

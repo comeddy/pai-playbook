@@ -1,5 +1,5 @@
 ---
-ko_hash: 30e0d35adaa8cc50c818c3cd9bc0749926010f03
+ko_hash: 8b28a766879d7530df4f5b63a6c21053baec478a
 ---
 # Maintenance — 所有权 · 更新规则 · 晋升管道
 
@@ -52,7 +52,7 @@ _owner: {名字} · 验证: {名字, 名字…} · updated: {YYYY-MM} · volatil
 
 > 易变性为'高'的条目(pillar-2/3/5, radar) 采用更短周期。尤其是 **AgentCore 区域·功能、模型许可证、EC2 实例 GA** 变化很快。
 
-**⚙️ 已自动化**: 徽章不手动添加。CI(`scripts/check_staleness.py`) 在**构建前自动注入**，且**每周一 cron 重新部署**即使不推送也会刷新徽章。若页面的 `updated`/`volatility` 元数据缺失，构建会失败 —— 元数据就是契约。
+**⚙️ 已自动化**: 徽章不手动添加。CI(`scripts/check_staleness.py`) 在**构建前自动注入**，且**每日 00:00 UTC cron 重新部署**即使不推送也会刷新徽章。若页面的 `updated`/`volatility` 元数据缺失，构建会失败 —— 元数据就是契约。
 
 ---
 

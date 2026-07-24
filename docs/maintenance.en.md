@@ -1,5 +1,5 @@
 ---
-ko_hash: 30e0d35adaa8cc50c818c3cd9bc0749926010f03
+ko_hash: 8b28a766879d7530df4f5b63a6c21053baec478a
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -52,7 +52,7 @@ When `updated` exceeds the threshold number of months, a **⏳ review needed** b
 
 > High-volatility items (pillar-2/3/5, radar) get a shorter cadence. In particular, **AgentCore regions/features, model licenses, and EC2 instance GA** change quickly.
 
-**⚙️ Automated**: badges are not placed manually. CI (`scripts/check_staleness.py`) **injects them automatically just before the build**, and a **weekly Monday cron redeploy** refreshes the badges without any push. If a page's `updated`/`volatility` metadata is missing, the build fails — the metadata is the contract.
+**⚙️ Automated**: badges are not placed manually. CI (`scripts/check_staleness.py`) **injects them automatically just before the build**, and a **daily 00:00 UTC cron redeploy** refreshes the badges without any push. If a page's `updated`/`volatility` metadata is missing, the build fails — the metadata is the contract.
 
 ---
 
