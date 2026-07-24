@@ -97,7 +97,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 **➡️ 다음 액션**: **"EC2 G6e/G7e + AWS Batch로 Isaac Sim SDG 파이프라인" 워크숍 제안**. 고객 실제 환경 CAD/USD 자산이 있으면 1일 PoC로 합성 데이터셋 샘플 생성 데모.
 
-**🔗 관련 자산**: [pillar-3 시뮬레이션](pillar-3.md) · (사내 Isaac-on-AWS 워크숍 deck — 확인 필요 ⚠️)
+**🔗 관련 자산**: [pillar-3 시뮬레이션](pillar-3.md) · (사내 Isaac-on-AWS 워크숍 deck — 확인 필요 ⚠️) · [VAMS — Visual Asset Management System (awslabs — USD 씬·포인트클라우드·CAD 등 시각 자산 중앙 관리(버전·계보·뷰어), 시뮬레이션 환경·학습 데이터 관리용. CDK 서버리스, near-production-grade)](https://github.com/awslabs/visual-asset-management-system)
 
 ---
 

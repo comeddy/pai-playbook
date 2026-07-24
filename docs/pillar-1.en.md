@@ -1,5 +1,5 @@
 ---
-ko_hash: 4c3e8bc89f1af826694331502c1eff9c68a7dc76
+ko_hash: e3f96792d0500e9f7964ab5e16354ebc473a8b32
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -100,7 +100,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **➡️ Next action**: **propose an "Isaac Sim SDG pipeline on EC2 G6e/G7e + AWS Batch" workshop**. If the customer has CAD/USD assets of their real environment, demo a synthetic-dataset sample generation in a 1-day PoC.
 
-**🔗 Related assets**: [pillar-3 Simulation](pillar-3.md) · (internal Isaac-on-AWS workshop deck — confirm needed ⚠️)
+**🔗 Related assets**: [pillar-3 Simulation](pillar-3.md) · (internal Isaac-on-AWS workshop deck — confirm needed ⚠️) · [VAMS — Visual Asset Management System (awslabs — centralized management of visual assets such as USD scenes, point clouds, and CAD (versioning, lineage, viewers), for simulation environments and training data. Serverless CDK, near-production-grade)](https://github.com/awslabs/visual-asset-management-system)
 
 ---
 

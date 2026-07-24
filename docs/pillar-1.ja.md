@@ -1,5 +1,5 @@
 ---
-ko_hash: 4c3e8bc89f1af826694331502c1eff9c68a7dc76
+ko_hash: e3f96792d0500e9f7964ab5e16354ebc473a8b32
 ---
 # Pillar 1 — データ収集 & 処理 (Data Collection & Processing)
 
@@ -101,7 +101,7 @@ _注意: 一部のアグリゲーターが DROID を「92,233 ep/Apache-2.0」�
 
 **➡️ 次のアクション**: **「EC2 G6e/G7e + AWS Batch で Isaac Sim SDG パイプライン」ワークショップを提案**。顧客の実環境の CAD/USD アセットがあれば1日 PoC で合成データセットサンプル生成デモ。
 
-**🔗 関連資産**: [pillar-3 シミュレーション](pillar-3.md) · （社内 Isaac-on-AWS ワークショップ deck — 確認が必要 ⚠️）
+**🔗 関連資産**: [pillar-3 シミュレーション](pillar-3.md) · （社内 Isaac-on-AWS ワークショップ deck — 確認が必要 ⚠️） · [VAMS — Visual Asset Management System（awslabs — USD シーン·点群·CAD などビジュアルアセットの一元管理（バージョン·リネージ·ビューア）、シミュレーション環境·学習データ管理向け。CDK サーバーレス、near-production-grade）](https://github.com/awslabs/visual-asset-management-system)
 
 ---
 
