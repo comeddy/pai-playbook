@@ -14,8 +14,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-07-24
+
 ### Added
 
+- Add a footer link (history icon) to the GitHub changelog on every page in all four languages
 - Register 8 verified AWS official Physical AI repos (7 aws-samples + 1 awslabs) as related assets across pillars, each with maturity caveats, in all four languages: AWS Physical AI Toolchain (OSMO on EKS) and Self-improving Physical AI and Agentic AI Robot (pillar 5), Physical AI Scaffolding Kit (pillars 2-3), Embodied AI Platform (pillar 2), VLA Simulator — 1-click benchmarking of 7 VLA models on EC2 (pillar 3), Android PAI data collector app and VAMS visual asset management (pillar 1)
 
 ### Changed
@@ -91,7 +94,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Promotion issue form with the THE FILTER checklist built in
 - Owner assignment for pillar pages
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
@@ -109,8 +113,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-07-24
+
 ### Added
 
+- 모든 페이지 푸터에 GitHub CHANGELOG 링크(history 아이콘) 추가, 4개 언어 공통 적용
 - 검증된 AWS 공식 Physical AI 리포 8종(aws-samples 7 + awslabs 1)을 필러별 관련 자산으로 등재, 각각 성숙도 캐비앗 명시, 4개 언어 반영: AWS Physical AI Toolchain(OSMO on EKS)·Self-improving Physical AI·Agentic AI Robot(pillar 5), Physical AI Scaffolding Kit(pillar 2~3), Embodied AI Platform(pillar 2), VLA Simulator — 7개 VLA 모델 원클릭 EC2 벤치마킹(pillar 3), Android PAI 데이터 수집 앱·VAMS 시각 자산 관리(pillar 1)
 
 ### Changed
@@ -186,7 +193,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - THE FILTER 체크리스트를 내장한 승격 이슈 폼 추가
 - 필러 페이지 owner 지정
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
