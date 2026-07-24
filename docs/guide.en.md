@@ -1,5 +1,5 @@
 ---
-ko_hash: 424d698d766a386533731ed59e3b927675ad9be2
+ko_hash: 71046738f5f1fb2be867c800b8d2a02d66a812c7
 ---
 # Guide — How This Playbook Works
 
@@ -14,7 +14,7 @@ _Last updated: 2026-07 · owner: comeddy · volatility: low (process page — up
 
 ```mermaid
 graph TD
-    A1["🤖 Weekly automated scan<br>(every Mon 02:00 UTC — arXiv·web)"] --> R
+    A1["🤖 Daily automated scan<br>(daily 02:00 UTC — arXiv·web)"] --> R
     A2["💬 SA tips<br>(promotion pipeline)"] --> R
     A3[🔍 Manual research] --> R
     R["Radar queue<br>all labeled 'unverified [4]' — not for customer proposals"] --> V["Primary-source verification<br>human + verification agent (against official announcements·paper originals)"]
@@ -37,9 +37,9 @@ This playbook was generated from a complete spec document (the [master prompt](h
 
 Every item must pass [THE FILTER](maintenance.md#inclusion-criteria-the-filter) to appear in the body: ⓐ production-verified ⓑ AWS-mappable ⓒ a record of real inquiries ⓓ GA (or roadmap) — **2 or more of the 4**. "It's new" or "the demo is impressive" is not a reason for inclusion. Published items carry a maturity label (🟢 GA / 🟡 Preview / 🔵 Research / ⚪ Hype) and a source grade (`[1]` official docs ~ `[4]` unverified) — how to read the labels is on the [home](index.md) page.
 
-## ③ Radar and the weekly automated scan
+## ③ Radar and the daily automated scan
 
-Items that haven't passed the filter yet live as a single line in the [Radar (queue)](radar.md). **Every Monday at 02:00 UTC** an automated scan runs and fills the Radar's "latest scan intake" section with the newest papers and news. Important: **all automated intake is quarantined as unverified `[4]`** and must not be used in customer proposals. Automation does nothing more than put candidates on the queue.
+Items that haven't passed the filter yet live as a single line in the [Radar (queue)](radar.md). **Every day at 02:00 UTC** an automated scan runs and fills the Radar's "latest scan intake" section with the newest papers and news (no update on days with nothing new). Important: **all automated intake is quarantined as unverified `[4]`** and must not be used in customer proposals. Automation does nothing more than put candidates on the queue.
 
 ## ④ Verification and promotion — the human's job
 
@@ -65,4 +65,4 @@ When something is pushed to `main`, CI runs the freshness check and the translat
 |---|---|
 | **just a reader** | Enter via the FAQ Top 20 or a pillar on the [home](index.md) page. If you just know the labels (🟢🟡🔵⚪) and source grades (`[1]`~`[4]`), you can read the trust level at a glance |
 | **someone who wants to submit an item** | Submit via the [promotion pipeline](maintenance.md#playbook-promotion-pipeline). It's faster if you also note how many of the 4 in THE FILTER it meets |
-| **owner** | Review the weekly automated intake → primary verification → promote/keep decision. See the full [maintenance rules](maintenance.md) |
+| **owner** | Review the daily automated intake → primary verification → promote/keep decision. See the full [maintenance rules](maintenance.md) |
