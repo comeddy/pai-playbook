@@ -97,7 +97,11 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 **➡️ 다음 액션**: **"EC2 G6e/G7e + AWS Batch로 Isaac Sim SDG 파이프라인" 워크숍 제안**. 고객 실제 환경 CAD/USD 자산이 있으면 1일 PoC로 합성 데이터셋 샘플 생성 데모.
 
-**🔗 관련 자산**: [pillar-3 시뮬레이션](pillar-3.md) · (사내 Isaac-on-AWS 워크숍 deck — 확인 필요 ⚠️) · [VAMS — Visual Asset Management System (awslabs — USD 씬·포인트클라우드·CAD 등 시각 자산 중앙 관리(버전·계보·뷰어), 시뮬레이션 환경·학습 데이터 관리용. CDK 서버리스, near-production-grade)](https://github.com/awslabs/visual-asset-management-system)
+**🔗 관련 자산**:
+
+- 플레이북: [pillar-3 시뮬레이션](pillar-3.md)
+- (사내 Isaac-on-AWS 워크숍 deck — 확인 필요 ⚠️)
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs. USD 씬·포인트클라우드·CAD 등 시각 자산 중앙 관리(버전·계보·뷰어), 시뮬레이션 환경·학습 데이터 관리용. CDK 서버리스, near-production-grade
 
 ---
 
@@ -215,7 +219,11 @@ graph LR
 
 **➡️ 다음 액션**: 고객이 텔레옵 데이터를 모으고 있다면 **"수집 스트림 → S3 → 자동 라벨 → 학습 큐" 파이프라인을 표준화**해 주라. 오픈 HW 자체 추천은 신중히(research-only 명시).
 
-**🔗 관련 자산**: [pillar-4 엣지 배포](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot 텔레옵 수집 on Greengrass 샘플 (aws-samples — SO-ARM101→LeRobot v3→S3)](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI 데이터 수집 앱 (aws-samples — 현장 스마트폰 영상+IMU→S3 오프라인 큐 업로드, ⚠️ 초기 샘플)](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
+**🔗 관련 자산**:
+
+- 플레이북: [pillar-4 엣지 배포](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
+- [LeRobot 텔레옵 수집 on Greengrass 샘플](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. SO-ARM101→LeRobot v3→S3
+- [Android PAI 데이터 수집 앱](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples. 현장 스마트폰 영상+IMU→S3 오프라인 큐 업로드. ⚠️ 초기 샘플
 
 ---
 

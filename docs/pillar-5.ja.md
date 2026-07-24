@@ -1,5 +1,5 @@
 ---
-ko_hash: 6202b36d5f8eabc13e3c73a90fb1be22fab75dcd
+ko_hash: e7f4d4a82b6905a35137d6cca70bd7a75fbad7ec
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -48,7 +48,14 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **➡️ 次のアクション**: 韓国顧客にまず **「AgentCore はソウルリージョン GA — データレジデンシー問題なし」** を確認させ（古い「ソウル非対応」情報を訂正）、ロボットスキルを Gateway ツールとして登録する PoC を提案します。価格は「ハーネス無料、リソースのみ課金」で安心させます。
 
-**🔗 関連アセット**: [pillar-4 エッジ](pillar-4.md) · [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （社内 AgentCore ワークショップ — 要確認 ⚠️） · [AWS Physical AI Toolchain（aws-samples — 4 ピラー・フライホイールのリファレンスアーキテクチャ。⚠️ 現在 Available なのは NVIDIA OSMO 6.3 on EKS オーケストレーションのみ、Cosmos·Isaac Lab·GR00T·Strands+AgentCore エージェンティックレイヤーは Planned）](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) · [Self-improving Physical AI（aws-samples — Bedrock エージェントが Isaac Sim と実機 SO-ARM101/XGO2/Zumi を IoT 経由で制御、エージェントメモリで sim-to-real 反復学習）](https://github.com/aws-samples/sample-self-improving-physical-AI) · [Agentic AI Robot — 産業安全モニタリング（aws-samples — AgentCore+IoT+ロボットの自律パトロール·エッジ推論デモ、AWS AI x Industry Week 2025 で展示、韓国語 README あり。⚠️ 実験·教育用と明記 — 本番環境向けではありません）](https://github.com/aws-samples/sample-agentic-ai-robot)
+**🔗 関連アセット**:
+
+- プレイブック: [pillar-4 エッジ](pillar-4.md)
+- [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- （社内 AgentCore ワークショップ — 要確認 ⚠️）
+- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) — aws-samples。4 ピラー・フライホイールのリファレンスアーキテクチャ。⚠️ 現在 Available なのは NVIDIA OSMO 6.3 on EKS オーケストレーションのみ、Cosmos·Isaac Lab·GR00T·Strands+AgentCore エージェンティックレイヤーは Planned
+- [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples。Bedrock エージェントが Isaac Sim と実機 SO-ARM101/XGO2/Zumi を IoT 経由で制御、エージェントメモリで sim-to-real 反復学習
+- [Agentic AI Robot — 産業安全モニタリング](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples。AgentCore+IoT+ロボットの自律パトロール·エッジ推論デモ、AWS AI x Industry Week 2025 で展示、韓国語 README あり。⚠️ 実験·教育用と明記 — 本番環境向けではありません
 
 <details markdown="1"><summary>🔄 揮発性データ（コンポーネント・リージョン・価格 — 2026-07 確認）</summary>
 

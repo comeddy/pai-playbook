@@ -1,5 +1,5 @@
 ---
-ko_hash: e3f96792d0500e9f7964ab5e16354ebc473a8b32
+ko_hash: 4e60ceaca49be1f5d21929d13cd064ca9298d788
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -100,7 +100,11 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **➡️ Next action**: **propose an "Isaac Sim SDG pipeline on EC2 G6e/G7e + AWS Batch" workshop**. If the customer has CAD/USD assets of their real environment, demo a synthetic-dataset sample generation in a 1-day PoC.
 
-**🔗 Related assets**: [pillar-3 Simulation](pillar-3.md) · (internal Isaac-on-AWS workshop deck — confirm needed ⚠️) · [VAMS — Visual Asset Management System (awslabs — centralized management of visual assets such as USD scenes, point clouds, and CAD (versioning, lineage, viewers), for simulation environments and training data. Serverless CDK, near-production-grade)](https://github.com/awslabs/visual-asset-management-system)
+**🔗 Related assets**:
+
+- Playbook: [pillar-3 Simulation](pillar-3.md)
+- (internal Isaac-on-AWS workshop deck — confirm needed ⚠️)
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs. Centralized management of visual assets such as USD scenes, point clouds, and CAD (versioning, lineage, viewers), for simulation environments and training data. Serverless CDK, near-production-grade
 
 ---
 
@@ -218,7 +222,11 @@ graph LR
 
 **➡️ Next action**: if the customer is collecting teleoperation data, **standardize the "collection stream → S3 → auto-label → training queue" pipeline** for them. Be cautious about recommending open HW itself (state it is research-only).
 
-**🔗 Related assets**: [pillar-4 edge deployment](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot teleop data collection on Greengrass sample (aws-samples — SO-ARM101→LeRobot v3→S3)](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI data collection app (aws-samples — field smartphone video+IMU→S3 offline-queue upload, ⚠️ early-stage sample)](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
+**🔗 Related assets**:
+
+- Playbook: [pillar-4 edge deployment](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
+- [LeRobot teleop data collection on Greengrass sample](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. SO-ARM101→LeRobot v3→S3
+- [Android PAI data collection app](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples. Field smartphone video+IMU→S3 offline-queue upload. ⚠️ Early-stage sample
 
 ---
 

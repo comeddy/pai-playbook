@@ -55,7 +55,14 @@ graph LR
 
 **➡️ 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/comeddy/pai-sim-isaaclab)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
 
-**🔗 관련 자산**: [pillar-2 학습 스택](pillar-2.md) · [pillar-1 합성 데이터](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS 워크숍 (Batch MNP 헤드리스 RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E 워크숍 (한국어 — Isaac Lab RL + Batch 트랙)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [(사내) AWS·NVIDIA 로보틱스 참조 아키텍처](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 내부망 필요 · [Physical AI Scaffolding Kit — Isaac Sim 워크스테이션 (aws-samples — EC2에 Isaac Sim/Lab 개발 환경 구축)](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) · [VLA Simulator — 1-Click VLA 시뮬레이션 on AWS (aws-samples — GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1을 LIBERO/RoboCasa/SimplerEnv/Isaac Lab에서 CDK 원클릭 EC2 GPU(g5/g6/g6e) 데모·벤치마킹, 결과 MP4→S3+SNS 자동 수신·EC2 자동 종료. 정책별 실측 성공률·검증 일자 명시)](https://github.com/aws-samples/sample-vla-simulator-on-aws)
+**🔗 관련 자산**:
+
+- 플레이북: [pillar-2 학습 스택](pillar-2.md) · [pillar-1 합성 데이터](pillar-1.md) · [decisions](decisions.md)
+- [NVIDIA Isaac Lab on AWS 워크숍](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) — Batch MNP 헤드리스 RL
+- [Physical AI E2E 워크숍](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — 한국어. Isaac Lab RL + Batch 트랙
+- [(사내) AWS·NVIDIA 로보틱스 참조 아키텍처](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 내부망 필요
+- [Physical AI Scaffolding Kit — Isaac Sim 워크스테이션](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. EC2에 Isaac Sim/Lab 개발 환경 구축
+- [VLA Simulator — 1-Click VLA 시뮬레이션 on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples. GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1을 LIBERO/RoboCasa/SimplerEnv/Isaac Lab에서 CDK 원클릭으로 EC2 GPU(g5/g6/g6e) 데모·벤치마킹. 결과 MP4→S3+SNS 자동 수신·EC2 자동 종료, 정책별 실측 성공률·검증 일자 명시
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (버전 — 2026-07 확인, 연도 일부 GitHub 재확인 필요)</summary>
 
@@ -202,7 +209,12 @@ graph TD
 
 **➡️ 다음 액션**: 고객이 "TwinMaker 죽었다던데?" 물으면 **즉시 정정**("GA, 신규 오픈, 다만 저속도"). 트윈+시뮬레이션 통합 원하면 Omniverse AMI로 연결. "OVX 있냐" 물으면 "없다, G6e/G7e + AMI" 로 정확히.
 
-**🔗 관련 자산**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker E2E 워크숍](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · [Omniverse 디지털 트윈 핸즈온 (한국어 — Isaac Sim + Kinesis 실시간 데이터, CDK)](https://github.com/kimjoonhyung/nvidia-omniverse-digital-twin) · (사내 디지털 트윈 워크숍 — 확인 필요 ⚠️)
+**🔗 관련 자산**:
+
+- 플레이북: [pillar-1](pillar-1.md)
+- [AWS IoT TwinMaker E2E 워크숍](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US)
+- [Omniverse 디지털 트윈 핸즈온](https://github.com/kimjoonhyung/nvidia-omniverse-digital-twin) — 한국어. Isaac Sim + Kinesis 실시간 데이터, CDK
+- (사내 디지털 트윈 워크숍 — 확인 필요 ⚠️)
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 6202b36d5f8eabc13e3c73a90fb1be22fab75dcd
+ko_hash: e7f4d4a82b6905a35137d6cca70bd7a75fbad7ec
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -47,7 +47,14 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **➡️ 后续行动**: 先让韩国客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
 
-**🔗 相关资产**: [pillar-4 边缘](pillar-4.md) · [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · （内部 AgentCore 研讨会 —— 需确认 ⚠️） · [AWS Physical AI Toolchain（aws-samples — 4 支柱飞轮参考架构。⚠️ 目前仅 NVIDIA OSMO 6.3 on EKS 编排为 Available，Cosmos·Isaac Lab·GR00T·Strands+AgentCore 智能体层均为 Planned）](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) · [Self-improving Physical AI（aws-samples — Bedrock 智能体通过 IoT 控制 Isaac Sim 与实体机器人 SO-ARM101/XGO2/Zumi，借助智能体记忆进行 sim-to-real 迭代学习）](https://github.com/aws-samples/sample-self-improving-physical-AI) · [Agentic AI Robot — 工业安全监控（aws-samples — AgentCore+IoT+机器人自主巡逻·边缘推理演示，曾在 AWS AI x Industry Week 2025 展示，含韩语 README。⚠️ 明确标注为实验·教育用途 —— 非生产环境）](https://github.com/aws-samples/sample-agentic-ai-robot)
+**🔗 相关资产**:
+
+- Playbook: [pillar-4 边缘](pillar-4.md)
+- [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- （内部 AgentCore 研讨会 —— 需确认 ⚠️）
+- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) —— aws-samples。4 支柱飞轮参考架构。⚠️ 目前仅 NVIDIA OSMO 6.3 on EKS 编排为 Available，Cosmos·Isaac Lab·GR00T·Strands+AgentCore 智能体层均为 Planned
+- [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) —— aws-samples。Bedrock 智能体通过 IoT 控制 Isaac Sim 与实体机器人 SO-ARM101/XGO2/Zumi，借助智能体记忆进行 sim-to-real 迭代学习
+- [Agentic AI Robot — 工业安全监控](https://github.com/aws-samples/sample-agentic-ai-robot) —— aws-samples。AgentCore+IoT+机器人自主巡逻·边缘推理演示，曾在 AWS AI x Industry Week 2025 展示，含韩语 README。⚠️ 明确标注为实验·教育用途 —— 非生产环境
 
 <details markdown="1"><summary>🔄 易变数据（组件·区域·价格 —— 2026-07 确认）</summary>
 

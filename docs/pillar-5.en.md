@@ -1,5 +1,5 @@
 ---
-ko_hash: 6202b36d5f8eabc13e3c73a90fb1be22fab75dcd
+ko_hash: e7f4d4a82b6905a35137d6cca70bd7a75fbad7ec
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -47,7 +47,14 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **➡️ Next action**: first confirm for Korean customers that **"AgentCore is GA in the Seoul region — no data residency issue"** (correcting outdated "not supported in Seoul" info), then propose a PoC registering robot skills as Gateway tools. Reassure on pricing with "harness free, only resources billed."
 
-**🔗 Related assets**: [pillar-4 edge](pillar-4.md) · [Getting started with AgentCore workshop](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US) · (internal AgentCore workshop — confirm needed ⚠️) · [AWS Physical AI Toolchain (aws-samples — 4-pillar flywheel reference architecture. ⚠️ only NVIDIA OSMO 6.3 on EKS orchestration is Available; Cosmos·Isaac Lab·GR00T·Strands+AgentCore agentic layer are Planned)](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) · [Self-improving Physical AI (aws-samples — Bedrock agents control Isaac Sim and real robots SO-ARM101/XGO2/Zumi via IoT, iterative sim-to-real learning with agent memory)](https://github.com/aws-samples/sample-self-improving-physical-AI) · [Agentic AI Robot — industrial safety monitoring (aws-samples — AgentCore+IoT+robot autonomous patrol and edge inference demo, shown at AWS AI x Industry Week 2025, Korean README. ⚠️ explicitly experimental/educational — not for production)](https://github.com/aws-samples/sample-agentic-ai-robot)
+**🔗 Related assets**:
+
+- Playbook: [pillar-4 edge](pillar-4.md)
+- [Getting started with AgentCore workshop](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- (internal AgentCore workshop — confirm needed ⚠️)
+- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) — aws-samples. 4-pillar flywheel reference architecture. ⚠️ Only NVIDIA OSMO 6.3 on EKS orchestration is Available; Cosmos·Isaac Lab·GR00T·Strands+AgentCore agentic layer are Planned
+- [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples. Bedrock agents control Isaac Sim and real robots SO-ARM101/XGO2/Zumi via IoT, iterative sim-to-real learning with agent memory
+- [Agentic AI Robot — industrial safety monitoring](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples. AgentCore+IoT+robot autonomous patrol and edge inference demo, shown at AWS AI x Industry Week 2025, Korean README. ⚠️ Explicitly experimental/educational — not for production
 
 <details markdown="1"><summary>🔄 Volatile data (components · regions · pricing — checked 2026-07)</summary>
 

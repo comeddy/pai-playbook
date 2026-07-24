@@ -1,5 +1,5 @@
 ---
-ko_hash: 141fc9713045500908ccc7f56840855626a7cba5
+ko_hash: 20bab2aebc8895b3bae26fe8be97785aea27dbc2
 ---
 # Pillar 3 — Simulation
 
@@ -58,7 +58,14 @@ graph LR
 
 **➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/comeddy/pai-sim-isaaclab)** (Terraform provisions g6e → Isaac Lab quadruped PPO headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
-**🔗 Related assets**: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md) · [NVIDIA Isaac Lab on AWS workshop (Batch MNP headless RL)](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) · [Physical AI E2E workshop (Korean — Isaac Lab RL + Batch track)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [(internal) AWS·NVIDIA robotics reference architecture](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS internal network required · [Physical AI Scaffolding Kit — Isaac Sim workstation (aws-samples — Isaac Sim/Lab dev environment on EC2)](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) · [VLA Simulator — 1-Click VLA simulation on AWS (aws-samples — demo/benchmark GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1 on LIBERO/RoboCasa/SimplerEnv/Isaac Lab via one-command CDK deploy to EC2 GPU (g5/g6/g6e); results as MP4→S3+SNS, auto-terminating EC2. Measured per-policy success rates and validation dates documented)](https://github.com/aws-samples/sample-vla-simulator-on-aws)
+**🔗 Related assets**:
+
+- Playbook: [pillar-2 training stack](pillar-2.md) · [pillar-1 synthetic data](pillar-1.md) · [decisions](decisions.md)
+- [NVIDIA Isaac Lab on AWS workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) — Batch MNP headless RL
+- [Physical AI E2E workshop](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — Korean. Isaac Lab RL + Batch track
+- [(internal) AWS·NVIDIA robotics reference architecture](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS internal network required
+- [Physical AI Scaffolding Kit — Isaac Sim workstation](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. Isaac Sim/Lab dev environment on EC2
+- [VLA Simulator — 1-Click VLA simulation on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples. Demo/benchmark GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1 on LIBERO/RoboCasa/SimplerEnv/Isaac Lab via one-command CDK deploy to EC2 GPU (g5/g6/g6e); results as MP4→S3+SNS, auto-terminating EC2. Measured per-policy success rates and validation dates documented
 
 <details markdown="1"><summary>🔄 Volatile data (versions — checked 2026-07, some years to be re-confirmed on GitHub)</summary>
 
@@ -205,7 +212,12 @@ graph TD
 
 **➡️ Next action**: if the customer asks "isn't TwinMaker dead?", **correct it immediately** ("GA, open to new customers, just low velocity"). If they want twin + simulation integration, connect to the Omniverse AMI. If they ask "is there OVX?", answer precisely "no, G6e/G7e + AMI."
 
-**🔗 Related assets**: [pillar-1](pillar-1.md) · [AWS IoT TwinMaker end-to-end workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US) · [Omniverse digital twin hands-on (Korean — Isaac Sim + Kinesis real-time data, CDK)](https://github.com/kimjoonhyung/nvidia-omniverse-digital-twin) · (internal digital twin workshop — confirm needed ⚠️)
+**🔗 Related assets**:
+
+- Playbook: [pillar-1](pillar-1.md)
+- [AWS IoT TwinMaker end-to-end workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/4b8a4050-893e-40f3-9788-8256025024b4/en-US)
+- [Omniverse digital twin hands-on](https://github.com/kimjoonhyung/nvidia-omniverse-digital-twin) — Korean. Isaac Sim + Kinesis real-time data, CDK
+- (internal digital twin workshop — confirm needed ⚠️)
 
 ---
 

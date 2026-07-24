@@ -1,5 +1,5 @@
 ---
-ko_hash: e3f96792d0500e9f7964ab5e16354ebc473a8b32
+ko_hash: 4e60ceaca49be1f5d21929d13cd064ca9298d788
 ---
 # Pillar 1 — データ収集 & 処理 (Data Collection & Processing)
 
@@ -101,7 +101,11 @@ _注意: 一部のアグリゲーターが DROID を「92,233 ep/Apache-2.0」�
 
 **➡️ 次のアクション**: **「EC2 G6e/G7e + AWS Batch で Isaac Sim SDG パイプライン」ワークショップを提案**。顧客の実環境の CAD/USD アセットがあれば1日 PoC で合成データセットサンプル生成デモ。
 
-**🔗 関連資産**: [pillar-3 シミュレーション](pillar-3.md) · （社内 Isaac-on-AWS ワークショップ deck — 確認が必要 ⚠️） · [VAMS — Visual Asset Management System（awslabs — USD シーン·点群·CAD などビジュアルアセットの一元管理（バージョン·リネージ·ビューア）、シミュレーション環境·学習データ管理向け。CDK サーバーレス、near-production-grade）](https://github.com/awslabs/visual-asset-management-system)
+**🔗 関連資産**:
+
+- プレイブック: [pillar-3 シミュレーション](pillar-3.md)
+- （社内 Isaac-on-AWS ワークショップ deck — 確認が必要 ⚠️）
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs。USD シーン·点群·CAD などビジュアルアセットの一元管理（バージョン·リネージ·ビューア）、シミュレーション環境·学習データ管理向け。CDK サーバーレス、near-production-grade
 
 ---
 
@@ -219,7 +223,11 @@ graph LR
 
 **➡️ 次のアクション**: 顧客がテレオペレーションデータを集めているなら **「収集ストリーム → S3 → 自動ラベル → 学習キュー」パイプラインを標準化** してあげよ。オープン HW 自体の推奨は慎重に（research-only を明示）。
 
-**🔗 関連資産**: [pillar-4 エッジデプロイ](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot テレオペ収集 on Greengrass サンプル（aws-samples — SO-ARM101→LeRobot v3→S3）](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI データ収集アプリ（aws-samples — 現場スマートフォン映像+IMU→S3 オフラインキューアップロード、⚠️ 初期サンプル）](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
+**🔗 関連資産**:
+
+- プレイブック: [pillar-4 エッジデプロイ](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
+- [LeRobot テレオペ収集 on Greengrass サンプル](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples。SO-ARM101→LeRobot v3→S3
+- [Android PAI データ収集アプリ](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples。現場スマートフォン映像+IMU→S3 オフラインキューアップロード。⚠️ 初期サンプル
 
 ---
 

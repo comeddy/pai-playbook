@@ -1,5 +1,5 @@
 ---
-ko_hash: 04492aadb05c73e1d081ceb78db98a8fba6d7efd
+ko_hash: 374272fbb4f1fe4963154ef4abef95cee9a762b2
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -145,7 +145,12 @@ graph TD
 
 **➡️ Next action**: **use the official AWS "Isaac Lab on SageMaker" blog as a workshop asset as-is** (the only reproducible AWS robotics training reference). If GPU availability is an issue, connect to Capacity Blocks / Flexible Training Plans.
 
-**🔗 Related assets**: [pillar-3 Simulation (Isaac Lab)](pillar-3.md) · [decisions: securing GPUs](decisions.md) · [Physical AI E2E workshop (Korean — GR00T VLA fine-tuning + SageMaker track)](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [Physical AI Scaffolding Kit (aws-samples — HyperPod Slurm cluster + π0·GR00T·Isaac Lab Newton RL training samples, multilingual README (ko·ja·en). Official asset of the AWS Japan Physical AI Development Support Program)](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) · [Embodied AI Platform (aws-samples — GR00T VLA teleoperation/imitation-learning fine-tuning on AWS Batch + DCV workstation → on-robot inference on SO-ARM100/101. ⚠️ only the GR00T training component is Available; the rest is roadmap)](https://github.com/aws-samples/sample-embodied-ai-platform)
+**🔗 Related assets**:
+
+- Playbook: [pillar-3 Simulation (Isaac Lab)](pillar-3.md) · [decisions: securing GPUs](decisions.md)
+- [Physical AI E2E workshop](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — Korean. GR00T VLA fine-tuning + SageMaker track
+- [Physical AI Scaffolding Kit](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. HyperPod Slurm cluster + π0·GR00T·Isaac Lab Newton RL training samples, multilingual README (ko·ja·en). Official asset of the AWS Japan Physical AI Development Support Program
+- [Embodied AI Platform](https://github.com/aws-samples/sample-embodied-ai-platform) — aws-samples. GR00T VLA teleoperation/imitation-learning fine-tuning on AWS Batch + DCV workstation → on-robot inference on SO-ARM100/101. ⚠️ Only the GR00T training component is Available; the rest is roadmap
 
 ---
 

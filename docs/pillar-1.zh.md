@@ -1,5 +1,5 @@
 ---
-ko_hash: e3f96792d0500e9f7964ab5e16354ebc473a8b32
+ko_hash: 4e60ceaca49be1f5d21929d13cd064ca9298d788
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -100,7 +100,11 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 **➡️ 后续行动**: **提议"EC2 G6e/G7e + AWS Batch 的 Isaac Sim SDG 管道"研讨会**。若客户有实际环境的 CAD/USD 资产，可用 1 天 PoC 演示合成数据集样本生成。
 
-**🔗 相关资产**: [pillar-3 仿真](pillar-3.md) · （内部 Isaac-on-AWS 研讨会 deck —— 需确认 ⚠️） · [VAMS — Visual Asset Management System（awslabs — 集中管理 USD 场景·点云·CAD 等视觉资产（版本·血缘·查看器），用于仿真环境与训练数据管理。CDK 无服务器，near-production-grade）](https://github.com/awslabs/visual-asset-management-system)
+**🔗 相关资产**:
+
+- Playbook: [pillar-3 仿真](pillar-3.md)
+- （内部 Isaac-on-AWS 研讨会 deck —— 需确认 ⚠️）
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) —— awslabs。集中管理 USD 场景·点云·CAD 等视觉资产（版本·血缘·查看器），用于仿真环境与训练数据管理。CDK 无服务器，near-production-grade
 
 ---
 
@@ -218,7 +222,11 @@ graph LR
 
 **➡️ 后续行动**: 若客户正在收集遥操作数据，则**为其标准化"采集流 → S3 → 自动标注 → 训练队列"管道**。谨慎推荐开放 HW 本身（明确标注 research-only）。
 
-**🔗 相关资产**: [pillar-4 边缘部署](pillar-4.md) · [radar: ALOHA/GELLO](radar.md) · [LeRobot 遥操作数据采集 on Greengrass 示例（aws-samples — SO-ARM101→LeRobot v3→S3）](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) · [Android PAI 数据采集应用（aws-samples — 现场智能手机视频+IMU→S3 离线队列上传，⚠️ 早期示例）](https://github.com/aws-samples/sample-physical-ai-data-collector-app)
+**🔗 相关资产**:
+
+- Playbook: [pillar-4 边缘部署](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
+- [LeRobot 遥操作数据采集 on Greengrass 示例](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) —— aws-samples。SO-ARM101→LeRobot v3→S3
+- [Android PAI 数据采集应用](https://github.com/aws-samples/sample-physical-ai-data-collector-app) —— aws-samples。现场智能手机视频+IMU→S3 离线队列上传。⚠️ 早期示例
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 04492aadb05c73e1d081ceb78db98a8fba6d7efd
+ko_hash: 374272fbb4f1fe4963154ef4abef95cee9a762b2
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -145,7 +145,12 @@ graph TD
 
 **➡️ 后续行动**: **直接把 AWS 官方"Isaac Lab on SageMaker"博客当作研讨会资产用**（唯一可复现的 AWS 机器人训练参考）。GPU 可用性有问题则连接到 Capacity Blocks/Flexible Training Plans。
 
-**🔗 相关资产**: [pillar-3 仿真(Isaac Lab)](pillar-3.md) · [decisions: GPU 获取](decisions.md) · [Physical AI E2E 研讨会（韩语 — GR00T VLA 微调 + SageMaker 轨道）](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) · [Physical AI Scaffolding Kit（aws-samples — HyperPod Slurm 集群 + π0·GR00T·Isaac Lab Newton RL 训练示例，多语言 README（韩·日·英）。AWS Japan Physical AI 开发支持计划官方资产）](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) · [Embodied AI Platform（aws-samples — GR00T VLA 遥操作·模仿学习微调 on AWS Batch + DCV 工作站 → SO-ARM100/101 实机推理。⚠️ 目前仅 GR00T 训练组件为 Available，其余为路线图）](https://github.com/aws-samples/sample-embodied-ai-platform)
+**🔗 相关资产**:
+
+- Playbook: [pillar-3 仿真(Isaac Lab)](pillar-3.md) · [decisions: GPU 获取](decisions.md)
+- [Physical AI E2E 研讨会](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) —— 韩语。GR00T VLA 微调 + SageMaker 轨道
+- [Physical AI Scaffolding Kit](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) —— aws-samples。HyperPod Slurm 集群 + π0·GR00T·Isaac Lab Newton RL 训练示例，多语言 README（韩·日·英）。AWS Japan Physical AI 开发支持计划官方资产
+- [Embodied AI Platform](https://github.com/aws-samples/sample-embodied-ai-platform) —— aws-samples。GR00T VLA 遥操作·模仿学习微调 on AWS Batch + DCV 工作站 → SO-ARM100/101 实机推理。⚠️ 目前仅 GR00T 训练组件为 Available，其余为路线图
 
 ---
 
