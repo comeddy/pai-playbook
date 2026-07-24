@@ -11,7 +11,7 @@
   python3 scripts/check_staleness.py --check --today 2027-01   # 날짜 오버라이드 (테스트용)
 
 주입된 배지는 빌드 산출물에만 존재한다 — CI 워크스페이스에서 mkdocs build 직전에 실행되고
-저장소에는 커밋되지 않는다. 주간 cron 재배포가 푸시 없이도 배지를 최신으로 유지한다.
+저장소에는 커밋되지 않는다. 매일 00:00 UTC cron 재배포가 푸시 없이도 배지를 최신으로 유지한다.
 
 번역 파일(`*.en.md`/`*.zh.md`/`*.ja.md`)은 검사하지 않으며, 배지는 존재하는 변형에 해당 언어로 함께 주입된다.
 """
@@ -69,7 +69,9 @@ BADGE_BODY = {
 # 리포트 출력용 하위 호환 별칭
 BADGE_MARK = BADGE_TITLE["ko"]
 
-RE_UPDATED = re.compile(r"(?:updated|최종 갱신):\s*(\d{4})-(\d{2})")
+# updated 앞 (?<!\w): last_updated: 같은 다른 필드 오매칭 방지 — '최종 갱신'에는 걸지 않는다
+# (헤더가 이탤릭 '_최종 갱신:' 형태라 '_'(\w)가 선행). 월은 1~2자리 허용(범위 검증은 parse_page).
+RE_UPDATED = re.compile(r"(?:(?<!\w)updated|최종 갱신):\s*(\d{4})-(\d{1,2})\b")
 RE_VOLATILITY = re.compile(r"volatility:\s*(높음|중간|낮음)")
 
 
@@ -91,27 +93,32 @@ def iter_with_fence(lines):
 
 
 def parse_page(path: pathlib.Path):
-    """페이지 메타데이터 파싱. 헤더(상단)가 푸터보다 먼저 매칭되도록 첫 매치를 쓴다.
+    """페이지 메타데이터 파싱 → (updated, volatility, conflict).
+
+    updated는 첫 매치(헤더 우선)를 쓰되, 페이지 안의 모든 updated 값을 수집해
+    서로 다른 값이 공존하면 conflict=True로 보고한다 — 헤더('최종 갱신')와
+    푸터('updated')가 어긋나면 조용히 낡은 값으로 계산되는 사고를 막는다.
 
     주의: maintenance.md의 '표준 템플릿' 코드 블록에 placeholder 메타데이터가 있으므로
     코드 펜스(``` 및 ~~~) 내부는 제외하고 스캔한다.
     """
     lines = path.read_text(encoding="utf-8").splitlines()
-    updated = volatility = None
+    updated_values = []
+    volatility = None
     for line, in_fence in iter_with_fence(lines):
         if in_fence:
             continue
-        if updated is None:
-            m = RE_UPDATED.search(line)
-            if m:
-                updated = (int(m.group(1)), int(m.group(2)))
+        for m in RE_UPDATED.finditer(line):
+            val = (int(m.group(1)), int(m.group(2)))
+            if 1 <= val[1] <= 12:
+                updated_values.append(val)
         if volatility is None:
             m = RE_VOLATILITY.search(line)
             if m:
                 volatility = m.group(1)
-        if updated and volatility:
-            break
-    return updated, volatility
+    updated = updated_values[0] if updated_values else None
+    conflict = len(set(updated_values)) > 1
+    return updated, volatility, conflict
 
 
 def is_translation(path: pathlib.Path) -> bool:
@@ -170,24 +177,39 @@ def main():
         today = (now.year, now.month)
 
     rows, missing = [], []
-    for path in sorted(DOCS.glob("*.md")):
+    # rglob: 하위 디렉터리 문서도 검사 대상 — 비재귀 glob은 신규 하위 폴더를 조용히 누락시킨다
+    for path in sorted(DOCS.rglob("*.md")):
         if is_translation(path):
             continue
-        updated, volatility = parse_page(path)
+        name = str(path.relative_to(DOCS))
+        try:
+            updated, volatility, conflict = parse_page(path)
+        except (OSError, UnicodeDecodeError) as e:
+            # 손상/비UTF-8 파일 1개가 검사 전체를 트레이스백으로 죽이지 않도록 격리
+            missing.append((name, f"읽기 실패({e.__class__.__name__})"))
+            continue
+        if conflict:
+            missing.append((name, "updated 값 불일치(헤더/푸터가 서로 다름)"))
+            continue
         if not updated or not volatility:
-            missing.append((path.name, "updated 누락" if not updated else "volatility 누락"))
+            missing.append((name, "updated 누락" if not updated else "volatility 누락"))
             continue
         threshold = THRESHOLD_MONTHS[volatility]
         elapsed = months_elapsed(updated, today)
+        # 경계 정의(의도): 월 단위 절삭 + '초과(>)' — updated 당월은 0개월로 치고,
+        # 기준 개월을 넘긴 다음 달부터 stale. 보수적(배지가 늦게 뜨는) 방향.
         stale = elapsed > threshold
-        rows.append((path.name, f"{updated[0]}-{updated[1]:02d}", volatility, threshold, elapsed, stale))
+        rows.append((name, f"{updated[0]}-{updated[1]:02d}", volatility, threshold, elapsed, stale))
         if stale and args.inject:
             inject_badge(path, "ko", volatility, updated, elapsed, threshold)
             # 존재하는 언어 변형에도 해당 언어 배지 주입 (독자가 어느 언어로 봐도 인지)
             for lang in LANGS:
                 variant = path.with_name(f"{path.stem}.{lang}.md")
                 if variant.exists():
-                    inject_badge(variant, lang, volatility, updated, elapsed, threshold)
+                    try:
+                        inject_badge(variant, lang, volatility, updated, elapsed, threshold)
+                    except (OSError, UnicodeDecodeError) as e:
+                        print(f"{variant.name:<18} ⚠️ 배지 주입 실패({e.__class__.__name__}) — 수동 확인 필요")
 
     print(f"기준일: {today[0]}-{today[1]:02d}")
     print(f"{'페이지':<18} {'updated':<9} {'volatility':<10} {'기준(월)':<8} {'경과(월)':<8} 상태")

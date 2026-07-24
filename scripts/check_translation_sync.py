@@ -14,6 +14,7 @@ import hashlib
 import os
 import pathlib
 import re
+import sys
 
 DOCS = pathlib.Path(__file__).resolve().parent.parent / "docs"
 LANGS = ("en", "zh", "ja")
@@ -33,17 +34,21 @@ def is_translation(path: pathlib.Path) -> bool:
 
 
 def recorded_hash(path: pathlib.Path):
-    """선두 frontmatter 블록('---' ~ '---') 안의 ko_hash만 인정한다."""
+    """선두 frontmatter 블록('---' ~ '---') 안의 ko_hash만 인정한다.
+
+    반환: (hash|None, reason) — reason은 'ok' / 'frontmatter 없음' / 'ko_hash 없음'.
+    원인을 구분해야 수정 안내가 정확하다(frontmatter 자체가 없는 것과 키 미기재는 다른 실수).
+    """
     lines = path.read_text(encoding="utf-8").splitlines()
     if not lines or lines[0].strip() != "---":
-        return None
+        return None, "frontmatter 없음"
     for line in lines[1:]:
         if line.strip() == "---":
-            return None
+            return None, "ko_hash 없음"
         m = RE_KO_HASH.match(line.strip())
         if m:
-            return m.group(1)
-    return None
+            return m.group(1), "ok"
+    return None, "ko_hash 없음"
 
 
 def main():
@@ -51,29 +56,46 @@ def main():
     ap.add_argument("--hash", metavar="FILE", help="해당 파일의 blob 해시만 출력하고 종료")
     args = ap.parse_args()
     if args.hash:
-        print(blob_hash(pathlib.Path(args.hash)))
+        try:
+            print(blob_hash(pathlib.Path(args.hash)))
+        except OSError as e:
+            print(f"오류: {args.hash} 를 읽을 수 없음 ({e.__class__.__name__}: {e})", file=sys.stderr)
+            sys.exit(2)
         return
 
     gha = os.environ.get("GITHUB_ACTIONS") == "true"
     rows = []
-    for src in sorted(DOCS.glob("*.md")):
+    # rglob: 하위 디렉터리 문서도 검사 대상 — 비재귀 glob은 신규 하위 폴더를 조용히 누락시킨다
+    for src in sorted(DOCS.rglob("*.md")):
         if is_translation(src):
             continue
-        cur = blob_hash(src)
+        src_name = str(src.relative_to(DOCS))
+        try:
+            cur = blob_hash(src)
+        except OSError:
+            # 손상 파일 1개가 검사 전체를 죽이지 않도록 격리 (정책상 exit 0은 유지)
+            for lang in LANGS:
+                rows.append((src_name, lang, "원본 읽기 실패"))
+            continue
         for lang in LANGS:
             variant = src.with_name(f"{src.stem}.{lang}.md")
             if not variant.exists():
                 status = "누락"
-            elif recorded_hash(variant) is None:
-                status = "ko_hash 없음"
-            elif recorded_hash(variant) != cur:
-                status = "뒤처짐"
             else:
-                status = "OK"
-            rows.append((src.name, lang, status))
+                try:
+                    rec, reason = recorded_hash(variant)
+                except (OSError, UnicodeDecodeError):
+                    rec, reason = None, "읽기 실패"
+                if rec is None:
+                    status = reason
+                elif rec != cur:
+                    status = "뒤처짐"
+                else:
+                    status = "OK"
+            rows.append((src_name, lang, status))
             if status != "OK" and gha:
                 target = variant.name if variant.exists() else src.name
-                print(f"::warning file=docs/{target}::{src.name} 번역({lang}) {status} — "
+                print(f"::warning file=docs/{target}::{src_name} 번역({lang}) {status} — "
                       f"translate-sync 스킬로 동기화하세요")
 
     print(f"{'원본':<18} {'lang':<5} 상태")

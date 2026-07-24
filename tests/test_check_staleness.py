@@ -55,6 +55,54 @@ def test_main_skips_translation_files(tmp_path, monkeypatch, capsys):
     assert "index.md" in out
 
 
+def test_conflicting_updated_dates_fail_check(tmp_path, monkeypatch, capsys):
+    """헤더('최종 갱신')와 푸터('updated')가 다르면 조용히 계산하지 말고 exit 1."""
+    (tmp_path / "index.md").write_text(
+        "# 홈\n_최종 갱신: 2026-01 · owner: x_\n\n본문\n\n_owner: x · updated: 2026-07 · volatility: 낮음_\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(cs, "DOCS", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["check_staleness.py", "--check", "--today", "2026-07"])
+    exited = None
+    try:
+        cs.main()
+    except SystemExit as e:
+        exited = e.code
+    assert exited == 1
+    assert "불일치" in capsys.readouterr().out
+
+
+def test_single_digit_month_and_field_boundary(tmp_path):
+    """단일 자리 월(2026-7)은 허용하고, last_updated: 같은 다른 필드는 매칭하지 않는다."""
+    p = tmp_path / "a.md"
+    p.write_text("# 제목\n_owner: x · updated: 2026-7 · volatility: 낮음_\nlast_updated: 2020-01\n", encoding="utf-8")
+    updated, volatility, conflict = cs.parse_page(p)
+    assert updated == (2026, 7)
+    assert volatility == "낮음"
+    assert conflict is False  # last_updated:는 수집되지 않아야 불일치도 아님
+
+
+def test_rglob_subdir_and_unreadable(tmp_path, monkeypatch, capsys):
+    """하위 디렉터리 문서도 검사되고, 손상 파일은 트레이스백 없이 격리 보고된다."""
+    sub = tmp_path / "intro"
+    sub.mkdir()
+    (sub / "page.md").write_text(
+        "# 소개\n_updated: 2026-07 · volatility: 낮음_\n", encoding="utf-8"
+    )
+    (tmp_path / "broken.md").write_bytes(b"\xff\xfe not utf8")
+    monkeypatch.setattr(cs, "DOCS", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["check_staleness.py", "--check", "--today", "2026-07"])
+    exited = None
+    try:
+        cs.main()  # 손상 파일은 '메타데이터 문제'로 집계 → exit 1 (조용한 통과 금지)
+    except SystemExit as e:
+        exited = e.code
+    assert exited == 1
+    out = capsys.readouterr().out
+    assert "intro/page.md" in out or "intro\\page.md" in out
+    assert "읽기 실패" in out
+
+
 def test_inject_into_existing_variants(tmp_path, monkeypatch):
     """stale 한국어 페이지의 언어 변형에도 해당 언어 배지가 주입된다."""
     (tmp_path / "index.md").write_text(
