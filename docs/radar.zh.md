@@ -1,5 +1,5 @@
 ---
-ko_hash: 026bab16f8923b50ce259438e0b8e935060a9b0c
+ko_hash: c7ff513ffc5426c3442747870ef04e7669f14899
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 | **智能体物理安全标准**（RoboGuard 等） | 🔵 Research | ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **AgentCore Payments / Agent Registry（首尔）** | 🟡 Preview/未提供 | 首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-07-25 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-07-26 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -70,6 +70,7 @@ _最终更新: 2026-07 · owner: comeddy · volatility: 高_
 | **1X NEO 25-DoF 腱驱动手** | 🟡 预订 | 手部规格（25-DoF·腱驱动·触觉皮肤）经官方确认 `[3]`，"5 天售罄 1 万台"为 1X 自述、无独立验证。**经验证的消费者交付为 0**（$20k 或 $499/月，出货计划于 2026 下半年）—— 早期家庭部署为遥操作试点，自主率为 1X 自估 60~70% | 实际交付验证 + 自主操作验证案例 |
 | **Anthropic × Physical Intelligence 收购传闻** | ⚪ Hype·路线图 | 2026-07-19 社交媒体传闻（Scoble 推文）扩散 → The Information 报道称"2026 年春确有收购谈判"，但并非实际收购，PI CEO Karol Hausman 已在内部 Slack 否认 `[4]` —— 仅有二手报道，双方均无一手确认。PI 基于 GCP 运行（参见 pillar-2）且为 OpenAI 投资组合公司，若交易成立将影响云与竞争格局 | 任一方官方声明（交易达成或明确否定） |
 | **AXIS**（社区驱动的可增长机器人操作数据引擎） | 🔵 Research | 确认实存（arXiv 2607.21588，2026-07-23）`[4]` —— 8 所大学 + Axis Robotics 共同研发，通过浏览器端 MuJoCo-WASM 遥操作众包后在 IsaacSim 中增强。仅限 Franka 机械臂仿真（207 项任务·5 万+条轨迹），报告称 π0.5 持续预训练使 LIBERO-Plus 提升 +4.9pp（自报基准，无独立复现）。作者自己将 sim-to-real 列为未来工作 —— 未在真实硬件上验证 | peer-review + 真实硬件 sim-to-real 验证 |
+| **AMD Ryzen AI Embedded X100 + Kria AI SoM**（机器人边缘计算，对标 NVIDIA Jetson Thor） | ⚪ Hype·路线图 | AMD 官方发布 `[4]`（2026-07-24）—— Zen 5 CPU·RDNA 3.5 iGPU·XDNA 2 NPU 统一内存（最高 128GB），宣称 FP32 性能为 Jetson Thor 的 3 倍、多线程性能为 Intel 的 2.1 倍（自报基准，无独立验证）。SOM 量产计划于 2026 年 Q4（Arbor/Congatec 等），目前机器人边缘部署案例为 0 | 独立基准测试 + 实际机器人边缘部署案例 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 

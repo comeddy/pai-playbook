@@ -51,7 +51,7 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 | **에이전트 물리안전 표준** (RoboGuard 등) | 🔵 Research | ISO는 물리만, LLM 의미 위험 표준 부재 | 표준화 진전 |
 | **AgentCore Payments / Agent Registry (서울)** | 🟡 Preview/미제공 | 서울 리전 미제공 (도쿄 Agent Registry ✅) | 서울 리전 확장 |
 
-## 🆕 최신 스캔 유입 (2026-07-25 · 1차 검증 완료 2026-07-21)
+## 🆕 최신 스캔 유입 (2026-07-26 · 1차 검증 완료 2026-07-21)
 
 <!-- 자동 스캔(arXiv/웹) 유입분. 2026-07-21 1차 출처 검증 완료(검증 에이전트 4식, 공식 발표·arXiv 원문 대조) — 승격 0건, 정정 6건. THE FILTER 통과 전까지 고객 제안 사용 금지. 정기 갱신은 scripts/radar_scan.md 참고. -->
 
@@ -67,6 +67,7 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 | **1X NEO 25-DoF 텐던 구동 핸드** | 🟡 예약 판매 | 핸드 사양(25-DoF·텐던·촉각 스킨) 공식 확인 `[3]`, "5일 1만 대 완판"은 1X 자체 주장·독립 검증 없음. **검증된 소비자 인도 0**($20k 또는 $499/월, 출하 2026 후반 계획) — 초기 가정 배치는 텔레옵 파일럿, 자율률은 1X 추정 60~70% | 실인도 검증 + 자율 매니퓰레이션 사례 |
 | **Anthropic × Physical Intelligence 인수설** | ⚪ Hype·로드맵 | 2026-07-19 소셜 루머(Scoble 트윗) 확산 → The Information 보도로는 "2026년 봄 인수 논의는 있었다"는 정황이나 실제 인수는 아님, PI CEO Karol Hausman이 사내 Slack에서 부인 `[4]` — 2차 보도뿐, 당사자 1차 확인 없음. PI는 GCP 기반(pillar-2 참고)·OpenAI 투자사라 성사 시 클라우드·경쟁 지형에 영향 큼 | 당사자 공식 발표(거래 성사 또는 명시적 종결) 확인 |
 | **AXIS** (커뮤니티 기반 성장형 로봇 매니퓰레이션 데이터 엔진) | 🔵 Research | 실존 확인(arXiv 2607.21588, 2026-07-23) `[4]` — 8개 대학 + Axis Robotics 공동, 브라우저 MuJoCo-WASM 텔레옵으로 크라우드소싱 후 IsaacSim 증강. Franka 시뮬레이션 전용(207 태스크·5만+ 궤적), π0.5 continual pretraining으로 LIBERO-Plus +4.9%p 보고(자체 벤치, 독립 재현 없음). sim-to-real은 저자 스스로 "향후 과제"로 명시 — 실기 미검증 | peer-review + 실기 sim-to-real 검증 |
+| **AMD Ryzen AI Embedded X100 + Kria AI SoM** (로봇 엣지 컴퓨트, NVIDIA Jetson Thor 대항) | ⚪ Hype·로드맵 | AMD 공식 발표 `[4]`(2026-07-24) — Zen 5 CPU·RDNA 3.5 iGPU·XDNA 2 NPU 통합 메모리(최대 128GB), Jetson Thor 대비 FP32 3배·Intel 대비 멀티스레드 2.1배 주장(자체 벤치, 독립 검증 없음). SOM 양산은 2026 Q4 예정(Arbor/Congatec 등), 현재 로봇 엣지 배포 사례 0 | 독립 벤치마크 + 실제 로봇 엣지 배포 사례 |
 
 ## ⚰️ 폐기됨 — 제안 금지 (기록 보존용)
 

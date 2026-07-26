@@ -1,5 +1,5 @@
 ---
-ko_hash: 026bab16f8923b50ce259438e0b8e935060a9b0c
+ko_hash: c7ff513ffc5426c3442747870ef04e7669f14899
 ---
 # Radar — Queue / Watchlist
 
@@ -54,7 +54,7 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 | **Agent physical-safety standards** (RoboGuard, etc.) | 🔵 Research | ISO covers physical only; no standard for LLM semantic risk | Progress on standardization |
 | **AgentCore Payments / Agent Registry (Seoul)** | 🟡 Preview/unavailable | Not available in Seoul region (Tokyo Agent Registry ✅) | Seoul region expansion |
 
-## 🆕 Latest scan intake (2026-07-25 · primary verification completed 2026-07-21)
+## 🆕 Latest scan intake (2026-07-26 · primary verification completed 2026-07-21)
 
 <!-- Intake from automated scan (arXiv/web). Primary-source verification completed 2026-07-21 (4 verification agents, cross-checked against official announcements and arXiv originals) — 0 promoted, 6 corrected. Do not use in customer proposals until they pass THE FILTER. See scripts/radar_scan.md for the periodic refresh. -->
 
@@ -70,6 +70,7 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 | **1X NEO 25-DoF tendon-driven hand** | 🟡 Pre-order | Hand specs (25 DoF, tendon-driven, tactile skin) officially confirmed `[3]`; "10k pre-orders sold out in 5 days" is 1X's own claim, not independently verified. **0 verified consumer deliveries** ($20k or $499/mo; shipments planned for late 2026) — early home placements are teleop pilots, and the autonomy rate is 1X's own estimate of 60–70% | Verified deliveries + validated autonomous manipulation case |
 | **Anthropic × Physical Intelligence acquisition rumor** | ⚪ Hype/roadmap | Social rumor (Scoble tweet) broke 2026-07-19 → The Information reported "acquisition talks did happen in spring 2026," but no actual acquisition; PI CEO Karol Hausman denied it internally on Slack `[4]` — secondary reporting only, no primary confirmation from either party. PI runs on GCP (see pillar-2) and is an OpenAI portfolio company, so a deal would matter for the cloud/competitive landscape | Official statement from either party (deal completed or explicitly off) |
 | **AXIS** (community-driven, growable robot-manipulation data engine) | 🔵 Research | Existence confirmed (arXiv 2607.21588, 2026-07-23) `[4]` — 8 universities + Axis Robotics; crowdsourced via browser-based MuJoCo-WASM teleoperation, then augmented in IsaacSim. Simulation-only on a Franka arm (207 tasks, 50k+ trajectories); reports +4.9pp on LIBERO-Plus from π0.5 continual pretraining (self-reported benchmark, no independent reproduction). Authors themselves list sim-to-real as future work — unvalidated on real hardware | peer review + real-hardware sim-to-real validation |
+| **AMD Ryzen AI Embedded X100 + Kria AI SoM** (robot edge compute, positioned against NVIDIA Jetson Thor) | ⚪ Hype/roadmap | AMD official announcement `[4]` (2026-07-24) — Zen 5 CPU, RDNA 3.5 iGPU, XDNA 2 NPU with unified memory (up to 128GB); claims 3x FP32 over Jetson Thor and 2.1x multithread over Intel (self-reported benchmarks, no independent validation). SOM mass production planned for Q4 2026 (Arbor, Congatec, etc.); 0 robot edge deployments today | Independent benchmark + real robot edge-deployment case |
 
 ## ⚰️ Retired — do not propose (kept for the record)
 
