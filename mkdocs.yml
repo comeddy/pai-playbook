@@ -22,6 +22,8 @@ nav:
 
 theme:
   name: material
+  custom_dir: overrides   # PWA 메타(main.html extrahead) — iPhone 홈 화면 standalone 앱
+  favicon: assets/icons/favicon.png
   language: ko
   palette:
     - media: "(prefers-color-scheme: light)"

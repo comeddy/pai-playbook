@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{#- PWA: iPhone '홈 화면에 추가' 시 주소창 없는 standalone 앱으로 열리게 하는 메타 —
+    아이콘·매니페스트는 docs/assets/, 색상은 테마 deep orange와 일치 -#}
+{% block extrahead %}
+  <link rel="manifest" href="{{ 'assets/site.webmanifest' | url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ 'assets/icons/apple-touch-icon.png' | url }}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PAI Playbook">
+  <meta name="theme-color" content="#ff5722">
+{% endblock %}
