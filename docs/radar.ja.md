@@ -1,5 +1,5 @@
 ---
-ko_hash: 12aa9c68963842ac2c80a0c3aed6e7805a41f5da
+ko_hash: d9f429a22b7169dd04e5a4022773ba6fa3f7bf9f
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,7 +55,7 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 | **エージェント物理安全標準**（RoboGuard など） | 🔵 Research | ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **AgentCore Payments / Agent Registry（ソウル）** | 🟡 Preview/未提供 | ソウルリージョン未提供（東京 Agent Registry ✅） | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-07-28 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-07-29 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
@@ -63,14 +63,13 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 |---|---|---|---|
 | **RLWRLD RLDX-1**（デクステリティ優先のファウンデーションモデル） | 🟡 Preview | 重み公開は事実だが ⚠️「オープンソース」ではない —— RLWRLD Model License v1.0（非商用・商用配布禁止）`[3]`、7~9B のバリアント群（主力 8.1B）。RoboCasa/LIBERO/SIMPLER の SOTA は自社発表で独立再現なし（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) が EC2 上で n=5 スモーク実測を提供 — 完全なベンチマーク再現ではありません）。AWS との関連はシミュレーションベンチマーキングに限定（非商用ライセンスが明示的に許可する用途、商用ポジショニング不可）—— 「関連の根拠なし」表記を更新（2026-07）。実顧客への展開 0 | 独立ベンチマーク再現 + 検証済みの展開事例 |
 | **NEURA Robotics × AWS 戦略的協業** | ⚪ Hype・ロードマップ | AWS 公式プレスで確認、2026-04-21 `[1]` —— AWS が primary cloud、Neuraverse ホスティング + NEURA Gym・SageMaker 連携を明記。ただしフルフィルメントセンターは原文で「展開機会を探る（explore）」段階 —— 実展開は 0。NEURA Gym RWTH Aachen などの訓練網拡大発表（2026-07-22）には AWS への言及なし —— 別トラックとして観察 | AWS インフラの実使用事例公開 + フルフィルメントセンター展開の検証 |
-| **TACO**（VLA 後処理の自己修正器としての Tactile World Model） | 🔵 Research | 実在確認（arXiv 2607.02840、2026-07-03）`[1]` —— 4 機関の共同研究（「単一ラボ」表記を訂正）、Franka 実機 6 タスクで絶対 +44%p。peer-review 未採択 | peer-review + 独立再現 |
 | **Actuator Reality Shaping**（zero-shot sim-to-real） | 🔵 Research | 実在確認（arXiv 2607.02205、2026-07-02）`[1]` —— 実機ハードウェア 4 種（ヒューマノイド歩行を含む）で検証、要約と原文が一致（訂正なし）。peer-review 未採択 | peer-review + 独立再現 |
 | **AgiBot 累計 1.5 万号機 + Longcheer ライン配備** | 🟡 パイロット | 累計**量産ラインオフ 1.5 万台**であり、15,000 号機は**顧客 Longcheer の工場に納品**（「自社工場」表記を訂正）+ 品質検査 1 ラインに G2 を 8 台 `[3]`。6 日間 99.99% デモ（作業 64,828 回・生産 17,625 個）は事実だがベンダー管理環境で独立検証なし；データセットのライセンスは [pillar-1](pillar-1.md) | 独立した生産性検証 + ライン拡大 |
-| **1X NEO 25-DoF テンドン駆動ハンド** | 🟡 予約販売 | ハンド仕様（25-DoF・テンドン駆動・触覚スキン）は公式確認 `[3]`、「5 日で 1 万台完売」は 1X の自社主張で独立検証なし。**検証済みの消費者納品は 0**（$20k または $499/月、出荷は 2026 年後半予定）—— 初期の家庭配備はテレオペのパイロットで、自律率は 1X 推定 60~70% | 実納品の検証 + 自律マニピュレーション事例 |
+| **AgiBot World 2026**（オープンソースの実世界ロボットマニピュレーションデータセット、5 段階で順次公開） | 🔵 Research | AgiBot 公式公開（HuggingFace `agibot-world/AgiBotWorld2026`、2026-07）`[4]` —— AgiBot G2 実機で収集した 100% 実世界データ、5 つの研究軸（模倣学習など）を段階的に公開予定、第 1 弾は商業・サービス環境で数百時間分。ライセンス・商用利用条件は未確認、独立ベンチマーク・学習検証事例なし。上記「AgiBot 累計 1.5 万号機」項目（生産量）とは別に、データ軸のみを扱う | ライセンス確定 + 独立した学習検証（SOTA 再現）事例 |
 | **AXIS**（コミュニティ駆動の成長型ロボット操作データエンジン） | 🔵 Research | 実在確認（arXiv 2607.21588、2026-07-23）`[4]` —— 8 大学 + Axis Robotics の共同、ブラウザベース MuJoCo-WASM テレオペでクラウドソーシングし IsaacSim で拡張。Franka アームでのシミュレーションのみ（207 タスク・5 万+ 軌跡）、π0.5 の continual pretraining で LIBERO-Plus が +4.9pp 向上と報告（自己申告ベンチマーク、独立再現なし）。著者自身が sim-to-real を今後の課題として明記 —— 実機では未検証 | peer-review + 実機での sim-to-real 検証 |
 | **AMD Ryzen AI Embedded X100 + Kria AI SoM**（ロボット向けエッジコンピュート、NVIDIA Jetson Thor に対抗） | ⚪ Hype・ロードマップ | AMD 公式発表 `[4]`（2026-07-24）—— Zen 5 CPU・RDNA 3.5 iGPU・XDNA 2 NPU による統合メモリ（最大 128GB）、Jetson Thor 比 FP32 3 倍・Intel 比マルチスレッド 2.1 倍を主張（自社ベンチマーク、独立検証なし）。SOM 量産は 2026 年 Q4 予定（Arbor・Congatec など）、現時点でロボットへのエッジ展開事例は 0 | 独立ベンチマーク + 実ロボットへのエッジ展開事例 |
 | **NVIDIA Cosmos 3 Edge**（Cosmos 3 系列のオンデバイス 4B ワールドモデル+ポリシー） | 🟡 Preview | NVIDIA 公式発表 `[4]`（2026-07-21、HuggingFace/developer ブログ）—— Jetson Thor 上のオンデバイス推論で 15Hz のリアルタイムロボットポリシー制御（自己申告ベンチマーク、独立検証なし）、Cosmos 3 Edge Policy（DROID）で pick-and-place のファインチューニングに対応。既存の「Cosmos 3 を sim-to-real 学習源として」項目（🖥️ セクション）とは別に、エッジ展開の軸のみを扱う —— AMD Ryzen AI Embedded X100（本表）と並行して競合構図を観察。現時点で実際の量産ロボット展開事例は 0 | 独立ベンチマーク + 実際の量産ロボット展開事例 |
-| **Samsung RX ヒューマノイドロボット事業部**（元現代自動車グループ・Boston Dynamics EVP の Lee Dong-kun が率いる） | ⚪ Hype・ロードマップ | Samsung 公式確認 `[1]`（2026-07-21、CEO TM Roh 直属で RX 事業部が発足）—— 米国・中国・日本に研究拠点を設立する計画。投資規模「13 兆ウォン（約 $13B）」および「工場でロボットブレイン AI を既にテスト済み」は二次報道のみ `[4]`、Samsung による一次確認なし。製品・量産ロードマップは未公開、AWS との関連は言及なし | 製品・量産ロードマップの公開 + クラウド/AWS インフラ連携の確認 |
+| **Mistral AI Robostral Navigate**（8B・単眼 RGB カメラのロボットナビゲーション VLA） | 🟡 Preview | Mistral 公式発表（2026-07-08）`[4]` —— ファウンデーションモデルラボの Physical AI への新規参入（競合構図の観察対象）。完全にシミュレーションのみで学習（約 40 万軌跡・6,000 シーン）、LiDAR・深度センサーなしで単眼 RGB+言語指示のみでナビゲーション、R2R-CE unseen 76.6% は自己申告ベンチマークで独立再現なし。実機展開・顧客事例は 0、AWS Bedrock との連携は未確認 | 独立した実機検証 + AWS マッピング（Bedrock など）の確認 + 実展開事例 |
 | **NVIDIA Halos for Robotics**（フルスタックのロボット安全システム） | 🟡 Preview | NVIDIA 公式発表 `[1]`（2026-06-23）—— IGX Thor+Holoscan Sensor Bridge+Halos OS+ANAB 認定検査ラボで構成。最初の採用企業 Agility が Amazon・GXO・Schaeffler・Toyota の現場で導入中 `[4]`（導入の事実は NVIDIA・Agility の発表のみで、第三者による安全認証の完了事例はまだない —— Inspection Lab は「認証準備支援」段階）。既存の「エージェント物理安全標準」項目（🔗 セクション、LLM の意味的リスク中心）とは別に、ハードウェアの機能安全軸のみを扱う。AWS との直接連携の発表なし（Amazon はここでは Agility の最終顧客であり AWS サービス連携ではない） | 第三者機関（TÜV など）による実際の認証事例 + AWS インフラ連携の確認 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
