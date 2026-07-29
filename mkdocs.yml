@@ -138,6 +138,8 @@ extra:
       link: https://www.linkedin.com/in/zerojin/
     - icon: fontawesome/brands/bluesky
       link: https://bsky.app/profile/pai-playbook.bsky.social
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/paiplaybook
     - icon: material/history
       link: https://github.com/comeddy/pai-playbook/blob/main/CHANGELOG.md
       name: Changelog (변경 이력)
