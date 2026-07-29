@@ -1,5 +1,5 @@
 ---
-ko_hash: f77fbe7041c8e96aee49ce46edadacd01be042a3
+ko_hash: 5976261cadc445c55ac7963c0e84d1417adad9ed
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -7,7 +7,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 中（数据集版本·
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: Physical AI 的瓶颈不是模型架构，而是**机器人行为数据的量·多样性·质量**。真实数据（遥操作）昂贵又缓慢，开放数据集则是**许可证的雷区**，合成数据到现在才成为实战管道。SA 的角色是为客户设计"从哪里获取数据，以及在 AWS 上用什么管道把它变成可训练的形态"。
+> **L0 TL;DR**: Physical AI 的瓶颈不是模型架构，而是**机器人行为数据的量·多样性·质量**。真实数据（遥操作[^teleop]）昂贵又缓慢，开放数据集则是**许可证的雷区**，合成数据[^sdg]到现在才成为实战管道。SA 的角色是为客户设计"从哪里获取数据，以及在 AWS 上用什么管道把它变成可训练的形态"。
 
 ---
 
@@ -15,9 +15,9 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 1. **"机器人学习数据去哪找？开放数据集直接用可以吗？"** → [开放机器人数据集](#1-开放机器人数据集--ga)（⚠️ 先看许可证）
 2. **"真实数据不足，能用合成数据来补吗？"** → [合成数据生成](#2-合成数据生成--isaac-sim-sdg--replicator--ga)、[Cosmos WFM](#3-nvidia-cosmos-world-foundation-models--ga开放模型--aws-为自托管算力)
-3. **"我们机器人的遥操作/ROS bag 数据怎么在 AWS 上做成训练管道？"** → [数据管道参考架构](#4-机器人学习数据管道参考架构--ga)、[格式 & 转换](#5-数据格式--转换--lerobot-v3--rlds--ga)
+3. **"我们机器人的遥操作/ROS bag[^rosbag] 数据怎么在 AWS 上做成训练管道？"** → [数据管道参考架构](#4-机器人学习数据管道参考架构--ga)、[格式 & 转换](#5-数据格式--转换--lerobot-v3--rlds--ga)
 
-> **稳定原理（几乎不变）**: 机器人数据分为 (1) **遥操作/真实数据** —— 高质量·高成本·低多样性，(2) **合成/仿真数据** —— 低成本·高多样性·存在域间差异，(3) **开放/网络数据** —— 用于预训练·注意许可证。实战配方几乎总是 **"开放数据集预训练 → 合成数据增强 → 少量真实演示微调"** 的三段混合。
+> **稳定原理（几乎不变）**: 机器人数据分为 (1) **遥操作/真实数据** —— 高质量·高成本·低多样性，(2) **合成/仿真数据** —— 低成本·高多样性·存在域间差异[^gap]，(3) **开放/网络数据** —— 用于预训练·注意许可证。实战配方几乎总是 **"开放数据集预训练 → 合成数据增强 → 少量真实演示微调"** 的三段混合。
 
 ```mermaid
 graph LR
@@ -32,13 +32,13 @@ graph LR
 
 ## 1. 开放机器人数据集  🟢 GA
 
-**L0 TL;DR**: VLA 预训练的事实标准语料库。但由于**每个数据集的许可证决定了能否商业分发**，如果客户计划将模型权重商用发布，许可证审计就是第一步。
+**L0 TL;DR**: VLA[^vla] 预训练的事实标准语料库。但由于**每个数据集的许可证决定了能否商业分发**，如果客户计划将模型权重商用发布，许可证审计就是第一步。
 
 **客户需求/问题**: "没有从零收集数据的余力，想用公开的先起步。但这个用在商用产品上可以吗？"
 
 **解决方案概览** `[1]`:
 
-- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** —— ~1M+ 回合(episode)、22 个 embodiment、整合了 60 余个数据集。OpenVLA·RT-2-X·π0·GR00T 的标准预训练语料库。⚠️ **许可证按组件不同**（多为 CC-BY-4.0/Apache-2.0，部分为 research-only）→ 商用则必须按组件进行法务审计。`[1]` arxiv 2310.08864
+- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** —— ~1M+ 回合(episode)[^traj]、22 个 embodiment[^embodiment]、整合了 60 余个数据集。OpenVLA·RT-2-X·π0·GR00T 的标准预训练语料库。⚠️ **许可证按组件不同**（多为 CC-BY-4.0/Apache-2.0，部分为 research-only）→ 商用则必须按组件进行法务审计。`[1]` arxiv 2310.08864
 - **[DROID](https://droid-dataset.github.io/)** —— 76,000 条遥操作轨迹、350 小时、Franka。许可证 **CC-BY-4.0**（对商业友好）。微调阶段的标准。`[1]` droid-dataset.github.io
 - **[AgiBot World](https://agibot-world.com/)** —— ~1,003,672 条轨迹（~43.8TB），规模最大。⚠️ **许可证 CC BY-NC-SA 4.0 = 非商业**。研究·基准测试可以，但**不可分发商用衍生权重**。`[1]` arxiv 2503.06669
 - **[RoboMIND](https://arxiv.org/abs/2412.13877)** —— 107k 条轨迹、4 个 embodiment、含 5k 失败演示（珍贵）。许可证需在 HF 上再次确认。`[1]` arxiv 2412.13877
@@ -86,7 +86,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 **客户需求/问题**: "我们工厂/仓库环境的数据几乎没有。标注成本也承受不起。能用仿真生成吗？"
 
-**解决方案概览** `[1]`: 用 [Isaac Sim](https://developer.nvidia.com/isaac/sim) 的 **Replicator** 以域随机化（光照·纹理·姿态·相机）为基础，通过编程方式（Replicator Functional API）生成合成图像/分割/边界框。Isaac Sim **5.0 GA（2025-08 SIGGRAPH）**、开源（GitHub）、5.1 GA，6.0 为 GTC'26 早期开发者版本（2026-03/06）。`[1]` developer.nvidia.com, github.com/isaac-sim
+**解决方案概览** `[1]`: 用 [Isaac Sim](https://developer.nvidia.com/isaac/sim) 的 **Replicator** 以域随机化[^dr]（光照·纹理·姿态·相机）为基础，通过编程方式（Replicator Functional API）生成合成图像/分割/边界框。Isaac Sim **5.0 GA（2025-08 SIGGRAPH）**、开源（GitHub）、5.1 GA，6.0 为 GTC'26 早期开发者版本（2026-03/06）。`[1]` developer.nvidia.com, github.com/isaac-sim
 
 **AWS 映射**: 在 EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 实例上运行 Isaac Sim + 用 **AWS Batch** 并行化大规模离线数据生成作业 + 存入 S3。用 NICE DCV 进行远程流传输（→ 参见 [pillar-3](pillar-3.md)）。
 
@@ -110,7 +110,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 ## 3. NVIDIA Cosmos World Foundation Models  🟢 GA（开放模型 · AWS 为自托管算力）
 
-**L0 TL;DR**: 预测·生成物理世界的基础模型，用来制作仿真资产·未来帧·行为仿真以做数据增强。因为是开放权重，**可在 AWS 算力（EKS/Batch/G7e）上自托管** —— 但 ⚠️ AWS 并非 NVIDIA 指定的 Cosmos 托管主机（→ [pillar-3](pillar-3.md)）。"用世界模型生成的数据来训练可实际部署的策略"也仍处于早期采用者阶段。
+**L0 TL;DR**: 预测·生成物理世界的基础模型[^wfm]，用来制作仿真资产·未来帧·行为仿真以做数据增强。因为是开放权重，**可在 AWS 算力（EKS/Batch/G7e）上自托管** —— 但 ⚠️ AWS 并非 NVIDIA 指定的 Cosmos 托管主机（→ [pillar-3](pillar-3.md)）。"用世界模型生成的数据来训练可实际部署的策略"也仍处于早期采用者阶段。
 
 **客户需求/问题**: "无法逐一制作仿真器场景。想自动生成多样的现实场景。"
 
@@ -173,7 +173,7 @@ graph LR
 
 ## 5. 数据格式 & 转换 — LeRobot v3 / RLDS  🟢 GA
 
-**L0 TL;DR**: 机器人数据的两种主导格式是 **RLDS**（基于 TFDS，VLA 训练管道原生消费）与 **LeRobotDataset v3**（Parquet+MP4，HF 生态互换标准）。**ROS 2 bag → 训练格式的转换没有标准工具，需要定制**，而这正是 AWS 管道的机会。
+**L0 TL;DR**: 机器人数据的两种主导格式[^fmt]是 **RLDS**（基于 TFDS，VLA 训练管道原生消费）与 **LeRobotDataset v3**（Parquet+MP4，HF 生态互换标准）。**ROS 2 bag → 训练格式的转换没有标准工具，需要定制**，而这正是 AWS 管道的机会。
 
 **客户需求/问题**: "我们的数据是 ROS 2 bag，但 VLA 训练代码要 RLDS/LeRobot。怎么转换？"
 
@@ -238,3 +238,16 @@ graph LR
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 中（数据集版本·大小在折叠块中为高）· sources: [1] 官方/论文, [3] 厂商博客, [4] 未经验证_
+
+<!-- 용어 각주 -->
+
+[^vla]: **VLA (Vision-Language-Action)** —— 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^teleop]: **遥操作（teleoperation）** —— 由人通过 VR 控制器·主导臂等远程操控机器人并记录示范动作的数据采集方式。质量最高，但人的时间会直接变成成本。🎥 [Stanford Mobile ALOHA 遥操作演示](https://www.youtube.com/watch?v=mnLVbwxSdNM)
+[^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** —— 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^traj]: **回合(episode)/轨迹（trajectory）** —— 机器人从开始到结束执行一个任务的一次完整记录。它是观测（相机·传感器）与动作（关节命令）的时间序列组合，是机器人学习数据的基本单位。
+[^embodiment]: **embodiment（具身形态）** —— 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂与人形机器人的 embodiment 不同，数据·策略无法直接移植。
+[^dr]: **域随机化（Domain Randomization）** —— 随机改变仿真中的光照·纹理·物体位置·相机角度来生成数据，让模型学到在任何环境下都通用的特征。这是缩小 sim-to-real 差距的代表性处方。
+[^gap]: **域间差异（domain gap）** —— 由于仿真与现实的差异（物理·视觉），在仿真中表现良好的模型在实物上性能下降的现象。处理这一差距的方法论是 [pillar-4](pillar-4.md) 的 sim-to-real。
+[^wfm]: **世界基础模型（WFM, World Foundation Model）** —— 为预测·生成物理世界的下一场景而训练的大型模型。通过文本·视频提示生成物理上合理的视频·场景，用于增强机器人学习数据。🎥 [NVIDIA Cosmos 介绍](https://www.youtube.com/watch?v=9Uch931cDx8)
+[^rosbag]: **ROS bag（rosbag2）** —— 机器人操作系统 ROS 2 将话题（传感器·命令流）整体录制的标准日志格式。它是机器人公司原始数据的事实默认形态，但无法直接用于训练，需要转换。
+[^fmt]: **RLDS / LeRobotDataset** —— 机器人学习数据的两大存储格式。RLDS 基于 TensorFlow Datasets，主要 VLA 训练代码可直接读取；LeRobotDataset（v3）是基于 Parquet+MP4 的 Hugging Face 生态标准。

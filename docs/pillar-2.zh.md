@@ -1,5 +1,5 @@
 ---
-ko_hash: eeb773269acf9568ec38a0dee57fcd910f45fbb2
+ko_hash: a08ce6b48c427263264177ba6c7b271e4eae7129
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -7,7 +7,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高（模型版本·许
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: 大多数客户**不会从零训练 VLA —— 而是微调开放基础模型**。所以核心问题有三个: (1) 用哪个模型（**许可证决定能否商用**），(2) LoRA 还是全量微调（决定 GPU 规模），(3) 在 AWS 上怎么跑（HyperPod + EC2 GPU）。用 Trainium 训练 VLA 的公开案例尚不存在。
+> **L0 TL;DR**: 大多数客户**不会从零训练 VLA[^vla] —— 而是微调[^ft]开放基础模型**。所以核心问题有三个: (1) 用哪个模型（**许可证决定能否商用**），(2) LoRA[^lora] 还是全量微调（决定 GPU 规模），(3) 在 AWS 上怎么跑（HyperPod + EC2 GPU）。用 Trainium 训练 VLA 的公开案例尚不存在。
 
 ---
 
@@ -17,7 +17,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 2. **"微调需要几张 GPU？用 LoRA 一张就够吗？"** → [VLA 微调实战](#2-vla-微调实战-lora-vs-full-ft--ga)
 3. **"在 AWS 上怎么跑 VLA 训练？用 HyperPod？能用 Trainium 吗？"** → [AWS 训练栈](#3-aws-训练栈-hyperpod--ec2-gpu--ga)
 
-> **稳定原理（几乎不变）**: (1) 几乎没有客户会预训练前沿 VLA —— **微调才是 99% 的现实**。(2) VLA 正收敛于 **System 2（慢速 VLM 规划器，5~10Hz）+ System 1（快速动作策略，50~200Hz）** 结构，而这种双层结构决定了"推理放云上还是边缘"（→ [pillar-4](pillar-4.md)、[decisions](decisions.md)）。(3) 连续动作生成以 **flow-matching / diffusion action head + action chunking** 为标准。
+> **稳定原理（几乎不变）**: (1) 几乎没有客户会预训练前沿 VLA —— **微调才是 99% 的现实**。(2) VLA 正收敛于 **System 2[^sys]（慢速 VLM[^vlm] 规划器，5~10Hz）+ System 1（快速动作策略，50~200Hz）** 结构，而这种双层结构决定了"推理放云上还是边缘"（→ [pillar-4](pillar-4.md)、[decisions](decisions.md)）。(3) 连续动作生成以 **flow-matching[^flow] / diffusion action head + action chunking[^chunk]** 为标准。
 
 ---
 
@@ -39,7 +39,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 - **发布商用产品** → 优先 π（Apache-2.0）或 OpenVLA（MIT）。GR00T 仅在确定许可证后使用。
 - **人形全身控制** → GR00T 最完整（SONIC controller、Cosmos Reason 骨干），但需确认许可证。
-- **研究·PoC** → 全部可用，按性能/embodiment 适配性选择。
+- **研究·PoC** → 全部可用，按性能/embodiment[^embodiment] 适配性选择。
 
 ```mermaid
 graph TD
@@ -215,3 +215,14 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 高（模型版本·许可证·GPU 需求·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证_
+
+<!-- 용어 각주 -->
+
+[^vla]: **VLA (Vision-Language-Action)** —— 以摄像头图像（Vision）和自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。说"把杯子拿起来"，它就生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^ft]: **微调（fine-tuning）** —— 用自己任务·机器人的少量数据，对经过大规模数据预训练的模型进行追加训练。相比从零训练，数据·GPU 可节省数十~数百倍。
+[^lora]: **LoRA (Low-Rank Adaptation)** —— 冻结原始权重、只额外训练小型低秩（low-rank）矩阵的轻量微调技术。GPU 内存需求仅为全量微调的几分之一，一张 24GB 级 GPU 即可完成。
+[^sys]: **System 2 / System 1** —— 把认知科学中"慢思考 / 快反应"的区分应用到机器人架构的结构。System 2 由慢速大模型负责规划（5~10Hz），System 1 由小型策略负责实时控制（50~200Hz）。它是决定推理放云上还是边缘的标准。
+[^flow]: **flow-matching / diffusion action head** —— 通过从噪声逐步细化来生成机器人连续动作的扩散（diffusion）·流（flow）系输出模块。能表达平滑且多模态（multi-modal）的动作分布，是最新 VLA 的标准动作头。
+[^chunk]: **action chunking** —— 不是每步只预测 1 个动作，而是一次预测未来多步动作（块）的技术。减少推理次数，更容易满足实时控制频率。
+[^vlm]: **VLM (Vision-Language Model)** —— 同时理解图像和文本的模型（例如看照片回答问题）。VLA 通常以 VLM 作为"眼睛+大脑"骨干，并在其上加装动作头。
+[^embodiment]: **embodiment（具身形态）** —— 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂和人形机器人的 embodiment 也不同，数据·策略无法原样移植。

@@ -4,7 +4,7 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음(버전·인스�
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
-> **L0 TL;DR**: 로봇 정책은 실기체보다 시뮬레이션에서 수천 배 빠르고 안전하게 학습된다. AWS에서의 정답 스택은 **EC2 G6e/G7e(RTX GPU) + NVIDIA Isaac Sim AMI(GUI) + AWS Batch(헤드리스 대규모 RL)** 다. ⚠️ **AWS RoboMaker는 2025-09-10 종료** — 절대 제안하지 말 것. Isaac Sim 최신 GA는 **5.1.0**이며 6.0은 아직 Preview다.
+> **L0 TL;DR**: 로봇 정책은 실기체보다 시뮬레이션에서 수천 배 빠르고 안전하게 학습된다. AWS에서의 정답 스택은 **EC2 G6e/G7e(RTX GPU) + NVIDIA Isaac Sim AMI(GUI) + AWS Batch(헤드리스[^headless] 대규모 RL[^rl])** 다. ⚠️ **AWS RoboMaker는 2025-09-10 종료** — 절대 제안하지 말 것. Isaac Sim 최신 GA는 **5.1.0**이며 6.0은 아직 Preview다.
 
 ---
 
@@ -14,7 +14,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 2. **"수천~수만 환경 병렬 RL을 클라우드에서 어떻게 스케일하죠?"** → [대규모 병렬 RL](#2-대규모-병렬-rl-시뮬레이션--ga)
 3. **"NVIDIA에 다 걸어야 하나요? 오픈소스 대안은요?"** → [오픈소스 대안](#3-오픈소스-시뮬레이터-대안--ga---일부-hype), [decisions](decisions.md)
 
-> **안정 원리 (잘 안 바뀜)**: 시뮬레이션의 가치는 (1) **병렬성**(GPU 한 장에서 수천~8천 환경 동시), (2) **안전**(실기체 파손 없이 위험 정책 탐색), (3) **자동 라벨**(완벽한 ground truth). 렌더링에는 **RTX(RT Core) GPU가 필수**라 A100/H100(컴퓨트 GPU)은 Isaac Sim 렌더링에 못 쓴다 — 이건 인스턴스 선택을 좌우하는 불변 제약.
+> **안정 원리 (잘 안 바뀜)**: 시뮬레이션의 가치는 (1) **병렬성**(GPU 한 장에서 수천~8천 환경 동시)[^parallel], (2) **안전**(실기체 파손 없이 위험 정책 탐색), (3) **자동 라벨**(완벽한 ground truth)[^gt]. 렌더링에는 **RTX(RT Core)[^rtcore] GPU가 필수**라 A100/H100(컴퓨트 GPU)은 Isaac Sim 렌더링에 못 쓴다 — 이건 인스턴스 선택을 좌우하는 불변 제약.
 
 ---
 
@@ -47,13 +47,13 @@ graph LR
 
 **의사결정 기준**:
 
-- GUI 씬 편집·SDG → G6e(비용) 또는 G7e(성능·큰 씬).
+- GUI 씬 편집·SDG[^sdg] → G6e(비용) 또는 G7e(성능·큰 씬).
 - 대규모 헤드리스 RL → 2번(AWS Batch).
 - 오픈소스로 충분한지 → 3번 / [decisions](decisions.md).
 
 **고객 사례**: 사례 대기 (Unitree H1 학습은 [pillar-2](pillar-2.md)의 AWS 블로그 참조).
 
-**➡️ 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/comeddy/pai-sim-isaaclab)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
+**➡️ 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/comeddy/pai-sim-isaaclab)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO[^ppo] 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
 
 **🔗 관련 자산**:
 
@@ -186,7 +186,7 @@ graph TD
 
 **L0 TL;DR**: **AWS IoT TwinMaker는 폐기되지 않았다**(3rd-party "discontinued" 주장은 오정보 — SiteWise 유지보수와 혼동). GA이고 신규 고객 오픈 상태지만 **신기능이 느리다**(저속도). Omniverse도 AWS Marketplace AMI로 GA.
 
-**고객 니즈/문제**: "설비/공장 디지털 트윈을 만들어 로봇 시뮬레이션·모니터링과 연결하고 싶다."
+**고객 니즈/문제**: "설비/공장 디지털 트윈[^dtwin]을 만들어 로봇 시뮬레이션·모니터링과 연결하고 싶다."
 
 **솔루션 개요** `[1]`:
 
@@ -203,7 +203,7 @@ graph TD
 
 **AWS 매핑**: IoT TwinMaker + IoT SiteWise + Omniverse AMI(G6e/G7e).
 
-**의사결정 기준**: 설비 데이터 통합·경량 트윈 → TwinMaker(단 저속도 감안). 포토리얼 시뮬레이션·USD 협업 → Omniverse AMI.
+**의사결정 기준**: 설비 데이터 통합·경량 트윈 → TwinMaker(단 저속도 감안). 포토리얼 시뮬레이션·USD[^usd] 협업 → Omniverse AMI.
 
 **고객 사례**: 사례 대기.
 
@@ -229,3 +229,15 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 높음 (버전·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증. GitHub 릴리스 연도 일부 재확인 권고._
+
+<!-- 용어 각주 -->
+
+[^rl]: **강화학습(RL, Reinforcement Learning)** — 보상 신호를 최대화하도록 시행착오로 정책을 학습시키는 방법. 시뮬레이션에서 수천 개 환경을 병렬로 돌려 로봇 보행 같은 제어 정책을 빠르게 학습한다.
+[^parallel]: **병렬 환경(parallel environments)** — GPU 한 장에서 같은 시뮬레이션 환경을 수천 개 복제해 동시에 돌리는 기법. 강화학습의 경험 수집 속도를 수천 배 끌어올리는 시뮬레이션의 핵심 가치다.
+[^headless]: **헤드리스(headless)** — GUI 화면 없이 시뮬레이터를 실행하는 모드. 렌더링 오버헤드가 없어 대규모 병렬 학습 잡은 헤드리스로 돌린다.
+[^rtcore]: **RT Core / RTX GPU** — 레이트레이싱 전용 하드웨어(RT Core)를 탑재한 NVIDIA GPU 계열. Isaac Sim의 사실적 렌더링에 필수라서, RT Core가 없는 A100/H100은 렌더링용으로 쓸 수 없다.
+[^gt]: **ground truth(정답 라벨)** — 학습·평가의 기준이 되는 정확한 정답 데이터. 시뮬레이션에서는 모든 물체의 위치·분할 마스크를 엔진이 이미 알고 있으므로 완벽한 라벨이 자동으로 생성된다.
+[^usd]: **USD (Universal Scene Description)** — 픽사(Pixar)가 만든 3D 씬 기술 표준 포맷. Isaac Sim의 씬·로봇·자산이 모두 USD로 기술되며, Omniverse 생태계의 공용 언어다.
+[^sdg]: **합성 데이터 생성(SDG, Synthetic Data Generation)** — 시뮬레이터로 학습용 이미지와 주석(라벨)을 자동 생성하는 기법. 라벨링 비용이 0에 수렴하는 것이 최대 장점. 🎥 [Isaac Sim Replicator SDG 튜토리얼](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^ppo]: **PPO (Proximal Policy Optimization)** — 가장 널리 쓰이는 강화학습 알고리즘. 안정적으로 수렴해 로봇 보행 학습의 사실상 기본값이다.
+[^dtwin]: **디지털 트윈(digital twin)** — 실제 공장·창고·로봇을 물리적으로 충실하게 본뜬 가상 복제본. 실환경을 건드리지 않고 정책 학습·검증·시나리오 실험을 할 수 있게 한다.

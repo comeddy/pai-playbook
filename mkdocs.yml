@@ -53,6 +53,7 @@ theme:
 markdown_extensions:
   - tables
   - attr_list
+  - footnotes             # 용어 각주([^1]) — 필러 페이지 하단 용어 설명에 사용
   - md_in_html            # <details markdown="1"> 내부 마크다운(표) 렌더링에 필수
   - admonition
   - pymdownx.details

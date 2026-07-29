@@ -1,5 +1,5 @@
 ---
-ko_hash: cda4dfe395c70e9fc8b88c1fc8dfa23f95efc448
+ko_hash: ff43cd0b632953b1db539867a88d54308f245b7a
 ---
 # Pillar 3 — Simulation
 
@@ -7,7 +7,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high (versions/instance
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: Robot policies are trained thousands of times faster and more safely in simulation than on real hardware. The right stack on AWS is **EC2 G6e/G7e (RTX GPU) + NVIDIA Isaac Sim AMI (GUI) + AWS Batch (headless large-scale RL)**. ⚠️ **AWS RoboMaker was discontinued 2025-09-10** — never propose it. The latest Isaac Sim GA is **5.1.0**, and 6.0 is still Preview.
+> **L0 TL;DR**: Robot policies are trained thousands of times faster and more safely in simulation than on real hardware. The right stack on AWS is **EC2 G6e/G7e (RTX GPU) + NVIDIA Isaac Sim AMI (GUI) + AWS Batch (headless[^headless] large-scale RL[^rl])**. ⚠️ **AWS RoboMaker was discontinued 2025-09-10** — never propose it. The latest Isaac Sim GA is **5.1.0**, and 6.0 is still Preview.
 
 ---
 
@@ -17,7 +17,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 2. **"How do I scale thousands~tens of thousands of parallel RL environments in the cloud?"** → [Large-scale parallel RL](#2-large-scale-parallel-rl-simulation--ga)
 3. **"Do I have to bet everything on NVIDIA? What about open-source alternatives?"** → [Open-source alternatives](#3-open-source-simulator-alternatives--ga---partly-hype), [decisions](decisions.md)
 
-> **Stable principle (rarely changes)**: the value of simulation is (1) **parallelism** (thousands~8,000 environments at once on a single GPU), (2) **safety** (exploring risky policies without breaking real hardware), and (3) **automatic labeling** (perfect ground truth). Rendering **requires an RTX (RT Core) GPU**, so A100/H100 (compute GPUs) cannot be used for Isaac Sim rendering — an invariant constraint that governs instance selection.
+> **Stable principle (rarely changes)**: the value of simulation is (1) **parallelism** (thousands~8,000 environments at once on a single GPU)[^parallel], (2) **safety** (exploring risky policies without breaking real hardware), and (3) **automatic labeling** (perfect ground truth)[^gt]. Rendering **requires an RTX (RT Core)[^rtcore] GPU**, so A100/H100 (compute GPUs) cannot be used for Isaac Sim rendering — an invariant constraint that governs instance selection.
 
 ---
 
@@ -50,13 +50,13 @@ graph LR
 
 **Decision criteria**:
 
-- GUI scene editing · SDG → G6e (cost) or G7e (performance, large scenes).
+- GUI scene editing · SDG[^sdg] → G6e (cost) or G7e (performance, large scenes).
 - Large-scale headless RL → item 2 (AWS Batch).
 - Whether open source suffices → item 3 / [decisions](decisions.md).
 
 **Customer case**: case pending (for Unitree H1 training, see the AWS blog in [pillar-2](pillar-2.md)).
 
-**➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/comeddy/pai-sim-isaaclab)** (Terraform provisions g6e → Isaac Lab quadruped PPO headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
+**➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/comeddy/pai-sim-isaaclab)** (Terraform provisions g6e → Isaac Lab quadruped PPO[^ppo] headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
 **🔗 Related assets**:
 
@@ -189,7 +189,7 @@ graph TD
 
 **L0 TL;DR**: **AWS IoT TwinMaker was not discontinued** (the third-party "discontinued" claim is misinformation, confused with SiteWise maintenance). It is GA and open to new customers, but **new features are slow** (low velocity). Omniverse is also GA via an AWS Marketplace AMI.
 
-**Customer need/problem**: "We want to build a digital twin of our equipment/factory and connect it to robot simulation and monitoring."
+**Customer need/problem**: "We want to build a digital twin[^dtwin] of our equipment/factory and connect it to robot simulation and monitoring."
 
 **Solution overview** `[1]`:
 
@@ -206,7 +206,7 @@ graph TD
 
 **AWS mapping**: IoT TwinMaker + IoT SiteWise + Omniverse AMI (G6e/G7e).
 
-**Decision criteria**: equipment data integration · lightweight twin → TwinMaker (given the low velocity). Photoreal simulation · USD collaboration → Omniverse AMI.
+**Decision criteria**: equipment data integration · lightweight twin → TwinMaker (given the low velocity). Photoreal simulation · USD[^usd] collaboration → Omniverse AMI.
 
 **Customer case**: case pending.
 
@@ -232,3 +232,15 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: high (versions · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified. Some GitHub release years advised to re-confirm._
+
+<!-- 용어 각주 -->
+
+[^rl]: **Reinforcement learning (RL)** — Trains a policy through trial and error to maximize a reward signal. In simulation, thousands of parallel environments let robots learn control policies such as locomotion quickly.
+[^parallel]: **Parallel environments** — Replicating the same simulation environment thousands of times on a single GPU and running them simultaneously. Speeds up RL experience collection by thousands of times — the core value of simulation.
+[^headless]: **Headless** — Running the simulator without a GUI. No rendering overhead, so large-scale parallel training jobs run headless.
+[^rtcore]: **RT Core / RTX GPU** — The NVIDIA GPU family with dedicated ray-tracing hardware (RT Cores). Required for Isaac Sim's photoreal rendering, so A100/H100 (no RT Cores) cannot be used for rendering.
+[^gt]: **Ground truth** — The exact answer data that serves as the reference for training and evaluation. In simulation the engine already knows every object's position and segmentation mask, so perfect labels are generated automatically.
+[^usd]: **USD (Universal Scene Description)** — The standard 3D scene description format created by Pixar. Isaac Sim scenes, robots, and assets are all described in USD; it is the common language of the Omniverse ecosystem.
+[^sdg]: **Synthetic Data Generation (SDG)** — Automatically generating training images and annotations (labels) with a simulator. Its biggest advantage: labeling cost converges to zero. 🎥 [Isaac Sim Replicator SDG tutorial](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^ppo]: **PPO (Proximal Policy Optimization)** — The most widely used reinforcement learning algorithm. Converges stably and is the de facto default for robot locomotion training.
+[^dtwin]: **Digital twin** — A physically faithful virtual replica of a real factory, warehouse, or robot. Enables policy training, validation, and scenario experiments without touching the real environment.

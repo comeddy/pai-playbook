@@ -4,7 +4,7 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 중간(엣지 HW·모�
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
-> **L0 TL;DR**: 정직한 한 줄 — **로코모션(보행) sim-to-real은 사실상 풀렸고 배포됐다**(ANYmal, Agility Digit). **조작(manipulation) sim-to-real은 아직 아니다** — 프런티어 VLA조차 시뮬레이션이 아니라 **실기체 데이터로 학습**하고, 시뮬레이션은 주로 평가/적응에 쓴다. 그리고 아키텍처 불변 법칙: **30~100Hz 실시간 제어는 반드시 엣지(온보드)**, 고수준 계획만 클라우드로.
+> **L0 TL;DR**: 정직한 한 줄 — **로코모션(보행)[^loco] sim-to-real[^s2r]은 사실상 풀렸고 배포됐다**(ANYmal, Agility Digit). **조작(manipulation)[^manip] sim-to-real은 아직 아니다** — 프런티어 VLA조차 시뮬레이션이 아니라 **실기체 데이터로 학습**하고, 시뮬레이션은 주로 평가/적응에 쓴다. 그리고 아키텍처 불변 법칙: **30~100Hz 실시간 제어는 반드시 엣지(온보드)**, 고수준 계획만 클라우드로.
 
 ---
 
@@ -14,21 +14,21 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 2. **"실시간 제어인데 추론을 엣지에 둬야 하나요, 클라우드에 둬야 하나요?"** → [엣지 추론 배포](#1-엣지-추론-배포--ga), [decisions](decisions.md)
 3. **"실기체 배포 전에 정책이 잘 되는지 어떻게 검증하죠?"** → [정책 평가](#5-정책-평가--배포-전-검증--research-미해결-문제)
 
-> **안정 원리 (잘 안 바뀜)**: sim-to-real gap의 정체는 (1) **동역학 불일치**(시뮬 물리 ≠ 실물, 특히 접촉), (2) **시각 불일치**(렌더 ≠ 실카메라). 로코모션이 잘 되는 이유는 로봇+지면이라는 단순·관대한 동역학이고, 조작이 안 되는 이유는 접촉 동역학이 까다롭기 때문. 검증된 처방은 **선택적 도메인 랜덤화(DR) + 시스템 식별(SysID) + RL을 MPC 위에 얹는 하이브리드**.
+> **안정 원리 (잘 안 바뀜)**: sim-to-real gap의 정체는 (1) **동역학[^dyn] 불일치**(시뮬 물리 ≠ 실물, 특히 접촉), (2) **시각 불일치**(렌더 ≠ 실카메라). 로코모션이 잘 되는 이유는 로봇+지면이라는 단순·관대한 동역학이고, 조작이 안 되는 이유는 접촉 동역학이 까다롭기 때문. 검증된 처방은 **선택적 도메인 랜덤화(DR)[^dr] + 시스템 식별(SysID)[^sysid] + RL을 MPC[^mpc] 위에 얹는 하이브리드**.
 
 ---
 
 ## 1. 엣지 추론 배포  🟢 GA
 
-**L0 TL;DR**: 실시간 제어 추론은 로봇 온보드에서 돌려야 한다. 2026년 표준 경로 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX/TensorRT**. ⚠️ **SageMaker Edge Manager는 2024-04 종료** — 대체 없다, ONNX+Greengrass로 간다.
+**L0 TL;DR**: 실시간 제어 추론은 로봇 온보드에서 돌려야 한다. 2026년 표준 경로 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**. ⚠️ **SageMaker Edge Manager는 2024-04 종료** — 대체 없다, ONNX+Greengrass로 간다.
 
-**고객 니즈/문제**: "학습은 클라우드에서 했는데, 로봇에 어떻게 배포하고 OTA로 관리하나? 실시간인데 클라우드 왕복은 안 되지 않나?"
+**고객 니즈/문제**: "학습은 클라우드에서 했는데, 로봇에 어떻게 배포하고 OTA[^ota]로 관리하나? 실시간인데 클라우드 왕복은 안 되지 않나?"
 
 **솔루션 개요** `[1]/[3]`:
 
 - **엣지 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**, T5000 프로덕션 모듈 유통. Jetson Orin 계열도 여전히 생산(저전력). 스펙·가격은 아래 접힌 블록.
 - **배포/관리**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/커스텀 컴포넌트, ML 추론 컴포넌트, MQTT 텔레메트리. ⚠️ **Greengrass V1은 2026-06-01 지원 종료** — V2만 현행.
-- **모델 경로**: PyTorch 정책 → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** 엔진 컴파일(온디바이스 가속)로 실시간 제어 지연 예산(sub-20~30ms급)을 맞추는 것이 표준 경로. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)(엣지 컴파일)는 존속하며 Greengrass와 조합.
+- **모델 경로**: PyTorch 정책 → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** 엔진 컴파일(온디바이스 가속)로 실시간 제어 지연 예산(sub-20~30ms급)[^latency]을 맞추는 것이 표준 경로. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)(엣지 컴파일)는 존속하며 Greengrass와 조합.
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — 콘솔·API 전부 불가. **드롭인 매니지드 후속 서비스 없음**. AWS 권고 = ONNX + Greengrass V2 (+ 선택적 SageMaker Neo).
 
 ```mermaid
@@ -198,3 +198,16 @@ graph LR
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 지표는 높음) · sources: [1] 공식/논문, [2] AWS 내부 검증, [3] 벤더/PR, [4] 미검증. 2026 arXiv 프리프린트는 비심사(illustrative)._
+
+<!-- 용어 각주 -->
+
+[^s2r]: **sim-to-real** — 시뮬레이션에서 학습한 정책을 실제 로봇으로 옮기는 것, 또는 그 방법론. 시뮬레이션과 현실의 물리·시각 차이(도메인 갭) 때문에 그냥 옮기면 성능이 무너진다. 🎥 [NVIDIA Isaac GR00T N1 소개](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^loco]: **로코모션(locomotion)** — 보행·주행 등 로봇이 이동하는 능력. 로봇과 지면의 접촉이라는 상대적으로 단순한 물리 덕분에 sim-to-real이 가장 먼저 풀린 영역이다.
+[^manip]: **매니퓰레이션(manipulation, 조작)** — 물체를 집고 옮기고 조립하는 능력. 손끝 접촉의 물리가 복잡해 sim-to-real이 아직 풀리지 않은 영역이다.
+[^dyn]: **동역학(dynamics)** — 힘·마찰·충돌이 만드는 운동의 물리. 특히 물체를 쥘 때의 접촉 동역학은 시뮬레이터가 정확히 재현하기 가장 어려운 부분이다.
+[^dr]: **도메인 랜덤화(Domain Randomization)** — 시뮬레이션의 물리 파라미터·조명·질감을 무작위로 바꿔가며 학습시켜, 정책이 어떤 환경 변화에도 견디게 만드는 기법. sim-to-real의 대표 처방.
+[^sysid]: **시스템 식별(SysID, System Identification)** — 실물 로봇의 물리 파라미터(마찰·질량·모터 응답)를 측정해 시뮬레이터를 실물에 맞게 보정하는 작업.
+[^mpc]: **MPC (Model Predictive Control)** — 짧은 미래를 반복 예측·최적화하며 제어하는 고전 제어 기법. 학습된 RL 정책을 MPC 위에 얹는 하이브리드가 검증된 처방으로 자리 잡았다.
+[^onnx]: **ONNX / TensorRT** — ONNX는 프레임워크 간 모델 교환 표준 포맷, TensorRT는 NVIDIA GPU용 추론 최적화 컴파일러. "PyTorch → ONNX → TensorRT" 변환이 엣지 실시간 추론의 표준 경로다.
+[^ota]: **OTA (Over-The-Air)** — 네트워크로 원격에서 로봇의 모델·소프트웨어를 갱신·배포하는 방식.
+[^latency]: **지연 예산(latency budget)** — 실시간 제어 루프가 허용하는 최대 추론 시간. 30~100Hz 제어면 한 사이클이 10~33ms이므로, 추론이 이 안에 끝나야 한다 — 클라우드 왕복이 불가능한 이유다.

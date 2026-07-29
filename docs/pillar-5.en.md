@@ -1,5 +1,5 @@
 ---
-ko_hash: bc6fff65fa54d83b3f5ddd5bca9e32e21a4c4221
+ko_hash: 3eaa37767ad4fcb8f429c4b186eb32e17cc7b01f
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -7,17 +7,17 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high (AgentCore feature
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: The layer where an LLM agent directs robots/equipment. This is **the pillar where AWS is strongest** — **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) is GA (2025-10) with full Seoul region support**, and **Policy (Cedar), which intercepts tool calls in real time, is also GA (2026-03)**. The canonical structure is the **System 2 (slow LLM planner, cloud) + System 1 (fast control, edge)** split. ⚠️ Amazon DeepFleet is not an "LLM agent" but a warehouse robot coordination foundation model, so don't confuse them.
+> **L0 TL;DR**: The layer where an LLM agent[^agent] directs robots/equipment. This is **the pillar where AWS is strongest** — **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) is GA (2025-10) with full Seoul region support**, and **Policy (Cedar), which intercepts tool calls[^tool] in real time, is also GA (2026-03)**. The canonical structure is the **System 2[^sys] (slow LLM planner, cloud) + System 1 (fast control, edge)** split. ⚠️ Amazon DeepFleet is not an "LLM agent" but a warehouse robot coordination foundation model, so don't confuse them.
 
 ---
 
 ## Top 3 questions customers ask most in this pillar
 
 1. **"Does directing robots/equipment with an LLM agent actually work? What does AWS have?"** → [Bedrock AgentCore](#1-amazon-bedrock-agentcore--ga)
-2. **"How do you put an agent on a real-time robot? Even offline at the edge?"** → [Edge agentic orchestration](#3-edge-agentic-orchestration--preview-reference-architecture)
-3. **"When an agent controls a physical system, how is safety guaranteed?"** → [Safety & guardrails](#5-safety--guardrails--ga-agent-layer---unsolved-physical-semantic-gap)
+2. **"How do you put an agent on a real-time robot? Even offline at the edge?"** → [Edge agentic orchestration](#3-edge-agentic-orchestration--preview-reference-architecture)[^orch]
+3. **"When an agent controls a physical system, how is safety guaranteed?"** → [Safety & guardrails](#5-safety--guardrails--ga-agent-layer---unsolved-physical-semantic-gap)[^guardrail]
 
-> **Stable principle (rarely changes)**: an agent does not "directly control a robot in real time." The agent handles **high-level planning and tool selection (System 2)**, while an edge policy handles **low-level real-time control (System 1)** (→ [pillar-2](pillar-2.md), [pillar-4](pillar-4.md)). What truly runs in production is (1) **warehouse fleet coordination** (DeepFleet, CoEvolution) and (2) **development/data workload orchestration** (OSMO); full-stack humanoid agents and MCP-robot connections are mostly research/demo.
+> **Stable principle (rarely changes)**: an agent does not "directly control a robot in real time." The agent handles **high-level planning and tool selection (System 2)**, while an edge policy handles **low-level real-time control (System 1)** (→ [pillar-2](pillar-2.md), [pillar-4](pillar-4.md)). What truly runs in production is (1) **warehouse fleet[^fleet] coordination** (DeepFleet, CoEvolution) and (2) **development/data workload orchestration** (OSMO); full-stack humanoid agents and MCP[^mcp]-robot connections are mostly research/demo.
 
 ---
 
@@ -40,7 +40,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 - Production agent (needs sessions · tools · permissions · observability) → **AgentCore Runtime + Gateway + Policy**.
 - Simple one-off inference → a direct Bedrock call suffices; AgentCore is overkill.
-- Multi-agent · A2A → Strands 1.0.
+- Multi-agent · A2A[^a2a] → Strands 1.0.
 - Offline · low-latency edge needed → item 3 (edge).
 
 **Customer case**: **AWS×SoftServe autonomous production line** (AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) — Hannover Messe 2026 **demo/showcase** ([1]/[3]).
@@ -202,3 +202,14 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_
+
+<!-- 용어 각주 -->
+
+[^agent]: **LLM agent** — Software in which a large language model plans on its own, selects and calls tools (APIs, robot skills), and carries out multi-step tasks. Unlike simple Q&A, the key point is that it "acts."
+[^orch]: **Orchestration** — The layer that coordinates and directs multiple agents, robots, and workflows as one system. It decides "who does what, and when" rather than controlling individual robots.
+[^sys]: **System 2 / System 1** — Cognitive science's "slow thinking / fast reaction" distinction applied to robot architecture. System 2 is a slow LLM planner that handles planning (cloud); System 1 is a small policy that handles real-time control (edge).
+[^tool]: **Tool calling** — The mechanism by which an agent calls external functions (APIs, robot skills) with a defined schema during reasoning. It is the agent's only path to affecting the physical world, so the safety gate (Policy) sits exactly at this point.
+[^mcp]: **MCP (Model Context Protocol)** — An open standard protocol connecting agents to tools and data sources. Often likened to "USB-C for agents"; experiments exposing robot skills as MCP servers are growing.
+[^guardrail]: **Guardrail** — A safety mechanism that constrains an agent's inputs/outputs and behavior with policies. In physical systems this means blocking dangerous tool calls and limiting the range of actions.
+[^fleet]: **Fleet coordination** — Scheduling and route allocation for a large group of robots as one system. Already production-proven at the hundreds-to-thousands scale, as with warehouse robots.
+[^a2a]: **A2A (Agent-to-Agent)** — A multi-agent communication approach in which different agents collaborate via a standard protocol.

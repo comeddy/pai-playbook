@@ -1,5 +1,5 @@
 ---
-ko_hash: cda4dfe395c70e9fc8b88c1fc8dfa23f95efc448
+ko_hash: ff43cd0b632953b1db539867a88d54308f245b7a
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -7,7 +7,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高（版本·实例经
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: 机器人策略在仿真中比在真实机体上训练快数千倍且更安全。AWS 上的正解栈是 **EC2 G6e/G7e(RTX GPU) + NVIDIA Isaac Sim AMI(GUI) + AWS Batch(无头大规模 RL)**。⚠️ **AWS RoboMaker 已于 2025-09-10 终止** —— 绝对不要提议。Isaac Sim 最新 GA 为 **5.1.0**，6.0 仍为 Preview。
+> **L0 TL;DR**: 机器人策略在仿真中比在真实机体上训练快数千倍且更安全。AWS 上的正解栈是 **EC2 G6e/G7e(RTX GPU) + NVIDIA Isaac Sim AMI(GUI) + AWS Batch(无头[^headless]大规模 RL[^rl])**。⚠️ **AWS RoboMaker 已于 2025-09-10 终止** —— 绝对不要提议。Isaac Sim 最新 GA 为 **5.1.0**，6.0 仍为 Preview。
 
 ---
 
@@ -17,7 +17,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 2. **"数千~数万环境的并行 RL 在云上怎么扩展？"** → [大规模并行 RL](#2-大规模并行-rl-仿真--ga)
 3. **"必须全押 NVIDIA 吗？开源替代方案呢？"** → [开源替代方案](#3-开源仿真器替代方案--ga---部分-hype)、[decisions](decisions.md)
 
-> **稳定原理（几乎不变）**: 仿真的价值在于 (1) **并行性**（一张 GPU 上同时数千~8 千环境），(2) **安全**（无需损坏真实机体即可探索危险策略），(3) **自动标注**（完美的 ground truth）。渲染**必须用 RTX(RT Core) GPU**，所以 A100/H100（计算 GPU）无法用于 Isaac Sim 渲染 —— 这是左右实例选择的不变约束。
+> **稳定原理（几乎不变）**: 仿真的价值在于 (1) **并行性**（一张 GPU 上同时数千~8 千环境）[^parallel]，(2) **安全**（无需损坏真实机体即可探索危险策略），(3) **自动标注**（完美的 ground truth）[^gt]。渲染**必须用 RTX(RT Core)[^rtcore] GPU**，所以 A100/H100（计算 GPU）无法用于 Isaac Sim 渲染 —— 这是左右实例选择的不变约束。
 
 ---
 
@@ -50,13 +50,13 @@ graph LR
 
 **决策标准**:
 
-- GUI 场景编辑·SDG → G6e（成本）或 G7e（性能·大场景）。
+- GUI 场景编辑·SDG[^sdg] → G6e（成本）或 G7e（性能·大场景）。
 - 大规模无头 RL → 第 2 项（AWS Batch）。
 - 开源是否够用 → 第 3 项 / [decisions](decisions.md)。
 
 **客户案例**: 案例待定（Unitree H1 训练见 [pillar-2](pillar-2.md) 的 AWS 博客）。
 
-**➡️ 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
+**➡️ 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO[^ppo] 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
 
 **🔗 相关资产**:
 
@@ -189,7 +189,7 @@ graph TD
 
 **L0 TL;DR**: **AWS IoT TwinMaker 并未被废弃**（第三方"discontinued"主张是误信息 —— 与 SiteWise 的维护混淆）。它是 GA 且对新客户开放，但**新功能推进缓慢**（低速度）。Omniverse 也以 AWS Marketplace AMI 形式 GA。
 
-**客户需求/问题**: "想制作设备/工厂数字孪生，并与机器人仿真·监控连接。"
+**客户需求/问题**: "想制作设备/工厂数字孪生[^dtwin]，并与机器人仿真·监控连接。"
 
 **解决方案概览** `[1]`:
 
@@ -206,7 +206,7 @@ graph TD
 
 **AWS 映射**: IoT TwinMaker + IoT SiteWise + Omniverse AMI(G6e/G7e)。
 
-**决策标准**: 设备数据整合·轻量孪生 → TwinMaker（但需考虑低速度）。照片级仿真·USD 协作 → Omniverse AMI。
+**决策标准**: 设备数据整合·轻量孪生 → TwinMaker（但需考虑低速度）。照片级仿真·USD[^usd] 协作 → Omniverse AMI。
 
 **客户案例**: 案例待定。
 
@@ -232,3 +232,15 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 高（版本·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证。建议再确认部分 GitHub 发布年份。_
+
+<!-- 용어 각주 -->
+
+[^rl]: **强化学习（RL, Reinforcement Learning）** — 通过试错学习策略以最大化奖励信号的方法。在仿真中并行运行数千个环境，可快速学习机器人行走等控制策略。
+[^parallel]: **并行环境（parallel environments）** — 在一张 GPU 上把同一仿真环境复制数千份并同时运行的技术。将强化学习的经验收集速度提升数千倍，是仿真的核心价值。
+[^headless]: **无头（headless）** — 不显示 GUI 画面运行仿真器的模式。没有渲染开销，因此大规模并行训练作业以无头方式运行。
+[^rtcore]: **RT Core / RTX GPU** — 搭载光线追踪专用硬件（RT Core）的 NVIDIA GPU 系列。Isaac Sim 的逼真渲染必需，因此没有 RT Core 的 A100/H100 无法用于渲染。
+[^gt]: **ground truth（真值标签）** — 作为训练·评估基准的准确答案数据。在仿真中，引擎已知所有物体的位置·分割掩码，因此可自动生成完美标签。
+[^usd]: **USD (Universal Scene Description)** — 皮克斯（Pixar）创建的 3D 场景描述标准格式。Isaac Sim 的场景·机器人·资产均以 USD 描述，是 Omniverse 生态的通用语言。
+[^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** — 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^ppo]: **PPO (Proximal Policy Optimization)** — 使用最广泛的强化学习算法。收敛稳定，是机器人行走学习的事实默认值。
+[^dtwin]: **数字孪生（digital twin）** — 对真实工厂·仓库·机器人进行物理上忠实复刻的虚拟副本。无需触碰真实环境即可进行策略训练·验证·场景实验。

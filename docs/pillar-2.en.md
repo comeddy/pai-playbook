@@ -1,5 +1,5 @@
 ---
-ko_hash: eeb773269acf9568ec38a0dee57fcd910f45fbb2
+ko_hash: a08ce6b48c427263264177ba6c7b271e4eae7129
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -7,7 +7,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high (model versions/li
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: Most customers **do not train a VLA from scratch — they fine-tune an open foundation model**. So the core questions are three: (1) which model to use (**the license governs commercial use**), (2) LoRA or full fine-tuning (determines GPU scale), and (3) how to run it on AWS (HyperPod + EC2 GPU). There is still no public case of training a VLA on Trainium.
+> **L0 TL;DR**: Most customers **do not train a VLA[^vla] from scratch — they fine-tune[^ft] an open foundation model**. So the core questions are three: (1) which model to use (**the license governs commercial use**), (2) LoRA[^lora] or full fine-tuning (determines GPU scale), and (3) how to run it on AWS (HyperPod + EC2 GPU). There is still no public case of training a VLA on Trainium.
 
 ---
 
@@ -17,7 +17,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 2. **"How many GPUs do I need for fine-tuning? Can LoRA do it on one?"** → [VLA fine-tuning in practice](#2-vla-fine-tuning-in-practice-lora-vs-full-ft--ga)
 3. **"How do I run VLA training on AWS? With HyperPod? Can I use Trainium?"** → [AWS training stack](#3-aws-training-stack-hyperpod--ec2-gpu--ga)
 
-> **Stable principle (rarely changes)**: (1) Almost no customer pretrains a frontier VLA — **fine-tuning is 99% of reality**. (2) VLA is converging on a **System 2 (slow VLM planner, 5~10Hz) + System 1 (fast action policy, 50~200Hz)** structure, and this dual structure decides "whether to put inference in the cloud or at the edge" (→ [pillar-4](pillar-4.md), [decisions](decisions.md)). (3) Continuous action generation standardizes on **flow-matching / diffusion action head + action chunking**.
+> **Stable principle (rarely changes)**: (1) Almost no customer pretrains a frontier VLA — **fine-tuning is 99% of reality**. (2) VLA is converging on a **System 2[^sys] (slow VLM[^vlm] planner, 5~10Hz) + System 1 (fast action policy, 50~200Hz)** structure, and this dual structure decides "whether to put inference in the cloud or at the edge" (→ [pillar-4](pillar-4.md), [decisions](decisions.md)). (3) Continuous action generation standardizes on **flow-matching[^flow] / diffusion action head + action chunking[^chunk]**.
 
 ---
 
@@ -39,7 +39,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 - **Commercial product launch** → prefer π (Apache-2.0) or OpenVLA (MIT). GR00T only after the license is confirmed.
 - **Full-body humanoid control** → GR00T is the most complete (SONIC controller, Cosmos Reason backbone), but confirm the license.
-- **Research/PoC** → all usable; choose by performance/embodiment fit.
+- **Research/PoC** → all usable; choose by performance/embodiment[^embodiment] fit.
 
 ```mermaid
 graph TD
@@ -215,3 +215,14 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: high (model versions · licenses · GPU requirements · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified_
+
+<!-- 용어 각주 -->
+
+[^vla]: **VLA (Vision-Language-Action)** — a foundation model that takes camera images (Vision) and natural-language instructions (Language) as input and directly outputs robot actions (Action). Say "pick up the cup" and it generates the joint movements. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^ft]: **fine-tuning** — additionally training a model pretrained on large-scale data with a small amount of data from your own task/robot. Saves tens to hundreds of times the data and GPU compared to training from scratch.
+[^lora]: **LoRA (Low-Rank Adaptation)** — a lightweight fine-tuning technique that freezes the original weights and trains only small additional low-rank matrices. GPU memory demand is a fraction of full fine-tuning, so a single 24GB-class GPU is enough.
+[^sys]: **System 2 / System 1** — the cognitive-science "slow thinking / fast reaction" distinction applied to robot architecture. System 2 is a slow large model that plans (5~10Hz); System 1 is a small policy that runs real-time control (50~200Hz). This becomes the criterion for whether inference goes to the cloud or the edge.
+[^flow]: **flow-matching / diffusion action head** — an output module in the diffusion/flow family that generates a robot's continuous actions by gradually refining them from noise. It can express smooth, multi-modal action distributions, making it the standard action head of modern VLAs.
+[^chunk]: **action chunking** — predicting a chunk of several future action steps at once instead of one action per step. Reduces the number of inference calls, making it easier to meet real-time control frequencies.
+[^vlm]: **VLM (Vision-Language Model)** — a model that understands images and text together (e.g., answering questions about a photo). A VLA typically uses a VLM as its "eyes + brain" backbone and puts an action head on top.
+[^embodiment]: **embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.

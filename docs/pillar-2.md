@@ -4,7 +4,7 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음(모델 버전·
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
-> **L0 TL;DR**: 대부분의 고객은 **VLA를 밑바닥부터 학습하지 않는다 — 오픈 파운데이션 모델을 파인튜닝**한다. 그래서 핵심 질문은 세 가지다: (1) 어느 모델을 쓸 것인가(**라이선스가 상용 여부를 좌우**), (2) LoRA냐 풀 파인튜닝이냐(GPU 규모 결정), (3) AWS에서 어떻게 돌릴 것인가(HyperPod + EC2 GPU). Trainium으로 VLA를 학습한 공개 사례는 아직 없다.
+> **L0 TL;DR**: 대부분의 고객은 **VLA[^vla]를 밑바닥부터 학습하지 않는다 — 오픈 파운데이션 모델을 파인튜닝[^ft]**한다. 그래서 핵심 질문은 세 가지다: (1) 어느 모델을 쓸 것인가(**라이선스가 상용 여부를 좌우**), (2) LoRA[^lora]냐 풀 파인튜닝이냐(GPU 규모 결정), (3) AWS에서 어떻게 돌릴 것인가(HyperPod + EC2 GPU). Trainium으로 VLA를 학습한 공개 사례는 아직 없다.
 
 ---
 
@@ -14,7 +14,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 2. **"파인튜닝에 GPU 몇 장 필요하죠? LoRA면 한 장으로 되나요?"** → [VLA 파인튜닝 실전](#2-vla-파인튜닝-실전-lora-vs-full-ft--ga)
 3. **"AWS에서 VLA 학습을 어떻게 돌리죠? HyperPod로? Trainium 써도 되나요?"** → [AWS 학습 스택](#3-aws-학습-스택-hyperpod--ec2-gpu--ga)
 
-> **안정 원리 (잘 안 바뀜)**: (1) 프런티어 VLA를 사전학습하는 고객은 거의 없다 — **파인튜닝이 99%의 현실**. (2) VLA는 **System 2(느린 VLM 플래너, 5~10Hz) + System 1(빠른 액션 정책, 50~200Hz)** 구조로 수렴 중이며, 이 이중 구조가 "추론을 클라우드에 둘지 엣지에 둘지"를 결정한다(→ [pillar-4](pillar-4.md), [decisions](decisions.md)). (3) 연속 액션 생성은 **flow-matching / diffusion action head + action chunking**이 표준.
+> **안정 원리 (잘 안 바뀜)**: (1) 프런티어 VLA를 사전학습하는 고객은 거의 없다 — **파인튜닝이 99%의 현실**. (2) VLA는 **System 2[^sys](느린 VLM[^vlm] 플래너, 5~10Hz) + System 1(빠른 액션 정책, 50~200Hz)** 구조로 수렴 중이며, 이 이중 구조가 "추론을 클라우드에 둘지 엣지에 둘지"를 결정한다(→ [pillar-4](pillar-4.md), [decisions](decisions.md)). (3) 연속 액션 생성은 **flow-matching[^flow] / diffusion action head + action chunking[^chunk]**이 표준.
 
 ---
 
@@ -36,7 +36,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 - **상용 제품 출시** → π(Apache-2.0) 또는 OpenVLA(MIT) 우선. GR00T는 라이선스 확정 후에만.
 - **휴머노이드 전신 제어** → GR00T가 가장 완성형(SONIC controller, Cosmos Reason 백본), 단 라이선스 확인.
-- **연구·PoC** → 전부 사용 가능, 성능/embodiment 적합성으로 선택.
+- **연구·PoC** → 전부 사용 가능, 성능/embodiment[^embodiment] 적합성으로 선택.
 
 ```mermaid
 graph TD
@@ -212,3 +212,14 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 높음 (모델 버전·라이선스·GPU 요구·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증_
+
+<!-- 용어 각주 -->
+
+[^vla]: **VLA (Vision-Language-Action)** — 카메라 영상(Vision)과 자연어 지시(Language)를 입력받아 로봇의 동작(Action)을 직접 출력하는 파운데이션 모델. "컵을 집어"라고 말하면 관절 움직임을 생성하는 식. 🎥 [NVIDIA Isaac GR00T N1 소개](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^ft]: **파인튜닝(fine-tuning)** — 대규모 데이터로 사전학습된 모델을 자기 태스크·로봇의 소량 데이터로 추가 학습시키는 것. 밑바닥부터 학습하는 것보다 데이터·GPU가 수십~수백 배 절약된다.
+[^lora]: **LoRA (Low-Rank Adaptation)** — 원본 가중치는 얼려두고 작은 저랭크(low-rank) 행렬만 추가로 학습하는 경량 파인튜닝 기법. GPU 메모리 요구가 풀 파인튜닝의 수분의 1이라 24GB급 GPU 한 장으로도 가능하다.
+[^sys]: **System 2 / System 1** — 인지과학의 "느린 사고 / 빠른 반응" 구분을 로봇 아키텍처에 적용한 구조. System 2는 느린 대형 모델이 계획을(5~10Hz), System 1은 작은 정책이 실시간 제어를(50~200Hz) 맡는다. 추론을 클라우드에 둘지 엣지에 둘지를 가르는 기준이 된다.
+[^flow]: **flow-matching / diffusion action head** — 로봇의 연속 동작을 노이즈에서 점진적으로 다듬어 생성하는 확산(diffusion)·플로우 계열의 출력 모듈. 부드럽고 여러 가지 가능한(multi-modal) 동작 분포를 표현할 수 있어 최신 VLA의 표준 액션 헤드다.
+[^chunk]: **action chunking** — 매 스텝 동작 1개가 아니라 앞으로의 동작 여러 스텝(청크)을 한 번에 예측하는 기법. 추론 횟수를 줄여 실시간 제어 주파수를 맞추기 쉽게 한다.
+[^vlm]: **VLM (Vision-Language Model)** — 이미지와 텍스트를 함께 이해하는 모델(예: 사진을 보고 질문에 답함). VLA는 보통 VLM을 "눈+두뇌" 백본으로 쓰고 그 위에 액션 헤드를 얹는다.
+[^embodiment]: **embodiment(임바디먼트)** — 로봇의 물리적 형태·자유도·센서 구성. 같은 모델이라도 로봇 팔과 휴머노이드는 embodiment가 달라 데이터·정책을 그대로 이식할 수 없다.

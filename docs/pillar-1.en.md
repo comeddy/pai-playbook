@@ -1,5 +1,5 @@
 ---
-ko_hash: f77fbe7041c8e96aee49ce46edadacd01be042a3
+ko_hash: 5976261cadc445c55ac7963c0e84d1417adad9ed
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -7,7 +7,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: medium (dataset version
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: The bottleneck in Physical AI is not the model architecture but the **volume, diversity, and quality of robot behavior data**. Real data (teleoperation) is expensive and slow, open datasets are **a licensing minefield**, and synthetic data has only now become a practical pipeline. The SA's role is to design "where to get the data, and through which pipeline on AWS to turn it into a trainable form."
+> **L0 TL;DR**: The bottleneck in Physical AI is not the model architecture but the **volume, diversity, and quality of robot behavior data**. Real data (teleoperation[^teleop]) is expensive and slow, open datasets are **a licensing minefield**, and synthetic data[^sdg] has only now become a practical pipeline. The SA's role is to design "where to get the data, and through which pipeline on AWS to turn it into a trainable form."
 
 ---
 
@@ -15,9 +15,9 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 1. **"Where do I get robot learning data? Can I just use open datasets?"** → [Open robot datasets](#1-open-robot-datasets--ga) (⚠️ check the license first)
 2. **"I'm short on real data — can I fill the gap with synthetic data?"** → [Synthetic data generation](#2-synthetic-data-generation--isaac-sim-sdg--replicator--ga), [Cosmos WFM](#3-nvidia-cosmos-world-foundation-models--ga-open-models--aws-is-self-hosted-compute)
-3. **"How do I turn our robot's teleoperation / ROS bag data into a training pipeline on AWS?"** → [Data pipeline reference architecture](#4-robot-learning-data-pipeline-reference-architecture--ga), [Formats & conversion](#5-data-formats--conversion--lerobot-v3--rlds--ga)
+3. **"How do I turn our robot's teleoperation / ROS bag[^rosbag] data into a training pipeline on AWS?"** → [Data pipeline reference architecture](#4-robot-learning-data-pipeline-reference-architecture--ga), [Formats & conversion](#5-data-formats--conversion--lerobot-v3--rlds--ga)
 
-> **Stable principle (rarely changes)**: robot data is (1) **teleoperation/real data** — high quality, high cost, low diversity; (2) **synthetic/simulation data** — low cost, high diversity, with a domain gap; (3) **open/web data** — for pretraining, mind the license. The practical recipe is almost always a 3-stage mix: **"open-dataset pretraining → synthetic-data augmentation → small-batch real-demo fine-tuning."**
+> **Stable principle (rarely changes)**: robot data is (1) **teleoperation/real data** — high quality, high cost, low diversity; (2) **synthetic/simulation data** — low cost, high diversity, with a domain gap[^gap]; (3) **open/web data** — for pretraining, mind the license. The practical recipe is almost always a 3-stage mix: **"open-dataset pretraining → synthetic-data augmentation → small-batch real-demo fine-tuning."**
 
 ```mermaid
 graph LR
@@ -32,13 +32,13 @@ graph LR
 
 ## 1. Open robot datasets  🟢 GA
 
-**L0 TL;DR**: The de facto standard corpus for VLA pretraining. But because **each dataset's license governs whether commercial distribution is allowed**, if the customer plans to ship model weights commercially, a license audit is the first step.
+**L0 TL;DR**: The de facto standard corpus for VLA[^vla] pretraining. But because **each dataset's license governs whether commercial distribution is allowed**, if the customer plans to ship model weights commercially, a license audit is the first step.
 
 **Customer need/problem**: "We can't afford to collect data from scratch and want to start with what's public. But can we use this in a commercial product?"
 
 **Solution overview** `[1]`:
 
-- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** — ~1M+ episodes, 22 embodiments, integrating ~60 datasets. The standard pretraining corpus for OpenVLA · RT-2-X · π0 · GR00T. ⚠️ **Licenses differ per component** (mostly CC-BY-4.0/Apache-2.0, some research-only) → for commercial use, a component-level legal audit is mandatory. `[1]` arxiv 2310.08864
+- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** — ~1M+ episodes[^traj], 22 embodiments[^embodiment], integrating ~60 datasets. The standard pretraining corpus for OpenVLA · RT-2-X · π0 · GR00T. ⚠️ **Licenses differ per component** (mostly CC-BY-4.0/Apache-2.0, some research-only) → for commercial use, a component-level legal audit is mandatory. `[1]` arxiv 2310.08864
 - **[DROID](https://droid-dataset.github.io/)** — 76,000 teleoperation trajectories, 350 hours, Franka. License **CC-BY-4.0** (commercial-friendly). The standard for the fine-tuning stage. `[1]` droid-dataset.github.io
 - **[AgiBot World](https://agibot-world.com/)** — ~1,003,672 trajectories (~43.8TB), the largest scale. ⚠️ **License CC BY-NC-SA 4.0 = non-commercial**. Fine for research/benchmarks, but **commercial derivative weights cannot be distributed**. `[1]` arxiv 2503.06669
 - **[RoboMIND](https://arxiv.org/abs/2412.13877)** — 107k trajectories, 4 embodiments, includes 5k failure demos (valuable). License needs re-confirmation on HF. `[1]` arxiv 2412.13877
@@ -86,7 +86,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer need/problem**: "We have almost no data for our factory/warehouse environment, and can't afford the labeling cost. Can we create it with simulation?"
 
-**Solution overview** `[1]`: With [Isaac Sim](https://developer.nvidia.com/isaac/sim)'s **Replicator**, generate synthetic images/segmentation/bounding boxes based on domain randomization (lighting, texture, pose, camera) programmatically (Replicator Functional API). Isaac Sim **5.0 GA (2025-08 SIGGRAPH)**, open source (GitHub), 5.1 GA, and 6.0 is the GTC'26 early developer release (2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
+**Solution overview** `[1]`: With [Isaac Sim](https://developer.nvidia.com/isaac/sim)'s **Replicator**, generate synthetic images/segmentation/bounding boxes based on domain randomization[^dr] (lighting, texture, pose, camera) programmatically (Replicator Functional API). Isaac Sim **5.0 GA (2025-08 SIGGRAPH)**, open source (GitHub), 5.1 GA, and 6.0 is the GTC'26 early developer release (2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
 
 **AWS mapping**: run Isaac Sim on EC2 **G6e** (L40S) · **G7e** (RTX PRO 6000 Blackwell) GPU instances + parallelize large-scale offline data-generation jobs with **AWS Batch** + store in S3. Remote streaming via NICE DCV (→ see [pillar-3](pillar-3.md)).
 
@@ -110,7 +110,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 ## 3. NVIDIA Cosmos World Foundation Models  🟢 GA (open models · AWS is self-hosted compute)
 
-**L0 TL;DR**: Foundation models that predict/generate the physical world, used for data augmentation by producing simulation assets, future frames, and behavior simulations. Because the weights are open, they **can be self-hosted on AWS compute (EKS/Batch/G7e)** — but ⚠️ AWS is not an NVIDIA-named managed host for Cosmos (→ [pillar-3](pillar-3.md)). "Training deployable policies from world-model-generated data" is also still at the early-adopter stage.
+**L0 TL;DR**: Foundation models[^wfm] that predict/generate the physical world, used for data augmentation by producing simulation assets, future frames, and behavior simulations. Because the weights are open, they **can be self-hosted on AWS compute (EKS/Batch/G7e)** — but ⚠️ AWS is not an NVIDIA-named managed host for Cosmos (→ [pillar-3](pillar-3.md)). "Training deployable policies from world-model-generated data" is also still at the early-adopter stage.
 
 **Customer need/problem**: "We can't build simulator scenes one by one. We want to auto-generate diverse realistic scenarios."
 
@@ -173,7 +173,7 @@ graph LR
 
 ## 5. Data formats & conversion — LeRobot v3 / RLDS  🟢 GA
 
-**L0 TL;DR**: The two dominant robot data formats are **RLDS** (TFDS-based, consumed natively by VLA training pipelines) and **LeRobotDataset v3** (Parquet+MP4, the HF-ecosystem interchange standard). **ROS 2 bag → training-format conversion has no standard tool and requires custom work**, and this is an AWS pipeline opportunity.
+**L0 TL;DR**: The two dominant robot data formats[^fmt] are **RLDS** (TFDS-based, consumed natively by VLA training pipelines) and **LeRobotDataset v3** (Parquet+MP4, the HF-ecosystem interchange standard). **ROS 2 bag → training-format conversion has no standard tool and requires custom work**, and this is an AWS pipeline opportunity.
 
 **Customer need/problem**: "Our data is ROS 2 bags, but the VLA training code wants RLDS/LeRobot. How do we convert?"
 
@@ -238,3 +238,16 @@ graph LR
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: medium (dataset versions/sizes are high in the collapsed block) · sources: [1] official/paper, [3] vendor blog, [4] unverified_
+
+<!-- 용어 각주 -->
+
+[^vla]: **VLA (Vision-Language-Action)** — a foundation model that takes camera images (Vision) and natural-language instructions (Language) as input and directly outputs robot actions (Action). Say "pick up the cup" and it generates the joint motions. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^teleop]: **Teleoperation** — a data-collection method in which a human remotely operates a robot with VR controllers, leader arms, etc., recording demonstration motions. Quality is the highest, but human time translates directly into cost. 🎥 [Stanford Mobile ALOHA teleoperation demo](https://www.youtube.com/watch?v=mnLVbwxSdNM)
+[^sdg]: **Synthetic Data Generation (SDG)** — a technique that uses a simulator to auto-generate training images and annotations (labels). Its biggest advantage: labeling cost converges to zero. 🎥 [Isaac Sim Replicator SDG tutorial](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^traj]: **Episode/trajectory** — one recording of a robot performing a task from start to finish. A time-series bundle of observations (cameras/sensors) and actions (joint commands); the basic unit of robot learning data.
+[^embodiment]: **Embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.
+[^dr]: **Domain Randomization** — generating data while randomly varying the simulation's lighting, textures, object positions, and camera angles so the model learns features that hold in any environment. The classic prescription for shrinking the sim-to-real gap.
+[^gap]: **Domain gap** — the phenomenon where a model that worked well in simulation loses performance on real hardware because of the differences (physical/visual) between simulation and reality. The methodology for handling this gap is sim-to-real in [pillar-4](pillar-4.md).
+[^wfm]: **World Foundation Model (WFM)** — a large model trained to predict/generate the next scenes of the physical world. From text/video prompts it creates physically plausible video and scenarios to augment robot training data. 🎥 [NVIDIA Cosmos introduction](https://www.youtube.com/watch?v=9Uch931cDx8)
+[^rosbag]: **ROS bag (rosbag2)** — the standard log format in which the robot operating system ROS 2 records topics (sensor/command streams) wholesale. The de facto default form of robot companies' raw data, but it cannot be used for training as-is and requires conversion.
+[^fmt]: **RLDS / LeRobotDataset** — the two dominant storage formats for robot learning data. RLDS is based on TensorFlow Datasets and is read directly by major VLA training code; LeRobotDataset (v3) is the Parquet+MP4-based Hugging Face ecosystem standard.

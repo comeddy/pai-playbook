@@ -1,5 +1,5 @@
 ---
-ko_hash: cda4dfe395c70e9fc8b88c1fc8dfa23f95efc448
+ko_hash: ff43cd0b632953b1db539867a88d54308f245b7a
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -8,7 +8,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高（バージョン�
 _特に別途表記がない限り、各項目はページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターに追記します。_
 [← index へ](index.md)
 
-> **L0 TL;DR**: ロボットポリシーはシミュレーションで実機よりも数千倍速く安全に学習されます。AWS での正解スタックは **EC2 G6e/G7e(RTX GPU) + NVIDIA Isaac Sim AMI(GUI) + AWS Batch(ヘッドレス大規模 RL)** です。⚠️ **AWS RoboMaker は 2025-09-10 に終了** —— 絶対に提案しないでください。Isaac Sim の最新 GA は **5.1.0** で、6.0 はまだ Preview です。
+> **L0 TL;DR**: ロボットポリシーはシミュレーションで実機よりも数千倍速く安全に学習されます。AWS での正解スタックは **EC2 G6e/G7e(RTX GPU) + NVIDIA Isaac Sim AMI(GUI) + AWS Batch(ヘッドレス[^headless]大規模 RL[^rl])** です。⚠️ **AWS RoboMaker は 2025-09-10 に終了** —— 絶対に提案しないでください。Isaac Sim の最新 GA は **5.1.0** で、6.0 はまだ Preview です。
 
 ---
 
@@ -18,7 +18,7 @@ _特に別途表記がない限り、各項目はページメタデータ（owne
 2. **「数千~数万環境の並列 RL をクラウドでどうスケールしますか?」** → [大規模並列 RL](#2-大規模並列-rl-シミュレーション--ga)
 3. **「NVIDIA に全部賭けるべきですか? オープンソースの代替は?」** → [オープンソース代替](#3-オープンソースシミュレーター代替--ga---一部-hype)、[decisions](decisions.md)
 
-> **安定原理（あまり変わらない）**: シミュレーションの価値は (1) **並列性**（GPU 1 枚で数千~8 千環境を同時に）、(2) **安全**（実機を破損せずに危険なポリシーを探索）、(3) **自動ラベル**（完璧な ground truth）にあります。レンダリングには **RTX(RT Core) GPU が必須**なので、A100/H100（コンピュート GPU）は Isaac Sim のレンダリングには使えません —— これはインスタンス選択を左右する不変の制約です。
+> **安定原理（あまり変わらない）**: シミュレーションの価値は (1) **並列性**（GPU 1 枚で数千~8 千環境を同時に）[^parallel]、(2) **安全**（実機を破損せずに危険なポリシーを探索）、(3) **自動ラベル**（完璧な ground truth）[^gt]にあります。レンダリングには **RTX(RT Core)[^rtcore] GPU が必須**なので、A100/H100（コンピュート GPU）は Isaac Sim のレンダリングには使えません —— これはインスタンス選択を左右する不変の制約です。
 
 ---
 
@@ -51,13 +51,13 @@ graph LR
 
 **意思決定基準**:
 
-- GUI シーン編集・SDG → G6e（コスト）または G7e（性能・大きなシーン）。
+- GUI シーン編集・SDG[^sdg] → G6e（コスト）または G7e（性能・大きなシーン）。
 - 大規模ヘッドレス RL → 2 番（AWS Batch）。
 - オープンソースで十分か → 3 番 / [decisions](decisions.md)。
 
 **顧客事例**: 事例待ち（Unitree H1 学習は [pillar-2](pillar-2.md) の AWS ブログを参照）。
 
-**➡️ 次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に、続いて **[pai-sim-isaaclab エンドツーエンドハンズオン](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform で g6e をプロビジョニング → Isaac Lab 四足歩行 PPO ヘッドレス学習 → ポリシー export、約2時間/$12）でヘッドレス学習まで接続。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
+**➡️ 次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に、続いて **[pai-sim-isaaclab エンドツーエンドハンズオン](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform で g6e をプロビジョニング → Isaac Lab 四足歩行 PPO[^ppo] ヘッドレス学習 → ポリシー export、約2時間/$12）でヘッドレス学習まで接続。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
 
 **🔗 関連資産**:
 
@@ -190,7 +190,7 @@ graph TD
 
 **L0 TL;DR**: **AWS IoT TwinMaker は廃止されていません**（第三者の "discontinued" 主張は誤情報 —— SiteWise のメンテナンスとの混同）。GA であり新規顧客に開放されていますが、**新機能の進みが遅い**（低速度）です。Omniverse も AWS Marketplace AMI として GA。
 
-**顧客ニーズ/課題**: 「設備/工場のデジタルツインを作り、ロボットのシミュレーション・監視と連携したい。」
+**顧客ニーズ/課題**: 「設備/工場のデジタルツイン[^dtwin]を作り、ロボットのシミュレーション・監視と連携したい。」
 
 **ソリューション概要** `[1]`:
 
@@ -207,7 +207,7 @@ graph TD
 
 **AWS マッピング**: IoT TwinMaker + IoT SiteWise + Omniverse AMI(G6e/G7e)。
 
-**意思決定基準**: 設備データ統合・軽量ツイン → TwinMaker（ただし低速度を考慮）。フォトリアルシミュレーション・USD コラボレーション → Omniverse AMI。
+**意思決定基準**: 設備データ統合・軽量ツイン → TwinMaker（ただし低速度を考慮）。フォトリアルシミュレーション・USD[^usd] コラボレーション → Omniverse AMI。
 
 **顧客事例**: 事例待ち。
 
@@ -233,3 +233,15 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 高（バージョン・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証。GitHub リリースの年の一部は再確認を推奨。_
+
+<!-- 용어 각주 -->
+
+[^rl]: **強化学習（RL, Reinforcement Learning）** — 報酬シグナルを最大化するよう試行錯誤でポリシーを学習させる手法です。シミュレーションで数千の環境を並列に動かし、ロボット歩行のような制御ポリシーを高速に学習します。
+[^parallel]: **並列環境（parallel environments）** — GPU 1 枚で同じシミュレーション環境を数千個複製して同時に動かす技法です。強化学習の経験収集速度を数千倍に引き上げる、シミュレーションの核心的価値です。
+[^headless]: **ヘッドレス（headless）** — GUI 画面なしでシミュレーターを実行するモードです。レンダリングのオーバーヘッドがないため、大規模並列学習ジョブはヘッドレスで実行します。
+[^rtcore]: **RT Core / RTX GPU** — レイトレーシング専用ハードウェア（RT Core）を搭載した NVIDIA GPU 系列です。Isaac Sim のフォトリアルなレンダリングに必須のため、RT Core のない A100/H100 はレンダリング用途に使えません。
+[^gt]: **ground truth（正解ラベル）** — 学習・評価の基準となる正確な正解データです。シミュレーションではすべての物体の位置・セグメンテーションマスクをエンジンが既に把握しているため、完璧なラベルが自動生成されます。
+[^usd]: **USD (Universal Scene Description)** — ピクサー（Pixar）が作った 3D シーン記述の標準フォーマットです。Isaac Sim のシーン・ロボット・資産はすべて USD で記述され、Omniverse エコシステムの共通言語です。
+[^sdg]: **合成データ生成（SDG, Synthetic Data Generation）** — シミュレーターで学習用画像とアノテーション（ラベル）を自動生成する技法です。ラベリングコストがゼロに近づくのが最大の利点です。🎥 [Isaac Sim Replicator SDG チュートリアル](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^ppo]: **PPO (Proximal Policy Optimization)** — 最も広く使われる強化学習アルゴリズムです。安定して収束し、ロボット歩行学習の事実上のデフォルトです。
+[^dtwin]: **デジタルツイン（digital twin）** — 実際の工場・倉庫・ロボットを物理的に忠実に模した仮想レプリカです。実環境に触れずにポリシー学習・検証・シナリオ実験を可能にします。

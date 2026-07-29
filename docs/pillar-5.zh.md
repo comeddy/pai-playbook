@@ -1,5 +1,5 @@
 ---
-ko_hash: bc6fff65fa54d83b3f5ddd5bca9e32e21a4c4221
+ko_hash: 3eaa37767ad4fcb8f429c4b186eb32e17cc7b01f
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -7,17 +7,17 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高（AgentCore 功能�
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: LLM 智能体指挥机器人·设备的层。这里是 **AWS 最强的支柱** —— **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) 已 GA(2025-10) 且首尔区域完全支持**，实时拦截工具调用的 **Policy(Cedar) 也已 GA(2026-03)**。结构上以 **System 2（慢速 LLM 规划器，云）+ System 1（快速控制，边缘）** 分离为正统。⚠️ Amazon DeepFleet 不是"LLM 智能体"，而是仓库机器人协调的基础模型，切勿混淆。
+> **L0 TL;DR**: LLM 智能体[^agent]指挥机器人·设备的层。这里是 **AWS 最强的支柱** —— **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) 已 GA(2025-10) 且首尔区域完全支持**，实时拦截工具调用[^tool]的 **Policy(Cedar) 也已 GA(2026-03)**。结构上以 **System 2[^sys]（慢速 LLM 规划器，云）+ System 1（快速控制，边缘）** 分离为正统。⚠️ Amazon DeepFleet 不是"LLM 智能体"，而是仓库机器人协调的基础模型，切勿混淆。
 
 ---
 
 ## 本支柱中客户最常问的问题 Top 3
 
 1. **"用 LLM 智能体指挥机器人/设备实际可行吗？AWS 上有什么？"** → [Bedrock AgentCore](#1-amazon-bedrock-agentcore--ga)
-2. **"实时机器人上怎么用智能体？能在边缘离线运行吗？"** → [边缘智能体编排](#3-边缘智能体编排--preview参考架构)
-3. **"智能体控制物理系统时，安全怎么保证？"** → [安全 & 护栏](#5-安全--护栏--ga智能体层--未解决物理-语义-gap)
+2. **"实时机器人上怎么用智能体？能在边缘离线运行吗？"** → [边缘智能体编排](#3-边缘智能体编排--preview参考架构)[^orch]
+3. **"智能体控制物理系统时，安全怎么保证？"** → [安全 & 护栏](#5-安全--护栏--ga智能体层--未解决物理-语义-gap)[^guardrail]
 
-> **稳定原理（几乎不变）**: 智能体不"直接实时控制"机器人。**高层规划·工具选择(System 2) 由智能体承担，低层实时控制(System 1) 由边缘策略承担**（→ [pillar-2](pillar-2.md)、[pillar-4](pillar-4.md)）。生产中真正跑起来的是 (1) **仓库机群协调**(DeepFleet, CoEvolution) 与 (2) **开发/数据工作负载编排**(OSMO)，而人形全栈智能体或 MCP-机器人连接大多为研究/演示。
+> **稳定原理（几乎不变）**: 智能体不"直接实时控制"机器人。**高层规划·工具选择(System 2) 由智能体承担，低层实时控制(System 1) 由边缘策略承担**（→ [pillar-2](pillar-2.md)、[pillar-4](pillar-4.md)）。生产中真正跑起来的是 (1) **仓库机群[^fleet]协调**(DeepFleet, CoEvolution) 与 (2) **开发/数据工作负载编排**(OSMO)，而人形全栈智能体或 MCP[^mcp]-机器人连接大多为研究/演示。
 
 ---
 
@@ -40,7 +40,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 - 生产智能体（需要会话·工具·权限·可观测性）→ **AgentCore Runtime + Gateway + Policy**。
 - 简单一次性推理 → 直接调用 Bedrock 即够，AgentCore 过重。
-- 多智能体·A2A → Strands 1.0。
+- 多智能体·A2A[^a2a] → Strands 1.0。
 - 需要离线·低延迟边缘 → 第 3 项（边缘）。
 
 **客户案例**: **AWS×SoftServe 自主生产线**(AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) —— Hannover Messe 2026 **演示/展示**([1]/[3])。
@@ -202,3 +202,14 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
+
+<!-- 용어 각주 -->
+
+[^agent]: **LLM 智能体** — 大语言模型自行制定计划、挑选并调用工具（API·机器人技能）、执行多步任务的软件。与简单问答不同，关键在于它有"行动"。
+[^orch]: **编排（orchestration）** — 把多个智能体·机器人·工作流作为一个系统进行协调·指挥的层。它决定的不是单个机器人的控制，而是"什么事由谁在何时做"。
+[^sys]: **System 2 / System 1** — 把认知科学中"慢思考 / 快反应"的区分应用到机器人架构的结构。System 2 由慢速 LLM 规划器负责规划（云），System 1 由小型策略负责实时控制（边缘）。
+[^tool]: **工具调用（tool calling）** — 智能体在推理过程中按既定 schema 调用外部功能（API、机器人技能）的机制。这是智能体影响物理世界的唯一通道，因此安全门禁（Policy）正设在这一点上。
+[^mcp]: **MCP（Model Context Protocol）** — 连接智能体与工具·数据源的开放标准协议。常被比作"智能体的 USB-C"，把机器人技能暴露为 MCP 服务器的实验正在增多。
+[^guardrail]: **护栏（guardrail）** — 用策略限制智能体输入输出与行为的安全装置。在物理系统中对应拦截危险的工具调用、限制行动范围。
+[^fleet]: **机群（fleet）协调** — 把大量机器人作为一个系统进行调度·路径分配。像仓库机器人那样在数百~数千台规模上已经过生产验证的领域。
+[^a2a]: **A2A（Agent-to-Agent）** — 不同智能体之间通过标准协议协作的多智能体通信方式。

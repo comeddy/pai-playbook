@@ -1,5 +1,5 @@
 ---
-ko_hash: eeb773269acf9568ec38a0dee57fcd910f45fbb2
+ko_hash: a08ce6b48c427263264177ba6c7b271e4eae7129
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -8,7 +8,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高（モデルバー�
 _個別項目は別途表記がない限りページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターを追加します。_
 [← index へ](index.md)
 
-> **L0 TL;DR**: ほとんどの顧客は **VLA をゼロから学習しません —— オープン基盤モデルをファインチューニング**します。そのため核心的な問いは三つです: (1) どのモデルを使うか（**ライセンスが商用可否を左右する**）、(2) LoRA かフルファインチューニングか（GPU 規模を決める）、(3) AWS でどう回すか（HyperPod + EC2 GPU）。Trainium で VLA を学習した公開事例はまだ存在しません。
+> **L0 TL;DR**: ほとんどの顧客は **VLA[^vla] をゼロから学習しません —— オープン基盤モデルをファインチューニング[^ft]**します。そのため核心的な問いは三つです: (1) どのモデルを使うか（**ライセンスが商用可否を左右する**）、(2) LoRA[^lora] かフルファインチューニングか（GPU 規模を決める）、(3) AWS でどう回すか（HyperPod + EC2 GPU）。Trainium で VLA を学習した公開事例はまだ存在しません。
 
 ---
 
@@ -18,7 +18,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 2. **「ファインチューニングに GPU は何枚必要ですか？LoRA なら 1 枚で済みますか？」** → [VLA ファインチューニング実践](#2-vla-ファインチューニング実践-lora-vs-full-ft--ga)
 3. **「AWS で VLA 学習をどう回しますか？HyperPod で？Trainium は使えますか？」** → [AWS 学習スタック](#3-aws-学習スタック-hyperpod--ec2-gpu--ga)
 
-> **安定原理（ほとんど変わらない）**: (1) フロンティア VLA を事前学習する顧客はほぼいません —— **ファインチューニングが 99% の現実**です。(2) VLA は **System 2（遅い VLM プランナー、5~10Hz）+ System 1（速いアクションポリシー、50~200Hz）** 構造へ収束しつつあり、この二層構造が「推論をクラウドに置くかエッジに置くか」を決めます（→ [pillar-4](pillar-4.md)、[decisions](decisions.md)）。(3) 連続アクション生成は **flow-matching / diffusion action head + action chunking** が標準です。
+> **安定原理（ほとんど変わらない）**: (1) フロンティア VLA を事前学習する顧客はほぼいません —— **ファインチューニングが 99% の現実**です。(2) VLA は **System 2[^sys]（遅い VLM[^vlm] プランナー、5~10Hz）+ System 1（速いアクションポリシー、50~200Hz）** 構造へ収束しつつあり、この二層構造が「推論をクラウドに置くかエッジに置くか」を決めます（→ [pillar-4](pillar-4.md)、[decisions](decisions.md)）。(3) 連続アクション生成は **flow-matching[^flow] / diffusion action head + action chunking[^chunk]** が標準です。
 
 ---
 
@@ -40,7 +40,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 - **商用製品リリース** → π（Apache-2.0）または OpenVLA（MIT）を優先。GR00T はライセンス確定後のみ。
 - **ヒューマノイド全身制御** → GR00T が最も完成型（SONIC controller、Cosmos Reason バックボーン）、ただしライセンス確認。
-- **研究・PoC** → すべて使用可能、性能/embodiment 適合性で選択。
+- **研究・PoC** → すべて使用可能、性能/embodiment[^embodiment] 適合性で選択。
 
 ```mermaid
 graph TD
@@ -216,3 +216,14 @@ graph TD
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 高（モデルバージョン・ライセンス・GPU 要件・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証_
+
+<!-- 용어 각주 -->
+
+[^vla]: **VLA (Vision-Language-Action)** —— カメラ映像（Vision）と自然言語の指示（Language）を入力として、ロボットの動作（Action）を直接出力する基盤モデルです。「コップを取って」と言えば関節の動きを生成する、という具合です。🎥 [NVIDIA Isaac GR00T N1 紹介](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^ft]: **ファインチューニング（fine-tuning）** —— 大規模データで事前学習されたモデルを、自分のタスク・ロボットの少量データで追加学習させることです。ゼロから学習するよりデータ・GPU が数十~数百倍節約できます。
+[^lora]: **LoRA (Low-Rank Adaptation)** —— 元の重みは凍結したまま、小さな低ランク（low-rank）行列だけを追加で学習する軽量ファインチューニング手法です。GPU メモリ要求がフルファインチューニングの数分の 1 のため、24GB 級 GPU 1 枚でも可能です。
+[^sys]: **System 2 / System 1** —— 認知科学の「遅い思考 / 速い反応」の区分をロボットアーキテクチャに適用した構造です。System 2 は遅い大型モデルが計画を（5~10Hz）、System 1 は小さなポリシーがリアルタイム制御を（50~200Hz）担います。推論をクラウドに置くかエッジに置くかを分ける基準になります。
+[^flow]: **flow-matching / diffusion action head** —— ロボットの連続動作をノイズから徐々に洗練して生成する拡散（diffusion）・フロー系の出力モジュールです。滑らかでマルチモーダル（multi-modal）な動作分布を表現でき、最新 VLA の標準アクションヘッドです。
+[^chunk]: **action chunking** —— 毎ステップ動作 1 個ではなく、将来の動作を複数ステップ（チャンク）まとめて一度に予測する手法です。推論回数を減らし、リアルタイム制御の周波数を満たしやすくします。
+[^vlm]: **VLM (Vision-Language Model)** —— 画像とテキストを一緒に理解するモデルです（例: 写真を見て質問に答える）。VLA は通常 VLM を「目+頭脳」のバックボーンとして使い、その上にアクションヘッドを載せます。
+[^embodiment]: **embodiment（エンボディメント）** —— ロボットの物理的形態・自由度・センサー構成です。同じモデルでもロボットアームとヒューマノイドは embodiment が異なり、データ・ポリシーをそのまま移植できません。

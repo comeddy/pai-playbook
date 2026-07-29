@@ -1,5 +1,5 @@
 ---
-ko_hash: 5768eac1a6e56af856665aef378727a8f91da863
+ko_hash: 4b8fe0a1961faa12192846d718e7fcc1a2aaf7a9
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -8,7 +8,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 中（エッジ HW・�
 _特に注記がない限り、各項目はページのメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターに追記します。_
 [← index へ](index.md)
 
-> **L0 TL;DR**: 正直な一言 — **locomotion（歩行）の sim-to-real はほぼ解決され、デプロイ済みです**（ANYmal、Agility Digit）。**マニピュレーション(manipulation) の sim-to-real はまだです** — フロンティア VLA でさえシミュレーションではなく、**実機体データで学習**しており、シミュレーションは主に評価/適応に使われます。さらにアーキテクチャの不変法則: **30~100Hz のリアルタイム制御は必ずエッジ（オンボード）**、高レベルの計画のみをクラウドに置きます。
+> **L0 TL;DR**: 正直な一言 — **locomotion（歩行）[^loco]の sim-to-real[^s2r] はほぼ解決され、デプロイ済みです**（ANYmal、Agility Digit）。**マニピュレーション(manipulation)[^manip] の sim-to-real はまだです** — フロンティア VLA でさえシミュレーションではなく、**実機体データで学習**しており、シミュレーションは主に評価/適応に使われます。さらにアーキテクチャの不変法則: **30~100Hz のリアルタイム制御は必ずエッジ（オンボード）**、高レベルの計画のみをクラウドに置きます。
 
 ---
 
@@ -18,21 +18,21 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 2. **「リアルタイム制御ですが、推論はエッジに置くべきですか、クラウドに置くべきですか？」** → [エッジ推論デプロイ](#1-エッジ推論デプロイ--ga)、[decisions](decisions.md)
 3. **「実機体にデプロイする前に、ポリシーがうまく機能するかどうかをどう検証しますか？」** → [ポリシー評価](#5-ポリシー評価--デプロイ前検証--research未解決問題)
 
-> **安定原理（ほとんど変わりません）**: sim-to-real gap の正体は (1) **動力学の不一致**（シミュ物理 ≠ 実物、特に接触）、(2) **視覚の不一致**（レンダリング ≠ 実カメラ）です。locomotion がうまくいく理由はロボット+地面というシンプルで寛容な動力学であり、マニピュレーションがうまくいかない理由は接触動力学が厄介だからです。検証された処方は **選択的ドメインランダマイゼーション(DR) + システム同定(SysID) + RL を MPC の上に載せるハイブリッド**です。
+> **安定原理（ほとんど変わりません）**: sim-to-real gap の正体は (1) **動力学[^dyn]の不一致**（シミュ物理 ≠ 実物、特に接触）、(2) **視覚の不一致**（レンダリング ≠ 実カメラ）です。locomotion がうまくいく理由はロボット+地面というシンプルで寛容な動力学であり、マニピュレーションがうまくいかない理由は接触動力学が厄介だからです。検証された処方は **選択的ドメインランダマイゼーション(DR)[^dr] + システム同定(SysID)[^sysid] + RL を MPC[^mpc] の上に載せるハイブリッド**です。
 
 ---
 
 ## 1. エッジ推論デプロイ  🟢 GA
 
-**L0 TL;DR**: リアルタイム制御の推論はロボットのオンボードで動かす必要があります。2026 年の標準経路 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX/TensorRT**。⚠️ **SageMaker Edge Manager は 2024-04 に終了** — 代替はありません、ONNX+Greengrass で進めます。
+**L0 TL;DR**: リアルタイム制御の推論はロボットのオンボードで動かす必要があります。2026 年の標準経路 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**。⚠️ **SageMaker Edge Manager は 2024-04 に終了** — 代替はありません、ONNX+Greengrass で進めます。
 
-**顧客ニーズ/問題**: 「学習はクラウドで行いましたが、ロボットにどうデプロイして OTA で管理しますか？リアルタイムなのにクラウド往復はできないのでは？」
+**顧客ニーズ/問題**: 「学習はクラウドで行いましたが、ロボットにどうデプロイして OTA[^ota] で管理しますか？リアルタイムなのにクラウド往復はできないのでは？」
 
 **ソリューション概要** `[1]/[3]`:
 
 - **エッジ HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**、T5000 本番モジュールが流通中。Jetson Orin 系列も引き続き生産（低消費電力）。スペック・価格は下の折りたたみブロック参照。
 - **デプロイ/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/カスタムコンポーネント、ML 推論コンポーネント、MQTT テレメトリ。⚠️ **Greengrass V1 は 2026-06-01 にサポート終了** — V2 のみが現行です。
-- **モデル経路**: PyTorch ポリシー → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** エンジンのコンパイル（オンデバイス高速化）でリアルタイム制御の遅延予算（sub-20~30ms 級）を満たすのが標準経路です。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（エッジコンパイル）は存続しており、Greengrass と組み合わせられます。
+- **モデル経路**: PyTorch ポリシー → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** エンジンのコンパイル（オンデバイス高速化）でリアルタイム制御の遅延予算（sub-20~30ms 級）[^latency]を満たすのが標準経路です。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（エッジコンパイル）は存続しており、Greengrass と組み合わせられます。
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — コンソール・API がすべて利用不可。**ドロップイン可能なマネージド後継サービスはありません**。AWS の推奨 = ONNX + Greengrass V2（+ オプションで SageMaker Neo）。
 
 ```mermaid
@@ -202,3 +202,16 @@ graph LR
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 中（エッジ HW・ベンダー指標は高）· sources: [1] 公式/論文, [2] AWS 内部検証, [3] ベンダー/PR, [4] 未検証。2026 arXiv プレプリントは非査読(illustrative)。_
+
+<!-- 용어 각주 -->
+
+[^s2r]: **sim-to-real** — シミュレーションで学習したポリシーを実際のロボットへ移すこと、またはその方法論です。シミュレーションと現実の物理・視覚の差（ドメインギャップ）のため、そのまま移すと性能が崩れます。🎥 [NVIDIA Isaac GR00T N1 紹介](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^loco]: **locomotion（ロコモーション）** — 歩行・走行などロボットが移動する能力です。ロボットと地面の接触という比較的シンプルな物理のおかげで、sim-to-real が最初に解決された領域です。
+[^manip]: **マニピュレーション（manipulation, 操作）** — 物体をつかみ、運び、組み立てる能力です。指先の接触の物理が複雑なため、sim-to-real がまだ解決されていない領域です。
+[^dyn]: **動力学（dynamics）** — 力・摩擦・衝突が生み出す運動の物理です。特に物体をつかむ際の接触動力学は、シミュレーターが正確に再現するのが最も難しい部分です。
+[^dr]: **ドメインランダマイゼーション（Domain Randomization）** — シミュレーションの物理パラメータ・照明・質感をランダムに変えながら学習させ、ポリシーがどんな環境変化にも耐えられるようにする技法です。sim-to-real の代表的な処方です。
+[^sysid]: **システム同定（SysID, System Identification）** — 実機ロボットの物理パラメータ（摩擦・質量・モーター応答）を測定し、シミュレーターを実物に合わせて校正する作業です。
+[^mpc]: **MPC（Model Predictive Control）** — 短い未来を繰り返し予測・最適化しながら制御する古典制御技法です。学習した RL ポリシーを MPC の上に載せるハイブリッドが検証済みの処方として定着しました。
+[^onnx]: **ONNX / TensorRT** — ONNX はフレームワーク間のモデル交換の標準フォーマット、TensorRT は NVIDIA GPU 向けの推論最適化コンパイラです。「PyTorch → ONNX → TensorRT」変換がエッジのリアルタイム推論の標準経路です。
+[^ota]: **OTA（Over-The-Air）** — ネットワーク経由でリモートからロボットのモデル・ソフトウェアを更新・配布する方式です。
+[^latency]: **遅延予算（latency budget）** — リアルタイム制御ループが許容する最大推論時間です。30~100Hz 制御なら 1 サイクルは 10~33ms なので、推論はこの範囲内に収まる必要があります — クラウド往復が不可能な理由です。

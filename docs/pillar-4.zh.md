@@ -1,5 +1,5 @@
 ---
-ko_hash: 5768eac1a6e56af856665aef378727a8f91da863
+ko_hash: 4b8fe0a1961faa12192846d718e7fcc1a2aaf7a9
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -7,7 +7,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 中（边缘 HW·模型
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: 诚实的一句话 —— **locomotion（行走）的 sim-to-real 基本已解决且已部署**（ANYmal、Agility Digit）。**操作(manipulation) 的 sim-to-real 还没有** —— 即便是前沿 VLA 也不是靠仿真，而是用**真实机体数据训练**，仿真主要用于评估/适配。还有架构不变定律: **30~100Hz 实时控制必须在边缘（板载）**，只有高层规划放到云上。
+> **L0 TL;DR**: 诚实的一句话 —— **locomotion（行走）[^loco]的 sim-to-real[^s2r] 基本已解决且已部署**（ANYmal、Agility Digit）。**操作(manipulation)[^manip] 的 sim-to-real 还没有** —— 即便是前沿 VLA 也不是靠仿真，而是用**真实机体数据训练**，仿真主要用于评估/适配。还有架构不变定律: **30~100Hz 实时控制必须在边缘（板载）**，只有高层规划放到云上。
 
 ---
 
@@ -17,21 +17,21 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 2. **"实时控制场景，推理该放边缘还是云上？"** → [边缘推理部署](#1-边缘推理部署--ga)、[decisions](decisions.md)
 3. **"真机部署前怎么验证策略是否可行？"** → [策略评估](#5-策略评估--部署前验证--research未解决问题)
 
-> **稳定原理（几乎不变）**: sim-to-real gap 的本质是 (1) **动力学不匹配**（仿真物理 ≠ 实物，尤其是接触），(2) **视觉不匹配**（渲染 ≠ 真实相机）。locomotion 之所以好做，是因为机器人+地面这种简单·宽容的动力学；操作之所以难做，是因为接触动力学棘手。经过验证的处方是 **选择性域随机化(DR) + 系统辨识(SysID) + 把 RL 叠加在 MPC 之上的混合**。
+> **稳定原理（几乎不变）**: sim-to-real gap 的本质是 (1) **动力学[^dyn]不匹配**（仿真物理 ≠ 实物，尤其是接触），(2) **视觉不匹配**（渲染 ≠ 真实相机）。locomotion 之所以好做，是因为机器人+地面这种简单·宽容的动力学；操作之所以难做，是因为接触动力学棘手。经过验证的处方是 **选择性域随机化(DR)[^dr] + 系统辨识(SysID)[^sysid] + 把 RL 叠加在 MPC[^mpc] 之上的混合**。
 
 ---
 
 ## 1. 边缘推理部署  🟢 GA
 
-**L0 TL;DR**: 实时控制推理必须在机器人板载运行。2026 年的标准路径 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX/TensorRT**。⚠️ **SageMaker Edge Manager 已于 2024-04 终止** —— 没有替代品，走 ONNX+Greengrass。
+**L0 TL;DR**: 实时控制推理必须在机器人板载运行。2026 年的标准路径 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**。⚠️ **SageMaker Edge Manager 已于 2024-04 终止** —— 没有替代品，走 ONNX+Greengrass。
 
-**客户需求/问题**: "训练在云上做了，怎么部署到机器人并用 OTA 管理？实时场景下云端往返不是不行吗？"
+**客户需求/问题**: "训练在云上做了，怎么部署到机器人并用 OTA[^ota] 管理？实时场景下云端往返不是不行吗？"
 
 **解决方案概览** `[1]/[3]`:
 
 - **边缘 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**，T5000 生产模块已流通。Jetson Orin 系列仍在生产（低功耗）。规格·价格见下方折叠块。
 - **部署/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) —— Lambda/Docker/自定义组件、ML 推理组件、MQTT 遥测。⚠️ **Greengrass V1 于 2026-06-01 支持终止** —— 只有 V2 是现行的。
-- **模型路径**: PyTorch 策略 → **[ONNX](https://onnx.ai/)** → 编译 **[TensorRT](https://developer.nvidia.com/tensorrt)** 引擎（端侧加速）以满足实时控制的延迟预算（sub-20~30ms 级）是标准路径。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（边缘编译）仍在，可与 Greengrass 组合。
+- **模型路径**: PyTorch 策略 → **[ONNX](https://onnx.ai/)** → 编译 **[TensorRT](https://developer.nvidia.com/tensorrt)** 引擎（端侧加速）以满足实时控制的延迟预算（sub-20~30ms 级）[^latency]是标准路径。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（边缘编译）仍在，可与 Greengrass 组合。
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** —— 控制台·API 全部不可用。**没有可直接替换的托管后续服务**。AWS 建议 = ONNX + Greengrass V2（+ 可选 SageMaker Neo）。
 
 ```mermaid
@@ -201,3 +201,16 @@ graph LR
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 中（边缘 HW·厂商指标为高）· sources: [1] 官方/论文, [2] AWS 内部验证, [3] 厂商/PR, [4] 未经验证。2026 arXiv 预印本为非评审(illustrative)。_
+
+<!-- 용어 각주 -->
+
+[^s2r]: **sim-to-real** — 把在仿真中训练的策略迁移到真实机器人上，或指其方法论。由于仿真与现实的物理·视觉差异（域间差异），直接迁移会导致性能崩溃。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^loco]: **locomotion（行走/移动）** — 行走·行驶等机器人的移动能力。得益于机器人与地面接触这种相对简单的物理，它是 sim-to-real 最先被解决的领域。
+[^manip]: **操作（manipulation）** — 抓取、搬运、装配物体的能力。指尖接触的物理很复杂，是 sim-to-real 尚未解决的领域。
+[^dyn]: **动力学（dynamics）** — 力·摩擦·碰撞所产生的运动物理。尤其是抓取物体时的接触动力学，是仿真器最难精确再现的部分。
+[^dr]: **域随机化（Domain Randomization）** — 随机改变仿真的物理参数·光照·纹理进行训练，使策略能承受任何环境变化的技法。sim-to-real 的代表性处方。
+[^sysid]: **系统辨识（SysID, System Identification）** — 测量真实机器人的物理参数（摩擦·质量·电机响应），把仿真器校准到与实物一致的工作。
+[^mpc]: **MPC（Model Predictive Control）** — 反复预测·优化短期未来来进行控制的经典控制技法。把学习到的 RL 策略叠加在 MPC 之上的混合已成为经过验证的处方。
+[^onnx]: **ONNX / TensorRT** — ONNX 是框架间模型交换的标准格式，TensorRT 是面向 NVIDIA GPU 的推理优化编译器。"PyTorch → ONNX → TensorRT" 转换是边缘实时推理的标准路径。
+[^ota]: **OTA（Over-The-Air）** — 通过网络远程更新·部署机器人的模型·软件的方式。
+[^latency]: **延迟预算（latency budget）** — 实时控制回路允许的最大推理时间。30~100Hz 控制下一个周期为 10~33ms，推理必须在此之内完成 —— 这就是云端往返不可行的原因。

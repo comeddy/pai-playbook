@@ -1,5 +1,5 @@
 ---
-ko_hash: 5768eac1a6e56af856665aef378727a8f91da863
+ko_hash: 4b8fe0a1961faa12192846d718e7fcc1a2aaf7a9
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -7,7 +7,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: medium (edge HW/models 
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: The honest one-liner — **locomotion (walking) sim-to-real is essentially solved and deployed** (ANYmal, Agility Digit). **Manipulation sim-to-real is not yet** — even frontier VLAs are trained on **real-hardware data**, not simulation, and simulation is used mainly for evaluation/adaptation. And the invariant architecture law: **30~100Hz real-time control must be at the edge (on-board)**, with only high-level planning in the cloud.
+> **L0 TL;DR**: The honest one-liner — **locomotion (walking)[^loco] sim-to-real[^s2r] is essentially solved and deployed** (ANYmal, Agility Digit). **Manipulation[^manip] sim-to-real is not yet** — even frontier VLAs are trained on **real-hardware data**, not simulation, and simulation is used mainly for evaluation/adaptation. And the invariant architecture law: **30~100Hz real-time control must be at the edge (on-board)**, with only high-level planning in the cloud.
 
 ---
 
@@ -17,21 +17,21 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 2. **"It's real-time control — should inference be at the edge or in the cloud?"** → [Edge inference deployment](#1-edge-inference-deployment--ga), [decisions](decisions.md)
 3. **"How do I validate that a policy works before deploying to real hardware?"** → [Policy evaluation](#5-policy-evaluation--pre-deployment-validation--research-unsolved-problem)
 
-> **Stable principle (rarely changes)**: the sim-to-real gap is really (1) **dynamics mismatch** (sim physics ≠ real, especially contact) and (2) **visual mismatch** (render ≠ real camera). Locomotion works well because robot+ground is simple, forgiving dynamics; manipulation doesn't because contact dynamics are hard. The proven prescription is a **hybrid of selective domain randomization (DR) + system identification (SysID) + RL layered on MPC**.
+> **Stable principle (rarely changes)**: the sim-to-real gap is really (1) **dynamics[^dyn] mismatch** (sim physics ≠ real, especially contact) and (2) **visual mismatch** (render ≠ real camera). Locomotion works well because robot+ground is simple, forgiving dynamics; manipulation doesn't because contact dynamics are hard. The proven prescription is a **hybrid of selective domain randomization (DR)[^dr] + system identification (SysID)[^sysid] + RL layered on MPC[^mpc]**.
 
 ---
 
 ## 1. Edge inference deployment  🟢 GA
 
-**L0 TL;DR**: Real-time control inference must run on the robot on-board. The 2026 standard path = **NVIDIA Jetson Thor (GA) + AWS IoT Greengrass V2 + ONNX/TensorRT**. ⚠️ **SageMaker Edge Manager was discontinued 2024-04** — there is no replacement; go with ONNX+Greengrass.
+**L0 TL;DR**: Real-time control inference must run on the robot on-board. The 2026 standard path = **NVIDIA Jetson Thor (GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**. ⚠️ **SageMaker Edge Manager was discontinued 2024-04** — there is no replacement; go with ONNX+Greengrass.
 
-**Customer need/problem**: "We trained in the cloud — how do we deploy to the robot and manage it OTA? It's real-time, so a cloud round-trip won't work, right?"
+**Customer need/problem**: "We trained in the cloud — how do we deploy to the robot and manage it OTA[^ota]? It's real-time, so a cloud round-trip won't work, right?"
 
 **Solution overview** `[1]/[3]`:
 
 - **Edge HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor (Blackwell) GA**, T5000 production module in distribution. The Jetson Orin line is still produced (low power). Specs/prices in the collapsed block below.
 - **Deployment/management**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)** (GA) — Lambda/Docker/custom components, ML inference components, MQTT telemetry. ⚠️ **Greengrass V1 support ended 2026-06-01** — only V2 is current.
-- **Model path**: PyTorch policy → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** engine compilation (on-device acceleration) is the standard path to meet the real-time control latency budget (sub-20~30ms class). [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html) (edge compilation) survives and combines with Greengrass.
+- **Model path**: PyTorch policy → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** engine compilation (on-device acceleration) is the standard path to meet the real-time control latency budget (sub-20~30ms class)[^latency]. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html) (edge compilation) survives and combines with Greengrass.
 - ⚠️ **SageMaker Edge Manager EOL (2024-04-26)** — console/API all unavailable. **No drop-in managed successor service**. AWS recommendation = ONNX + Greengrass V2 (+ optionally SageMaker Neo).
 
 ```mermaid
@@ -201,3 +201,16 @@ graph LR
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: medium (edge HW · vendor metrics are high) · sources: [1] official/paper, [2] AWS internal validation, [3] vendor/PR, [4] unverified. 2026 arXiv preprints are non-peer-reviewed (illustrative)._
+
+<!-- 용어 각주 -->
+
+[^s2r]: **sim-to-real** — Transferring a policy trained in simulation to a real robot, or the methodology for doing so. The physical and visual differences between simulation and reality (the domain gap) mean a naive transfer collapses performance. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^loco]: **locomotion** — A robot's ability to move: walking, driving, etc. Thanks to the relatively simple physics of robot-ground contact, it is the area where sim-to-real was solved first.
+[^manip]: **manipulation** — The ability to grasp, move, and assemble objects. The physics of fingertip contact is complex, so this is the area where sim-to-real remains unsolved.
+[^dyn]: **dynamics** — The physics of motion produced by force, friction, and collision. Contact dynamics when grasping an object is the hardest part for a simulator to reproduce accurately.
+[^dr]: **Domain Randomization (DR)** — Training while randomly varying the simulation's physics parameters, lighting, and textures so the policy withstands any environmental change. The signature sim-to-real prescription.
+[^sysid]: **SysID (System Identification)** — Measuring the real robot's physical parameters (friction, mass, motor response) to calibrate the simulator to the real hardware.
+[^mpc]: **MPC (Model Predictive Control)** — A classical control technique that controls by repeatedly predicting and optimizing over a short future horizon. The hybrid of a learned RL policy layered on MPC has become the proven prescription.
+[^onnx]: **ONNX / TensorRT** — ONNX is the standard format for exchanging models between frameworks; TensorRT is NVIDIA's inference-optimization compiler for its GPUs. The "PyTorch → ONNX → TensorRT" conversion is the standard path for real-time edge inference.
+[^ota]: **OTA (Over-The-Air)** — Updating and deploying a robot's models and software remotely over the network.
+[^latency]: **latency budget** — The maximum inference time a real-time control loop allows. At 30~100Hz control, one cycle is 10~33ms, so inference must finish within it — the reason a cloud round-trip is impossible.

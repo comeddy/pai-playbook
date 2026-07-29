@@ -4,7 +4,7 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 중간(데이터셋 �
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
-> **L0 TL;DR**: Physical AI의 병목은 모델 아키텍처가 아니라 **로봇 행동 데이터의 양·다양성·품질**이다. 실데이터(텔레옵)는 비싸고 느리고, 오픈 데이터셋은 **라이선스가 지뢰밭**이며, 합성 데이터는 이제야 실전 파이프라인이 됐다. SA의 역할은 "어디서 데이터를 얻고, AWS 위에서 어떤 파이프라인으로 학습 가능한 형태로 만드는가"를 설계해 주는 것.
+> **L0 TL;DR**: Physical AI의 병목은 모델 아키텍처가 아니라 **로봇 행동 데이터의 양·다양성·품질**이다. 실데이터(텔레옵[^teleop])는 비싸고 느리고, 오픈 데이터셋은 **라이선스가 지뢰밭**이며, 합성 데이터[^sdg]는 이제야 실전 파이프라인이 됐다. SA의 역할은 "어디서 데이터를 얻고, AWS 위에서 어떤 파이프라인으로 학습 가능한 형태로 만드는가"를 설계해 주는 것.
 
 ---
 
@@ -12,9 +12,9 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 1. **"로봇 학습 데이터를 어디서 구하죠? 오픈 데이터셋 그냥 써도 되나요?"** → [오픈 로봇 데이터셋](#1-오픈-로봇-데이터셋--ga) (⚠️ 라이선스 먼저 보라)
 2. **"실데이터가 부족한데 합성 데이터로 메울 수 있나요?"** → [합성 데이터 생성](#2-합성-데이터-생성--isaac-sim-sdg--replicator--ga), [Cosmos WFM](#3-nvidia-cosmos-world-foundation-models--ga-오픈-모델--aws는-셀프호스팅-컴퓨트)
-3. **"우리 로봇의 텔레옵/ROS bag 데이터를 AWS에서 어떻게 학습 파이프라인으로 만들죠?"** → [데이터 파이프라인 참조 아키텍처](#4-로봇-학습-데이터-파이프라인-참조-아키텍처--ga), [포맷 & 변환](#5-데이터-포맷--변환--lerobot-v3--rlds--ga)
+3. **"우리 로봇의 텔레옵/ROS bag[^rosbag] 데이터를 AWS에서 어떻게 학습 파이프라인으로 만들죠?"** → [데이터 파이프라인 참조 아키텍처](#4-로봇-학습-데이터-파이프라인-참조-아키텍처--ga), [포맷 & 변환](#5-데이터-포맷--변환--lerobot-v3--rlds--ga)
 
-> **안정 원리 (잘 안 바뀜)**: 로봇 데이터는 (1) **텔레옵/실데이터** — 고품질·고비용·저다양성, (2) **합성/시뮬레이션 데이터** — 저비용·고다양성·도메인 갭 존재, (3) **오픈/웹 데이터** — 사전학습용·라이선스 주의. 실전 레시피는 거의 항상 **"오픈 데이터셋 사전학습 → 합성 데이터 증강 → 소량 실데모 파인튜닝"** 의 3단 혼합이다.
+> **안정 원리 (잘 안 바뀜)**: 로봇 데이터는 (1) **텔레옵/실데이터** — 고품질·고비용·저다양성, (2) **합성/시뮬레이션 데이터** — 저비용·고다양성·도메인 갭[^gap] 존재, (3) **오픈/웹 데이터** — 사전학습용·라이선스 주의. 실전 레시피는 거의 항상 **"오픈 데이터셋 사전학습 → 합성 데이터 증강 → 소량 실데모 파인튜닝"** 의 3단 혼합이다.
 
 ```mermaid
 graph LR
@@ -29,13 +29,13 @@ graph LR
 
 ## 1. 오픈 로봇 데이터셋  🟢 GA
 
-**L0 TL;DR**: VLA 사전학습의 사실상 표준 코퍼스. 다만 **각 데이터셋 라이선스가 상업적 배포 가능 여부를 좌우**하므로, 고객이 모델 가중치를 상용 출시할 계획이면 라이선스 감사가 첫 단계다.
+**L0 TL;DR**: VLA[^vla] 사전학습의 사실상 표준 코퍼스. 다만 **각 데이터셋 라이선스가 상업적 배포 가능 여부를 좌우**하므로, 고객이 모델 가중치를 상용 출시할 계획이면 라이선스 감사가 첫 단계다.
 
 **고객 니즈/문제**: "밑바닥부터 데이터를 모을 여력은 없고, 공개된 걸로 시작하고 싶다. 그런데 이걸 상용 제품에 써도 되나?"
 
 **솔루션 개요** `[1]`:
 
-- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** — ~1M+ 에피소드, 22개 embodiment, 60여 데이터셋 통합. OpenVLA·RT-2-X·π0·GR00T의 표준 사전학습 코퍼스. ⚠️ **라이선스가 컴포넌트별로 다름**(대부분 CC-BY-4.0/Apache-2.0, 일부 research-only) → 상용이면 컴포넌트 단위 법무 감사 필수. `[1]` arxiv 2310.08864
+- **[Open X-Embodiment (OXE)](https://robotics-transformer-x.github.io/)** — ~1M+ 에피소드[^traj], 22개 embodiment[^embodiment], 60여 데이터셋 통합. OpenVLA·RT-2-X·π0·GR00T의 표준 사전학습 코퍼스. ⚠️ **라이선스가 컴포넌트별로 다름**(대부분 CC-BY-4.0/Apache-2.0, 일부 research-only) → 상용이면 컴포넌트 단위 법무 감사 필수. `[1]` arxiv 2310.08864
 - **[DROID](https://droid-dataset.github.io/)** — 76,000 텔레옵 궤적, 350시간, Franka. 라이선스 **CC-BY-4.0** (상업 친화적). 파인튜닝 단계 표준. `[1]` droid-dataset.github.io
 - **[AgiBot World](https://agibot-world.com/)** — ~1,003,672 궤적(~43.8TB)로 최대 규모. ⚠️ **라이선스 CC BY-NC-SA 4.0 = 비상업**. 연구·벤치마크는 되지만 **상용 파생 가중치 배포 불가**. `[1]` arxiv 2503.06669
 - **[RoboMIND](https://arxiv.org/abs/2412.13877)** — 107k 궤적, 4개 embodiment, 실패 데모 5k 포함(귀함). 라이선스는 HF에서 재확인 필요. `[1]` arxiv 2412.13877
@@ -83,7 +83,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 **고객 니즈/문제**: "우리 공장/창고 환경 데이터가 거의 없다. 라벨링 비용도 감당 안 된다. 시뮬레이션으로 만들 수 있나?"
 
-**솔루션 개요** `[1]`: [Isaac Sim](https://developer.nvidia.com/isaac/sim)의 **Replicator**로 도메인 랜덤화(조명·질감·포즈·카메라) 기반 합성 이미지/세그멘테이션/바운딩박스를 프로그래밍 방식(Replicator Functional API)으로 생성. Isaac Sim **5.0 GA(2025-08 SIGGRAPH)**, 오픈소스(GitHub), 5.1 GA, 6.0은 GTC'26 얼리 개발자 릴리스(2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
+**솔루션 개요** `[1]`: [Isaac Sim](https://developer.nvidia.com/isaac/sim)의 **Replicator**로 도메인 랜덤화[^dr](조명·질감·포즈·카메라) 기반 합성 이미지/세그멘테이션/바운딩박스를 프로그래밍 방식(Replicator Functional API)으로 생성. Isaac Sim **5.0 GA(2025-08 SIGGRAPH)**, 오픈소스(GitHub), 5.1 GA, 6.0은 GTC'26 얼리 개발자 릴리스(2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
 
 **AWS 매핑**: EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 인스턴스에서 Isaac Sim 실행 + **AWS Batch**로 대규모 오프라인 데이터 생성 잡 병렬화 + S3 저장. NICE DCV로 원격 스트리밍(→ [pillar-3](pillar-3.md) 참조).
 
@@ -107,7 +107,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 ## 3. NVIDIA Cosmos World Foundation Models  🟢 GA (오픈 모델 · AWS는 셀프호스팅 컴퓨트)
 
-**L0 TL;DR**: 물리 세계를 예측·생성하는 파운데이션 모델로, 시뮬레이션 자산·미래 프레임·행동 시뮬레이션을 만들어 데이터 증강에 쓴다. 오픈 가중치라 **AWS 컴퓨트(EKS/Batch/G7e) 위에서 셀프호스팅 가능** — 단 ⚠️ AWS는 NVIDIA가 명명한 Cosmos 매니지드 호스트가 아니다(→ [pillar-3](pillar-3.md)). "월드모델로 만든 데이터로 실배포 정책을 학습"도 아직 얼리어답터 단계.
+**L0 TL;DR**: 물리 세계를 예측·생성하는 파운데이션 모델[^wfm]로, 시뮬레이션 자산·미래 프레임·행동 시뮬레이션을 만들어 데이터 증강에 쓴다. 오픈 가중치라 **AWS 컴퓨트(EKS/Batch/G7e) 위에서 셀프호스팅 가능** — 단 ⚠️ AWS는 NVIDIA가 명명한 Cosmos 매니지드 호스트가 아니다(→ [pillar-3](pillar-3.md)). "월드모델로 만든 데이터로 실배포 정책을 학습"도 아직 얼리어답터 단계.
 
 **고객 니즈/문제**: "시뮬레이터 씬을 일일이 만들 수 없다. 다양한 현실적 시나리오를 자동 생성하고 싶다."
 
@@ -170,7 +170,7 @@ graph LR
 
 ## 5. 데이터 포맷 & 변환 — LeRobot v3 / RLDS  🟢 GA
 
-**L0 TL;DR**: 로봇 데이터의 두 지배적 포맷은 **RLDS**(TFDS 기반, VLA 학습 파이프라인이 네이티브 소비)와 **LeRobotDataset v3**(Parquet+MP4, HF 생태계 상호교환 표준). **ROS 2 bag → 학습 포맷 변환은 표준 도구가 없어 커스텀**이 필요하며, 이게 AWS 파이프라인 기회다.
+**L0 TL;DR**: 로봇 데이터의 두 지배적 포맷[^fmt]은 **RLDS**(TFDS 기반, VLA 학습 파이프라인이 네이티브 소비)와 **LeRobotDataset v3**(Parquet+MP4, HF 생태계 상호교환 표준). **ROS 2 bag → 학습 포맷 변환은 표준 도구가 없어 커스텀**이 필요하며, 이게 AWS 파이프라인 기회다.
 
 **고객 니즈/문제**: "우리 데이터는 ROS 2 bag인데 VLA 학습 코드는 RLDS/LeRobot를 원한다. 어떻게 변환하지?"
 
@@ -235,3 +235,16 @@ graph LR
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
+
+<!-- 용어 각주 -->
+
+[^vla]: **VLA (Vision-Language-Action)** — 카메라 영상(Vision)과 자연어 지시(Language)를 입력받아 로봇의 동작(Action)을 직접 출력하는 파운데이션 모델. "컵을 집어"라고 말하면 관절 움직임을 생성하는 식. 🎥 [NVIDIA Isaac GR00T N1 소개](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^teleop]: **텔레오퍼레이션(텔레옵)** — 사람이 VR 컨트롤러·리더암 등으로 로봇을 원격 조종하며 시범 동작을 기록하는 데이터 수집 방식. 품질이 가장 높지만 사람의 시간이 그대로 비용이 된다. 🎥 [Stanford Mobile ALOHA 텔레옵 시연](https://www.youtube.com/watch?v=mnLVbwxSdNM)
+[^sdg]: **합성 데이터 생성(SDG, Synthetic Data Generation)** — 시뮬레이터로 학습용 이미지와 주석(라벨)을 자동 생성하는 기법. 라벨링 비용이 0에 수렴하는 것이 최대 장점. 🎥 [Isaac Sim Replicator SDG 튜토리얼](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^traj]: **에피소드/궤적(trajectory)** — 로봇이 한 태스크를 시작부터 종료까지 수행한 기록 1회분. 관측(카메라·센서)과 행동(관절 명령)의 시계열 묶음으로, 로봇 학습 데이터의 기본 단위다.
+[^embodiment]: **embodiment(임바디먼트)** — 로봇의 물리적 형태·자유도·센서 구성. 같은 모델이라도 로봇 팔과 휴머노이드는 embodiment가 달라 데이터·정책을 그대로 이식할 수 없다.
+[^dr]: **도메인 랜덤화(Domain Randomization)** — 시뮬레이션의 조명·질감·물체 위치·카메라 각도를 무작위로 바꿔가며 데이터를 생성해, 모델이 어떤 환경에서도 통하는 특징을 배우게 하는 기법. sim-to-real 갭을 줄이는 대표 처방.
+[^gap]: **도메인 갭(domain gap)** — 시뮬레이션과 현실의 차이(물리·시각) 때문에 시뮬레이션에서 잘 되던 모델이 실물에서는 성능이 떨어지는 현상. 이 갭을 다루는 방법론이 [pillar-4](pillar-4.md)의 sim-to-real이다.
+[^wfm]: **월드 파운데이션 모델(WFM, World Foundation Model)** — 물리 세계의 다음 장면을 예측·생성하도록 학습된 대형 모델. 텍스트·영상 프롬프트로 물리적으로 그럴듯한 영상·시나리오를 만들어 로봇 학습 데이터를 증강한다. 🎥 [NVIDIA Cosmos 소개](https://www.youtube.com/watch?v=9Uch931cDx8)
+[^rosbag]: **ROS bag(rosbag2)** — 로봇 운영체제 ROS 2가 토픽(센서·명령 스트림)을 통째로 녹화하는 표준 로그 포맷. 로봇 회사 원천 데이터의 사실상 기본 형태지만, 그대로는 학습에 쓸 수 없어 변환이 필요하다.
+[^fmt]: **RLDS / LeRobotDataset** — 로봇 학습 데이터의 양대 저장 포맷. RLDS는 TensorFlow Datasets 기반으로 주요 VLA 학습 코드가 직접 읽으며, LeRobotDataset(v3)은 Parquet+MP4 기반의 Hugging Face 생태계 표준이다.
