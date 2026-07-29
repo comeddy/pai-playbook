@@ -1,9 +1,9 @@
 ---
-ko_hash: e7f4d4a82b6905a35137d6cca70bd7a75fbad7ec
+ko_hash: bc6fff65fa54d83b3f5ddd5bca9e32e21a4c4221
 ---
 # Pillar 5 — Agentic Orchestration
 
-_Last updated: 2026-07 · owner: comeddy · volatility: high (AgentCore features/regions expand often)_
+_Last updated: 2026-07 · owner: Youngjin · volatility: high (AgentCore features/regions expand often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -201,4 +201,4 @@ graph TD
 - **Korean figures like Lotte 30% are single-source** — re-confirm before hard citation.
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_
+_owner: Youngjin · updated: 2026-07 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_

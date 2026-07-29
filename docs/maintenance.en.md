@@ -1,5 +1,5 @@
 ---
-ko_hash: 8b28a766879d7530df4f5b63a6c21053baec478a
+ko_hash: f0d495e54f225980d1c60146398f19701be9c976
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -36,7 +36,7 @@ _owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatili
 - `updated`: the year-month of last actual review. An absolute date (no relative dates).
 - `volatility`: high/medium/low. Determines the staleness cadence.
 
-> ✅ **Pillars P1–P5 · index · radar owner: comeddy** (assigned 2026-07). decisions/maintenance are still `TBD ⚠️` — remaining debt.
+> ✅ **Pillars P1–P5 · index · radar owner: Youngjin** (assigned 2026-07). decisions/maintenance are still `TBD ⚠️` — remaining debt.
 
 ---
 
@@ -140,7 +140,7 @@ graph TD
 
 ## Known technical debt (as of 2026-07)
 
-1. ~~All items have no owner~~ → **P1–P5 · index · radar owner: comeddy assigned (2026-07)**. decisions/maintenance owners are TBD ⚠️.
+1. ~~All items have no owner~~ → **P1–P5 · index · radar owner: Youngjin assigned (2026-07)**. decisions/maintenance owners are TBD ⚠️.
 2. ~~FAQ Top 10 is a seed~~ → **Expanded to Top 20 with a source column (2026-07)**. Remaining: re-rank by frequency once actual Slack inquiry history is available ([index](index.md)).
 3. **Internal asset deep links not connected** — workshop/deck/skill links are in "confirm needed ⚠️" state.
 4. **Insufficient domestic (Korea) customer cases** — mostly "case pending." Korean robotics companies are NVIDIA-aligned, so this is AWS whitespace.

@@ -1,5 +1,5 @@
 ---
-ko_hash: 8b28a766879d7530df4f5b63a6c21053baec478a
+ko_hash: f0d495e54f225980d1c60146398f19701be9c976
 ---
 # Maintenance — 所有权 · 更新规则 · 晋升管道
 
@@ -36,7 +36,7 @@ _owner: {名字} · 验证: {名字, 名字…} · updated: {YYYY-MM} · volatil
 - `updated`: 最后实际复核的年月。绝对日期（禁止相对日期）。
 - `volatility`: 高/中/低。决定 staleness 周期。
 
-> ✅ **支柱 P1~P5·index·radar owner: comeddy**（2026-07 指定）。decisions/maintenance 仍为 `待定 ⚠️` —— 剩余债务。
+> ✅ **支柱 P1~P5·index·radar owner: Youngjin**（2026-07 指定）。decisions/maintenance 仍为 `待定 ⚠️` —— 剩余债务。
 
 ---
 
@@ -140,7 +140,7 @@ graph TD
 
 ## 已知技术债务（截至 2026-07）
 
-1. ~~全部条目 owner 未定~~ → **P1~P5·index·radar owner: comeddy 指定完成(2026-07)**。decisions/maintenance owner 为待定 ⚠️。
+1. ~~全部条目 owner 未定~~ → **P1~P5·index·radar owner: Youngjin 指定完成(2026-07)**。decisions/maintenance owner 为待定 ⚠️。
 2. ~~FAQ Top 10 为种子~~ → **扩展为 Top 20 并标注来源（2026-07）**。剩余：获取 Slack 实际问询记录后按频率重新排序（[index](index.md)）。
 3. **内部资产深链未连接** —— 研讨会/deck/skill 链接处于"需确认 ⚠️"状态。
 4. **韩国客户案例不足** —— 大多为"案例待定"。韩国机器人企业为 NVIDIA 阵营，故 AWS 存在空白地带。

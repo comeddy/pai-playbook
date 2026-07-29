@@ -1,9 +1,9 @@
 ---
-ko_hash: 91dcad465cf87970250e298c95d0849ba9004d6e
+ko_hash: 0d093825ae18ba6b3af281b17baf6d5e20ce4330
 ---
 # Radar — Queue / Watchlist
 
-_Last updated: 2026-07 · owner: comeddy · volatility: high_
+_Last updated: 2026-07 · owner: Youngjin · volatility: high_
 [← back to index](index.md)
 
 > **L0 TL;DR**: Things **worth watching** that have not yet passed the inclusion criteria ([2.5 THE FILTER](maintenance.md#inclusion-criteria-the-filter)). Each item is one line — a maturity label + **why it is on hold**. Once it clears the gate (2 of 4), the owning pillar's owner promotes it using the standard template.
@@ -95,4 +95,4 @@ _Last updated: 2026-07 · owner: comeddy · volatility: high_
 Full pipeline → [maintenance](maintenance.md#playbook-promotion-pipeline).
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: high (the Radar changes fast by nature — monthly review recommended)_
+_owner: Youngjin · updated: 2026-07 · volatility: high (the Radar changes fast by nature — monthly review recommended)_

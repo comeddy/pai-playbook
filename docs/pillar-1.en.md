@@ -1,9 +1,9 @@
 ---
-ko_hash: 4e60ceaca49be1f5d21929d13cd064ca9298d788
+ko_hash: f77fbe7041c8e96aee49ce46edadacd01be042a3
 ---
 # Pillar 1 — Data Collection & Processing
 
-_Last updated: 2026-07 · owner: comeddy · volatility: medium (dataset versions/sizes are high)_
+_Last updated: 2026-07 · owner: Youngjin · volatility: medium (dataset versions/sizes are high)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -237,4 +237,4 @@ graph LR
 - **The license is the first risk.** Just pointing out that AgiBot World (the largest) is non-commercial earns customer trust.
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: medium (dataset versions/sizes are high in the collapsed block) · sources: [1] official/paper, [3] vendor blog, [4] unverified_
+_owner: Youngjin · updated: 2026-07 · volatility: medium (dataset versions/sizes are high in the collapsed block) · sources: [1] official/paper, [3] vendor blog, [4] unverified_

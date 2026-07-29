@@ -1,9 +1,9 @@
 ---
-ko_hash: 4e60ceaca49be1f5d21929d13cd064ca9298d788
+ko_hash: f77fbe7041c8e96aee49ce46edadacd01be042a3
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
-_最终更新: 2026-07 · owner: comeddy · volatility: 中（数据集版本·大小为高）_
+_最终更新: 2026-07 · owner: Youngjin · volatility: 中（数据集版本·大小为高）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -237,4 +237,4 @@ graph LR
 - **许可证是首要风险。** 仅点出 AgiBot World（规模最大）为非商业这一事实，就能赢得客户信任。
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: 中（数据集版本·大小在折叠块中为高）· sources: [1] 官方/论文, [3] 厂商博客, [4] 未经验证_
+_owner: Youngjin · updated: 2026-07 · volatility: 中（数据集版本·大小在折叠块中为高）· sources: [1] 官方/论文, [3] 厂商博客, [4] 未经验证_

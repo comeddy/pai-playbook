@@ -1,9 +1,9 @@
 ---
-ko_hash: 556a053d08d8b34241de83e2e1ce2be884cabe35
+ko_hash: ae1b44d85858640be9877a59b6191cbeb0f504c3
 ---
 # Physical AI Playbook — Introduction
 
-_Last updated: 2026-07 · owner: comeddy · status: initial build in progress_
+_Last updated: 2026-07 · owner: Youngjin · status: initial build in progress_
 
 > **L0 TL;DR**: A reference asset that lets you answer a customer's Physical AI question with **architecture direction, AWS mapping, and next actions in under 5 minutes from this single playbook** — no digging through Slack. This is neither a paper-summary collection nor a news archive.
 
@@ -98,4 +98,4 @@ _Last updated: 2026-07 · owner: comeddy · status: initial build in progress_
 
 ---
 
-_owner: comeddy · updated: 2026-07 · volatility: low (structural page — only the FAQ Top 20 ranking is reviewed quarterly)_
+_owner: Youngjin · updated: 2026-07 · volatility: low (structural page — only the FAQ Top 20 ranking is reviewed quarterly)_

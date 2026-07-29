@@ -1,9 +1,9 @@
 ---
-ko_hash: 2d2e77c8b849d3bc85b542f1f1ff0f2787d48bf4
+ko_hash: 87fd8141899e9bff24fd7ea43c7b77b365ce07ee
 ---
 # Guide — How This Playbook Works
 
-_Last updated: 2026-07 · owner: comeddy · volatility: low (process page — updated only when the pipeline changes)_
+_Last updated: 2026-07 · owner: Youngjin · volatility: low (process page — updated only when the pipeline changes)_
 [← to index](index.md)
 
 > **L0 TL;DR**: This site is not a news archive but a **verification pipeline**. Newly announced technologies, papers, and releases don't land in the body right away — an automated scan gathers candidates, humans verify against primary sources, and only items that pass 2 of the 4 gates (THE FILTER) make it into the body. Even after being published, freshness is monitored automatically, content is synchronized across 4 languages, and it must pass the build gate before it deploys.

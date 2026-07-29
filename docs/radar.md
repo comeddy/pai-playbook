@@ -1,6 +1,6 @@
 # Radar — 대기열 / 관찰 목록
 
-_최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
+_최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음_
 [← index로](index.md)
 
 > **L0 TL;DR**: 포함 기준([2.5 THE FILTER](maintenance.md#포함-기준-the-filter))을 아직 통과 못했지만 **지켜볼 것들**. 각 항목은 한 줄 — 성숙도 라벨 + **왜 대기 중인지**. 게이트(4개 중 2개)를 통과하면 담당 필러 owner가 표준 템플릿으로 승격한다.
@@ -92,4 +92,4 @@ _최종 갱신: 2026-07 · owner: comeddy · volatility: 높음_
 전체 파이프라인 → [maintenance](maintenance.md#playbook-승격-파이프라인).
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: 높음 (Radar는 본질적으로 빠르게 변함 — 월 단위 검토 권장)_
+_owner: Youngjin · updated: 2026-07 · volatility: 높음 (Radar는 본질적으로 빠르게 변함 — 월 단위 검토 권장)_

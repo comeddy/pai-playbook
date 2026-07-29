@@ -1,5 +1,5 @@
 ---
-ko_hash: 8b28a766879d7530df4f5b63a6c21053baec478a
+ko_hash: f0d495e54f225980d1c60146398f19701be9c976
 ---
 # Maintenance — 所有権 · 更新ルール · 昇格パイプライン
 
@@ -37,7 +37,7 @@ _owner: {名前} · 検証: {名前, 名前…} · updated: {YYYY-MM} · volatil
 - `updated`: 最後に実際にレビューした年月。絶対日付（相対日付は禁止）。
 - `volatility`: 高/中/低。staleness 周期を決定します。
 
-> ✅ **ピラー P1～P5・index・radar owner: comeddy**（2026-07 指定）。decisions/maintenance はまだ `未定 ⚠️` — 残る負債です。
+> ✅ **ピラー P1～P5・index・radar owner: Youngjin**（2026-07 指定）。decisions/maintenance はまだ `未定 ⚠️` — 残る負債です。
 
 ---
 
@@ -141,7 +141,7 @@ graph TD
 
 ## 既知の技術的負債（2026-07 時点）
 
-1. ~~全項目 owner 未定~~ → **P1～P5・index・radar owner: comeddy 指定完了(2026-07)**。decisions/maintenance の owner は未定 ⚠️。
+1. ~~全項目 owner 未定~~ → **P1～P5・index・radar owner: Youngjin 指定完了(2026-07)**。decisions/maintenance の owner は未定 ⚠️。
 2. ~~FAQ Top 10 がシード~~ → **Top 20 へ拡張 + 出典列を追加（2026-07）**。残り：Slack の実際の問い合わせ履歴を入手したら頻度順に再整列（[index](index.md)）。
 3. **社内資産のディープリンク未接続** — ワークショップ/deck/skill リンクが「要確認 ⚠️」状態。
 4. **韓国顧客事例の不足** — 大半が「事例待ち」。韓国ロボット企業が NVIDIA 陣営のため AWS ホワイトスペース。

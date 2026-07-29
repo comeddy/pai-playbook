@@ -1,10 +1,10 @@
 ---
-ko_hash: 556a053d08d8b34241de83e2e1ce2be884cabe35
+ko_hash: ae1b44d85858640be9877a59b6191cbeb0f504c3
 ---
 # Physical AI Playbook のご案内
 
 
-_最終更新: 2026-07 · owner: comeddy · ステータス: 初期構築中_
+_最終更新: 2026-07 · owner: Youngjin · ステータス: 初期構築中_
 
 > **L0 TL;DR**: 顧客が Physical AI の質問を投げかけたとき、Slack を掘り返さずに **この playbook 一つでアーキテクチャの方向性・AWS マッピング・次のアクションを5分以内に** 提示するための参照資産です。論文要約集でも、ニュースアーカイブでもありません。
 
@@ -99,4 +99,4 @@ _最終更新: 2026-07 · owner: comeddy · ステータス: 初期構築中_
 
 ---
 
-_owner: comeddy · updated: 2026-07 · volatility: 低（構造ページ — FAQ Top 20 の順位のみ四半期ごとに再検討）_
+_owner: Youngjin · updated: 2026-07 · volatility: 低（構造ページ — FAQ Top 20 の順位のみ四半期ごとに再検討）_

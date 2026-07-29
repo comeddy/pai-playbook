@@ -1,9 +1,9 @@
 ---
-ko_hash: 20bab2aebc8895b3bae26fe8be97785aea27dbc2
+ko_hash: cda4dfe395c70e9fc8b88c1fc8dfa23f95efc448
 ---
 # Pillar 3 — Simulation
 
-_Last updated: 2026-07 · owner: comeddy · volatility: high (versions/instances change often)_
+_Last updated: 2026-07 · owner: Youngjin · volatility: high (versions/instances change often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -231,4 +231,4 @@ graph TD
 - **Genesis "430,000×" is refuted**, **MuJoCo Warp is Alpha**, **Unity Robotics Hub is effectively abandoned (since 2022)**, **Habitat has been unmaintained since v0.3.4** — do not exaggerate open-source maturity.
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: high (versions · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified. Some GitHub release years advised to re-confirm._
+_owner: Youngjin · updated: 2026-07 · volatility: high (versions · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified. Some GitHub release years advised to re-confirm._

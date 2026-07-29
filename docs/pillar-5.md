@@ -1,6 +1,6 @@
 # Pillar 5 — 에이전트 오케스트레이션 (Agentic Orchestration)
 
-_최종 갱신: 2026-07 · owner: comeddy · volatility: 높음(AgentCore 기능·리전 자주 확장)_
+_최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음(AgentCore 기능·리전 자주 확장)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -198,4 +198,4 @@ graph TD
 - **Lotte 30% 등 국내 수치는 단일 출처** — 하드 인용 전 재확인.
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: 높음 (AgentCore 기능·리전은 접힌 블록에서 관리) · sources: [1] 공식, [3] 벤더/press, [4] 연구/커뮤니티_
+_owner: Youngjin · updated: 2026-07 · volatility: 높음 (AgentCore 기능·리전은 접힌 블록에서 관리) · sources: [1] 공식, [3] 벤더/press, [4] 연구/커뮤니티_

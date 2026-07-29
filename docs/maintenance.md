@@ -33,7 +33,7 @@ _owner: {이름} · 검증: {이름, 이름…} · updated: {YYYY-MM} · volatil
 - `updated`: 마지막 실검토 연월. 절대 날짜(상대 날짜 금지).
 - `volatility`: 높음/중간/낮음. staleness 주기를 결정.
 
-> ✅ **필러 P1~P5·index·radar owner: comeddy** (2026-07 지정). decisions/maintenance는 아직 `미정 ⚠️` — 남은 부채.
+> ✅ **필러 P1~P5·index·radar owner: Youngjin** (2026-07 지정). decisions/maintenance는 아직 `미정 ⚠️` — 남은 부채.
 
 ---
 
@@ -137,7 +137,7 @@ graph TD
 
 ## 알려진 기술 부채 (2026-07 시점)
 
-1. ~~전 항목 owner 미정~~ → **P1~P5·index·radar owner: comeddy 지정 완료(2026-07)**. decisions/maintenance owner는 미정 ⚠️.
+1. ~~전 항목 owner 미정~~ → **P1~P5·index·radar owner: Youngjin 지정 완료(2026-07)**. decisions/maintenance owner는 미정 ⚠️.
 2. ~~FAQ Top 10이 시드~~ → **Top 20 확장 + 출처 표기 완료(2026-07)**. 잔여: Slack 실제 문의 이력 확보 시 빈도순 재정렬([index](index.md)).
 3. **사내 자산 딥링크 미연결** — 워크숍/deck/skill 링크가 "확인 필요 ⚠️" 상태.
 4. **국내 고객 사례 부족** — 대부분 "사례 대기". 국내 로봇 기업이 NVIDIA 정렬이라 AWS 화이트스페이스.

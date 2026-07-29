@@ -1,6 +1,6 @@
 # Physical AI Playbook 안내
 
-_최종 갱신: 2026-07 · owner: comeddy · 상태: 초기 구축 중_
+_최종 갱신: 2026-07 · owner: Youngjin · 상태: 초기 구축 중_
 
 > **L0 TL;DR**: 고객이 Physical AI 질문을 던졌을 때, 슬랙을 뒤지지 않고 **이 playbook 하나로 아키텍처 방향 · AWS 매핑 · 다음 액션을 5분 안에** 제시하기 위한 참조 자산이다. 논문 요약집도, 뉴스 아카이브도 아니다.
 
@@ -95,4 +95,4 @@ _최종 갱신: 2026-07 · owner: comeddy · 상태: 초기 구축 중_
 
 ---
 
-_owner: comeddy · updated: 2026-07 · volatility: 낮음 (구조 페이지 — FAQ Top 20 순위만 분기별 재검토)_
+_owner: Youngjin · updated: 2026-07 · volatility: 낮음 (구조 페이지 — FAQ Top 20 순위만 분기별 재검토)_

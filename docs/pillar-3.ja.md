@@ -1,10 +1,10 @@
 ---
-ko_hash: 20bab2aebc8895b3bae26fe8be97785aea27dbc2
+ko_hash: cda4dfe395c70e9fc8b88c1fc8dfa23f95efc448
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
 
-_最終更新: 2026-07 · owner: comeddy · volatility: 高（バージョン・インスタンスが頻繁に変わる）_
+_最終更新: 2026-07 · owner: Youngjin · volatility: 高（バージョン・インスタンスが頻繁に変わる）_
 _特に別途表記がない限り、各項目はページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターに追記します。_
 [← index へ](index.md)
 
@@ -232,4 +232,4 @@ graph TD
 - **Genesis「430,000 倍」は反論済み**、**MuJoCo Warp は Alpha**、**Unity Robotics Hub は事実上放置（2022 年以降）**、**Habitat は v0.3.4 以降メンテナンス停止** —— オープンソースの成熟度を誇張しないこと。
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: 高（バージョン・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証。GitHub リリースの年の一部は再確認を推奨。_
+_owner: Youngjin · updated: 2026-07 · volatility: 高（バージョン・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証。GitHub リリースの年の一部は再確認を推奨。_

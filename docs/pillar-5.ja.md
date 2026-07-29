@@ -1,10 +1,10 @@
 ---
-ko_hash: e7f4d4a82b6905a35137d6cca70bd7a75fbad7ec
+ko_hash: bc6fff65fa54d83b3f5ddd5bca9e32e21a4c4221
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
 
-_最終更新: 2026-07 · owner: comeddy · volatility: 高（AgentCore の機能・リージョンが頻繁に拡張）_
+_最終更新: 2026-07 · owner: Youngjin · volatility: 高（AgentCore の機能・リージョンが頻繁に拡張）_
 _個別項目は別途表記がない限りページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターを追加します。_
 [← index へ](index.md)
 
@@ -202,4 +202,4 @@ graph TD
 - **Lotte 30% など韓国数値は単一出典** — ハード引用の前に要再確認。
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: 高（AgentCore の機能・リージョンは折りたたみブロックで管理）· sources: [1] 公式, [3] ベンダー/press, [4] 研究/コミュニティ_
+_owner: Youngjin · updated: 2026-07 · volatility: 高（AgentCore の機能・リージョンは折りたたみブロックで管理）· sources: [1] 公式, [3] ベンダー/press, [4] 研究/コミュニティ_

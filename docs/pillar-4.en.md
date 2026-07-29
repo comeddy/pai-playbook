@@ -1,9 +1,9 @@
 ---
-ko_hash: 44146473d26bc7f6421390815a34c4b4e9cc6a38
+ko_hash: 5768eac1a6e56af856665aef378727a8f91da863
 ---
 # Pillar 4 — Sim-to-Real
 
-_Last updated: 2026-07 · owner: comeddy · volatility: medium (edge HW/models are high)_
+_Last updated: 2026-07 · owner: Youngjin · volatility: medium (edge HW/models are high)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -200,4 +200,4 @@ graph LR
 - **Humanoid "production" metrics are mostly vendor PR** — no independent autonomy audit. Only Digit@GXO · Figure@BMW are customer cross-confirmed. 1X Neo is "a product, but actually teleoperated."
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: medium (edge HW · vendor metrics are high) · sources: [1] official/paper, [2] AWS internal validation, [3] vendor/PR, [4] unverified. 2026 arXiv preprints are non-peer-reviewed (illustrative)._
+_owner: Youngjin · updated: 2026-07 · volatility: medium (edge HW · vendor metrics are high) · sources: [1] official/paper, [2] AWS internal validation, [3] vendor/PR, [4] unverified. 2026 arXiv preprints are non-peer-reviewed (illustrative)._

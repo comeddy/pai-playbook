@@ -1,9 +1,9 @@
 ---
-ko_hash: 374272fbb4f1fe4963154ef4abef95cee9a762b2
+ko_hash: eeb773269acf9568ec38a0dee57fcd910f45fbb2
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
-_最终更新: 2026-07 · owner: comeddy · volatility: 高（模型版本·许可证·实例经常变动）_
+_最终更新: 2026-07 · owner: Youngjin · volatility: 高（模型版本·许可证·实例经常变动）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -214,4 +214,4 @@ graph TD
 - **Trainium-for-VLA 未经验证。** 整个 VLA 工具链是 CUDA。提议时明示风险。
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: 高（模型版本·许可证·GPU 需求·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证_
+_owner: Youngjin · updated: 2026-07 · volatility: 高（模型版本·许可证·GPU 需求·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证_

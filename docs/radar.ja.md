@@ -1,10 +1,10 @@
 ---
-ko_hash: 91dcad465cf87970250e298c95d0849ba9004d6e
+ko_hash: 0d093825ae18ba6b3af281b17baf6d5e20ce4330
 ---
 # Radar — キュー / ウォッチリスト
 
 
-_最終更新: 2026-07 · owner: comeddy · volatility: 高_
+_最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 [← index へ](index.md)
 
 > **L0 TL;DR**: 包含基準（[2.5 THE FILTER](maintenance.md#包含基準-the-filter)）はまだ通過していないものの、**注目すべきもの**。各項目は一行 — 成熟度ラベル + **なぜ待機中か**。ゲート（4 項目中 2 項目）を通過すると、担当ピラーの owner が標準テンプレートで昇格します。
@@ -96,4 +96,4 @@ _最終更新: 2026-07 · owner: comeddy · volatility: 高_
 パイプライン全体 → [maintenance](maintenance.md#playbook-昇格パイプライン)。
 
 ---
-_owner: comeddy · updated: 2026-07 · volatility: 高（Radar は本質的に急速に変化します — 月次レビューを推奨）_
+_owner: Youngjin · updated: 2026-07 · volatility: 高（Radar は本質的に急速に変化します — 月次レビューを推奨）_
