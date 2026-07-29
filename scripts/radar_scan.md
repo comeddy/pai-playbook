@@ -19,6 +19,7 @@
 
 ## 절차
 
+0. **staleness 알림** (보고 전용): `python3 scripts/check_staleness.py --check` 실행. 최종 보고는 **반드시 staleness 상태 줄로 시작** — 0건이면 `✅ staleness: 0`, 있으면 `⏳ STALE (owner 검토 필요): <페이지> (<경과>/<기준> 개월), …`. 페이지의 owner/updated/volatility를 수정해 stale을 해소하는 것은 금지 — 그건 owner(사람)의 몫이다.
 1. **스캔** (여러 각도, WebSearch 위주 — 헤드리스에서 alphaXiv MCP는 없을 수 있음):
    - arXiv/논문: "vision-language-action / humanoid manipulation / sim-to-real / world action model / physical AI data(로봇 데이터 수집·데이터셋·데이터 파이프라인) 최신"
    - 뉴스·기술: "Physical AI robotics latest news <이번달> · NVIDIA Isaac/GR00T/Cosmos release · AWS Physical AI blog · The Robot Report Physical AI 최신 · IEEE Spectrum Robotics 최신"
