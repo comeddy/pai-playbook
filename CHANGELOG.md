@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Introduce glossary footnotes across the five pillar pages — 45 term definitions with oEmbed-verified official video links, identical labels in all four languages
+- Add an Executive Brief page (5-question flow with a now/soon/not-yet judgment matrix) and an SA-facing executive conversation guide (pitches, top-10 Q&A, objection handling, industry angles, forbidden claims), in all four languages
 
 ### Changed
 
@@ -126,6 +127,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - 필러 5종 페이지에 용어 각주 도입 — 용어 정의 45개, oEmbed 검증 공식 영상 링크, 4개 언어 동일 라벨
+- 경영진 브리핑 페이지(5가지 질문 흐름 + 지금/곧/아직 판단 매트릭스)와 SA용 임원 대화 가이드(피치·Top 10 Q&A·반박 대응·산업 앵글·금지 표현) 추가, 4개 언어 반영
 
 ### Changed
 
@@ -233,6 +235,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - 在五个支柱页面引入术语脚注 — 45 条术语定义，附经 oEmbed 验证的官方视频链接，四种语言标签一致
+- 新增高管简报页面（5 问题流程 + 现在/即将/尚未 判断矩阵）与面向 SA 的高管对话指南（电梯演讲·Top 10 问答·异议应对·行业切入点·禁用表述），覆盖 4 种语言
 
 ### Changed
 
@@ -340,6 +343,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - 5 つのピラーページに用語脚注を導入 — 用語定義 45 件、oEmbed 検証済み公式動画リンク、4 言語で同一ラベル
+- 経営層ブリーフィングページ（5 つの質問フロー + 今/まもなく/まだ 判断マトリクス）と SA 向け経営層対話ガイド（ピッチ・Top 10 Q&A・反論対応・業界別アングル・禁止表現）を追加、4 言語対応
 
 ### Changed
 
