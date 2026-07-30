@@ -2,6 +2,8 @@
 
 [![English](https://img.shields.io/badge/lang-English-blue)](#english)
 [![한국어](https://img.shields.io/badge/lang-%ED%95%9C%EA%B5%AD%EC%96%B4-red)](#korean)
+[![中文](https://img.shields.io/badge/lang-%E4%B8%AD%E6%96%87-green)](#chinese)
+[![日本語](https://img.shields.io/badge/lang-%E6%97%A5%E6%9C%AC%E8%AA%9E-orange)](#japanese)
 
 ---
 
@@ -192,6 +194,204 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - 페이지별 변동성 기반 staleness 배지 자동화(1/3/6개월 검토 주기), 주간 cron 재배포로 갱신
 - THE FILTER 체크리스트를 내장한 승격 이슈 폼 추가
 - 필러 페이지 owner 지정
+
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/comeddy/pai-playbook/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/comeddy/pai-playbook/releases/tag/v1.0.0
+
+---
+
+<a id="chinese"></a>
+
+# 中文
+
+本项目的所有重要变更均记录在此文件中。
+格式遵循 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)，并遵守 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)。版本以 git 标签管理（v1.0.0+）。
+
+## [Unreleased]
+
+## [1.5.0] - 2026-07-24
+
+### Added
+
+- 在所有页面页脚添加指向 GitHub CHANGELOG 的链接（history 图标），四种语言统一应用
+- 将 8 个经验证的 AWS 官方 Physical AI 仓库（aws-samples 7 个 + awslabs 1 个）登记为各支柱的相关资产，逐一标注成熟度注意事项，四种语言同步：AWS Physical AI Toolchain（OSMO on EKS）·Self-improving Physical AI·Agentic AI Robot（pillar 5），Physical AI Scaffolding Kit（pillar 2~3），Embodied AI Platform（pillar 2），VLA Simulator —— 在 EC2 上一键基准测试 7 个 VLA 模型（pillar 3），Android PAI 数据采集应用·VAMS 视觉资产管理（pillar 1）
+
+### Changed
+
+- 更新 Radar 中 RLDX-1 条目：将"未发现 AWS 关联"改为仅限仿真基准测试的关联（aws-samples VLA Simulator 在非商业许可允许范围内于 EC2 上运行 RLDX-1，不可用于商业定位）
+- 在 Radar 中记录 2026-07-20 周扫描流入（8 条）及其一手来源验证结果（晋升 0 条、更正 6 条），四种语言同步
+- 扩展周扫描 runbook 范围：在 arXiv 查询中加入 physical AI data（机器人数据采集·数据集），新闻来源加入 The Robot Report·IEEE Spectrum Robotics
+
+## [1.4.0] - 2026-07-19
+
+### Added
+
+- 新增 `/intro/` 独立着陆页（单文件 HTML）并扩展为四种语言（`/intro/en|zh|ja/`）—— 含 hreflang 替代链接及 header nav·footer 双处语言切换器
+- 引入一手来源多人验证机制：可选的 `验证:` 元数据字段（owner 保持 1 人）、晋升管道中的"验证负责人（可多人）"角色、晋升议题表单的验证者输入项 —— 四种语言同步
+- 新增双语 CHANGELOG·git 标签（v1.0.0~v1.3.0）·GitHub Releases·README 发布徽章
+- 为自定义域名 `pai.zerojin.art` 添加 `docs/CNAME` 基础工作（域名尚未启用）
+
+## [1.3.0] - 2026-07-19
+
+### Added
+
+- 登记经验证的 AWS 官方研讨会：Bedrock AgentCore 入门·Deep Dive（pillar 5）、IoT TwinMaker 端到端（pillar 3）
+- 将 Physical AI E2E 研讨会（韩语）配置到 pillar 2（GR00T VLA 微调赛道）与 pillar 3（Isaac Lab RL 赛道）
+- 新增执行资产：LeRobot 遥操作采集 on Greengrass 示例（aws-samples）、Omniverse 数字孪生实操（韩语）、内部 AWS·NVIDIA 机器人参考架构（标注仅限内部）
+
+### Fixed
+
+- 消除译文中"国内"的歧义，明确改为 Korean/韩国/韓国（30 处）—— 此前中文读者会误读为中国，并新增术语表规则防止回归
+- 反映四种语言全量校对（40 个文件）结果：统一 워크샵 → 워크숍 的拼写，修正 실재 → 실제
+
+## [1.2.0] - 2026-07-18
+
+### Added
+
+- 新设讲解完整验证管道（候选发现 → Radar → THE FILTER → 晋升 → 监控）的"指南"页面，通过顶部标签导航露出
+- 将 FAQ 从 Top 10 扩展为 Top 20 并增加来源列（第 11~20 条基于公开社区调研）
+- 新增 Radar"最新扫描流入"栏目 + 周自动扫描（云例程，每周一 02:00 UTC）+ runbook
+- 在支柱·决策树·指南·维护页新增 18 个 Mermaid 图，全面替换 ASCII 图
+- 在加粗产品名首次出现处添加约 46 个精选官方链接（全部经 curl 预先验证）
+- 登记经验证的研讨会资产：NVIDIA Isaac Lab on AWS、自研 pai-sim-isaaclab 实操（晋升为后续行动）
+- 新增页脚社交链接（GitHub 仓库·LinkedIn·Bluesky）、双语 README、CC-BY-4.0 LICENSE
+
+### Changed
+
+- 首页标题改为"Physical AI Playbook 안내"，行动标签"SA 다음 액션"改为"다음 액션"（118 处），晋升管道标题变更（跨页锚点一并更新）
+- 将一手来源验证结果反映到 Radar 流入条目（晋升 Apptronik Apollo 2、更正 Atlas 误称、更正 AgiBot·1X NEO 的主张）
+
+### Fixed
+
+- 修复列表项被压成段落的渲染缺陷：在列表前插入 160 处缺失的空行（5 个支柱 × 4 种语言）
+
+## [1.1.0] - 2026-07-18
+
+### Added
+
+- 网站以四种语言发布：全部页面的英语·中文（简体）·日语翻译，韩语保持为源文本（mkdocs-static-i18n suffix 结构、语言切换器）
+- 新增基于 ko_hash 的翻译漂移检测（`scripts/check_translation_sync.py`，仅警告的 CI 步骤）
+- 新增翻译术语表（`i18n/glossary.md`）与 translate-sync 技能（检测 → 术语表 → 翻译变更文件 → strict 构建门禁）
+- 扩展 staleness 徽章，使其按语言注入到翻译页面
+- 在 README 中添加多语言站点链接
+
+### Changed
+
+- 移除 `navigation.instant`（与 i18n 语言切换器存在已文档化的不兼容）
+
+## [1.0.0] - 2026-07-11
+
+### Added
+
+- 首次发布：由主提示生成的 8 个页面（首页·支柱 1~5·决策树·Radar·维护），逐页执行对抗性事实核查
+- MkDocs Material 站点 + GitHub Actions 部署到 GitHub Pages（strict 构建门禁：损坏的链接·锚点导致部署失败）
+- 基于页面易变性的 staleness 徽章自动化（1/3/6 个月复核周期），由每周 cron 重新部署刷新
+- 新增内置 THE FILTER 清单的晋升议题表单
+- 指定支柱页面 owner
+
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
+[1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
+[1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/comeddy/pai-playbook/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/comeddy/pai-playbook/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/comeddy/pai-playbook/releases/tag/v1.0.0
+
+---
+
+<a id="japanese"></a>
+
+# 日本語
+
+このプロジェクトの主要な変更点をこのファイルに記録します。
+形式は [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) に従い、[Semantic Versioning](https://semver.org/spec/v2.0.0.html) を遵守します。バージョンは git タグ（v1.0.0+）で管理します。
+
+## [Unreleased]
+
+## [1.5.0] - 2026-07-24
+
+### Added
+
+- 全ページのフッターに GitHub CHANGELOG へのリンク（history アイコン）を追加、4言語共通で適用
+- 検証済みの AWS 公式 Physical AI リポジトリ 8 種（aws-samples 7 + awslabs 1）をピラー別の関連資産として登録、それぞれ成熟度の注意書きを明記、4言語に反映：AWS Physical AI Toolchain（OSMO on EKS）・Self-improving Physical AI・Agentic AI Robot（pillar 5）、Physical AI Scaffolding Kit（pillar 2～3）、Embodied AI Platform（pillar 2）、VLA Simulator — 7 つの VLA モデルを EC2 でワンクリック・ベンチマーク（pillar 3）、Android PAI データ収集アプリ・VAMS 視覚資産管理（pillar 1）
+
+### Changed
+
+- Radar の RLDX-1 項目を更新：「AWS 連携の根拠なし」表記をシミュレーションベンチマーク限定の連携に置き換え（aws-samples VLA Simulator が非商用ライセンスの許容範囲内で RLDX-1 を EC2 上で実行、商用ポジショニングは不可）
+- Radar に 2026-07-20 週次スキャン流入（8 件）と一次ソース検証結果（昇格 0 件・訂正 6 件）を記録、4言語に反映
+- 週次スキャン runbook の範囲を拡張：arXiv クエリに physical AI data（ロボットデータ収集・データセット）を追加、ニュースソースに The Robot Report・IEEE Spectrum Robotics を追加
+
+## [1.4.0] - 2026-07-19
+
+### Added
+
+- `/intro/` 独立ランディングページを追加(単一 HTML)し、4言語へ拡張（`/intro/en|zh|ja/`）— hreflang 代替リンクと header nav・footer 両方の言語スイッチャーを含む
+- 一次ソース検証の複数検証者体制を導入：任意の `検証:` メタデータフィールド（owner は 1 名を維持）、昇格パイプラインの「検証担当（複数可）」役割、昇格イシューフォームの検証者入力欄 — 4言語に反映
+- バイリンガル CHANGELOG・git タグ（v1.0.0～v1.3.0）・GitHub Releases・README リリースバッジを追加
+- カスタムドメイン `pai.zerojin.art` 用の `docs/CNAME` 基盤作業を追加（ドメインは未有効化）
+
+## [1.3.0] - 2026-07-19
+
+### Added
+
+- 検証済みの AWS 公式ワークショップを登録：Bedrock AgentCore 入門・Deep Dive（pillar 5）、IoT TwinMaker エンドツーエンド（pillar 3）
+- Physical AI E2E ワークショップ（韓国語）を pillar 2（GR00T VLA ファインチューニングトラック）と pillar 3（Isaac Lab RL トラック）に配置
+- 実行資産を追加：LeRobot テレオペ収集 on Greengrass サンプル（aws-samples）、Omniverse デジタルツインハンズオン（韓国語）、社内 AWS・NVIDIA ロボティクス参照アーキテクチャ（社内限定と表記）
+
+### Fixed
+
+- 翻訳における「国内」の曖昧さを Korean/韩国/韓国 に明示（30 箇所）— 中国語読者に中国と読まれていた問題、用語集ルールで再発防止
+- 4言語の全数校正（40 ファイル）の結果を反映：워크샵 → 워크숍 の表記統一、실재 → 실제 の修正
+
+## [1.2.0] - 2026-07-18
+
+### Added
+
+- 検証パイプラインの全工程（候補発見 → Radar → THE FILTER → 昇格 → 監視）を説明する「ガイド」ページを新設、上部タブナビゲーションで公開
+- FAQ を Top 10 から Top 20 へ拡張し出典列を追加（11～20 番は公開コミュニティ調査に基づく）
+- Radar「最新スキャン流入」セクション + 週次自動スキャン（クラウドルーチン、毎週月曜 02:00 UTC）+ runbook を追加
+- ピラー・意思決定ツリー・ガイド・メンテナンスに Mermaid 図 18 個を追加、ASCII 図を全量置き換え
+- 太字の製品名の初出箇所に厳選した公式リンクを約 46 箇所追加（全数 curl で事前検証）
+- 検証済みワークショップ資産を登録：NVIDIA Isaac Lab on AWS、自作 pai-sim-isaaclab ハンズオン（次のアクションへ昇格）
+- フッターのソーシャルリンク（GitHub リポジトリ・LinkedIn・Bluesky）、バイリンガル README、CC-BY-4.0 LICENSE を追加
+
+### Changed
+
+- ホームのタイトルを「Physical AI Playbook 안내」に変更、アクションラベル「SA 다음 액션」を「다음 액션」に変更（118 箇所）、昇格パイプラインの見出しを変更（ページ横断アンカーを一括更新）
+- 一次ソース検証の結果を Radar 流入項目に反映（Apptronik Apollo 2 を昇格、Atlas の誤称を訂正、AgiBot・1X NEO の主張を訂正）
+
+### Fixed
+
+- 箇条書きが段落に潰れるリストレンダリング不具合を修正：リスト前の空行 160 箇所を挿入（ピラー 5 × 4言語）
+
+## [1.1.0] - 2026-07-18
+
+### Added
+
+- サイトを 4言語で公開：全ページの英語・中国語（簡体字）・日本語翻訳、韓国語をソースとして維持（mkdocs-static-i18n suffix 構造、言語スイッチャー）
+- ko_hash ベースの翻訳ドリフト検知を追加（`scripts/check_translation_sync.py`、警告のみの CI ステップ）
+- 翻訳用語集（`i18n/glossary.md`）と translate-sync スキルを追加（検知 → 用語集 → 変更ファイルの翻訳 → strict ビルドゲート）
+- staleness バッジを翻訳ページにも言語別に注入するよう拡張
+- README に多言語サイトリンクを追加
+
+### Changed
+
+- `navigation.instant` を削除（i18n 言語スイッチャーとの文書化された非互換）
+
+## [1.0.0] - 2026-07-11
+
+### Added
+
+- 初回リリース：マスタープロンプトで生成した 8 ページ（ホーム・ピラー 1～5・意思決定ツリー・Radar・メンテナンス）、ページごとに敵対的ファクトチェックを実施
+- MkDocs Material サイト + GitHub Actions による GitHub Pages デプロイ（strict ビルドゲート：壊れたリンク・アンカーはデプロイ失敗）
+- ページ別の揮発性に基づく staleness バッジ自動化（1/3/6 か月レビュー周期）、週次 cron 再デプロイで更新
+- THE FILTER チェックリストを内蔵した昇格イシューフォームを追加
+- ピラーページの owner を指定
 
 [Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
 [1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
