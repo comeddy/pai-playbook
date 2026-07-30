@@ -1,5 +1,5 @@
 ---
-ko_hash: a372c2a339763b2f62cd0fa75319f8a09aa2bd4e
+ko_hash: de850bcb42694d11cee09f06618aef39b04d8120
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -156,7 +156,7 @@ graph TD
 
 ## This prompt is itself a living document
 
-Look at the actual generation results and **adjust the inclusion criteria, template, and pillar weighting**. Master prompt: `physical-ai-playbook-master-prompt.md`.
+Look at the actual generation results and **adjust the inclusion criteria, template, and pillar weighting**. Master prompt: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md).
 
 ---
 _owner: TBD ⚠️ · updated: 2026-07 · volatility: low (operating rules — updated only when the rules change)_

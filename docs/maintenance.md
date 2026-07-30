@@ -153,7 +153,7 @@ graph TD
 
 ## 이 프롬프트 자체도 살아있는 문서다
 
-실제 생성 결과를 보고 **포함 기준·템플릿·필러 가중치를 조정**하라. 마스터 프롬프트: `physical-ai-playbook-master-prompt.md`.
+실제 생성 결과를 보고 **포함 기준·템플릿·필러 가중치를 조정**하라. 마스터 프롬프트: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md).
 
 ---
 _owner: 미정 ⚠️ · updated: 2026-07 · volatility: 낮음 (운영 규칙 — 규칙 변경 시에만 갱신)_

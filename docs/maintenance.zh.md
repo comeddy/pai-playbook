@@ -1,5 +1,5 @@
 ---
-ko_hash: a372c2a339763b2f62cd0fa75319f8a09aa2bd4e
+ko_hash: de850bcb42694d11cee09f06618aef39b04d8120
 ---
 # Maintenance — 所有权 · 更新规则 · 晋升管道
 
@@ -156,7 +156,7 @@ graph TD
 
 ## 这份提示本身也是活文档
 
-根据实际生成结果**调整纳入标准·模板·支柱权重**。主提示: `physical-ai-playbook-master-prompt.md`。
+根据实际生成结果**调整纳入标准·模板·支柱权重**。主提示: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md)。
 
 ---
 _owner: 待定 ⚠️ · updated: 2026-07 · volatility: 低（运营规则 —— 仅在规则变更时更新）_

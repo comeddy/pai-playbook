@@ -1,5 +1,5 @@
 ---
-ko_hash: a372c2a339763b2f62cd0fa75319f8a09aa2bd4e
+ko_hash: de850bcb42694d11cee09f06618aef39b04d8120
 ---
 # Maintenance — 所有権 · 更新ルール · 昇格パイプライン
 
@@ -157,7 +157,7 @@ graph TD
 
 ## このプロンプト自体も生きた文書です
 
-実際の生成結果を見て **包含基準·テンプレート·ピラー重み付けを調整** してください。マスタープロンプト: `physical-ai-playbook-master-prompt.md`。
+実際の生成結果を見て **包含基準·テンプレート·ピラー重み付けを調整** してください。マスタープロンプト: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md)。
 
 ---
 _owner: 未定 ⚠️ · updated: 2026-07 · volatility: 低（運営ルール — ルール変更時のみ更新）_
