@@ -93,6 +93,8 @@ plugins:
           nav_translations:
             홈: Home
             가이드: Guide
+            "경영진 브리핑": "Executive Brief"
+            "임원 대화 가이드": "Executive Conversation Guide"
             "P1 · 데이터 수집 & 처리": "P1 · Data Collection & Processing"
             "P2 · 모델 학습 (VLA)": "P2 · Model Training (VLA)"
             "P3 · 시뮬레이션": "P3 · Simulation"
@@ -107,6 +109,8 @@ plugins:
           nav_translations:
             홈: 首页
             가이드: 指南
+            "경영진 브리핑": "高管简报"
+            "임원 대화 가이드": "高管对话指南"
             "P1 · 데이터 수집 & 처리": "P1 · 数据采集与处理"
             "P2 · 모델 학습 (VLA)": "P2 · 模型训练 (VLA)"
             "P3 · 시뮬레이션": "P3 · 仿真"
@@ -121,6 +125,8 @@ plugins:
           nav_translations:
             홈: ホーム
             가이드: ガイド
+            "경영진 브리핑": "経営層ブリーフィング"
+            "임원 대화 가이드": "経営層対話ガイド"
             "P1 · 데이터 수집 & 처리": "P1 · データ収集と処理"
             "P2 · 모델 학습 (VLA)": "P2 · モデル学習 (VLA)"
             "P3 · 시뮬레이션": "P3 · シミュレーション"
