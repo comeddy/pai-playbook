@@ -1,0 +1,46 @@
+name: "🐛 버그 제보 (내용 오류·깨진 링크·번역·빌드)"
+description: "플레이북에서 발견한 잘못된 것 — 사실 오류, 깨진 링크/앵커, 번역 불일치, 렌더링·스크립트 문제"
+title: "[버그] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **새 기술·항목 추가 제안**은 이 양식이 아니라 [📌 Playbook 후보 제보](https://github.com/comeddy/pai-playbook/issues/new?template=promote-candidate.yml)를 사용하세요.
+
+  - type: dropdown
+    id: bug-type
+    attributes:
+      label: 유형
+      options:
+        - "내용 오류 (사실·수치·라이선스·성숙도 라벨이 틀림)"
+        - "깨진 링크/앵커 (404, 잘못된 딥링크)"
+        - "번역 불일치 (ko 원본과 en/zh/ja가 다름)"
+        - "렌더링 문제 (표·다이어그램·레이아웃 깨짐)"
+        - "스크립트/CI 문제 (check_staleness, translation_sync, 배포)"
+        - "기타"
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: 발견 위치
+      description: "페이지 URL 또는 파일 경로 + 섹션. 번역 문제면 언어도."
+      placeholder: "예: https://comeddy.github.io/pai-playbook/pillar-2/ §1 (ja) / docs/radar.md 🤖 표"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 현상
+      description: "무엇이 잘못됐나. 내용 오류라면 **왜 틀렸는지 근거(1차 출처 URL)**를 함께 — 이 플레이북은 출처 없는 정정을 받지 않습니다."
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 것 (선택)
+      description: "올바른 내용/동작. 정정 문안을 제안해도 좋습니다."

@@ -1,0 +1,46 @@
+name: "💡 기능 개선 제안 (사이트·자동화·구조)"
+description: "플레이북의 기능·구조·자동화 개선 아이디어 — 새 기술 항목 추가는 후보 제보 양식으로"
+title: "[개선] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **새 기술·항목을 본문/Radar에 넣자는 제안**은 THE FILTER 게이트가 내장된 [📌 Playbook 후보 제보](https://github.com/comeddy/pai-playbook/issues/new?template=promote-candidate.yml)를 사용하세요.
+        이 양식은 **사이트 기능·페이지 구조·자동화·운영 체계**의 개선용입니다.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 영역
+      options:
+        - "페이지/콘텐츠 구조 (새 페이지, 섹션 재구성, 가독성)"
+        - "다국어/번역 체계"
+        - "자동화 (일간 스캔, staleness, 소셜 게시, CI)"
+        - "사이트 기능 (검색, PWA, 내비게이션, 디자인)"
+        - "운영/거버넌스 (owner, 검증 절차, 이슈 관리)"
+        - "기타"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 제안 내용
+      description: "무엇을 어떻게 바꾸자는 것인지."
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: 동기 — 누가 언제 아쉬웠나
+      description: "어떤 독자(SA/임원/기여자)의 어떤 상황에서 필요했는지. 실제 사례가 있으면 우선순위가 올라갑니다."
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 참고 (선택)
+      description: "비슷한 사례, 관련 문서·이슈, 스크린샷 등."
