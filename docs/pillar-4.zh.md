@@ -1,5 +1,5 @@
 ---
-ko_hash: 4b8fe0a1961faa12192846d718e7fcc1a2aaf7a9
+ko_hash: 6bf5b710d0b4a9424ed12b8b2cd24174c01cafff
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -204,7 +204,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（边缘 HW·厂商指�
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — 把在仿真中训练的策略迁移到真实机器人上，或指其方法论。由于仿真与现实的物理·视觉差异（域间差异），直接迁移会导致性能崩溃。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^s2r]: **sim-to-real** — 把在仿真中训练的策略迁移到真实机器人上，或指其方法论。由于仿真与现实的物理·视觉差异（域间差异），直接迁移会导致性能崩溃。🎥 [NVIDIA sim-to-real 机器人展示](https://www.youtube.com/watch?v=sffNvv3GkRA)
 [^loco]: **locomotion（行走/移动）** — 行走·行驶等机器人的移动能力。得益于机器人与地面接触这种相对简单的物理，它是 sim-to-real 最先被解决的领域。
 [^manip]: **操作（manipulation）** — 抓取、搬运、装配物体的能力。指尖接触的物理很复杂，是 sim-to-real 尚未解决的领域。
 [^dyn]: **动力学（dynamics）** — 力·摩擦·碰撞所产生的运动物理。尤其是抓取物体时的接触动力学，是仿真器最难精确再现的部分。

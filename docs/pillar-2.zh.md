@@ -218,11 +218,11 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（模型版本·许可�
 
 <!-- 용어 각주 -->
 
-[^vla]: **VLA (Vision-Language-Action)** —— 以摄像头图像（Vision）和自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。说"把杯子拿起来"，它就生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^ft]: **微调（fine-tuning）** —— 用自己任务·机器人的少量数据，对经过大规模数据预训练的模型进行追加训练。相比从零训练，数据·GPU 可节省数十~数百倍。
-[^lora]: **LoRA (Low-Rank Adaptation)** —— 冻结原始权重、只额外训练小型低秩（low-rank）矩阵的轻量微调技术。GPU 内存需求仅为全量微调的几分之一，一张 24GB 级 GPU 即可完成。
-[^sys]: **System 2 / System 1** —— 把认知科学中"慢思考 / 快反应"的区分应用到机器人架构的结构。System 2 由慢速大模型负责规划（5~10Hz），System 1 由小型策略负责实时控制（50~200Hz）。它是决定推理放云上还是边缘的标准。
-[^flow]: **flow-matching / diffusion action head** —— 通过从噪声逐步细化来生成机器人连续动作的扩散（diffusion）·流（flow）系输出模块。能表达平滑且多模态（multi-modal）的动作分布，是最新 VLA 的标准动作头。
-[^chunk]: **action chunking** —— 不是每步只预测 1 个动作，而是一次预测未来多步动作（块）的技术。减少推理次数，更容易满足实时控制频率。
-[^vlm]: **VLM (Vision-Language Model)** —— 同时理解图像和文本的模型（例如看照片回答问题）。VLA 通常以 VLM 作为"眼睛+大脑"骨干，并在其上加装动作头。
-[^embodiment]: **embodiment（具身形态）** —— 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂和人形机器人的 embodiment 也不同，数据·策略无法原样移植。
+[^vla]: **VLA (Vision-Language-Action)** — 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^ft]: **微调（fine-tuning）** — 用自己任务·机器人的少量数据，对经过大规模数据预训练的模型进行追加训练。相比从零训练，数据·GPU 可节省数十~数百倍。
+[^lora]: **LoRA (Low-Rank Adaptation)** — 冻结原始权重、只额外训练小型低秩（low-rank）矩阵的轻量微调技术。GPU 内存需求仅为全量微调的几分之一，一张 24GB 级 GPU 即可完成。
+[^sys]: **System 2 / System 1** — 把认知科学中"慢思考 / 快反应"的区分应用到机器人架构的结构。System 2 由慢速大模型负责规划（5~10Hz），System 1 由小型策略负责实时控制（50~200Hz）。它是决定推理放云上还是边缘的标准。
+[^flow]: **flow-matching / diffusion action head** — 通过从噪声逐步细化来生成机器人连续动作的扩散（diffusion）·流（flow）系输出模块。能表达平滑且多模态（multi-modal）的动作分布，是最新 VLA 的标准动作头。
+[^chunk]: **action chunking** — 不是每步只预测 1 个动作，而是一次预测未来多步动作（块）的技术。减少推理次数，更容易满足实时控制频率。
+[^vlm]: **VLM (Vision-Language Model)** — 同时理解图像和文本的模型（例如看照片回答问题）。VLA 通常以 VLM 作为"眼睛+大脑"骨干，并在其上加装动作头。
+[^embodiment]: **embodiment（具身形态）** — 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂与人形机器人的 embodiment 不同，数据·策略无法直接移植。

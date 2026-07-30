@@ -201,7 +201,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 �
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — 시뮬레이션에서 학습한 정책을 실제 로봇으로 옮기는 것, 또는 그 방법론. 시뮬레이션과 현실의 물리·시각 차이(도메인 갭) 때문에 그냥 옮기면 성능이 무너진다. 🎥 [NVIDIA Isaac GR00T N1 소개](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^s2r]: **sim-to-real** — 시뮬레이션에서 학습한 정책을 실제 로봇으로 옮기는 것, 또는 그 방법론. 시뮬레이션과 현실의 물리·시각 차이(도메인 갭) 때문에 그냥 옮기면 성능이 무너진다. 🎥 [NVIDIA sim-to-real 로보틱스 쇼케이스](https://www.youtube.com/watch?v=sffNvv3GkRA)
 [^loco]: **로코모션(locomotion)** — 보행·주행 등 로봇이 이동하는 능력. 로봇과 지면의 접촉이라는 상대적으로 단순한 물리 덕분에 sim-to-real이 가장 먼저 풀린 영역이다.
 [^manip]: **매니퓰레이션(manipulation, 조작)** — 물체를 집고 옮기고 조립하는 능력. 손끝 접촉의 물리가 복잡해 sim-to-real이 아직 풀리지 않은 영역이다.
 [^dyn]: **동역학(dynamics)** — 힘·마찰·충돌이 만드는 운동의 물리. 특히 물체를 쥘 때의 접촉 동역학은 시뮬레이터가 정확히 재현하기 가장 어려운 부분이다.

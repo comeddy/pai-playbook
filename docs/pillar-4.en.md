@@ -1,5 +1,5 @@
 ---
-ko_hash: 4b8fe0a1961faa12192846d718e7fcc1a2aaf7a9
+ko_hash: 6bf5b710d0b4a9424ed12b8b2cd24174c01cafff
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -204,7 +204,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: medium (edge HW · vendor me
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — Transferring a policy trained in simulation to a real robot, or the methodology for doing so. The physical and visual differences between simulation and reality (the domain gap) mean a naive transfer collapses performance. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^s2r]: **sim-to-real** — Transferring a policy trained in simulation to a real robot, or the methodology for doing so. The physical and visual differences between simulation and reality (the domain gap) mean a naive transfer collapses performance. 🎥 [NVIDIA sim-to-real robotics showcase](https://www.youtube.com/watch?v=sffNvv3GkRA)
 [^loco]: **locomotion** — A robot's ability to move: walking, driving, etc. Thanks to the relatively simple physics of robot-ground contact, it is the area where sim-to-real was solved first.
 [^manip]: **manipulation** — The ability to grasp, move, and assemble objects. The physics of fingertip contact is complex, so this is the area where sim-to-real remains unsolved.
 [^dyn]: **dynamics** — The physics of motion produced by force, friction, and collision. Contact dynamics when grasping an object is the hardest part for a simulator to reproduce accurately.

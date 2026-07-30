@@ -241,13 +241,13 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（数据集版本·大�
 
 <!-- 용어 각주 -->
 
-[^vla]: **VLA (Vision-Language-Action)** —— 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^teleop]: **遥操作（teleoperation）** —— 由人通过 VR 控制器·主导臂等远程操控机器人并记录示范动作的数据采集方式。质量最高，但人的时间会直接变成成本。🎥 [Stanford Mobile ALOHA 遥操作演示](https://www.youtube.com/watch?v=mnLVbwxSdNM)
-[^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** —— 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
-[^traj]: **回合(episode)/轨迹（trajectory）** —— 机器人从开始到结束执行一个任务的一次完整记录。它是观测（相机·传感器）与动作（关节命令）的时间序列组合，是机器人学习数据的基本单位。
-[^embodiment]: **embodiment（具身形态）** —— 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂与人形机器人的 embodiment 不同，数据·策略无法直接移植。
-[^dr]: **域随机化（Domain Randomization）** —— 随机改变仿真中的光照·纹理·物体位置·相机角度来生成数据，让模型学到在任何环境下都通用的特征。这是缩小 sim-to-real 差距的代表性处方。
-[^gap]: **域间差异（domain gap）** —— 由于仿真与现实的差异（物理·视觉），在仿真中表现良好的模型在实物上性能下降的现象。处理这一差距的方法论是 [pillar-4](pillar-4.md) 的 sim-to-real。
-[^wfm]: **世界基础模型（WFM, World Foundation Model）** —— 为预测·生成物理世界的下一场景而训练的大型模型。通过文本·视频提示生成物理上合理的视频·场景，用于增强机器人学习数据。🎥 [NVIDIA Cosmos 介绍](https://www.youtube.com/watch?v=9Uch931cDx8)
-[^rosbag]: **ROS bag（rosbag2）** —— 机器人操作系统 ROS 2 将话题（传感器·命令流）整体录制的标准日志格式。它是机器人公司原始数据的事实默认形态，但无法直接用于训练，需要转换。
-[^fmt]: **RLDS / LeRobotDataset** —— 机器人学习数据的两大存储格式。RLDS 基于 TensorFlow Datasets，主要 VLA 训练代码可直接读取；LeRobotDataset（v3）是基于 Parquet+MP4 的 Hugging Face 生态标准。
+[^vla]: **VLA (Vision-Language-Action)** — 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^teleop]: **遥操作（teleoperation）** — 由人通过 VR 控制器·主导臂等远程操控机器人并记录示范动作的数据采集方式。质量最高，但人的时间会直接变成成本。🎥 [Stanford Mobile ALOHA 遥操作演示](https://www.youtube.com/watch?v=mnLVbwxSdNM)
+[^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** — 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^traj]: **回合(episode)/轨迹（trajectory）** — 机器人从开始到结束执行一个任务的一次完整记录。它是观测（相机·传感器）与动作（关节命令）的时间序列组合，是机器人学习数据的基本单位。
+[^embodiment]: **embodiment（具身形态）** — 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂与人形机器人的 embodiment 不同，数据·策略无法直接移植。
+[^dr]: **域随机化（Domain Randomization）** — 随机改变仿真中的光照·纹理·物体位置·相机角度来生成数据，让模型学到在任何环境下都通用的特征。这是缩小 sim-to-real 差距的代表性处方。
+[^gap]: **域间差异（domain gap）** — 由于仿真与现实的差异（物理·视觉），在仿真中表现良好的模型在实物上性能下降的现象。处理这一差距的方法论是 [pillar-4](pillar-4.md) 的 sim-to-real。
+[^wfm]: **世界基础模型（WFM, World Foundation Model）** — 为预测·生成物理世界的下一场景而训练的大型模型。通过文本·视频提示生成物理上合理的视频·场景，用于增强机器人学习数据。🎥 [NVIDIA Cosmos 介绍](https://www.youtube.com/watch?v=9Uch931cDx8)
+[^rosbag]: **ROS bag（rosbag2）** — 机器人操作系统 ROS 2 将话题（传感器·命令流）整体录制的标准日志格式。它是机器人公司原始数据的事实默认形态，但无法直接用于训练，需要转换。
+[^fmt]: **RLDS / LeRobotDataset** — 机器人学习数据的两大存储格式。RLDS 基于 TensorFlow Datasets，主要 VLA 训练代码可直接读取；LeRobotDataset（v3）是基于 Parquet+MP4 的 Hugging Face 生态标准。

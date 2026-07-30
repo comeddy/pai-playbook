@@ -242,6 +242,6 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（バージョン・イ�
 [^rtcore]: **RT Core / RTX GPU** — レイトレーシング専用ハードウェア（RT Core）を搭載した NVIDIA GPU 系列です。Isaac Sim のフォトリアルなレンダリングに必須のため、RT Core のない A100/H100 はレンダリング用途に使えません。
 [^gt]: **ground truth（正解ラベル）** — 学習・評価の基準となる正確な正解データです。シミュレーションではすべての物体の位置・セグメンテーションマスクをエンジンが既に把握しているため、完璧なラベルが自動生成されます。
 [^usd]: **USD (Universal Scene Description)** — ピクサー（Pixar）が作った 3D シーン記述の標準フォーマットです。Isaac Sim のシーン・ロボット・資産はすべて USD で記述され、Omniverse エコシステムの共通言語です。
-[^sdg]: **合成データ生成（SDG, Synthetic Data Generation）** — シミュレーターで学習用画像とアノテーション（ラベル）を自動生成する技法です。ラベリングコストがゼロに近づくのが最大の利点です。🎥 [Isaac Sim Replicator SDG チュートリアル](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^sdg]: **合成データ生成（SDG, Synthetic Data Generation）** — シミュレーターで学習用画像とアノテーション（ラベル）を自動生成する技法です。ラベリングコストがゼロに収束するのが最大の利点です。🎥 [Isaac Sim Replicator SDG チュートリアル](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^ppo]: **PPO (Proximal Policy Optimization)** — 最も広く使われる強化学習アルゴリズムです。安定して収束し、ロボット歩行学習の事実上のデフォルトです。
 [^dtwin]: **デジタルツイン（digital twin）** — 実際の工場・倉庫・ロボットを物理的に忠実に模した仮想レプリカです。実環境に触れずにポリシー学習・検証・シナリオ実験を可能にします。

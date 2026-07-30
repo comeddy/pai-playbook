@@ -1,5 +1,5 @@
 ---
-ko_hash: f0d495e54f225980d1c60146398f19701be9c976
+ko_hash: b3ac42322cb56ec58a5b64a21616c9a0c6cf8d36
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -99,6 +99,8 @@ _owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatili
 ```
 
 **Enforce the depth hierarchy**: L0 at the very top. L2 deep-dives are separated into `<details>` folds/links to keep the body short.
+
+**Glossary-footnote convention**: whenever content is added or updated, handle terms an SA can't immediately parse with `[^term]` footnotes in the same change — reuse an existing footnote id if one exists; for a new term, add a "**Term** — 1–2 sentence explanation" entry to the `<!-- 용어 각주 -->` block at the bottom of the page (attach a 🎥 link if a helpful official video exists, verified via oEmbed). Markers go only at the first body occurrence — never in headings or mermaid blocks. Apply identically across all 4 languages (same marker ids, same URLs).
 
 ---
 

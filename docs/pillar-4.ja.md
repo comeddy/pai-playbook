@@ -1,5 +1,5 @@
 ---
-ko_hash: 4b8fe0a1961faa12192846d718e7fcc1a2aaf7a9
+ko_hash: 6bf5b710d0b4a9424ed12b8b2cd24174c01cafff
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -205,7 +205,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（エッジ HW・ベン�
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — シミュレーションで学習したポリシーを実際のロボットへ移すこと、またはその方法論です。シミュレーションと現実の物理・視覚の差（ドメインギャップ）のため、そのまま移すと性能が崩れます。🎥 [NVIDIA Isaac GR00T N1 紹介](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^s2r]: **sim-to-real** — シミュレーションで学習したポリシーを実際のロボットへ移すこと、またはその方法論です。シミュレーションと現実の物理・視覚の差（ドメインギャップ）のため、そのまま移すと性能が崩れます。🎥 [NVIDIA sim-to-real ロボティクスショーケース](https://www.youtube.com/watch?v=sffNvv3GkRA)
 [^loco]: **locomotion（ロコモーション）** — 歩行・走行などロボットが移動する能力です。ロボットと地面の接触という比較的シンプルな物理のおかげで、sim-to-real が最初に解決された領域です。
 [^manip]: **マニピュレーション（manipulation, 操作）** — 物体をつかみ、運び、組み立てる能力です。指先の接触の物理が複雑なため、sim-to-real がまだ解決されていない領域です。
 [^dyn]: **動力学（dynamics）** — 力・摩擦・衝突が生み出す運動の物理です。特に物体をつかむ際の接触動力学は、シミュレーターが正確に再現するのが最も難しい部分です。
