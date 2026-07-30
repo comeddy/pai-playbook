@@ -1,5 +1,5 @@
 ---
-ko_hash: ff43cd0b632953b1db539867a88d54308f245b7a
+ko_hash: 0fa04bc61945e26ce9f20e78daf8a8e43e817038
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -32,6 +32,17 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - **版本**: Isaac Sim 最新 **GA = 5.1.0(2025-10-30)**。**6.0 为 Preview**（"Early Developer Release", GTC'26）—— 即便 GitHub 补丁标签被错误标为 "GA"，也**不要把 6.0 说成 GA**。Isaac Lab 稳定版 2.3.x，3.0 为 beta（引入 Newton 物理引擎）。
 - **许可证**: Isaac Sim **源码为 Apache 2.0**（商用免费）。但若将 **Omniverse Kit 运行时**做第三方再分发/SaaS 提供/交钥匙安装，则**需要 NVIDIA AI Enterprise 许可证**。内部 R&D 或仅销售产出物则无需。[Isaac Lab](https://github.com/isaac-sim/IsaacLab) 为 BSD-3。
 - **GPU 需求**: **必须 RTX(RT Core)**。最低 RTX 4080(16GB)，理想为 RTX PRO 6000 Blackwell(48GB)。**不支持 A100/H100**（无 RT Core）。
+
+**栈中各组件实际提供的能力** `[1]`（docs 2026-07 核实）:
+
+| 组件 | 技术要点 | 仿真视角 |
+|---|---|---|
+| **Isaac Sim** | 基于 RTX 光线追踪的高保真仿真器 —— USD 场景、相机·LiDAR 等传感器仿真、Replicator SDG | 需要逼真渲染的感知·合成数据轴 |
+| **Isaac Lab** | Isaac Sim 之上的 RL/模仿学习框架 —— 单张 GPU 上数千并行环境，联动 skrl·rsl_rl 等库 | 步行·操作策略学习的标准入口 |
+| **Marketplace AMI** | Isaac Sim 预配置镜像（免费）—— 无需安装驱动·依赖，开机即用 | 消除门槛，让"30 分钟实操"成为可能 |
+| **NICE DCV** | AWS 远程显示协议 —— 高画质·低延迟流传输，在 EC2 上无额外许可费用 | 像本地一样操作云 GPU 上的 Isaac Sim GUI |
+| **AWS Batch MNP** | 多节点并行[^mnp]批处理作业 —— 将容器作业跨多节点排队·调度 | 无 GUI 的大规模 headless RL 作业并行化（第 2 节） |
+| **G6e / G7e** | 搭载 RT Core 的可渲染 GPU 实例 | 满足不变约束（A100/H100 不可用）的唯一系列 |
 
 **AWS 映射** `[1]`:
 
@@ -244,3 +255,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（版本·实例在折�
 [^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** — 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^ppo]: **PPO (Proximal Policy Optimization)** — 使用最广泛的强化学习算法。收敛稳定，是机器人行走学习的事实默认值。
 [^dtwin]: **数字孪生（digital twin）** — 对真实工厂·仓库·机器人进行物理上忠实复刻的虚拟副本。无需触碰真实环境即可进行策略训练·验证·场景实验。
+[^mnp]: **MNP（Multi-Node Parallel）** — AWS Batch 将一个作业跨多台 EC2 节点执行的模式。使需要节点间通信的大规模训练·仿真作业也能通过批处理队列管理。

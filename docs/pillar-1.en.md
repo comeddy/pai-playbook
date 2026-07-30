@@ -1,5 +1,5 @@
 ---
-ko_hash: ac90b606c29c6cd9ae102b2da34198952d8c2678
+ko_hash: 0e91167768055daa91af823ff5fa27ba66ae9389
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -155,6 +155,17 @@ graph LR
     HP --> VAL["Validation"]
 ```
 
+**What each service does in the pipeline** `[1]` (docs verified 2026-07):
+
+| Service | Technical summary | For robot data |
+|---|---|---|
+| **S3** | Effectively unlimited object storage + storage-class tiering (rarely-read raw data moves to low-cost tiers) | The landing zone where teleop raw data and ROS bags accumulate as-is |
+| **FSx for Lustre** | A parallel filesystem linked to S3 via a **DRA (data repository association)** — training jobs get fast random access as a filesystem without the initial S3 download, cutting S3 request costs across repeated epochs | Removes the bottleneck of shuffling and re-reading large episode sets |
+| **Glue** | Serverless ETL[^etl] — crawlers infer schemas, jobs run format conversion and quality filtering | Where the custom rosbag→LeRobot/RLDS converter lives (item 5) |
+| **Batch** | Queues and schedules containerized batch jobs; multi-node parallel (MNP) and GPU jobs; FSx integration | Mass-parallelizes converting thousands of episodes and synthetic data generation |
+| **Ground Truth** | Human-in-the-loop labeling workforces and workflows | Robot data is mostly auto-labeled — auxiliary use such as success/failure review |
+| **HyperPod** | → see the training-stack table in [pillar-2](pillar-2.md) | The final consumer of this pipeline |
+
 **AWS mapping**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod. (all GA)
 
 **Decision criteria**:
@@ -251,3 +262,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: medium (dataset versions/siz
 [^wfm]: **World Foundation Model (WFM)** — a large model trained to predict/generate the next scenes of the physical world. From text/video prompts it creates physically plausible video and scenarios to augment robot training data. 🎥 [NVIDIA Cosmos introduction](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag (rosbag2)** — the standard log format in which the robot operating system ROS 2 records topics (sensor/command streams) wholesale. The de facto default form of robot companies' raw data, but it cannot be used for training as-is and requires conversion.
 [^fmt]: **RLDS / LeRobotDataset** — the two dominant storage formats for robot learning data. RLDS is based on TensorFlow Datasets and is read directly by major VLA training code; LeRobotDataset (v3) is the Parquet+MP4-based Hugging Face ecosystem standard.
+[^etl]: **ETL (Extract-Transform-Load)** — the data-processing pattern of extracting source data and transforming/loading it into a form usable for training and analysis. In a robot pipeline, "ROS bag → training-format conversion + quality filtering" is the ETL step.

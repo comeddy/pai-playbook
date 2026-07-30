@@ -1,5 +1,5 @@
 ---
-ko_hash: ff43cd0b632953b1db539867a88d54308f245b7a
+ko_hash: 0fa04bc61945e26ce9f20e78daf8a8e43e817038
 ---
 # Pillar 3 — Simulation
 
@@ -32,6 +32,17 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 - **Versions**: latest Isaac Sim **GA = 5.1.0 (2025-10-30)**. **6.0 is Preview** ("Early Developer Release," GTC'26) — even if the GitHub patch tag is mislabeled "GA," **do not call 6.0 GA**. Isaac Lab stable is 2.3.x; 3.0 is beta (introduces the Newton physics engine).
 - **License**: Isaac Sim **source is Apache 2.0** (free for commercial). But redistributing/offering-as-SaaS/turnkey-installing the **Omniverse Kit runtime** to third parties requires an **NVIDIA AI Enterprise license**. Not needed for internal R&D or selling only the output. [Isaac Lab](https://github.com/isaac-sim/IsaacLab) is BSD-3.
 - **GPU requirement**: **RTX (RT Core) required**. Minimum RTX 4080 (16GB), ideal RTX PRO 6000 Blackwell (48GB). **A100/H100 not supported** (no RT Core).
+
+**What each stack component actually does** `[1]` (docs verified 2026-07):
+
+| Component | Technical summary | For simulation |
+|---|---|---|
+| **Isaac Sim** | High-fidelity simulator built on RTX ray tracing — USD scenes, camera/LiDAR sensor simulation, Replicator SDG | The axis for perception and synthetic data that needs realistic rendering |
+| **Isaac Lab** | The RL/imitation-learning framework on top of Isaac Sim — thousands of parallel environments on one GPU, integrations with skrl, rsl_rl, etc. | The standard entry point for locomotion/manipulation policy training |
+| **Marketplace AMI** | A pre-configured Isaac Sim image (free) — boots ready to use, no driver/dependency installs | Removes the entry barrier that makes the "30-minute hands-on" possible |
+| **NICE DCV** | AWS's remote display protocol — high-quality, low-latency streaming with no extra license cost on EC2 | Operate the cloud GPU's Isaac Sim GUI as if local |
+| **AWS Batch MNP** | Multi-node parallel[^mnp] batch jobs — queues and schedules container jobs across nodes | Parallelizes large headless RL jobs without a GUI (item 2) |
+| **G6e / G7e** | Render-capable GPU instances with RT Cores | The only families satisfying the invariant constraint (no A100/H100) |
 
 **AWS mapping** `[1]`:
 
@@ -244,3 +255,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: high (versions · instances 
 [^sdg]: **Synthetic Data Generation (SDG)** — a technique that uses a simulator to auto-generate training images and annotations (labels). Its biggest advantage: labeling cost converges to zero. 🎥 [Isaac Sim Replicator SDG tutorial](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^ppo]: **PPO (Proximal Policy Optimization)** — the most widely used reinforcement learning algorithm. Converges stably and is the de facto default for robot locomotion training.
 [^dtwin]: **Digital twin** — A physically faithful virtual replica of a real factory, warehouse, or robot. Enables policy training, validation, and scenario experiments without touching the real environment.
+[^mnp]: **MNP (Multi-Node Parallel)** — the AWS Batch mode that runs a single job across multiple EC2 nodes. It lets large training/simulation jobs that need inter-node communication be managed through a batch queue.

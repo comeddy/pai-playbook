@@ -152,6 +152,17 @@ graph LR
     HP --> VAL["검증"]
 ```
 
+**각 서비스가 파이프라인에서 해주는 것** `[1]` (docs 2026-07 확인):
+
+| 서비스 | 기술 요약 | 로봇 데이터 관점 |
+|---|---|---|
+| **S3** | 사실상 무한 확장 객체 스토리지 + 스토리지 클래스 티어링(안 읽는 원본은 저비용 계층으로) | 텔레옵 원본·ROS bag을 그대로 쌓는 랜딩존 |
+| **FSx for Lustre** | S3와 **DRA(data repository association)**로 연결되는 병렬 파일시스템 — 학습 잡이 S3 초기 다운로드 없이 파일시스템처럼 고속 랜덤 액세스, 반복 에폭의 S3 요청 비용 절감 | 대규모 에피소드 셔플·반복 읽기 병목 해소 |
+| **Glue** | 서버리스 ETL[^etl] — 크롤러가 스키마 파악, 잡이 포맷 변환·품질 필터 실행 | rosbag→LeRobot/RLDS 커스텀 컨버터를 올리는 자리(5번) |
+| **Batch** | 컨테이너 배치 잡 큐·스케줄링, 멀티노드 병렬(MNP)·GPU 잡, FSx 연동 | 수천 에피소드 변환·합성 데이터 생성의 대량 병렬화 |
+| **Ground Truth** | 휴먼 인 더 루프 라벨링 워크포스·워크플로우 | 로봇 데이터는 대개 자동 라벨 — 성공/실패 검수 등 보조 용도 |
+| **HyperPod** | → [pillar-2](pillar-2.md)의 학습 스택 표 참조 | 이 파이프라인의 최종 소비자 |
+
 **AWS 매핑**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod. (전부 GA)
 
 **의사결정 기준**:
@@ -248,3 +259,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 중간 (데이터셋 버전�
 [^wfm]: **월드 파운데이션 모델(WFM, World Foundation Model)** — 물리 세계의 다음 장면을 예측·생성하도록 학습된 대형 모델. 텍스트·영상 프롬프트로 물리적으로 그럴듯한 영상·시나리오를 만들어 로봇 학습 데이터를 증강한다. 🎥 [NVIDIA Cosmos 소개](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag(rosbag2)** — 로봇 운영체제 ROS 2가 토픽(센서·명령 스트림)을 통째로 녹화하는 표준 로그 포맷. 로봇 회사 원천 데이터의 사실상 기본 형태지만, 그대로는 학습에 쓸 수 없어 변환이 필요하다.
 [^fmt]: **RLDS / LeRobotDataset** — 로봇 학습 데이터의 양대 저장 포맷. RLDS는 TensorFlow Datasets 기반으로 주요 VLA 학습 코드가 직접 읽으며, LeRobotDataset(v3)은 Parquet+MP4 기반의 Hugging Face 생태계 표준이다.
+[^etl]: **ETL (Extract-Transform-Load)** — 원천 데이터를 추출해 학습·분석 가능한 형태로 변환·적재하는 데이터 처리 패턴. 로봇 파이프라인에서는 "ROS bag → 학습 포맷 변환 + 품질 필터"가 ETL에 해당한다.

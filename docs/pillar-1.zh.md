@@ -1,5 +1,5 @@
 ---
-ko_hash: ac90b606c29c6cd9ae102b2da34198952d8c2678
+ko_hash: 0e91167768055daa91af823ff5fa27ba66ae9389
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -155,6 +155,17 @@ graph LR
     HP --> VAL["验证"]
 ```
 
+**各服务在管道中实际提供的能力** `[1]`（docs 2026-07 核实）:
+
+| 服务 | 技术要点 | 机器人数据视角 |
+|---|---|---|
+| **S3** | 近乎无限扩展的对象存储 + 存储类别分层（不常读的原始数据移入低成本层） | 原样堆放遥操作原始数据·ROS bag 的落地区 |
+| **FSx for Lustre** | 通过 **DRA（data repository association）**与 S3 关联的并行文件系统 —— 训练任务无需先从 S3 下载即可像文件系统一样高速随机访问，减少重复轮次的 S3 请求费用 | 消除大规模回合洗牌·反复读取的瓶颈 |
+| **Glue** | 无服务器 ETL[^etl] —— 爬虫解析 schema，作业执行格式转换·质量过滤 | 部署 rosbag→LeRobot/RLDS 自定义转换器的位置（第 5 节） |
+| **Batch** | 容器批处理作业的排队·调度，多节点并行（MNP）·GPU 作业，可联动 FSx | 数千回合转换·合成数据生成的大规模并行化 |
+| **Ground Truth** | 人在回路的标注人力·工作流 | 机器人数据大多自动标注 —— 用于成功/失败复核等辅助场景 |
+| **HyperPod** | → 参见 [pillar-2](pillar-2.md) 的训练栈表格 | 这条管道的最终消费者 |
+
 **AWS 映射**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod。（全部 GA）
 
 **决策标准**:
@@ -251,3 +262,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（数据集版本·大�
 [^wfm]: **世界基础模型（WFM, World Foundation Model）** — 为预测·生成物理世界的下一场景而训练的大型模型。通过文本·视频提示生成物理上合理的视频·场景，用于增强机器人学习数据。🎥 [NVIDIA Cosmos 介绍](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag（rosbag2）** — 机器人操作系统 ROS 2 将话题（传感器·命令流）整体录制的标准日志格式。它是机器人公司原始数据的事实默认形态，但无法直接用于训练，需要转换。
 [^fmt]: **RLDS / LeRobotDataset** — 机器人学习数据的两大存储格式。RLDS 基于 TensorFlow Datasets，主要 VLA 训练代码可直接读取；LeRobotDataset（v3）是基于 Parquet+MP4 的 Hugging Face 生态标准。
+[^etl]: **ETL（Extract-Transform-Load）** — 提取源数据并转换·加载为可训练·可分析形态的数据处理模式。在机器人管道中，"ROS bag → 训练格式转换 + 质量过滤"就是 ETL。

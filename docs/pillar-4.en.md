@@ -1,5 +1,5 @@
 ---
-ko_hash: 61ecb4ea052d08de6a6a018a4c40a704f26e2be0
+ko_hash: 02cb4e57c1b43a7a3d7456496f0d4e1955bb8f9b
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -30,7 +30,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 **Solution overview** `[1]/[3]`:
 
 - **Edge HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor (Blackwell) GA**, T5000 production module in distribution. The Jetson Orin line is still produced (low power). Specs/prices in the collapsed block below.
-- **Deployment/management**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)** (GA) — Lambda/Docker/custom components, ML inference components, MQTT telemetry. ⚠️ **Greengrass V1 support ended 2026-06-01** — only V2 is current.
+- **Deployment/management**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)** (GA) — Lambda/Docker/custom components, ML inference components, MQTT[^mqtt] telemetry. ⚠️ **Greengrass V1 support ended 2026-06-01** — only V2 is current.
 - **Model path**: PyTorch policy → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** engine compilation (on-device acceleration) is the standard path to meet the real-time control latency budget (sub-20~30ms class)[^latency]. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html) (edge compilation) survives and combines with Greengrass.
 - ⚠️ **SageMaker Edge Manager EOL (2024-04-26)** — console/API all unavailable. **No drop-in managed successor service**. AWS recommendation = ONNX + Greengrass V2 (+ optionally SageMaker Neo).
 
@@ -52,6 +52,17 @@ graph LR
 | Thor vs Orin | NVIDIA official: ~7.5× normalized AI compute, ~3.5× energy efficiency. ⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS — do not directly compare raw numbers | NVIDIA `[3]` |
 | ONNX→TensorRT acceleration | ~7× (vendor number, NVIDIA Jetson blog 2025, model/HW dependent — include conditions when citing) | NVIDIA `[3]` |
 </details>
+
+**What the deployment stack actually does** `[1]` (docs verified 2026-07):
+
+| Component | Technical summary | For edge deployment |
+|---|---|---|
+| **Jetson Thor** | An onboard edge computer with a Blackwell GPU (128GB unified memory) — real-time inference solved inside the robot | Where the System 1 policy lives |
+| **Greengrass V2** | A software-deployment runtime built on **components** (recipe + S3 artifacts) — fleet OTA, inter-process communication (IPC) and MQTT proxying, log manager | The channel for versioned delivery of models and inference apps to a robot fleet |
+| **ONNX → TensorRT** | Export to a framework-neutral format, then compile with kernel fusion and precision optimization for the device GPU | The standard path to meeting the sub-20–30ms latency budget |
+| **SageMaker Neo** | A managed per-target-hardware model compilation service (optional) | An alternative for teams that find raw TensorRT hard to handle |
+| **IoT Core (MQTT)** | A lightweight publish/subscribe messaging broker — telemetry up, commands down | The cloud connection point for robot state and events |
+| **IoT Jobs** | Fleet-wide remote-operation (OTA) orchestration — staged rollout, abort, retry | The mechanism for safely pushing model v2 to 100 robots |
 
 **AWS mapping**: IoT Greengrass V2 + IoT Core (MQTT) + SageMaker Neo (compilation) + S3 (model artifacts) + IoT Jobs (OTA). Collect edge telemetry with Model Monitor.
 
@@ -214,3 +225,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: medium (edge HW · vendor me
 [^onnx]: **ONNX / TensorRT** — ONNX is the standard format for exchanging models between frameworks; TensorRT is NVIDIA's inference-optimization compiler for its GPUs. The "PyTorch → ONNX → TensorRT" conversion is the standard path for real-time edge inference.
 [^ota]: **OTA (Over-The-Air)** — updating and deploying a robot's models and software remotely over the network.
 [^latency]: **latency budget** — the maximum inference time a real-time control loop allows. At 30~100Hz control, one cycle is 10~33ms, so inference must finish within it — the reason a cloud round-trip is impossible.
+[^mqtt]: **MQTT** — the standard lightweight publish/subscribe messaging protocol for IoT. It carries robot telemetry and commands over small bandwidth even on unstable networks.

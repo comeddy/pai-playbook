@@ -1,5 +1,5 @@
 ---
-ko_hash: ac90b606c29c6cd9ae102b2da34198952d8c2678
+ko_hash: 0e91167768055daa91af823ff5fa27ba66ae9389
 ---
 # Pillar 1 — データ収集 & 処理 (Data Collection & Processing)
 
@@ -156,6 +156,17 @@ graph LR
     HP --> VAL["検証"]
 ```
 
+**各サービスがパイプラインで実際に担うもの** `[1]`（docs 2026-07 確認）:
+
+| サービス | 技術要約 | ロボットデータの観点 |
+|---|---|---|
+| **S3** | 事実上無限にスケールするオブジェクトストレージ + ストレージクラスの階層化（読まれない原本は低コスト層へ） | テレオペ原本・ROS bag をそのまま貯めるランディングゾーン |
+| **FSx for Lustre** | **DRA（data repository association）**で S3 と連携する並列ファイルシステム — 学習ジョブは S3 からの初期ダウンロードなしにファイルシステムとして高速ランダムアクセスでき、反復エポックの S3 リクエスト費用も削減 | 大規模エピソードのシャッフル・反復読み込みのボトルネックを解消 |
+| **Glue** | サーバーレス ETL[^etl] — クローラーがスキーマを把握し、ジョブがフォーマット変換・品質フィルタを実行 | rosbag→LeRobot/RLDS カスタムコンバーターを載せる場所（5 節） |
+| **Batch** | コンテナバッチジョブのキュー・スケジューリング、マルチノード並列（MNP）・GPU ジョブ、FSx 連携 | 数千エピソードの変換・合成データ生成の大規模並列化 |
+| **Ground Truth** | ヒューマンインザループのラベリングワークフォース・ワークフロー | ロボットデータはほぼ自動ラベル — 成功/失敗の検収など補助用途 |
+| **HyperPod** | → [pillar-2](pillar-2.md) の学習スタック表を参照 | このパイプラインの最終消費者 |
+
 **AWS マッピング**: S3 · FSx for Lustre · Glue · Batch · SageMaker Ground Truth · HyperPod。（全て GA）
 
 **意思決定基準**:
@@ -252,3 +263,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（データセットの�
 [^wfm]: **ワールド基盤モデル（WFM, World Foundation Model）** — 物理世界の次のシーンを予測・生成するよう学習された大型モデルです。テキスト・映像プロンプトから物理的にもっともらしい映像・シナリオを作り、ロボット学習データを拡張します。🎥 [NVIDIA Cosmos 紹介](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag（rosbag2）** — ロボットオペレーティングシステム ROS 2 がトピック（センサー・コマンドのストリーム）を丸ごと録画する標準ログフォーマットです。ロボット企業の元データの事実上のデフォルト形態ですが、そのままでは学習に使えず変換が必要です。
 [^fmt]: **RLDS / LeRobotDataset** — ロボット学習データの二大保存フォーマットです。RLDS は TensorFlow Datasets ベースで主要な VLA 学習コードが直接読み込み、LeRobotDataset（v3）は Parquet+MP4 ベースの Hugging Face エコシステム標準です。
+[^etl]: **ETL（Extract-Transform-Load）** — ソースデータを抽出し、学習・分析可能な形に変換・格納するデータ処理パターンです。ロボットパイプラインでは「ROS bag → 学習フォーマット変換 + 品質フィルタ」が ETL に当たります。

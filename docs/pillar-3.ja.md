@@ -1,5 +1,5 @@
 ---
-ko_hash: ff43cd0b632953b1db539867a88d54308f245b7a
+ko_hash: 0fa04bc61945e26ce9f20e78daf8a8e43e817038
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -33,6 +33,17 @@ _特に別途表記がない限り、各項目はページメタデータ（owne
 - **バージョン**: Isaac Sim の最新 **GA = 5.1.0(2025-10-30)**。**6.0 は Preview**（"Early Developer Release", GTC'26）—— たとえ GitHub のパッチタグが誤って "GA" と付いていても、**6.0 を GA と言わないでください**。Isaac Lab 安定版は 2.3.x、3.0 は beta（Newton 物理エンジンを導入）。
 - **ライセンス**: Isaac Sim の**ソースは Apache 2.0**（商用無料）。ただし **Omniverse Kit ランタイム**を第三者再配布/SaaS 提供/ターンキー設置する場合は、**NVIDIA AI Enterprise ライセンスが必要**です。社内 R&D や成果物のみを販売する場合は不要。[Isaac Lab](https://github.com/isaac-sim/IsaacLab) は BSD-3。
 - **GPU 要件**: **RTX(RT Core) 必須**。最低 RTX 4080(16GB)、理想は RTX PRO 6000 Blackwell(48GB)。**A100/H100 非対応**（RT Core なし）。
+
+**スタック構成要素が実際に担うもの** `[1]`（docs 2026-07 確認）:
+
+| 構成要素 | 技術要約 | シミュレーションの観点 |
+|---|---|---|
+| **Isaac Sim** | RTX レイトレーシングベースの高忠実度シミュレーター — USD シーン、カメラ・LiDAR などのセンサーシミュレーション、Replicator SDG | リアルなレンダリングが必要な認識・合成データの軸 |
+| **Isaac Lab** | Isaac Sim 上の RL/模倣学習フレームワーク — GPU 1 枚で数千の並列環境、skrl・rsl_rl などのライブラリ連携 | 歩行・操作ポリシー学習の標準的な入口 |
+| **Marketplace AMI** | Isaac Sim 事前構成イメージ（無料）— ドライバー・依存関係のインストールなしで起動即使用 | 「30 分ハンズオン」を可能にする参入障壁の除去 |
+| **NICE DCV** | AWS のリモートディスプレイプロトコル — 高画質・低遅延ストリーミング、EC2 では追加ライセンス費用なし | クラウド GPU の Isaac Sim GUI をローカルのように操作 |
+| **AWS Batch MNP** | マルチノード並列[^mnp]バッチジョブ — コンテナジョブを複数ノードにまたがってキュー・スケジューリング | GUI なしのヘッドレス大規模 RL ジョブの並列化（2 節） |
+| **G6e / G7e** | RT Core 搭載のレンダリング可能な GPU インスタンス | 不変制約（A100/H100 不可）を満たす唯一の系列 |
 
 **AWS マッピング** `[1]`:
 
@@ -245,3 +256,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（バージョン・イ�
 [^sdg]: **合成データ生成（SDG, Synthetic Data Generation）** — シミュレーターで学習用画像とアノテーション（ラベル）を自動生成する技法です。ラベリングコストがゼロに収束するのが最大の利点です。🎥 [Isaac Sim Replicator SDG チュートリアル](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^ppo]: **PPO (Proximal Policy Optimization)** — 最も広く使われる強化学習アルゴリズムです。安定して収束し、ロボット歩行学習の事実上のデフォルトです。
 [^dtwin]: **デジタルツイン（digital twin）** — 実際の工場・倉庫・ロボットを物理的に忠実に模した仮想レプリカです。実環境に触れずにポリシー学習・検証・シナリオ実験を可能にします。
+[^mnp]: **MNP（Multi-Node Parallel）** — AWS Batch が 1 つのジョブを複数の EC2 ノードにまたがって実行するモードです。ノード間通信が必要な大規模学習・シミュレーションジョブもバッチキューで管理できるようにします。

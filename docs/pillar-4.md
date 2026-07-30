@@ -27,7 +27,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 **솔루션 개요** `[1]/[3]`:
 
 - **엣지 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**, T5000 프로덕션 모듈 유통. Jetson Orin 계열도 여전히 생산(저전력). 스펙·가격은 아래 접힌 블록.
-- **배포/관리**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/커스텀 컴포넌트, ML 추론 컴포넌트, MQTT 텔레메트리. ⚠️ **Greengrass V1은 2026-06-01 지원 종료** — V2만 현행.
+- **배포/관리**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/커스텀 컴포넌트, ML 추론 컴포넌트, MQTT[^mqtt] 텔레메트리. ⚠️ **Greengrass V1은 2026-06-01 지원 종료** — V2만 현행.
 - **모델 경로**: PyTorch 정책 → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** 엔진 컴파일(온디바이스 가속)로 실시간 제어 지연 예산(sub-20~30ms급)[^latency]을 맞추는 것이 표준 경로. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)(엣지 컴파일)는 존속하며 Greengrass와 조합.
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — 콘솔·API 전부 불가. **드롭인 매니지드 후속 서비스 없음**. AWS 권고 = ONNX + Greengrass V2 (+ 선택적 SageMaker Neo).
 
@@ -49,6 +49,17 @@ graph LR
 | Thor vs Orin | NVIDIA 공식: 정규화 AI 컴퓨트 ~7.5배, 에너지효율 ~3.5배. ⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS — 원시 수치 직접 비교 금지 | NVIDIA `[3]` |
 | ONNX→TensorRT 가속 | ~7배(벤더 수치, NVIDIA Jetson 블로그 2025, 모델·HW 의존 — 인용 시 조건 병기) | NVIDIA `[3]` |
 </details>
+
+**배포 스택이 실제로 해주는 것** `[1]` (docs 2026-07 확인):
+
+| 구성요소 | 기술 요약 | 엣지 배포 관점 |
+|---|---|---|
+| **Jetson Thor** | Blackwell GPU 온보드 엣지 컴퓨터(128GB 통합 메모리) — 실시간 추론을 로봇 안에서 해결 | System 1 정책이 사는 곳 |
+| **Greengrass V2** | **컴포넌트**(레시피 + S3 아티팩트) 단위 소프트웨어 배포 런타임 — 플릿 OTA, 프로세스 간 통신(IPC)·MQTT 프록시, 로그 매니저 | 모델·추론 앱을 로봇 플릿에 버전 관리하며 배포하는 통로 |
+| **ONNX → TensorRT** | 프레임워크 중립 포맷으로 export 후 디바이스 GPU에 맞춰 커널 융합·정밀도 최적화 컴파일 | sub-20~30ms 지연 예산을 맞추는 표준 경로 |
+| **SageMaker Neo** | 타깃 하드웨어별 모델 컴파일 매니지드 서비스(선택) | TensorRT를 직접 다루기 어려운 팀의 대안 |
+| **IoT Core (MQTT)** | 경량 발행/구독 메시징 브로커 — 텔레메트리 상향, 명령 하향 | 로봇 상태·이벤트의 클라우드 연결점 |
+| **IoT Jobs** | 플릿 대상 원격 작업(OTA) 오케스트레이션 — 단계적 롤아웃·중단·재시도 | 모델 v2를 100대에 안전하게 밀어넣는 메커니즘 |
 
 **AWS 매핑**: IoT Greengrass V2 + IoT Core(MQTT) + SageMaker Neo(컴파일) + S3(모델 아티팩트) + IoT Jobs(OTA). Model Monitor로 엣지 텔레메트리 수집.
 
@@ -211,3 +222,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 �
 [^onnx]: **ONNX / TensorRT** — ONNX는 프레임워크 간 모델 교환 표준 포맷, TensorRT는 NVIDIA GPU용 추론 최적화 컴파일러. "PyTorch → ONNX → TensorRT" 변환이 엣지 실시간 추론의 표준 경로다.
 [^ota]: **OTA (Over-The-Air)** — 네트워크로 원격에서 로봇의 모델·소프트웨어를 갱신·배포하는 방식.
 [^latency]: **지연 예산(latency budget)** — 실시간 제어 루프가 허용하는 최대 추론 시간. 30~100Hz 제어면 한 사이클이 10~33ms이므로, 추론이 이 안에 끝나야 한다 — 클라우드 왕복이 불가능한 이유다.
+[^mqtt]: **MQTT** — IoT 표준 경량 발행/구독(pub/sub) 메시징 프로토콜. 불안정한 네트워크에서도 작은 대역폭으로 로봇 텔레메트리와 명령을 주고받는 데 쓰인다.

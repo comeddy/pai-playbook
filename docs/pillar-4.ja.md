@@ -1,5 +1,5 @@
 ---
-ko_hash: 61ecb4ea052d08de6a6a018a4c40a704f26e2be0
+ko_hash: 02cb4e57c1b43a7a3d7456496f0d4e1955bb8f9b
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -31,7 +31,7 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 **ソリューション概要** `[1]/[3]`:
 
 - **エッジ HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**、T5000 本番モジュールが流通中。Jetson Orin 系列も引き続き生産（低消費電力）。スペック・価格は下の折りたたみブロック参照。
-- **デプロイ/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/カスタムコンポーネント、ML 推論コンポーネント、MQTT テレメトリ。⚠️ **Greengrass V1 は 2026-06-01 にサポート終了** — V2 のみが現行です。
+- **デプロイ/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/カスタムコンポーネント、ML 推論コンポーネント、MQTT[^mqtt] テレメトリ。⚠️ **Greengrass V1 は 2026-06-01 にサポート終了** — V2 のみが現行です。
 - **モデル経路**: PyTorch ポリシー → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** エンジンのコンパイル（オンデバイス高速化）でリアルタイム制御の遅延予算（sub-20~30ms 級）[^latency]を満たすのが標準経路です。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（エッジコンパイル）は存続しており、Greengrass と組み合わせられます。
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — コンソール・API がすべて利用不可。**ドロップイン可能なマネージド後継サービスはありません**。AWS の推奨 = ONNX + Greengrass V2（+ オプションで SageMaker Neo）。
 
@@ -53,6 +53,17 @@ graph LR
 | Thor vs Orin | NVIDIA 公式: 正規化 AI コンピュート ~7.5 倍, エネルギー効率 ~3.5 倍。⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS — 生の数値の直接比較は禁止 | NVIDIA `[3]` |
 | ONNX→TensorRT 高速化 | ~7 倍（ベンダー数値, NVIDIA Jetson ブログ 2025, モデル・HW に依存 — 引用時は条件を併記） | NVIDIA `[3]` |
 </details>
+
+**デプロイスタックが実際に担うもの** `[1]`（docs 2026-07 確認）:
+
+| 構成要素 | 技術要約 | エッジデプロイの観点 |
+|---|---|---|
+| **Jetson Thor** | Blackwell GPU 搭載のオンボードエッジコンピューター（128GB ユニファイドメモリ）— リアルタイム推論をロボットの中で解決 | System 1 ポリシーの住処 |
+| **Greengrass V2** | **コンポーネント**（レシピ + S3 アーティファクト）単位のソフトウェアデプロイランタイム — フリート OTA、プロセス間通信（IPC）・MQTT プロキシ、ログマネージャー | モデル・推論アプリをロボットフリートへバージョン管理しつつ配布する経路 |
+| **ONNX → TensorRT** | フレームワーク中立フォーマットへ export 後、デバイス GPU に合わせてカーネル融合・精度最適化コンパイル | sub-20~30ms の遅延予算を満たす標準経路 |
+| **SageMaker Neo** | ターゲットハードウェア別のマネージドモデルコンパイルサービス（任意） | TensorRT を直接扱いにくいチームの代替手段 |
+| **IoT Core (MQTT)** | 軽量な発行/購読メッセージングブローカー — テレメトリ上り、コマンド下り | ロボットの状態・イベントのクラウド接続点 |
+| **IoT Jobs** | フリート対象のリモート作業（OTA）オーケストレーション — 段階的ロールアウト・中断・再試行 | モデル v2 を 100 台へ安全に配布するメカニズム |
 
 **AWS マッピング**: IoT Greengrass V2 + IoT Core(MQTT) + SageMaker Neo（コンパイル）+ S3（モデルアーティファクト）+ IoT Jobs(OTA)。Model Monitor でエッジテレメトリを収集。
 
@@ -215,3 +226,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（エッジ HW・ベン�
 [^onnx]: **ONNX / TensorRT** — ONNX はフレームワーク間のモデル交換の標準フォーマット、TensorRT は NVIDIA GPU 向けの推論最適化コンパイラです。「PyTorch → ONNX → TensorRT」変換がエッジのリアルタイム推論の標準経路です。
 [^ota]: **OTA（Over-The-Air）** — ネットワーク経由でリモートからロボットのモデル・ソフトウェアを更新・配布する方式です。
 [^latency]: **遅延予算（latency budget）** — リアルタイム制御ループが許容する最大推論時間です。30~100Hz 制御なら 1 サイクルは 10~33ms なので、推論はこの範囲内に収まる必要があります — クラウド往復が不可能な理由です。
+[^mqtt]: **MQTT** — IoT 標準の軽量な発行/購読（pub/sub）メッセージングプロトコルです。不安定なネットワークでも小さな帯域でロボットのテレメトリとコマンドをやり取りできます。

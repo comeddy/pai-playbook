@@ -30,6 +30,17 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - **라이선스**: Isaac Sim **소스는 Apache 2.0**(상업 무료). 단 **Omniverse Kit 런타임**을 3자 재배포/SaaS 제공/턴키 설치하면 **NVIDIA AI Enterprise 라이선스 필요**. 내부 R&D나 결과물만 판매하면 불필요. [Isaac Lab](https://github.com/isaac-sim/IsaacLab)은 BSD-3.
 - **GPU 요구**: **RTX(RT Core) 필수**. 최소 RTX 4080(16GB), 이상적 RTX PRO 6000 Blackwell(48GB). **A100/H100 미지원**(RT Core 없음).
 
+**스택 구성요소가 실제로 해주는 것** `[1]` (docs 2026-07 확인):
+
+| 구성요소 | 기술 요약 | 시뮬레이션 관점 |
+|---|---|---|
+| **Isaac Sim** | RTX 레이트레이싱 기반 고충실 시뮬레이터 — USD 씬, 카메라·LiDAR 등 센서 시뮬, Replicator SDG | 사실적 렌더링이 필요한 인식·합성 데이터 축 |
+| **Isaac Lab** | Isaac Sim 위의 RL/모방학습 프레임워크 — GPU 한 장에서 수천 병렬 환경, skrl·rsl_rl 등 라이브러리 연동 | 보행·조작 정책 학습의 표준 진입점 |
+| **Marketplace AMI** | Isaac Sim 사전 구성 이미지(무료) — 드라이버·의존성 설치 없이 부팅 즉시 사용 | "30분 핸즈온"을 가능하게 하는 진입 장벽 제거 |
+| **NICE DCV** | AWS 원격 디스플레이 프로토콜 — 고화질·저지연 스트리밍, EC2에서 추가 라이선스 비용 없음 | 클라우드 GPU의 Isaac Sim GUI를 로컬처럼 조작 |
+| **AWS Batch MNP** | 멀티노드 병렬[^mnp] 배치 잡 — 컨테이너 잡을 여러 노드에 걸쳐 큐·스케줄링 | GUI 없는 헤드리스 대규모 RL 잡의 병렬화(2번) |
+| **G6e / G7e** | RT Core 탑재 렌더링 가능 GPU 인스턴스 | 안정 원리의 불변 제약(A100/H100 불가)을 만족하는 유일 계열 |
+
 **AWS 매핑** `[1]`:
 
 - **인스턴스**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**. 공식 **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)**(build 2026.1.1, Ubuntu 24.04, 무료)가 G6e·G7e 지원, `g6e.4xlarge` 권장.
@@ -241,3 +252,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 높음 (버전·인스턴스
 [^sdg]: **합성 데이터 생성(SDG, Synthetic Data Generation)** — 시뮬레이터로 학습용 이미지와 주석(라벨)을 자동 생성하는 기법. 라벨링 비용이 0에 수렴하는 것이 최대 장점. 🎥 [Isaac Sim Replicator SDG 튜토리얼](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^ppo]: **PPO (Proximal Policy Optimization)** — 가장 널리 쓰이는 강화학습 알고리즘. 안정적으로 수렴해 로봇 보행 학습의 사실상 기본값이다.
 [^dtwin]: **디지털 트윈(digital twin)** — 실제 공장·창고·로봇을 물리적으로 충실하게 본뜬 가상 복제본. 실환경을 건드리지 않고 정책 학습·검증·시나리오 실험을 할 수 있게 한다.
+[^mnp]: **MNP (Multi-Node Parallel)** — AWS Batch가 하나의 잡을 여러 EC2 노드에 걸쳐 실행하는 모드. 노드 간 통신이 필요한 대규모 학습·시뮬레이션 잡을 배치 큐로 관리할 수 있게 한다.

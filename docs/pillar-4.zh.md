@@ -1,5 +1,5 @@
 ---
-ko_hash: 61ecb4ea052d08de6a6a018a4c40a704f26e2be0
+ko_hash: 02cb4e57c1b43a7a3d7456496f0d4e1955bb8f9b
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -30,7 +30,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 **解决方案概览** `[1]/[3]`:
 
 - **边缘 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**，T5000 生产模块已流通。Jetson Orin 系列仍在生产（低功耗）。规格·价格见下方折叠块。
-- **部署/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) —— Lambda/Docker/自定义组件、ML 推理组件、MQTT 遥测。⚠️ **Greengrass V1 于 2026-06-01 支持终止** —— 只有 V2 是现行的。
+- **部署/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) —— Lambda/Docker/自定义组件、ML 推理组件、MQTT[^mqtt] 遥测。⚠️ **Greengrass V1 于 2026-06-01 支持终止** —— 只有 V2 是现行的。
 - **模型路径**: PyTorch 策略 → **[ONNX](https://onnx.ai/)** → 编译 **[TensorRT](https://developer.nvidia.com/tensorrt)** 引擎（端侧加速）以满足实时控制的延迟预算（sub-20~30ms 级）[^latency]是标准路径。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（边缘编译）仍在，可与 Greengrass 组合。
 - ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** —— 控制台·API 全部不可用。**没有可直接替换的托管后续服务**。AWS 建议 = ONNX + Greengrass V2（+ 可选 SageMaker Neo）。
 
@@ -52,6 +52,17 @@ graph LR
 | Thor vs Orin | NVIDIA 官方: 归一化 AI 算力 ~7.5 倍, 能效 ~3.5 倍。⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS —— 禁止直接比较原始数值 | NVIDIA `[3]` |
 | ONNX→TensorRT 加速 | ~7 倍（厂商数值, NVIDIA Jetson 博客 2025, 依赖模型·HW —— 引用时并列注明条件） | NVIDIA `[3]` |
 </details>
+
+**部署栈实际提供的能力** `[1]`（docs 2026-07 核实）:
+
+| 组件 | 技术要点 | 边缘部署视角 |
+|---|---|---|
+| **Jetson Thor** | 搭载 Blackwell GPU 的机载边缘计算机（128GB 统一内存）—— 在机器人内部解决实时推理 | System 1 策略的驻地 |
+| **Greengrass V2** | 以**组件**（配方 + S3 工件）为单位的软件部署运行时 —— 机群 OTA、进程间通信（IPC）·MQTT 代理、日志管理器 | 向机器人机群按版本交付模型·推理应用的通道 |
+| **ONNX → TensorRT** | 导出为框架中立格式后，针对设备 GPU 做算子融合·精度优化编译 | 满足 sub-20~30ms 延迟预算的标准路径 |
+| **SageMaker Neo** | 面向目标硬件的托管模型编译服务（可选） | 难以直接驾驭 TensorRT 的团队的替代方案 |
+| **IoT Core (MQTT)** | 轻量发布/订阅消息代理 —— 遥测上行、命令下行 | 机器人状态·事件的云端连接点 |
+| **IoT Jobs** | 面向机群的远程作业（OTA）编排 —— 分阶段发布·中止·重试 | 把模型 v2 安全推送到 100 台机器人的机制 |
 
 **AWS 映射**: IoT Greengrass V2 + IoT Core(MQTT) + SageMaker Neo（编译）+ S3（模型工件）+ IoT Jobs(OTA)。用 Model Monitor 采集边缘遥测。
 
@@ -214,3 +225,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（边缘 HW·厂商指�
 [^onnx]: **ONNX / TensorRT** — ONNX 是框架间模型交换的标准格式，TensorRT 是面向 NVIDIA GPU 的推理优化编译器。"PyTorch → ONNX → TensorRT" 转换是边缘实时推理的标准路径。
 [^ota]: **OTA（Over-The-Air）** — 通过网络远程更新·部署机器人的模型·软件的方式。
 [^latency]: **延迟预算（latency budget）** — 实时控制回路允许的最大推理时间。30~100Hz 控制下一个周期为 10~33ms，推理必须在此之内完成 —— 这就是云端往返不可行的原因。
+[^mqtt]: **MQTT** — IoT 标准的轻量发布/订阅（pub/sub）消息协议。即使在不稳定网络下也能以极小带宽收发机器人遥测与命令。
