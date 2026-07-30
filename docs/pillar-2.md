@@ -119,7 +119,28 @@ graph TD
 - **EC2 GPU 사다리** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 최대 72 Blackwell/NVLink 도메인, [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/)로 확보).
 - **Trainium**: Trn2 GA(2024-12), **Trn3 UltraServers GA(2025-12 re:Invent)**, Trn4 발표. ⚠️ **VLA/로보틱스를 Trainium으로 학습한 공개 사례 없음** — 전체 VLA 툴체인이 CUDA/NVIDIA. Trainium-for-VLA는 미검증.
 
+**HyperPod가 실제로 해주는 것** `[1]` (docs 2026-07 확인):
+
+| 구성요소 | 기술 요약 | VLA 학습 관점 |
+|---|---|---|
+| **오케스트레이션** | **Slurm[^slurm]·EKS·Training Jobs** 3가지 모드 — HPC팀(Slurm)과 쿠버네티스팀(EKS)의 기존 워크플로우를 그대로 수용 | Isaac Lab RL(Slurm 관례)과 VLA 파인튜닝(EKS)을 같은 클러스터에서 |
+| **내결함성 스택** | 헬스 모니터링 에이전트 + deep health check가 GPU·네트워크를 상시 감시 → **불량 노드 자동 교체 + 마지막 체크포인트 auto-resume**(개입 0). Checkpointless training은 체크포인트 없이도 수분 내 복구 | 수 주짜리 학습의 "노드 죽으면 처음부터?"에 대한 직접적인 답 |
+| **Task Governance** | 팀·프로젝트별 쿼터를 **GPU 단위까지 세분 할당**, 우선순위 스케줄링, 저순위 잡 선점(체크포인트 저장 후 일시정지→재개), 유휴 컴퓨트 팀 간 대여 | 로봇팀·모델팀이 한 클러스터를 나눠 쓸 때 GPU 유휴율 관리 |
+| **Elastic training** | 가용량·우선순위에 따라 잡 규모 자동 확대/축소, 자동 체크포인트·재개 | Capacity Blocks 확보분이 시간대별로 변할 때 자동 흡수 |
+| **네트워크·스토리지** | **EFA[^efa]** 저지연 노드 간 통신 + FSx for Lustre 학습 채널(→ [pillar-1](pillar-1.md) 파이프라인) | 멀티노드 그래디언트 동기화 병목 제거 |
+| **레시피** | LLM/FM용 사전 검증 학습 레시피 제공 — ⚠️ **VLA 전용 레시피는 없음**, 클러스터 위에서 DIY | 이 갭이 곧 SA의 화이트스페이스(파인튜닝 레시피 자산화 기회) |
+
 **AWS 매핑**: 위 서비스 자체가 매핑. GPU 확보 전략(On-Demand vs Capacity Blocks vs Flexible Training Plans)은 → [decisions](decisions.md).
+
+```mermaid
+graph LR
+    D[("S3 / FSx Lustre<br>학습 데이터")] --> C["HyperPod 클러스터<br>Slurm / EKS · EFA"]
+    C --> J["학습 잡<br>LoRA · Full-FT · RL"]
+    HM["헬스 모니터링<br>deep health check"] -. 불량 노드 자동 교체 .-> C
+    J -- 체크포인트 --> CK[(S3 체크포인트)]
+    CK -. auto-resume .-> J
+    J --> E["평가 · export<br>→ ONNX/TensorRT ([pillar-4])"]
+```
 
 **의사결정 기준**:
 
@@ -223,3 +244,5 @@ _owner: Youngjin · updated: 2026-07 · volatility: 높음 (모델 버전·라�
 [^chunk]: **action chunking** — 매 스텝 동작 1개가 아니라 앞으로의 동작 여러 스텝(청크)을 한 번에 예측하는 기법. 추론 횟수를 줄여 실시간 제어 주파수를 맞추기 쉽게 한다.
 [^vlm]: **VLM (Vision-Language Model)** — 이미지와 텍스트를 함께 이해하는 모델(예: 사진을 보고 질문에 답함). VLA는 보통 VLM을 "눈+두뇌" 백본으로 쓰고 그 위에 액션 헤드를 얹는다.
 [^embodiment]: **embodiment(임바디먼트)** — 로봇의 물리적 형태·자유도·센서 구성. 같은 모델이라도 로봇 팔과 휴머노이드는 embodiment가 달라 데이터·정책을 그대로 이식할 수 없다.
+[^slurm]: **Slurm** — HPC 클러스터의 표준 오픈소스 잡 스케줄러. 수천 노드에 배치 잡을 큐잉·할당하며, 연구실·슈퍼컴 출신 팀에게 가장 익숙한 워크플로우다.
+[^efa]: **EFA (Elastic Fabric Adapter)** — EC2용 저지연·OS 바이패스 네트워크 인터페이스. 멀티노드 분산 학습에서 GPU 간 그래디언트 동기화(All-Reduce) 병목을 줄이는 핵심이다.

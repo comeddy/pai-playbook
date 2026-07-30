@@ -1,5 +1,5 @@
 ---
-ko_hash: a08ce6b48c427263264177ba6c7b271e4eae7129
+ko_hash: f8a74b6a911410befa7c1ebeb2dc50e25145b92a
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -123,7 +123,27 @@ graph TD
 - **EC2 GPU の梯子** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 最大 72 Blackwell/NVLink ドメイン, [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/) で確保)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 発表。⚠️ **Trainium で VLA/ロボティクスを学習した公開事例なし** —— VLA ツールチェーン全体が CUDA/NVIDIA。Trainium-for-VLA は未検証。
 
+**HyperPod が実際に提供するもの** `[1]`（docs 2026-07 確認）:
+
+| 構成要素 | 技術要約 | VLA 学習の観点 |
+|---|---|---|
+| **オーケストレーション** | **Slurm[^slurm]・EKS・Training Jobs** の 3 モード — HPC チーム（Slurm）と Kubernetes チーム（EKS）の既存ワークフローをそのまま受け入れる | Isaac Lab RL（Slurm 慣例）と VLA ファインチューニング（EKS）を同じクラスターで |
+| **耐障害性スタック** | ヘルスモニタリングエージェント + ディープヘルスチェックが GPU・ネットワークを常時監視 → **不良ノードを自動交換し、最新チェックポイントから auto-resume**（介入ゼロ）。Checkpointless training はチェックポイントなしでも数分で復旧 | 数週間規模の学習での「ノードが落ちたら最初から？」への直接の答え |
+| **Task Governance** | チーム・プロジェクト別クォータを **GPU 単位まで細分割り当て**、優先度スケジューリング、低優先度ジョブのプリエンプション（チェックポイント保存後に一時停止→再開）、チーム間の遊休コンピュート貸借 | ロボットチームとモデルチームが 1 つのクラスターを共有する際の GPU 遊休率管理 |
+| **Elastic training** | 可用容量・優先度に応じてジョブ規模を自動拡縮、自動チェックポイント・再開 | Capacity Blocks の確保分が時間帯で変動しても自動吸収 |
+| **ネットワーク・ストレージ** | **EFA[^efa]** の低遅延ノード間通信 + FSx for Lustre 学習チャネル（→ [pillar-1](pillar-1.md) パイプライン） | マルチノードの勾配同期ボトルネックを解消 |
+| **レシピ** | LLM/FM 向けの事前検証済み学習レシピを提供 — ⚠️ **VLA 専用レシピはなし**、クラスター上で DIY | このギャップこそ SA のホワイトスペース（ファインチューニングレシピの資産化機会） |
+
 **AWS マッピング**: 上記サービス自体がマッピング。GPU 確保戦略（On-Demand vs Capacity Blocks vs Flexible Training Plans）は → [decisions](decisions.md)。
+```mermaid
+graph LR
+    D[("S3 / FSx Lustre<br>学習データ")] --> C["HyperPod クラスター<br>Slurm / EKS · EFA"]
+    C --> J["学習ジョブ<br>LoRA · Full-FT · RL"]
+    HM["ヘルスモニタリング<br>ディープヘルスチェック"] -. 不良ノード自動交換 .-> C
+    J -- チェックポイント --> CK[(S3 チェックポイント)]
+    CK -. auto-resume .-> J
+    J --> E["評価 · エクスポート<br>→ ONNX/TensorRT ([pillar-4])"]
+```
 
 **意思決定基準**:
 
@@ -227,3 +247,5 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（モデルバージョ�
 [^chunk]: **action chunking** — 毎ステップ動作 1 個ではなく、将来の動作を複数ステップ（チャンク）まとめて一度に予測する手法です。推論回数を減らし、リアルタイム制御の周波数を満たしやすくします。
 [^vlm]: **VLM (Vision-Language Model)** — 画像とテキストを一緒に理解するモデルです（例: 写真を見て質問に答える）。VLA は通常 VLM を「目+頭脳」のバックボーンとして使い、その上にアクションヘッドを載せます。
 [^embodiment]: **embodiment（エンボディメント）** — ロボットの物理的形態・自由度・センサー構成のことです。同じモデルでもロボットアームとヒューマノイドでは embodiment が異なり、データ・ポリシーをそのまま移植できません。
+[^slurm]: **Slurm** — HPC クラスターの標準的なオープンソースジョブスケジューラーです。数千ノードにバッチジョブをキューイング・割り当てし、研究室・スパコン出身のチームに最もなじみのあるワークフローです。
+[^efa]: **EFA（Elastic Fabric Adapter）** — EC2 向けの低遅延・OS バイパスのネットワークインターフェースです。マルチノード分散学習で GPU 間の勾配同期（All-Reduce）ボトルネックを減らす鍵になります。

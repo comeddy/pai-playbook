@@ -1,5 +1,5 @@
 ---
-ko_hash: a08ce6b48c427263264177ba6c7b271e4eae7129
+ko_hash: f8a74b6a911410befa7c1ebeb2dc50e25145b92a
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -122,7 +122,27 @@ graph TD
 - **EC2 GPU 阶梯** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 最多 72 Blackwell/NVLink 域, 用 [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/) 获取)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 已公布。⚠️ **没有用 Trainium 训练 VLA/机器人的公开案例** —— 整个 VLA 工具链都是 CUDA/NVIDIA。Trainium-for-VLA 未经验证。
 
+**HyperPod 实际提供的能力** `[1]`（docs 2026-07 核实）:
+
+| 组成 | 技术要点 | VLA 训练视角 |
+|---|---|---|
+| **编排** | **Slurm[^slurm]·EKS·Training Jobs** 三种模式 —— 原样承接 HPC 团队（Slurm）与 Kubernetes 团队（EKS）的既有工作流 | 在同一集群上跑 Isaac Lab RL（Slurm 惯例）与 VLA 微调（EKS） |
+| **容错栈** | 健康监控代理 + 深度健康检查持续监视 GPU·网络 → **自动替换故障节点并从最近检查点 auto-resume**（零人工干预）。Checkpointless training 即使没有检查点也能在数分钟内恢复 | 对数周级训练"节点挂了要从头来吗？"的直接回答 |
+| **Task Governance** | 按团队·项目分配配额可**细化到单个 GPU**，优先级调度、抢占低优先级任务（保存检查点后暂停→稍后恢复）、团队间出借空闲算力 | 机器人团队·模型团队共用一个集群时的 GPU 空闲率管理 |
+| **Elastic training** | 任务规模随可用容量·优先级自动扩缩，自动检查点·恢复 | 自动吸收 Capacity Blocks 配额随时间的波动 |
+| **网络·存储** | **EFA[^efa]** 低延迟节点间通信 + FSx for Lustre 训练通道（→ [pillar-1](pillar-1.md) 管道） | 消除多节点梯度同步瓶颈 |
+| **配方** | 提供 LLM/FM 的预验证训练配方 —— ⚠️ **无 VLA 专用配方**，VLA 训练需在集群上 DIY | 这一空白正是 SA 的机会（微调配方资产化） |
+
 **AWS 映射**: 上述服务本身即映射。GPU 获取策略（On-Demand vs Capacity Blocks vs Flexible Training Plans）→ [decisions](decisions.md)。
+```mermaid
+graph LR
+    D[("S3 / FSx Lustre<br>训练数据")] --> C["HyperPod 集群<br>Slurm / EKS · EFA"]
+    C --> J["训练任务<br>LoRA · Full-FT · RL"]
+    HM["健康监控<br>深度健康检查"] -. 自动替换故障节点 .-> C
+    J -- 检查点 --> CK[(S3 检查点)]
+    CK -. auto-resume .-> J
+    J --> E["评估 · 导出<br>→ ONNX/TensorRT ([pillar-4])"]
+```
 
 **决策标准**:
 
@@ -226,3 +246,5 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（模型版本·许可�
 [^chunk]: **action chunking** — 不是每步只预测 1 个动作，而是一次预测未来多步动作（块）的技术。减少推理次数，更容易满足实时控制频率。
 [^vlm]: **VLM (Vision-Language Model)** — 同时理解图像和文本的模型（例如看照片回答问题）。VLA 通常以 VLM 作为"眼睛+大脑"骨干，并在其上加装动作头。
 [^embodiment]: **embodiment（具身形态）** — 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂与人形机器人的 embodiment 不同，数据·策略无法直接移植。
+[^slurm]: **Slurm** — HPC 集群的标准开源作业调度器。可在数千节点上排队·分配批处理作业，是研究室·超算出身团队最熟悉的工作流。
+[^efa]: **EFA（Elastic Fabric Adapter）** — 面向 EC2 的低延迟·绕过操作系统的网络接口。是消除多节点分布式训练中 GPU 间梯度同步（All-Reduce）瓶颈的关键。

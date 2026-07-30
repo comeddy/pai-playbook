@@ -1,5 +1,5 @@
 ---
-ko_hash: a08ce6b48c427263264177ba6c7b271e4eae7129
+ko_hash: f8a74b6a911410befa7c1ebeb2dc50e25145b92a
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -122,7 +122,27 @@ graph TD
 - **EC2 GPU ladder** `[1]`: **G7** (RTX PRO 4500, GA 2026-06) · **G7e** (RTX PRO 6000 Blackwell, GA 2026-01) · **G6e** (L40S) → **P6-B200** (8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)** (GB200 NVL72, up to 72 Blackwell/NVLink domain, secured via [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/)).
 - **Trainium**: Trn2 GA (2024-12), **Trn3 UltraServers GA (2025-12 re:Invent)**, Trn4 announced. ⚠️ **No public case of training VLA/robotics on Trainium** — the whole VLA toolchain is CUDA/NVIDIA. Trainium-for-VLA is unverified.
 
+**What HyperPod actually does** `[1]` (docs verified 2026-07):
+
+| Component | Technical summary | For VLA training |
+|---|---|---|
+| **Orchestration** | Three modes — **Slurm[^slurm], EKS, and Training Jobs** — accommodating both HPC teams (Slurm) and Kubernetes teams (EKS) with their existing workflows | Run Isaac Lab RL (Slurm convention) and VLA fine-tuning (EKS) on the same cluster |
+| **Resiliency stack** | A health-monitoring agent plus deep health checks continuously watch GPUs and network → **faulty nodes are replaced automatically and jobs auto-resume from the last checkpoint** (zero intervention). Checkpointless training recovers within minutes even without checkpoints | The direct answer to "if a node dies, do we start over?" on weeks-long runs |
+| **Task Governance** | Per-team/project quotas **down to individual GPUs**, priority scheduling, preemption of low-priority jobs (checkpoint, pause, resume later), and lending idle compute across teams | Managing GPU idle rates when robot and model teams share one cluster |
+| **Elastic training** | Jobs scale up/down automatically with capacity and priority, with automatic checkpoint/resume | Absorbs Capacity Blocks allocations as they fluctuate over time |
+| **Network & storage** | **EFA[^efa]** low-latency inter-node communication + FSx for Lustre training channels (→ the [pillar-1](pillar-1.md) pipeline) | Removes the multi-node gradient-sync bottleneck |
+| **Recipes** | Pre-validated training recipes for LLMs/FMs — ⚠️ **no VLA-specific recipes**; VLA training is DIY on the cluster | This gap is the SA's whitespace (an opportunity to build reusable fine-tuning recipes) |
+
 **AWS mapping**: the services above are themselves the mapping. GPU-securing strategy (On-Demand vs Capacity Blocks vs Flexible Training Plans) → [decisions](decisions.md).
+```mermaid
+graph LR
+    D[("S3 / FSx Lustre<br>training data")] --> C["HyperPod cluster<br>Slurm / EKS · EFA"]
+    C --> J["Training job<br>LoRA · Full-FT · RL"]
+    HM["Health monitoring<br>deep health checks"] -. auto node replacement .-> C
+    J -- checkpoints --> CK[(S3 checkpoints)]
+    CK -. auto-resume .-> J
+    J --> E["Eval · export<br>→ ONNX/TensorRT ([pillar-4])"]
+```
 
 **Decision criteria**:
 
@@ -226,3 +246,5 @@ _owner: Youngjin · updated: 2026-07 · volatility: high (model versions · lice
 [^chunk]: **action chunking** — predicting a chunk of several future action steps at once instead of one action per step. Reduces the number of inference calls, making it easier to meet real-time control frequencies.
 [^vlm]: **VLM (Vision-Language Model)** — a model that understands images and text together (e.g., answering questions about a photo). A VLA typically uses a VLM as its "eyes + brain" backbone and puts an action head on top.
 [^embodiment]: **Embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.
+[^slurm]: **Slurm** — the standard open-source job scheduler for HPC clusters. It queues and allocates batch jobs across thousands of nodes, and is the workflow most familiar to teams from research labs and supercomputing.
+[^efa]: **EFA (Elastic Fabric Adapter)** — a low-latency, OS-bypass network interface for EC2. It is key to reducing the gradient-synchronization (All-Reduce) bottleneck between GPUs in multi-node distributed training.
