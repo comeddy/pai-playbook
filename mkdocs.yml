@@ -141,6 +141,11 @@ validation:
   unrecognized_links: warn
   anchors: warn
 
+extra_css:
+  - stylesheets/font-size.css      # 글자 크기 조절 버튼 (font-size.js와 쌍)
+extra_javascript:
+  - javascripts/font-size.js
+
 extra:
   social:
     - icon: fontawesome/brands/github

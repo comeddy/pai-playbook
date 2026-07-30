@@ -1,0 +1,35 @@
+/* 글자 크기 조절 — 본문(.md-typeset)만 조절. 단계·키는 javascripts/font-size.js 와 계약 */
+html[data-fs="85"]  .md-typeset { font-size: .68rem; }
+html[data-fs="90"]  .md-typeset { font-size: .72rem; }
+html[data-fs="95"]  .md-typeset { font-size: .76rem; }
+html[data-fs="105"] .md-typeset { font-size: .84rem; }
+html[data-fs="110"] .md-typeset { font-size: .88rem; }
+html[data-fs="115"] .md-typeset { font-size: .92rem; }
+html[data-fs="120"] .md-typeset { font-size: .96rem; }
+html[data-fs="125"] .md-typeset { font-size: 1rem;   }
+html[data-fs="130"] .md-typeset { font-size: 1.04rem; }
+
+.pai-fs-controls {
+  position: fixed;
+  right: .8rem;
+  bottom: .8rem;
+  z-index: 3; /* 콘텐츠 위, 헤더·검색 오버레이(z-index 4) 아래 */
+  display: flex;
+  gap: .25rem;
+}
+.pai-fs-controls button {
+  min-width: 44px;  /* 터치 타깃 */
+  min-height: 44px;
+  border: none;
+  border-radius: .4rem;
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color);
+  font-family: inherit;
+  font-size: .7rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--md-shadow-z2);
+}
+.pai-fs-controls button:hover { color: var(--md-accent-fg-color); }
+.pai-fs-controls button:disabled { opacity: .4; cursor: default; }
+@media print { .pai-fs-controls { display: none; } }
