@@ -31,7 +31,30 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - **[Strands Agents SDK](https://strandsagents.com/)**(동반): 모델·클라우드 중립 오케스트레이션 SDK, **1.0 도달(GA급)**. Amazon Q Developer·Glue가 내부 사용. AgentCore와 페어링. (버전·지표는 접힌 블록)
 - **[Nova Act](https://nova.amazon.com/act)**(관련): 브라우저/UI 자동화 에이전트, re:Invent 2025 **GA**. 벤더가 높은 태스크 신뢰성을 주장(수치는 접힌 블록 — 측정 조건 미공개).
 
+**컴포넌트가 실제로 해주는 것** `[1]` (docs 2026-07 확인):
+
+| 컴포넌트 | 기술 요약 | 로봇 워크로드 관점 |
+|---|---|---|
+| **Runtime** | 세션마다 전용 microVM[^microvm](CPU·메모리·파일시스템 격리, 종료 시 메모리 소거)에서 서버리스 실행. **최장 8시간** 장기 세션, LLM·툴 응답 **대기 시간은 과금 제외**. LangGraph·CrewAI·Strands 등 프레임워크·모델 중립 | System 2 플래너를 올리는 곳 — 긴 작업 계획도 하나의 격리 세션으로 유지 |
+| **Gateway** | **Lambda·OpenAPI·Smithy·기존 MCP 서버·API Gateway를 MCP 툴로 변환**하고 가상 MCP 서버 하나로 집계. 시맨틱 툴 검색, 인바운드·아웃바운드 인증 모두 매니지드 | 로봇 스킬(집기·이동·검사 API)을 코드 몇 줄로 에이전트 툴화하는 지점 |
+| **Memory** | 단기(세션 원본 이벤트) + 장기(추출 전략: 요약·시맨틱·사용자 선호 + episodic) 이층 구조. **장기 기억 인출도 Policy를 통과** | 태스크 맥락("아까 그 선반") 유지 + 현장별 노하우의 세션 간 축적 |
+| **Identity** | 에이전트 워크로드 아이덴티티 + OAuth2/API 키 토큰 볼트 — 툴 호출 시 안전하게 대리 인증 | 로봇 플릿 API에 사람 자격증명을 하드코딩하지 않게 해줌 |
+| **Policy** | 모든 에이전트→툴 호출을 실시간 가로채 Cedar 정책으로 ms 단위 allow/deny. 자연어 작성 → Cedar 컴파일 | 물리 행동 직전의 마지막 안전 게이트(→ 5번 안전 절) |
+| **Observability** | OTEL[^otel] 호환 트레이스·스팬·지표, CloudWatch 통합 | "왜 그 행동을 했나"를 스텝 단위로 재구성 — 사고 조사·감사 대응 |
+| **Built-in Tools** | Browser(격리 microVM)·Code Interpreter 매니지드 제공 | 매뉴얼 조회·수치 계산 등 보조 작업 |
+
 **AWS 매핑**: 서비스 자체가 매핑. 로봇 스킬을 Gateway에 툴로 등록 → 에이전트가 자연어 계획으로 호출, Policy로 게이팅, Memory로 세션 유지, Observability로 추적.
+
+```mermaid
+graph LR
+    U["운영자<br>자연어 지시"] --> RT["AgentCore Runtime<br>System 2 플래너 (LLM)"]
+    RT <--> M["Memory<br>단기·장기 맥락"]
+    RT -- 툴 호출 --> P{"Policy<br>Cedar allow/deny"}
+    P -- 허용 --> GW["Gateway<br>로봇 스킬 = MCP 툴"]
+    P -- 차단 --> X["거부 + 기록"]
+    GW --> ROB["로봇/설비 API<br>(IoT · 엣지 System 1)"]
+    RT -. 트레이스 .-> O["Observability<br>OTEL / CloudWatch"]
+```
 
 **의사결정 기준**:
 
@@ -210,3 +233,5 @@ _owner: Youngjin · updated: 2026-07 · volatility: 높음 (AgentCore 기능·�
 [^guardrail]: **가드레일(guardrail)** — 에이전트의 입출력과 행동을 정책으로 제한하는 안전장치. 물리 시스템에서는 위험한 툴 호출 차단, 행동 범위 제한이 이에 해당한다.
 [^fleet]: **플릿(fleet) 조율** — 다수의 로봇 무리를 하나의 시스템으로 스케줄링·경로 배분하는 것. 창고 로봇처럼 수백~수천 대 규모에서 이미 프로덕션 검증된 영역이다.
 [^a2a]: **A2A (Agent-to-Agent)** — 서로 다른 에이전트끼리 표준 프로토콜로 협업하는 멀티에이전트 통신 방식.
+[^microvm]: **microVM(마이크로 가상 머신)** — 컨테이너보다 강한 격리를 제공하는 초경량 가상 머신(예: AWS Firecracker). 세션마다 CPU·메모리·파일시스템을 통째로 분리하고 종료 시 메모리를 소거해, 세션 간 데이터 유출을 구조적으로 막는다.
+[^otel]: **OTEL (OpenTelemetry)** — 트레이스·지표·로그 수집의 업계 표준 규격. 특정 벤더에 묶이지 않고 에이전트의 단계별 실행 기록을 표준 형식으로 내보내 관측 도구와 연동할 수 있다.

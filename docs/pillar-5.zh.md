@@ -1,5 +1,5 @@
 ---
-ko_hash: e3af0d836ac3b1704210662147a46b1326739885
+ko_hash: 026e86a0608e672970051e472e7d8e4021420340
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -34,7 +34,29 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - **[Strands Agents SDK](https://strandsagents.com/)**（配套）: 模型·云中立的编排 SDK，**已达 1.0（GA 级）**。Amazon Q Developer·Glue 内部使用。与 AgentCore 配对。（版本·指标见折叠块）
 - **[Nova Act](https://nova.amazon.com/act)**（相关）: 浏览器/UI 自动化智能体，re:Invent 2025 **GA**。厂商声称高任务可靠性（数值见折叠块 —— 测量条件未公开）。
 
+**各组件实际提供的能力** `[1]`（docs 2026-07 核实）:
+
+| 组件 | 技术要点 | 机器人工作负载视角 |
+|---|---|---|
+| **Runtime** | 每个会话在专属 microVM[^microvm] 中无服务器运行（CPU·内存·文件系统隔离，终止时清除内存）。长会话**最长 8 小时**；等待 LLM·工具响应的时间**不计费**。框架·模型中立（LangGraph·CrewAI·Strands 等） | 承载 System 2 规划器的地方 —— 长任务规划保持在同一个隔离会话中 |
+| **Gateway** | **把 Lambda·OpenAPI·Smithy·既有 MCP 服务器·API Gateway 转换为 MCP 工具**，聚合为一个虚拟 MCP 服务器。语义工具搜索，入站·出站认证全托管 | 用几行代码把机器人技能（抓取·移动·检查 API）工具化的接入点 |
+| **Memory** | 双层：短期（会话原始事件）+ 长期（提取策略：摘要·语义·用户偏好 + episodic）。**长期记忆的检索也要经过 Policy** | 保持任务上下文（"刚才那个货架"）并跨会话积累现场知识 |
+| **Identity** | 智能体工作负载身份 + OAuth2/API 密钥令牌保险库 —— 工具调用时安全代理认证 | 避免在机器人机群 API 中硬编码人的凭证 |
+| **Policy** | 实时拦截所有智能体→工具调用，以毫秒级评估 Cedar 策略（自然语言编写 → 编译为 Cedar） | 物理动作前的最后安全闸门（→ 第 5 节） |
+| **Observability** | 兼容 OTEL[^otel] 的追踪·跨度·指标，集成 CloudWatch | 按步骤重构"它为什么那么做" —— 事故调查·审计 |
+| **Built-in Tools** | 托管 Browser（隔离 microVM）·Code Interpreter | 手册查询·数值计算等辅助工作 |
+
 **AWS 映射**: 服务本身即映射。将机器人技能作为工具注册到 Gateway → 智能体以自然语言计划调用，用 Policy 门控，用 Memory 维持会话，用 Observability 追踪。
+```mermaid
+graph LR
+    U["操作员<br>自然语言指令"] --> RT["AgentCore Runtime<br>System 2 规划器 (LLM)"]
+    RT <--> M["Memory<br>短期·长期上下文"]
+    RT -- 工具调用 --> P{"Policy<br>Cedar allow/deny"}
+    P -- 允许 --> GW["Gateway<br>机器人技能 = MCP 工具"]
+    P -- 拒绝 --> X["拦截 + 记录"]
+    GW --> ROB["机器人/设备 API<br>(IoT · 边缘 System 1)"]
+    RT -. 追踪 .-> O["Observability<br>OTEL / CloudWatch"]
+```
 
 **决策标准**:
 
@@ -213,3 +235,5 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（AgentCore 功能·区�
 [^guardrail]: **护栏（guardrail）** — 用策略限制智能体输入输出与行为的安全装置。在物理系统中对应拦截危险的工具调用、限制行动范围。
 [^fleet]: **机群（fleet）协调** — 把大量机器人作为一个系统进行调度·路径分配。像仓库机器人那样在数百~数千台规模上已经过生产验证的领域。
 [^a2a]: **A2A（Agent-to-Agent）** — 不同智能体之间通过标准协议协作的多智能体通信方式。
+[^microvm]: **microVM（微型虚拟机）** — 比容器隔离性更强的超轻量虚拟机（如 AWS Firecracker）。每个会话独占 CPU·内存·文件系统，终止时清除内存，从结构上防止会话间数据泄漏。
+[^otel]: **OTEL（OpenTelemetry）** — 追踪·指标·日志采集的行业标准规范。不绑定特定厂商，可将智能体的逐步执行记录以标准格式导出并对接可观测性工具。

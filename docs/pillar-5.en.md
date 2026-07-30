@@ -1,5 +1,5 @@
 ---
-ko_hash: e3af0d836ac3b1704210662147a46b1326739885
+ko_hash: 026e86a0608e672970051e472e7d8e4021420340
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -34,7 +34,29 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 - **[Strands Agents SDK](https://strandsagents.com/)** (companion): a model- and cloud-neutral orchestration SDK, **reached 1.0 (GA-class)**. Used internally by Amazon Q Developer · Glue. Pairs with AgentCore. (Versions/metrics in the collapsed block)
 - **[Nova Act](https://nova.amazon.com/act)** (related): a browser/UI automation agent, **GA at re:Invent 2025**. The vendor claims high task reliability (the number is in the collapsed block — measurement conditions undisclosed).
 
+**What each component actually does** `[1]` (docs verified 2026-07):
+
+| Component | Technical summary | For robot workloads |
+|---|---|---|
+| **Runtime** | Serverless execution in a dedicated microVM[^microvm] per session (isolated CPU/memory/filesystem, memory sanitized on termination). Long-running sessions **up to 8 hours**; **no billing while waiting** for LLM/tool responses. Framework- and model-agnostic (LangGraph, CrewAI, Strands, …) | Where the System 2 planner lives — a long task plan stays in one isolated session |
+| **Gateway** | **Turns Lambda, OpenAPI, Smithy, existing MCP servers, and API Gateway into MCP tools**, aggregated as one virtual MCP server. Semantic tool search; managed inbound and outbound auth | The point where robot skills (pick, move, inspect APIs) become agent tools in a few lines of code |
+| **Memory** | Two tiers: short-term (raw session events) + long-term (extraction strategies: summary, semantic, user preference + episodic). **Long-term retrieval also passes through Policy** | Keeps task context ("that shelf from earlier") and accumulates site know-how across sessions |
+| **Identity** | Agent workload identity + OAuth2/API-key token vault — safe delegated auth on tool calls | Keeps human credentials out of robot-fleet APIs |
+| **Policy** | Intercepts every agent→tool call in real time and evaluates Cedar policies in milliseconds (written in natural language → compiled to Cedar) | The last safety gate right before physical action (→ section 5) |
+| **Observability** | OTEL[^otel]-compatible traces, spans, and metrics; CloudWatch integration | Reconstructs "why did it do that" step by step — incident investigation and audits |
+| **Built-in Tools** | Managed Browser (isolated microVM) and Code Interpreter | Auxiliary work such as manual lookups and calculations |
+
 **AWS mapping**: the services themselves are the mapping. Register robot skills as tools on Gateway → the agent invokes them via natural-language planning, gated by Policy, session maintained by Memory, traced by Observability.
+```mermaid
+graph LR
+    U["Operator<br>natural-language instruction"] --> RT["AgentCore Runtime<br>System 2 planner (LLM)"]
+    RT <--> M["Memory<br>short- and long-term context"]
+    RT -- tool call --> P{"Policy<br>Cedar allow/deny"}
+    P -- allow --> GW["Gateway<br>robot skill = MCP tool"]
+    P -- deny --> X["blocked + logged"]
+    GW --> ROB["Robot/equipment API<br>(IoT · edge System 1)"]
+    RT -. traces .-> O["Observability<br>OTEL / CloudWatch"]
+```
 
 **Decision criteria**:
 
@@ -213,3 +235,5 @@ _owner: Youngjin · updated: 2026-07 · volatility: high (AgentCore features · 
 [^guardrail]: **Guardrail** — A safety mechanism that constrains an agent's inputs/outputs and behavior with policies. In physical systems this means blocking dangerous tool calls and limiting the range of actions.
 [^fleet]: **Fleet coordination** — scheduling and route allocation for a large group of robots as one system. Already production-proven at the hundreds-to-thousands scale, as with warehouse robots.
 [^a2a]: **A2A (Agent-to-Agent)** — A multi-agent communication approach in which different agents collaborate via a standard protocol.
+[^microvm]: **microVM (micro virtual machine)** — an ultra-light VM (e.g., AWS Firecracker) with stronger isolation than containers. Each session gets its own CPU, memory, and filesystem, and memory is sanitized on termination — structurally preventing cross-session data leakage.
+[^otel]: **OTEL (OpenTelemetry)** — the industry-standard specification for collecting traces, metrics, and logs. It exports an agent's step-by-step execution records in a vendor-neutral format for observability tooling.
