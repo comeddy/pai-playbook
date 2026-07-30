@@ -147,6 +147,7 @@ extra_javascript:
   - javascripts/font-size.js
 
 extra:
+  generator: false        # 푸터 'Made with Material for MkDocs' 표기 숨김 (공식 옵션)
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/comeddy/pai-playbook
