@@ -32,7 +32,8 @@
     return b;
   }
   function current() {
-    var v = parseInt(localStorage.getItem(KEY), 10);
+    var v;
+    try { v = parseInt(localStorage.getItem(KEY), 10); } catch (e) { return 100; }
     return STEPS.indexOf(v) === -1 ? 100 : v;
   }
   function apply(v) {
