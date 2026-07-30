@@ -11,6 +11,7 @@ docs_dir: docs
 nav:
   - 홈: index.md
   - 가이드: guide.md
+  - "경영진 브리핑": exec.md
   - "P1 · 데이터 수집 & 처리": pillar-1.md
   - "P2 · 모델 학습 (VLA)": pillar-2.md
   - "P3 · 시뮬레이션": pillar-3.md
