@@ -243,7 +243,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: 중간 (데이터셋 버전�
 [^sdg]: **합성 데이터 생성(SDG, Synthetic Data Generation)** — 시뮬레이터로 학습용 이미지와 주석(라벨)을 자동 생성하는 기법. 라벨링 비용이 0에 수렴하는 것이 최대 장점. 🎥 [Isaac Sim Replicator SDG 튜토리얼](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^traj]: **에피소드/궤적(trajectory)** — 로봇이 한 태스크를 시작부터 종료까지 수행한 기록 1회분. 관측(카메라·센서)과 행동(관절 명령)의 시계열 묶음으로, 로봇 학습 데이터의 기본 단위다.
 [^embodiment]: **embodiment(임바디먼트)** — 로봇의 물리적 형태·자유도·센서 구성. 같은 모델이라도 로봇 팔과 휴머노이드는 embodiment가 달라 데이터·정책을 그대로 이식할 수 없다.
-[^dr]: **도메인 랜덤화(Domain Randomization)** — 시뮬레이션의 조명·질감·물체 위치·카메라 각도를 무작위로 바꿔가며 데이터를 생성해, 모델이 어떤 환경에서도 통하는 특징을 배우게 하는 기법. sim-to-real 갭을 줄이는 대표 처방.
+[^dr]: **도메인 랜덤화(Domain Randomization)** — 시뮬레이션의 조명·질감·물체 위치·카메라 각도·물리 파라미터를 무작위로 바꿔가며 데이터를 생성·학습시키는 기법. 모델이 어떤 환경에서도 통하는 특징을 배우게 한다 — sim-to-real 갭을 줄이는 대표 처방.
 [^gap]: **도메인 갭(domain gap)** — 시뮬레이션과 현실의 차이(물리·시각) 때문에 시뮬레이션에서 잘 되던 모델이 실물에서는 성능이 떨어지는 현상. 이 갭을 다루는 방법론이 [pillar-4](pillar-4.md)의 sim-to-real이다.
 [^wfm]: **월드 파운데이션 모델(WFM, World Foundation Model)** — 물리 세계의 다음 장면을 예측·생성하도록 학습된 대형 모델. 텍스트·영상 프롬프트로 물리적으로 그럴듯한 영상·시나리오를 만들어 로봇 학습 데이터를 증강한다. 🎥 [NVIDIA Cosmos 소개](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag(rosbag2)** — 로봇 운영체제 ROS 2가 토픽(센서·명령 스트림)을 통째로 녹화하는 표준 로그 포맷. 로봇 회사 원천 데이터의 사실상 기본 형태지만, 그대로는 학습에 쓸 수 없어 변환이 필요하다.

@@ -1,5 +1,5 @@
 ---
-ko_hash: 3eaa37767ad4fcb8f429c4b186eb32e17cc7b01f
+ko_hash: e3af0d836ac3b1704210662147a46b1326739885
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -14,10 +14,10 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 ## Top 3 questions customers ask most in this pillar
 
 1. **"Does directing robots/equipment with an LLM agent actually work? What does AWS have?"** → [Bedrock AgentCore](#1-amazon-bedrock-agentcore--ga)
-2. **"How do you put an agent on a real-time robot? Even offline at the edge?"** → [Edge agentic orchestration](#3-edge-agentic-orchestration--preview-reference-architecture)[^orch]
-3. **"When an agent controls a physical system, how is safety guaranteed?"** → [Safety & guardrails](#5-safety--guardrails--ga-agent-layer---unsolved-physical-semantic-gap)[^guardrail]
+2. **"How do you put an agent on a real-time robot? Even offline at the edge?"** → [Edge agentic orchestration](#3-edge-agentic-orchestration--preview-reference-architecture)
+3. **"When an agent controls a physical system, how is safety guaranteed?"** → [Safety & guardrails](#5-safety--guardrails--ga-agent-layer---unsolved-physical-semantic-gap)
 
-> **Stable principle (rarely changes)**: an agent does not "directly control a robot in real time." The agent handles **high-level planning and tool selection (System 2)**, while an edge policy handles **low-level real-time control (System 1)** (→ [pillar-2](pillar-2.md), [pillar-4](pillar-4.md)). What truly runs in production is (1) **warehouse fleet[^fleet] coordination** (DeepFleet, CoEvolution) and (2) **development/data workload orchestration** (OSMO); full-stack humanoid agents and MCP[^mcp]-robot connections are mostly research/demo.
+> **Stable principle (rarely changes)**: an agent does not "directly control a robot in real time." The agent handles **high-level planning and tool selection (System 2)**, while an edge policy handles **low-level real-time control (System 1)** (→ [pillar-2](pillar-2.md), [pillar-4](pillar-4.md)). What truly runs in production is (1) **warehouse fleet[^fleet] coordination** (DeepFleet, CoEvolution) and (2) **development/data workload orchestration**[^orch] (OSMO); full-stack humanoid agents and MCP[^mcp]-robot connections are mostly research/demo.
 
 ---
 
@@ -82,7 +82,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Solution overview** `[1]/[4]`: Evolved from the SayCan/PaLM-E (2022~23 research) lineage. The current dominant pattern = high-level planner (task decomposition · tool-calling, slow) + low-level action policy (fast). Example numbers (vendor-disclosed, for order-of-magnitude sense): Figure Helix S2 7~9Hz + S1 200Hz (Figure, 2025), GR00T N1 S1 diffusion ~10ms (NVIDIA, 2025). ⚠️ **The pattern itself is standard, but full-stack whole-body humanoids are mostly pilot/demo**.
 
-**AWS mapping**: **System 2 = cloud Bedrock AgentCore** (planning · tool orchestration · guardrails), **System 1 = edge Jetson** (real-time control, → [pillar-4](pillar-4.md)). If latency is tolerable, System 2 in the cloud; otherwise edge on-board.
+**AWS mapping**: **System 2 = cloud Bedrock AgentCore** (planning · tool orchestration · guardrails[^guardrail]), **System 1 = edge Jetson** (real-time control, → [pillar-4](pillar-4.md)). If latency is tolerable, System 2 in the cloud; otherwise edge on-board.
 
 ```mermaid
 graph TD
@@ -205,11 +205,11 @@ _owner: Youngjin · updated: 2026-07 · volatility: high (AgentCore features · 
 
 <!-- 용어 각주 -->
 
-[^agent]: **LLM agent** — Software in which a large language model plans on its own, selects and calls tools (APIs, robot skills), and carries out multi-step tasks. Unlike simple Q&A, the key point is that it "acts."
-[^orch]: **Orchestration** — The layer that coordinates and directs multiple agents, robots, and workflows as one system. It decides "who does what, and when" rather than controlling individual robots.
-[^sys]: **System 2 / System 1** — Cognitive science's "slow thinking / fast reaction" distinction applied to robot architecture. System 2 is a slow LLM planner that handles planning (cloud); System 1 is a small policy that handles real-time control (edge).
-[^tool]: **Tool calling** — The mechanism by which an agent calls external functions (APIs, robot skills) with a defined schema during reasoning. It is the agent's only path to affecting the physical world, so the safety gate (Policy) sits exactly at this point.
-[^mcp]: **MCP (Model Context Protocol)** — An open standard protocol connecting agents to tools and data sources. Often likened to "USB-C for agents"; experiments exposing robot skills as MCP servers are growing.
+[^agent]: **LLM agent** — software in which a large language model plans on its own, selects and calls tools (APIs, robot skills), and carries out multi-step tasks. Unlike simple Q&A, the key point is that it "acts."
+[^orch]: **Orchestration** — the layer that coordinates and directs multiple agents, robots, and workflows as one system. It decides "who does what, and when" rather than controlling individual robots.
+[^sys]: **System 2 / System 1** — the cognitive-science "slow thinking / fast reaction" distinction applied to robot architecture. System 2 is a slow LLM planner that handles planning (cloud); System 1 is a small policy that handles real-time control (edge).
+[^tool]: **Tool calling** — the mechanism by which an agent calls external functions (APIs, robot skills) with a defined schema during reasoning. It is the agent's only path to affecting the physical world, so the safety gate (Policy) sits exactly at this point.
+[^mcp]: **MCP (Model Context Protocol)** — an open standard protocol connecting agents to tools and data sources. Often likened to "USB-C for agents"; experiments exposing robot skills as MCP servers are growing.
 [^guardrail]: **Guardrail** — A safety mechanism that constrains an agent's inputs/outputs and behavior with policies. In physical systems this means blocking dangerous tool calls and limiting the range of actions.
-[^fleet]: **Fleet coordination** — Scheduling and route allocation for a large group of robots as one system. Already production-proven at the hundreds-to-thousands scale, as with warehouse robots.
+[^fleet]: **Fleet coordination** — scheduling and route allocation for a large group of robots as one system. Already production-proven at the hundreds-to-thousands scale, as with warehouse robots.
 [^a2a]: **A2A (Agent-to-Agent)** — A multi-agent communication approach in which different agents collaborate via a standard protocol.

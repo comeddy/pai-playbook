@@ -1,5 +1,5 @@
 ---
-ko_hash: 6bf5b710d0b4a9424ed12b8b2cd24174c01cafff
+ko_hash: 61ecb4ea052d08de6a6a018a4c40a704f26e2be0
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -204,13 +204,13 @@ _owner: Youngjin · updated: 2026-07 · volatility: medium (edge HW · vendor me
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — Transferring a policy trained in simulation to a real robot, or the methodology for doing so. The physical and visual differences between simulation and reality (the domain gap) mean a naive transfer collapses performance. 🎥 [NVIDIA sim-to-real robotics showcase](https://www.youtube.com/watch?v=sffNvv3GkRA)
+[^s2r]: **sim-to-real** — transferring a policy trained in simulation to a real robot, or the methodology for doing so. The physical and visual differences between simulation and reality (the domain gap) mean a naive transfer collapses performance. 🎥 [NVIDIA sim-to-real robotics showcase](https://www.youtube.com/watch?v=sffNvv3GkRA)
 [^loco]: **locomotion** — A robot's ability to move: walking, driving, etc. Thanks to the relatively simple physics of robot-ground contact, it is the area where sim-to-real was solved first.
-[^manip]: **manipulation** — The ability to grasp, move, and assemble objects. The physics of fingertip contact is complex, so this is the area where sim-to-real remains unsolved.
-[^dyn]: **dynamics** — The physics of motion produced by force, friction, and collision. Contact dynamics when grasping an object is the hardest part for a simulator to reproduce accurately.
-[^dr]: **Domain Randomization (DR)** — Training while randomly varying the simulation's physics parameters, lighting, and textures so the policy withstands any environmental change. The signature sim-to-real prescription.
-[^sysid]: **SysID (System Identification)** — Measuring the real robot's physical parameters (friction, mass, motor response) to calibrate the simulator to the real hardware.
+[^manip]: **manipulation** — the ability to grasp, move, and assemble objects. The physics of fingertip contact is complex, so this is the area where sim-to-real remains unsolved.
+[^dyn]: **dynamics** — the physics of motion produced by force, friction, and collision. Contact dynamics when grasping an object is the hardest part for a simulator to reproduce accurately.
+[^dr]: **Domain Randomization (DR)** — a technique that randomly varies the simulation's lighting, textures, object positions, camera angles, and physics parameters during data generation or training. The policy withstands any environmental change — the signature sim-to-real prescription.
+[^sysid]: **SysID (System Identification)** — measuring the real robot's physical parameters (friction, mass, motor response) to calibrate the simulator to the real hardware.
 [^mpc]: **MPC (Model Predictive Control)** — A classical control technique that controls by repeatedly predicting and optimizing over a short future horizon. The hybrid of a learned RL policy layered on MPC has become the proven prescription.
 [^onnx]: **ONNX / TensorRT** — ONNX is the standard format for exchanging models between frameworks; TensorRT is NVIDIA's inference-optimization compiler for its GPUs. The "PyTorch → ONNX → TensorRT" conversion is the standard path for real-time edge inference.
-[^ota]: **OTA (Over-The-Air)** — Updating and deploying a robot's models and software remotely over the network.
-[^latency]: **latency budget** — The maximum inference time a real-time control loop allows. At 30~100Hz control, one cycle is 10~33ms, so inference must finish within it — the reason a cloud round-trip is impossible.
+[^ota]: **OTA (Over-The-Air)** — updating and deploying a robot's models and software remotely over the network.
+[^latency]: **latency budget** — the maximum inference time a real-time control loop allows. At 30~100Hz control, one cycle is 10~33ms, so inference must finish within it — the reason a cloud round-trip is impossible.

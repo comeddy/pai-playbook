@@ -1,5 +1,5 @@
 ---
-ko_hash: 5976261cadc445c55ac7963c0e84d1417adad9ed
+ko_hash: ac90b606c29c6cd9ae102b2da34198952d8c2678
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -246,7 +246,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（数据集版本·大�
 [^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** — 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^traj]: **回合(episode)/轨迹（trajectory）** — 机器人从开始到结束执行一个任务的一次完整记录。它是观测（相机·传感器）与动作（关节命令）的时间序列组合，是机器人学习数据的基本单位。
 [^embodiment]: **embodiment（具身形态）** — 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂与人形机器人的 embodiment 不同，数据·策略无法直接移植。
-[^dr]: **域随机化（Domain Randomization）** — 随机改变仿真中的光照·纹理·物体位置·相机角度来生成数据，让模型学到在任何环境下都通用的特征。这是缩小 sim-to-real 差距的代表性处方。
+[^dr]: **域随机化（Domain Randomization）** — 随机改变仿真的光照·纹理·物体位置·相机角度·物理参数来生成数据或进行训练的技法。让模型学到在任何环境下都通用的特征 — 缩小 sim-to-real 差距的代表性处方。
 [^gap]: **域间差异（domain gap）** — 由于仿真与现实的差异（物理·视觉），在仿真中表现良好的模型在实物上性能下降的现象。处理这一差距的方法论是 [pillar-4](pillar-4.md) 的 sim-to-real。
 [^wfm]: **世界基础模型（WFM, World Foundation Model）** — 为预测·生成物理世界的下一场景而训练的大型模型。通过文本·视频提示生成物理上合理的视频·场景，用于增强机器人学习数据。🎥 [NVIDIA Cosmos 介绍](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag（rosbag2）** — 机器人操作系统 ROS 2 将话题（传感器·命令流）整体录制的标准日志格式。它是机器人公司原始数据的事实默认形态，但无法直接用于训练，需要转换。

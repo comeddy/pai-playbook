@@ -1,5 +1,5 @@
 ---
-ko_hash: 5976261cadc445c55ac7963c0e84d1417adad9ed
+ko_hash: ac90b606c29c6cd9ae102b2da34198952d8c2678
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -246,7 +246,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: medium (dataset versions/siz
 [^sdg]: **Synthetic Data Generation (SDG)** — a technique that uses a simulator to auto-generate training images and annotations (labels). Its biggest advantage: labeling cost converges to zero. 🎥 [Isaac Sim Replicator SDG tutorial](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^traj]: **Episode/trajectory** — one recording of a robot performing a task from start to finish. A time-series bundle of observations (cameras/sensors) and actions (joint commands); the basic unit of robot learning data.
 [^embodiment]: **Embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.
-[^dr]: **Domain Randomization** — generating data while randomly varying the simulation's lighting, textures, object positions, and camera angles so the model learns features that hold in any environment. The classic prescription for shrinking the sim-to-real gap.
+[^dr]: **Domain Randomization (DR)** — a technique that randomly varies the simulation's lighting, textures, object positions, camera angles, and physics parameters during data generation or training. The model learns features that hold in any environment — the classic prescription for shrinking the sim-to-real gap.
 [^gap]: **Domain gap** — the phenomenon where a model that worked well in simulation loses performance on real hardware because of the differences (physical/visual) between simulation and reality. The methodology for handling this gap is sim-to-real in [pillar-4](pillar-4.md).
 [^wfm]: **World Foundation Model (WFM)** — a large model trained to predict/generate the next scenes of the physical world. From text/video prompts it creates physically plausible video and scenarios to augment robot training data. 🎥 [NVIDIA Cosmos introduction](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag (rosbag2)** — the standard log format in which the robot operating system ROS 2 records topics (sensor/command streams) wholesale. The de facto default form of robot companies' raw data, but it cannot be used for training as-is and requires conversion.

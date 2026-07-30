@@ -1,5 +1,5 @@
 ---
-ko_hash: 3eaa37767ad4fcb8f429c4b186eb32e17cc7b01f
+ko_hash: e3af0d836ac3b1704210662147a46b1326739885
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -14,10 +14,10 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 ## 本支柱中客户最常问的问题 Top 3
 
 1. **"用 LLM 智能体指挥机器人/设备实际可行吗？AWS 上有什么？"** → [Bedrock AgentCore](#1-amazon-bedrock-agentcore--ga)
-2. **"实时机器人上怎么用智能体？能在边缘离线运行吗？"** → [边缘智能体编排](#3-边缘智能体编排--preview参考架构)[^orch]
-3. **"智能体控制物理系统时，安全怎么保证？"** → [安全 & 护栏](#5-安全--护栏--ga智能体层--未解决物理-语义-gap)[^guardrail]
+2. **"实时机器人上怎么用智能体？能在边缘离线运行吗？"** → [边缘智能体编排](#3-边缘智能体编排--preview参考架构)
+3. **"智能体控制物理系统时，安全怎么保证？"** → [安全 & 护栏](#5-安全--护栏--ga智能体层--未解决物理-语义-gap)
 
-> **稳定原理（几乎不变）**: 智能体不"直接实时控制"机器人。**高层规划·工具选择(System 2) 由智能体承担，低层实时控制(System 1) 由边缘策略承担**（→ [pillar-2](pillar-2.md)、[pillar-4](pillar-4.md)）。生产中真正跑起来的是 (1) **仓库机群[^fleet]协调**(DeepFleet, CoEvolution) 与 (2) **开发/数据工作负载编排**(OSMO)，而人形全栈智能体或 MCP[^mcp]-机器人连接大多为研究/演示。
+> **稳定原理（几乎不变）**: 智能体不"直接实时控制"机器人。**高层规划·工具选择(System 2) 由智能体承担，低层实时控制(System 1) 由边缘策略承担**（→ [pillar-2](pillar-2.md)、[pillar-4](pillar-4.md)）。生产中真正跑起来的是 (1) **仓库机群[^fleet]协调**(DeepFleet, CoEvolution) 与 (2) **开发/数据工作负载编排**[^orch](OSMO)，而人形全栈智能体或 MCP[^mcp]-机器人连接大多为研究/演示。
 
 ---
 
@@ -82,7 +82,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]/[4]`: 从 SayCan/PaLM-E(2022~23 研究) 谱系演进。当前主导模式 = 高层规划器（任务分解·工具调用，慢）+ 低层动作策略（快）。示例数值（厂商公开，用于建立量级感）: Figure Helix S2 7~9Hz + S1 200Hz(Figure, 2025)、GR00T N1 S1 diffusion ~10ms(NVIDIA, 2025)。⚠️ **模式本身是标准，但全身人形全栈大多为试点/演示**。
 
-**AWS 映射**: **System 2 = 云端 Bedrock AgentCore**（规划·工具编排·护栏），**System 1 = 边缘 Jetson**（实时控制，→ [pillar-4](pillar-4.md)）。能容忍延迟则 System 2 放云上，否则边缘板载。
+**AWS 映射**: **System 2 = 云端 Bedrock AgentCore**（规划·工具编排·护栏[^guardrail]），**System 1 = 边缘 Jetson**（实时控制，→ [pillar-4](pillar-4.md)）。能容忍延迟则 System 2 放云上，否则边缘板载。
 
 ```mermaid
 graph TD

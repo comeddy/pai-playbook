@@ -205,7 +205,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 �
 [^loco]: **로코모션(locomotion)** — 보행·주행 등 로봇이 이동하는 능력. 로봇과 지면의 접촉이라는 상대적으로 단순한 물리 덕분에 sim-to-real이 가장 먼저 풀린 영역이다.
 [^manip]: **매니퓰레이션(manipulation, 조작)** — 물체를 집고 옮기고 조립하는 능력. 손끝 접촉의 물리가 복잡해 sim-to-real이 아직 풀리지 않은 영역이다.
 [^dyn]: **동역학(dynamics)** — 힘·마찰·충돌이 만드는 운동의 물리. 특히 물체를 쥘 때의 접촉 동역학은 시뮬레이터가 정확히 재현하기 가장 어려운 부분이다.
-[^dr]: **도메인 랜덤화(Domain Randomization)** — 시뮬레이션의 물리 파라미터·조명·질감을 무작위로 바꿔가며 학습시켜, 정책이 어떤 환경 변화에도 견디게 만드는 기법. sim-to-real의 대표 처방.
+[^dr]: **도메인 랜덤화(Domain Randomization)** — 시뮬레이션의 조명·질감·물체 위치·카메라 각도·물리 파라미터를 무작위로 바꿔가며 데이터를 생성·학습시키는 기법. 정책이 어떤 환경 변화에도 견디게 만든다 — sim-to-real의 대표 처방.
 [^sysid]: **시스템 식별(SysID, System Identification)** — 실물 로봇의 물리 파라미터(마찰·질량·모터 응답)를 측정해 시뮬레이터를 실물에 맞게 보정하는 작업.
 [^mpc]: **MPC (Model Predictive Control)** — 짧은 미래를 반복 예측·최적화하며 제어하는 고전 제어 기법. 학습된 RL 정책을 MPC 위에 얹는 하이브리드가 검증된 처방으로 자리 잡았다.
 [^onnx]: **ONNX / TensorRT** — ONNX는 프레임워크 간 모델 교환 표준 포맷, TensorRT는 NVIDIA GPU용 추론 최적화 컴파일러. "PyTorch → ONNX → TensorRT" 변환이 엣지 실시간 추론의 표준 경로다.

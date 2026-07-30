@@ -12,6 +12,7 @@ nav:
   - 홈: index.md
   - 가이드: guide.md
   - "경영진 브리핑": exec.md
+  - "임원 대화 가이드": exec-guide.md
   - "P1 · 데이터 수집 & 처리": pillar-1.md
   - "P2 · 모델 학습 (VLA)": pillar-2.md
   - "P3 · 시뮬레이션": pillar-3.md
@@ -54,7 +55,7 @@ theme:
 markdown_extensions:
   - tables
   - attr_list
-  - footnotes             # 용어 각주([^1]) — 필러 페이지 하단 용어 설명에 사용
+  - footnotes             # 용어 각주([^vla] 같은 명명 라벨) — 필러 페이지 하단 용어 설명에 사용
   - md_in_html            # <details markdown="1"> 내부 마크다운(표) 렌더링에 필수
   - admonition
   - pymdownx.details

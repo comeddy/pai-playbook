@@ -16,6 +16,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Introduce glossary footnotes across the five pillar pages — 45 term definitions with oEmbed-verified official video links, identical labels in all four languages
+
+### Changed
+
+- Replace the sim-to-real footnote video with NVIDIA's official sim-to-real showcase; unify footnote translations across pages, normalize definition dashes, and institutionalize the footnote convention (maintenance page · translation glossary · mkdocs comment)
+
 ## [1.5.0] - 2026-07-24
 
 ### Added
@@ -114,6 +122,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 형식은 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)를 따르고, [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다. 버전은 git 태그(v1.0.0+)로 관리합니다.
 
 ## [Unreleased]
+
+### Added
+
+- 필러 5종 페이지에 용어 각주 도입 — 용어 정의 45개, oEmbed 검증 공식 영상 링크, 4개 언어 동일 라벨
+
+### Changed
+
+- sim-to-real 각주 영상을 NVIDIA 공식 sim-to-real 쇼케이스로 교체, 페이지 간 각주 번역 통일·정의 대시 정규화, 각주 관례 제도화(maintenance 페이지·번역 용어집·mkdocs 주석)
 
 ## [1.5.0] - 2026-07-24
 
@@ -214,6 +230,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- 在五个支柱页面引入术语脚注 — 45 条术语定义，附经 oEmbed 验证的官方视频链接，四种语言标签一致
+
+### Changed
+
+- 将 sim-to-real 脚注视频更换为 NVIDIA 官方 sim-to-real 展示；统一跨页脚注翻译并规范定义破折号，将脚注惯例制度化（maintenance 页面·翻译术语表·mkdocs 注释）
+
 ## [1.5.0] - 2026-07-24
 
 ### Added
@@ -312,6 +336,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 形式は [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) に従い、[Semantic Versioning](https://semver.org/spec/v2.0.0.html) を遵守します。バージョンは git タグ（v1.0.0+）で管理します。
 
 ## [Unreleased]
+
+### Added
+
+- 5 つのピラーページに用語脚注を導入 — 用語定義 45 件、oEmbed 検証済み公式動画リンク、4 言語で同一ラベル
+
+### Changed
+
+- sim-to-real 脚注動画を NVIDIA 公式 sim-to-real ショーケースに差し替え、ページ間の脚注翻訳を統一・定義ダッシュを正規化、脚注慣例を制度化（maintenance ページ・翻訳用語集・mkdocs コメント）
 
 ## [1.5.0] - 2026-07-24
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 6bf5b710d0b4a9424ed12b8b2cd24174c01cafff
+ko_hash: 61ecb4ea052d08de6a6a018a4c40a704f26e2be0
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -208,7 +208,7 @@ _owner: Youngjin · updated: 2026-07 · volatility: 中（边缘 HW·厂商指�
 [^loco]: **locomotion（行走/移动）** — 行走·行驶等机器人的移动能力。得益于机器人与地面接触这种相对简单的物理，它是 sim-to-real 最先被解决的领域。
 [^manip]: **操作（manipulation）** — 抓取、搬运、装配物体的能力。指尖接触的物理很复杂，是 sim-to-real 尚未解决的领域。
 [^dyn]: **动力学（dynamics）** — 力·摩擦·碰撞所产生的运动物理。尤其是抓取物体时的接触动力学，是仿真器最难精确再现的部分。
-[^dr]: **域随机化（Domain Randomization）** — 随机改变仿真的物理参数·光照·纹理进行训练，使策略能承受任何环境变化的技法。sim-to-real 的代表性处方。
+[^dr]: **域随机化（Domain Randomization）** — 随机改变仿真的光照·纹理·物体位置·相机角度·物理参数来生成数据或进行训练的技法。使策略能承受任何环境变化 — sim-to-real 的代表性处方。
 [^sysid]: **系统辨识（SysID, System Identification）** — 测量真实机器人的物理参数（摩擦·质量·电机响应），把仿真器校准到与实物一致的工作。
 [^mpc]: **MPC（Model Predictive Control）** — 反复预测·优化短期未来来进行控制的经典控制技法。把学习到的 RL 策略叠加在 MPC 之上的混合已成为经过验证的处方。
 [^onnx]: **ONNX / TensorRT** — ONNX 是框架间模型交换的标准格式，TensorRT 是面向 NVIDIA GPU 的推理优化编译器。"PyTorch → ONNX → TensorRT" 转换是边缘实时推理的标准路径。

@@ -235,12 +235,12 @@ _owner: Youngjin · updated: 2026-07 · volatility: high (versions · instances 
 
 <!-- 용어 각주 -->
 
-[^rl]: **Reinforcement learning (RL)** — Trains a policy through trial and error to maximize a reward signal. In simulation, thousands of parallel environments let robots learn control policies such as locomotion quickly.
-[^parallel]: **Parallel environments** — Replicating the same simulation environment thousands of times on a single GPU and running them simultaneously. Speeds up RL experience collection by thousands of times — the core value of simulation.
-[^headless]: **Headless** — Running the simulator without a GUI. No rendering overhead, so large-scale parallel training jobs run headless.
-[^rtcore]: **RT Core / RTX GPU** — The NVIDIA GPU family with dedicated ray-tracing hardware (RT Cores). Required for Isaac Sim's photoreal rendering, so A100/H100 (no RT Cores) cannot be used for rendering.
-[^gt]: **Ground truth** — The exact answer data that serves as the reference for training and evaluation. In simulation the engine already knows every object's position and segmentation mask, so perfect labels are generated automatically.
-[^usd]: **USD (Universal Scene Description)** — The standard 3D scene description format created by Pixar. Isaac Sim scenes, robots, and assets are all described in USD; it is the common language of the Omniverse ecosystem.
+[^rl]: **Reinforcement learning (RL)** — training a policy through trial and error to maximize a reward signal. In simulation, thousands of parallel environments let robots learn control policies such as locomotion quickly.
+[^parallel]: **Parallel environments** — replicating the same simulation environment thousands of times on a single GPU and running them simultaneously. Speeds up RL experience collection by thousands of times — the core value of simulation.
+[^headless]: **Headless** — running the simulator without a GUI. No rendering overhead, so large-scale parallel training jobs run headless.
+[^rtcore]: **RT Core / RTX GPU** — the NVIDIA GPU family with dedicated ray-tracing hardware (RT Cores). Required for Isaac Sim's photoreal rendering, so A100/H100 (no RT Cores) cannot be used for rendering.
+[^gt]: **Ground truth** — the exact answer data that serves as the reference for training and evaluation. In simulation the engine already knows every object's position and segmentation mask, so perfect labels are generated automatically.
+[^usd]: **USD (Universal Scene Description)** — the standard 3D scene description format created by Pixar. Isaac Sim scenes, robots, and assets are all described in USD; it is the common language of the Omniverse ecosystem.
 [^sdg]: **Synthetic Data Generation (SDG)** — a technique that uses a simulator to auto-generate training images and annotations (labels). Its biggest advantage: labeling cost converges to zero. 🎥 [Isaac Sim Replicator SDG tutorial](https://www.youtube.com/watch?v=HHzNIh72B_Y)
-[^ppo]: **PPO (Proximal Policy Optimization)** — The most widely used reinforcement learning algorithm. Converges stably and is the de facto default for robot locomotion training.
+[^ppo]: **PPO (Proximal Policy Optimization)** — the most widely used reinforcement learning algorithm. Converges stably and is the de facto default for robot locomotion training.
 [^dtwin]: **Digital twin** — A physically faithful virtual replica of a real factory, warehouse, or robot. Enables policy training, validation, and scenario experiments without touching the real environment.
