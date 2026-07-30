@@ -1,5 +1,5 @@
 ---
-ko_hash: b3ac42322cb56ec58a5b64a21616c9a0c6cf8d36
+ko_hash: 127473f4690e6b35485a2184522e40988b6689aa
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -100,7 +100,7 @@ _owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatili
 
 **Enforce the depth hierarchy**: L0 at the very top. L2 deep-dives are separated into `<details>` folds/links to keep the body short.
 
-**Glossary-footnote convention**: whenever content is added or updated, handle terms an SA can't immediately parse with `[^term]` footnotes in the same change — reuse an existing footnote id if one exists; for a new term, add a "**Term** — 1–2 sentence explanation" entry to the `<!-- 용어 각주 -->` block at the bottom of the page (attach a 🎥 link if a helpful official video exists, verified via oEmbed). Markers go only at the first body occurrence — never in headings or mermaid blocks. Apply identically across all 4 languages (same marker ids, same URLs).
+**Glossary-footnote convention (ongoing)**: whenever content is added or updated, handle terms an SA can't immediately parse with `[^label]` footnotes in the same change — reuse an existing label if one exists; for a new term, add a "**Term** — 1–2 sentence explanation" entry to the `<!-- 용어 각주 -->` block at the very bottom of the page. If a verified official video exists, attach a 🎥 link at the end of the definition (cross-check title and channel via the oEmbed response before merging). Markers go only at the first body occurrence — never in headings or mermaid blocks. Labels are mechanical identifiers and must never be translated; apply identically across all 4 languages (same labels, same URLs) — detailed rules in `i18n/glossary.md`.
 
 ---
 
