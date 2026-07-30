@@ -27,13 +27,13 @@
 2. **선별 + 라벨링**: THE FILTER로 거르고 성숙도 라벨·`[4]`·"왜 대기"·"승격 조건" 4열을 채운다. 기존 radar 항목과 dedup.
 3. **한국어 갱신**: `docs/radar.md`의 `## 🆕 최신 스캔 유입` 섹션 표를 **재평가 + 신규 추가** 방식으로 갱신 — 기존 행 중 여전히 유효·검증 대기인 것은 유지, 낡았거나 반박된 것은 제거, 신규를 추가하고 **~10행 상한**(초과 시 오래된·관련성 낮은 것부터 제거). 승격됐거나 폐기된 항목은 적절한 섹션으로 이동/제거.
 4. **다국어 동기화**: `translate-sync` 스킬 절차로 en/zh/ja 반영 + `ko_hash` 갱신 (`i18n/glossary.md` 준수).
-5. **게이트**: `python3 scripts/check_translation_sync.py`(비동기 0/30) + `mkdocs build --strict`(exit 0).
+5. **게이트**: `python3 scripts/check_translation_sync.py`(비동기 0/36) + `mkdocs build --strict`(exit 0).
 6. **커밋·푸시**: 커밋 메시지에 스캔 날짜·건수·주요 출처를 남긴다. `main` 푸시 → CI가 배포.
 
 ## 검증 명령
 
 ```bash
-python3 scripts/check_translation_sync.py            # 비동기 0/30 확인
+python3 scripts/check_translation_sync.py            # 비동기 0/36 확인
 mkdocs build --strict --site-dir /tmp/radar-scan     # exit 0 확인
 ```
 

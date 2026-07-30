@@ -1,5 +1,5 @@
 ---
-ko_hash: 127473f4690e6b35485a2184522e40988b6689aa
+ko_hash: a372c2a339763b2f62cd0fa75319f8a09aa2bd4e
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -99,6 +99,8 @@ _owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatili
 ```
 
 **Enforce the depth hierarchy**: L0 at the very top. L2 deep-dives are separated into `<details>` folds/links to keep the body short.
+
+- **Executive-page (exec/exec-guide) principle**: no new technical claims — carry only executive-language translations of the pillar/radar verification verdicts.
 
 **Glossary-footnote convention (ongoing)**: whenever content is added or updated, handle terms an SA can't immediately parse with `[^label]` footnotes in the same change — reuse an existing label if one exists; for a new term, add a "**Term** — 1–2 sentence explanation" entry to the `<!-- 용어 각주 -->` block at the very bottom of the page. If a verified official video exists, attach a 🎥 link at the end of the definition (cross-check title and channel via the oEmbed response before merging). Markers go only at the first body occurrence — never in headings or mermaid blocks. Labels are mechanical identifiers and must never be translated; apply identically across all 4 languages (same labels, same URLs) — detailed rules in `i18n/glossary.md`.
 
