@@ -14,3 +14,4 @@ AWS Korea SA용 Physical AI Playbook. MkDocs Material, 4개 언어(ko 원본 + e
 - 정직성: 미검증 항목은 출처 등급 `[4]` 유지, 성숙 단계로 포장 금지. Radar 유입 항목의 필러 본문 승격은 사람(담당 필러 owner)의 일.
 - 모든 페이지·항목에 `_owner · updated · volatility_` 메타 라인 필수 (누락 시 CI 빌드 실패).
 - 항목명에는 1차 확인용 공식 출처 바로가기 링크 부착(curl 200 검증).
+- CHANGELOG.md는 4개 언어(English→한국어→中文→日本語 순, 배지 앵커 전환) — 릴리스 항목 추가 시 4개 섹션 모두 갱신, 카테고리 헤딩은 영문 유지.
