@@ -1,5 +1,5 @@
 ---
-ko_hash: 89bb2b5d0e9c6e906f7fe02ce40d24b29629d586
+ko_hash: 4bc20de9d96f72e6370a2f9a07f1b88907924492
 ---
 # 高管对话指南 — 供 SA 使用
 
@@ -45,7 +45,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 中_
 |---|---|---|---|
 | 制造 | 把开放 VLA 针对自家工序微调的路径已经打开 | Figure 02@BMW 验证试点（[radar](radar.md#-硬件--部署路线图演示)） | 用单张 G7e LoRA 1 天 PoC 验证窄任务 |
 | 物流 | 移动机器人已经在付费商业现场 | Digit@GXO 6.5 万+ 运行小时（[pillar-4](pillar-4.md)） | 限定为窄范围结构化移动任务 |
-| 汽车 | 把在仿真中训练的策略迁移到实机的路径已经标准化 | Zoox HyperPod 训练（⚠️ AV，64+ GPU 95% 利用率 — [pillar-2](pillar-2.md)） | 用云端并行仿真 PoC 降低进入门槛 |
+| 汽车 | 把在仿真中训练的策略迁移到实机的训练管道已经成熟 | Zoox HyperPod 训练（⚠️ AV，64+ GPU 95% 利用率 — [pillar-2](pillar-2.md)） | 用云端并行仿真 PoC 降低进入门槛 |
 
 ## 5. ⚠️ 高管面前禁用·慎用的表述
 

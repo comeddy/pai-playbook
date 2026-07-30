@@ -1,5 +1,5 @@
 ---
-ko_hash: 5eaea711ab78ef743f19e677a307615c76034962
+ko_hash: 62cdee875eec2ac591bec215c23b02eed13b0298
 ---
 # Executive Brief — Physical AI: What to Do and What to Wait On
 
@@ -16,7 +16,7 @@ Three verification signals have stacked up. First, Agility Digit has run for pay
 
 **Manufacturing**: A path has opened to fine-tune open VLA models to your own tasks. Rather than training from scratch, the realistic approach is to teach a specific process with a small number of real demonstrations ([pillar-2](pillar-2.md)).
 **Logistics**: Locomotion-based (walking) robots are already deployed at paid commercial sites. Precision manipulation, by contrast, is still at the research/preview stage, so task scope must be kept narrow ([pillar-4](pillar-4.md)).
-**Automotive**: The path from policies trained at scale in simulation to real hardware has been standardized. Parallel simulation on cloud GPUs lowers the barrier to entry ([pillar-3](pillar-3.md)).
+**Automotive**: The training pipeline for moving policies trained at scale in simulation to real hardware has matured. Parallel simulation on cloud GPUs lowers the barrier to entry ([pillar-3](pillar-3.md)).
 
 ## ③ What is real and what is hype
 

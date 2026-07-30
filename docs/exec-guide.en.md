@@ -1,5 +1,5 @@
 ---
-ko_hash: 89bb2b5d0e9c6e906f7fe02ce40d24b29629d586
+ko_hash: 4bc20de9d96f72e6370a2f9a07f1b88907924492
 ---
 # Executive Conversation Guide — For SAs
 
@@ -45,7 +45,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: medium_
 |---|---|---|---|
 | Manufacturing | A path has opened to fine-tune open VLA to your own process | Figure 02@BMW verification pilot ([radar](radar.md#-hardware--deployment-roadmap--demo)) | Verify a narrow task with a single G7e LoRA 1-day PoC |
 | Logistics | Locomotion robots are already at paid commercial sites | Digit@GXO 65,000+ operating hours ([pillar-4](pillar-4.md)) | Scope to narrow, structured movement tasks |
-| Automotive | The path from policies trained in sim to real hardware has been standardized | Zoox HyperPod training (⚠️ AV, 64+ GPUs at 95% utilization — [pillar-2](pillar-2.md)) | Lower the barrier with a cloud parallel-sim PoC |
+| Automotive | The training pipeline for moving policies trained in sim to real hardware has matured | Zoox HyperPod training (⚠️ AV, 64+ GPUs at 95% utilization — [pillar-2](pillar-2.md)) | Lower the barrier with a cloud parallel-sim PoC |
 
 ## 5. ⚠️ Phrases to avoid or handle with care in front of executives
 
