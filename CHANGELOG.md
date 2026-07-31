@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Register 3 more verified aws-samples Physical AI assets from a full org survey: robotic-cellsim-tools (URDF→Isaac Sim scene primitives, pillar 3), ROS2 OTA firmware updates (Greengrass V2 + IoT Jobs fleet OTA, pillar 4), and the Smart Machines hybrid Physical AI demo (agentic equipment monitoring, pillar 5), each with maturity caveats, in all four languages
 - Register VLA Hub (aws-samples, real-time VLA inference hub — six OSS VLAs as per-model gRPC endpoints via CDK/ECS, with a Jetson edge track) as a pillar-4 related asset with maturity caveats, in all four languages
+- Register the AgentCore retail agent workshop "Build! Deploy! Observe!" (Korean; three-phase hands-on covering all seven AgentCore services) as a pillar-5 related asset, with a link-persistence caveat on the event guide site, in all four languages
 - Introduce glossary footnotes across the five pillar pages — 45 term definitions with oEmbed-verified official video links, identical labels in all four languages
 - Add an Executive Brief page (5-question flow with a now/soon/not-yet judgment matrix) and an SA-facing executive conversation guide (pitches, top-10 Q&A, objection handling, industry angles, forbidden claims), in all four languages
 - Add iPhone/iPad home-screen PWA support: web app manifest (standalone, deep-orange theme), 4 robot-design app icons, apple-touch meta tags, and a new favicon
@@ -147,6 +148,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - aws-samples 조직 전수 조사로 검증된 Physical AI 자산 3종 추가 등재: robotic-cellsim-tools(URDF→Isaac Sim 씬 프리미티브, pillar 3), ROS2 OTA 펌웨어 업데이트(Greengrass V2+IoT Jobs 플릿 OTA, pillar 4), Smart Machines 하이브리드 Physical AI 데모(에이전트 장비 모니터링, pillar 5) — 성숙도 캐비앗 병기, 4개 언어 반영
 - VLA Hub(aws-samples, 실시간 VLA 추론 허브 — OSS VLA 6종을 모델별 gRPC 엔드포인트로 CDK/ECS 배포, Jetson 엣지 트랙 포함)를 pillar-4 관련 자산으로 등재, 성숙도 캐비앗 병기, 4개 언어 반영
+- AgentCore 리테일 에이전트 워크숍 "Build! Deploy! Observe!"(한국어, AgentCore 7개 서비스 전부를 3단계 핸즈온으로 커버)를 pillar-5 관련 자산으로 등재 — 이벤트 가이드 사이트 링크 지속성 캐비앗 병기, 4개 언어 반영
 - 필러 5종 페이지에 용어 각주 도입 — 용어 정의 45개, oEmbed 검증 공식 영상 링크, 4개 언어 동일 라벨
 - 경영진 브리핑 페이지(5가지 질문 흐름 + 지금/곧/아직 판단 매트릭스)와 SA용 임원 대화 가이드(피치·Top 10 Q&A·반박 대응·산업 앵글·금지 표현) 추가, 4개 언어 반영
 - iPhone/iPad 홈 화면 PWA 지원: 웹 앱 매니페스트(standalone·deep orange 테마), 로봇 디자인 앱 아이콘 4종, apple-touch 메타, 파비콘 교체
@@ -274,6 +276,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - 通过对 aws-samples 组织的全面调查，追加登载 3 项经验证的 Physical AI 资产：robotic-cellsim-tools（URDF→Isaac Sim 场景原语，pillar 3）、ROS2 OTA 固件更新（Greengrass V2+IoT Jobs 机群 OTA，pillar 4）、Smart Machines 混合 Physical AI 演示（智能体设备监控，pillar 5）—— 均标注成熟度注意事项，覆盖 4 种语言
 - 将 VLA Hub（aws-samples，实时 VLA 推理中心 — 用 CDK/ECS 把 6 个 OSS VLA 部署为按模型的 gRPC 端点，含 Jetson 边缘轨道）登记为 pillar-4 相关资产，标注成熟度注意事项，四种语言同步
+- 将 AgentCore 零售智能体研讨会 "Build! Deploy! Observe!"（韩语，三阶段动手实验覆盖 AgentCore 全部 7 个服务）登记为 pillar-5 相关资产 — 标注活动指南站点链接持久性注意事项，四种语言同步
 - 在五个支柱页面引入术语脚注 — 45 条术语定义，附经 oEmbed 验证的官方视频链接，四种语言标签一致
 - 新增高管简报页面（5 问题流程 + 现在/即将/尚未 判断矩阵）与面向 SA 的高管对话指南（电梯演讲·Top 10 问答·异议应对·行业切入点·禁用表述），覆盖 4 种语言
 - 新增 iPhone/iPad 主屏幕 PWA 支持：Web 应用清单（standalone·深橙主题）、4 款机器人设计应用图标、apple-touch 元标签及新网站图标
@@ -401,6 +404,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - aws-samples 組織の全数調査により検証済み Physical AI アセット 3 種を追加掲載：robotic-cellsim-tools（URDF→Isaac Sim シーンプリミティブ、pillar 3）、ROS2 OTA ファームウェア更新（Greengrass V2+IoT Jobs フリート OTA、pillar 4）、Smart Machines ハイブリッド Physical AI デモ（エージェント設備監視、pillar 5）— 成熟度の注意書き付き、4 言語対応
 - VLA Hub（aws-samples、リアルタイム VLA 推論ハブ — OSS VLA 6 種をモデルごとの gRPC エンドポイントとして CDK/ECS でデプロイ、Jetson エッジトラックを含む）を pillar-4 の関連資産として登録、成熟度の注意書きを明記、4 言語に反映
+- AgentCore リテールエージェントワークショップ「Build! Deploy! Observe!」（韓国語、AgentCore 7 サービスすべてを 3 フェーズのハンズオンでカバー）を pillar-5 の関連資産として登録 — イベントガイドサイトのリンク持続性の注意書きを明記、4 言語に反映
 - 5 つのピラーページに用語脚注を導入 — 用語定義 45 件、oEmbed 検証済み公式動画リンク、4 言語で同一ラベル
 - 経営層ブリーフィングページ（5 つの質問フロー + 今/まもなく/まだ 判断マトリクス）と SA 向け経営層対話ガイド（ピッチ・Top 10 Q&A・反論対応・業界別アングル・禁止表現）を追加、4 言語対応
 - iPhone/iPad ホーム画面 PWA 対応：Web アプリマニフェスト（standalone・ディープオレンジテーマ）、ロボットデザインのアプリアイコン 4 種、apple-touch メタ、ファビコン刷新

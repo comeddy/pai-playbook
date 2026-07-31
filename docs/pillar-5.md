@@ -71,6 +71,7 @@ graph LR
 
 - 플레이북: [pillar-4 엣지](pillar-4.md)
 - [AgentCore 시작 워크숍](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 워크숍](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- [AgentCore 리테일 에이전트 워크숍 "Build! Deploy! Observe!"](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) — 한국어. 리테일 도메인 예제지만 AgentCore 7개 서비스(Gateway·Runtime·Observability·Code Interpreter·Memory·Policy·Browser) 전부를 3단계 핸즈온으로 커버 — Policy 가드레일·에스컬레이션 실습은 5번(안전 & 가드레일)의 접점. 가이드: [워크숍 사이트](https://dxdbmmdwak6t8.cloudfront.net/) (이벤트용 CloudFront 배포 — 링크 지속성 확인 필요 ⚠️)
 - (사내 AgentCore 워크숍 — 확인 필요 ⚠️)
 - [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) — aws-samples. 4-필러 플라이휠 참조 아키텍처. ⚠️ 현재 NVIDIA OSMO 6.3 on EKS 오케스트레이션만 Available, Cosmos·Isaac Lab·GR00T·Strands+AgentCore 에이전틱 레이어는 Planned
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples. Bedrock 에이전트가 Isaac Sim·실기 SO-ARM101/XGO2/Zumi를 IoT로 제어, 에이전트 메모리로 sim-to-real 반복 학습
