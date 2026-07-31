@@ -1,5 +1,5 @@
 ---
-ko_hash: befcb85cce44a3466f2ed6a0a37e2423682d0d9c
+ko_hash: 4f97e5ff7eaaffda03d183cfdb04a4d084ffa3b0
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -80,6 +80,7 @@ graph LR
 
 - Playbook: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 编排](pillar-5.md) · [decisions](decisions.md)
 - [VLA Hub — AWS 上的实时 VLA 推理中心](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples。用 CDK 将 6 个 OSS VLA（GR00T N1.6/N1.7·π0.5·OpenVLA-7B·SmolVLA-450M·LAP-3B）部署为按模型独立的 gRPC 端点（ECS on EC2 g5/g6，内部 NLB）。部署时自动探测有 GPU 容量的 AZ；包含使用相同容器·proto 的 Jetson（Orin/Thor）单设备轨道 — 一套代码覆盖 System 2 云端/边缘推理路径。其 capability matrix（按模型的许可证·适配成本·场景推荐）在客户沟通中很有用。⚠️ 早期阶段（2026-05 创建）·仅内部 NLB（客户端须在同一 VPC）·GR00T 须确认许可证
+- [ROS2 OTA 固件更新](https://github.com/aws-samples/ros2-ota-firmware-updates) —— aws-samples。基于 Greengrass V2 + IoT Jobs 的 ROS2 机群固件 OTA 参考实现 —— 设备代理从 Docker 镜像仓库拉取镜像，失败时自动回滚到上一个正常版本，无法直连互联网的设备经 Greengrass 代理。把上表 IoT Jobs 一行落到可运行代码的资产
 
 ---
 

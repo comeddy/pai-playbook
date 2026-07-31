@@ -1,5 +1,5 @@
 ---
-ko_hash: 026e86a0608e672970051e472e7d8e4021420340
+ko_hash: a1050db229ba2735f2a9652e4b826858b16e126f
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -77,6 +77,7 @@ graph LR
 - [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) —— aws-samples。4 支柱飞轮参考架构。⚠️ 目前仅 NVIDIA OSMO 6.3 on EKS 编排为 Available，Cosmos·Isaac Lab·GR00T·Strands+AgentCore 智能体层均为 Planned
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) —— aws-samples。Bedrock 智能体通过 IoT 控制 Isaac Sim 与实体机器人 SO-ARM101/XGO2/Zumi，借助智能体记忆进行 sim-to-real 迭代学习
 - [Agentic AI Robot — 工业安全监控](https://github.com/aws-samples/sample-agentic-ai-robot) —— aws-samples。AgentCore+IoT+机器人自主巡逻·边缘推理演示，曾在 AWS AI x Industry Week 2025 展示，含韩语 README。⚠️ 明确标注为实验·教育用途 —— 非生产环境
+- [Smart Machines — 工业设备混合 Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) —— aws-samples。智能体完成机群遥测异常检测→根因诊断→建单·调整设备参数的全栈演示（多智能体对话·自然语言场景构建器·KVS 视频→Bedrock 分析·Jetson YOLOWorld+VLM 边缘监控）。⚠️ README 明示为演示 —— 目前仅挖掘机（模拟遥测）完整可用，机械臂为 WIP
 
 <details markdown="1"><summary>🔄 易变数据（组件·区域·价格 —— 2026-07 确认）</summary>
 

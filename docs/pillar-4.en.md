@@ -1,5 +1,5 @@
 ---
-ko_hash: befcb85cce44a3466f2ed6a0a37e2423682d0d9c
+ko_hash: 4f97e5ff7eaaffda03d183cfdb04a4d084ffa3b0
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -80,6 +80,7 @@ graph LR
 
 - Playbook: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 orchestration](pillar-5.md) · [decisions](decisions.md)
 - [VLA Hub — real-time VLA inference hub on AWS](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples. Deploys six OSS VLAs (GR00T N1.6/N1.7 · π0.5 · OpenVLA-7B · SmolVLA-450M · LAP-3B) as independent per-model gRPC endpoints via CDK (ECS on EC2 g5/g6, internal NLB). Probes GPU-available AZs at deploy time; includes a Jetson (Orin/Thor) single-device track with the same container/proto — one codebase covering the System 2 cloud/edge inference paths. Its capability matrix (per-model licenses, adaptation cost, scenario picks) is useful in customer conversations. ⚠️ Early-stage (created 2026-05) · internal NLB only (clients must sit in the same VPC) · GR00T requires a license check
+- [ROS2 OTA firmware updates](https://github.com/aws-samples/ros2-ota-firmware-updates) — aws-samples. Reference implementation of OTA firmware updates for ROS2 fleets with Greengrass V2 + IoT Jobs — a device agent pulls images from a Docker registry, auto-rolls back to the last known-good version on failure, and devices without internet access go through the Greengrass proxy. Shows the IoT Jobs row of the table above as working code
 
 ---
 

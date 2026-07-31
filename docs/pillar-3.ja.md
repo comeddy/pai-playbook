@@ -1,5 +1,5 @@
 ---
-ko_hash: 0fa04bc61945e26ce9f20e78daf8a8e43e817038
+ko_hash: 1c7fcbea88bac643fc982b48aecab329e0660596
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -78,6 +78,7 @@ graph LR
 - [（社内）AWS·NVIDIA ロボティクスリファレンスアーキテクチャ](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 社内ネットワークが必要
 - [Physical AI Scaffolding Kit — Isaac Sim ワークステーション](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples。EC2 上に Isaac Sim/Lab 開発環境を構築
 - [VLA Simulator — 1-Click VLA シミュレーション on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples。CDK ワンコマンドで EC2 GPU（g5/g6/g6e）にデプロイし、LIBERO/RoboCasa/SimplerEnv/Isaac Lab 上で GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1 をデモ·ベンチマーク。結果は MP4→S3+SNS で自動受信、EC2 は自動終了。ポリシーごとの実測成功率·検証日を明記
+- [robotic-cellsim-tools — マルチロボット産業セル・シミュレーションツール](https://github.com/aws-samples/sample-robotic-cellsim-tools) — aws-samples。市販の URDF を入力に Isaac Sim 5.1+ の USDA ステージ（PhysX アーティキュレーション・ROS 2 トピック・リンク別接触テレメトリ）を組み立て・検証・駆動する Rust CLI ツール群。決定的（同入力=同出力）・バージョン付き REST API — エージェント/MCP が組み合わせるシミュレーションプリミティブとして設計
 
 <details markdown="1"><summary>🔄 揮発性データ（バージョン —— 2026-07 確認、一部の年は GitHub で再確認が必要）</summary>
 

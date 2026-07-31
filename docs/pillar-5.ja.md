@@ -1,5 +1,5 @@
 ---
-ko_hash: 026e86a0608e672970051e472e7d8e4021420340
+ko_hash: a1050db229ba2735f2a9652e4b826858b16e126f
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -78,6 +78,7 @@ graph LR
 - [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) — aws-samples。4 ピラー・フライホイールのリファレンスアーキテクチャ。⚠️ 現在 Available なのは NVIDIA OSMO 6.3 on EKS オーケストレーションのみ、Cosmos·Isaac Lab·GR00T·Strands+AgentCore エージェンティックレイヤーは Planned
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples。Bedrock エージェントが Isaac Sim と実機 SO-ARM101/XGO2/Zumi を IoT 経由で制御、エージェントメモリで sim-to-real 反復学習
 - [Agentic AI Robot — 産業安全モニタリング](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples。AgentCore+IoT+ロボットの自律パトロール·エッジ推論デモ、AWS AI x Industry Week 2025 で展示、韓国語 README あり。⚠️ 実験·教育用と明記 — 本番環境向けではありません
+- [Smart Machines — 産業設備ハイブリッド Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples。エージェントがフリートテレメトリの異常検知→原因診断→チケット作成・パラメータ調整まで行うフルスタックデモ（マルチエージェントチャット・自然言語シナリオビルダー・KVS 映像→Bedrock 分析・Jetson YOLOWorld+VLM エッジモニタリング）。⚠️ README 明記のデモ — 現在ショベル（シミュレーションテレメトリ）のみ完動、ロボットアームは WIP
 
 <details markdown="1"><summary>🔄 揮発性データ（コンポーネント・リージョン・価格 — 2026-07 確認）</summary>
 
