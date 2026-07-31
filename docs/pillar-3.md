@@ -74,6 +74,7 @@ graph LR
 - [(사내) AWS·NVIDIA 로보틱스 참조 아키텍처](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 내부망 필요
 - [Physical AI Scaffolding Kit — Isaac Sim 워크스테이션](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. EC2에 Isaac Sim/Lab 개발 환경 구축
 - [VLA Simulator — 1-Click VLA 시뮬레이션 on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples. GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1을 LIBERO/RoboCasa/SimplerEnv/Isaac Lab에서 CDK 원클릭으로 EC2 GPU(g5/g6/g6e) 데모·벤치마킹. 결과 MP4→S3+SNS 자동 수신·EC2 자동 종료, 정책별 실측 성공률·검증 일자 명시
+- [robotic-cellsim-tools — 멀티로봇 산업 셀 시뮬레이션 도구](https://github.com/aws-samples/sample-robotic-cellsim-tools) — aws-samples. 시판 URDF를 입력받아 Isaac Sim 5.1+ USDA 스테이지(PhysX 아티큘레이션·ROS 2 토픽·링크별 접촉 텔레메트리)를 조립·검증·구동하는 Rust CLI 도구군. 결정적(같은 입력=같은 출력)·버전드 REST API — 에이전트/MCP가 조합할 시뮬 프리미티브로 설계
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (버전 — 2026-07 확인, 연도 일부 GitHub 재확인 필요)</summary>
 

@@ -77,6 +77,7 @@ graph LR
 
 - 플레이북: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 오케스트레이션](pillar-5.md) · [decisions](decisions.md)
 - [VLA Hub — 실시간 VLA 추론 허브 on AWS](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples. OSS VLA 6종(GR00T N1.6/N1.7·π0.5·OpenVLA-7B·SmolVLA-450M·LAP-3B)을 모델별 독립 gRPC 엔드포인트로 CDK 배포(ECS on EC2 g5/g6, 내부 NLB). 배포 시점에 GPU 가용 AZ 자동 탐지, 동일 컨테이너·proto의 Jetson(Orin/Thor) 단일 디바이스 트랙 포함 — System 2 클라우드/엣지 추론 경로를 한 코드베이스로. 모델별 라이선스·적응 비용·시나리오 추천을 정리한 capability matrix가 고객 상담용으로 유용. ⚠️ 초기 단계(2026-05 생성)·내부 NLB 전용(클라이언트 동일 VPC 필수)·GR00T는 라이선스 확인 필수
+- [ROS2 OTA 펌웨어 업데이트](https://github.com/aws-samples/ros2-ota-firmware-updates) — aws-samples. Greengrass V2 + IoT Jobs로 ROS2 플릿 펌웨어 OTA 참조 구현 — 디바이스 에이전트가 Docker 레지스트리에서 이미지 풀, 실패 시 이전 정상 버전 자동 롤백, 인터넷 미연결 디바이스는 Greengrass 프록시 경유. 위 표의 IoT Jobs 행을 실코드로 보여주는 자산
 
 ---
 

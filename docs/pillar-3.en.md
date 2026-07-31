@@ -1,5 +1,5 @@
 ---
-ko_hash: 0fa04bc61945e26ce9f20e78daf8a8e43e817038
+ko_hash: 1c7fcbea88bac643fc982b48aecab329e0660596
 ---
 # Pillar 3 — Simulation
 
@@ -77,6 +77,7 @@ graph LR
 - [(internal) AWS·NVIDIA robotics reference architecture](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS internal network required
 - [Physical AI Scaffolding Kit — Isaac Sim workstation](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. Isaac Sim/Lab dev environment on EC2
 - [VLA Simulator — 1-Click VLA simulation on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples. Demo/benchmark GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1 on LIBERO/RoboCasa/SimplerEnv/Isaac Lab via one-command CDK deploy to EC2 GPU (g5/g6/g6e); results as MP4→S3+SNS, auto-terminating EC2. Measured per-policy success rates and validation dates documented
+- [robotic-cellsim-tools — multi-robot industrial cell simulation tools](https://github.com/aws-samples/sample-robotic-cellsim-tools) — aws-samples. Rust CLI toolset that takes off-the-shelf URDFs and assembles, validates, and drives Isaac Sim 5.1+ USDA stages (PhysX articulations, ROS 2 topics, per-link contact telemetry). Deterministic (same inputs = same outputs) with a versioned REST API — designed as simulation primitives for agents/MCP to compose
 
 <details markdown="1"><summary>🔄 Volatile data (versions — checked 2026-07, some years to be re-confirmed on GitHub)</summary>
 
