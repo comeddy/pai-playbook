@@ -22,10 +22,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Register VLA Hub (aws-samples, real-time VLA inference hub — six OSS VLAs as per-model gRPC endpoints via CDK/ECS, with a Jetson edge track) as a pillar-4 related asset with maturity caveats, in all four languages
 - Introduce glossary footnotes across the five pillar pages — 45 term definitions with oEmbed-verified official video links, identical labels in all four languages
 - Add an Executive Brief page (5-question flow with a now/soon/not-yet judgment matrix) and an SA-facing executive conversation guide (pitches, top-10 Q&A, objection handling, industry angles, forbidden claims), in all four languages
+- Add iPhone/iPad home-screen PWA support: web app manifest (standalone, deep-orange theme), 4 robot-design app icons, apple-touch meta tags, and a new favicon
+- Add a floating font-size control (A−/A+, body text 85–130% in 5% steps, persisted via localStorage) and a light/dark toggle on the intro landing pages
+- Attach 37 curl-verified official source shortcuts to every Radar item (papers→arXiv, products→official pages, deprecations→EOL docs) and make the convention part of the scan runbook
+- Add an X (@paiplaybook) social link to the footer
+- Add bug-report and feature-request issue forms, plus a CLAUDE.md rule that findings discovered during work are recorded as GitHub issues
+- Deepen the AWS anchor sections of pillars 1–5 with service-role tables and HyperPod/AgentCore architecture diagrams
+- Routinize the quarterly aws-samples org survey (1st of Jan/Apr/Jul/Oct 03:00 UTC, branch+PR gate — never direct to main) with a standard runbook
+- Expand the CHANGELOG itself to four languages (Chinese and Japanese sections with full version history)
 
 ### Changed
 
 - Replace the sim-to-real footnote video with NVIDIA's official sim-to-real showcase; unify footnote translations across pages, normalize definition dashes, and institutionalize the footnote convention (maintenance page · translation glossary · mkdocs comment)
+- Switch the Radar auto-scan from weekly to daily (02:00 UTC; intake table now re-evaluate-and-append with a ~10-row cap, no commit on zero new items) and the staleness-badge redeploy from weekly to daily (00:00 UTC)
+
+### Fixed
+
+- Harden the CI scripts after a kiro-cli code review (9 findings): surface conflicting header/footer updated dates as errors, isolate unreadable files instead of crashing, recurse into subdirectories, friendlier --hash errors, distinguish missing-frontmatter from missing-key (tests 9→14)
+
+### Removed
+
+- Remove the inactive custom-domain remnant docs/CNAME (pai.zerojin.art) — no DNS record and no Pages setting existed
 
 ## [1.5.0] - 2026-07-24
 
@@ -132,10 +149,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - VLA Hub(aws-samples, 실시간 VLA 추론 허브 — OSS VLA 6종을 모델별 gRPC 엔드포인트로 CDK/ECS 배포, Jetson 엣지 트랙 포함)를 pillar-4 관련 자산으로 등재, 성숙도 캐비앗 병기, 4개 언어 반영
 - 필러 5종 페이지에 용어 각주 도입 — 용어 정의 45개, oEmbed 검증 공식 영상 링크, 4개 언어 동일 라벨
 - 경영진 브리핑 페이지(5가지 질문 흐름 + 지금/곧/아직 판단 매트릭스)와 SA용 임원 대화 가이드(피치·Top 10 Q&A·반박 대응·산업 앵글·금지 표현) 추가, 4개 언어 반영
+- iPhone/iPad 홈 화면 PWA 지원: 웹 앱 매니페스트(standalone·deep orange 테마), 로봇 디자인 앱 아이콘 4종, apple-touch 메타, 파비콘 교체
+- 글자 크기 조절 플로팅 버튼(A−/A+, 본문 85~130% 5% 단계, localStorage 유지)과 intro 랜딩 라이트/다크 토글 추가
+- Radar 전 항목에 1차 확인용 공식 출처 바로가기 37개 부착(논문→arXiv, 제품→공식 페이지, 폐기→EOL 문서 — 전수 curl 200 검증), 스캔 런북에 관례화
+- 푸터에 X(@paiplaybook) 소셜 링크 추가
+- 버그 제보·기능 개선 이슈 폼 2종 추가 + 작업 중 발견 사항을 GitHub 이슈로 기록하는 관례를 CLAUDE.md에 명문화
+- pillar 1~5의 AWS 앵커 섹션 기술 깊이 보강 — 서비스 역할 표와 HyperPod·AgentCore 아키텍처 다이어그램
+- aws-samples 조직 분기 전수 조사 루틴화(1·4·7·10월 1일 03:00 UTC, 브랜치+PR 게이트 — main 직푸시 금지) + 표준 런북
+- CHANGELOG 자체를 4개 언어로 확장(중국어·일본어 섹션, 전 버전 이력 포함)
 
 ### Changed
 
 - sim-to-real 각주 영상을 NVIDIA 공식 sim-to-real 쇼케이스로 교체, 페이지 간 각주 번역 통일·정의 대시 정규화, 각주 관례 제도화(maintenance 페이지·번역 용어집·mkdocs 주석)
+- Radar 자동 스캔을 주간→일간(매일 02:00 UTC — 유입 표는 재평가+추가 방식·~10행 상한·신규 0건 시 무커밋)으로, staleness 배지 재배포를 주간→일간(매일 00:00 UTC)으로 전환
+
+### Fixed
+
+- kiro-cli 코드 리뷰(9건) 반영으로 CI 스크립트 견고성 강화: 헤더/푸터 updated 불일치를 에러로 표면화, 손상 파일 격리, 하위 디렉터리 재귀 검사, --hash 친화적 에러, frontmatter 부재/키 누락 구분 (테스트 9→14)
+
+### Removed
+
+- 미활성 커스텀 도메인 잔재 docs/CNAME(pai.zerojin.art) 제거 — DNS 레코드·Pages 설정 모두 부재였음
 
 ## [1.5.0] - 2026-07-24
 
@@ -242,10 +276,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - 将 VLA Hub（aws-samples，实时 VLA 推理中心 — 用 CDK/ECS 把 6 个 OSS VLA 部署为按模型的 gRPC 端点，含 Jetson 边缘轨道）登记为 pillar-4 相关资产，标注成熟度注意事项，四种语言同步
 - 在五个支柱页面引入术语脚注 — 45 条术语定义，附经 oEmbed 验证的官方视频链接，四种语言标签一致
 - 新增高管简报页面（5 问题流程 + 现在/即将/尚未 判断矩阵）与面向 SA 的高管对话指南（电梯演讲·Top 10 问答·异议应对·行业切入点·禁用表述），覆盖 4 种语言
+- 新增 iPhone/iPad 主屏幕 PWA 支持：Web 应用清单（standalone·深橙主题）、4 款机器人设计应用图标、apple-touch 元标签及新网站图标
+- 新增浮动字号控制（A−/A+，正文 85~130% 按 5% 步进，localStorage 保持）及 intro 落地页明暗模式切换
+- 为 Radar 全部条目附加 37 个经 curl 200 全量验证的官方出处快捷链接（论文→arXiv、产品→官方页面、废弃→EOL 文档），并写入扫描运行手册成为惯例
+- 页脚新增 X（@paiplaybook）社交链接
+- 新增缺陷报告·功能改进两种 issue 表单，并在 CLAUDE.md 明文化“工作中发现的事项记录为 GitHub issue”的惯例
+- 加深 pillar 1~5 的 AWS 锚点章节技术深度 —— 服务职责表与 HyperPod·AgentCore 架构图
+- 将 aws-samples 组织季度全面调查例行化（1·4·7·10 月 1 日 03:00 UTC，分支+PR 关卡 —— 禁止直推 main）并配标准运行手册
+- CHANGELOG 本身扩展为 4 种语言（新增中文·日文章节，含全部版本历史）
 
 ### Changed
 
 - 将 sim-to-real 脚注视频更换为 NVIDIA 官方 sim-to-real 展示；统一跨页脚注翻译并规范定义破折号，将脚注惯例制度化（maintenance 页面·翻译术语表·mkdocs 注释）
+- Radar 自动扫描由每周改为每日（02:00 UTC —— 流入表改为重估+追加方式·约 10 行上限·无新增则不提交），staleness 徽章重新部署也由每周改为每日（00:00 UTC）
+
+### Fixed
+
+- 依据 kiro-cli 代码评审（9 项）加固 CI 脚本：将页眉/页脚 updated 不一致显式报错、隔离损坏文件、递归检查子目录、--hash 友好报错、区分缺 frontmatter 与缺键（测试 9→14）
+
+### Removed
+
+- 移除未启用的自定义域名残留 docs/CNAME（pai.zerojin.art）—— DNS 记录与 Pages 设置均不存在
 
 ## [1.5.0] - 2026-07-24
 
@@ -352,10 +403,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - VLA Hub（aws-samples、リアルタイム VLA 推論ハブ — OSS VLA 6 種をモデルごとの gRPC エンドポイントとして CDK/ECS でデプロイ、Jetson エッジトラックを含む）を pillar-4 の関連資産として登録、成熟度の注意書きを明記、4 言語に反映
 - 5 つのピラーページに用語脚注を導入 — 用語定義 45 件、oEmbed 検証済み公式動画リンク、4 言語で同一ラベル
 - 経営層ブリーフィングページ（5 つの質問フロー + 今/まもなく/まだ 判断マトリクス）と SA 向け経営層対話ガイド（ピッチ・Top 10 Q&A・反論対応・業界別アングル・禁止表現）を追加、4 言語対応
+- iPhone/iPad ホーム画面 PWA 対応：Web アプリマニフェスト（standalone・ディープオレンジテーマ）、ロボットデザインのアプリアイコン 4 種、apple-touch メタ、ファビコン刷新
+- フローティング文字サイズコントロール（A−/A+、本文 85~130% を 5% 刻み、localStorage 保持）と intro ランディングのライト/ダーク切替を追加
+- Radar 全項目に一次確認用の公式出典ショートカット 37 件を付与（論文→arXiv、製品→公式ページ、廃止→EOL ドキュメント — 全数 curl 200 検証）、スキャン運用手順書に慣例化
+- フッターに X（@paiplaybook）ソーシャルリンクを追加
+- バグ報告・機能改善の issue フォーム 2 種を追加し、作業中の発見事項を GitHub issue に記録する慣例を CLAUDE.md に明文化
+- pillar 1~5 の AWS アンカー節の技術深度を強化 — サービス役割表と HyperPod・AgentCore アーキテクチャ図
+- aws-samples 組織の四半期全数調査をルーチン化（1・4・7・10 月 1 日 03:00 UTC、ブランチ+PR ゲート — main 直接プッシュ禁止）+ 標準運用手順書
+- CHANGELOG 自体を 4 言語に拡張（中国語・日本語セクション、全バージョン履歴込み）
 
 ### Changed
 
 - sim-to-real 脚注動画を NVIDIA 公式 sim-to-real ショーケースに差し替え、ページ間の脚注翻訳を統一・定義ダッシュを正規化、脚注慣例を制度化（maintenance ページ・翻訳用語集・mkdocs コメント）
+- Radar 自動スキャンを週次→日次（毎日 02:00 UTC — 流入表は再評価+追加方式・約 10 行上限・新規 0 件ならコミットなし）へ、staleness バッジ再デプロイも週次→日次（毎日 00:00 UTC）へ切替
+
+### Fixed
+
+- kiro-cli コードレビュー（9 件）を反映し CI スクリプトを堅牢化：ヘッダー/フッターの updated 不一致をエラーとして表面化、破損ファイルの隔離、サブディレクトリ再帰検査、--hash の親切なエラー、frontmatter 欠如とキー欠如の区別（テスト 9→14）
+
+### Removed
+
+- 未有効のカスタムドメイン残骸 docs/CNAME（pai.zerojin.art）を削除 — DNS レコード・Pages 設定とも不在だった
 
 ## [1.5.0] - 2026-07-24
 
