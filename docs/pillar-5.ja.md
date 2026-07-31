@@ -1,5 +1,5 @@
 ---
-ko_hash: a1050db229ba2735f2a9652e4b826858b16e126f
+ko_hash: 988bb82fc6f249723788d56590c00fbcae8486ab
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -90,10 +90,29 @@ graph LR
 | Payments | 🟡 Preview | ❌ |
 | Agent Registry | — | ❌（東京 ✅） |
 
-**価格**: ハーネス無料、リソースのみ。Runtime/Browser/Code Interpreter = $0.0895/vCPU-hr + $0.00945/GB-hr（秒単位）。Gateway $0.005/1,000 呼び出し。Memory 短期 $0.25/1,000 イベント、長期保存 $0.75/1,000 レコード·月。
-**リージョン**: ソウル(ap-northeast-2) 全コア+Policy+Evaluations ✅。東京(ap-northeast-1) + Agent Registry ✅。（AWS 公式リージョン表 `[1]`、2026-07 に直接確認）
-**Strands**: Python 1.0(2026-05-21)、TS 1.0(2026-04-30)、~16.7M ダウンロード/月(2026-06, `[3]`)。
-**Nova Act**: 「90%+ タスク信頼性」 — Amazon 発表数値、測定条件は非公開(2025-12, `[3]`)。条件なしの断定的な引用は禁止。
+**価格** — ハーネス（制御部）は無料、使用したリソースのみ課金:
+
+| 項目 | 料金 |
+|---|---|
+| Runtime · Browser · Code Interpreter | $0.0895/vCPU-時間 + $0.00945/GB-時間（秒単位課金） |
+| Gateway | 呼び出し 1,000 件あたり $0.005 |
+| Memory — 短期 | イベント 1,000 件あたり $0.25 |
+| Memory — 長期保存 | レコード 1,000 件あたり月 $0.75 |
+
+**リージョン**（AWS 公式リージョン表 `[1]`、2026-07 に直接確認）:
+
+| リージョン | サポート範囲 |
+|---|---|
+| **ソウル** (ap-northeast-2) | 全コアコンポーネント + Policy + Evaluations ✅ |
+| 東京 (ap-northeast-1) | コアコンポーネント + **Agent Registry** ✅（ソウル未対応分） |
+
+**関連ツール指標**:
+
+| 項目 | 値 | 備考 |
+|---|---|---|
+| Strands Python 1.0 | 2026-05-21 | ダウンロード ~16.7M/月（2026-06, `[3]`） |
+| Strands TypeScript 1.0 | 2026-04-30 | |
+| Nova Act | 「90%+ タスク信頼性」 | Amazon 発表数値、測定条件は非公開（2025-12, `[3]`）— **条件なしの断定的な引用は禁止** |
 </details>
 
 ---

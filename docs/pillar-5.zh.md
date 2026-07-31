@@ -1,5 +1,5 @@
 ---
-ko_hash: a1050db229ba2735f2a9652e4b826858b16e126f
+ko_hash: 988bb82fc6f249723788d56590c00fbcae8486ab
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -89,10 +89,29 @@ graph LR
 | Payments | 🟡 Preview | ❌ |
 | Agent Registry | — | ❌（东京 ✅） |
 
-**价格**: 框架免费，仅按资源。Runtime/Browser/Code Interpreter = $0.0895/vCPU-hr + $0.00945/GB-hr（按秒）。Gateway $0.005/1,000 次调用。Memory 短期 $0.25/1,000 事件，长期存储 $0.75/1,000 记录·月。
-**区域**: 首尔(ap-northeast-2) 全部核心+Policy+Evaluations ✅。东京(ap-northeast-1) + Agent Registry ✅。（AWS 官方区域表 `[1]`，2026-07 直接确认）
-**Strands**: Python 1.0(2026-05-21)、TS 1.0(2026-04-30)、~16.7M 下载/月(2026-06, `[3]`)。
-**Nova Act**: "90%+ 任务可靠性" —— Amazon 公布数值，测量条件未公开(2025-12, `[3]`)。禁止无条件断言引用。
+**价格** —— 框架（控制面）免费，只按实际使用的资源计费:
+
+| 项目 | 费率 |
+|---|---|
+| Runtime · Browser · Code Interpreter | $0.0895/vCPU-小时 + $0.00945/GB-小时（按秒计费） |
+| Gateway | 每 1,000 次调用 $0.005 |
+| Memory —— 短期 | 每 1,000 事件 $0.25 |
+| Memory —— 长期存储 | 每 1,000 记录每月 $0.75 |
+
+**区域**（AWS 官方区域表 `[1]`，2026-07 直接确认）:
+
+| 区域 | 覆盖范围 |
+|---|---|
+| **首尔** (ap-northeast-2) | 全部核心组件 + Policy + Evaluations ✅ |
+| 东京 (ap-northeast-1) | 核心组件 + **Agent Registry** ✅（首尔尚未支持） |
+
+**配套工具指标**:
+
+| 项目 | 值 | 备注 |
+|---|---|---|
+| Strands Python 1.0 | 2026-05-21 | 下载约 16.7M/月（2026-06, `[3]`） |
+| Strands TypeScript 1.0 | 2026-04-30 | |
+| Nova Act | "90%+ 任务可靠性" | Amazon 公布数值，测量条件未公开（2025-12, `[3]`）—— **禁止无条件断言引用** |
 </details>
 
 ---

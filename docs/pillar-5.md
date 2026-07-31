@@ -87,10 +87,29 @@ graph LR
 | Payments | 🟡 Preview | ❌ |
 | Agent Registry | — | ❌ (도쿄 ✅) |
 
-**가격**: 하네스 무료, 리소스만. Runtime/Browser/Code Interpreter = $0.0895/vCPU-hr + $0.00945/GB-hr(초당). Gateway $0.005/1,000 호출. Memory 단기 $0.25/1,000 이벤트, 장기저장 $0.75/1,000 레코드·월.
-**리전**: 서울(ap-northeast-2) 전 코어+Policy+Evaluations ✅. 도쿄(ap-northeast-1) + Agent Registry ✅. (AWS 공식 리전 표 `[1]`, 2026-07 직접 확인)
-**Strands**: Python 1.0(2026-05-21), TS 1.0(2026-04-30), ~16.7M 다운로드/월(2026-06, `[3]`).
-**Nova Act**: "90%+ 태스크 신뢰성" — Amazon 발표 수치, 측정 조건 미공개(2025-12, `[3]`). 조건 없이 단정 인용 금지.
+**가격** — 하네스(제어부)는 무료, 사용한 리소스만 과금:
+
+| 항목 | 요금 |
+|---|---|
+| Runtime · Browser · Code Interpreter | $0.0895/vCPU-시간 + $0.00945/GB-시간 (초 단위 과금) |
+| Gateway | 호출 1,000건당 $0.005 |
+| Memory — 단기 | 이벤트 1,000건당 $0.25 |
+| Memory — 장기 저장 | 레코드 1,000건당 월 $0.75 |
+
+**리전** (AWS 공식 리전 표 `[1]`, 2026-07 직접 확인):
+
+| 리전 | 지원 범위 |
+|---|---|
+| **서울** (ap-northeast-2) | 전 코어 컴포넌트 + Policy + Evaluations ✅ |
+| 도쿄 (ap-northeast-1) | 코어 컴포넌트 + **Agent Registry** ✅ (서울 미지원분) |
+
+**동반 도구 지표**:
+
+| 항목 | 값 | 비고 |
+|---|---|---|
+| Strands Python 1.0 | 2026-05-21 | 다운로드 ~16.7M/월 (2026-06, `[3]`) |
+| Strands TypeScript 1.0 | 2026-04-30 | |
+| Nova Act | "90%+ 태스크 신뢰성" | Amazon 발표 수치, 측정 조건 미공개 (2025-12, `[3]`) — **조건 없이 단정 인용 금지** |
 </details>
 
 ---

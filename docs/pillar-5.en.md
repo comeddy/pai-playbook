@@ -1,5 +1,5 @@
 ---
-ko_hash: a1050db229ba2735f2a9652e4b826858b16e126f
+ko_hash: 988bb82fc6f249723788d56590c00fbcae8486ab
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -89,10 +89,29 @@ graph LR
 | Payments | 🟡 Preview | ❌ |
 | Agent Registry | — | ❌ (Tokyo ✅) |
 
-**Pricing**: harness free, resources only. Runtime/Browser/Code Interpreter = $0.0895/vCPU-hr + $0.00945/GB-hr (per second). Gateway $0.005/1,000 calls. Memory short-term $0.25/1,000 events, long-term storage $0.75/1,000 records·month.
-**Regions**: Seoul (ap-northeast-2) all core + Policy + Evaluations ✅. Tokyo (ap-northeast-1) + Agent Registry ✅. (AWS official region table `[1]`, checked directly 2026-07)
-**Strands**: Python 1.0 (2026-05-21), TS 1.0 (2026-04-30), ~16.7M downloads/month (2026-06, `[3]`).
-**Nova Act**: "90%+ task reliability" — Amazon-announced number, measurement conditions undisclosed (2025-12, `[3]`). Do not cite as fact without conditions.
+**Pricing** — the harness (control plane) is free; you pay only for resources used:
+
+| Item | Rate |
+|---|---|
+| Runtime · Browser · Code Interpreter | $0.0895/vCPU-hour + $0.00945/GB-hour (billed per second) |
+| Gateway | $0.005 per 1,000 calls |
+| Memory — short-term | $0.25 per 1,000 events |
+| Memory — long-term storage | $0.75 per 1,000 records per month |
+
+**Regions** (AWS official region table `[1]`, checked directly 2026-07):
+
+| Region | Coverage |
+|---|---|
+| **Seoul** (ap-northeast-2) | All core components + Policy + Evaluations ✅ |
+| Tokyo (ap-northeast-1) | Core components + **Agent Registry** ✅ (not yet in Seoul) |
+
+**Companion-tool indicators**:
+
+| Item | Value | Note |
+|---|---|---|
+| Strands Python 1.0 | 2026-05-21 | ~16.7M downloads/month (2026-06, `[3]`) |
+| Strands TypeScript 1.0 | 2026-04-30 | |
+| Nova Act | "90%+ task reliability" | Amazon-announced figure, measurement conditions undisclosed (2025-12, `[3]`) — **do not cite as fact without conditions** |
 </details>
 
 ---
