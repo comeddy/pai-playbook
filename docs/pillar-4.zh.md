@@ -1,5 +1,5 @@
 ---
-ko_hash: 02cb4e57c1b43a7a3d7456496f0d4e1955bb8f9b
+ko_hash: befcb85cce44a3466f2ed6a0a37e2423682d0d9c
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -76,7 +76,10 @@ graph LR
 
 **➡️ 后续行动**: **画出 "Jetson Thor（板载控制）+ Greengrass V2(OTA/管理) + ONNX→TensorRT" 边缘参考架构**，并主动告知"Edge Manager 已消失"以更正客户的错误预期。询问实时要求的 Hz 来确定边缘/云边界。
 
-**🔗 相关资产**: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 编排](pillar-5.md) · [decisions](decisions.md)
+**🔗 相关资产**:
+
+- Playbook: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 编排](pillar-5.md) · [decisions](decisions.md)
+- [VLA Hub — AWS 上的实时 VLA 推理中心](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples。用 CDK 将 6 个 OSS VLA（GR00T N1.6/N1.7·π0.5·OpenVLA-7B·SmolVLA-450M·LAP-3B）部署为按模型独立的 gRPC 端点（ECS on EC2 g5/g6，内部 NLB）。部署时自动探测有 GPU 容量的 AZ；包含使用相同容器·proto 的 Jetson（Orin/Thor）单设备轨道 — 一套代码覆盖 System 2 云端/边缘推理路径。其 capability matrix（按模型的许可证·适配成本·场景推荐）在客户沟通中很有用。⚠️ 早期阶段（2026-05 创建）·仅内部 NLB（客户端须在同一 VPC）·GR00T 须确认许可证
 
 ---
 

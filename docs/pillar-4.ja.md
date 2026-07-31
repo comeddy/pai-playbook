@@ -1,5 +1,5 @@
 ---
-ko_hash: 02cb4e57c1b43a7a3d7456496f0d4e1955bb8f9b
+ko_hash: befcb85cce44a3466f2ed6a0a37e2423682d0d9c
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -77,7 +77,10 @@ graph LR
 
 **➡️ 次のアクション**: **「Jetson Thor（オンボード制御）+ Greengrass V2(OTA/管理) + ONNX→TensorRT」エッジリファレンスアーキテクチャを描き**、「Edge Manager は無くなった」という点を先手で伝えて顧客の誤った期待を訂正します。リアルタイム要求の Hz を尋ねてエッジ/クラウドの境界を確定します。
 
-**🔗 関連資産**: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 オーケストレーション](pillar-5.md) · [decisions](decisions.md)
+**🔗 関連資産**:
+
+- プレイブック: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 オーケストレーション](pillar-5.md) · [decisions](decisions.md)
+- [VLA Hub — AWS 上のリアルタイム VLA 推論ハブ](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples。OSS VLA 6 種（GR00T N1.6/N1.7・π0.5・OpenVLA-7B・SmolVLA-450M・LAP-3B）をモデルごとの独立 gRPC エンドポイントとして CDK でデプロイ（ECS on EC2 g5/g6、内部 NLB）。デプロイ時に GPU 容量のある AZ を自動検出。同一コンテナ・proto の Jetson（Orin/Thor）単一デバイストラックを含み、System 2 のクラウド/エッジ推論経路を 1 つのコードベースでカバー。モデル別ライセンス・適応コスト・シナリオ推奨をまとめた capability matrix は顧客対話に有用。⚠️ 初期段階（2026-05 作成）・内部 NLB のみ（クライアントは同一 VPC 必須）・GR00T はライセンス確認必須
 
 ---
 

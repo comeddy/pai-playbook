@@ -1,5 +1,5 @@
 ---
-ko_hash: 02cb4e57c1b43a7a3d7456496f0d4e1955bb8f9b
+ko_hash: befcb85cce44a3466f2ed6a0a37e2423682d0d9c
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -76,7 +76,10 @@ graph LR
 
 **➡️ Next action**: **draw the "Jetson Thor (on-board control) + Greengrass V2 (OTA/management) + ONNX→TensorRT" edge reference architecture**, and proactively inform the customer that "Edge Manager is gone" to correct wrong expectations. Ask the real-time Hz requirement to fix the edge/cloud boundary.
 
-**🔗 Related assets**: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 orchestration](pillar-5.md) · [decisions](decisions.md)
+**🔗 Related assets**:
+
+- Playbook: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 orchestration](pillar-5.md) · [decisions](decisions.md)
+- [VLA Hub — real-time VLA inference hub on AWS](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples. Deploys six OSS VLAs (GR00T N1.6/N1.7 · π0.5 · OpenVLA-7B · SmolVLA-450M · LAP-3B) as independent per-model gRPC endpoints via CDK (ECS on EC2 g5/g6, internal NLB). Probes GPU-available AZs at deploy time; includes a Jetson (Orin/Thor) single-device track with the same container/proto — one codebase covering the System 2 cloud/edge inference paths. Its capability matrix (per-model licenses, adaptation cost, scenario picks) is useful in customer conversations. ⚠️ Early-stage (created 2026-05) · internal NLB only (clients must sit in the same VPC) · GR00T requires a license check
 
 ---
 
