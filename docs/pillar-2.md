@@ -167,6 +167,7 @@ graph TD
 
 - 플레이북: [pillar-3 시뮬레이션(Isaac Lab)](pillar-3.md) · [decisions: GPU 확보](decisions.md)
 - [Physical AI E2E 워크숍](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — 한국어. GR00T VLA 파인튜닝 + SageMaker 트랙
+- [Physical AI 101 — 처음 시작하는 사람을 위한 개념 지도](https://d2gup9k4vdzl3b.cloudfront.net/pai101/index.html) — 입문자용 단일 페이지: 큰 그림→연구 지형→VLA 파인튜닝→모델 내부→로봇 기초 개념→AWS의 역할, AWS PAI 참조 아키텍처·용어집 포함. 페이지 내 한국어/영어 전환, 말미에 이 플레이북을 다음 단계로 안내
 - [Physical AI Scaffolding Kit](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. HyperPod Slurm 클러스터 + π0·GR00T·Isaac Lab Newton RL 학습 샘플, 다국어 README(ko·ja·en). AWS Japan Physical AI 개발 지원 프로그램 공식 자산
 - [Embodied AI Platform](https://github.com/aws-samples/sample-embodied-ai-platform) — aws-samples. GR00T VLA 텔레옵·모방학습 파인튜닝 on AWS Batch + DCV 워크스테이션 → SO-ARM100/101 실기 추론. ⚠️ 현재 GR00T 학습 컴포넌트 1개만 Available, 나머지 로드맵
 

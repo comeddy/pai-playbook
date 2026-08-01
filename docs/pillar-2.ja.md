@@ -1,5 +1,5 @@
 ---
-ko_hash: f8a74b6a911410befa7c1ebeb2dc50e25145b92a
+ko_hash: ae585bf934217b7f1ac75c501ad73e8f4a91770c
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -170,6 +170,7 @@ graph TD
 
 - プレイブック: [pillar-3 シミュレーション(Isaac Lab)](pillar-3.md) · [decisions: GPU 確保](decisions.md)
 - [Physical AI E2E ワークショップ](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — 韓国語。GR00T VLA ファインチューニング + SageMaker トラック
+- [Physical AI 101 — はじめての人のための概念マップ](https://d2gup9k4vdzl3b.cloudfront.net/pai101/index.html) — 入門者向け単一ページ：全体像→研究の地形→VLA ファインチューニング→モデル内部→ロボット基礎概念→AWS の役割、AWS PAI リファレンスアーキテクチャ・用語集付き。ページ内で韓国語/英語切替、締めくくりに本プレイブックを次のステップとして案内
 - [Physical AI Scaffolding Kit](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples。HyperPod Slurm クラスター + π0·GR00T·Isaac Lab Newton RL 学習サンプル、多言語 README（韓・日・英）。AWS Japan Physical AI 開発支援プログラム公式アセット
 - [Embodied AI Platform](https://github.com/aws-samples/sample-embodied-ai-platform) — aws-samples。GR00T VLA テレオペレーション·模倣学習ファインチューニング on AWS Batch + DCV ワークステーション → SO-ARM100/101 実機推論。⚠️ 現在 Available なのは GR00T 学習コンポーネント 1 つのみ、残りはロードマップ
 

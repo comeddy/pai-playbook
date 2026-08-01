@@ -1,5 +1,5 @@
 ---
-ko_hash: f8a74b6a911410befa7c1ebeb2dc50e25145b92a
+ko_hash: ae585bf934217b7f1ac75c501ad73e8f4a91770c
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -169,6 +169,7 @@ graph TD
 
 - Playbook: [pillar-3 Simulation (Isaac Lab)](pillar-3.md) · [decisions: securing GPUs](decisions.md)
 - [Physical AI E2E workshop](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — Korean. GR00T VLA fine-tuning + SageMaker track
+- [Physical AI 101 — a concept map for getting started](https://d2gup9k4vdzl3b.cloudfront.net/pai101/index.html) — single-page primer: big picture → research landscape → VLA fine-tuning → model internals → robot fundamentals → the role of AWS, with AWS PAI reference architectures and a glossary. Korean/English toggle built in; points to this playbook as the next step
 - [Physical AI Scaffolding Kit](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. HyperPod Slurm cluster + π0·GR00T·Isaac Lab Newton RL training samples, multilingual README (ko·ja·en). Official asset of the AWS Japan Physical AI Development Support Program
 - [Embodied AI Platform](https://github.com/aws-samples/sample-embodied-ai-platform) — aws-samples. GR00T VLA teleoperation/imitation-learning fine-tuning on AWS Batch + DCV workstation → on-robot inference on SO-ARM100/101. ⚠️ Only the GR00T training component is Available; the rest is roadmap
 
