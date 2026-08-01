@@ -1,5 +1,5 @@
 ---
-ko_hash: 21be7119020c5e687a3ef6fa2dff17a68b67dc3c
+ko_hash: 40bed44cf7b358d0590ff1997c75d6ff24d959fd
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | 首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-07-31 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-08-01 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -69,7 +69,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列端侧 4B 世界模型+策略） | 🟡 Preview | NVIDIA 官方发布 `[4]`（2026-07-21，HuggingFace/developer 博客）—— 在 Jetson Thor 上端侧推理，实现 15Hz 实时机器人策略控制（自报基准，无独立验证），Cosmos 3 Edge Policy（DROID）支持 pick-and-place 微调。与既有的"Cosmos 3 作为 sim-to-real 学习源"条目（🖥️ 部分）不同，本条仅涉及边缘部署方向 —— 与 AMD Ryzen AI Embedded X100（本表）并行观察为竞争方案。目前实际生产机器人部署案例为 0 | 独立基准测试 + 实际生产机器人部署案例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute 分拆，Large Behavior Models 人形机器人） | 🟡 试点 | 公司官方发布（2026-07-15）`[4]` —— 2026-01 从 TRI 分拆（创始人 Russ Tedrake，前 TRI SVP），Toyota·Deviation Capital 联合领投 + NVIDIA·Boeing·Samsung Ventures 等参与的 3 亿美元种子轮（估值 11 亿美元）。人形上半身+轮式移动底座，基于 Diffusion Policy·Large Behavior Models 的策略，宣称自 2026-02 起在北美 Toyota 工厂实现试点→"量产转换"，无第三方验证 | 第三方审计·独立验证 + 部署规模扩大案例 |
 | **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)**（支持广泛末端执行器的 embodied foundation model） | 🟡 Preview | Generalist AI 官方博客发布（2026-07）`[4]` —— 基于约 9,000 种末端执行器（五指手至专用工具）、50 万+小时真实交互数据预训练，宣称自报成功率 99%·速度提升 3 倍（无独立复现）。Generalist AI 已在 [pillar-1](pillar-1.md) 中作为 Cosmos WFM 数据生成使用方被提及，但 GEN-1 模型本身属于独立的新条目 | 独立基准复现 + 实际部署案例 |
-| **[Generative Bionics GENE.01](https://gbionics.ai)**（全身多模态智能皮肤人形机器人） | 🟡 Preview | 意大利初创公司官方发布（2026-07-20）`[4]` —— 全身智能皮肤可感知触觉·接近·力·温度，配合"physics-native AI"（自称基于经同行评审的 Nature Machine Intelligence 研究），宣称是首个在主要 Physical AI 软件生态系统中发布开源数字孪生的人形机器人。仅发布了与 Fincantieri 造船厂的合作，尚无实际运行或独立验证 | 公开实际运行案例 + 独立验证（传感器性能·安全性） |
+| **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA 基础模型，10 万+小时真实世界 UMI 轨迹） | 🔵 Research | 小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）·RoboDojo（20.07，此前为 13.07）·VLABench·RoboCasa 四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。"代码·权重即将发布"，但 GitHub 仓库目前仅有 README，实际发布尚未确认（截至 2026-08-01） | 确认代码·权重实际发布 + 独立基准复现 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 

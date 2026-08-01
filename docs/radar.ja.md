@@ -1,5 +1,5 @@
 ---
-ko_hash: 21be7119020c5e687a3ef6fa2dff17a68b67dc3c
+ko_hash: 40bed44cf7b358d0590ff1997c75d6ff24d959fd
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,7 +55,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ソウルリージョン未提供（東京 Agent Registry ✅） | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-07-31 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-08-01 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
@@ -70,7 +70,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列のオンデバイス 4B ワールドモデル+ポリシー） | 🟡 Preview | NVIDIA 公式発表 `[4]`（2026-07-21、HuggingFace/developer ブログ）—— Jetson Thor 上のオンデバイス推論で 15Hz のリアルタイムロボットポリシー制御（自己申告ベンチマーク、独立検証なし）、Cosmos 3 Edge Policy（DROID）で pick-and-place のファインチューニングに対応。既存の「Cosmos 3 を sim-to-real 学習源として」項目（🖥️ セクション）とは別に、エッジ展開の軸のみを扱う —— AMD Ryzen AI Embedded X100（本表）と並行して競合構図を観察。現時点で実際の量産ロボット展開事例は 0 | 独立ベンチマーク + 実際の量産ロボット展開事例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute からのスピンアウト、Large Behavior Models ヒューマノイド） | 🟡 パイロット | 公式発表（2026-07-15）`[4]` —— 2026-01 に TRI からスピンアウト（創業者 Russ Tedrake、元 TRI SVP）、Toyota・Deviation Capital 共同リード + NVIDIA・Boeing・Samsung Ventures などが参加したシード 3 億ドル（バリュエーション 11 億ドル）。ヒューマノイド上半身+ホイール式移動ベース、Diffusion Policy・Large Behavior Models ベースの方策で、北米 Toyota 工場にて 2026-02 からパイロット→「本番転換」を自社主張、第三者検証なし | 第三者監査・独立検証 + 展開規模拡大の事例 |
 | **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)**（幅広いエンドエフェクタに対応する embodied foundation model） | 🟡 Preview | Generalist AI 公式ブログ発表（2026-07）`[4]` —— 5 指ハンドから専用ツールまで約 9,000 種のエンドエフェクタ、実測データ 50 万+時間で事前学習、自己申告で成功率 99%・速度 3 倍を主張（独立再現なし）。Generalist AI は [pillar-1](pillar-1.md) で Cosmos WFM のデータ生成活用企業として既に言及されているが、GEN-1 モデル自体は別の新規事案 | 独立ベンチマーク再現 + 実展開事例 |
-| **[Generative Bionics GENE.01](https://gbionics.ai)**（フルボディ・マルチモーダルスマートスキンのヒューマノイド） | 🟡 Preview | イタリアのスタートアップによる公式発表（2026-07-20）`[4]` —— 触覚・近接・力・温度を検知するフルボディスマートスキンと「physics-native AI」（Nature Machine Intelligence の peer-review 済み研究に基づくと自社主張）、主要な Physical AI ソフトウェアエコシステムにオープンソースのデジタルツインを公開した初のヒューマノイドと主張。Fincantieri 造船所での適用協業の発表のみで、実稼働・独立検証なし | 実稼働事例の公開 + 独立検証（センサー性能・安全性） |
+| **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA ファウンデーションモデル、10 万時間超の実世界 UMI 軌跡） | 🔵 Research | Xiaomi 公式 arXiv 発表（2607.15330、2026-07-16）`[4]` —— Qwen3-VL ベースの MoT（VLM+DiT）、RoboCasa365（57.4%、従来 SOTA 46.6% から向上）・RoboDojo（20.07、従来 13.07 から向上）・VLABench・RoboCasa の 4 ベンチマークで自己申告 SOTA（RLDX-1・GR00T N1.6 などと比較、独立再現なし）。「コード・重みは公開予定」とのことだが、GitHub リポジトリは README のみで実際の公開は未確認（2026-08-01 時点） | コード・重みの実公開確認 + 独立ベンチマーク再現 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 

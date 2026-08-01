@@ -51,7 +51,7 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음_
 | **에이전트 물리안전 표준** ([RoboGuard](https://arxiv.org/abs/2503.07885) 등) | 🔵 Research | ISO는 물리만, LLM 의미 위험 표준 부재 | 표준화 진전 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/) (서울)** | 🟡 Preview/미제공 | 서울 리전 미제공 (도쿄 Agent Registry ✅) | 서울 리전 확장 |
 
-## 🆕 최신 스캔 유입 (2026-07-31 · 1차 검증 완료 2026-07-21)
+## 🆕 최신 스캔 유입 (2026-08-01 · 1차 검증 완료 2026-07-21)
 
 <!-- 자동 스캔(arXiv/웹) 유입분. 2026-07-21 1차 출처 검증 완료(검증 에이전트 4식, 공식 발표·arXiv 원문 대조) — 승격 0건, 정정 6건. THE FILTER 통과 전까지 고객 제안 사용 금지. 정기 갱신은 scripts/radar_scan.md 참고. -->
 
@@ -66,7 +66,7 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음_
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)** (Cosmos 3 계열 온디바이스 4B 월드모델+정책) | 🟡 Preview | NVIDIA 공식 발표 `[4]`(2026-07-21, HuggingFace/developer 블로그) — Jetson Thor 온디바이스 추론으로 15Hz 실시간 로봇 정책 제어(자체 벤치, 독립 검증 없음), Cosmos 3 Edge Policy(DROID)로 pick-and-place 파인튜닝 지원. 기존 "Cosmos 3 as sim-to-real 학습원"(🖥️ 섹션)과 별개로 엣지 배포 축만 다룸, AMD Ryzen AI Embedded X100(본 표)과 경쟁 구도 병행 관찰. 실제 프로덕션 로봇 배포 사례 0 | 독립 벤치마크 + 실제 로봇 프로덕션 배포 사례 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)** (Toyota Research Institute 스핀아웃, Large Behavior Models 휴머노이드) | 🟡 파일럿 | 회사 공식 발표(2026-07-15) `[4]` — 2026-01 TRI에서 스핀아웃(창업자 Russ Tedrake, 전 TRI SVP), Toyota·Deviation Capital 공동 리드 + NVIDIA·Boeing·Samsung Ventures 등 참여 시드 3억 달러(밸류 11억 달러). 휴머노이드 상반신+이동형 베이스, Diffusion Policy·Large Behavior Models 기반 정책으로 노스아메리카 Toyota 공장에서 2026-02부터 파일럿→"프로덕션 전환" 자체 주장, 3자 검증 없음 | 3자 감사·독립 검증 + 배포 규모 확대 사례 |
 | **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)** (범용 end-effector 대응 embodied foundation model) | 🟡 Preview | Generalist AI 공식 블로그 발표(2026-07) `[4]` — 5-finger 핸드~특수 툴 약 9,000종 end-effector, 실측 데이터 50만+시간 사전학습, 자체 벤치 성공률 99%·속도 3배 주장(독립 재현 없음). Generalist AI는 [pillar-1](pillar-1.md)에 Cosmos WFM 데이터 생성 활용사로 이미 언급되어 있으나 GEN-1 모델 자체는 별개 신규 사안 | 독립 벤치마크 재현 + 실배포 사례 |
-| **[Generative Bionics GENE.01](https://gbionics.ai)** (풀바디 멀티모달 스마트스킨 휴머노이드) | 🟡 Preview | 이탈리아 스타트업 공식 발표(2026-07-20) `[4]` — 촉각·근접·힘·온도 감지 풀바디 스마트스킨 + "physics-native AI"(자체 주장 Nature Machine Intelligence 피어리뷰 기반), 오픈소스 디지털 트윈을 주요 Physical AI SW 생태계에 배포한 최초 휴머노이드라 주장. Fincantieri 조선소 적용 협업 발표뿐, 실가동·독립 검증 없음 | 실가동 사례 공개 + 독립 검증(센서 성능·안전성) |
+| **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)** (VLA 파운데이션 모델, UMI 10만+시간 실세계 궤적) | 🔵 Research | Xiaomi 공식 arXiv 발표(2607.15330, 2026-07-16) `[4]` — Qwen3-VL 기반 MoT(VLM+DiT), RoboCasa365(57.4%, 기존 SOTA 46.6%↑)·RoboDojo(20.07, 기존 13.07↑)·VLABench·RoboCasa 4개 벤치마크 SOTA 자체 주장(RLDX-1·GR00T N1.6 포함 비교, 독립 재현 없음). "코드·가중치 공개 예정"이나 GitHub 리포지토리는 README뿐, 실공개 미확인(2026-08-01 기준) | 코드·가중치 실공개 확인 + 독립 벤치마크 재현 |
 
 ## ⚰️ 폐기됨 — 제안 금지 (기록 보존용)
 

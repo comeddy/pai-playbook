@@ -1,5 +1,5 @@
 ---
-ko_hash: 21be7119020c5e687a3ef6fa2dff17a68b67dc3c
+ko_hash: 40bed44cf7b358d0590ff1997c75d6ff24d959fd
 ---
 # Radar — Queue / Watchlist
 
@@ -54,7 +54,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 | **Agent physical-safety standards** ([RoboGuard](https://arxiv.org/abs/2503.07885), etc.) | 🔵 Research | ISO covers physical only; no standard for LLM semantic risk | Progress on standardization |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/) (Seoul)** | 🟡 Preview/unavailable | Not available in Seoul region (Tokyo Agent Registry ✅) | Seoul region expansion |
 
-## 🆕 Latest scan intake (2026-07-31 · primary verification completed 2026-07-21)
+## 🆕 Latest scan intake (2026-08-01 · primary verification completed 2026-07-21)
 
 <!-- Intake from automated scan (arXiv/web). Primary-source verification completed 2026-07-21 (4 verification agents, cross-checked against official announcements and arXiv originals) — 0 promoted, 6 corrected. Do not use in customer proposals until they pass THE FILTER. See scripts/radar_scan.md for the periodic refresh. -->
 
@@ -69,7 +69,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)** (Cosmos 3-family, on-device 4B world model + policy) | 🟡 Preview | NVIDIA official announcement `[4]` (2026-07-21, HuggingFace/developer blog) — on-device inference on Jetson Thor for real-time 15Hz robot policy control (self-reported benchmark, no independent validation); Cosmos 3 Edge Policy (DROID) supports pick-and-place fine-tuning. Distinct from the existing "Cosmos 3 as sim-to-real training source" entry (🖥️ section) — this covers only the edge-deployment track; watch alongside AMD Ryzen AI Embedded X100 (this table) as a competing approach. 0 production robot deployments today | Independent benchmark + real production robot-deployment case |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)** (Toyota Research Institute spinout, Large Behavior Models humanoid) | 🟡 Pilot | Official company announcement (2026-07-15) `[4]` — spun out of TRI in 2026-01 (founder Russ Tedrake, former TRI SVP); $300M seed co-led by Toyota and Deviation Capital, with NVIDIA, Boeing, Samsung Ventures, etc. participating ($1.1B valuation). Humanoid upper body on a wheeled mobile base, running Diffusion Policy / Large Behavior Models; claims a pilot-to-"production" transition at a North American Toyota plant starting 2026-02, no third-party validation | Third-party audit / independent validation + expanded deployment scale |
 | **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)** (embodied foundation model supporting a broad range of end effectors) | 🟡 Preview | Generalist AI official blog post (2026-07) `[4]` — pretrained on ~9,000 end-effector variants (5-finger hands to specialized tools) and 500k+ hours of real interaction data; claims 99% task success and 3x speed (self-reported, no independent reproduction). Generalist AI is already mentioned in [pillar-1](pillar-1.md) as a Cosmos WFM data-generation user, but the GEN-1 model itself is a distinct new item | Independent benchmark reproduction + real deployment case |
-| **[Generative Bionics GENE.01](https://gbionics.ai)** (full-body multimodal smart-skin humanoid) | 🟡 Preview | Official announcement from the Italian startup (2026-07-20) `[4]` — full-body smart skin sensing touch, proximity, force, and temperature, plus "physics-native AI" (claimed to be based on peer-reviewed Nature Machine Intelligence research); claims to be the first humanoid to publish an open-source digital twin across major Physical AI software ecosystems. Only a Fincantieri shipyard collaboration has been announced — no live deployment or independent validation | Public live-deployment case + independent validation (sensor performance, safety) |
+| **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)** (VLA foundation model, 100k+ hours of real-world UMI trajectories) | 🔵 Research | Xiaomi official arXiv release (2607.15330, 2026-07-16) `[4]` — Qwen3-VL-based MoT (VLM+DiT), self-reported SOTA on four benchmarks: RoboCasa365 (57.4%, up from prior SOTA 46.6%), RoboDojo (20.07, up from 13.07), VLABench, and RoboCasa (compared against RLDX-1 and GR00T N1.6 among others; no independent reproduction). Code/weights are "to be released," but the GitHub repo currently holds only a README — release not yet confirmed (as of 2026-08-01) | Confirmed code/weight release + independent benchmark reproduction |
 
 ## ⚰️ Retired — do not propose (kept for the record)
 
