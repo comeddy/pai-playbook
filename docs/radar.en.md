@@ -1,5 +1,5 @@
 ---
-ko_hash: 40bed44cf7b358d0590ff1997c75d6ff24d959fd
+ko_hash: e54960172a948369d4c1f83f3ad68020d430981e
 ---
 # Radar — Queue / Watchlist
 
@@ -19,16 +19,16 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 | Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | Secondary sources only `[4]`, no primary PI confirmation | Official PI release + performance validation |
 | **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) commercial license** | 🟡→ | Commercial-use claim is secondary-source only `[4]` (N1.5 is clearly non-commercial per model card `[1]`) | License confirmed on live model card |
 | **[World-action models](https://developer.nvidia.com/isaac/gr00t)** (DreamZero → GR00T N2) | 🟡 Preview | GR00T N2 "expected end of year," DreamZero is research | GA + real deployment case |
-| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)** (world model for robot learning) | 🟡 Preview | The world model itself is preview; applying it to robot learning is research | Validated case of robot policy learning |
-| **VLM-based SysID** ([Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)) | 🔵 Research | 2026 preprints, single lab | peer-review + reproduction |
-| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)** (visual sim-to-real at scale) | 🔵 Research | CVPR/CoRL research, not production | Evidence of production deployment |
+| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)** (world model[^wfm] for robot learning) | 🟡 Preview | The world model itself is preview; applying it to robot learning is research | Validated case of robot policy learning |
+| **VLM-based SysID[^sysid]** ([Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)) | 🔵 Research | 2026 preprints, single lab | peer-review + reproduction |
+| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)** (visual sim-to-real[^s2r] at scale) | 🔵 Research | CVPR/CoRL research, not production | Evidence of production deployment |
 | **Robbyant [LingBot-VLA](https://huggingface.co/robbyant) / [UnifoLM-VLA-0](https://huggingface.co/unitreerobotics)** | 🔵 Research | Secondary sources, no validation | Primary confirmation + AWS mapping |
 
 ## 🖥️ Simulation / tools (awaiting maturity)
 
 | Item | Label | Why on hold | Promotion condition |
 |---|---|---|---|
-| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** physics engine | ⚪ Hype | "430,000×" refuted `[1]`, slow on contact-rich manipulation | Independent benchmark + production adoption |
+| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** physics engine[^physeng] | ⚪ Hype | "430,000×" refuted `[1]`, slow on contact-rich manipulation | Independent benchmark + production adoption |
 | **[MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp)** | 🟡 Alpha | PyPI classifier "3-Alpha" `[1]`, not production | Beta/GA transition |
 | **[NVIDIA Newton](https://github.com/newton-physics/newton)** physics engine | 🟡 Preview | Experimental backend in Isaac Sim 6.0 | GA + official in Isaac Lab 3.0 |
 | **[Isaac Sim 6.0](https://docs.isaacsim.omniverse.nvidia.com/latest/index.html)** | 🟡 Preview | "Early Developer Release," API in flux (latest GA is 5.1) | 6.x GA declaration |
@@ -49,8 +49,8 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 
 | Item | Label | Why on hold | Promotion condition |
 |---|---|---|---|
-| **MCP for robotics** ([ros-mcp-server](https://github.com/lpigeon/ros-mcp-server), etc.) | 🔵 Research | 50+ servers exist but open-source/demo, none in production (safety, latency, determinism unvalidated) | Production-hardening case |
-| **ROS 2 + LLM agents** (NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)) | 🔵 Research | ROSA (JPL) is the strongest real case but mock-ops. Field deployment limited | Field production deployment |
+| **MCP[^mcp] for robotics** ([ros-mcp-server](https://github.com/lpigeon/ros-mcp-server), etc.) | 🔵 Research | 50+ servers exist but open-source/demo, none in production (safety, latency, determinism unvalidated) | Production-hardening case |
+| **ROS 2[^ros] + LLM agents[^agent]** (NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)) | 🔵 Research | ROSA (JPL) is the strongest real case but mock-ops. Field deployment limited | Field production deployment |
 | **Agent physical-safety standards** ([RoboGuard](https://arxiv.org/abs/2503.07885), etc.) | 🔵 Research | ISO covers physical only; no standard for LLM semantic risk | Progress on standardization |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/) (Seoul)** | 🟡 Preview/unavailable | Not available in Seoul region (Tokyo Agent Registry ✅) | Seoul region expansion |
 
@@ -79,7 +79,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 | **[SageMaker Edge Manager](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)** | 🔴 Discontinued (2024-04-26) `[1]` | ONNX + IoT Greengrass V2 (+ SageMaker Neo) |
 | **[IoT Greengrass V1](https://docs.aws.amazon.com/greengrass/v1/developerguide/what-is-gg.html)** | 🔴 Discontinued (2026-06-01) `[1]` | Greengrass V2 |
 | **[Gazebo Classic 11](https://classic.gazebosim.org/)** | 🔴 EOL (2025-01) `[1]` | Gazebo Jetty/Harmonic |
-| **Trainium for VLA** | ⚪ No public case `[4]` | Currently CUDA/NVIDIA (state the risk when proposing) |
+| **Trainium for VLA[^vla]** | ⚪ No public case `[4]` | Currently CUDA/NVIDIA (state the risk when proposing) |
 
 > ⚠️ **Rumor watch (not true)**: "AWS IoT TwinMaker discontinued" is **misinformation** — TwinMaker is GA and open to new customers (low velocity). It is a third-party blog claim confused with SiteWise maintenance. Do not repeat. → [pillar-3](pillar-3.md).
 
@@ -96,3 +96,14 @@ Full pipeline → [maintenance](maintenance.md#playbook-promotion-pipeline).
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: high (the Radar changes fast by nature — monthly review recommended)_
+
+<!-- 용어 각주 -->
+
+[^wfm]: **World Foundation Model (WFM)** — a large model trained to predict/generate the next scenes of the physical world. From text/video prompts it creates physically plausible video and scenarios to augment robot training data. 🎥 [NVIDIA Cosmos introduction](https://www.youtube.com/watch?v=9Uch931cDx8)
+[^sysid]: **SysID (System Identification)** — measuring the real robot's physical parameters (friction, mass, motor response) to calibrate the simulator to the real hardware.
+[^s2r]: **sim-to-real** — transferring a policy trained in simulation to a real robot, or the methodology for doing so. The physical and visual differences between simulation and reality (the domain gap) mean a naive transfer collapses performance. 🎥 [NVIDIA sim-to-real robotics showcase](https://www.youtube.com/watch?v=sffNvv3GkRA)
+[^physeng]: **Physics engine** — the core software of a simulator that numerically computes rigid-body dynamics, contact, friction, and collision. An engine's accuracy-speed trade-off drives the choice of simulator (Isaac/MuJoCo/Genesis).
+[^mcp]: **MCP (Model Context Protocol)** — an open standard protocol connecting agents to tools and data sources. Often likened to "USB-C for agents"; experiments exposing robot skills as MCP servers are growing.
+[^ros]: **ROS 2 (Robot Operating System 2)** — the de facto standard open-source middleware for robot software. A distributed architecture in which sensor and control nodes communicate over topics; the shared foundation of industrial and research robot stacks.
+[^agent]: **LLM agent** — software in which a large language model plans on its own, selects and calls tools (APIs, robot skills), and carries out multi-step tasks. Unlike simple Q&A, the key point is that it "acts."
+[^vla]: **VLA (Vision-Language-Action)** — a foundation model that takes camera images (Vision) and natural-language instructions (Language) as input and directly outputs robot actions (Action). Say "pick up the cup" and it generates the joint motions. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)

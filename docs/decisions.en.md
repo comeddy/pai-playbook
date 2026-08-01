@@ -1,5 +1,5 @@
 ---
-ko_hash: 2d9089e64ca908421f0f2c97d624ef4f0f50ddb0
+ko_hash: 1d6d057abe1f0348c2cf07f68fa41e2a47b04d5a
 ---
 # Decisions — Cross-cutting Decision Trees
 
@@ -16,7 +16,7 @@ Contents: [1) Cloud vs Edge](#1-cloud-training-vs-edge-inference-boundary) · [2
 
 **Key question: "Can I put this inference in the cloud, or must it be on the edge?"**
 
-The most important discriminator is the **control frequency**.
+The most important discriminator is the **control frequency**[^ctrlfreq].
 
 ```mermaid
 graph TD
@@ -26,15 +26,15 @@ graph TD
     Q -- "both needed (nearly every real robot)" --> SPLIT["🟡 split deployment: System 2 = cloud, System 1 = edge<br>action chunking connects the two rates ← standard architecture"]
 ```
 
-| Aspect | System 2 (planning) | System 1 (control) |
+| Aspect | System 2[^sys] (planning) | System 1 (control) |
 |---|---|---|
 | Frequency | ≤ 5~10Hz | 50~200Hz |
 | Latency tolerance | yes (async) | none (sub-20ms) |
 | Location | **cloud** (AgentCore) or on-board | **edge on-board** (Jetson) |
-| Model | large VLM/LLM | lightweight diffusion/flow-matching |
+| Model | large VLM/LLM | lightweight diffusion/flow-matching[^flow] |
 | AWS | Bedrock AgentCore, EC2 | IoT Greengrass V2, SageMaker Neo, ONNX/TensorRT |
 
-> **Ruling principle**: "If the loop involves real-time safety/reaction, edge; if there's time to think, cloud." action chunking is the bridge.
+> **Ruling principle**: "If the loop involves real-time safety/reaction, edge; if there's time to think, cloud." action chunking[^chunk] is the bridge.
 > Basis: [pillar-4 edge](pillar-4.md), [pillar-2 System1/System2](pillar-2.md), [pillar-5](pillar-5.md).
 
 ---
@@ -56,8 +56,8 @@ graph TD
 |---|---|---|---|
 | Maturity | 🟢 GA 5.1 | 🟢 GA (Warp is Alpha) | 🟢 GA (Classic EOL) |
 | GPU | **RTX required** (A100/H100 ✗) | compute GPU OK (P5 ✓) | CPU-centric |
-| Render/SDG | best | limited | limited |
-| Differentiable | △ | ✓ (JAX) | ✗ |
+| Render/SDG[^sdg] | best | limited | limited |
+| Differentiable[^diffsim] | △ | ✓ (JAX) | ✗ |
 | ROS integration | possible | secondary | **native** |
 | License | Apache (source) + AI Enterprise (redistribution/SaaS) | Apache | Apache |
 | AWS | G6e/G7e + AMI + Batch | EC2 (incl. P5) + Batch | EC2 + Batch |
@@ -85,7 +85,7 @@ graph TD
 | On-Demand | few · one-off · exploration | EC2 G7e/G6e/P6 |
 | Capacity Blocks for ML | large scale · fixed date · UltraServer | P6e-GB200, reserved |
 | Flexible Training Plans | flexible schedule · cost-optimized | SageMaker HyperPod |
-| Trainium | reduce LLM training cost | Trn2/Trn3 ⚠️ **no public case for VLA [4]** (→ pillar-2) |
+| Trainium | reduce LLM training cost | Trn2/Trn3 ⚠️ **no public case for VLA[^vla] [4]** (→ pillar-2) |
 
 > **Ruling principle**: start with On-Demand G7e. If unavailable or large-scale, Capacity Blocks / Flexible Training Plans. **Trainium is safe for LLMs but has no validated case for VLA/robotics** — state the risk when proposing.
 > Basis: [pillar-2 training stack](pillar-2.md), [pillar-3](pillar-3.md).
@@ -94,7 +94,7 @@ graph TD
 
 ## 4) Build vs Buy (foundation models)
 
-**Key question: "Should I fine-tune a foundation model, or train my own?"**
+**Key question: "Should I fine-tune[^ft] a foundation model, or train my own?"**
 
 ```mermaid
 graph TD
@@ -107,9 +107,9 @@ graph TD
 
 | Option | Data | GPU | When |
 |---|---|---|---|
-| LoRA fine-tuning | 100~thousands of demos | single 24~40GB | **default starting point** |
-| Full fine-tuning | large-scale real data | 70~100GB+ / multi-node | multiple embodiments |
-| Pretraining (Build) | ultra-large scale | Blackwell cluster | a few frontier players |
+| LoRA[^lora] fine-tuning | 100~thousands of demos | single 24~40GB | **default starting point** |
+| Full fine-tuning | large-scale real data | 70~100GB+ / multi-node | multiple embodiments[^embodiment] |
+| Pretraining (Build)[^pretrain] | ultra-large scale | Blackwell cluster | a few frontier players |
 | Reasoning-layer Buy | — | — | control from open models, planning from an API |
 
 > **Ruling principle**: **almost always fine-tuning (Buy + adapt) is the answer.** Pretraining from scratch is for a tiny few. For commercial use, the license is the first gate (mind GR00T non-commercial). "A manipulation policy from simulation alone" is a trap — real data is essential ([pillar-4](pillar-4.md)).
@@ -132,3 +132,16 @@ _(The table below is volatile — 2026-07, based on direct check of the official
 
 ---
 _owner: TBD ⚠️ · updated: 2026-07 · volatility: medium (tree principles are low, instance/region details are high)_
+
+<!-- 용어 각주 -->
+[^ctrlfreq]: **control frequency** — how many times per second a robot updates its control commands (Hz). Reactive loops like balance and grasping need 30~100Hz or more, which is physically impossible over a cloud round-trip — the first discriminator for where inference is deployed.
+[^sys]: **System 2 / System 1** — the cognitive-science "slow thinking / fast reaction" distinction applied to robot architecture. System 2 is a slow large model that plans (5~10Hz); System 1 is a small policy that runs real-time control (50~200Hz). This becomes the criterion for whether inference goes to the cloud or the edge.
+[^flow]: **flow-matching / diffusion action head** — an output module in the diffusion/flow family that generates a robot's continuous actions by gradually refining them from noise. It can express smooth, multi-modal action distributions, making it the standard action head of modern VLAs.
+[^chunk]: **action chunking** — predicting a chunk of several future action steps at once instead of one action per step. Reduces the number of inference calls, making it easier to meet real-time control frequencies.
+[^sdg]: **Synthetic Data Generation (SDG)** — a technique that uses a simulator to auto-generate training images and annotations (labels). Its biggest advantage: labeling cost converges to zero. 🎥 [Isaac Sim Replicator SDG tutorial](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^diffsim]: **differentiable physics** — a physics engine whose entire simulation computation is differentiable, so gradients can be backpropagated from outputs to inputs. Policies and parameters can be optimized directly with gradient descent (MJX is the representative example).
+[^vla]: **VLA (Vision-Language-Action)** — a foundation model that takes camera images (Vision) and natural-language instructions (Language) as input and directly outputs robot actions (Action). Say "pick up the cup" and it generates the joint motions. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^ft]: **fine-tuning** — additionally training a model pretrained on large-scale data with a small amount of data from your own task/robot. Saves tens to hundreds of times the data and GPU compared to training from scratch.
+[^lora]: **LoRA (Low-Rank Adaptation)** — a lightweight fine-tuning technique that freezes the original weights and trains only small additional low-rank matrices. GPU memory demand is a fraction of full fine-tuning, so a single 24GB-class GPU is enough.
+[^embodiment]: **Embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.
+[^pretrain]: **pre-training** — training a model from scratch on large-scale general-purpose data to build its base capabilities; it is then adapted to a specific task by fine-tuning on a small amount of data. Frontier VLA pre-training is the domain of a tiny handful of organizations.

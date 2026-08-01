@@ -1,5 +1,5 @@
 ---
-ko_hash: 40bed44cf7b358d0590ff1997c75d6ff24d959fd
+ko_hash: e54960172a948369d4c1f83f3ad68020d430981e
 ---
 # Radar — 队列 / 观察列表
 
@@ -19,16 +19,16 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | 仅二手来源 `[4]`，无 PI 一手确认 | PI 官方发布 + 性能验证 |
 | **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) 商业许可证** | 🟡→ | 允许商用的说法仅来自二手来源 `[4]`（N1.5 在模型卡上明确为非商业 `[1]`） | 在实时模型卡确定许可证 |
 | **[World-action models](https://developer.nvidia.com/isaac/gr00t)**（DreamZero → GR00T N2） | 🟡 Preview | GR00T N2 "计划年底"，DreamZero 为研究 | GA + 实际部署案例 |
-| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)**（用于机器人学习的世界模型） | 🟡 Preview | 世界模型本身为预览，用于机器人学习为研究 | 机器人策略学习验证案例 |
-| **基于 VLM 的 SysID**（[Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)） | 🔵 Research | 2026 预印本，单一实验室 | peer-review + 复现 |
-| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)**（visual sim-to-real at scale） | 🔵 Research | CVPR/CoRL 研究，非生产 | 生产部署证据 |
+| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)**（用于机器人学习的世界模型[^wfm]） | 🟡 Preview | 世界模型本身为预览，用于机器人学习为研究 | 机器人策略学习验证案例 |
+| **基于 VLM 的 SysID[^sysid]**（[Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)） | 🔵 Research | 2026 预印本，单一实验室 | peer-review + 复现 |
+| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)**（visual sim-to-real[^s2r] at scale） | 🔵 Research | CVPR/CoRL 研究，非生产 | 生产部署证据 |
 | **Robbyant [LingBot-VLA](https://huggingface.co/robbyant) / [UnifoLM-VLA-0](https://huggingface.co/unitreerobotics)** | 🔵 Research | 二手来源，无验证 | 一手确认 + AWS 映射 |
 
 ## 🖥️ 仿真 / 工具（待成熟）
 
 | 条目 | 标签 | 为何待定 | 晋升条件 |
 |---|---|---|---|
-| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** 物理引擎 | ⚪ Hype | "430,000 倍"已被反驳 `[1]`，接触操作中慢 | 独立基准 + 生产采用 |
+| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** 物理引擎[^physeng] | ⚪ Hype | "430,000 倍"已被反驳 `[1]`，接触操作中慢 | 独立基准 + 生产采用 |
 | **[MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp)** | 🟡 Alpha | PyPI classifier "3-Alpha" `[1]`，非生产 | Beta/GA 转换 |
 | **[NVIDIA Newton](https://github.com/newton-physics/newton)** 物理引擎 | 🟡 Preview | 在 Isaac Sim 6.0 中为 experimental 后端 | GA + Isaac Lab 3.0 正式 |
 | **[Isaac Sim 6.0](https://docs.isaacsim.omniverse.nvidia.com/latest/index.html)** | 🟡 Preview | "Early Developer Release"，API 变动（最新 GA 为 5.1） | 6.x GA 宣布 |
@@ -49,8 +49,8 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 
 | 条目 | 标签 | 为何待定 | 晋升条件 |
 |---|---|---|---|
-| **MCP for robotics**（[ros-mcp-server](https://github.com/lpigeon/ros-mcp-server) 等） | 🔵 Research | 有 50+ 服务器但为开源/演示，无生产（安全·延迟·确定性未验证） | 生产硬化案例 |
-| **ROS 2 + LLM 智能体**（NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)） | 🔵 Research | ROSA(JPL) 为最强实例但为 mock-ops。现场部署有限 | 现场生产部署 |
+| **MCP[^mcp] for robotics**（[ros-mcp-server](https://github.com/lpigeon/ros-mcp-server) 等） | 🔵 Research | 有 50+ 服务器但为开源/演示，无生产（安全·延迟·确定性未验证） | 生产硬化案例 |
+| **ROS 2[^ros] + LLM 智能体[^agent]**（NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)） | 🔵 Research | ROSA(JPL) 为最强实例但为 mock-ops。现场部署有限 | 现场生产部署 |
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | 首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
 
@@ -79,7 +79,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[SageMaker Edge Manager](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)** | 🔴 终止 (2024-04-26) `[1]` | ONNX + IoT Greengrass V2 (+ SageMaker Neo) |
 | **[IoT Greengrass V1](https://docs.aws.amazon.com/greengrass/v1/developerguide/what-is-gg.html)** | 🔴 终止 (2026-06-01) `[1]` | Greengrass V2 |
 | **[Gazebo Classic 11](https://classic.gazebosim.org/)** | 🔴 EOL (2025-01) `[1]` | Gazebo Jetty/Harmonic |
-| **Trainium for VLA** | ⚪ 无公开案例 `[4]` | 当前为 CUDA/NVIDIA（提议时明示风险） |
+| **Trainium for VLA[^vla]** | ⚪ 无公开案例 `[4]` | 当前为 CUDA/NVIDIA（提议时明示风险） |
 
 > ⚠️ **传闻警戒（并非事实）**: "AWS IoT TwinMaker 废弃"是**误信息** —— TwinMaker 是 GA·对新客户开放（低速度）。是与 SiteWise 维护混淆的第三方博客主张。禁止重复。→ [pillar-3](pillar-3.md)。
 
@@ -96,3 +96,14 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 
 ---
 _owner: Youngjin · updated: 2026-07 · volatility: 高（Radar 本质上快速变化 —— 建议月度评审）_
+
+<!-- 용어 각주 -->
+
+[^wfm]: **世界基础模型（WFM, World Foundation Model）** — 为预测·生成物理世界的下一场景而训练的大型模型。通过文本·视频提示生成物理上合理的视频·场景，用于增强机器人学习数据。🎥 [NVIDIA Cosmos 介绍](https://www.youtube.com/watch?v=9Uch931cDx8)
+[^sysid]: **系统辨识（SysID, System Identification）** — 测量真实机器人的物理参数（摩擦·质量·电机响应），把仿真器校准到与实物一致的工作。
+[^s2r]: **sim-to-real** — 把在仿真中训练的策略迁移到真实机器人上，或指其方法论。由于仿真与现实的物理·视觉差异（域间差异），直接迁移会导致性能崩溃。🎥 [NVIDIA sim-to-real 机器人展示](https://www.youtube.com/watch?v=sffNvv3GkRA)
+[^physeng]: **物理引擎（physics engine）** — 数值计算刚体动力学·接触·摩擦·碰撞的仿真器核心软件。引擎的精度·速度权衡左右着仿真器的选择（Isaac/MuJoCo/Genesis）。
+[^mcp]: **MCP（Model Context Protocol）** — 连接智能体与工具·数据源的开放标准协议。常被比作"智能体的 USB-C"，把机器人技能暴露为 MCP 服务器的实验正在增多。
+[^ros]: **ROS 2（Robot Operating System 2）** — 机器人软件事实上的标准开源中间件。传感器·控制节点通过话题（topic）通信的分布式架构，是工业·研究机器人栈的公共基础。
+[^agent]: **LLM 智能体** — 大语言模型自行制定计划、挑选并调用工具（API·机器人技能）、执行多步任务的软件。与简单问答不同，关键在于它有"行动"。
+[^vla]: **VLA (Vision-Language-Action)** — 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
