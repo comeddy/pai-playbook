@@ -1,5 +1,5 @@
 ---
-ko_hash: ae1b44d85858640be9877a59b6191cbeb0f504c3
+ko_hash: bc36175ccdcd713713ae95d66c0e5dbc65afa4b6
 ---
 # Physical AI Playbook 介绍
 
@@ -79,6 +79,9 @@ _最终更新: 2026-07 · owner: Youngjin · 状态: 初期构建中_
 
 ## 页面列表
 
+- [guide — 本手册的构建与维护方式（完整验证管道）](guide.md)
+- [高管简报 — 面向高管的 5 分钟判断框架（现在/即将/尚未 矩阵）](exec.md)
+- [高管对话指南 — SA 的高管会议准备（电梯演讲·Top 10 问答·禁用表述）](exec-guide.md)
 - [pillar-1 — 数据采集 & 处理](pillar-1.md)
 - [pillar-2 — 模型训练 (VLA)](pillar-2.md)
 - [pillar-3 — 仿真](pillar-3.md)

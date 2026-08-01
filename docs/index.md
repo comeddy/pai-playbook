@@ -76,6 +76,9 @@ _최종 갱신: 2026-07 · owner: Youngjin · 상태: 초기 구축 중_
 
 ## 페이지 목록
 
+- [guide — 이 플레이북이 만들어지고 관리되는 방식 (검증 파이프라인 전과정)](guide.md)
+- [경영진 브리핑 — 임원용 5분 판단 프레임 (지금/곧/아직 매트릭스)](exec.md)
+- [임원 대화 가이드 — SA용 임원 미팅 준비 (피치·Top 10 Q&A·금지 표현)](exec-guide.md)
 - [pillar-1 — 데이터 수집 & 처리](pillar-1.md)
 - [pillar-2 — 모델 학습 (VLA)](pillar-2.md)
 - [pillar-3 — 시뮬레이션](pillar-3.md)

@@ -1,5 +1,5 @@
 ---
-ko_hash: ae1b44d85858640be9877a59b6191cbeb0f504c3
+ko_hash: bc36175ccdcd713713ae95d66c0e5dbc65afa4b6
 ---
 # Physical AI Playbook のご案内
 
@@ -80,6 +80,9 @@ _最終更新: 2026-07 · owner: Youngjin · ステータス: 初期構築中_
 
 ## ページ一覧
 
+- [guide — このプレイブックの作られ方と維持のしくみ（検証パイプライン全体）](guide.md)
+- [経営層ブリーフィング — 経営層向け 5 分の判断フレーム（今/まもなく/まだ マトリクス）](exec.md)
+- [経営層対話ガイド — SA の経営層ミーティング準備（ピッチ・Top 10 Q&A・禁止表現）](exec-guide.md)
 - [pillar-1 — データ収集 & 処理](pillar-1.md)
 - [pillar-2 — モデル学習 (VLA)](pillar-2.md)
 - [pillar-3 — シミュレーション](pillar-3.md)

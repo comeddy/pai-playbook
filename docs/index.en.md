@@ -1,5 +1,5 @@
 ---
-ko_hash: ae1b44d85858640be9877a59b6191cbeb0f504c3
+ko_hash: bc36175ccdcd713713ae95d66c0e5dbc65afa4b6
 ---
 # Physical AI Playbook — Introduction
 
@@ -79,6 +79,9 @@ _Last updated: 2026-07 · owner: Youngjin · status: initial build in progress_
 
 ## Page list
 
+- [guide — how this playbook is built and maintained (the full verification pipeline)](guide.md)
+- [Executive Brief — a 5-minute judgment frame for executives (now/soon/not-yet matrix)](exec.md)
+- [Executive Conversation Guide — SA prep for executive meetings (pitches, top-10 Q&A, forbidden claims)](exec-guide.md)
 - [pillar-1 — Data Collection & Processing](pillar-1.md)
 - [pillar-2 — Model Training (VLA)](pillar-2.md)
 - [pillar-3 — Simulation](pillar-3.md)
