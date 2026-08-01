@@ -1,5 +1,5 @@
 ---
-ko_hash: 87fd8141899e9bff24fd7ea43c7b77b365ce07ee
+ko_hash: 537674ce72f440aa5efc1db9f7a75937d99b64df
 ---
 # Guide — How This Playbook Works
 
@@ -51,7 +51,7 @@ Published items age too. Each page has a volatility grade — high 1 month / med
 
 ## ⑥ 4-language sync
 
-**Korean is the original**; English, Chinese, and Japanese are derivatives. Each translation file records the original's fingerprint (ko_hash) at the time of translation, so when the original changes, the system automatically detects which translation has fallen behind (CI warning). Terminology is kept consistent across the 4 languages via a shared glossary. Switch languages from the dropdown at the top right of the page.
+**Korean is the original**; English, Chinese, and Japanese are derivatives. Each translation file records the original's fingerprint (ko_hash) at the time of translation, so when the original changes, the system automatically detects which translation has fallen behind (CI[^ci] warning). Terminology is kept consistent across the 4 languages via a shared glossary. Switch languages from the dropdown at the top right of the page.
 
 ## ⑦ Deployment pipeline
 
@@ -66,3 +66,7 @@ When something is pushed to `main`, CI runs the freshness check and the translat
 | **just a reader** | Enter via the FAQ Top 20 or a pillar on the [home](index.md) page. If you just know the labels (🟢🟡🔵⚪) and source grades (`[1]`~`[4]`), you can read the trust level at a glance |
 | **someone who wants to submit an item** | Submit via the [promotion pipeline](maintenance.md#playbook-promotion-pipeline). It's faster if you also note how many of the 4 in THE FILTER it meets |
 | **owner** | Review the daily automated intake → primary verification → promote/keep decision. See the full [maintenance rules](maintenance.md) |
+
+<!-- 용어 각주 -->
+
+[^ci]: **CI (Continuous Integration)** — a pipeline that automatically runs checks and builds on every commit and push. In this repository, the freshness check, translation-sync check, and strict build all run in CI, and deployment happens only when every one of them passes.

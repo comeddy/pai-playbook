@@ -1,5 +1,5 @@
 ---
-ko_hash: de850bcb42694d11cee09f06618aef39b04d8120
+ko_hash: 32977ddb9ac6915e77425c2bef8f48913273b39f
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -34,7 +34,7 @@ _owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatili
 - `owner`: **always exactly one person** (single-accountability principle). If undecided, mark as `TBD ⚠️` to **keep it on the books as debt** (do not hide it).
 - `verified by` (optional): the people who performed primary-source verification (cross-checking official announcements, original papers, licenses) — **multiple allowed**, comma-separated. Omit if identical to the owner.
 - `updated`: the year-month of last actual review. An absolute date (no relative dates).
-- `volatility`: high/medium/low. Determines the staleness cadence.
+- `volatility`: high/medium/low. Determines the staleness[^staleness] cadence.
 
 > ✅ **Pillars P1–P5 · index · radar owner: Youngjin** (assigned 2026-07). decisions/maintenance are still `TBD ⚠️` — remaining debt.
 
@@ -102,7 +102,7 @@ _owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatili
 
 - **Executive-page (exec/exec-guide) principle**: no new technical claims — carry only executive-language translations of the pillar/radar verification verdicts.
 
-**Glossary-footnote convention (ongoing)**: whenever content is added or updated, handle terms an SA can't immediately parse with `[^label]` footnotes in the same change — reuse an existing label if one exists; for a new term, add a "**Term** — 1–2 sentence explanation" entry to the `<!-- 용어 각주 -->` block at the very bottom of the page. If a verified official video exists, attach a 🎥 link at the end of the definition (cross-check title and channel via the oEmbed response before merging). Markers go only at the first body occurrence — never in headings or mermaid blocks. Labels are mechanical identifiers and must never be translated; apply identically across all 4 languages (same labels, same URLs) — detailed rules in `i18n/glossary.md`.
+**Glossary-footnote convention (ongoing)**: whenever content is added or updated, handle terms an SA can't immediately parse with `[^label]` footnotes in the same change — reuse an existing label if one exists; for a new term, add a "**Term** — 1–2 sentence explanation" entry to the `<!-- 용어 각주 -->` block at the very bottom of the page. If a verified official video exists, attach a 🎥 link at the end of the definition (cross-check title and channel via the oEmbed[^oembed] response before merging). Markers go only at the first body occurrence — never in headings or mermaid blocks. Labels are mechanical identifiers and must never be translated; apply identically across all 4 languages (same labels, same URLs) — detailed rules in `i18n/glossary.md`.
 
 ---
 
@@ -160,3 +160,8 @@ Look at the actual generation results and **adjust the inclusion criteria, templ
 
 ---
 _owner: TBD ⚠️ · updated: 2026-07 · volatility: low (operating rules — updated only when the rules change)_
+
+<!-- 용어 각주 -->
+
+[^staleness]: **staleness** — the degree to which a document or dataset has drifted from reality since its last review. This playbook sets an allowed window (1/3/6 months) per page via its volatility grade and automatically attaches a badge when it is exceeded.
+[^oembed]: **oEmbed** — a standard API that returns a piece of content's embed information (title, author, etc.) as JSON from a single URL. Used to mechanically verify, before publishing, that a video link actually exists and that its title and channel match.
