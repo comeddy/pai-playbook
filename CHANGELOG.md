@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-08-02
+
 ### Added
 
 - Register 3 more verified aws-samples Physical AI assets from a full org survey: robotic-cellsim-tools (URDF→Isaac Sim scene primitives, pillar 3), ROS2 OTA firmware updates (Greengrass V2 + IoT Jobs fleet OTA, pillar 4), and the Smart Machines hybrid Physical AI demo (agentic equipment monitoring, pillar 5), each with maturity caveats, in all four languages
@@ -126,7 +128,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Promotion issue form with the THE FILTER checklist built in
 - Owner assignment for pillar pages
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
@@ -144,6 +147,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 형식은 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)를 따르고, [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다. 버전은 git 태그(v1.0.0+)로 관리합니다.
 
 ## [Unreleased]
+
+## [1.6.0] - 2026-08-02
 
 ### Added
 
@@ -255,7 +260,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - THE FILTER 체크리스트를 내장한 승격 이슈 폼 추가
 - 필러 페이지 owner 지정
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
@@ -273,6 +279,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 格式遵循 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)，并遵守 [Semantic Versioning](https://semver.org/spec/v2.0.0.html)。版本以 git 标签管理（v1.0.0+）。
 
 ## [Unreleased]
+
+## [1.6.0] - 2026-08-02
 
 ### Added
 
@@ -384,7 +392,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - 新增内置 THE FILTER 清单的晋升议题表单
 - 指定支柱页面 owner
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
@@ -402,6 +411,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 形式は [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) に従い、[Semantic Versioning](https://semver.org/spec/v2.0.0.html) を遵守します。バージョンは git タグ（v1.0.0+）で管理します。
 
 ## [Unreleased]
+
+## [1.6.0] - 2026-08-02
 
 ### Added
 
@@ -513,7 +524,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - THE FILTER チェックリストを内蔵した昇格イシューフォームを追加
 - ピラーページの owner を指定
 
-[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/comeddy/pai-playbook/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/comeddy/pai-playbook/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/comeddy/pai-playbook/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/comeddy/pai-playbook/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/comeddy/pai-playbook/compare/v1.2.0...v1.3.0
