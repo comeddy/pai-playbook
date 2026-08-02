@@ -19,6 +19,18 @@
   document.body.appendChild(box);
   apply(current());
 
+  // 푸터(소셜 링크)와 겹침 방지 — 푸터가 보이는 높이만큼 버튼을 위로 밀어올린다
+  var footer = document.querySelector(".md-footer");
+  if (footer && "IntersectionObserver" in window) {
+    var thresholds = [];
+    for (var t = 0; t <= 1.0001; t += 0.02) thresholds.push(Math.min(t, 1));
+    new IntersectionObserver(function (entries) {
+      var e = entries[0];
+      var overlap = e.isIntersecting ? Math.ceil(e.intersectionRect.height) : 0;
+      box.style.bottom = overlap > 0 ? "calc(" + overlap + "px + .8rem)" : "";
+    }, { threshold: thresholds }).observe(footer);
+  }
+
   function makeButton(text, label, delta) {
     var b = document.createElement("button");
     b.type = "button";
