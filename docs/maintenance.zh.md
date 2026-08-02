@@ -1,5 +1,5 @@
 ---
-ko_hash: 2081f5cd5f25bd7940b719a153cdae078205994a
+ko_hash: fd172d3597fd4c25e5a5ffbb57459124a97718de
 ---
 # Maintenance — 所有权 · 更新规则 · 晋升管道
 
@@ -124,7 +124,7 @@ graph TD
 | **捕获负责人** | 监控频道，收集表情候选 |
 | **验证负责人（可多人）** | 流入条目的一手来源确认 —— 对照官方发布·论文原文·许可证。参与者记录在晋升议题和条目的 `验证:` 字段 |
 | **支柱 owner** | 门禁判定、晋升/Radar 决策、编写模板、更新 |
-| **playbook 管理员（待定 ⚠️）** | staleness 徽章、结构一致性、季度评审 |
+| **playbook 管理员（Youngjin）** | staleness 徽章、结构一致性、季度评审 |
 
 ---
 
@@ -144,7 +144,7 @@ graph TD
 
 ## 已知技术债务（截至 2026-07）
 
-1. ~~全部条目 owner 未定~~ → **全部页面 owner: Youngjin 指定完成** —— P1~P5·index·radar（2026-07）、decisions·maintenance（2026-08）。剩余：角色表中的 playbook 管理员为待定 ⚠️。
+1. ~~全部条目 owner 未定~~ → **全部页面 owner: Youngjin 指定完成** —— P1~P5·index·radar（2026-07）、decisions·maintenance（2026-08）、playbook 管理员角色（2026-08）。owner·角色债务已全部清偿。
 2. ~~FAQ Top 10 为种子~~ → **扩展为 Top 20 并标注来源（2026-07）**。剩余：获取 Slack 实际问询记录后按频率重新排序（[index](index.md)）。
 3. **内部资产深链未连接** —— 研讨会/deck/skill 链接处于"需确认 ⚠️"状态。
 4. **韩国客户案例不足** —— 大多为"案例待定"。韩国机器人企业为 NVIDIA 阵营，故 AWS 存在空白地带。

@@ -121,7 +121,7 @@ graph TD
 | **캡처 담당** | 채널 모니터, 이모지 후보 수집 |
 | **검증 담당(복수 가능)** | 유입 항목의 1차 출처 확인 — 공식 발표·논문 원문·라이선스 대조. 참여자는 승격 이슈와 항목 `검증:` 필드에 기록 |
 | **필러 owner** | 게이트 판정, 승격/Radar 결정, 템플릿 작성, 갱신 |
-| **playbook 관리자(미정 ⚠️)** | staleness 배지, 구조 일관성, 분기 리뷰 |
+| **playbook 관리자(Youngjin)** | staleness 배지, 구조 일관성, 분기 리뷰 |
 
 ---
 
@@ -141,7 +141,7 @@ graph TD
 
 ## 알려진 기술 부채 (2026-07 시점)
 
-1. ~~전 항목 owner 미정~~ → **전 페이지 owner: Youngjin 지정 완료** — P1~P5·index·radar(2026-07), decisions·maintenance(2026-08). 잔여: 역할 표의 playbook 관리자 미정 ⚠️.
+1. ~~전 항목 owner 미정~~ → **전 페이지 owner: Youngjin 지정 완료** — P1~P5·index·radar(2026-07), decisions·maintenance(2026-08), playbook 관리자 역할(2026-08). owner·역할 부채 전부 해소.
 2. ~~FAQ Top 10이 시드~~ → **Top 20 확장 + 출처 표기 완료(2026-07)**. 잔여: Slack 실제 문의 이력 확보 시 빈도순 재정렬([index](index.md)).
 3. **사내 자산 딥링크 미연결** — 워크숍/deck/skill 링크가 "확인 필요 ⚠️" 상태.
 4. **국내 고객 사례 부족** — 대부분 "사례 대기". 국내 로봇 기업이 NVIDIA 정렬이라 AWS 화이트스페이스.

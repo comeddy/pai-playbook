@@ -1,5 +1,5 @@
 ---
-ko_hash: 2081f5cd5f25bd7940b719a153cdae078205994a
+ko_hash: fd172d3597fd4c25e5a5ffbb57459124a97718de
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
@@ -124,7 +124,7 @@ graph TD
 | **Capture owner** | Monitor the channel, collect emoji candidates |
 | **Verifiers (multiple allowed)** | Primary-source verification of intake items — cross-check official announcements, original papers, and licenses. Participants are recorded in the promotion issue and the item's `verified by:` field |
 | **Pillar owner** | Gate judgment, promote/Radar decision, template authoring, updates |
-| **Playbook maintainer (TBD ⚠️)** | Staleness badges, structural consistency, quarterly review |
+| **Playbook maintainer (Youngjin)** | Staleness badges, structural consistency, quarterly review |
 
 ---
 
@@ -144,7 +144,7 @@ graph TD
 
 ## Known technical debt (as of 2026-07)
 
-1. ~~All items have no owner~~ → **All pages owner: Youngjin assigned** — P1–P5 · index · radar (2026-07), decisions · maintenance (2026-08). Remaining: the playbook-maintainer role in the roles table is TBD ⚠️.
+1. ~~All items have no owner~~ → **All pages owner: Youngjin assigned** — P1–P5 · index · radar (2026-07), decisions · maintenance (2026-08), and the playbook-maintainer role (2026-08). All owner/role debt is closed.
 2. ~~FAQ Top 10 is a seed~~ → **Expanded to Top 20 with a source column (2026-07)**. Remaining: re-rank by frequency once actual Slack inquiry history is available ([index](index.md)).
 3. **Internal asset deep links not connected** — workshop/deck/skill links are in "confirm needed ⚠️" state.
 4. **Insufficient domestic (Korea) customer cases** — mostly "case pending." Korean robotics companies are NVIDIA-aligned, so this is AWS whitespace.
