@@ -1,6 +1,6 @@
 # Maintenance — 소유권 · 갱신 규칙 · 승격 파이프라인
 
-_최종 갱신: 2026-07 · owner: 미정 ⚠️ · volatility: 낮음_
+_최종 갱신: 2026-07 · owner: Youngjin · volatility: 낮음_
 [← index로](index.md)
 
 > **L0 TL;DR**: 이 playbook이 **안 낡게 만드는 구조**를 정의한다. 휘발성/안정 정보를 분리하고, 모든 항목에 소유자·갱신일·휘발성을 붙이고, 슬랙 후보를 게이트로 걸러 승격한다. **이 페이지가 곧 운영 규칙**이다.
@@ -33,7 +33,7 @@ _owner: {이름} · 검증: {이름, 이름…} · updated: {YYYY-MM} · volatil
 - `updated`: 마지막 실검토 연월. 절대 날짜(상대 날짜 금지).
 - `volatility`: 높음/중간/낮음. staleness[^staleness] 주기를 결정.
 
-> ✅ **필러 P1~P5·index·radar owner: Youngjin** (2026-07 지정). decisions/maintenance는 아직 `미정 ⚠️` — 남은 부채.
+> ✅ **전 페이지 owner: Youngjin** — 필러 P1~P5·index·radar(2026-07 지정) + decisions·maintenance(2026-08 지정)로 owner 부채 해소.
 
 ---
 
@@ -141,7 +141,7 @@ graph TD
 
 ## 알려진 기술 부채 (2026-07 시점)
 
-1. ~~전 항목 owner 미정~~ → **P1~P5·index·radar owner: Youngjin 지정 완료(2026-07)**. decisions/maintenance owner는 미정 ⚠️.
+1. ~~전 항목 owner 미정~~ → **전 페이지 owner: Youngjin 지정 완료** — P1~P5·index·radar(2026-07), decisions·maintenance(2026-08). 잔여: 역할 표의 playbook 관리자 미정 ⚠️.
 2. ~~FAQ Top 10이 시드~~ → **Top 20 확장 + 출처 표기 완료(2026-07)**. 잔여: Slack 실제 문의 이력 확보 시 빈도순 재정렬([index](index.md)).
 3. **사내 자산 딥링크 미연결** — 워크숍/deck/skill 링크가 "확인 필요 ⚠️" 상태.
 4. **국내 고객 사례 부족** — 대부분 "사례 대기". 국내 로봇 기업이 NVIDIA 정렬이라 AWS 화이트스페이스.
@@ -156,7 +156,7 @@ graph TD
 실제 생성 결과를 보고 **포함 기준·템플릿·필러 가중치를 조정**하라. 마스터 프롬프트: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md).
 
 ---
-_owner: 미정 ⚠️ · updated: 2026-07 · volatility: 낮음 (운영 규칙 — 규칙 변경 시에만 갱신)_
+_owner: Youngjin · updated: 2026-07 · volatility: 낮음 (운영 규칙 — 규칙 변경 시에만 갱신)_
 
 <!-- 용어 각주 -->
 

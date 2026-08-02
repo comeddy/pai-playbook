@@ -1,9 +1,9 @@
 ---
-ko_hash: 1d6d057abe1f0348c2cf07f68fa41e2a47b04d5a
+ko_hash: b15a935d9e31947f7a299ed8e94daf83137f6af1
 ---
 # Decisions — 横向决策树
 
-_最终更新: 2026-07 · owner: 待定 ⚠️ · volatility: 中_
+_最终更新: 2026-07 · owner: Youngjin · volatility: 中_
 [← 返回 index](index.md)
 
 > **L0 TL;DR**: 把客户常遇到的 4 个岔路口以**决策表/树**（而非散文）呈现。每个决策都横跨多个支柱。赶时间就只看对应的表来确定方向。
@@ -131,7 +131,7 @@ _（下表为易变 —— 2026-07，以 AWS 官方区域表 `[1]` 直接确认�
 > 担心数据驻留的客户: 先让其确认 **AgentCore 首尔 GA** 来安心（更正过时的"首尔不支持"信息）。→ [pillar-5](pillar-5.md)。
 
 ---
-_owner: 待定 ⚠️ · updated: 2026-07 · volatility: 中（树的原理为低，实例/区域细节为高）_
+_owner: Youngjin · updated: 2026-07 · volatility: 中（树的原理为低，实例/区域细节为高）_
 
 <!-- 용어 각주 -->
 [^ctrlfreq]: **控制频率（control frequency）** — 机器人每秒更新多少次控制命令（Hz）。平衡·抓取等反应回路需要 30~100Hz 以上，经由存在往返延迟的云在物理上不可能实现 — 是划分推理部署位置的第一判别因素。

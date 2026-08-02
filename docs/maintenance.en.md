@@ -1,9 +1,9 @@
 ---
-ko_hash: 32977ddb9ac6915e77425c2bef8f48913273b39f
+ko_hash: 2081f5cd5f25bd7940b719a153cdae078205994a
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
-_Last updated: 2026-07 · owner: TBD ⚠️ · volatility: low_
+_Last updated: 2026-07 · owner: Youngjin · volatility: low_
 [← back to index](index.md)
 
 > **L0 TL;DR**: This defines the **structure that keeps this playbook from going stale**. It separates volatile from stable information, attaches an owner, update date, and volatility to every item, and filters Slack candidates through a gate before promotion. **This page is itself the operating rules.**
@@ -36,7 +36,7 @@ _owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatili
 - `updated`: the year-month of last actual review. An absolute date (no relative dates).
 - `volatility`: high/medium/low. Determines the staleness[^staleness] cadence.
 
-> ✅ **Pillars P1–P5 · index · radar owner: Youngjin** (assigned 2026-07). decisions/maintenance are still `TBD ⚠️` — remaining debt.
+> ✅ **All pages owner: Youngjin** — pillars P1–P5 · index · radar (assigned 2026-07) + decisions · maintenance (assigned 2026-08); the owner debt is closed.
 
 ---
 
@@ -144,7 +144,7 @@ graph TD
 
 ## Known technical debt (as of 2026-07)
 
-1. ~~All items have no owner~~ → **P1–P5 · index · radar owner: Youngjin assigned (2026-07)**. decisions/maintenance owners are TBD ⚠️.
+1. ~~All items have no owner~~ → **All pages owner: Youngjin assigned** — P1–P5 · index · radar (2026-07), decisions · maintenance (2026-08). Remaining: the playbook-maintainer role in the roles table is TBD ⚠️.
 2. ~~FAQ Top 10 is a seed~~ → **Expanded to Top 20 with a source column (2026-07)**. Remaining: re-rank by frequency once actual Slack inquiry history is available ([index](index.md)).
 3. **Internal asset deep links not connected** — workshop/deck/skill links are in "confirm needed ⚠️" state.
 4. **Insufficient domestic (Korea) customer cases** — mostly "case pending." Korean robotics companies are NVIDIA-aligned, so this is AWS whitespace.
@@ -159,7 +159,7 @@ graph TD
 Look at the actual generation results and **adjust the inclusion criteria, template, and pillar weighting**. Master prompt: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md).
 
 ---
-_owner: TBD ⚠️ · updated: 2026-07 · volatility: low (operating rules — updated only when the rules change)_
+_owner: Youngjin · updated: 2026-07 · volatility: low (operating rules — updated only when the rules change)_
 
 <!-- 용어 각주 -->
 

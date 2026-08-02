@@ -1,10 +1,10 @@
 ---
-ko_hash: 32977ddb9ac6915e77425c2bef8f48913273b39f
+ko_hash: 2081f5cd5f25bd7940b719a153cdae078205994a
 ---
 # Maintenance — 所有権 · 更新ルール · 昇格パイプライン
 
 
-_最終更新: 2026-07 · owner: 未定 ⚠️ · volatility: 低_
+_最終更新: 2026-07 · owner: Youngjin · volatility: 低_
 [← index へ](index.md)
 
 > **L0 TL;DR**: この playbook を **古びさせない構造** を定義します。揮発性/安定情報を分離し、すべての項目に所有者·更新日·揮発性を付け、Slack 候補をゲートでふるいにかけて昇格させます。**このページこそが運営ルール** です。
@@ -37,7 +37,7 @@ _owner: {名前} · 検証: {名前, 名前…} · updated: {YYYY-MM} · volatil
 - `updated`: 最後に実際にレビューした年月。絶対日付（相対日付は禁止）。
 - `volatility`: 高/中/低。staleness[^staleness] 周期を決定します。
 
-> ✅ **ピラー P1～P5・index・radar owner: Youngjin**（2026-07 指定）。decisions/maintenance はまだ `未定 ⚠️` — 残る負債です。
+> ✅ **全ページ owner: Youngjin** — ピラー P1～P5・index・radar（2026-07 指定）+ decisions・maintenance（2026-08 指定）で owner 負債は解消しました。
 
 ---
 
@@ -145,7 +145,7 @@ graph TD
 
 ## 既知の技術的負債（2026-07 時点）
 
-1. ~~全項目 owner 未定~~ → **P1～P5・index・radar owner: Youngjin 指定完了(2026-07)**。decisions/maintenance の owner は未定 ⚠️。
+1. ~~全項目 owner 未定~~ → **全ページ owner: Youngjin 指定完了** — P1～P5・index・radar（2026-07）、decisions・maintenance（2026-08）。残り：役割表の playbook 管理者は未定 ⚠️。
 2. ~~FAQ Top 10 がシード~~ → **Top 20 へ拡張 + 出典列を追加（2026-07）**。残り：Slack の実際の問い合わせ履歴を入手したら頻度順に再整列（[index](index.md)）。
 3. **社内資産のディープリンク未接続** — ワークショップ/deck/skill リンクが「要確認 ⚠️」状態。
 4. **韓国顧客事例の不足** — 大半が「事例待ち」。韓国ロボット企業が NVIDIA 陣営のため AWS ホワイトスペース。
@@ -160,7 +160,7 @@ graph TD
 実際の生成結果を見て **包含基準·テンプレート·ピラー重み付けを調整** してください。マスタープロンプト: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md)。
 
 ---
-_owner: 未定 ⚠️ · updated: 2026-07 · volatility: 低（運営ルール — ルール変更時のみ更新）_
+_owner: Youngjin · updated: 2026-07 · volatility: 低（運営ルール — ルール変更時のみ更新）_
 
 <!-- 용어 각주 -->
 

@@ -1,9 +1,9 @@
 ---
-ko_hash: 1d6d057abe1f0348c2cf07f68fa41e2a47b04d5a
+ko_hash: b15a935d9e31947f7a299ed8e94daf83137f6af1
 ---
 # Decisions — Cross-cutting Decision Trees
 
-_Last updated: 2026-07 · owner: TBD ⚠️ · volatility: medium_
+_Last updated: 2026-07 · owner: Youngjin · volatility: medium_
 [← back to index](index.md)
 
 > **L0 TL;DR**: The 4 crossroads customers hit most often, as **decision tables/trees** instead of prose. Each decision cuts across pillars. In a hurry, just read the relevant table and set your direction.
@@ -131,7 +131,7 @@ _(The table below is volatile — 2026-07, based on direct check of the official
 > Customers worried about data residency: first confirm **AgentCore Seoul GA** to reassure them (correct the outdated "not available in Seoul" info). → [pillar-5](pillar-5.md).
 
 ---
-_owner: TBD ⚠️ · updated: 2026-07 · volatility: medium (tree principles are low, instance/region details are high)_
+_owner: Youngjin · updated: 2026-07 · volatility: medium (tree principles are low, instance/region details are high)_
 
 <!-- 용어 각주 -->
 [^ctrlfreq]: **control frequency** — how many times per second a robot updates its control commands (Hz). Reactive loops like balance and grasping need 30~100Hz or more, which is physically impossible over a cloud round-trip — the first discriminator for where inference is deployed.

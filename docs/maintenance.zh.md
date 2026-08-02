@@ -1,9 +1,9 @@
 ---
-ko_hash: 32977ddb9ac6915e77425c2bef8f48913273b39f
+ko_hash: 2081f5cd5f25bd7940b719a153cdae078205994a
 ---
 # Maintenance — 所有权 · 更新规则 · 晋升管道
 
-_最终更新: 2026-07 · owner: 待定 ⚠️ · volatility: 低_
+_最终更新: 2026-07 · owner: Youngjin · volatility: 低_
 [← 返回 index](index.md)
 
 > **L0 TL;DR**: 定义让这份 playbook **不过时的结构**。分离易变/稳定信息，为所有条目附上所有者·更新日·易变性，并通过门禁筛选 Slack 候选来晋升。**本页面本身就是运营规则**。
@@ -36,7 +36,7 @@ _owner: {名字} · 验证: {名字, 名字…} · updated: {YYYY-MM} · volatil
 - `updated`: 最后实际复核的年月。绝对日期（禁止相对日期）。
 - `volatility`: 高/中/低。决定 staleness[^staleness] 周期。
 
-> ✅ **支柱 P1~P5·index·radar owner: Youngjin**（2026-07 指定）。decisions/maintenance 仍为 `待定 ⚠️` —— 剩余债务。
+> ✅ **全部页面 owner: Youngjin** —— 支柱 P1~P5·index·radar（2026-07 指定）+ decisions·maintenance（2026-08 指定），owner 债务已清偿。
 
 ---
 
@@ -144,7 +144,7 @@ graph TD
 
 ## 已知技术债务（截至 2026-07）
 
-1. ~~全部条目 owner 未定~~ → **P1~P5·index·radar owner: Youngjin 指定完成(2026-07)**。decisions/maintenance owner 为待定 ⚠️。
+1. ~~全部条目 owner 未定~~ → **全部页面 owner: Youngjin 指定完成** —— P1~P5·index·radar（2026-07）、decisions·maintenance（2026-08）。剩余：角色表中的 playbook 管理员为待定 ⚠️。
 2. ~~FAQ Top 10 为种子~~ → **扩展为 Top 20 并标注来源（2026-07）**。剩余：获取 Slack 实际问询记录后按频率重新排序（[index](index.md)）。
 3. **内部资产深链未连接** —— 研讨会/deck/skill 链接处于"需确认 ⚠️"状态。
 4. **韩国客户案例不足** —— 大多为"案例待定"。韩国机器人企业为 NVIDIA 阵营，故 AWS 存在空白地带。
@@ -159,7 +159,7 @@ graph TD
 根据实际生成结果**调整纳入标准·模板·支柱权重**。主提示: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md)。
 
 ---
-_owner: 待定 ⚠️ · updated: 2026-07 · volatility: 低（运营规则 —— 仅在规则变更时更新）_
+_owner: Youngjin · updated: 2026-07 · volatility: 低（运营规则 —— 仅在规则变更时更新）_
 
 <!-- 용어 각주 -->
 
