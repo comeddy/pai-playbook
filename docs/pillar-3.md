@@ -64,7 +64,7 @@ graph LR
 
 **고객 사례**: 사례 대기 (Unitree H1 학습은 [pillar-2](pillar-2.md)의 AWS 블로그 참조).
 
-**➡️ 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/comeddy/pai-sim-isaaclab)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO[^ppo] 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
+**➡️ 다음 액션**: **"Marketplace Isaac Sim AMI를 g6e.4xlarge에 띄우고 NICE DCV로 접속하는 30분 핸즈온"** 을 첫 제안으로, 이어서 **[pai-sim-isaaclab 엔드투엔드 핸즈온](https://github.com/aws-samples/sample-issac-lab-on-aws)**(Terraform으로 g6e 프로비저닝 → Isaac Lab 4족보행 PPO[^ppo] 헤드리스 학습 → 정책 export, ~2h/$12)으로 헤드리스 학습까지 연결. 라이선스 질문 나오면 "소스 Apache지만 재배포/SaaS면 AI Enterprise 필요" 를 정확히 안내.
 
 **🔗 관련 자산**:
 

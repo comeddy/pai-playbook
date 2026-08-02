@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Point the pillar-3 pai-sim-isaaclab hands-on link to its new aws-samples home (sample-issac-lab-on-aws) — same project, donated upstream; verified public before the swap
 - Replace the sim-to-real footnote video with NVIDIA's official sim-to-real showcase; unify footnote translations across pages, normalize definition dashes, and institutionalize the footnote convention (maintenance page · translation glossary · mkdocs comment)
 - Switch the Radar auto-scan from weekly to daily (02:00 UTC; intake table now re-evaluate-and-append with a ~10-row cap, no commit on zero new items) and the staleness-badge redeploy from weekly to daily (00:00 UTC)
 
@@ -162,6 +163,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- pillar-3 pai-sim-isaaclab 핸즈온 링크를 aws-samples 이관 주소(sample-issac-lab-on-aws)로 변경 — 동일 프로젝트의 업스트림 기증, 공개 전환 확인 후 교체
 - sim-to-real 각주 영상을 NVIDIA 공식 sim-to-real 쇼케이스로 교체, 페이지 간 각주 번역 통일·정의 대시 정규화, 각주 관례 제도화(maintenance 페이지·번역 용어집·mkdocs 주석)
 - Radar 자동 스캔을 주간→일간(매일 02:00 UTC — 유입 표는 재평가+추가 방식·~10행 상한·신규 0건 시 무커밋)으로, staleness 배지 재배포를 주간→일간(매일 00:00 UTC)으로 전환
 
@@ -290,6 +292,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- 将 pillar-3 的 pai-sim-isaaclab 实操链接指向其 aws-samples 新地址（sample-issac-lab-on-aws）— 同一项目捐赠至上游，确认公开后替换
 - 将 sim-to-real 脚注视频更换为 NVIDIA 官方 sim-to-real 展示；统一跨页脚注翻译并规范定义破折号，将脚注惯例制度化（maintenance 页面·翻译术语表·mkdocs 注释）
 - Radar 自动扫描由每周改为每日（02:00 UTC —— 流入表改为重估+追加方式·约 10 行上限·无新增则不提交），staleness 徽章重新部署也由每周改为每日（00:00 UTC）
 
@@ -418,6 +421,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- pillar-3 の pai-sim-isaaclab ハンズオンリンクを aws-samples 移管先（sample-issac-lab-on-aws）に変更 — 同一プロジェクトのアップストリーム寄贈、公開転換を確認して差し替え
 - sim-to-real 脚注動画を NVIDIA 公式 sim-to-real ショーケースに差し替え、ページ間の脚注翻訳を統一・定義ダッシュを正規化、脚注慣例を制度化（maintenance ページ・翻訳用語集・mkdocs コメント）
 - Radar 自動スキャンを週次→日次（毎日 02:00 UTC — 流入表は再評価+追加方式・約 10 行上限・新規 0 件ならコミットなし）へ、staleness バッジ再デプロイも週次→日次（毎日 00:00 UTC）へ切替
 

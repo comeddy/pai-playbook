@@ -1,5 +1,5 @@
 ---
-ko_hash: 1c7fcbea88bac643fc982b48aecab329e0660596
+ko_hash: 8917e699dc4c867556d2cf544e0f92aa24744fe1
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -68,7 +68,7 @@ graph LR
 
 **顧客事例**: 事例待ち（Unitree H1 学習は [pillar-2](pillar-2.md) の AWS ブログを参照）。
 
-**➡️ 次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に、続いて **[pai-sim-isaaclab エンドツーエンドハンズオン](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform で g6e をプロビジョニング → Isaac Lab 四足歩行 PPO[^ppo] ヘッドレス学習 → ポリシー export、約2時間/$12）でヘッドレス学習まで接続。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
+**➡️ 次のアクション**: **「Marketplace の Isaac Sim AMI を g6e.4xlarge に立ち上げ、NICE DCV で接続する 30 分ハンズオン」** を最初の提案に、続いて **[pai-sim-isaaclab エンドツーエンドハンズオン](https://github.com/aws-samples/sample-issac-lab-on-aws)**（Terraform で g6e をプロビジョニング → Isaac Lab 四足歩行 PPO[^ppo] ヘッドレス学習 → ポリシー export、約2時間/$12）でヘッドレス学習まで接続。ライセンスの質問が出たら「ソースは Apache だが再配布/SaaS なら AI Enterprise が必要」を正確に案内。
 
 **🔗 関連資産**:
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 1c7fcbea88bac643fc982b48aecab329e0660596
+ko_hash: 8917e699dc4c867556d2cf544e0f92aa24744fe1
 ---
 # Pillar 3 — Simulation
 
@@ -67,7 +67,7 @@ graph LR
 
 **Customer case**: case pending (for Unitree H1 training, see the AWS blog in [pillar-2](pillar-2.md)).
 
-**➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/comeddy/pai-sim-isaaclab)** (Terraform provisions g6e → Isaac Lab quadruped PPO[^ppo] headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
+**➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/aws-samples/sample-issac-lab-on-aws)** (Terraform provisions g6e → Isaac Lab quadruped PPO[^ppo] headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
 **🔗 Related assets**:
 

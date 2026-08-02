@@ -1,5 +1,5 @@
 ---
-ko_hash: 1c7fcbea88bac643fc982b48aecab329e0660596
+ko_hash: 8917e699dc4c867556d2cf544e0f92aa24744fe1
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -67,7 +67,7 @@ graph LR
 
 **客户案例**: 案例待定（Unitree H1 训练见 [pillar-2](pillar-2.md) 的 AWS 博客）。
 
-**➡️ 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/comeddy/pai-sim-isaaclab)**（Terraform 预置 g6e → Isaac Lab 四足 PPO[^ppo] 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
+**➡️ 后续行动**: **将"在 g6e.4xlarge 上启动 Marketplace Isaac Sim AMI 并用 NICE DCV 接入的 30 分钟 hands-on"作为首个提议**，随后以 **[pai-sim-isaaclab 端到端实操](https://github.com/aws-samples/sample-issac-lab-on-aws)**（Terraform 预置 g6e → Isaac Lab 四足 PPO[^ppo] 无头训练 → 策略导出，约 2 小时/$12）衔接到无头训练。出现许可证问题则准确说明"源码 Apache，但再分发/SaaS 需 AI Enterprise"。
 
 **🔗 相关资产**:
 
