@@ -1,5 +1,5 @@
 ---
-ko_hash: 124f5792584af3c8b8517389204357a7405df105
+ko_hash: 9176c259bb26d7436c56b6ac241aaeaa620e677e
 ---
 # Guide — How This Playbook Works
 
