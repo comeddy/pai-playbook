@@ -1,9 +1,9 @@
 ---
-ko_hash: 537674ce72f440aa5efc1db9f7a75937d99b64df
+ko_hash: 124f5792584af3c8b8517389204357a7405df105
 ---
 # Guide — How This Playbook Works
 
-_Last updated: 2026-07 · owner: Youngjin · volatility: low (process page — updated only when the pipeline changes)_
+_Last updated: 2026-08 · owner: Youngjin · volatility: low (process page — updated only when the pipeline changes)_
 [← to index](index.md)
 
 > **L0 TL;DR**: This site is not a news archive but a **verification pipeline**. Newly announced technologies, papers, and releases don't land in the body right away — an automated scan gathers candidates, humans verify against primary sources, and only items that pass 2 of the 4 gates (THE FILTER) make it into the body. Even after being published, freshness is monitored automatically, content is synchronized across 4 languages, and it must pass the build gate before it deploys.
@@ -56,6 +56,26 @@ Published items age too. Each page has a volatility grade — high 1 month / med
 ## ⑦ Deployment pipeline
 
 When something is pushed to `main`, CI runs the freshness check and the translation-sync check and deploys to GitHub Pages only if the **strict build** (which fails if there is even a single broken link or anchor) passes. In other words, every page you're looking at right now has passed this gate.
+
+---
+
+## ⑧ Hands-on review guide (owner · verifiers)
+
+If you are assigned as a page owner or verifier, the following is the whole job. All you need is **repository access + 10 minutes on this page**.
+
+**When — the system tells you.** When the **"⏳ review needed" badge** appears at the top of a live page, that page is due (auto-attached when the volatility threshold of 1/3/6 months is exceeded). To look ahead, one line in the repository — `python3 scripts/check_staleness.py --check` — prints the status of every page.
+
+**Where — the Korean source in the repository.** Clone the [GitHub repository](https://github.com/comeddy/pai-playbook) and review `docs/<page>.md` (ko). The live site is for checking; editing always happens in the repository.
+
+**How — five steps:**
+
+1. **Fact check** — open the official-source links attached to each item name (all connection-verified) and confirm versions, licenses, and GA status against primary sources.
+2. **Update the volatile blocks** — the collapsed `<details>` blocks are designed so you only touch version/price/region numbers there. The body (stable layer) is principles and rarely changes.
+3. **Update the metadata** — when the review is done, set `updated:` to the current year-month. This is the only legitimate way to clear the badge (non-content work such as footnotes or formatting does not bump it).
+4. **Sync the 4 languages** — if you changed ko, apply the same change to en/zh/ja and refresh `ko_hash` (procedure: the repository `CLAUDE.md`; terminology: `i18n/glossary.md`).
+5. **Gates, then push** — `python3 scripts/check_translation_sync.py` (0 out of sync) and `mkdocs build --strict` (exit 0) must pass before committing. Push to main → automatic deploy.
+
+**If languages are split across people** — the owner is one person per page (based on the ko source), and language reviewers are verifiers recorded in the item's `verified by:` field. Remember one rule: **never edit a translation file directly — always start from the ko source**. When ko changes, the sync check reports which translations fell behind, and the language reviewer updates only those files per the glossary.
 
 ---
 
