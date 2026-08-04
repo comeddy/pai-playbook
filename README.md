@@ -18,6 +18,8 @@ AWS SA를 위한 검증 우선 Physical AI 참조 자산 — 아키텍처 방향
 
 Physical AI Playbook is a curated reference site that lets an AWS solutions architect answer a customer's Physical AI question — robotics simulation, VLA model training, sim-to-real, data pipelines, agentic orchestration — with architecture direction, AWS mapping, and a concrete next action in under five minutes. Unlike a news archive, every item must pass a verification gate (THE FILTER) before it enters the body, and the site continuously monitors its own freshness and translation drift. The site is published in Korean (source), English, Chinese, and Japanese at [comeddy.github.io/pai-playbook](https://comeddy.github.io/pai-playbook/).
 
+> **Disclaimer**: This is a personal project. It is **not** official AWS (Amazon Web Services) documentation and does not represent AWS positions. Always re-verify service specifications, pricing, and regional availability against the [official AWS documentation](https://docs.aws.amazon.com/). Maturity verdicts on third-party products reflect the maintainer's assessment based on each item's source grade.
+
 ## Features
 
 - **Verification pipeline (THE FILTER)** — candidates enter a Radar queue as unverified, and only items meeting 2 of 4 criteria (production-validated, AWS-mappable, real inquiry history, GA) are promoted to the body with maturity labels and source grades.
@@ -122,6 +124,8 @@ This project is licensed under the Creative Commons Attribution 4.0 Internationa
 ## 개요
 
 Physical AI Playbook은 AWS 솔루션즈 아키텍트가 고객의 Physical AI 질문 — 로보틱스 시뮬레이션, VLA 모델 학습, sim-to-real, 데이터 파이프라인, 에이전트 오케스트레이션 — 에 대해 아키텍처 방향·AWS 매핑·다음 액션을 5분 안에 제시할 수 있게 하는 큐레이션 참조 사이트입니다. 뉴스 아카이브와 달리 모든 항목은 검증 관문(THE FILTER)을 통과해야 본문에 실리며, 사이트 스스로 신선도와 번역 표류를 상시 감시합니다. 한국어(원본)·영어·중국어·일본어 4개 언어로 [comeddy.github.io/pai-playbook](https://comeddy.github.io/pai-playbook/)에 배포됩니다.
+
+> **면책 안내**: 이 사이트는 개인 프로젝트이며, **AWS(Amazon Web Services)의 공식 문서·공식 입장이 아닙니다.** 서비스 사양·가격·리전 지원은 반드시 [AWS 공식 문서](https://docs.aws.amazon.com/)에서 재확인하시기 바랍니다. 타사 제품에 대한 성숙도 판정은 각 항목의 출처 등급에 근거한 운영자 개인의 평가입니다.
 
 ## 주요 기능
 

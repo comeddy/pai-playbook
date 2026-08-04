@@ -1,5 +1,5 @@
 ---
-ko_hash: 4bc20de9d96f72e6370a2f9a07f1b88907924492
+ko_hash: 0931a676f6f041549e0a671aa41c9db3a0bdc677
 ---
 # Executive Conversation Guide — For SAs
 
@@ -54,7 +54,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: medium_
 | "Optimus goes into mass production soon" | "Humanoids are at the verification-pilot stage. Our proposal is the earlier stage — data/sim infrastructure" |
 | (Citing radar ⚪/🔵 items as if they were mature capabilities) | (Maturity label as-is: "It was announced, but it's not yet production-verified") |
 | "Figure 03 runs an 8-hour autonomous shift" | "That's a CEO tweet with no independent verification. What's verified is the Figure 02@BMW pilot" ([radar](radar.md#-hardware--deployment-roadmap--demo)) |
-| "1X Neo does household chores fully autonomously" | "Autonomy is 60–70%; the rest is VR teleoperation" ([radar](radar.md#-hardware--deployment-roadmap--demo)) |
+| "1X Neo does household chores fully autonomously" | "The 1X CEO openly acknowledges it runs on mixed autonomy + VR teleoperation. Even the '60–70% autonomy' figure has no primary source" ([radar](radar.md#-hardware--deployment-roadmap--demo)) |
 | "Simulation alone completes a manipulation policy" | "Manipulation sim-to-real is still unsolved. Fine-tuning on real data is essential" ([pillar-4](pillar-4.md)) |
 
 Always check the maturity labels in [Radar](radar.md) for the latest status before you speak.

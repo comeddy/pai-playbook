@@ -38,7 +38,7 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음_
 | **Tesla Optimus V3** | ⚪ Hype | Musk 주장뿐, 생산 미시작 | 검증된 배포 |
 | **Hyundai·BD 전기식 [Atlas](https://bostondynamics.com/atlas/)** | ⚪ 로드맵 | 전기식 Atlas 제품 버전 공개(2026-07, BD 공식 `[3]`). 배포 2.5만+대·양산능력 3만/년 모두 **2028 시작**, 현재 실가동 ~0. 2026은 소규모 파일럿만(현대 RMAC + Google DeepMind). ⚠️ "5세대"는 오칭 | 실가동 출하 시작 |
 | **[Apptronik Apollo 2 + Robot Park](https://apptronik.com/)** | 🟡 파일럿 | Mercedes-Benz·GXO 운영 파일럿 `[3]` + Google DeepMind Gemini Robotics 데이터 파트너십(9만 sqft). 자율·상용 확산 미검증. AWS 매핑은 일반적(데이터→S3/SageMaker), 파트너십 자체는 Google `[4]` | 상용 배포 규모 + 자율 성과 검증 |
-| **[1X Neo](https://www.1x.tech/neo)** 자율성 | 🟡 Preview | 제품 출시했으나 자율 ~60~70%, 나머지 VR 원격조작 | 진짜 자율 검증 |
+| **[1X Neo](https://www.1x.tech/neo)** 자율성 | 🟡 Preview | 자율+VR 원격조작(Expert Mode) 혼합 운용 — CEO 직접 인정 ([Engadget](https://www.engadget.com/ai/1x-neo-is-a-20000-home-robot-that-will-learn-chores-via-teleoperation-040252200.html) `[3]`). "자율 60~70%" 수치는 1차 출처 없음 `[4]` | 진짜 자율 검증 |
 | **[Figure 03](https://www.figure.ai/) "8시간 자율 시프트"** | ⚪ Hype | CEO 트윗, 독립 검증 없음 (Figure 02@BMW는 검증 파일럿) | 3자 자율성 감사 |
 | **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) 채택** (Doosan/LG/Samsung) | 🟢 GA(발표) | 채택 "발표"지 프로덕션 검증 아님 | 프로덕션 사례 공개 |
 

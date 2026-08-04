@@ -1,5 +1,5 @@
 ---
-ko_hash: e54960172a948369d4c1f83f3ad68020d430981e
+ko_hash: 0cc222c14f07960096566dd2f43b1983319ba9b0
 ---
 # Radar — Queue / Watchlist
 
@@ -41,7 +41,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 | **Tesla Optimus V3** | ⚪ Hype | Musk claims only, production not started | Validated deployment |
 | **Hyundai·BD electric [Atlas](https://bostondynamics.com/atlas/)** | ⚪ Roadmap | Electric Atlas product version unveiled (2026-07, BD official `[3]`). Deployment 25k+ units & 30k/yr capacity both **start 2028**; ~0 in live production today. 2026 is a small pilot only (Hyundai RMAC + Google DeepMind). ⚠️ "Gen 5" is a misnomer | Verified real-operation shipments begin |
 | **[Apptronik Apollo 2 + Robot Park](https://apptronik.com/)** | 🟡 Pilot | Operational pilots at Mercedes-Benz & GXO `[3]` + Google DeepMind Gemini Robotics data partnership (90k sq ft). Autonomy/commercial scale unverified. AWS mapping is generic (data→S3/SageMaker); the partnership itself is Google `[4]` | Commercial deployment scale + validated autonomy |
-| **[1X Neo](https://www.1x.tech/neo)** autonomy | 🟡 Preview | Product shipped but autonomy ~60–70%, rest is VR teleoperation | Validation of true autonomy |
+| **[1X Neo](https://www.1x.tech/neo)** autonomy | 🟡 Preview | Mixed autonomy + VR teleoperation (Expert Mode) — acknowledged by the CEO directly ([Engadget](https://www.engadget.com/ai/1x-neo-is-a-20000-home-robot-that-will-learn-chores-via-teleoperation-040252200.html) `[3]`). The "60–70% autonomy" figure has no primary source `[4]` | Validation of true autonomy |
 | **[Figure 03](https://www.figure.ai/) "8-hour autonomous shift"** | ⚪ Hype | CEO tweet, no independent validation (Figure 02@BMW is a validated pilot) | Third-party autonomy audit |
 | **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) adoption** (Doosan/LG/Samsung) | 🟢 GA(announced) | Adoption is "announced," not production-validated | Public production case |
 

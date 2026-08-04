@@ -1,5 +1,5 @@
 ---
-ko_hash: e54960172a948369d4c1f83f3ad68020d430981e
+ko_hash: 0cc222c14f07960096566dd2f43b1983319ba9b0
 ---
 # Radar — 队列 / 观察列表
 
@@ -41,7 +41,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **Tesla Optimus V3** | ⚪ Hype | 仅 Musk 的主张，生产未启动 | 经过验证的部署 |
 | **Hyundai·BD 全电动 [Atlas](https://bostondynamics.com/atlas/)** | ⚪ 路线图 | 全电动 Atlas 产品版本公开（2026-07，BD 官方 `[3]`）。部署 2.5 万+台·产能 3 万/年均 **2028 启动**，当前实际运行 ~0。2026 仅小规模试点（现代 RMAC + Google DeepMind）。⚠️"第五代"为误称 | 实际运行出货启动 |
 | **[Apptronik Apollo 2 + Robot Park](https://apptronik.com/)** | 🟡 试点 | Mercedes-Benz·GXO 运营试点 `[3]` + Google DeepMind Gemini Robotics 数据合作（9 万平方英尺）。自主·商用扩散未验证。AWS 映射为通用（数据→S3/SageMaker），合作本身属 Google `[4]` | 商用部署规模 + 自主成果验证 |
-| **[1X Neo](https://www.1x.tech/neo)** 自主性 | 🟡 Preview | 已发布产品但自主 ~60~70%，其余为 VR 远程操作 | 真正自主的验证 |
+| **[1X Neo](https://www.1x.tech/neo)** 自主性 | 🟡 Preview | 自主 + VR 遥操作（Expert Mode）混合运行 — CEO 亲自承认（[Engadget](https://www.engadget.com/ai/1x-neo-is-a-20000-home-robot-that-will-learn-chores-via-teleoperation-040252200.html) `[3]`）。"自主 60~70%" 的数字无一手来源 `[4]` | 真正自主的验证 |
 | **[Figure 03](https://www.figure.ai/) "8 小时自主班次"** | ⚪ Hype | CEO 推文，无独立验证（Figure 02@BMW 为已验证试点） | 第三方自主性审计 |
 | **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) 采用**（Doosan/LG/Samsung） | 🟢 GA（公布） | 采用为"公布"而非生产验证 | 公开生产案例 |
 
