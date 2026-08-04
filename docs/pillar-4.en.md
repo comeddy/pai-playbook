@@ -1,5 +1,5 @@
 ---
-ko_hash: 4f97e5ff7eaaffda03d183cfdb04a4d084ffa3b0
+ko_hash: 3b1e492892a261f2c662042eda12eb33aad3e5a2
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -112,7 +112,7 @@ graph LR
 |---|---|
 | Paid · validated | ANYmal (quadruped, hundreds), Agility Digit@GXO (100k+ totes) |
 | Production pilot (metrics · autonomy, vendor-reported) | Figure 02@BMW (~1,250h, 90k+ parts→Figure 03), Apptronik Apollo@Mercedes |
-| Product shipped but not autonomous | 1X Neo (autonomy ~60~70%, rest VR teleoperation "Expert Mode") |
+| Product shipped but not autonomous | 1X Neo (mixed autonomy + VR teleoperation "Expert Mode" — the "60–70% autonomy" figure has no primary source, see [radar](radar.md)) |
 | Impressive demo / research | Atlas agile motions, Spot RL research kit (product is MPC), Unitree agile skills, Figure 03 "8-hour autonomy" claim (CEO tweet) |
 | Announced · roadmap (0 units operating) | Hyundai Atlas 25k units (2028, union opposition), Tesla Optimus V3 |
 </details>
@@ -215,7 +215,7 @@ graph LR
 - **Humanoid "production" metrics are mostly vendor PR** — no independent autonomy audit. Only Digit@GXO · Figure@BMW are customer cross-confirmed. 1X Neo is "a product, but actually teleoperated."
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: medium (edge HW · vendor metrics are high) · sources: [1] official/paper, [2] AWS internal validation, [3] vendor/PR, [4] unverified. 2026 arXiv preprints are non-peer-reviewed (illustrative)._
+_owner: Youngjin · updated: 2026-07 · volatility: medium (edge HW · vendor metrics are high) · sources: [1] official/paper, [3] vendor/PR, [4] unverified. 2026 arXiv preprints are non-peer-reviewed (illustrative)._
 
 <!-- 용어 각주 -->
 

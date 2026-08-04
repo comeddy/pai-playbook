@@ -109,7 +109,7 @@ graph LR
 |---|---|
 | 유료·검증 | ANYmal(사족, 수백 대), Agility Digit@GXO(10만+ 토트) |
 | 프로덕션 파일럿(메트릭·자율, 벤더보고) | Figure 02@BMW(~1,250h, 9만+ 부품→Figure 03), Apptronik Apollo@Mercedes |
-| 제품 출시했으나 자율 아님 | 1X Neo(자율 ~60~70%, 나머지 VR 원격조작 "Expert Mode") |
+| 제품 출시했으나 자율 아님 | 1X Neo(자율+VR 원격조작 "Expert Mode" 혼합 운용 — "자율 60~70%" 수치는 1차 출처 없음, [radar](radar.md) 참조) |
 | 인상적 데모/연구 | Atlas 애자일 동작, Spot RL 연구킷(제품은 MPC), Unitree 애자일 스킬, Figure 03 "8시간 자율" 주장(CEO 트윗) |
 | 발표·로드맵(0대 가동) | Hyundai Atlas 2.5만 대(2028, 노조 반대), Tesla Optimus V3 |
 </details>
@@ -212,7 +212,7 @@ graph LR
 - **휴머노이드 "프로덕션" 지표는 대부분 벤더 PR** — 독립 자율성 감사 없음. Digit@GXO·Figure@BMW만 고객 교차확인. 1X Neo는 "제품이지만 실제론 원격조작".
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 지표는 높음) · sources: [1] 공식/논문, [2] AWS 내부 검증, [3] 벤더/PR, [4] 미검증. 2026 arXiv 프리프린트는 비심사(illustrative)._
+_owner: Youngjin · updated: 2026-07 · volatility: 중간 (엣지 HW·벤더 지표는 높음) · sources: [1] 공식/논문, [3] 벤더/PR, [4] 미검증. 2026 arXiv 프리프린트는 비심사(illustrative)._
 
 <!-- 용어 각주 -->
 

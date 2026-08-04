@@ -1,5 +1,5 @@
 ---
-ko_hash: 4f97e5ff7eaaffda03d183cfdb04a4d084ffa3b0
+ko_hash: 3b1e492892a261f2c662042eda12eb33aad3e5a2
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -112,7 +112,7 @@ graph LR
 |---|---|
 | 付费·已验证 | ANYmal（四足，数百台）, Agility Digit@GXO（10 万+ 料箱） |
 | 生产试点（有指标·自主，厂商报告） | Figure 02@BMW（~1,250h, 9 万+ 零件→Figure 03）, Apptronik Apollo@Mercedes |
-| 已发布产品但非自主 | 1X Neo（自主 ~60~70%，其余为 VR 远程操作 "Expert Mode"） |
+| 已发布产品但非自主 | 1X Neo（自主 + VR 遥操作 "Expert Mode" 混合运行 —— "自主 60~70%" 的数字无一手来源，参见 [radar](radar.md)） |
 | 令人印象深刻的演示/研究 | Atlas 敏捷动作, Spot RL 研究套件（产品为 MPC）, Unitree 敏捷技能, Figure 03 "8 小时自主"主张（CEO 推文） |
 | 公布·路线图（0 台运行） | Hyundai Atlas 2.5 万台（2028，工会反对）, Tesla Optimus V3 |
 </details>
@@ -215,7 +215,7 @@ graph LR
 - **人形机器人"生产"指标大多是厂商 PR** —— 无独立自主性审计。只有 Digit@GXO·Figure@BMW 经客户交叉确认。1X Neo 是"产品但实际上是远程操作"。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 中（边缘 HW·厂商指标为高）· sources: [1] 官方/论文, [2] AWS 内部验证, [3] 厂商/PR, [4] 未经验证。2026 arXiv 预印本为非评审(illustrative)。_
+_owner: Youngjin · updated: 2026-07 · volatility: 中（边缘 HW·厂商指标为高）· sources: [1] 官方/论文, [3] 厂商/PR, [4] 未经验证。2026 arXiv 预印本为非评审(illustrative)。_
 
 <!-- 용어 각주 -->
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 4f97e5ff7eaaffda03d183cfdb04a4d084ffa3b0
+ko_hash: 3b1e492892a261f2c662042eda12eb33aad3e5a2
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -113,7 +113,7 @@ graph LR
 |---|---|
 | 有料・検証済み | ANYmal（四足、数百台）, Agility Digit@GXO（10 万+ トート） |
 | 本番パイロット（メトリクス・自律あり、ベンダー報告） | Figure 02@BMW（~1,250h, 9 万+ 部品→Figure 03）, Apptronik Apollo@Mercedes |
-| 製品リリース済みだが自律ではない | 1X Neo（自律 ~60~70%、残りは VR 遠隔操作 "Expert Mode"） |
+| 製品リリース済みだが自律ではない | 1X Neo（自律 + VR 遠隔操作 "Expert Mode" の混合運用 — 「自律 60~70%」という数字は一次ソースなし、[radar](radar.md) 参照） |
 | 印象的なデモ/研究 | Atlas のアジャイル動作, Spot RL 研究キット（製品は MPC）, Unitree のアジャイルスキル, Figure 03 「8 時間自律」の主張（CEO ツイート） |
 | 発表・ロードマップ（0 台稼働） | Hyundai Atlas 2.5 万台（2028、労組反対）, Tesla Optimus V3 |
 </details>
@@ -216,7 +216,7 @@ graph LR
 - **ヒューマノイドの「本番」指標はほとんどがベンダー PR** — 独立した自律性監査はありません。Digit@GXO・Figure@BMW のみが顧客のクロスチェック済み。1X Neo は「製品だが実際には遠隔操作」。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 中（エッジ HW・ベンダー指標は高）· sources: [1] 公式/論文, [2] AWS 内部検証, [3] ベンダー/PR, [4] 未検証。2026 arXiv プレプリントは非査読(illustrative)。_
+_owner: Youngjin · updated: 2026-07 · volatility: 中（エッジ HW・ベンダー指標は高）· sources: [1] 公式/論文, [3] ベンダー/PR, [4] 未検証。2026 arXiv プレプリントは非査読(illustrative)。_
 
 <!-- 용어 각주 -->
 
