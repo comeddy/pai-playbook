@@ -1,5 +1,5 @@
 ---
-ko_hash: 7e17ccdef368dc630f3147a10d0e3ddae2b45e6b
+ko_hash: b0b4ba86f91d21efbefe0ab6668c4e5c0771923b
 ---
 # Physical AI Playbook — Introduction
 
@@ -8,7 +8,7 @@ _Last updated: 2026-07 · owner: Youngjin · status: initial build in progress_
 > **L0 TL;DR**: A reference asset that lets you answer a customer's Physical AI question with **architecture direction, AWS mapping, and next actions in under 5 minutes from this single playbook** — no digging through Slack. This is neither a paper-summary collection nor a news archive.
 
 !!! info "Unofficial"
-    This site is a personally maintained reference asset and is **not official AWS (Amazon Web Services) documentation or an official AWS position.** Always re-verify service specifications, pricing, and regional availability against the [official AWS documentation](https://docs.aws.amazon.com/).
+    This site is a personally maintained reference asset and is **not official AWS (Amazon Web Services) documentation or an official AWS position.** Service specifications, pricing, and regional availability on this site must always be re-verified against the [official AWS documentation](https://docs.aws.amazon.com/).
 
 ---
 

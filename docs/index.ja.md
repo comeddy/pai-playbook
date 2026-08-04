@@ -1,5 +1,5 @@
 ---
-ko_hash: 7e17ccdef368dc630f3147a10d0e3ddae2b45e6b
+ko_hash: b0b4ba86f91d21efbefe0ab6668c4e5c0771923b
 ---
 # Physical AI Playbook のご案内
 
@@ -9,7 +9,7 @@ _最終更新: 2026-07 · owner: Youngjin · ステータス: 初期構築中_
 > **L0 TL;DR**: 顧客が Physical AI の質問を投げかけたとき、Slack を掘り返さずに **この playbook 一つでアーキテクチャの方向性・AWS マッピング・次のアクションを5分以内に** 提示するための参照資産です。論文要約集でも、ニュースアーカイブでもありません。
 
 !!! info "非公式資料（Unofficial）"
-    本サイトは個人が運営する参照資産であり、**AWS（Amazon Web Services）の公式ドキュメント・公式見解ではありません。** サービス仕様・価格・リージョン対応は必ず [AWS 公式ドキュメント](https://docs.aws.amazon.com/)でご確認ください。
+    本サイトは個人が運営する参照資産であり、**AWS（Amazon Web Services）の公式ドキュメント・公式見解ではありません。** 本サイトのサービス仕様・価格・リージョン対応は、必ず [AWS 公式ドキュメント](https://docs.aws.amazon.com/)でご確認ください。
 
 ---
 
