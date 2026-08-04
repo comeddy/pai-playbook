@@ -1,5 +1,5 @@
 ---
-ko_hash: ae585bf934217b7f1ac75c501ad73e8f4a91770c
+ko_hash: c840bc898186873a4789e79bab0eb3de8e76c1cf
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -169,6 +169,7 @@ graph TD
 
 - Playbook: [pillar-3 Simulation (Isaac Lab)](pillar-3.md) · [decisions: securing GPUs](decisions.md)
 - [Physical AI E2E workshop](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — Korean. GR00T VLA fine-tuning + SageMaker track
+- [AWS Physical AI Recipes](https://github.com/hi-space/aws-physical-ai-recipes) — Korean, MIT. Hands-on recipe collection that includes the code behind the E2E workshop above: an Isaac Lab→GR00T fine-tuning→inference→monitoring E2E (CDK), SageMaker HyperPod VLA/RL distributed-training infrastructure (Slurm·FSx·MLflow), a GR00T-N1.6-3B SageMaker fine-tuning pipeline, and NVIDIA OSMO[^osmo] on EKS workflow orchestration
 - [Physical AI 101 — a concept map for getting started](https://d2gup9k4vdzl3b.cloudfront.net/pai101/index.html) — single-page primer: big picture → research landscape → VLA fine-tuning → model internals → robot fundamentals → the role of AWS, with AWS PAI reference architectures and a glossary. Korean/English toggle built in; points to this playbook as the next step
 - [Physical AI Scaffolding Kit](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. HyperPod Slurm cluster + π0·GR00T·Isaac Lab Newton RL training samples, multilingual README (ko·ja·en). Official asset of the AWS Japan Physical AI Development Support Program
 - [Embodied AI Platform](https://github.com/aws-samples/sample-embodied-ai-platform) — aws-samples. GR00T VLA teleoperation/imitation-learning fine-tuning on AWS Batch + DCV workstation → on-robot inference on SO-ARM100/101. ⚠️ Only the GR00T training component is Available; the rest is roadmap
@@ -249,3 +250,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: high (model versions · lice
 [^embodiment]: **Embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.
 [^slurm]: **Slurm** — the standard open-source job scheduler for HPC clusters. It queues and allocates batch jobs across thousands of nodes, and is the workflow most familiar to teams from research labs and supercomputing.
 [^efa]: **EFA (Elastic Fabric Adapter)** — a low-latency, OS-bypass network interface for EC2. It is key to reducing the gradient-synchronization (All-Reduce) bottleneck between GPUs in multi-node distributed training.
+[^osmo]: **OSMO** — NVIDIA's workflow orchestration platform for robotics workloads. It schedules multi-stage jobs such as synthetic data generation, simulation, and model training across on-premises and cloud clusters (e.g., Kubernetes).

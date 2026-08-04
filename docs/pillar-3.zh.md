@@ -1,5 +1,5 @@
 ---
-ko_hash: 8917e699dc4c867556d2cf544e0f92aa24744fe1
+ko_hash: 21e6a7278477de1d8d5738495e862185b4e17501
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -74,6 +74,7 @@ graph LR
 - Playbook: [pillar-2 训练栈](pillar-2.md) · [pillar-1 合成数据](pillar-1.md) · [decisions](decisions.md)
 - [NVIDIA Isaac Lab on AWS 研讨会](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) —— Batch MNP 无头 RL
 - [Physical AI E2E 研讨会](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) —— 韩语。Isaac Lab RL + Batch 轨道
+- [AWS Physical AI Recipes — 多用户 Isaac Lab GPU 环境](https://github.com/hi-space/aws-physical-ai-recipes) —— 韩语，MIT。上述 E2E 研讨会的代码仓库: 以 CDK 一键部署多用户 Isaac Lab GPU 环境（DCV·EFS·Batch），并包含 NVIDIA OSMO[^osmo] on EKS 编排配方
 - [（内部）AWS·NVIDIA 机器人参考架构](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) —— 需 AWS 内网
 - [Physical AI Scaffolding Kit — Isaac Sim 工作站](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) —— aws-samples。在 EC2 上构建 Isaac Sim/Lab 开发环境
 - [VLA Simulator — 1-Click VLA 仿真 on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) —— aws-samples。通过 CDK 一键部署到 EC2 GPU（g5/g6/g6e），在 LIBERO/RoboCasa/SimplerEnv/Isaac Lab 上演示·基准测试 GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1。结果以 MP4→S3+SNS 自动送达并自动终止 EC2，逐策略实测成功率·验证日期均有记录
@@ -257,3 +258,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（版本·实例在折�
 [^ppo]: **PPO (Proximal Policy Optimization)** — 使用最广泛的强化学习算法。收敛稳定，是机器人行走学习的事实默认值。
 [^dtwin]: **数字孪生（digital twin）** — 对真实工厂·仓库·机器人进行物理上忠实复刻的虚拟副本。无需触碰真实环境即可进行策略训练·验证·场景实验。
 [^mnp]: **MNP（Multi-Node Parallel）** — AWS Batch 将一个作业跨多台 EC2 节点执行的模式。使需要节点间通信的大规模训练·仿真作业也能通过批处理队列管理。
+[^osmo]: **OSMO** — NVIDIA 面向机器人工作负载的工作流编排平台。将合成数据生成、仿真、模型训练等多阶段作业调度到本地与云端的多个集群（如 Kubernetes）。

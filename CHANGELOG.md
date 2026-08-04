@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- Register AWS Physical AI Recipes (hi-space, Korean, MIT — the code behind the Physical AI E2E workshop: Isaac Lab→GR00T fine-tuning→inference→monitoring E2E via CDK, HyperPod VLA/RL distributed-training infrastructure, a GR00T-N1.6-3B SageMaker fine-tuning pipeline, NVIDIA OSMO on EKS) as a related asset on pillars 2 and 3, with a new OSMO glossary footnote, in all four languages
+
 ## [1.6.0] - 2026-08-02
 
 ### Added
@@ -147,6 +151,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 형식은 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)를 따르고, [Semantic Versioning](https://semver.org/spec/v2.0.0.html)을 준수합니다. 버전은 git 태그(v1.0.0+)로 관리합니다.
 
 ## [Unreleased]
+
+### Added
+
+- AWS Physical AI Recipes(hi-space, 한국어, MIT — Physical AI E2E 워크숍의 코드 저장소: Isaac Lab→GR00T 파인튜닝→추론→모니터링 E2E(CDK), HyperPod VLA/RL 분산 학습 인프라, GR00T-N1.6-3B SageMaker 파인튜닝 파이프라인, NVIDIA OSMO on EKS)를 pillar 2·3 관련 자산으로 등재 — OSMO 용어 각주 신설, 4개 언어 반영
 
 ## [1.6.0] - 2026-08-02
 
@@ -280,6 +288,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added
+
+- 将 AWS Physical AI Recipes（hi-space，韩语，MIT — Physical AI E2E 研讨会的代码仓库: Isaac Lab→GR00T 微调→推理→监控 E2E（CDK）、HyperPod VLA/RL 分布式训练基础设施、GR00T-N1.6-3B SageMaker 微调管道、NVIDIA OSMO on EKS）登记为 pillar 2·3 相关资产 — 新增 OSMO 术语脚注，四种语言同步
+
 ## [1.6.0] - 2026-08-02
 
 ### Added
@@ -411,6 +423,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 形式は [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) に従い、[Semantic Versioning](https://semver.org/spec/v2.0.0.html) を遵守します。バージョンは git タグ（v1.0.0+）で管理します。
 
 ## [Unreleased]
+
+### Added
+
+- AWS Physical AI Recipes（hi-space、韓国語、MIT — Physical AI E2E ワークショップのコードリポジトリ: Isaac Lab→GR00T ファインチューニング→推論→モニタリング E2E（CDK）、HyperPod VLA/RL 分散学習インフラ、GR00T-N1.6-3B SageMaker ファインチューニングパイプライン、NVIDIA OSMO on EKS）を pillar 2·3 の関連資産として登録 — OSMO 用語脚注を新設、4言語反映
 
 ## [1.6.0] - 2026-08-02
 

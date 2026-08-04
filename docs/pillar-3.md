@@ -71,6 +71,7 @@ graph LR
 - 플레이북: [pillar-2 학습 스택](pillar-2.md) · [pillar-1 합성 데이터](pillar-1.md) · [decisions](decisions.md)
 - [NVIDIA Isaac Lab on AWS 워크숍](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) — Batch MNP 헤드리스 RL
 - [Physical AI E2E 워크숍](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — 한국어. Isaac Lab RL + Batch 트랙
+- [AWS Physical AI Recipes — Isaac Lab 멀티유저 GPU 환경](https://github.com/hi-space/aws-physical-ai-recipes) — 한국어, MIT. 위 E2E 워크숍의 코드 저장소: 멀티유저 Isaac Lab GPU 환경(DCV·EFS·Batch)을 CDK 원클릭으로 배포, NVIDIA OSMO[^osmo] on EKS 오케스트레이션 레시피 포함
 - [(사내) AWS·NVIDIA 로보틱스 참조 아키텍처](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 내부망 필요
 - [Physical AI Scaffolding Kit — Isaac Sim 워크스테이션](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. EC2에 Isaac Sim/Lab 개발 환경 구축
 - [VLA Simulator — 1-Click VLA 시뮬레이션 on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples. GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1을 LIBERO/RoboCasa/SimplerEnv/Isaac Lab에서 CDK 원클릭으로 EC2 GPU(g5/g6/g6e) 데모·벤치마킹. 결과 MP4→S3+SNS 자동 수신·EC2 자동 종료, 정책별 실측 성공률·검증 일자 명시
@@ -254,3 +255,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 높음 (버전·인스턴스
 [^ppo]: **PPO (Proximal Policy Optimization)** — 가장 널리 쓰이는 강화학습 알고리즘. 안정적으로 수렴해 로봇 보행 학습의 사실상 기본값이다.
 [^dtwin]: **디지털 트윈(digital twin)** — 실제 공장·창고·로봇을 물리적으로 충실하게 본뜬 가상 복제본. 실환경을 건드리지 않고 정책 학습·검증·시나리오 실험을 할 수 있게 한다.
 [^mnp]: **MNP (Multi-Node Parallel)** — AWS Batch가 하나의 잡을 여러 EC2 노드에 걸쳐 실행하는 모드. 노드 간 통신이 필요한 대규모 학습·시뮬레이션 잡을 배치 큐로 관리할 수 있게 한다.
+[^osmo]: **OSMO** — NVIDIA의 로보틱스 워크로드용 워크플로 오케스트레이션 플랫폼. 합성 데이터 생성·시뮬레이션·모델 학습 같은 멀티스테이지 잡을 온프레미스·클라우드의 여러 클러스터(Kubernetes 등)에 걸쳐 스케줄링한다.
