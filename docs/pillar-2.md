@@ -51,7 +51,7 @@ graph TD
 
 **➡️ 다음 액션**: 고객이 모델 선정 중이면 **"라이선스 매트릭스(GR00T=확인필요 / π=Apache-2.0 / OpenVLA=MIT)를 첫 슬라이드로"** 제시. 상용이면 π0.5 또는 OpenVLA 파인튜닝 PoC를 EC2 G7e 위에서 제안.
 
-**🔗 관련 자산**: [pillar-1 데이터셋 라이선스](pillar-1.md) · [pillar-4 엣지 배포](pillar-4.md)
+**🔗 관련 자산**: [pillar-1 데이터셋 라이선스](pillar-1.md) · [pillar-4 엣지 배포](pillar-4.md) · [로봇 파운데이션 모델 페이퍼 리뷰](https://hi-space.gitbook.io/physical-ai-on-aws/paper-review-tbd/robot-foundation-model) — 한국어. 추론 VLM(Cosmos-Reason 1)·VLA(RT-2, OpenVLA, Gemini Robotics, GR00T N1, π0.6) 논문 정리
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (모델 버전·라이선스 — 갱신 대상, 2026-07 확인)</summary>
 

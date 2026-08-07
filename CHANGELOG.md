@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - Register AWS Physical AI Recipes (hi-space, Korean, MIT — the code behind the Physical AI E2E workshop: Isaac Lab→GR00T fine-tuning→inference→monitoring E2E via CDK, HyperPod VLA/RL distributed-training infrastructure, a GR00T-N1.6-3B SageMaker fine-tuning pipeline, NVIDIA OSMO on EKS) as a related asset on pillars 2 and 3, with a new OSMO glossary footnote, in all four languages
+- Register the robot foundation model paper-review section of the Physical AI on AWS GitBook (Korean; reasoning VLM Cosmos-Reason 1 and VLA papers RT-2, OpenVLA, Gemini Robotics, GR00T N1, π0.6) as a pillar-2 open-VLA-model related asset, in all four languages
 
 ## [1.6.0] - 2026-08-02
 
@@ -155,6 +156,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - AWS Physical AI Recipes(hi-space, 한국어, MIT — Physical AI E2E 워크숍의 코드 저장소: Isaac Lab→GR00T 파인튜닝→추론→모니터링 E2E(CDK), HyperPod VLA/RL 분산 학습 인프라, GR00T-N1.6-3B SageMaker 파인튜닝 파이프라인, NVIDIA OSMO on EKS)를 pillar 2·3 관련 자산으로 등재 — OSMO 용어 각주 신설, 4개 언어 반영
+- Physical AI on AWS GitBook의 로봇 파운데이션 모델 페이퍼 리뷰 섹션(한국어 — 추론 VLM Cosmos-Reason 1, VLA 논문 RT-2·OpenVLA·Gemini Robotics·GR00T N1·π0.6)을 pillar-2 오픈 VLA 모델 관련 자산으로 등재, 4개 언어 반영
 
 ## [1.6.0] - 2026-08-02
 
@@ -291,6 +293,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - 将 AWS Physical AI Recipes（hi-space，韩语，MIT — Physical AI E2E 研讨会的代码仓库: Isaac Lab→GR00T 微调→推理→监控 E2E（CDK）、HyperPod VLA/RL 分布式训练基础设施、GR00T-N1.6-3B SageMaker 微调管道、NVIDIA OSMO on EKS）登记为 pillar 2·3 相关资产 — 新增 OSMO 术语脚注，四种语言同步
+- 将 Physical AI on AWS GitBook 的机器人基础模型论文评读部分（韩语 — 推理 VLM Cosmos-Reason 1，VLA 论文 RT-2、OpenVLA、Gemini Robotics、GR00T N1、π0.6）登记为 pillar-2 开放 VLA 模型相关资产，四种语言同步
 
 ## [1.6.0] - 2026-08-02
 
@@ -427,6 +430,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - AWS Physical AI Recipes（hi-space、韓国語、MIT — Physical AI E2E ワークショップのコードリポジトリ: Isaac Lab→GR00T ファインチューニング→推論→モニタリング E2E（CDK）、HyperPod VLA/RL 分散学習インフラ、GR00T-N1.6-3B SageMaker ファインチューニングパイプライン、NVIDIA OSMO on EKS）を pillar 2·3 の関連資産として登録 — OSMO 用語脚注を新設、4言語反映
+- Physical AI on AWS GitBook のロボット基盤モデル論文レビューセクション（韓国語 — 推論 VLM Cosmos-Reason 1、VLA 論文 RT-2・OpenVLA・Gemini Robotics・GR00T N1・π0.6）を pillar-2 オープン VLA モデルの関連資産として登録、4言語反映
 
 ## [1.6.0] - 2026-08-02
 

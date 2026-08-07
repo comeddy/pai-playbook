@@ -1,5 +1,5 @@
 ---
-ko_hash: c840bc898186873a4789e79bab0eb3de8e76c1cf
+ko_hash: 2c29e4687a0d5eacca6f0d234f467639196c6d74
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -55,7 +55,7 @@ graph TD
 
 **➡️ 次のアクション**: 顧客がモデル選定中なら **「ライセンスマトリクス（GR00T=確認必要 / π=Apache-2.0 / OpenVLA=MIT）を最初のスライドに」** 提示。商用なら π0.5 または OpenVLA ファインチューニング PoC を EC2 G7e 上で提案。
 
-**🔗 関連資産**: [pillar-1 データセットライセンス](pillar-1.md) · [pillar-4 エッジデプロイ](pillar-4.md)
+**🔗 関連資産**: [pillar-1 データセットライセンス](pillar-1.md) · [pillar-4 エッジデプロイ](pillar-4.md) · [ロボット基盤モデル論文レビュー](https://hi-space.gitbook.io/physical-ai-on-aws/paper-review-tbd/robot-foundation-model) — 韓国語。推論 VLM（Cosmos-Reason 1）と VLA（RT-2、OpenVLA、Gemini Robotics、GR00T N1、π0.6）の論文まとめ
 
 <details markdown="1"><summary>🔄 揮発性データ（モデルバージョン・ライセンス —— 更新対象、2026-07 確認）</summary>
 

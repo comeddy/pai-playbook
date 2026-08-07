@@ -1,5 +1,5 @@
 ---
-ko_hash: c840bc898186873a4789e79bab0eb3de8e76c1cf
+ko_hash: 2c29e4687a0d5eacca6f0d234f467639196c6d74
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -54,7 +54,7 @@ graph TD
 
 **➡️ 后续行动**: 若客户正在选型，则**将"许可证矩阵（GR00T=需确认 / π=Apache-2.0 / OpenVLA=MIT）作为第一张幻灯片"**呈现。若为商用，则提议在 EC2 G7e 上做 π0.5 或 OpenVLA 微调 PoC。
 
-**🔗 相关资产**: [pillar-1 数据集许可证](pillar-1.md) · [pillar-4 边缘部署](pillar-4.md)
+**🔗 相关资产**: [pillar-1 数据集许可证](pillar-1.md) · [pillar-4 边缘部署](pillar-4.md) · [机器人基础模型论文评读](https://hi-space.gitbook.io/physical-ai-on-aws/paper-review-tbd/robot-foundation-model) —— 韩语。推理 VLM（Cosmos-Reason 1）与 VLA（RT-2、OpenVLA、Gemini Robotics、GR00T N1、π0.6）论文整理
 
 <details markdown="1"><summary>🔄 易变数据（模型版本·许可证 —— 更新对象，2026-07 确认）</summary>
 

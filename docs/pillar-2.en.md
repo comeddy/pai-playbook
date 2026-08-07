@@ -1,5 +1,5 @@
 ---
-ko_hash: c840bc898186873a4789e79bab0eb3de8e76c1cf
+ko_hash: 2c29e4687a0d5eacca6f0d234f467639196c6d74
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -54,7 +54,7 @@ graph TD
 
 **➡️ Next action**: if the customer is selecting a model, **present the "license matrix (GR00T=confirm needed / π=Apache-2.0 / OpenVLA=MIT) as the first slide."** For commercial use, propose a π0.5 or OpenVLA fine-tuning PoC on EC2 G7e.
 
-**🔗 Related assets**: [pillar-1 dataset licenses](pillar-1.md) · [pillar-4 edge deployment](pillar-4.md)
+**🔗 Related assets**: [pillar-1 dataset licenses](pillar-1.md) · [pillar-4 edge deployment](pillar-4.md) · [Robot foundation model paper reviews](https://hi-space.gitbook.io/physical-ai-on-aws/paper-review-tbd/robot-foundation-model) — Korean. Paper summaries of reasoning VLM (Cosmos-Reason 1) and VLA (RT-2, OpenVLA, Gemini Robotics, GR00T N1, π0.6)
 
 <details markdown="1"><summary>🔄 Volatile data (model versions/licenses — subject to update, checked 2026-07)</summary>
 
