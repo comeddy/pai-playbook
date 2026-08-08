@@ -1,5 +1,5 @@
 ---
-ko_hash: a2d03f03e5c3e2bcd5e406fdd7f1e97a78d7c727
+ko_hash: ce9ab944b4d7ea0993f14c5815b61062b93ad457
 ---
 # Radar — 队列 / 观察列表
 
@@ -58,18 +58,18 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
-| 项目 | 标签 | 为何等待 | 晋升条件 |
-|---|---|---|---|
-| **[RLWRLD RLDX-1](https://huggingface.co/RLWRLD)**（灵巧手优先的基础模型） | 🟡 Preview | 权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER SOTA 为自报，无独立复现（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) 在 EC2 上提供 n=5 冒烟实测 —— 并非完整基准复现）。AWS 关联仅限仿真基准测试（非商业许可证明确允许的用途，不可用于商业定位）—— "未发现关联"表述已更新（2026-07）。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
-| **[NEURA Robotics × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale) 战略合作** | ⚪ Hype·路线图 | 经 AWS 官方新闻稿确认，2026-04-21 `[1]` —— AWS 为 primary cloud，明确写入 Neuraverse 托管 + NEURA Gym·SageMaker 集成。但履行中心在原文中为"探索部署机会（explore）"阶段 —— 实际部署为 0。NEURA Gym RWTH Aachen 等训练网络扩展公告（2026-07-22）未提及 AWS —— 作为独立线索观察 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
-| **[Actuator Reality Shaping](https://arxiv.org/abs/2607.02205)**（zero-shot sim-to-real） | 🔵 Research | 确认实存（arXiv 2607.02205，2026-07-02）`[1]` —— 在 4 种实物硬件（含人形行走）上验证，摘要与原文一致（无需更正）。未经 peer-review | peer-review + 独立复现 |
-| **[AgiBot World 2026](https://huggingface.co/datasets/agibot-world/AgiBotWorld2026)**（开源真实世界机器人操作数据集，分 5 阶段陆续公开） | 🔵 Research | AgiBot 官方发布（HuggingFace `agibot-world/AgiBotWorld2026`，2026-07）`[4]` —— 在 AgiBot G2 平台上采集的 100% 真实世界数据，将分阶段公开 5 个研究方向（模仿学习等），第一批为商业·服务场景数百小时。许可证及商业使用条款未确认，尚无独立基准或训练验证案例 | 确认许可证 + 独立训练验证（SOTA 复现）案例 |
-| **[AXIS](https://arxiv.org/abs/2607.21588)**（社区驱动的可增长机器人操作数据引擎） | 🔵 Research | 确认实存（arXiv 2607.21588，2026-07-23）`[4]` —— 8 所大学 + Axis Robotics 共同研发，通过浏览器端 MuJoCo-WASM 遥操作众包后在 IsaacSim 中增强。仅限 Franka 机械臂仿真（207 项任务·5 万+条轨迹），报告称 π0.5 持续预训练使 LIBERO-Plus 提升 +4.9pp（自报基准，无独立复现）。作者自己将 sim-to-real 列为未来工作 —— 未在真实硬件上验证 | peer-review + 真实硬件 sim-to-real 验证 |
-| **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列端侧 4B 世界模型+策略） | 🟡 Preview | NVIDIA 官方发布 `[4]`（2026-07-21，HuggingFace/developer 博客）—— 在 Jetson Thor 上端侧推理，实现 15Hz 实时机器人策略控制（自报基准，无独立验证），Cosmos 3 Edge Policy（DROID）支持 pick-and-place 微调。与既有的"Cosmos 3 作为 sim-to-real 学习源"条目（🖥️ 部分）不同，本条仅涉及边缘部署方向 —— 与 AMD Ryzen AI Embedded X100（本表）并行观察为竞争方案。目前实际生产机器人部署案例为 0 | 独立基准测试 + 实际生产机器人部署案例 |
-| **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute 分拆，Large Behavior Models 人形机器人） | 🟡 试点 | 公司官方发布（2026-07-15）`[4]` —— 2026-01 从 TRI 分拆（创始人 Russ Tedrake，前 TRI SVP），Toyota·Deviation Capital 联合领投 + NVIDIA·Boeing·Samsung Ventures 等参与的 3 亿美元种子轮（估值 11 亿美元）。人形上半身+轮式移动底座，基于 Diffusion Policy·Large Behavior Models 的策略，宣称自 2026-02 起在北美 Toyota 工厂实现试点→"量产转换"，无第三方验证 | 第三方审计·独立验证 + 部署规模扩大案例 |
-| **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)**（支持广泛末端执行器的 embodied foundation model） | 🟡 Preview | Generalist AI 官方博客发布（2026-07）`[4]` —— 基于约 9,000 种末端执行器（五指手至专用工具）、50 万+小时真实交互数据预训练，宣称自报成功率 99%·速度提升 3 倍（无独立复现）。Generalist AI 已在 [pillar-1](pillar-1.md) 中作为 Cosmos WFM 数据生成使用方被提及，但 GEN-1 模型本身属于独立的新条目 | 独立基准复现 + 实际部署案例 |
-| **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA 基础模型，10 万+小时真实世界 UMI 轨迹） | 🔵 Research | 小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）·RoboDojo（20.07，此前为 13.07）·VLABench·RoboCasa 四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。"代码·权重即将发布"，但 GitHub 仓库目前仅有 README，实际发布尚未确认（截至 2026-08-01） | 确认代码·权重实际发布 + 独立基准复现 |
-| **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind，全身控制 VLA[^vla]） | 🟡 Preview | 官方发布（2026-07-30）`[4]` —— 从此前仅上半身控制扩展为全身控制（行走·弯腰·双手协调），同时推出推理模型 Gemini Robotics ER 2 与端侧模型 On-Device 2。在 Apptronik Apollo 2 实机演示（拧灯泡 92% 成功率），自报基准，无独立验证。仅 ER 2 公开预览（AI Studio/Enterprise Agent Platform），VLA·On-Device 2 仅限早期访问合作伙伴。⚠️ [pillar-2](pillar-2.md) 中"Gemini Robotics"竞品栈章节为本次发布前的快照（确认于 2026-07，仅覆盖 ER 1.6/On-Device/1.5）—— 需 pillar owner 更新 | 早期访问结束·GA 公开 + 独立基准验证 |
+| 项目 | 标签 | 为何受关注 | 为何等待 | 晋升条件 |
+|---|---|---|---|---|
+| **[RLWRLD RLDX-1](https://huggingface.co/RLWRLD)**（灵巧手[^dex]优先的基础模型） | 🟡 Preview | 韩国初创公司的灵巧手操作专用基础模型 —— 三大仿真基准自报 SOTA 叠加权重实际公开，可直接上手实测 | 权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER[^simbench] SOTA 为自报，无独立复现（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) 在 EC2 上提供 n=5 冒烟[^smoke]实测 —— 并非完整基准复现）。AWS 关联仅限仿真基准测试（非商业许可证明确允许的用途，不可用于商业定位）—— "未发现关联"表述已更新（2026-07）。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
+| **[NEURA Robotics × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale) 战略合作** | ⚪ Hype·路线图 | 人形机器人厂商明确将 AWS 列为 primary cloud 的罕见官方合作 —— "Physical AI on AWS" 客户对话的直接参考案例候选 | 经 AWS 官方新闻稿确认，2026-04-21 `[1]` —— AWS 为 primary cloud，明确写入 Neuraverse 托管 + NEURA Gym·SageMaker 集成。但履行中心在原文中为"探索部署机会（explore）"阶段 —— 实际部署为 0。NEURA Gym RWTH Aachen 等训练网络扩展公告（2026-07-22）未提及 AWS —— 作为独立线索观察 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
+| **[Actuator Reality Shaping](https://arxiv.org/abs/2607.02205)**（zero-shot sim-to-real） | 🔵 Research | 仅靠执行器差距校正即在 4 种实物硬件上实现 zero-shot sim-to-real —— 有望跳过实机微调成本的路线 | 确认实存（arXiv 2607.02205，2026-07-02）`[1]` —— 在 4 种实物硬件（含人形行走）上验证，摘要与原文一致（无需更正）。未经 peer-review | peer-review + 独立复现 |
+| **[AgiBot World 2026](https://huggingface.co/datasets/agibot-world/AgiBotWorld2026)**（开源真实世界机器人操作数据集，分 5 阶段陆续公开） | 🔵 Research | 免费公开在商业·服务场景采集的 100% 真实世界操作数据 —— 直指业界最大瓶颈"真实数据匮乏" | AgiBot 官方发布（HuggingFace `agibot-world/AgiBotWorld2026`，2026-07）`[4]` —— 在 AgiBot G2 平台上采集的 100% 真实世界数据，将分阶段公开 5 个研究方向（模仿学习等），第一批为商业·服务场景数百小时。许可证及商业使用条款未确认，尚无独立基准或训练验证案例 | 确认许可证 + 独立训练验证（SOTA 复现）案例 |
+| **[AXIS](https://arxiv.org/abs/2607.21588)**（社区驱动的可增长机器人操作数据引擎） | 🔵 Research | 以浏览器遥操作众包改变示范数据采集成本结构的尝试 —— 以 π0.5 性能提升（+4.9pp）实证其效用 | 确认实存（arXiv 2607.21588，2026-07-23）`[4]` —— 8 所大学 + Axis Robotics 共同研发，通过浏览器端 MuJoCo-WASM[^wasm] 遥操作[^teleop]众包后在 IsaacSim 中增强。仅限 Franka 机械臂仿真（207 项任务·5 万+条轨迹），报告称 π0.5 持续预训练[^ctp]使 LIBERO-Plus 提升 +4.9pp（自报基准，无独立复现）。作者自己将 sim-to-real 列为未来工作 —— 未在真实硬件上验证 | peer-review + 真实硬件 sim-to-real 验证 |
+| **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列端侧 4B 世界模型+策略） | 🟡 Preview | 在 Jetson Thor 上以 15Hz 端侧运行世界模型+策略 —— 无需云端往返的边缘推理方向的领先案例 | NVIDIA 官方发布 `[4]`（2026-07-21，HuggingFace/developer 博客）—— 在 Jetson Thor 上端侧推理，实现 15Hz 实时机器人策略控制（自报基准，无独立验证），Cosmos 3 Edge Policy（DROID[^droid]）支持 pick-and-place 微调。与既有的"Cosmos 3 作为 sim-to-real 学习源"条目（🖥️ 部分）不同，本条仅涉及边缘部署方向 —— 与 AMD Ryzen AI Embedded X100（本表）并行观察为竞争方案。目前实际生产机器人部署案例为 0 | 独立基准测试 + 实际生产机器人部署案例 |
+| **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute 分拆，Large Behavior Models[^lbm] 人形机器人） | 🟡 试点 | 曾执掌 TRI 机器人研究的 Russ Tedrake 的分拆公司 + 3 亿美元种子轮 —— LBM 商业化最前线，拥有 Toyota 工厂实际试点 | 公司官方发布（2026-07-15）`[4]` —— 2026-01 从 TRI 分拆（创始人 Russ Tedrake，前 TRI SVP），Toyota·Deviation Capital 联合领投 + NVIDIA·Boeing·Samsung Ventures 等参与的 3 亿美元种子轮（估值 11 亿美元）。人形上半身+轮式移动底座，基于 Diffusion Policy[^diffpol]·Large Behavior Models 的策略，宣称自 2026-02 起在北美 Toyota 工厂实现试点→"量产转换"，无第三方验证 | 第三方审计·独立验证 + 部署规模扩大案例 |
+| **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)**（支持广泛末端执行器[^eef]的 embodied foundation model） | 🟡 Preview | 单一模型覆盖约 9,000 种末端执行器 + 50 万小时实测数据预训练 —— 在 embodiment 通用性上宣称前所未有的规模 | Generalist AI 官方博客发布（2026-07）`[4]` —— 基于约 9,000 种末端执行器（五指手至专用工具）、50 万+小时真实交互数据预训练，宣称自报成功率 99%·速度提升 3 倍（无独立复现）。Generalist AI 已在 [pillar-1](pillar-1.md) 中作为 Cosmos WFM 数据生成使用方被提及，但 GEN-1 模型本身属于独立的新条目 | 独立基准复现 + 实际部署案例 |
+| **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] 基础模型，10 万+小时真实世界 UMI[^umi] 轨迹） | 🔵 Research | 凭借 10 万+小时真实世界 UMI 轨迹的数据规模在四个基准上自报 SOTA —— 中国大厂正式加入 VLA 竞争的信号 | 小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）·RoboDojo（20.07，此前为 13.07）·VLABench·RoboCasa 四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。"代码·权重即将发布"，但 GitHub 仓库目前仅有 README，实际发布尚未确认（截至 2026-08-01） | 确认代码·权重实际发布 + 独立基准复现 |
+| **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind，全身控制 VLA） | 🟡 Preview | 前沿实验室 VLA 从上半身操作扩展到全身（行走·双手协调）控制 —— 改变竞品栈格局的代际转换信号 | 官方发布（2026-07-30）`[4]` —— 从此前仅上半身控制扩展为全身控制（行走·弯腰·双手协调），同时推出推理模型 Gemini Robotics ER 2 与端侧模型 On-Device 2。在 Apptronik Apollo 2 实机演示（拧灯泡 92% 成功率），自报基准，无独立验证。仅 ER 2 公开预览（AI Studio/Enterprise Agent Platform），VLA·On-Device 2 仅限早期访问合作伙伴。⚠️ [pillar-2](pillar-2.md) 中"Gemini Robotics"竞品栈章节为本次发布前的快照（确认于 2026-07，仅覆盖 ER 1.6/On-Device/1.5）—— 需 pillar owner 更新 | 早期访问结束·GA 公开 + 独立基准验证 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
@@ -79,7 +79,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[SageMaker Edge Manager](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)** | 🔴 终止 (2024-04-26) `[1]` | ONNX + IoT Greengrass V2 (+ SageMaker Neo) |
 | **[IoT Greengrass V1](https://docs.aws.amazon.com/greengrass/v1/developerguide/what-is-gg.html)** | 🔴 终止 (2026-06-01) `[1]` | Greengrass V2 |
 | **[Gazebo Classic 11](https://classic.gazebosim.org/)** | 🔴 EOL (2025-01) `[1]` | Gazebo Jetty/Harmonic |
-| **Trainium for VLA[^vla]** | ⚪ 无公开案例 `[4]` | 当前为 CUDA/NVIDIA（提议时明示风险） |
+| **Trainium for VLA** | ⚪ 无公开案例 `[4]` | 当前为 CUDA/NVIDIA（提议时明示风险） |
 
 > ⚠️ **传闻警戒（并非事实）**: "AWS IoT TwinMaker 废弃"是**误信息** —— TwinMaker 是 GA·对新客户开放（低速度）。是与 SiteWise 维护混淆的第三方博客主张。禁止重复。→ [pillar-3](pillar-3.md)。
 
@@ -107,3 +107,14 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（Radar 本质上快速�
 [^ros]: **ROS 2（Robot Operating System 2）** — 机器人软件事实上的标准开源中间件。传感器·控制节点通过话题（topic）通信的分布式架构，是工业·研究机器人栈的公共基础。
 [^agent]: **LLM 智能体** — 大语言模型自行制定计划、挑选并调用工具（API·机器人技能）、执行多步任务的软件。与简单问答不同，关键在于它有"行动"。
 [^vla]: **VLA (Vision-Language-Action)** — 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
+[^dex]: **灵巧性（dexterity）** — 手指级的精细·灵活操作能力。其接触物理远比行走复杂，被视为机器人学习中最难的轴。
+[^simbench]: **LIBERO · RoboCasa · SIMPLER** — 无需真机即可比较 VLA/操作策略性能的标准仿真基准套件。仿真分数并不保证真机性能。
+[^smoke]: **冒烟测试（smoke test）** — 只确认"基本能跑"的小规模运行，不是完整验证。n=5 这样的样本无法支撑统计意义上的性能主张。
+[^wasm]: **MuJoCo-WASM** — 将物理引擎 MuJoCo 移植到 WebAssembly、无需安装即可在浏览器中运行仿真的技术。它使远程示范的众包采集成为可能。
+[^teleop]: **遥操作（teleoperation）** — 由人通过 VR 控制器·主导臂等远程操控机器人并记录示范动作的数据采集方式。质量最高，但人的时间会直接变成成本。🎥 [Stanford Mobile ALOHA 遥操作演示](https://www.youtube.com/watch?v=mnLVbwxSdNM)
+[^ctp]: **持续预训练（continual pretraining）** — 在已预训练的模型上用新的大规模数据继续预训练，在既有能力之上吸收数据，而不是从零重新训练。
+[^droid]: **DROID** — 由 13 家机构用 Franka 机械臂采集的大规模开放真实世界操作数据集，被广泛用作操作策略预训练·微调的材料。
+[^lbm]: **Large Behavior Models (LBM)** — LLM 的"机器人行为"版：Toyota Research Institute 用该术语指代用大规模示范数据训练、以单一模型执行多种操作任务的机器人基础模型。
+[^diffpol]: **Diffusion Policy** — 用图像生成中的扩散（diffusion）模型来生成机器人动作序列的策略架构。它能稳定学习包含多种有效做法的示范数据，已成为模仿学习的事实标准。
+[^eef]: **末端执行器（end-effector）** — 安装在机械臂末端的作业工具（夹爪·多指手·专用工具）。选用哪种末端执行器决定数据·策略的兼容性。
+[^umi]: **UMI (Universal Manipulation Interface)** — 无需机器人、由人手持带相机的便携夹爪采集示范数据的方式。可以在不投入机器人的情况下大量获取真实世界数据。
