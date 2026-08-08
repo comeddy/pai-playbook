@@ -1,5 +1,5 @@
 ---
-ko_hash: 0cc222c14f07960096566dd2f43b1983319ba9b0
+ko_hash: a2d03f03e5c3e2bcd5e406fdd7f1e97a78d7c727
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,7 +55,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ソウルリージョン未提供（東京 Agent Registry ✅） | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-08-01 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-08-08 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
@@ -66,11 +66,11 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[Actuator Reality Shaping](https://arxiv.org/abs/2607.02205)**（zero-shot sim-to-real） | 🔵 Research | 実在確認（arXiv 2607.02205、2026-07-02）`[1]` —— 実機ハードウェア 4 種（ヒューマノイド歩行を含む）で検証、要約と原文が一致（訂正なし）。peer-review 未採択 | peer-review + 独立再現 |
 | **[AgiBot World 2026](https://huggingface.co/datasets/agibot-world/AgiBotWorld2026)**（オープンソースの実世界ロボットマニピュレーションデータセット、5 段階で順次公開） | 🔵 Research | AgiBot 公式公開（HuggingFace `agibot-world/AgiBotWorld2026`、2026-07）`[4]` —— AgiBot G2 実機で収集した 100% 実世界データ、5 つの研究軸（模倣学習など）を段階的に公開予定、第 1 弾は商業・サービス環境で数百時間分。ライセンス・商用利用条件は未確認、独立ベンチマーク・学習検証事例なし | ライセンス確定 + 独立した学習検証（SOTA 再現）事例 |
 | **[AXIS](https://arxiv.org/abs/2607.21588)**（コミュニティ駆動の成長型ロボット操作データエンジン） | 🔵 Research | 実在確認（arXiv 2607.21588、2026-07-23）`[4]` —— 8 大学 + Axis Robotics の共同、ブラウザベース MuJoCo-WASM テレオペでクラウドソーシングし IsaacSim で拡張。Franka アームでのシミュレーションのみ（207 タスク・5 万+ 軌跡）、π0.5 の continual pretraining で LIBERO-Plus が +4.9pp 向上と報告（自己申告ベンチマーク、独立再現なし）。著者自身が sim-to-real を今後の課題として明記 —— 実機では未検証 | peer-review + 実機での sim-to-real 検証 |
-| **[AMD Ryzen AI Embedded X100 + Kria AI SoM](https://www.amd.com/en/products/embedded.html)**（ロボット向けエッジコンピュート、NVIDIA Jetson Thor に対抗） | ⚪ Hype・ロードマップ | AMD 公式発表 `[4]`（2026-07-24）—— Zen 5 CPU・RDNA 3.5 iGPU・XDNA 2 NPU による統合メモリ（最大 128GB）、Jetson Thor 比 FP32 3 倍・Intel 比マルチスレッド 2.1 倍を主張（自社ベンチマーク、独立検証なし）。SOM 量産は 2026 年 Q4 予定（Arbor・Congatec など）、現時点でロボットへのエッジ展開事例は 0 | 独立ベンチマーク + 実ロボットへのエッジ展開事例 |
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列のオンデバイス 4B ワールドモデル+ポリシー） | 🟡 Preview | NVIDIA 公式発表 `[4]`（2026-07-21、HuggingFace/developer ブログ）—— Jetson Thor 上のオンデバイス推論で 15Hz のリアルタイムロボットポリシー制御（自己申告ベンチマーク、独立検証なし）、Cosmos 3 Edge Policy（DROID）で pick-and-place のファインチューニングに対応。既存の「Cosmos 3 を sim-to-real 学習源として」項目（🖥️ セクション）とは別に、エッジ展開の軸のみを扱う —— AMD Ryzen AI Embedded X100（本表）と並行して競合構図を観察。現時点で実際の量産ロボット展開事例は 0 | 独立ベンチマーク + 実際の量産ロボット展開事例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute からのスピンアウト、Large Behavior Models ヒューマノイド） | 🟡 パイロット | 公式発表（2026-07-15）`[4]` —— 2026-01 に TRI からスピンアウト（創業者 Russ Tedrake、元 TRI SVP）、Toyota・Deviation Capital 共同リード + NVIDIA・Boeing・Samsung Ventures などが参加したシード 3 億ドル（バリュエーション 11 億ドル）。ヒューマノイド上半身+ホイール式移動ベース、Diffusion Policy・Large Behavior Models ベースの方策で、北米 Toyota 工場にて 2026-02 からパイロット→「本番転換」を自社主張、第三者検証なし | 第三者監査・独立検証 + 展開規模拡大の事例 |
 | **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)**（幅広いエンドエフェクタに対応する embodied foundation model） | 🟡 Preview | Generalist AI 公式ブログ発表（2026-07）`[4]` —— 5 指ハンドから専用ツールまで約 9,000 種のエンドエフェクタ、実測データ 50 万+時間で事前学習、自己申告で成功率 99%・速度 3 倍を主張（独立再現なし）。Generalist AI は [pillar-1](pillar-1.md) で Cosmos WFM のデータ生成活用企業として既に言及されているが、GEN-1 モデル自体は別の新規事案 | 独立ベンチマーク再現 + 実展開事例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA ファウンデーションモデル、10 万時間超の実世界 UMI 軌跡） | 🔵 Research | Xiaomi 公式 arXiv 発表（2607.15330、2026-07-16）`[4]` —— Qwen3-VL ベースの MoT（VLM+DiT）、RoboCasa365（57.4%、従来 SOTA 46.6% から向上）・RoboDojo（20.07、従来 13.07 から向上）・VLABench・RoboCasa の 4 ベンチマークで自己申告 SOTA（RLDX-1・GR00T N1.6 などと比較、独立再現なし）。「コード・重みは公開予定」とのことだが、GitHub リポジトリは README のみで実際の公開は未確認（2026-08-01 時点） | コード・重みの実公開確認 + 独立ベンチマーク再現 |
+| **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind、全身制御 VLA[^vla]） | 🟡 Preview | 公式発表（2026-07-30）`[4]` —— これまでの上半身のみの制御を全身制御（歩行・屈曲・両手協調）に拡張、推論モデル Gemini Robotics ER 2・エッジモデル On-Device 2 を同時発表。Apptronik Apollo 2 で実機デモ（電球の取り外し 92% 成功）、自己申告ベンチマークで独立検証なし。公開プレビューは ER 2 のみ（AI Studio/Enterprise Agent Platform）、VLA・On-Device 2 はアーリーアクセスパートナー限定。⚠️ [pillar-2](pillar-2.md) の「Gemini Robotics」競合スタック節は本発表以前のスナップショット（確認 2026-07、ER 1.6/On-Device/1.5 が対象）—— pillar owner による更新が必要 | アーリーアクセス終了・GA 公開 + 独立ベンチマーク検証 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 
