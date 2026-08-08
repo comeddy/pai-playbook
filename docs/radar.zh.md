@@ -1,12 +1,12 @@
 ---
-ko_hash: ce9ab944b4d7ea0993f14c5815b61062b93ad457
+ko_hash: 3b2e42231e27f0397c0effcbe1a95d840d6e4abd
 ---
 # Radar — 队列 / 观察列表
 
 _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: 尚未通过纳入标准（[2.5 THE FILTER](maintenance.md#纳入标准-the-filter)）但**值得关注**的东西。每个条目一句话 —— 成熟度标签 + **为何待定**。一旦通过门禁（4 项中 2 项），由负责的支柱 owner 用标准模板晋升。
+> **L0 TL;DR**: 尚未通过纳入标准（[2.5 THE FILTER](maintenance.md#纳入标准-the-filter)）但**值得关注**的东西。每个条目一句话 —— 成熟度标签 + **为何受关注 + 为何待定**。一旦通过门禁（4 项中 2 项），由负责的支柱 owner 用标准模板晋升。
 >
 > ⚠️ **不要把这里的条目当作"成熟能力"用于客户提案。** 华丽的演示常常掩盖可部署性。
 
@@ -14,45 +14,45 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 
 ## 🔬 模型 / 算法（待验证）
 
-| 条目 | 标签 | 为何待定 | 晋升条件 |
-|---|---|---|---|
-| Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | 仅二手来源 `[4]`，无 PI 一手确认 | PI 官方发布 + 性能验证 |
-| **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) 商业许可证** | 🟡→ | 允许商用的说法仅来自二手来源 `[4]`（N1.5 在模型卡上明确为非商业 `[1]`） | 在实时模型卡确定许可证 |
-| **[World-action models](https://developer.nvidia.com/isaac/gr00t)**（DreamZero → GR00T N2） | 🟡 Preview | GR00T N2 "计划年底"，DreamZero 为研究 | GA + 实际部署案例 |
-| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)**（用于机器人学习的世界模型[^wfm]） | 🟡 Preview | 世界模型本身为预览，用于机器人学习为研究 | 机器人策略学习验证案例 |
-| **基于 VLM 的 SysID[^sysid]**（[Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)） | 🔵 Research | 2026 预印本，单一实验室 | peer-review + 复现 |
-| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)**（visual sim-to-real[^s2r] at scale） | 🔵 Research | CVPR/CoRL 研究，非生产 | 生产部署证据 |
-| **Robbyant [LingBot-VLA](https://huggingface.co/robbyant) / [UnifoLM-VLA-0](https://huggingface.co/unitreerobotics)** | 🔵 Research | 二手来源，无验证 | 一手确认 + AWS 映射 |
+| 条目 | 标签 | 为何受关注 | 为何待定 | 晋升条件 |
+|---|---|---|---|---|
+| Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | 以 π0/π0.5 领跑 VLA 的 PI 下一代旗舰传闻 —— 一旦发布可能再次刷新行业基准 | 仅二手来源 `[4]`，无 PI 一手确认 | PI 官方发布 + 性能验证 |
+| **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) 商业许可证** | 🟡→ | 若允许商用属实，将成为可用于客户提案的罕见开放 VLA（N1.5 为非商业，无法用于提案） | 允许商用的说法仅来自二手来源 `[4]`（N1.5 在模型卡上明确为非商业 `[1]`） | 在实时模型卡确定许可证 |
+| **[World-action models](https://developer.nvidia.com/isaac/gr00t)**（DreamZero → GR00T N2） | 🟡 Preview | 被视为 VLA 之后一代的"同时生成动作的世界模型"方向 —— NVIDIA 路线图的方向指标 | GR00T N2 "计划年底"，DreamZero 为研究 | GA + 实际部署案例 |
+| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)**（用于机器人学习的世界模型[^wfm]） | 🟡 Preview | 尝试把前沿级世界模型用作机器人策略学习的数据源 —— 若成立可绕过真实数据瓶颈 | 世界模型本身为预览，用于机器人学习为研究 | 机器人策略学习验证案例 |
+| **基于 VLM 的 SysID[^sysid]**（[Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)） | 🔵 Research | 仅凭视频估计物理参数、自动完成仿真器校准 —— 有望消除 sim-to-real 的手工校准 | 2026 预印本，单一实验室 | peer-review + 复现 |
+| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)**（visual sim-to-real[^s2r] at scale） | 🔵 Research | 从普通视频重建仿真环境与演示的 visual sim-to-real —— 改变数据采集成本结构的候选 | CVPR/CoRL 研究，非生产 | 生产部署证据 |
+| **Robbyant [LingBot-VLA](https://huggingface.co/robbyant) / [UnifoLM-VLA-0](https://huggingface.co/unitreerobotics)** | 🔵 Research | 中国新兴开放 VLA 系列 —— 用于观察开放权重竞争格局 | 二手来源，无验证 | 一手确认 + AWS 映射 |
 
 ## 🖥️ 仿真 / 工具（待成熟）
 
-| 条目 | 标签 | 为何待定 | 晋升条件 |
-|---|---|---|---|
-| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** 物理引擎[^physeng] | ⚪ Hype | "430,000 倍"已被反驳 `[1]`，接触操作中慢 | 独立基准 + 生产采用 |
-| **[MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp)** | 🟡 Alpha | PyPI classifier "3-Alpha" `[1]`，非生产 | Beta/GA 转换 |
-| **[NVIDIA Newton](https://github.com/newton-physics/newton)** 物理引擎 | 🟡 Preview | 在 Isaac Sim 6.0 中为 experimental 后端 | GA + Isaac Lab 3.0 正式 |
-| **[Isaac Sim 6.0](https://docs.isaacsim.omniverse.nvidia.com/latest/index.html)** | 🟡 Preview | "Early Developer Release"，API 变动（最新 GA 为 5.1） | 6.x GA 宣布 |
-| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) 作为 sim-to-real 学习源** | 🟢 GA（模型）/🔵（实战） | 模型 GA，但"用世界模型数据训练可实际部署策略"仅早期采用者。⚠️ **AWS 未托管** | 强化 AWS 映射 + 学习验证 |
+| 条目 | 标签 | 为何受关注 | 为何待定 | 晋升条件 |
+|---|---|---|---|---|
+| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** 物理引擎[^physeng] | ⚪ Hype | 以"超高速通用物理引擎"之说引发热议 —— 若属实将改变 GPU 仿真的成本结构 | "430,000 倍"已被反驳 `[1]`，接触操作中慢 | 独立基准 + 生产采用 |
+| **[MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp)** | 🟡 Alpha | 结合 MuJoCo 精度与 GPU 并行 —— Isaac 一家独大格局的替代候选 | PyPI classifier "3-Alpha" `[1]`，非生产 | Beta/GA 转换 |
+| **[NVIDIA Newton](https://github.com/newton-physics/newton)** 物理引擎 | 🟡 Preview | 与 Google DeepMind·Disney Research 共同开发的新一代开源物理引擎 —— Isaac 生态下一代标准的有力候选 | 在 Isaac Sim 6.0 中为 experimental 后端 | GA + Isaac Lab 3.0 正式 |
+| **[Isaac Sim 6.0](https://docs.isaacsim.omniverse.nvidia.com/latest/index.html)** | 🟡 Preview | 包含 Newton 集成的新一代架构改造 —— 现行 5.x 栈迁移方向的指标 | "Early Developer Release"，API 变动（最新 GA 为 5.1） | 6.x GA 宣布 |
+| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) 作为 sim-to-real 学习源** | 🟢 GA（模型）/🔵（实战） | 用世界模型生成数据训练可实际部署策略的方向 —— 若成立将改写 SDG 管道格局 | 模型 GA，但"用世界模型数据训练可实际部署策略"仅早期采用者。⚠️ **AWS 未托管** | 强化 AWS 映射 + 学习验证 |
 
 ## 🤖 硬件 / 部署（路线图·演示）
 
-| 条目 | 标签 | 为何待定 | 晋升条件 |
-|---|---|---|---|
-| **Tesla Optimus V3** | ⚪ Hype | 仅 Musk 的主张，生产未启动 | 经过验证的部署 |
-| **Hyundai·BD 全电动 [Atlas](https://bostondynamics.com/atlas/)** | ⚪ 路线图 | 全电动 Atlas 产品版本公开（2026-07，BD 官方 `[3]`）。部署 2.5 万+台·产能 3 万/年均 **2028 启动**，当前实际运行 ~0。2026 仅小规模试点（现代 RMAC + Google DeepMind）。⚠️"第五代"为误称 | 实际运行出货启动 |
-| **[Apptronik Apollo 2 + Robot Park](https://apptronik.com/)** | 🟡 试点 | Mercedes-Benz·GXO 运营试点 `[3]` + Google DeepMind Gemini Robotics 数据合作（9 万平方英尺）。自主·商用扩散未验证。AWS 映射为通用（数据→S3/SageMaker），合作本身属 Google `[4]` | 商用部署规模 + 自主成果验证 |
-| **[1X Neo](https://www.1x.tech/neo)** 自主性 | 🟡 Preview | 自主 + VR 遥操作（Expert Mode）混合运行 — CEO 亲自承认（[Engadget](https://www.engadget.com/ai/1x-neo-is-a-20000-home-robot-that-will-learn-chores-via-teleoperation-040252200.html) `[3]`）。"自主 60~70%" 的数字无一手来源 `[4]` | 真正自主的验证 |
-| **[Figure 03](https://www.figure.ai/) "8 小时自主班次"** | ⚪ Hype | CEO 推文，无独立验证（Figure 02@BMW 为已验证试点） | 第三方自主性审计 |
-| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) 采用**（Doosan/LG/Samsung） | 🟢 GA（公布） | 采用为"公布"而非生产验证 | 公开生产案例 |
+| 条目 | 标签 | 为何受关注 | 为何待定 | 晋升条件 |
+|---|---|---|---|---|
+| **Tesla Optimus V3** | ⚪ Hype | 话题度最高的人形机器人量产计划 —— 客户提问频率最高的条目 | 仅 Musk 的主张，生产未启动 | 经过验证的部署 |
+| **Hyundai·BD 全电动 [Atlas](https://bostondynamics.com/atlas/)** | ⚪ 路线图 | 现代汽车集团的量产路线图（2028 起 3 万台/年）—— 韩国客户触点上最直接的人形机器人赛道 | 全电动 Atlas 产品版本公开（2026-07，BD 官方 `[3]`）。部署 2.5 万+台·产能 3 万/年均 **2028 启动**，当前实际运行 ~0。2026 仅小规模试点（现代 RMAC + Google DeepMind）。⚠️"第五代"为误称 | 实际运行出货启动 |
+| **[Apptronik Apollo 2 + Robot Park](https://apptronik.com/)** | 🟡 试点 | Mercedes·GXO 实际运营试点 + Google DeepMind 数据合作 —— 人形机器人商业化最前线的指标 | Mercedes-Benz·GXO 运营试点 `[3]` + Google DeepMind Gemini Robotics 数据合作（9 万平方英尺）。自主·商用扩散未验证。AWS 映射为通用（数据→S3/SageMaker），合作本身属 Google `[4]` | 商用部署规模 + 自主成果验证 |
+| **[1X Neo](https://www.1x.tech/neo)** 自主性 | 🟡 Preview | 真正开售（$20k）的首批家用人形机器人 —— 遥操作混合运营模式的试验场 | 自主 + VR 遥操作（Expert Mode）混合运行 — CEO 亲自承认（[Engadget](https://www.engadget.com/ai/1x-neo-is-a-20000-home-robot-that-will-learn-chores-via-teleoperation-040252200.html) `[3]`）。"自主 60~70%" 的数字无一手来源 `[4]` | 真正自主的验证 |
+| **[Figure 03](https://www.figure.ai/) "8 小时自主班次"** | ⚪ Hype | 在已验证的 BMW 试点业绩之上的自主性主张 —— 若属实将刷新工业人形机器人自主性标准 | CEO 推文，无独立验证（Figure 02@BMW 为已验证试点） | 第三方自主性审计 |
+| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) 采用**（Doosan/LG/Samsung） | 🟢 GA（公布） | 韩国三大企业集团的采用公告 —— 韩国客户对话中随时被提及的参考案例 | 采用为"公布"而非生产验证 | 公开生产案例 |
 
 ## 🔗 智能体 / 连接（早期）
 
-| 条目 | 标签 | 为何待定 | 晋升条件 |
-|---|---|---|---|
-| **MCP[^mcp] for robotics**（[ros-mcp-server](https://github.com/lpigeon/ros-mcp-server) 等） | 🔵 Research | 有 50+ 服务器但为开源/演示，无生产（安全·延迟·确定性未验证） | 生产硬化案例 |
-| **ROS 2[^ros] + LLM 智能体[^agent]**（NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)） | 🔵 Research | ROSA(JPL) 为最强实例但为 mock-ops。现场部署有限 | 现场生产部署 |
-| **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
-| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | 首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
+| 条目 | 标签 | 为何受关注 | 为何待定 | 晋升条件 |
+|---|---|---|---|---|
+| **MCP[^mcp] for robotics**（[ros-mcp-server](https://github.com/lpigeon/ros-mcp-server) 等） | 🔵 Research | 将智能体标准协议接入机器人技能的实验激增（50+ 服务器）—— AgentCore 联动的切入角度 | 有 50+ 服务器但为开源/演示，无生产（安全·延迟·确定性未验证） | 生产硬化案例 |
+| **ROS 2[^ros] + LLM 智能体[^agent]**（NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)） | 🔵 Research | NASA JPL ROSA 等实际组织的验证案例 —— 自然语言→机器人运维最现实的切入口 | ROSA(JPL) 为最强实例但为 mock-ops。现场部署有限 | 现场生产部署 |
+| **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求 | ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
+| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | 机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案 | 首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
 
 ## 🆕 最新扫描流入（2026-08-08 · 一手验证完成 2026-07-21）
 

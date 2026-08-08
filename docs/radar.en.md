@@ -1,12 +1,12 @@
 ---
-ko_hash: ce9ab944b4d7ea0993f14c5815b61062b93ad457
+ko_hash: 3b2e42231e27f0397c0effcbe1a95d840d6e4abd
 ---
 # Radar — Queue / Watchlist
 
 _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 [← back to index](index.md)
 
-> **L0 TL;DR**: Things **worth watching** that have not yet passed the inclusion criteria ([2.5 THE FILTER](maintenance.md#inclusion-criteria-the-filter)). Each item is one line — a maturity label + **why it is on hold**. Once it clears the gate (2 of 4), the owning pillar's owner promotes it using the standard template.
+> **L0 TL;DR**: Things **worth watching** that have not yet passed the inclusion criteria ([2.5 THE FILTER](maintenance.md#inclusion-criteria-the-filter)). Each item is one line — a maturity label + **why it's noteworthy + why it is on hold**. Once it clears the gate (2 of 4), the owning pillar's owner promotes it using the standard template.
 >
 > ⚠️ **Do not present items here as "mature capabilities" in customer proposals.** A flashy demo often masks how deployable something actually is.
 
@@ -14,45 +14,45 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 
 ## 🔬 Models / algorithms (awaiting validation)
 
-| Item | Label | Why on hold | Promotion condition |
-|---|---|---|---|
-| Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | Secondary sources only `[4]`, no primary PI confirmation | Official PI release + performance validation |
-| **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) commercial license** | 🟡→ | Commercial-use claim is secondary-source only `[4]` (N1.5 is clearly non-commercial per model card `[1]`) | License confirmed on live model card |
-| **[World-action models](https://developer.nvidia.com/isaac/gr00t)** (DreamZero → GR00T N2) | 🟡 Preview | GR00T N2 "expected end of year," DreamZero is research | GA + real deployment case |
-| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)** (world model[^wfm] for robot learning) | 🟡 Preview | The world model itself is preview; applying it to robot learning is research | Validated case of robot policy learning |
-| **VLM-based SysID[^sysid]** ([Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)) | 🔵 Research | 2026 preprints, single lab | peer-review + reproduction |
-| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)** (visual sim-to-real[^s2r] at scale) | 🔵 Research | CVPR/CoRL research, not production | Evidence of production deployment |
-| **Robbyant [LingBot-VLA](https://huggingface.co/robbyant) / [UnifoLM-VLA-0](https://huggingface.co/unitreerobotics)** | 🔵 Research | Secondary sources, no validation | Primary confirmation + AWS mapping |
+| Item | Label | Why noteworthy | Why on hold | Promotion condition |
+|---|---|---|---|---|
+| Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | Rumored next flagship from PI, a leading VLA lab (π0/π0.5) — a release could move the industry baseline again | Secondary sources only `[4]`, no primary PI confirmation | Official PI release + performance validation |
+| **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) commercial license** | 🟡→ | If commercial use is real, it becomes a rare open VLA usable in customer proposals (N1.5 is non-commercial, so unusable) | Commercial-use claim is secondary-source only `[4]` (N1.5 is clearly non-commercial per model card `[1]`) | License confirmed on live model card |
+| **[World-action models](https://developer.nvidia.com/isaac/gr00t)** (DreamZero → GR00T N2) | 🟡 Preview | The "world models that also generate actions" track touted as the post-VLA generation — a directional indicator for NVIDIA's roadmap | GR00T N2 "expected end of year," DreamZero is research | GA + real deployment case |
+| Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)** (world model[^wfm] for robot learning) | 🟡 Preview | An attempt to use a frontier-grade world model as a data source for robot policy learning — would bypass the real-data bottleneck if it works | The world model itself is preview; applying it to robot learning is research | Validated case of robot policy learning |
+| **VLM-based SysID[^sysid]** ([Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)) | 🔵 Research | Estimates physical parameters from video alone to automate simulator calibration — could eliminate manual sim-to-real calibration | 2026 preprints, single lab | peer-review + reproduction |
+| **VIRAL / [VideoMimic](https://www.videomimic.net/) / [Real2Render2Real](https://real2render2real.com/)** (visual sim-to-real[^s2r] at scale) | 🔵 Research | Visual sim-to-real that reconstructs simulation environments and demonstrations from ordinary video — a candidate to change the data-collection cost structure | CVPR/CoRL research, not production | Evidence of production deployment |
+| **Robbyant [LingBot-VLA](https://huggingface.co/robbyant) / [UnifoLM-VLA-0](https://huggingface.co/unitreerobotics)** | 🔵 Research | A new wave of open VLA families from China — watched for the open-weights competitive landscape | Secondary sources, no validation | Primary confirmation + AWS mapping |
 
 ## 🖥️ Simulation / tools (awaiting maturity)
 
-| Item | Label | Why on hold | Promotion condition |
-|---|---|---|---|
-| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** physics engine[^physeng] | ⚪ Hype | "430,000×" refuted `[1]`, slow on contact-rich manipulation | Independent benchmark + production adoption |
-| **[MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp)** | 🟡 Alpha | PyPI classifier "3-Alpha" `[1]`, not production | Beta/GA transition |
-| **[NVIDIA Newton](https://github.com/newton-physics/newton)** physics engine | 🟡 Preview | Experimental backend in Isaac Sim 6.0 | GA + official in Isaac Lab 3.0 |
-| **[Isaac Sim 6.0](https://docs.isaacsim.omniverse.nvidia.com/latest/index.html)** | 🟡 Preview | "Early Developer Release," API in flux (latest GA is 5.1) | 6.x GA declaration |
-| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) as sim-to-real training source** | 🟢 GA(model)/🔵(in practice) | Model is GA, but "training deployable policies from world-model data" is early-adopter only. ⚠️ **not hosted on AWS** | Stronger AWS mapping + training validation |
+| Item | Label | Why noteworthy | Why on hold | Promotion condition |
+|---|---|---|---|---|
+| **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** physics engine[^physeng] | ⚪ Hype | Hyped as an "ultra-fast general-purpose physics engine" — if true, it changes the cost structure of GPU simulation | "430,000×" refuted `[1]`, slow on contact-rich manipulation | Independent benchmark + production adoption |
+| **[MuJoCo Warp](https://github.com/google-deepmind/mujoco_warp)** | 🟡 Alpha | Combines MuJoCo accuracy with GPU parallelism — an alternative candidate to the Isaac monoculture | PyPI classifier "3-Alpha" `[1]`, not production | Beta/GA transition |
+| **[NVIDIA Newton](https://github.com/newton-physics/newton)** physics engine | 🟡 Preview | Next-generation open-source physics engine co-developed with Google DeepMind and Disney Research — the likely next standard of the Isaac ecosystem | Experimental backend in Isaac Sim 6.0 | GA + official in Isaac Lab 3.0 |
+| **[Isaac Sim 6.0](https://docs.isaacsim.omniverse.nvidia.com/latest/index.html)** | 🟡 Preview | A next-generation overhaul including Newton integration — a directional indicator for migrating the current 5.x stack | "Early Developer Release," API in flux (latest GA is 5.1) | 6.x GA declaration |
+| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) as sim-to-real training source** | 🟢 GA(model)/🔵(in practice) | The track of training deployable policies from world-model-generated data — would reshape the SDG pipeline landscape if it works | Model is GA, but "training deployable policies from world-model data" is early-adopter only. ⚠️ **not hosted on AWS** | Stronger AWS mapping + training validation |
 
 ## 🤖 Hardware / deployment (roadmap / demo)
 
-| Item | Label | Why on hold | Promotion condition |
-|---|---|---|---|
-| **Tesla Optimus V3** | ⚪ Hype | Musk claims only, production not started | Validated deployment |
-| **Hyundai·BD electric [Atlas](https://bostondynamics.com/atlas/)** | ⚪ Roadmap | Electric Atlas product version unveiled (2026-07, BD official `[3]`). Deployment 25k+ units & 30k/yr capacity both **start 2028**; ~0 in live production today. 2026 is a small pilot only (Hyundai RMAC + Google DeepMind). ⚠️ "Gen 5" is a misnomer | Verified real-operation shipments begin |
-| **[Apptronik Apollo 2 + Robot Park](https://apptronik.com/)** | 🟡 Pilot | Operational pilots at Mercedes-Benz & GXO `[3]` + Google DeepMind Gemini Robotics data partnership (90k sq ft). Autonomy/commercial scale unverified. AWS mapping is generic (data→S3/SageMaker); the partnership itself is Google `[4]` | Commercial deployment scale + validated autonomy |
-| **[1X Neo](https://www.1x.tech/neo)** autonomy | 🟡 Preview | Mixed autonomy + VR teleoperation (Expert Mode) — acknowledged by the CEO directly ([Engadget](https://www.engadget.com/ai/1x-neo-is-a-20000-home-robot-that-will-learn-chores-via-teleoperation-040252200.html) `[3]`). The "60–70% autonomy" figure has no primary source `[4]` | Validation of true autonomy |
-| **[Figure 03](https://www.figure.ai/) "8-hour autonomous shift"** | ⚪ Hype | CEO tweet, no independent validation (Figure 02@BMW is a validated pilot) | Third-party autonomy audit |
-| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) adoption** (Doosan/LG/Samsung) | 🟢 GA(announced) | Adoption is "announced," not production-validated | Public production case |
+| Item | Label | Why noteworthy | Why on hold | Promotion condition |
+|---|---|---|---|---|
+| **Tesla Optimus V3** | ⚪ Hype | The highest-profile humanoid mass-production plan — the most frequently asked-about item by customers | Musk claims only, production not started | Validated deployment |
+| **Hyundai·BD electric [Atlas](https://bostondynamics.com/atlas/)** | ⚪ Roadmap | Hyundai Motor Group's mass-production roadmap (30k/yr from 2028) — the most direct humanoid track for customer conversations in Korea | Electric Atlas product version unveiled (2026-07, BD official `[3]`). Deployment 25k+ units & 30k/yr capacity both **start 2028**; ~0 in live production today. 2026 is a small pilot only (Hyundai RMAC + Google DeepMind). ⚠️ "Gen 5" is a misnomer | Verified real-operation shipments begin |
+| **[Apptronik Apollo 2 + Robot Park](https://apptronik.com/)** | 🟡 Pilot | Live operational pilots at Mercedes and GXO plus a Google DeepMind data partnership — a front-line indicator of humanoid commercialization | Operational pilots at Mercedes-Benz & GXO `[3]` + Google DeepMind Gemini Robotics data partnership (90k sq ft). Autonomy/commercial scale unverified. AWS mapping is generic (data→S3/SageMaker); the partnership itself is Google `[4]` | Commercial deployment scale + validated autonomy |
+| **[1X Neo](https://www.1x.tech/neo)** autonomy | 🟡 Preview | Among the first home humanoids actually on sale ($20k) — a test bed for the mixed-teleoperation operating model | Mixed autonomy + VR teleoperation (Expert Mode) — acknowledged by the CEO directly ([Engadget](https://www.engadget.com/ai/1x-neo-is-a-20000-home-robot-that-will-learn-chores-via-teleoperation-040252200.html) `[3]`). The "60–70% autonomy" figure has no primary source `[4]` | Validation of true autonomy |
+| **[Figure 03](https://www.figure.ai/) "8-hour autonomous shift"** | ⚪ Hype | An autonomy claim on top of a validated BMW pilot record — would reset the bar for industrial humanoid autonomy if true | CEO tweet, no independent validation (Figure 02@BMW is a validated pilot) | Third-party autonomy audit |
+| **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/) adoption** (Doosan/LG/Samsung) | 🟢 GA(announced) | Adoption announcements by three major Korean conglomerates — a reference that comes up immediately in customer conversations in Korea | Adoption is "announced," not production-validated | Public production case |
 
 ## 🔗 Agents / connectivity (early)
 
-| Item | Label | Why on hold | Promotion condition |
-|---|---|---|---|
-| **MCP[^mcp] for robotics** ([ros-mcp-server](https://github.com/lpigeon/ros-mcp-server), etc.) | 🔵 Research | 50+ servers exist but open-source/demo, none in production (safety, latency, determinism unvalidated) | Production-hardening case |
-| **ROS 2[^ros] + LLM agents[^agent]** (NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)) | 🔵 Research | ROSA (JPL) is the strongest real case but mock-ops. Field deployment limited | Field production deployment |
-| **Agent physical-safety standards** ([RoboGuard](https://arxiv.org/abs/2503.07885), etc.) | 🔵 Research | ISO covers physical only; no standard for LLM semantic risk | Progress on standardization |
-| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/) (Seoul)** | 🟡 Preview/unavailable | Not available in Seoul region (Tokyo Agent Registry ✅) | Seoul region expansion |
+| Item | Label | Why noteworthy | Why on hold | Promotion condition |
+|---|---|---|---|---|
+| **MCP[^mcp] for robotics** ([ros-mcp-server](https://github.com/lpigeon/ros-mcp-server), etc.) | 🔵 Research | A surge of experiments (50+ servers) wiring the agent-standard protocol to robot skills — an AgentCore-integration angle | 50+ servers exist but open-source/demo, none in production (safety, latency, determinism unvalidated) | Production-hardening case |
+| **ROS 2[^ros] + LLM agents[^agent]** (NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)) | 🔵 Research | Real-organization validation cases such as NASA JPL's ROSA — the most realistic entry path from natural language to robot operations | ROSA (JPL) is the strongest real case but mock-ops. Field deployment limited | Field production deployment |
+| **Agent physical-safety standards** ([RoboGuard](https://arxiv.org/abs/2503.07885), etc.) | 🔵 Research | A standards vacuum for LLM semantic-level risk — could surface as a regulatory/procurement requirement | ISO covers physical only; no standard for LLM semantic risk | Progress on standardization |
+| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/) (Seoul)** | 🟡 Preview/unavailable | The AWS-native track for robot-agent commerce and registry infrastructure — immediately proposable once it opens in the Seoul region | Not available in Seoul region (Tokyo Agent Registry ✅) | Seoul region expansion |
 
 ## 🆕 Latest scan intake (2026-08-08 · primary verification completed 2026-07-21)
 
