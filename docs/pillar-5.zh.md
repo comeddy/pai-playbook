@@ -1,5 +1,5 @@
 ---
-ko_hash: c3f160007e4fa4b68230e641c1e6fb3d9873d518
+ko_hash: 594dcfdde2b600d3825054f2ad33621d80baccaa
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -88,7 +88,7 @@ graph LR
 | Policy (Cedar 工具门禁) | 🟢 GA (2026-03) | ✅ |
 | Evaluations | 🟡 Preview→ | ✅ |
 | Payments | 🟡 Preview | ❌ |
-| Agent Registry | — | ❌（东京 ✅） |
+| Agent Registry | 🟡 Preview | ❌（东京 ✅） |
 
 **价格** —— 框架（控制面）免费，只按实际使用的资源计费:
 

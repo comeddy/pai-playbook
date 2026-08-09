@@ -1,5 +1,5 @@
 ---
-ko_hash: a67da71bf18af7297eb9b8558a5613e85c194f9e
+ko_hash: 3a60688b0c215d06e7e8959c8245a39ff2bd5e51
 ---
 # Radar — Queue / Watchlist
 
@@ -52,7 +52,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 | **MCP[^mcp] for robotics** ([ros-mcp-server](https://github.com/lpigeon/ros-mcp-server), etc.) | 🔵 Research | ✨ **Notable**: A surge of experiments (50+ servers) wiring the agent-standard protocol to robot skills — an AgentCore-integration angle<br>⏳ **On hold**: 50+ servers exist but open-source/demo, none in production (safety, latency, determinism unvalidated) | Production-hardening case |
 | **ROS 2[^ros] + LLM agents[^agent]** (NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)) | 🔵 Research | ✨ **Notable**: Real-organization validation cases such as NASA JPL's ROSA — the most realistic entry path from natural language to robot operations<br>⏳ **On hold**: ROSA (JPL) is the strongest real case but mock-ops. Field deployment limited | Field production deployment |
 | **Agent physical-safety standards** ([RoboGuard](https://arxiv.org/abs/2503.07885), etc.) | 🔵 Research | ✨ **Notable**: A standards vacuum for LLM semantic-level risk — could surface as a regulatory/procurement requirement<br>⏳ **On hold**: ISO covers physical only; no standard for LLM semantic risk | Progress on standardization |
-| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/) (Seoul)** | 🟡 Preview/unavailable | ✨ **Notable**: The AWS-native track for robot-agent commerce and registry infrastructure — immediately proposable once it opens in the Seoul region<br>⏳ **On hold**: Not available in Seoul region (Tokyo Agent Registry ✅) | Seoul region expansion |
+| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/) (Seoul)** | 🟡 Preview/unavailable | ✨ **Notable**: The AWS-native track for robot-agent commerce and registry infrastructure — immediately proposable once it opens in the Seoul region<br>⏳ **On hold**: Not available in Seoul region — Agent Registry is in Tokyo ✅, but Payments is not in Tokyo either (Sydney only in APAC) `[1]` | Seoul region expansion |
 
 ## 🆕 Latest scan intake (2026-08-09 · primary verification completed 2026-07-21)
 

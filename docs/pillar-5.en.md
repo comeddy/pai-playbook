@@ -1,5 +1,5 @@
 ---
-ko_hash: c3f160007e4fa4b68230e641c1e6fb3d9873d518
+ko_hash: 594dcfdde2b600d3825054f2ad33621d80baccaa
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -88,7 +88,7 @@ graph LR
 | Policy (Cedar tool gate) | 🟢 GA (2026-03) | ✅ |
 | Evaluations | 🟡 Preview→ | ✅ |
 | Payments | 🟡 Preview | ❌ |
-| Agent Registry | — | ❌ (Tokyo ✅) |
+| Agent Registry | 🟡 Preview | ❌ (Tokyo ✅) |
 
 **Pricing** — the harness (control plane) is free; you pay only for resources used:
 

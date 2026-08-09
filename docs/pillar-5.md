@@ -86,7 +86,7 @@ graph LR
 | Policy (Cedar 툴 게이트) | 🟢 GA (2026-03) | ✅ |
 | Evaluations | 🟡 Preview→ | ✅ |
 | Payments | 🟡 Preview | ❌ |
-| Agent Registry | — | ❌ (도쿄 ✅) |
+| Agent Registry | 🟡 Preview | ❌ (도쿄 ✅) |
 
 **가격** — 하네스(제어부)는 무료, 사용한 리소스만 과금:
 

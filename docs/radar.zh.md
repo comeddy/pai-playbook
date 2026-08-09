@@ -1,5 +1,5 @@
 ---
-ko_hash: a67da71bf18af7297eb9b8558a5613e85c194f9e
+ko_hash: 3a60688b0c215d06e7e8959c8245a39ff2bd5e51
 ---
 # Radar — 队列 / 观察列表
 
@@ -52,7 +52,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **MCP[^mcp] for robotics**（[ros-mcp-server](https://github.com/lpigeon/ros-mcp-server) 等） | 🔵 Research | ✨ **关注**：将智能体标准协议接入机器人技能的实验激增（50+ 服务器）—— AgentCore 联动的切入角度<br>⏳ **待定**：有 50+ 服务器但为开源/演示，无生产（安全·延迟·确定性未验证） | 生产硬化案例 |
 | **ROS 2[^ros] + LLM 智能体[^agent]**（NASA JPL [ROSA](https://github.com/nasa-jpl/rosa), [RAI](https://github.com/RobotecAI/rai)） | 🔵 Research | ✨ **关注**：NASA JPL ROSA 等实际组织的验证案例 —— 自然语言→机器人运维最现实的切入口<br>⏳ **待定**：ROSA(JPL) 为最强实例但为 mock-ops。现场部署有限 | 现场生产部署 |
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
-| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供（东京 Agent Registry ✅） | 首尔区域扩展 |
+| **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
 ## 🆕 最新扫描流入（2026-08-09 · 一手验证完成 2026-07-21）
 

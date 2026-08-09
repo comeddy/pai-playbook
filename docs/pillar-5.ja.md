@@ -1,5 +1,5 @@
 ---
-ko_hash: c3f160007e4fa4b68230e641c1e6fb3d9873d518
+ko_hash: 594dcfdde2b600d3825054f2ad33621d80baccaa
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -89,7 +89,7 @@ graph LR
 | Policy (Cedar ツールゲート) | 🟢 GA (2026-03) | ✅ |
 | Evaluations | 🟡 Preview→ | ✅ |
 | Payments | 🟡 Preview | ❌ |
-| Agent Registry | — | ❌（東京 ✅） |
+| Agent Registry | 🟡 Preview | ❌（東京 ✅） |
 
 **価格** — ハーネス（制御部）は無料、使用したリソースのみ課金:
 
