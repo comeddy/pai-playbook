@@ -1,5 +1,5 @@
 ---
-ko_hash: a03d8a72b65d0e885605b32941a724181d7f1870
+ko_hash: a67da71bf18af7297eb9b8558a5613e85c194f9e
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,7 +55,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ✨ **注目**: LLM の意味レベルのリスクを扱う標準の空白地帯 — 規制・調達要件として浮上する可能性<br>⏳ **待機**: ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ✨ **注目**: ロボットエージェントの商取引・レジストリ基盤の AWS ネイティブ軸 — ソウルリージョン開放後は即提案可能<br>⏳ **待機**: ソウルリージョン未提供（東京 Agent Registry ✅） | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-08-08 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-08-09 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
@@ -63,7 +63,6 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 |---|---|---|---|
 | **[RLWRLD RLDX-1](https://huggingface.co/RLWRLD)**（デクステリティ[^dex]優先のファウンデーションモデル） | 🟡 Preview | ✨ **注目**: 韓国スタートアップの手指マニピュレーション特化基盤モデル — 3 大シミュレーションベンチマークでの SOTA 主張に重みの実公開が重なり、直接実測が可能<br>⏳ **待機**: 重み公開は事実だが ⚠️「オープンソース」ではない —— RLWRLD Model License v1.0（非商用・商用配布禁止）`[3]`、7~9B のバリアント群（主力 8.1B）。RoboCasa/LIBERO/SIMPLER[^simbench] の SOTA は自社発表で独立再現なし（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) が EC2 上で n=5 スモーク[^smoke]実測を提供 — 完全なベンチマーク再現ではありません）。AWS との関連はシミュレーションベンチマーキングに限定（非商用ライセンスが明示的に許可する用途、商用ポジショニング不可）—— 「関連の根拠なし」表記を更新（2026-07）。実顧客への展開 0 | 独立ベンチマーク再現 + 検証済みの展開事例 |
 | **[NEURA Robotics × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale) 戦略的協業** | ⚪ Hype・ロードマップ | ✨ **注目**: ヒューマノイドメーカーが AWS を primary cloud と明記した希少な公式協業 — 「Physical AI on AWS」顧客対話の直接的なリファレンス候補<br>⏳ **待機**: AWS 公式プレスで確認、2026-04-21 `[1]` —— AWS が primary cloud、Neuraverse ホスティング + NEURA Gym・SageMaker 連携を明記。ただしフルフィルメントセンターは原文で「展開機会を探る（explore）」段階 —— 実展開は 0。NEURA Gym RWTH Aachen などの訓練網拡大発表（2026-07-22）には AWS への言及なし —— 別トラックとして観察 | AWS インフラの実使用事例公開 + フルフィルメントセンター展開の検証 |
-| **[Actuator Reality Shaping](https://arxiv.org/abs/2607.02205)**（zero-shot sim-to-real） | 🔵 Research | ✨ **注目**: アクチュエータのギャップ補正のみで実機 4 種の zero-shot sim-to-real を実証 — 実機ファインチューニングのコストを省ける可能性のあるアプローチ<br>⏳ **待機**: 実在確認（arXiv 2607.02205、2026-07-02）`[1]` —— 実機ハードウェア 4 種（ヒューマノイド歩行を含む）で検証、要約と原文が一致（訂正なし）。peer-review 未採択 | peer-review + 独立再現 |
 | **[AgiBot World 2026](https://huggingface.co/datasets/agibot-world/AgiBotWorld2026)**（オープンソースの実世界ロボットマニピュレーションデータセット、5 段階で順次公開） | 🔵 Research | ✨ **注目**: 商業・サービス環境で収集した 100% 実世界マニピュレーションデータを無償公開 — 業界最大のボトルネックである実データ不足を正面から狙う<br>⏳ **待機**: AgiBot 公式公開（HuggingFace `agibot-world/AgiBotWorld2026`、2026-07）`[4]` —— AgiBot G2 実機で収集した 100% 実世界データ、5 つの研究軸（模倣学習など）を段階的に公開予定、第 1 弾は商業・サービス環境で数百時間分。ライセンス・商用利用条件は未確認、独立ベンチマーク・学習検証事例なし | ライセンス確定 + 独立した学習検証（SOTA 再現）事例 |
 | **[AXIS](https://arxiv.org/abs/2607.21588)**（コミュニティ駆動の成長型ロボット操作データエンジン） | 🔵 Research | ✨ **注目**: ブラウザテレオペレーションのクラウドソーシングでデモデータ収集のコスト構造を変える試み — π0.5 の性能向上（+4.9pp）で効用を実証<br>⏳ **待機**: 実在確認（arXiv 2607.21588、2026-07-23）`[4]` —— 8 大学 + Axis Robotics の共同、ブラウザベース MuJoCo-WASM[^wasm] テレオペ[^teleop]でクラウドソーシングし IsaacSim で拡張。Franka アームでのシミュレーションのみ（207 タスク・5 万+ 軌跡）、π0.5 の continual pretraining[^ctp] で LIBERO-Plus が +4.9pp 向上と報告（自己申告ベンチマーク、独立再現なし）。著者自身が sim-to-real を今後の課題として明記 —— 実機では未検証 | peer-review + 実機での sim-to-real 検証 |
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列のオンデバイス 4B ワールドモデル+ポリシー） | 🟡 Preview | ✨ **注目**: ワールドモデル+ポリシーを Jetson Thor 上のオンデバイス 15Hz で駆動 — クラウド往復なしのエッジ推論軸の先行事例<br>⏳ **待機**: NVIDIA 公式発表 `[4]`（2026-07-21、HuggingFace/developer ブログ）—— Jetson Thor 上のオンデバイス推論で 15Hz のリアルタイムロボットポリシー制御（自己申告ベンチマーク、独立検証なし）、Cosmos 3 Edge Policy（DROID[^droid]）で pick-and-place のファインチューニングに対応。既存の「Cosmos 3 を sim-to-real 学習源として」項目（🖥️ セクション）とは別に、エッジ展開の軸のみを扱う —— AMD Ryzen AI Embedded X100（本表）と並行して競合構図を観察。現時点で実際の量産ロボット展開事例は 0 | 独立ベンチマーク + 実際の量産ロボット展開事例 |
@@ -71,6 +70,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)**（幅広いエンドエフェクタ[^eef]に対応する embodied foundation model） | 🟡 Preview | ✨ **注目**: 約 9,000 種のエンドエフェクタを単一モデルでカバー + 実測 50 万時間の事前学習 — embodiment 汎用性で前例のないスケールを主張<br>⏳ **待機**: Generalist AI 公式ブログ発表（2026-07）`[4]` —— 5 指ハンドから専用ツールまで約 9,000 種のエンドエフェクタ、実測データ 50 万+時間で事前学習、自己申告で成功率 99%・速度 3 倍を主張（独立再現なし）。Generalist AI は [pillar-1](pillar-1.md) で Cosmos WFM のデータ生成活用企業として既に言及されているが、GEN-1 モデル自体は別の新規事案 | 独立ベンチマーク再現 + 実展開事例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] ファウンデーションモデル、10 万時間超の実世界 UMI[^umi] 軌跡） | 🔵 Research | ✨ **注目**: UMI 10 万時間超の実世界軌跡というデータスケールで 4 ベンチマークの SOTA を主張 — 中国ビッグテックが VLA 競争へ本格参入するシグナル<br>⏳ **待機**: Xiaomi 公式 arXiv 発表（2607.15330、2026-07-16）`[4]` —— Qwen3-VL ベースの MoT（VLM+DiT）、RoboCasa365（57.4%、従来 SOTA 46.6% から向上）・RoboDojo（20.07、従来 13.07 から向上）・VLABench・RoboCasa の 4 ベンチマークで自己申告 SOTA（RLDX-1・GR00T N1.6 などと比較、独立再現なし）。「コード・重みは公開予定」とのことだが、GitHub リポジトリは README のみで実際の公開は未確認（2026-08-01 時点） | コード・重みの実公開確認 + 独立ベンチマーク再現 |
 | **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind、全身制御 VLA） | 🟡 Preview | ✨ **注目**: フロンティアラボの VLA が上半身マニピュレーションを超えて全身（歩行・両手協調）制御へ拡張 — 競合スタックの地形を変える世代転換のシグナル<br>⏳ **待機**: 公式発表（2026-07-30）`[4]` —— これまでの上半身のみの制御を全身制御（歩行・屈曲・両手協調）に拡張、推論モデル Gemini Robotics ER 2・エッジモデル On-Device 2 を同時発表。Apptronik Apollo 2 で実機デモ（電球の取り外し 92% 成功）、自己申告ベンチマークで独立検証なし。公開プレビューは ER 2 のみ（AI Studio/Enterprise Agent Platform）、VLA・On-Device 2 はアーリーアクセスパートナー限定。⚠️ [pillar-2](pillar-2.md) の「Gemini Robotics」競合スタック節は本発表以前のスナップショット（確認 2026-07、ER 1.6/On-Device/1.5 が対象）—— pillar owner による更新が必要 | アーリーアクセス終了・GA 公開 + 独立ベンチマーク検証 |
+| **[SiMDex](https://arxiv.org/abs/2608.04196)**（人の一人称視点動画をマイニングしてロボット操作データを確保） | 🔵 Research | ✨ **注目**: 既存の人の一人称視点動画約 3,200 万件からタスクに適した部分だけをレコメンドシステム式の recall→rank→re-rank で選び VLA の後続学習に再利用 — 新規デモ収集なしで実データのボトルネックを回避するアプローチ<br>⏳ **待機**: arXiv 2608.04196（2026-08-04、東京大学・ByteDance Seed など）`[4]` —— ロボットの形態（エンボディメント）に依存しない再利用可能な行動表現を用い VLA アーキテクチャの変更なしで適用、実機の手先操作タスクで利用可能サンプルの 5% 未満を使い成功率 47.7%→61.1% と自己報告ベンチマークで主張。peer-review 未採択、独立再現なし | peer-review + 独立再現 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 
