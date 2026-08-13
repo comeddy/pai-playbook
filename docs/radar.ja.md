@@ -1,5 +1,5 @@
 ---
-ko_hash: 2120b206ddc31b5760ec7ad7d3c509fb4664161c
+ko_hash: 94c646a040dbcc708bfece1bbc163ab857c998d4
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,7 +55,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ✨ **注目**: LLM の意味レベルのリスクを扱う標準の空白地帯 — 規制・調達要件として浮上する可能性<br>⏳ **待機**: ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ✨ **注目**: ロボットエージェントの商取引・レジストリ基盤の AWS ネイティブ軸 — ソウルリージョン開放後は即提案可能<br>⏳ **待機**: ソウルリージョン未提供 — Agent Registry は東京 ✅、Payments は東京にも未提供（APAC はシドニーのみ）`[1]` | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-08-11 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-08-13 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
@@ -69,7 +69,7 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] ファウンデーションモデル、10 万時間超の実世界 UMI[^umi] 軌跡） | 🔵 Research | ✨ **注目**: UMI 10 万時間超の実世界軌跡というデータスケールで 4 ベンチマークの SOTA を主張 — 中国ビッグテックが VLA 競争へ本格参入するシグナル<br>⏳ **待機**: Xiaomi 公式 arXiv 発表（2607.15330、2026-07-16）`[4]` —— Qwen3-VL ベースの MoT（VLM+DiT）、RoboCasa365（57.4%、従来 SOTA 46.6% から向上）など 4 ベンチマークで自己申告 SOTA（RLDX-1・GR00T N1.6 などと比較、独立再現なし）。⚠️ **訂正（2026-08-10）**: 2026-08-03 に GitHub でコード・チェックポイント（ベース 5B + RoboCasa/RoboCasa365/VLABench タスク別 3 種）の実公開を確認 — **Apache-2.0**（RLDX-1 と異なり商用利用を明示的に許可、AWS マッピングの可能性あり）。リポジトリ自身のリーダーボード数値は arXiv 論文と表記方式が異なり直接対照が必要、独立再現・実導入は依然ゼロ | 独立ベンチマーク再現 + 実導入事例 |
 | **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind、全身制御 VLA） | 🟡 Preview | ✨ **注目**: フロンティアラボの VLA が上半身マニピュレーションを超えて全身（歩行・両手協調）制御へ拡張 — 競合スタックの地形を変える世代転換のシグナル<br>⏳ **待機**: 公式発表（2026-07-30）`[4]` —— これまでの上半身のみの制御を全身制御（歩行・屈曲・両手協調）に拡張、推論モデル Gemini Robotics ER 2・エッジモデル On-Device 2 を同時発表。Apptronik Apollo 2 で実機デモ（電球の取り外し 92% 成功）、自己申告ベンチマークで独立検証なし。公開プレビューは ER 2 のみ（AI Studio/Enterprise Agent Platform）、VLA・On-Device 2 はアーリーアクセスパートナー限定。⚠️ [pillar-2](pillar-2.md) の「Gemini Robotics」競合スタック節は本発表以前のスナップショット（確認 2026-07、ER 1.6/On-Device/1.5 が対象）—— pillar owner による更新が必要 | アーリーアクセス終了・GA 公開 + 独立ベンチマーク検証 |
 | **[SiMDex](https://arxiv.org/abs/2608.04196)**（人の一人称視点動画をマイニングしてロボット操作データを確保） | 🔵 Research | ✨ **注目**: 既存の人の一人称視点動画約 3,200 万件からタスクに適した部分だけをレコメンドシステム式の recall→rank→re-rank で選び VLA の後続学習に再利用 — 新規デモ収集なしで実データのボトルネックを回避するアプローチ<br>⏳ **待機**: arXiv 2608.04196（2026-08-04、東京大学・ByteDance Seed など）`[4]` —— ロボットの形態（エンボディメント）に依存しない再利用可能な行動表現を用い VLA アーキテクチャの変更なしで適用、実機の手先操作タスクで利用可能サンプルの 5% 未満を使い成功率 47.7%→61.1% と自己報告ベンチマークで主張。peer-review 未採択、独立再現なし | peer-review + 独立再現 |
-| **[Ego2Robot](https://arxiv.org/abs/2608.02580)**（人の一人称視点動画をロボット学習データに合成するパイプライン） | 🔵 Research | ✨ **注目**: 人の手の動きを 15 種のロボット embodiment にリターゲット・レンダリングし、18,561 時間規模（史上最大を自称）の ego-to-robot データを生成 — 実機（ARX ACone）でのファインチューニングで成功率向上まで検証。SiMDex（マイニング方式）とは異なり合成（変換+レンダリング）アプローチ<br>⏳ **待機**: arXiv 2608.02580（2026-08-03、Alibaba Qwen Team・中国人民大学・ShanghaiTech など）`[4]` —— RoboTwin2.0 派生ベンチマーク・π0.5 比較の自己申告結果、5 タスクの小規模実機検証のみで独立再現なし。データセット・コードの公開状況は不明（プロジェクトページのみ言及） | peer-review + データセット公開の確認 + 大規模な独立再現 |
+| **[Xiaomi-Robotics-U0](https://arxiv.org/abs/2607.11643)**（統合埋め込み型データ合成ワールドファウンデーションモデル、38B） | 🔵 Research | ✨ **注目**: text-to-image・シーン合成・動画生成・「embodied transfer」を単一のオートレグレッシブフレームワークに統合し、ロボット学習用の合成データを直接生成 — WorldArena ベンチマークで 100 以上のモデル中総合 1 位を自己申告、実機の π0.5 ポリシーに拡張データを適用し held-out（背景・照明変更）条件でのタスク完了率を 36.9%→63.2% に改善したことまで実測<br>⏳ **待機**: Xiaomi 公式 arXiv 発表（2607.11643、2026-07-13）`[4]` —— ベンチマーク・実機結果ともに自己申告で、独立再現・peer-review なし、重み・コードのオープンソース公開状況は不明。同表の既存項目 Xiaomi-Robotics-1（VLA ポリシーモデル）とは別モデル・別事案（本件はデータ合成用 WFM） | peer-review + 独立再現 + 重み・コード公開の確認 |
 | **[ω-0](https://arxiv.org/abs/2608.06375)**（移動+操作を同時制御するワールド-アクションモデル） | 🔵 Research | ✨ **注目**: 移動・姿勢調整・バランス・操作を分離せず単一モデルで同時実行（concurrent loco-manipulation）—— diffusion[^diffpol] ベースの whole-body アクションを生成し、実機（Unitree G1）で 11 の家庭タスクを自律実行、人の動作データの転移（human-to-humanoid）まで実証<br>⏳ **待機**: arXiv 2608.06375（2026-08-06、NTU・北京大学・BAAI など）`[4]` —— 自己申告ベンチマークで既存の模倣学習・VLA・ヒューマノイド・WAM ベースラインに優位と主張、独立再現・peer-review なし。40 時間規模の ω-HOME データセットの公開状況は不明 | peer-review + 独立再現 + データセット・コード公開の確認 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
