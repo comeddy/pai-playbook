@@ -1,5 +1,5 @@
 ---
-ko_hash: 94c646a040dbcc708bfece1bbc163ab857c998d4
+ko_hash: f6746ec27cffa9b0eecbad11c1e382fc17d694db
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-08-13 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-08-15 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -64,12 +64,12 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[NEURA Robotics × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale) 战略合作** | ⚪ Hype·路线图 | ✨ **关注**：人形机器人厂商明确将 AWS 列为 primary cloud 的罕见官方合作 —— "Physical AI on AWS" 客户对话的直接参考案例候选<br>⏳ **待定**：经 AWS 官方新闻稿确认，2026-04-21 `[1]` —— AWS 为 primary cloud，明确写入 Neuraverse 托管 + NEURA Gym·SageMaker 集成。但履行中心在原文中为"探索部署机会（explore）"阶段 —— 实际部署为 0。NEURA Gym RWTH Aachen 等训练网络扩展公告（2026-07-22）未提及 AWS —— 作为独立线索观察 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列端侧 4B 世界模型+策略） | 🟡 Preview | ✨ **关注**：在 Jetson Thor 上以 15Hz 端侧运行世界模型+策略 —— 无需云端往返的边缘推理方向的领先案例<br>⏳ **待定**：NVIDIA 官方发布 `[4]`（2026-07-21，HuggingFace/developer 博客）—— 在 Jetson Thor 上端侧推理，实现 15Hz 实时机器人策略控制（自报基准，无独立验证），Cosmos 3 Edge Policy（DROID[^droid]）支持 pick-and-place 微调。与既有的"Cosmos 3 作为 sim-to-real 学习源"条目（🖥️ 部分）不同，本条仅涉及边缘部署方向 —— 与 AMD Ryzen AI Embedded X100（本表）并行观察为竞争方案。目前实际生产机器人部署案例为 0 | 独立基准测试 + 实际生产机器人部署案例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute 分拆，Large Behavior Models[^lbm] 人形机器人） | 🟡 试点 | ✨ **关注**：曾执掌 TRI 机器人研究的 Russ Tedrake 的分拆公司 + 3 亿美元种子轮 —— LBM 商业化最前线，拥有 Toyota 工厂实际试点<br>⏳ **待定**：公司官方发布（2026-07-15）`[4]` —— 2026-01 从 TRI 分拆（创始人 Russ Tedrake，前 TRI SVP），Toyota·Deviation Capital 联合领投 + NVIDIA·Boeing·Samsung Ventures 等参与的 3 亿美元种子轮（估值 11 亿美元）。人形上半身+轮式移动底座，基于 Diffusion Policy[^diffpol]·Large Behavior Models 的策略，宣称自 2026-02 起在北美 Toyota 工厂实现试点→"量产转换"，无第三方验证 | 第三方审计·独立验证 + 部署规模扩大案例 |
-| **[Generalist AI GEN-1](https://generalistai.com/blog/gen-1)**（支持广泛末端执行器[^eef]的 embodied foundation model） | 🟡 Preview | ✨ **关注**：单一模型覆盖约 9,000 种末端执行器 + 50 万小时实测数据预训练 —— 在 embodiment 通用性上宣称前所未有的规模<br>⏳ **待定**：Generalist AI 官方博客发布（2026-07）`[4]` —— 基于约 9,000 种末端执行器（五指手至专用工具）、50 万+小时真实交互数据预训练，宣称自报成功率 99%·速度提升 3 倍（无独立复现）。Generalist AI 已在 [pillar-1](pillar-1.md) 中作为 Cosmos WFM 数据生成使用方被提及，但 GEN-1 模型本身属于独立的新条目 | 独立基准复现 + 实际部署案例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] 基础模型，10 万+小时真实世界 UMI[^umi] 轨迹） | 🔵 Research | ✨ **关注**：凭借 10 万+小时真实世界 UMI 轨迹的数据规模在四个基准上自报 SOTA —— 中国大厂正式加入 VLA 竞争的信号<br>⏳ **待定**：小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）等四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。⚠️ **更正（2026-08-10）**：已确认 2026-08-03 在 GitHub 实际发布代码与权重（5B 基础模型 + RoboCasa/RoboCasa365/VLABench 三个任务专用版本）—— **Apache-2.0**（与 RLDX-1 不同，明确允许商用，具备 AWS 映射可能性）。仓库自报的排行榜数据与 arXiv 论文的表述方式不同，需直接对照；独立复现与实际部署仍为零 | 独立基准复现 + 实际部署案例 |
 | **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind，全身控制 VLA） | 🟡 Preview | ✨ **关注**：前沿实验室 VLA 从上半身操作扩展到全身（行走·双手协调）控制 —— 改变竞品栈格局的代际转换信号<br>⏳ **待定**：官方发布（2026-07-30）`[4]` —— 从此前仅上半身控制扩展为全身控制（行走·弯腰·双手协调），同时推出推理模型 Gemini Robotics ER 2 与端侧模型 On-Device 2。在 Apptronik Apollo 2 实机演示（拧灯泡 92% 成功率），自报基准，无独立验证。仅 ER 2 公开预览（AI Studio/Enterprise Agent Platform），VLA·On-Device 2 仅限早期访问合作伙伴。⚠️ [pillar-2](pillar-2.md) 中"Gemini Robotics"竞品栈章节为本次发布前的快照（确认于 2026-07，仅覆盖 ER 1.6/On-Device/1.5）—— 需 pillar owner 更新 | 早期访问结束·GA 公开 + 独立基准验证 |
 | **[SiMDex](https://arxiv.org/abs/2608.04196)**（挖掘第一视角人类视频以获取机器人操作数据） | 🔵 Research | ✨ **关注**：以推荐系统式的 recall→rank→re-rank 流程，从约 3200 万条已有第一视角人类视频中挑出与任务相关的片段，复用于 VLA 后训练 —— 无需新采集示范即可绕开真实数据瓶颈<br>⏳ **待定**：arXiv 2608.04196（2026-08-04，东京大学·ByteDance Seed 等）`[4]` —— 采用与具身形态无关、可复用的动作表示，无需改动 VLA 架构，在实物灵巧操作任务上使用不到 5% 的可用样本，自报成功率从 47.7% 提升至 61.1%。未经 peer-review，无独立复现 | peer-review + 独立复现 |
 | **[Xiaomi-Robotics-U0](https://arxiv.org/abs/2607.11643)**（统一具身数据合成世界基础模型，38B） | 🔵 Research | ✨ **关注**：将文本生成图像·场景合成·视频生成·"embodied transfer" 统一到单一自回归框架中，直接为机器人学习生成合成数据 —— 自报在 WorldArena 基准 100+ 模型中综合排名第一，并将增强数据应用于真实 π0.5 策略，使 held-out（背景·光照变化）条件下的任务完成率从 36.9% 提升至 63.2%<br>⏳ **待定**：小米官方 arXiv 发布（2607.11643，2026-07-13）`[4]` —— 基准与实机结果均为自报，无独立复现·无 peer-review，权重·代码是否开源尚不明确。与本表既有条目 Xiaomi-Robotics-1（VLA 策略模型）为不同模型·不同事项（本条为数据合成用 WFM） | peer-review + 独立复现 + 确认权重·代码公开 |
 | **[ω-0](https://arxiv.org/abs/2608.06375)**（同时控制移动+操作的世界-动作模型） | 🔵 Research | ✨ **关注**：不将移动、姿态调整、平衡与操作分离，由单一模型同时完成（concurrent loco-manipulation）——生成基于 diffusion[^diffpol] 的 whole-body 动作，在真实硬件（Unitree G1）上演示 11 项家庭任务的自主执行，还包含人类动作数据迁移（human-to-humanoid）<br>⏳ **待定**：arXiv 2608.06375（2026-08-06，南洋理工·北大·BAAI 等）`[4]` —— 在自报基准上宣称优于现有模仿学习·VLA·人形机器人·WAM 基线，无独立复现·peer-review。40 小时规模的 ω-HOME 数据集是否公开尚不明确 | peer-review + 独立复现 + 确认数据集·代码公开 |
+| **[In-Context VLA / VLA-Talker](https://arxiv.org/abs/2608.05738)**（通过智能体式工具调用[^agent]规避推理-控制冲突的 VLA[^vla] 架构） | 🔵 Research | ✨ **关注**：证明在 VLA 中注入自由文本推理（CoT）会因延迟与优化目标冲突而拖累底层控制性能，转而让策略主动调用开放词汇检测器·单目深度·VLM（VLA-Talker）只获取所需信息 —— 在架构层面把推理与动作分开，而不是混在文本里<br>⏳ **待定**：arXiv 2608.05738（2026-08-06，单一研究团队）`[4]` —— 仅自报基准，无独立复现·peer-review，代码·权重公开状态不明 | peer-review + 独立复现 + 确认公开 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
@@ -113,5 +113,4 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（Radar 本质上快速�
 [^droid]: **DROID** — 由 13 家机构用 Franka 机械臂采集的大规模开放真实世界操作数据集，被广泛用作操作策略预训练·微调的材料。
 [^lbm]: **Large Behavior Models (LBM)** — LLM 的"机器人行为"版：Toyota Research Institute 用该术语指代用大规模示范数据训练、以单一模型执行多种操作任务的机器人基础模型。
 [^diffpol]: **Diffusion Policy** — 用图像生成中的扩散（diffusion）模型来生成机器人动作序列的策略架构。它能稳定学习包含多种有效做法的示范数据，已成为模仿学习的事实标准。
-[^eef]: **末端执行器（end-effector）** — 安装在机械臂末端的作业工具（夹爪·多指手·专用工具）。选用哪种末端执行器决定数据·策略的兼容性。
 [^umi]: **UMI (Universal Manipulation Interface)** — 无需机器人、由人手持带相机的便携夹爪采集示范数据的方式。可以在不投入机器人的情况下大量获取真实世界数据。
