@@ -25,6 +25,7 @@
    - arXiv/논문: "vision-language-action / humanoid manipulation / sim-to-real / world action model / physical AI data(로봇 데이터 수집·데이터셋·데이터 파이프라인) 최신"
    - 뉴스·기술: "Physical AI robotics latest news <이번달> · NVIDIA Isaac/GR00T/Cosmos release · AWS Physical AI blog · The Robot Report Physical AI 최신 · IEEE Spectrum Robotics 최신"
    - 경쟁·하드웨어: "humanoid robot foundation model announcement · Gemini/Figure/1X/Tesla 최신"
+   - AWS 워크샵: "AWS Workshop Studio(catalog.workshops.aws) physical AI · robotics · Isaac Sim · SageMaker robotics 신규 워크샵" — 신규 워크샵은 뉴스가 아니라 SA 실습 자산이므로, 유입 표 대신 해당 필러 **🔗 관련 자산** 편입 후보로 보고에 남긴다(편입 자체는 aws-samples 분기 조사와 동일하게 사람 리뷰 경로).
 2. **선별 + 라벨링**: THE FILTER로 거르고 성숙도 라벨·`[4]`·"왜 주목받는가"(의미·시사점 1줄)·"왜 대기"·"승격 조건" **5열**을 채운다(2026-08-08부터 radar 전 섹션 공통 표 구조). 기존 radar 항목과 dedup.
 3. **한국어 갱신**: `docs/radar.md`의 `## 🆕 최신 스캔 유입` 섹션 표를 **재평가 + 신규 추가** 방식으로 갱신 — 기존 행 중 여전히 유효·검증 대기인 것은 유지, 낡았거나 반박된 것은 제거, 신규를 추가하고 **~10행 상한**(초과 시 오래된·관련성 낮은 것부터 제거). 승격됐거나 폐기된 항목은 적절한 섹션으로 이동/제거.
 4. **다국어 동기화**: `translate-sync` 스킬 절차로 en/zh/ja 반영 + `ko_hash` 갱신 (`i18n/glossary.md` 준수).
