@@ -1,5 +1,5 @@
 ---
-ko_hash: f6746ec27cffa9b0eecbad11c1e382fc17d694db
+ko_hash: c7769dc0da2222137c683a4eb98958ba645864dc
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-08-15 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-08-18 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -67,7 +67,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] 基础模型，10 万+小时真实世界 UMI[^umi] 轨迹） | 🔵 Research | ✨ **关注**：凭借 10 万+小时真实世界 UMI 轨迹的数据规模在四个基准上自报 SOTA —— 中国大厂正式加入 VLA 竞争的信号<br>⏳ **待定**：小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）等四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。⚠️ **更正（2026-08-10）**：已确认 2026-08-03 在 GitHub 实际发布代码与权重（5B 基础模型 + RoboCasa/RoboCasa365/VLABench 三个任务专用版本）—— **Apache-2.0**（与 RLDX-1 不同，明确允许商用，具备 AWS 映射可能性）。仓库自报的排行榜数据与 arXiv 论文的表述方式不同，需直接对照；独立复现与实际部署仍为零 | 独立基准复现 + 实际部署案例 |
 | **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind，全身控制 VLA） | 🟡 Preview | ✨ **关注**：前沿实验室 VLA 从上半身操作扩展到全身（行走·双手协调）控制 —— 改变竞品栈格局的代际转换信号<br>⏳ **待定**：官方发布（2026-07-30）`[4]` —— 从此前仅上半身控制扩展为全身控制（行走·弯腰·双手协调），同时推出推理模型 Gemini Robotics ER 2 与端侧模型 On-Device 2。在 Apptronik Apollo 2 实机演示（拧灯泡 92% 成功率），自报基准，无独立验证。仅 ER 2 公开预览（AI Studio/Enterprise Agent Platform），VLA·On-Device 2 仅限早期访问合作伙伴。⚠️ [pillar-2](pillar-2.md) 中"Gemini Robotics"竞品栈章节为本次发布前的快照（确认于 2026-07，仅覆盖 ER 1.6/On-Device/1.5）—— 需 pillar owner 更新 | 早期访问结束·GA 公开 + 独立基准验证 |
 | **[SiMDex](https://arxiv.org/abs/2608.04196)**（挖掘第一视角人类视频以获取机器人操作数据） | 🔵 Research | ✨ **关注**：以推荐系统式的 recall→rank→re-rank 流程，从约 3200 万条已有第一视角人类视频中挑出与任务相关的片段，复用于 VLA 后训练 —— 无需新采集示范即可绕开真实数据瓶颈<br>⏳ **待定**：arXiv 2608.04196（2026-08-04，东京大学·ByteDance Seed 等）`[4]` —— 采用与具身形态无关、可复用的动作表示，无需改动 VLA 架构，在实物灵巧操作任务上使用不到 5% 的可用样本，自报成功率从 47.7% 提升至 61.1%。未经 peer-review，无独立复现 | peer-review + 独立复现 |
-| **[Xiaomi-Robotics-U0](https://arxiv.org/abs/2607.11643)**（统一具身数据合成世界基础模型，38B） | 🔵 Research | ✨ **关注**：将文本生成图像·场景合成·视频生成·"embodied transfer" 统一到单一自回归框架中，直接为机器人学习生成合成数据 —— 自报在 WorldArena 基准 100+ 模型中综合排名第一，并将增强数据应用于真实 π0.5 策略，使 held-out（背景·光照变化）条件下的任务完成率从 36.9% 提升至 63.2%<br>⏳ **待定**：小米官方 arXiv 发布（2607.11643，2026-07-13）`[4]` —— 基准与实机结果均为自报，无独立复现·无 peer-review，权重·代码是否开源尚不明确。与本表既有条目 Xiaomi-Robotics-1（VLA 策略模型）为不同模型·不同事项（本条为数据合成用 WFM） | peer-review + 独立复现 + 确认权重·代码公开 |
+| **[Xiaomi-Robotics-U0](https://arxiv.org/abs/2607.11643)**（统一具身数据合成世界基础模型，38B） | 🔵 Research | ✨ **关注**：将文本生成图像·场景合成·视频生成·"embodied transfer" 统一到单一自回归框架中，直接为机器人学习生成合成数据 —— 自报在 WorldArena 基准 100+ 模型中综合排名第一，并将增强数据应用于真实 π0.5 策略，使 held-out（背景·光照变化）条件下的任务完成率从 36.9% 提升至 63.2%<br>⏳ **待定**：小米官方 arXiv 发布（2607.11643，2026-07-13）`[4]` —— 基准与实机结果均为自报，无独立复现·无 peer-review。⚠️ **更正（2026-08-18）**：已确认 GitHub（`XiaomiRobotics/Xiaomi-Robotics-U0`）实际公开了代码与权重 —— **Apache-2.0**，2026-07 发布（支持 Scene Gen/Transfer/T2I/X2I，Video 权重尚未公开）—— 更正此前"是否开源尚不明确"的表述。π0.5（Physical Intelligence 独立发布的模型）完成率提升只是消费 U0 数据后的下游结果，并非对 U0 本身的独立复现。与本表既有条目 Xiaomi-Robotics-1（VLA 策略模型）为不同模型·不同事项（本条为数据合成用 WFM） | peer-review + 独立复现 |
 | **[ω-0](https://arxiv.org/abs/2608.06375)**（同时控制移动+操作的世界-动作模型） | 🔵 Research | ✨ **关注**：不将移动、姿态调整、平衡与操作分离，由单一模型同时完成（concurrent loco-manipulation）——生成基于 diffusion[^diffpol] 的 whole-body 动作，在真实硬件（Unitree G1）上演示 11 项家庭任务的自主执行，还包含人类动作数据迁移（human-to-humanoid）<br>⏳ **待定**：arXiv 2608.06375（2026-08-06，南洋理工·北大·BAAI 等）`[4]` —— 在自报基准上宣称优于现有模仿学习·VLA·人形机器人·WAM 基线，无独立复现·peer-review。40 小时规模的 ω-HOME 数据集是否公开尚不明确 | peer-review + 独立复现 + 确认数据集·代码公开 |
 | **[In-Context VLA / VLA-Talker](https://arxiv.org/abs/2608.05738)**（通过智能体式工具调用[^agent]规避推理-控制冲突的 VLA[^vla] 架构） | 🔵 Research | ✨ **关注**：证明在 VLA 中注入自由文本推理（CoT）会因延迟与优化目标冲突而拖累底层控制性能，转而让策略主动调用开放词汇检测器·单目深度·VLM（VLA-Talker）只获取所需信息 —— 在架构层面把推理与动作分开，而不是混在文本里<br>⏳ **待定**：arXiv 2608.05738（2026-08-06，单一研究团队）`[4]` —— 仅自报基准，无独立复现·peer-review，代码·权重公开状态不明 | peer-review + 独立复现 + 确认公开 |
 
