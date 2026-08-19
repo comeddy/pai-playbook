@@ -1,5 +1,5 @@
 ---
-ko_hash: c7769dc0da2222137c683a4eb98958ba645864dc
+ko_hash: 491a67cc32e881c9e15338b878d172980b2bd6cc
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,14 +54,14 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-08-18 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-08-19 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
 | 项目 | 标签 | 要点 | 晋升条件 |
 |---|---|---|---|
 | **[RLWRLD RLDX-1](https://huggingface.co/RLWRLD)**（灵巧手[^dex]优先的基础模型） | 🟡 Preview | ✨ **关注**：韩国初创公司的灵巧手操作专用基础模型 —— 三大仿真基准自报 SOTA 叠加权重实际公开，可直接上手实测<br>⏳ **待定**：权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER[^simbench] SOTA 为自报，无独立复现（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) 在 EC2 上提供 n=5 冒烟[^smoke]实测 —— 并非完整基准复现）。AWS 关联仅限仿真基准测试（非商业许可证明确允许的用途，不可用于商业定位）—— "未发现关联"表述已更新（2026-07）。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
-| **[NEURA Robotics × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale) 战略合作** | ⚪ Hype·路线图 | ✨ **关注**：人形机器人厂商明确将 AWS 列为 primary cloud 的罕见官方合作 —— "Physical AI on AWS" 客户对话的直接参考案例候选<br>⏳ **待定**：经 AWS 官方新闻稿确认，2026-04-21 `[1]` —— AWS 为 primary cloud，明确写入 Neuraverse 托管 + NEURA Gym·SageMaker 集成。但履行中心在原文中为"探索部署机会（explore）"阶段 —— 实际部署为 0。NEURA Gym RWTH Aachen 等训练网络扩展公告（2026-07-22）未提及 AWS —— 作为独立线索观察 | 实际 AWS 基础设施使用案例公开 + 履行中心部署验证 |
+| **[Ψ₀ (Psi-Zero)](https://github.com/physical-superintelligence-lab/Psi0)**（基于人类视频预训练 + 少量真实机器人数据训练的人形移动+操作一体化基础模型） | 🔵 Research | ✨ **关注**：USC Physical Superintelligence Lab（+ 斯坦福）发布的开放模型 —— 先在约 800 小时第一人称人类视频上预训练，再仅用 30 小时真实机器人数据微调，自报成功率较现有 SOTA 高 40% 以上（数据量减少 10 倍以上），代码·权重·数据集均已实际公开<br>⏳ **待定**：经 GitHub 官方仓库确认（Apache-2.0，标注 RSS 2026 accepted，arXiv 2603.12263）`[4]` —— 自报基准结果，尚无独立复现或同行评审，实际机器人生产部署案例为 0 | 独立基准复现 + 验证过的部署案例 |
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列端侧 4B 世界模型+策略） | 🟡 Preview | ✨ **关注**：在 Jetson Thor 上以 15Hz 端侧运行世界模型+策略 —— 无需云端往返的边缘推理方向的领先案例<br>⏳ **待定**：NVIDIA 官方发布 `[4]`（2026-07-21，HuggingFace/developer 博客）—— 在 Jetson Thor 上端侧推理，实现 15Hz 实时机器人策略控制（自报基准，无独立验证），Cosmos 3 Edge Policy（DROID[^droid]）支持 pick-and-place 微调。与既有的"Cosmos 3 作为 sim-to-real 学习源"条目（🖥️ 部分）不同，本条仅涉及边缘部署方向 —— 与 AMD Ryzen AI Embedded X100（本表）并行观察为竞争方案。目前实际生产机器人部署案例为 0 | 独立基准测试 + 实际生产机器人部署案例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute 分拆，Large Behavior Models[^lbm] 人形机器人） | 🟡 试点 | ✨ **关注**：曾执掌 TRI 机器人研究的 Russ Tedrake 的分拆公司 + 3 亿美元种子轮 —— LBM 商业化最前线，拥有 Toyota 工厂实际试点<br>⏳ **待定**：公司官方发布（2026-07-15）`[4]` —— 2026-01 从 TRI 分拆（创始人 Russ Tedrake，前 TRI SVP），Toyota·Deviation Capital 联合领投 + NVIDIA·Boeing·Samsung Ventures 等参与的 3 亿美元种子轮（估值 11 亿美元）。人形上半身+轮式移动底座，基于 Diffusion Policy[^diffpol]·Large Behavior Models 的策略，宣称自 2026-02 起在北美 Toyota 工厂实现试点→"量产转换"，无第三方验证 | 第三方审计·独立验证 + 部署规模扩大案例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] 基础模型，10 万+小时真实世界 UMI[^umi] 轨迹） | 🔵 Research | ✨ **关注**：凭借 10 万+小时真实世界 UMI 轨迹的数据规模在四个基准上自报 SOTA —— 中国大厂正式加入 VLA 竞争的信号<br>⏳ **待定**：小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）等四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。⚠️ **更正（2026-08-10）**：已确认 2026-08-03 在 GitHub 实际发布代码与权重（5B 基础模型 + RoboCasa/RoboCasa365/VLABench 三个任务专用版本）—— **Apache-2.0**（与 RLDX-1 不同，明确允许商用，具备 AWS 映射可能性）。仓库自报的排行榜数据与 arXiv 论文的表述方式不同，需直接对照；独立复现与实际部署仍为零 | 独立基准复现 + 实际部署案例 |

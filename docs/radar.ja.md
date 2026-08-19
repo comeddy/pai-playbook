@@ -1,5 +1,5 @@
 ---
-ko_hash: c7769dc0da2222137c683a4eb98958ba645864dc
+ko_hash: 491a67cc32e881c9e15338b878d172980b2bd6cc
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,14 +55,14 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ✨ **注目**: LLM の意味レベルのリスクを扱う標準の空白地帯 — 規制・調達要件として浮上する可能性<br>⏳ **待機**: ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ✨ **注目**: ロボットエージェントの商取引・レジストリ基盤の AWS ネイティブ軸 — ソウルリージョン開放後は即提案可能<br>⏳ **待機**: ソウルリージョン未提供 — Agent Registry は東京 ✅、Payments は東京にも未提供（APAC はシドニーのみ）`[1]` | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-08-18 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-08-19 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
 | 項目 | ラベル | 要点 | 昇格条件 |
 |---|---|---|---|
 | **[RLWRLD RLDX-1](https://huggingface.co/RLWRLD)**（デクステリティ[^dex]優先のファウンデーションモデル） | 🟡 Preview | ✨ **注目**: 韓国スタートアップの手指マニピュレーション特化基盤モデル — 3 大シミュレーションベンチマークでの SOTA 主張に重みの実公開が重なり、直接実測が可能<br>⏳ **待機**: 重み公開は事実だが ⚠️「オープンソース」ではない —— RLWRLD Model License v1.0（非商用・商用配布禁止）`[3]`、7~9B のバリアント群（主力 8.1B）。RoboCasa/LIBERO/SIMPLER[^simbench] の SOTA は自社発表で独立再現なし（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) が EC2 上で n=5 スモーク[^smoke]実測を提供 — 完全なベンチマーク再現ではありません）。AWS との関連はシミュレーションベンチマーキングに限定（非商用ライセンスが明示的に許可する用途、商用ポジショニング不可）—— 「関連の根拠なし」表記を更新（2026-07）。実顧客への展開 0 | 独立ベンチマーク再現 + 検証済みの展開事例 |
-| **[NEURA Robotics × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale) 戦略的協業** | ⚪ Hype・ロードマップ | ✨ **注目**: ヒューマノイドメーカーが AWS を primary cloud と明記した希少な公式協業 — 「Physical AI on AWS」顧客対話の直接的なリファレンス候補<br>⏳ **待機**: AWS 公式プレスで確認、2026-04-21 `[1]` —— AWS が primary cloud、Neuraverse ホスティング + NEURA Gym・SageMaker 連携を明記。ただしフルフィルメントセンターは原文で「展開機会を探る（explore）」段階 —— 実展開は 0。NEURA Gym RWTH Aachen などの訓練網拡大発表（2026-07-22）には AWS への言及なし —— 別トラックとして観察 | AWS インフラの実使用事例公開 + フルフィルメントセンター展開の検証 |
+| **[Ψ₀ (Psi-Zero)](https://github.com/physical-superintelligence-lab/Psi0)**（人間動画の事前学習 + 少量の実robotデータで学習するヒューマノイドの移動+操作統合ファウンデーションモデル） | 🔵 Research | ✨ **注目**: USC Physical Superintelligence Lab（+ スタンフォード）発のオープンモデル —— 人称視点の人間動画 約800時間で事前学習後、実ロボットデータわずか30時間でファインチューニングし、既存 SOTA 比 40%以上高い成功率(データ10倍以上削減)を自社主張、コード・重み・データセットまで実公開<br>⏳ **待機**: GitHub 公式リポジトリで確認(Apache-2.0、RSS 2026 accepted 表記、arXiv 2603.12263) `[4]` —— 自己申告ベンチマーク結果、独立再現・peer-review なし、実ロボットの量産展開事例は 0 | 独立ベンチマーク再現 + 検証済みの展開事例 |
 | **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列のオンデバイス 4B ワールドモデル+ポリシー） | 🟡 Preview | ✨ **注目**: ワールドモデル+ポリシーを Jetson Thor 上のオンデバイス 15Hz で駆動 — クラウド往復なしのエッジ推論軸の先行事例<br>⏳ **待機**: NVIDIA 公式発表 `[4]`（2026-07-21、HuggingFace/developer ブログ）—— Jetson Thor 上のオンデバイス推論で 15Hz のリアルタイムロボットポリシー制御（自己申告ベンチマーク、独立検証なし）、Cosmos 3 Edge Policy（DROID[^droid]）で pick-and-place のファインチューニングに対応。既存の「Cosmos 3 を sim-to-real 学習源として」項目（🖥️ セクション）とは別に、エッジ展開の軸のみを扱う —— AMD Ryzen AI Embedded X100（本表）と並行して競合構図を観察。現時点で実際の量産ロボット展開事例は 0 | 独立ベンチマーク + 実際の量産ロボット展開事例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute からのスピンアウト、Large Behavior Models[^lbm] ヒューマノイド） | 🟡 パイロット | ✨ **注目**: TRI ロボティクスを率いた Russ Tedrake のスピンアウト + シード 3 億ドル — LBM 商用化の最前線、Toyota 工場での実パイロットを保有<br>⏳ **待機**: 公式発表（2026-07-15）`[4]` —— 2026-01 に TRI からスピンアウト（創業者 Russ Tedrake、元 TRI SVP）、Toyota・Deviation Capital 共同リード + NVIDIA・Boeing・Samsung Ventures などが参加したシード 3 億ドル（バリュエーション 11 億ドル）。ヒューマノイド上半身+ホイール式移動ベース、Diffusion Policy[^diffpol]・Large Behavior Models ベースの方策で、北米 Toyota 工場にて 2026-02 からパイロット→「本番転換」を自社主張、第三者検証なし | 第三者監査・独立検証 + 展開規模拡大の事例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] ファウンデーションモデル、10 万時間超の実世界 UMI[^umi] 軌跡） | 🔵 Research | ✨ **注目**: UMI 10 万時間超の実世界軌跡というデータスケールで 4 ベンチマークの SOTA を主張 — 中国ビッグテックが VLA 競争へ本格参入するシグナル<br>⏳ **待機**: Xiaomi 公式 arXiv 発表（2607.15330、2026-07-16）`[4]` —— Qwen3-VL ベースの MoT（VLM+DiT）、RoboCasa365（57.4%、従来 SOTA 46.6% から向上）など 4 ベンチマークで自己申告 SOTA（RLDX-1・GR00T N1.6 などと比較、独立再現なし）。⚠️ **訂正（2026-08-10）**: 2026-08-03 に GitHub でコード・チェックポイント（ベース 5B + RoboCasa/RoboCasa365/VLABench タスク別 3 種）の実公開を確認 — **Apache-2.0**（RLDX-1 と異なり商用利用を明示的に許可、AWS マッピングの可能性あり）。リポジトリ自身のリーダーボード数値は arXiv 論文と表記方式が異なり直接対照が必要、独立再現・実導入は依然ゼロ | 独立ベンチマーク再現 + 実導入事例 |
