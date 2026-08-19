@@ -21,7 +21,11 @@ description: Use when Korean source pages under docs/ have changed and en/zh/ja 
 5. **빌드 게이트**: `mkdocs build --strict --site-dir <scratchpad>/site-check`.
    앵커 오류 시: 산출물의 실제 heading id(`grep '<h[23] id=' <산출물>.html`)를
    읽어 링크를 맞춘다. 사전 계산 슬러그를 신뢰하지 말 것.
-6. **커밋 전 확인**: 통과 결과(OK 개수, strict exit 0)를 사용자에게 보여주고
+6. **CHANGELOG 확인**: 이번 동기화의 근거가 된 콘텐츠 변경이 CHANGELOG.md의
+   `[Unreleased]`에 기재되어 있는지 확인한다. 없으면 4개 언어 섹션
+   (English→한국어→中文→日本語, 카테고리 헤딩은 영문 유지) 모두에 추가한다.
+   단순 번역 드리프트 해소(원본 변경 없음)는 CHANGELOG 대상이 아니다.
+7. **커밋 전 확인**: 통과 결과(OK 개수, strict exit 0)를 사용자에게 보여주고
    커밋한다. 실패 상태로 완료 선언 금지.
 
 ## 주의
