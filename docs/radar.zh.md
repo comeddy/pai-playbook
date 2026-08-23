@@ -1,5 +1,5 @@
 ---
-ko_hash: 491a67cc32e881c9e15338b878d172980b2bd6cc
+ko_hash: 0b5c04eb640c8549e02081c7e4a23e41d6c662c8
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-08-19 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-08-23 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -62,7 +62,6 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 |---|---|---|---|
 | **[RLWRLD RLDX-1](https://huggingface.co/RLWRLD)**（灵巧手[^dex]优先的基础模型） | 🟡 Preview | ✨ **关注**：韩国初创公司的灵巧手操作专用基础模型 —— 三大仿真基准自报 SOTA 叠加权重实际公开，可直接上手实测<br>⏳ **待定**：权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER[^simbench] SOTA 为自报，无独立复现（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) 在 EC2 上提供 n=5 冒烟[^smoke]实测 —— 并非完整基准复现）。AWS 关联仅限仿真基准测试（非商业许可证明确允许的用途，不可用于商业定位）—— "未发现关联"表述已更新（2026-07）。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
 | **[Ψ₀ (Psi-Zero)](https://github.com/physical-superintelligence-lab/Psi0)**（基于人类视频预训练 + 少量真实机器人数据训练的人形移动+操作一体化基础模型） | 🔵 Research | ✨ **关注**：USC Physical Superintelligence Lab（+ 斯坦福）发布的开放模型 —— 先在约 800 小时第一人称人类视频上预训练，再仅用 30 小时真实机器人数据微调，自报成功率较现有 SOTA 高 40% 以上（数据量减少 10 倍以上），代码·权重·数据集均已实际公开<br>⏳ **待定**：经 GitHub 官方仓库确认（Apache-2.0，标注 RSS 2026 accepted，arXiv 2603.12263）`[4]` —— 自报基准结果，尚无独立复现或同行评审，实际机器人生产部署案例为 0 | 独立基准复现 + 验证过的部署案例 |
-| **[NVIDIA Cosmos 3 Edge](https://www.nvidia.com/en-us/ai/cosmos/)**（Cosmos 3 系列端侧 4B 世界模型+策略） | 🟡 Preview | ✨ **关注**：在 Jetson Thor 上以 15Hz 端侧运行世界模型+策略 —— 无需云端往返的边缘推理方向的领先案例<br>⏳ **待定**：NVIDIA 官方发布 `[4]`（2026-07-21，HuggingFace/developer 博客）—— 在 Jetson Thor 上端侧推理，实现 15Hz 实时机器人策略控制（自报基准，无独立验证），Cosmos 3 Edge Policy（DROID[^droid]）支持 pick-and-place 微调。与既有的"Cosmos 3 作为 sim-to-real 学习源"条目（🖥️ 部分）不同，本条仅涉及边缘部署方向 —— 与 AMD Ryzen AI Embedded X100（本表）并行观察为竞争方案。目前实际生产机器人部署案例为 0 | 独立基准测试 + 实际生产机器人部署案例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute 分拆，Large Behavior Models[^lbm] 人形机器人） | 🟡 试点 | ✨ **关注**：曾执掌 TRI 机器人研究的 Russ Tedrake 的分拆公司 + 3 亿美元种子轮 —— LBM 商业化最前线，拥有 Toyota 工厂实际试点<br>⏳ **待定**：公司官方发布（2026-07-15）`[4]` —— 2026-01 从 TRI 分拆（创始人 Russ Tedrake，前 TRI SVP），Toyota·Deviation Capital 联合领投 + NVIDIA·Boeing·Samsung Ventures 等参与的 3 亿美元种子轮（估值 11 亿美元）。人形上半身+轮式移动底座，基于 Diffusion Policy[^diffpol]·Large Behavior Models 的策略，宣称自 2026-02 起在北美 Toyota 工厂实现试点→"量产转换"，无第三方验证 | 第三方审计·独立验证 + 部署规模扩大案例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] 基础模型，10 万+小时真实世界 UMI[^umi] 轨迹） | 🔵 Research | ✨ **关注**：凭借 10 万+小时真实世界 UMI 轨迹的数据规模在四个基准上自报 SOTA —— 中国大厂正式加入 VLA 竞争的信号<br>⏳ **待定**：小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）等四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。⚠️ **更正（2026-08-10）**：已确认 2026-08-03 在 GitHub 实际发布代码与权重（5B 基础模型 + RoboCasa/RoboCasa365/VLABench 三个任务专用版本）—— **Apache-2.0**（与 RLDX-1 不同，明确允许商用，具备 AWS 映射可能性）。仓库自报的排行榜数据与 arXiv 论文的表述方式不同，需直接对照；独立复现与实际部署仍为零 | 独立基准复现 + 实际部署案例 |
 | **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind，全身控制 VLA） | 🟡 Preview | ✨ **关注**：前沿实验室 VLA 从上半身操作扩展到全身（行走·双手协调）控制 —— 改变竞品栈格局的代际转换信号<br>⏳ **待定**：官方发布（2026-07-30）`[4]` —— 从此前仅上半身控制扩展为全身控制（行走·弯腰·双手协调），同时推出推理模型 Gemini Robotics ER 2 与端侧模型 On-Device 2。在 Apptronik Apollo 2 实机演示（拧灯泡 92% 成功率），自报基准，无独立验证。仅 ER 2 公开预览（AI Studio/Enterprise Agent Platform），VLA·On-Device 2 仅限早期访问合作伙伴。⚠️ [pillar-2](pillar-2.md) 中"Gemini Robotics"竞品栈章节为本次发布前的快照（确认于 2026-07，仅覆盖 ER 1.6/On-Device/1.5）—— 需 pillar owner 更新 | 早期访问结束·GA 公开 + 独立基准验证 |
@@ -70,6 +69,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 | **[Xiaomi-Robotics-U0](https://arxiv.org/abs/2607.11643)**（统一具身数据合成世界基础模型，38B） | 🔵 Research | ✨ **关注**：将文本生成图像·场景合成·视频生成·"embodied transfer" 统一到单一自回归框架中，直接为机器人学习生成合成数据 —— 自报在 WorldArena 基准 100+ 模型中综合排名第一，并将增强数据应用于真实 π0.5 策略，使 held-out（背景·光照变化）条件下的任务完成率从 36.9% 提升至 63.2%<br>⏳ **待定**：小米官方 arXiv 发布（2607.11643，2026-07-13）`[4]` —— 基准与实机结果均为自报，无独立复现·无 peer-review。⚠️ **更正（2026-08-18）**：已确认 GitHub（`XiaomiRobotics/Xiaomi-Robotics-U0`）实际公开了代码与权重 —— **Apache-2.0**，2026-07 发布（支持 Scene Gen/Transfer/T2I/X2I，Video 权重尚未公开）—— 更正此前"是否开源尚不明确"的表述。π0.5（Physical Intelligence 独立发布的模型）完成率提升只是消费 U0 数据后的下游结果，并非对 U0 本身的独立复现。与本表既有条目 Xiaomi-Robotics-1（VLA 策略模型）为不同模型·不同事项（本条为数据合成用 WFM） | peer-review + 独立复现 |
 | **[ω-0](https://arxiv.org/abs/2608.06375)**（同时控制移动+操作的世界-动作模型） | 🔵 Research | ✨ **关注**：不将移动、姿态调整、平衡与操作分离，由单一模型同时完成（concurrent loco-manipulation）——生成基于 diffusion[^diffpol] 的 whole-body 动作，在真实硬件（Unitree G1）上演示 11 项家庭任务的自主执行，还包含人类动作数据迁移（human-to-humanoid）<br>⏳ **待定**：arXiv 2608.06375（2026-08-06，南洋理工·北大·BAAI 等）`[4]` —— 在自报基准上宣称优于现有模仿学习·VLA·人形机器人·WAM 基线，无独立复现·peer-review。40 小时规模的 ω-HOME 数据集是否公开尚不明确 | peer-review + 独立复现 + 确认数据集·代码公开 |
 | **[In-Context VLA / VLA-Talker](https://arxiv.org/abs/2608.05738)**（通过智能体式工具调用[^agent]规避推理-控制冲突的 VLA[^vla] 架构） | 🔵 Research | ✨ **关注**：证明在 VLA 中注入自由文本推理（CoT）会因延迟与优化目标冲突而拖累底层控制性能，转而让策略主动调用开放词汇检测器·单目深度·VLM（VLA-Talker）只获取所需信息 —— 在架构层面把推理与动作分开，而不是混在文本里<br>⏳ **待定**：arXiv 2608.05738（2026-08-06，单一研究团队）`[4]` —— 仅自报基准，无独立复现·peer-review，代码·权重公开状态不明 | peer-review + 独立复现 + 确认公开 |
+| **[ROBOTIS AI Sapiens K1](https://github.com/ROBOTIS-GIT/ai_sapiens)**（基于 DYNAMIXEL-Q 的开源人形机器人平台） | 🟡 Preview | ✨ **关注**：韩国企业 ROBOTIS 的开源人形机器人 —— 仅凭智能手机视频学习 K-pop 舞蹈动作(视频动作捕捉→重定向→仿真 RL→sim-to-real)并演示，还集成 NVIDIA Kimodo 实现文本→动作生成的扩展 —— 韩国客户接触点上会直接被提及的本地开放人形机器人案例<br>⏳ **待定**：GitHub 官方仓库（`ROBOTIS-GIT/ai_sapiens`，Apache-2.0）`[4]` —— ROS 2 软件包（机器人描述·控制器接口·sim2real 工具）已公开，但视频→动作生成完整流程的开源化仅是 ROBOTIS 自身的预告计划（时间表未确定）。K-pop 舞蹈演示为自报，无独立验证·实际部署案例 | 完整流程公开确认 + 独立验证 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
@@ -110,7 +110,6 @@ _owner: Youngjin · updated: 2026-07 · volatility: 高（Radar 本质上快速�
 [^dex]: **灵巧性（dexterity）** — 手指级的精细·灵活操作能力。其接触物理远比行走复杂，被视为机器人学习中最难的轴。
 [^simbench]: **LIBERO · RoboCasa · SIMPLER** — 无需真机即可比较 VLA/操作策略性能的标准仿真基准套件。仿真分数并不保证真机性能。
 [^smoke]: **冒烟测试（smoke test）** — 只确认"基本能跑"的小规模运行，不是完整验证。n=5 这样的样本无法支撑统计意义上的性能主张。
-[^droid]: **DROID** — 由 13 家机构用 Franka 机械臂采集的大规模开放真实世界操作数据集，被广泛用作操作策略预训练·微调的材料。
 [^lbm]: **Large Behavior Models (LBM)** — LLM 的"机器人行为"版：Toyota Research Institute 用该术语指代用大规模示范数据训练、以单一模型执行多种操作任务的机器人基础模型。
 [^diffpol]: **Diffusion Policy** — 用图像生成中的扩散（diffusion）模型来生成机器人动作序列的策略架构。它能稳定学习包含多种有效做法的示范数据，已成为模仿学习的事实标准。
 [^umi]: **UMI (Universal Manipulation Interface)** — 无需机器人、由人手持带相机的便携夹爪采集示范数据的方式。可以在不投入机器人的情况下大量获取真实世界数据。
