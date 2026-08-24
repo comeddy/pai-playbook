@@ -1,9 +1,9 @@
 ---
-ko_hash: 0931a676f6f041549e0a671aa41c9db3a0bdc677
+ko_hash: 2ce31417f5c626dbd06c8a584b1cdd3ea96dd2f6
 ---
 # Executive Conversation Guide — For SAs
 
-_Last updated: 2026-07 · owner: Youngjin · volatility: medium_
+_Last updated: 2026-08 · owner: Youngjin · volatility: medium_
 [← to index](index.md)
 
 > **L0 TL;DR**: A practical asset to skim 30 minutes before an executive meeting. If the [Executive Brief](exec.md) is what you "show," this page is how you "say" it.
@@ -59,4 +59,4 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: medium_
 
 Always check the maturity labels in [Radar](radar.md) for the latest status before you speak.
 
-_owner: Youngjin · updated: 2026-07 · volatility: medium_
+_owner: Youngjin · updated: 2026-08 · volatility: medium_

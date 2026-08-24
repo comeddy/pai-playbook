@@ -1,9 +1,9 @@
 ---
-ko_hash: 0931a676f6f041549e0a671aa41c9db3a0bdc677
+ko_hash: 2ce31417f5c626dbd06c8a584b1cdd3ea96dd2f6
 ---
 # 経営層対話ガイド — SA 向け
 
-_最終更新: 2026-07 · owner: Youngjin · volatility: 中_
+_最終更新: 2026-08 · owner: Youngjin · volatility: 中_
 [← index へ](index.md)
 
 > **L0 TL;DR**：経営層ミーティングの 30 分前に目を通す実戦資産。[経営層ブリーフィング](exec.md)が「見せるもの」なら、このページは「話し方」です。
@@ -59,4 +59,4 @@ _最終更新: 2026-07 · owner: Youngjin · volatility: 中_
 
 最新の状態は必ず [Radar](radar.md) で成熟度ラベルを確認してから話すこと。
 
-_owner: Youngjin · updated: 2026-07 · volatility: 中_
+_owner: Youngjin · updated: 2026-08 · volatility: 中_

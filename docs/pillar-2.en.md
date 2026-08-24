@@ -1,9 +1,9 @@
 ---
-ko_hash: 2c29e4687a0d5eacca6f0d234f467639196c6d74
+ko_hash: e260e3f021dc962fc99d34f2bac7a78f8c64289b
 ---
 # Pillar 2 — Model Training (VLA)
 
-_Last updated: 2026-07 · owner: Youngjin · volatility: high (model versions/licenses/instances change often)_
+_Last updated: 2026-08 · owner: Youngjin · volatility: high (model versions/licenses/instances change often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -236,7 +236,7 @@ graph TD
 - **Trainium-for-VLA is unverified.** The whole VLA toolchain is CUDA. State the risk when proposing.
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: high (model versions · licenses · GPU requirements · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified_
+_owner: Youngjin · updated: 2026-08 · volatility: high (model versions · licenses · GPU requirements · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified_
 
 <!-- 용어 각주 -->
 

@@ -1,10 +1,10 @@
 ---
-ko_hash: 2c29e4687a0d5eacca6f0d234f467639196c6d74
+ko_hash: e260e3f021dc962fc99d34f2bac7a78f8c64289b
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
 
-_最終更新: 2026-07 · owner: Youngjin · volatility: 高（モデルバージョン・ライセンス・インスタンスが頻繁に変わる）_
+_最終更新: 2026-08 · owner: Youngjin · volatility: 高（モデルバージョン・ライセンス・インスタンスが頻繁に変わる）_
 _個別項目は別途表記がない限りページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターを追加します。_
 [← index へ](index.md)
 
@@ -237,7 +237,7 @@ graph TD
 - **Trainium-for-VLA は未検証。** VLA ツールチェーン全体が CUDA。提案時はリスクを明示。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 高（モデルバージョン・ライセンス・GPU 要件・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証_
+_owner: Youngjin · updated: 2026-08 · volatility: 高（モデルバージョン・ライセンス・GPU 要件・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証_
 
 <!-- 용어 각주 -->
 

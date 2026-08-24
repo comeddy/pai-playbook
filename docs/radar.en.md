@@ -1,9 +1,9 @@
 ---
-ko_hash: 0b5c04eb640c8549e02081c7e4a23e41d6c662c8
+ko_hash: 24e97dabe4e6acb1d5d33e2299d61e2873fe1f61
 ---
 # Radar — Queue / Watchlist
 
-_Last updated: 2026-07 · owner: Youngjin · volatility: high_
+_Last updated: 2026-08 · owner: Youngjin · volatility: high_
 [← back to index](index.md)
 
 > **L0 TL;DR**: Things **worth watching** that have not yet passed the inclusion criteria ([2.5 THE FILTER](maintenance.md#inclusion-criteria-the-filter)). Each item is one line — a maturity label + **why it's noteworthy + why it is on hold**. Once it clears the gate (2 of 4), the owning pillar's owner promotes it using the standard template.
@@ -95,7 +95,7 @@ _Last updated: 2026-07 · owner: Youngjin · volatility: high_
 Full pipeline → [maintenance](maintenance.md#playbook-promotion-pipeline).
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: high (the Radar changes fast by nature — monthly review recommended)_
+_owner: Youngjin · updated: 2026-08 · volatility: high (the Radar changes fast by nature — monthly review recommended)_
 
 <!-- 용어 각주 -->
 

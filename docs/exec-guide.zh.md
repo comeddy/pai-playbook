@@ -1,9 +1,9 @@
 ---
-ko_hash: 0931a676f6f041549e0a671aa41c9db3a0bdc677
+ko_hash: 2ce31417f5c626dbd06c8a584b1cdd3ea96dd2f6
 ---
 # 高管对话指南 — 供 SA 使用
 
-_最终更新: 2026-07 · owner: Youngjin · volatility: 中_
+_最终更新: 2026-08 · owner: Youngjin · volatility: 中_
 [← 返回 index](index.md)
 
 > **L0 TL;DR**：在高管会议前 30 分钟速读的实战资产。如果说[高管简报](exec.md)是"给人看的东西"，那么本页就是"怎么说"。
@@ -59,4 +59,4 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 中_
 
 最新状态请始终在 [Radar](radar.md) 中确认成熟度标签后再说。
 
-_owner: Youngjin · updated: 2026-07 · volatility: 中_
+_owner: Youngjin · updated: 2026-08 · volatility: 中_

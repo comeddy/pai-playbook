@@ -1,9 +1,9 @@
 ---
-ko_hash: fd172d3597fd4c25e5a5ffbb57459124a97718de
+ko_hash: 816585a0026e445581edb5a90cb047d6a2c09e54
 ---
 # Maintenance — 所有权 · 更新规则 · 晋升管道
 
-_最终更新: 2026-07 · owner: Youngjin · volatility: 低_
+_最终更新: 2026-08 · owner: Youngjin · volatility: 低_
 [← 返回 index](index.md)
 
 > **L0 TL;DR**: 定义让这份 playbook **不过时的结构**。分离易变/稳定信息，为所有条目附上所有者·更新日·易变性，并通过门禁筛选 Slack 候选来晋升。**本页面本身就是运营规则**。
@@ -159,7 +159,7 @@ graph TD
 根据实际生成结果**调整纳入标准·模板·支柱权重**。主提示: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md)。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 低（运营规则 —— 仅在规则变更时更新）_
+_owner: Youngjin · updated: 2026-08 · volatility: 低（运营规则 —— 仅在规则变更时更新）_
 
 <!-- 용어 각주 -->
 

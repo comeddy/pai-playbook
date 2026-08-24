@@ -1,9 +1,9 @@
 ---
-ko_hash: 21e6a7278477de1d8d5738495e862185b4e17501
+ko_hash: 03a2bfb536f1aa2996363651492b4fa2547efbc8
 ---
 # Pillar 3 — 仿真 (Simulation)
 
-_最终更新: 2026-07 · owner: Youngjin · volatility: 高（版本·实例经常变动）_
+_最终更新: 2026-08 · owner: Youngjin · volatility: 高（版本·实例经常变动）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -244,7 +244,7 @@ graph TD
 - **Genesis "430,000 倍"已被反驳**，**MuJoCo Warp 为 Alpha**，**Unity Robotics Hub 实际处于放置状态（2022 年以后）**，**Habitat 在 v0.3.4 之后停止维护** —— 禁止夸大开源成熟度。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 高（版本·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证。建议再确认部分 GitHub 发布年份。_
+_owner: Youngjin · updated: 2026-08 · volatility: 高（版本·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证。建议再确认部分 GitHub 发布年份。_
 
 <!-- 용어 각주 -->
 

@@ -1,10 +1,10 @@
 ---
-ko_hash: 3b1e492892a261f2c662042eda12eb33aad3e5a2
+ko_hash: 46fa4dce36a82cc019b01f166e352c358b20dc7d
 ---
 # Pillar 4 — Sim-to-Real
 
 
-_最終更新: 2026-07 · owner: Youngjin · volatility: 中（エッジ HW・モデルは高）_
+_最終更新: 2026-08 · owner: Youngjin · volatility: 中（エッジ HW・モデルは高）_
 _特に注記がない限り、各項目はページのメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターに追記します。_
 [← index へ](index.md)
 
@@ -216,7 +216,7 @@ graph LR
 - **ヒューマノイドの「本番」指標はほとんどがベンダー PR** — 独立した自律性監査はありません。Digit@GXO・Figure@BMW のみが顧客のクロスチェック済み。1X Neo は「製品だが実際には遠隔操作」。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 中（エッジ HW・ベンダー指標は高）· sources: [1] 公式/論文, [3] ベンダー/PR, [4] 未検証。2026 arXiv プレプリントは非査読(illustrative)。_
+_owner: Youngjin · updated: 2026-08 · volatility: 中（エッジ HW・ベンダー指標は高）· sources: [1] 公式/論文, [3] ベンダー/PR, [4] 未検証。2026 arXiv プレプリントは非査読(illustrative)。_
 
 <!-- 용어 각주 -->
 

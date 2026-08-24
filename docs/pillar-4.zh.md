@@ -1,9 +1,9 @@
 ---
-ko_hash: 3b1e492892a261f2c662042eda12eb33aad3e5a2
+ko_hash: 46fa4dce36a82cc019b01f166e352c358b20dc7d
 ---
 # Pillar 4 — Sim-to-Real
 
-_最终更新: 2026-07 · owner: Youngjin · volatility: 中（边缘 HW·模型为高）_
+_最终更新: 2026-08 · owner: Youngjin · volatility: 中（边缘 HW·模型为高）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -215,7 +215,7 @@ graph LR
 - **人形机器人"生产"指标大多是厂商 PR** —— 无独立自主性审计。只有 Digit@GXO·Figure@BMW 经客户交叉确认。1X Neo 是"产品但实际上是远程操作"。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 中（边缘 HW·厂商指标为高）· sources: [1] 官方/论文, [3] 厂商/PR, [4] 未经验证。2026 arXiv 预印本为非评审(illustrative)。_
+_owner: Youngjin · updated: 2026-08 · volatility: 中（边缘 HW·厂商指标为高）· sources: [1] 官方/论文, [3] 厂商/PR, [4] 未经验证。2026 arXiv 预印本为非评审(illustrative)。_
 
 <!-- 용어 각주 -->
 

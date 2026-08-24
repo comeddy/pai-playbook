@@ -1,10 +1,10 @@
 ---
-ko_hash: 258a75ccf4720614015a33074ba6d8a467f2283d
+ko_hash: f7e4f3e40d911870cb03d15519dafa65271f879e
 ---
 # Pillar 1 — データ収集 & 処理 (Data Collection & Processing)
 
 
-_最終更新: 2026-07 · owner: Youngjin · volatility: 中（データセットのバージョン・サイズは高）_
+_最終更新: 2026-08 · owner: Youngjin · volatility: 中（データセットのバージョン・サイズは高）_
 _個別項目は別途表記が無い限りページメタデータ（owner/updated/volatility）を継承。項目別に owner を指定する場合は項目フッターを追加。_
 [← index へ](index.md)
 
@@ -249,7 +249,7 @@ graph LR
 - **ライセンスが最初のリスク。** AgiBot World（最大規模）が非商業だという事実一つを指摘するだけで顧客の信頼を得られます。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 中（データセットのバージョン・サイズは折りたたみブロックで高）· sources: [1] 公式/論文, [3] ベンダーブログ, [4] 未検証_
+_owner: Youngjin · updated: 2026-08 · volatility: 中（データセットのバージョン・サイズは折りたたみブロックで高）· sources: [1] 公式/論文, [3] ベンダーブログ, [4] 未検証_
 
 <!-- 용어 각주 -->
 

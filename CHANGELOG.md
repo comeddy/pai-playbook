@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - Expand the pillar-1 "LeRobot teleop collection on Greengrass" related-asset entry with repo details (Greengrass v2 component, SO-ARM101 + dual cameras → LeRobot v3 → S3 auto-upload, MQTT web-console control, KVS live/replay, validated on Jetson AGX Thor) and the README's not-for-production caveat (MIT-0), in all four languages
+- Refresh the `updated` metadata to 2026-08 on 9 pages that received substantive August changes (index, exec-guide, maintenance, radar, pillars 1–5), in all four languages
 
 ## [1.6.0] - 2026-08-02
 
@@ -165,6 +166,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - pillar-1 "LeRobot 텔레옵 수집 on Greengrass" 관련 자산 항목을 리포 상세(Greengrass v2 컴포넌트, SO-ARM101+듀얼 카메라→LeRobot v3→S3 자동 업로드, 웹 콘솔 MQTT 제어, KVS 라이브·재생, Jetson AGX Thor 검증)와 README의 production 사용 금지 캐비앗(MIT-0)으로 보강, 4개 언어 반영
+- 8월 실질 변경이 있었던 9개 페이지(index, exec-guide, maintenance, radar, pillar 1~5)의 `updated` 메타를 2026-08로 갱신, 4개 언어 반영
 
 ## [1.6.0] - 2026-08-02
 
@@ -306,6 +308,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - 以仓库详情（Greengrass v2 组件、SO-ARM101+双摄像头→LeRobot v3→S3 自动上传、Web 控制台 MQTT 控制、KVS 直播·回放、已在 Jetson AGX Thor 上验证）及 README 的禁止生产使用注意事项（MIT-0）充实 pillar-1 "LeRobot 遥操作采集 on Greengrass" 相关资产条目，四种语言同步
+- 将 8 月发生实质变更的 9 个页面（index、exec-guide、maintenance、radar、pillar 1~5）的 `updated` 元数据刷新为 2026-08，四种语言同步
 
 ## [1.6.0] - 2026-08-02
 
@@ -447,6 +450,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 
 - pillar-1 の「LeRobot テレオペ収集 on Greengrass」関連資産項目を、リポジトリ詳細（Greengrass v2 コンポーネント、SO-ARM101+デュアルカメラ→LeRobot v3→S3 自動アップロード、Web コンソール MQTT 制御、KVS ライブ・再生、Jetson AGX Thor 検証済み）と README の本番使用禁止の注意（MIT-0）で拡充、4言語反映
+- 8月に実質的な変更があった 9 ページ（index、exec-guide、maintenance、radar、pillar 1~5）の `updated` メタデータを 2026-08 に更新、4言語反映
 
 ## [1.6.0] - 2026-08-02
 

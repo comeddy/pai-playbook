@@ -1,6 +1,6 @@
 # Pillar 3 — 시뮬레이션 (Simulation)
 
-_최종 갱신: 2026-07 · owner: Youngjin · volatility: 높음(버전·인스턴스가 자주 바뀜)_
+_최종 갱신: 2026-08 · owner: Youngjin · volatility: 높음(버전·인스턴스가 자주 바뀜)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -241,7 +241,7 @@ graph TD
 - **Genesis "430,000배"는 반박됨**, **MuJoCo Warp는 Alpha**, **Unity Robotics Hub는 사실상 방치(2022년 이후)**, **Habitat은 v0.3.4 이후 유지보수 중단** — 오픈소스 성숙도 과장 금지.
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 높음 (버전·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증. GitHub 릴리스 연도 일부 재확인 권고._
+_owner: Youngjin · updated: 2026-08 · volatility: 높음 (버전·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증. GitHub 릴리스 연도 일부 재확인 권고._
 
 <!-- 용어 각주 -->
 

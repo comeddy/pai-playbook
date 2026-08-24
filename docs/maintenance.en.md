@@ -1,9 +1,9 @@
 ---
-ko_hash: fd172d3597fd4c25e5a5ffbb57459124a97718de
+ko_hash: 816585a0026e445581edb5a90cb047d6a2c09e54
 ---
 # Maintenance — Ownership · Update Rules · Promotion Pipeline
 
-_Last updated: 2026-07 · owner: Youngjin · volatility: low_
+_Last updated: 2026-08 · owner: Youngjin · volatility: low_
 [← back to index](index.md)
 
 > **L0 TL;DR**: This defines the **structure that keeps this playbook from going stale**. It separates volatile from stable information, attaches an owner, update date, and volatility to every item, and filters Slack candidates through a gate before promotion. **This page is itself the operating rules.**
@@ -159,7 +159,7 @@ graph TD
 Look at the actual generation results and **adjust the inclusion criteria, template, and pillar weighting**. Master prompt: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md).
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: low (operating rules — updated only when the rules change)_
+_owner: Youngjin · updated: 2026-08 · volatility: low (operating rules — updated only when the rules change)_
 
 <!-- 용어 각주 -->
 

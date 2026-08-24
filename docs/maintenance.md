@@ -1,6 +1,6 @@
 # Maintenance — 소유권 · 갱신 규칙 · 승격 파이프라인
 
-_최종 갱신: 2026-07 · owner: Youngjin · volatility: 낮음_
+_최종 갱신: 2026-08 · owner: Youngjin · volatility: 낮음_
 [← index로](index.md)
 
 > **L0 TL;DR**: 이 playbook이 **안 낡게 만드는 구조**를 정의한다. 휘발성/안정 정보를 분리하고, 모든 항목에 소유자·갱신일·휘발성을 붙이고, 슬랙 후보를 게이트로 걸러 승격한다. **이 페이지가 곧 운영 규칙**이다.
@@ -156,7 +156,7 @@ graph TD
 실제 생성 결과를 보고 **포함 기준·템플릿·필러 가중치를 조정**하라. 마스터 프롬프트: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md).
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 낮음 (운영 규칙 — 규칙 변경 시에만 갱신)_
+_owner: Youngjin · updated: 2026-08 · volatility: 낮음 (운영 규칙 — 규칙 변경 시에만 갱신)_
 
 <!-- 용어 각주 -->
 

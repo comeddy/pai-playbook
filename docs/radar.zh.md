@@ -1,9 +1,9 @@
 ---
-ko_hash: 0b5c04eb640c8549e02081c7e4a23e41d6c662c8
+ko_hash: 24e97dabe4e6acb1d5d33e2299d61e2873fe1f61
 ---
 # Radar — 队列 / 观察列表
 
-_最终更新: 2026-07 · owner: Youngjin · volatility: 高_
+_最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 [← 返回 index](index.md)
 
 > **L0 TL;DR**: 尚未通过纳入标准（[2.5 THE FILTER](maintenance.md#纳入标准-the-filter)）但**值得关注**的东西。每个条目一句话 —— 成熟度标签 + **为何受关注 + 为何待定**。一旦通过门禁（4 项中 2 项），由负责的支柱 owner 用标准模板晋升。
@@ -95,7 +95,7 @@ _最终更新: 2026-07 · owner: Youngjin · volatility: 高_
 完整管道 → [maintenance](maintenance.md#playbook-晋升管道)。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 高（Radar 本质上快速变化 —— 建议月度评审）_
+_owner: Youngjin · updated: 2026-08 · volatility: 高（Radar 本质上快速变化 —— 建议月度评审）_
 
 <!-- 용어 각주 -->
 

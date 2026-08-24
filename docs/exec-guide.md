@@ -1,6 +1,6 @@
 # 임원 대화 가이드 — SA용
 
-_최종 갱신: 2026-07 · owner: Youngjin · volatility: 중간_
+_최종 갱신: 2026-08 · owner: Youngjin · volatility: 중간_
 [← index로](index.md)
 
 > **L0 TL;DR**: 임원 미팅 30분 전에 훑는 실전 자산. [경영진 브리핑](exec.md)이
@@ -57,4 +57,4 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 중간_
 
 최신 상태는 항상 [Radar](radar.md)에서 성숙도 라벨을 확인하고 말할 것.
 
-_owner: Youngjin · updated: 2026-07 · volatility: 중간_
+_owner: Youngjin · updated: 2026-08 · volatility: 중간_

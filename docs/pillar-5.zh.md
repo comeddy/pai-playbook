@@ -1,9 +1,9 @@
 ---
-ko_hash: 594dcfdde2b600d3825054f2ad33621d80baccaa
+ko_hash: 7f96f7f33bffa4fab8ca65c8cb5dd1084f0ed4d3
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
-_最终更新: 2026-07 · owner: Youngjin · volatility: 高（AgentCore 功能·区域经常扩展）_
+_最终更新: 2026-08 · owner: Youngjin · volatility: 高（AgentCore 功能·区域经常扩展）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -244,7 +244,7 @@ graph TD
 - **Lotte 30% 等韩国数值为单一来源** —— 硬引用前需再确认。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
+_owner: Youngjin · updated: 2026-08 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
 
 <!-- 용어 각주 -->
 

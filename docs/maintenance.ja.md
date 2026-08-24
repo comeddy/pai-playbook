@@ -1,10 +1,10 @@
 ---
-ko_hash: fd172d3597fd4c25e5a5ffbb57459124a97718de
+ko_hash: 816585a0026e445581edb5a90cb047d6a2c09e54
 ---
 # Maintenance — 所有権 · 更新ルール · 昇格パイプライン
 
 
-_最終更新: 2026-07 · owner: Youngjin · volatility: 低_
+_最終更新: 2026-08 · owner: Youngjin · volatility: 低_
 [← index へ](index.md)
 
 > **L0 TL;DR**: この playbook を **古びさせない構造** を定義します。揮発性/安定情報を分離し、すべての項目に所有者·更新日·揮発性を付け、Slack 候補をゲートでふるいにかけて昇格させます。**このページこそが運営ルール** です。
@@ -160,7 +160,7 @@ graph TD
 実際の生成結果を見て **包含基準·テンプレート·ピラー重み付けを調整** してください。マスタープロンプト: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md)。
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 低（運営ルール — ルール変更時のみ更新）_
+_owner: Youngjin · updated: 2026-08 · volatility: 低（運営ルール — ルール変更時のみ更新）_
 
 <!-- 용어 각주 -->
 

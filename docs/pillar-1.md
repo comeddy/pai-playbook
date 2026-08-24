@@ -1,6 +1,6 @@
 # Pillar 1 — 데이터 수집 & 처리 (Data Collection & Processing)
 
-_최종 갱신: 2026-07 · owner: Youngjin · volatility: 중간(데이터셋 버전·크기는 높음)_
+_최종 갱신: 2026-08 · owner: Youngjin · volatility: 중간(데이터셋 버전·크기는 높음)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -245,7 +245,7 @@ graph LR
 - **라이선스가 첫 리스크.** AgiBot World(최대 규모)가 비상업이라는 사실 하나만 짚어도 고객 신뢰를 얻는다.
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
+_owner: Youngjin · updated: 2026-08 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
 
 <!-- 용어 각주 -->
 

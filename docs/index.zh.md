@@ -1,9 +1,9 @@
 ---
-ko_hash: b883f09cce87a233271097a1c5160900d47f325f
+ko_hash: 2516ae28ab4a3201184ae9b9a4c5af28d03d0276
 ---
 # Physical AI Playbook 介绍
 
-_最终更新: 2026-07 · owner: Youngjin · 状态: 初期构建中_
+_最终更新: 2026-08 · owner: Youngjin · 状态: 初期构建中_
 
 > **L0 TL;DR**: 当客户抛出 Physical AI 问题时，无需翻查 Slack，**仅凭这一份 playbook 就能在 5 分钟内**给出架构方向、AWS 映射与后续行动的参考资产。它既不是论文摘要集，也不是新闻归档。
 
@@ -107,7 +107,7 @@ _最终更新: 2026-07 · owner: Youngjin · 状态: 初期构建中_
 
 ---
 
-_owner: Youngjin · updated: 2026-07 · volatility: 低（结构性页面 —— 仅 FAQ Top 20 排名按季度复核）_
+_owner: Youngjin · updated: 2026-08 · volatility: 低（结构性页面 —— 仅 FAQ Top 20 排名按季度复核）_
 
 <!-- 용어 각주 -->
 
