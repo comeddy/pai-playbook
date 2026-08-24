@@ -233,7 +233,7 @@ graph LR
 **🔗 관련 자산**:
 
 - 플레이북: [pillar-4 엣지 배포](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
-- [LeRobot 텔레옵 수집 on Greengrass 샘플](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. SO-ARM101→LeRobot v3→S3
+- [LeRobot 텔레옵 수집 on Greengrass 샘플](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. Greengrass v2 커스텀 컴포넌트로 SO-ARM101(리더/팔로워)+듀얼 카메라 텔레옵을 LeRobot v3 포맷 기록→S3 자동 업로드. 웹 콘솔에서 MQTT 원격 제어 + KVS 라이브(WebRTC/HLS)·에피소드 재생, Jetson AGX Thor 검증. "수집→S3" 표준화 데모의 1차 후보. ⚠️ README 명시 교육·데모용 — production 사용 금지(MIT-0)
 - [Android PAI 데이터 수집 앱](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples. 현장 스마트폰 영상+IMU→S3 오프라인 큐 업로드. ⚠️ 초기 샘플
 
 ---

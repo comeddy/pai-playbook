@@ -1,5 +1,5 @@
 ---
-ko_hash: 0e91167768055daa91af823ff5fa27ba66ae9389
+ko_hash: 258a75ccf4720614015a33074ba6d8a467f2283d
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
@@ -236,7 +236,7 @@ graph LR
 **🔗 相关资产**:
 
 - Playbook: [pillar-4 边缘部署](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
-- [LeRobot 遥操作数据采集 on Greengrass 示例](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) —— aws-samples。SO-ARM101→LeRobot v3→S3
+- [LeRobot 遥操作数据采集 on Greengrass 示例](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) —— aws-samples。以 Greengrass v2 自定义组件将 SO-ARM101（Leader/Follower）+ 双摄像头遥操作按 LeRobot v3 格式记录→自动上传 S3。可在 Web 控制台通过 MQTT 远程控制 + KVS 直播（WebRTC/HLS）·回合(episode)回放，已在 Jetson AGX Thor 上验证。"采集→S3"标准化演示的首选候选。⚠️ README 明示仅供教学·演示 —— 禁止用于生产环境（MIT-0）
 - [Android PAI 数据采集应用](https://github.com/aws-samples/sample-physical-ai-data-collector-app) —— aws-samples。现场智能手机视频+IMU→S3 离线队列上传。⚠️ 早期示例
 
 ---

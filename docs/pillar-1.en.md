@@ -1,5 +1,5 @@
 ---
-ko_hash: 0e91167768055daa91af823ff5fa27ba66ae9389
+ko_hash: 258a75ccf4720614015a33074ba6d8a467f2283d
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -236,7 +236,7 @@ graph LR
 **🔗 Related assets**:
 
 - Playbook: [pillar-4 edge deployment](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
-- [LeRobot teleop data collection on Greengrass sample](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. SO-ARM101→LeRobot v3→S3
+- [LeRobot teleop data collection on Greengrass sample](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. Greengrass v2 custom component that records SO-ARM101 (leader/follower) + dual-camera teleoperation in LeRobot v3 format → auto-upload to S3. MQTT remote control from a web console + KVS live (WebRTC/HLS) and episode playback, validated on Jetson AGX Thor. Prime candidate for a "collection→S3" standardization demo. ⚠️ README states educational/demo only — not for production use (MIT-0)
 - [Android PAI data collection app](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples. Field smartphone video+IMU→S3 offline-queue upload. ⚠️ Early-stage sample
 
 ---
