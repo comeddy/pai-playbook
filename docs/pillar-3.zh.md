@@ -1,9 +1,9 @@
 ---
-ko_hash: 03a2bfb536f1aa2996363651492b4fa2547efbc8
+ko_hash: 9131854faa710f967d2e47febe0398f607f38852
 ---
 # Pillar 3 — 仿真 (Simulation)
 
-_最终更新: 2026-08 · owner: Youngjin · volatility: 高（版本·实例经常变动）_
+_最终更新: 2026-09 · owner: Youngjin · volatility: 高（版本·实例经常变动）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -17,7 +17,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 2. **"数千~数万环境的并行 RL 在云上怎么扩展？"** → [大规模并行 RL](#2-大规模并行-rl-仿真--ga)
 3. **"必须全押 NVIDIA 吗？开源替代方案呢？"** → [开源替代方案](#3-开源仿真器替代方案--ga---部分-hype)、[decisions](decisions.md)
 
-> **稳定原理（几乎不变）**: 仿真的价值在于 (1) **并行性**（一张 GPU 上同时数千~8 千环境）[^parallel]，(2) **安全**（无需损坏真实机体即可探索危险策略），(3) **自动标注**（完美的 ground truth）[^gt]。渲染**必须用 RTX(RT Core)[^rtcore] GPU**，所以 A100/H100（计算 GPU）无法用于 Isaac Sim 渲染 —— 这是左右实例选择的不变约束。
+> **稳定原理（几乎不变）**: 仿真的价值在于 (1) **并行性**（一张 GPU 上同时数千~8 千环境）[^parallel]，(2) **安全**（无需损坏真实机体即可探索危险策略），(3) **自动标注**（完美的 ground truth）[^gt] —— 而把这些换算成钱的**实体机器人经济学**（一台机器人的钱 = 数万 GPU 小时）见下方第 6 节。渲染**必须用 RTX(RT Core)[^rtcore] GPU**，所以 A100/H100（计算 GPU）无法用于 Isaac Sim 渲染 —— 这是左右实例选择的不变约束。
 
 ---
 
@@ -102,6 +102,7 @@ graph LR
 **解决方案概览** `[1]/[3]`:
 
 - Isaac Lab 在**一张 GPU 上同时仿真数千~8 千环境**，并可随多节点近乎线性扩展（具体数值见下方折叠块 —— 引用时务必并列注明测量条件）。
+- **收敛时间的基准点依据** `[1]`: ETH Zurich 在单台工作站 GPU 上用 4,096 个并行环境（PPO）训练出 ANYmal 步行策略 —— **平地不到 4 分钟、崎岖地形约 20 分钟**（[Rudin et al., CoRL 2021, arXiv:2109.11978](https://arxiv.org/abs/2109.11978)）—— 公开证明大规模并行 RL 能在实用时间内收敛的原点，也是 ANYmal 实际部署步行的研究谱系。可作为"几分钟让机器人学会走路"演示的依据引用。
 - **[AWS Batch Multi-Node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)** 是 AWS 推荐的编排器（也是 RoboMaker 的迁移路径）。AWS HPC/Physical AI 博客中存在 Isaac Lab on G6e + Batch MNP + EFS + ECR 的参考。
 
 ```mermaid
@@ -186,6 +187,8 @@ graph TD
 
 **解决方案概览** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)**(2026-05-31 GTC Taipei GA) 是当前旗舰 —— Reasoner(VLM) + Generator(diffusion)，MoT 架构。**Super 64B**（数据中心）、**Nano 16B**（RTX PRO 6000，实时机器人，含 Nano-Policy-DROID）、**Edge**（Jetson，计划中 —— 参数未公开）。许可证 **OpenMDW-1.1（可商用）**。HF/GitHub/NGC 分发。⚠️ 旧的 Predict/Transfer/Reason 系列进入维护模式（建议迁移到 Cosmos 3）。
 
+- **划清界线 — 物理仿真是"身体"，WFM 是"眼睛"** `[1]`: WFM 不是物理仿真器的替代品，而是**生成式数据增幅层**。如果说 Isaac 等物理仿真用数值计算刚体·接触·摩擦来驱动机器人的"身体"，那么 WFM 是把仿真产出的灰色（gray）场景转换为 photoreal，或者多样化光照·纹理·视角来扩增训练数据（[Cosmos-Transfer1, arXiv:2503.14492](https://arxiv.org/abs/2503.14492)）。这是对客户提问"Cosmos 会取代 Isaac 吗？"的一句话回答。
+
 **AWS 映射**: **直接映射较弱** —— Cosmos 3 不以 AWS 为指定托管方。但因是开放权重(HF/GitHub)，**可在 EC2 G7e(Nano 16B, RTX PRO 6000) 上自托管**。这就是 AWS 的角度: "即便不是托管主机，也能用最佳 GPU 自行运行"。
 
 **决策标准**: 需要托管 Cosmos NIM → 其他云。开放权重自托管·数据主权·整合既有 AWS 栈 → EC2 G7e。
@@ -208,6 +211,7 @@ graph TD
 
 - **[AWS IoT TwinMaker](https://aws.amazon.com/iot-twinmaker/)** —— GA，官方产品页面有效，无废弃横幅（2026-07-11 确认）。⚠️ innfactory.de/oneuptime.com 等的 "discontinued" 主张是**未经验证的传闻**，禁止重复。但 2025~26 无重大新功能，故为**低速度**。
 - **NVIDIA Omniverse on AWS** —— Marketplace AMI(Developer/Production, Linux/Windows)。运行于 **EC2 G6e/G7e**。Production AMI 是捆绑 AI Enterprise 许可证 + 支持的付费订阅。⚠️ **没有专用的 "OVX" 实例家族** —— Omniverse on AWS = G6e/G7e + AMI。托管的 "Omniverse Enterprise on AWS" 无明确依据。
+- **现实→仿真管道三步** `[2]`: ① **Reality Capture** —— 对实际产线·单元做 as-is 实测扫描（NavVis 等）→ ② **OpenUSD 转换** —— 用 layer composition 把静态背景层与机器人·传感器层分离合成 → ③ **仿真验证后训练**。在 AWS 上用 Omniverse AMI(G6e/G7e) + Amazon DCV 即可远程驱动这套编辑环境。
 
 <details markdown="1"><summary>🔄 易变数据（AMI 版本·价格 —— 2026-07 确认）</summary>
 
@@ -234,6 +238,31 @@ graph TD
 
 ---
 
+## 6. 为什么选择仿真 — 实体机器人的经济学（价格 · 成本 · 法规）  🟢 GA（稳定原理）
+
+**L0 TL;DR**: 用数字说"仿真便宜"。实体机器人从**入门四足 ~$1,600 到未上市人形估计 ~$130K+，跨度约 100 倍**；人形机器人成本的**约一半是关节（执行器+手）**；在韩国还要加上法定防护配置（→ [pillar-4 安全法规](pillar-4.md)）。同样的钱换成 GPU 就是数万小时 —— **一轮 4,096 环境并行训练按 Spot 计只要 $11~12**。这套经济学正是本支柱全部内容（第 1·2 节）的 ROI 依据。
+
+**客户需求/问题**: "怎么向高管论证仿真基础设施投资的正当性？" —— 了解实体试错的成本结构，就是仿真的 ROI 论据。
+
+**解决方案概览** `[1]/[3]`:
+
+- **一台机器人的价格（公开价，大致值，随时点变动）**: Unitree Go2（四足入门）~$1,600 → Unitree G1（人形入门）$13,500 → Franka Research 3（协作臂）~$20–30K → Boston Dynamics Spot ~$74.5K 起（臂·LiDAR 满配 $150–300K+）→ Unitree H1 ~$90K → Fourier GR-1 ~$150K。⚠️ **不要把价格表当预算读** —— Tesla Optimus "$20–30K" 不是售价而是量产目标价（当前制造成本估计 $50–100K），BD Atlas 不对外销售（分析师估计 ~$130–145K），Figure·Apollo·Digit 无公开单价（试点/RaaS）。公开的 10 行中有 4 行是拿钱也买不到的。
+- **成本的一半不是"智能"而是关节** `[3]`: 人形机器人 BOM[^bom] 中，执行器（电机+精密减速器）+精密手占 **~48–57%**（Morgan Stanley 'The Humanoid 100', 2025-02 —— 以 Tesla Optimus Gen2 计执行器 ~56%，仅 14 个行星滚柱丝杠就占整机 ~19%，ex-SW BOM $50–60K）。精密减速器寡头垄断（Harmonic Drive 被引用 ~85% 份额）·稀土磁体供应集中·年出货仅 ~1.3 万台（2025 估计）缺乏规模效应，三者叠加使单价难以下降。**在仿真里这一半是免费的** —— 关节的磨损·故障·更换成本为 0。
+- **与 GPU 小时的等价比较** `[2]`: 首尔区域 g6e.xlarge(L40S 48GB) On-Demand $2.288/hr，Spot 实测 ~$0.98/hr（2026-08，AWS Price List API —— 随时点·AZ 变动）。按 ETH 配方（4,096 环境，步行 <4 分钟~20 分钟，→ 第 2 节）计**一轮训练 $11~12**。一台 Spot 四足的钱（~$75K）等于数万 g6e GPU 小时 —— 实体试错还要叠加磨损·事故·人工费，而仿真只需付每小时的费用。
+- **法规配置为 0**: 实体单元的法定防护（1.8m 围栏·KCs 认证防护装置，→ [pillar-4 安全法规](pillar-4.md)）与风险评估·认证的交付周期在仿真中不存在。高速碰撞·跌落·硬件故障等危险场景也能安全地无限重复 —— AWS·NVIDIA 官方文档使用同样的论据（"在真实世界训练机器人缓慢、昂贵且有潜在危险"）。
+
+**AWS 映射**: 这套经济学本身就是第 1 节（Isaac on EC2）·第 2 节（Batch 并行 RL）投资正当性的来源。价格为 AWS Price List API（ap-northeast-2）实测 —— 引用时务必并注时点。
+
+**决策标准**: 实体单元先期投资 vs 仿真先行 → 几乎总是**仿真先行**正确。但要在同一口气里说明局限: 操作（manipulation）单靠仿真解决不了（→ [pillar-4 操作](pillar-4.md)），这才诚实。
+
+**客户案例**: （该框架本身是公开厂商·研究数值的组合 —— 各数值来源正文并注）
+
+**➡️ 后续行动**: 收到面向高管的仿真投资论证请求时，用**"关节占成本一半，仿真里免费" + "一轮训练 $12"** 两个数字开场。详细价格波动大，务必并注时点，安全·法规轴连接到 [pillar-4](pillar-4.md)。
+
+**🔗 相关资产**: [pillar-4 安全法规](pillar-4.md) · [decisions](decisions.md) · [exec 高管简报](exec.md)
+
+---
+
 ## 本支柱的诚实现实（SA 必读）
 
 - **AWS RoboMaker 已死（2025-09-10 支持终止）。** 绝对禁止作为选项提出。后续栈 = EC2 G6e/G7e + Isaac Sim AMI + AWS Batch MNP。
@@ -244,7 +273,7 @@ graph TD
 - **Genesis "430,000 倍"已被反驳**，**MuJoCo Warp 为 Alpha**，**Unity Robotics Hub 实际处于放置状态（2022 年以后）**，**Habitat 在 v0.3.4 之后停止维护** —— 禁止夸大开源成熟度。
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 高（版本·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证。建议再确认部分 GitHub 发布年份。_
+_owner: Youngjin · updated: 2026-09 · volatility: 高（版本·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证。建议再确认部分 GitHub 发布年份。_
 
 <!-- 용어 각주 -->
 
@@ -259,3 +288,4 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（版本·实例在折�
 [^dtwin]: **数字孪生（digital twin）** — 对真实工厂·仓库·机器人进行物理上忠实复刻的虚拟副本。无需触碰真实环境即可进行策略训练·验证·场景实验。
 [^mnp]: **MNP（Multi-Node Parallel）** — AWS Batch 将一个作业跨多台 EC2 节点执行的模式。使需要节点间通信的大规模训练·仿真作业也能通过批处理队列管理。
 [^osmo]: **OSMO** — NVIDIA 面向机器人工作负载的工作流编排平台。将合成数据生成、仿真、模型训练等多阶段作业调度到本地与云端的多个集群（如 Kubernetes）。
+[^bom]: **BOM (Bill of Materials，物料清单)** — 制造一台产品所需零部件·材料的清单及成本构成。"人形机器人 BOM 的一半是关节"指的是执行器（电机+减速器）与手在硬件成本中的占比。

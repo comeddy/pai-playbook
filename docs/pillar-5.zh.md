@@ -1,9 +1,9 @@
 ---
-ko_hash: 7f96f7f33bffa4fab8ca65c8cb5dd1084f0ed4d3
+ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
-_最终更新: 2026-08 · owner: Youngjin · volatility: 高（AgentCore 功能·区域经常扩展）_
+_最终更新: 2026-09 · owner: Youngjin · volatility: 高（AgentCore 功能·区域经常扩展）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -167,7 +167,7 @@ graph TD
 
 **➡️ 后续行动**: 向离线客户**以 AWS Greengrass 智能体 Guidance + 示例代码作为起点**提出（诚实说明不是 GA 产品）。设计在线/离线混合（边缘 SLM ↔ 云端 AgentCore）。
 
-**🔗 相关资产**: [pillar-4 边缘部署](pillar-4.md) · [pillar-1](pillar-1.md)
+**🔗 相关资产**: [pillar-4 边缘部署](pillar-4.md) · [pillar-1](pillar-1.md) · [MCP+MQTT on AWS IoT Core 模式](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/) —— 官方博客。在 IoT Core(MQTT) 上把机器人·边缘设备当作 MCP 工具来驱动 Physical AI 智能体的实战模式 —— 连接边缘运营(P4)与多设备协调(P5)的现行标准路径
 
 ---
 
@@ -202,7 +202,7 @@ graph TD
 
 **决策标准**: 仓库/AMR 机群协调 → 已验证领域（参考 DeepFleet 式方法）。人形智能体机群 → 仍处早期。开发工作负载 → OSMO(NVIDIA) 或 AWS Batch/Step Functions。
 
-**客户案例**（⚠️ 韩国为早期/演示/公布）: **Lotte Global Logistics×CoEvolution**(30%，单一来源)、**LG CNS** 仓库演示（人形+机器狗+移动）、**Naver** AI Agent Platform 计划于 2026 下半年（NVIDIA 蓝图）。
+**客户案例**（⚠️ 韩国为早期/演示/公布）: **Lotte Global Logistics×CoEvolution**(30%，单一来源)、**LG CNS** 仓库演示（人形+机器狗+移动）、**Naver** AI Agent Platform 计划于 2026 下半年（NVIDIA 蓝图）。海外生产案例: **Certis**（安保服务）—— [在 AWS 上部署·运营自主巡逻机器人](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/)的官方客户案例 `[1]` —— 把机群真正投入现场运行的边缘+协调视角下少见的公开参考。
 
 **➡️ 后续行动**: 向机群客户**以"协调逻辑用 AgentCore，连接用 IoT，训练用 SageMaker"三层来梳理**。准确说明，避免把 DeepFleet 误解为 LLM 智能体。
 
@@ -234,6 +234,31 @@ graph TD
 
 ---
 
+## 6. 物理世界的智能体标准 — Anthropic MHS & AWS Strands Robots  🟡 Research Preview
+
+**L0 TL;DR**: 2026-08-27 Anthropic 公开了 **[Model Hardware Standard(MHS)](https://www.anthropic.com/news/model-hardware-standard-research-preview)** research preview —— 让 AI 智能体通过**标准化驱动（read/write primitive）**操作物理设备（显微镜·liquid handler·机械臂）并并行编排多台设备的共享规格。相当于 MCP 之于数据·工具的硬件版。**AWS 通过 Strands Robots 支持 MHS**（面向 preview 参与者的 private pre-release），**Doosan Robotics（韩国）为发布合作伙伴**。⚠️ research preview —— 禁止向客户做生产提议，仅作方向指标。
+
+**客户需求/问题**: "每台设备都在重复定制集成（数周~数月）。智能体-硬件连接没有标准吗？"
+
+**解决方案概览** `[1]/[3]`:
+
+- **工作方式**: 将设备暴露为 read（例: get temperature）/write（set temperature）primitive 集合的**标准驱动** + 由自然语言标签生成的 reference file（记载该设备可测量·可调整的项目与**强制执行的安全限值（safety limits）**）。智能体通过三种机制（MCP·CLI·code files/API）控制设备，编排步骤、观测结果并实时调整参数。model-agnostic —— 核心主张是把集成周期从数周~数月缩短到数小时~数分钟。
+- **AWS 的位置**: Anthropic 公告明示 "AWS will support MHS through **Strands Robots**, the library for connecting AI agents to physical devices"。它与公开的 [strands-labs/robots](https://github.com/strands-labs/robots)（Apache-2.0 —— Strands Agents + GR00T VLA + LeRobot 整合机器人控制库）相衔接，但 ⚠️ **公开包本身并未提及 MHS** —— 支持 MHS 的构建是单独的 private pre-release。
+- **韩国相关性** `[3]`: Doosan Robotics 作为发布合作伙伴，正在机械臂的自动质检（QA）·多机器人协作上测试 MHS（与 Universal Robots·Tecan·QIAGEN 等一道）。
+- **诚实的局限**: LLM 通过文本·图像学习物理世界，**空间·物理推理仍需专家监督** —— Anthropic 自己举例: Genentech 研究人员不得不教 Claude "样品起泡（foaming）不是软件 bug 而是物理失败"。已计划开源。
+
+**AWS 映射**: AgentCore（第 1 节）负责智能体运行时·Policy 门控，MHS/Strands Robots 负责设备连接标准 —— 相当于在第 5 节分层防御的"工具门禁"之下再加一层**"设备驱动 + safety limits"**。
+
+**决策标准**: 还不到写进今天设计的阶段（research preview）。但对设备集成积压大的客户（实验室自动化·多品种单元），应作为**观察清单第一位**进行引导。
+
+**客户案例**: Doosan Robotics（发布合作伙伴，测试阶段）`[3]`。
+
+**➡️ 后续行动**: 向已在用 MCP 的客户以 **"MCP 管数据·工具，MHS 管硬件"** 的框架介绍；一旦公开，就以 Strands Robots 路径安排验证 PoC。在那之前的现行替代方案是 [MCP+MQTT on IoT Core 模式](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/)（第 3 节相关资产）。
+
+**🔗 相关资产**: [strands-labs/robots](https://github.com/strands-labs/robots) · [pillar-4 边缘](pillar-4.md)
+
+---
+
 ## 本支柱的诚实现实（SA 必读）
 
 - **AgentCore 首尔区域完全支持**（含 Policy·Evaluations）。"首尔不支持"是 GA 初期的说法 —— 现在已错。让客户对数据驻留放心。
@@ -244,7 +269,7 @@ graph TD
 - **Lotte 30% 等韩国数值为单一来源** —— 硬引用前需再确认。
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
+_owner: Youngjin · updated: 2026-09 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
 
 <!-- 용어 각주 -->
 

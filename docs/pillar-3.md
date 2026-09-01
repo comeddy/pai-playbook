@@ -1,6 +1,6 @@
 # Pillar 3 — 시뮬레이션 (Simulation)
 
-_최종 갱신: 2026-08 · owner: Youngjin · volatility: 높음(버전·인스턴스가 자주 바뀜)_
+_최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음(버전·인스턴스가 자주 바뀜)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -14,7 +14,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 2. **"수천~수만 환경 병렬 RL을 클라우드에서 어떻게 스케일하죠?"** → [대규모 병렬 RL](#2-대규모-병렬-rl-시뮬레이션--ga)
 3. **"NVIDIA에 다 걸어야 하나요? 오픈소스 대안은요?"** → [오픈소스 대안](#3-오픈소스-시뮬레이터-대안--ga---일부-hype), [decisions](decisions.md)
 
-> **안정 원리 (잘 안 바뀜)**: 시뮬레이션의 가치는 (1) **병렬성**(GPU 한 장에서 수천~8천 환경 동시)[^parallel], (2) **안전**(실기체 파손 없이 위험 정책 탐색), (3) **자동 라벨**(완벽한 ground truth)[^gt]. 렌더링에는 **RTX(RT Core)[^rtcore] GPU가 필수**라 A100/H100(컴퓨트 GPU)은 Isaac Sim 렌더링에 못 쓴다 — 이건 인스턴스 선택을 좌우하는 불변 제약.
+> **안정 원리 (잘 안 바뀜)**: 시뮬레이션의 가치는 (1) **병렬성**(GPU 한 장에서 수천~8천 환경 동시)[^parallel], (2) **안전**(실기체 파손 없이 위험 정책 탐색), (3) **자동 라벨**(완벽한 ground truth)[^gt] — 그리고 이를 돈으로 환산한 **실물의 경제학**(로봇 한 대 값 = GPU 수만 시간)은 아래 6번. 렌더링에는 **RTX(RT Core)[^rtcore] GPU가 필수**라 A100/H100(컴퓨트 GPU)은 Isaac Sim 렌더링에 못 쓴다 — 이건 인스턴스 선택을 좌우하는 불변 제약.
 
 ---
 
@@ -99,6 +99,7 @@ graph LR
 **솔루션 개요** `[1]/[3]`:
 
 - Isaac Lab은 **GPU 한 장에서 수천~8천 환경을 동시 시뮬레이션**하고, 멀티노드로 선형에 가깝게 스케일한다(구체 수치는 아래 접힌 블록 — 인용 시 반드시 측정조건 병기).
+- **수렴 시간의 기준점 근거** `[1]`: ETH Zurich는 단일 워크스테이션 GPU에서 4,096개 병렬 환경(PPO)으로 ANYmal 보행 정책을 **평지 4분 미만, 험지 약 20분**에 학습시켰다([Rudin et al., CoRL 2021, arXiv:2109.11978](https://arxiv.org/abs/2109.11978)) — 대규모 병렬 RL이 실용 시간 안에 수렴함을 공개 증명한 원점이자, ANYmal 실배포 보행의 연구 계보. "몇 분 만에 로봇 걷게 만들기" 데모의 근거로 인용.
 - **[AWS Batch Multi-Node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)**가 AWS 권장 오케스트레이터(RoboMaker 마이그레이션 경로이기도). AWS HPC/Physical AI 블로그에 Isaac Lab on G6e + Batch MNP + EFS + ECR 레퍼런스 존재.
 
 ```mermaid
@@ -183,6 +184,8 @@ graph TD
 
 **솔루션 개요** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)**(2026-05-31 GTC Taipei GA)가 현 플래그십 — Reasoner(VLM) + Generator(diffusion), MoT 아키텍처. **Super 64B**(데이터센터), **Nano 16B**(RTX PRO 6000, 실시간 로보틱스, Nano-Policy-DROID 포함), **Edge**(Jetson, 예정 — 파라미터 미공개). 라이선스 **OpenMDW-1.1(상업 가능)**. HF/GitHub/NGC 배포. ⚠️ 구 Predict/Transfer/Reason 라인업은 유지보수 모드(Cosmos 3로 이전 권고).
 
+- **선긋기 — 물리 sim은 "몸", WFM은 "눈"** `[1]`: WFM은 물리 시뮬레이터의 대체재가 아니라 **생성형 데이터 증폭 층**이다. Isaac 등 물리 sim이 강체·접촉·마찰을 수치로 계산해 로봇의 "몸"을 굴린다면, WFM은 sim이 만든 회색(gray) 장면을 photoreal로 변환하거나 조명·질감·시점을 다양화해 학습 데이터를 불린다([Cosmos-Transfer1, arXiv:2503.14492](https://arxiv.org/abs/2503.14492)). "Cosmos가 Isaac을 대체하나?"라는 고객 질문에 대한 한 줄 답.
+
 **AWS 매핑**: **직접 매핑 약함** — Cosmos 3는 AWS가 명시 호스트가 아님. 다만 오픈 가중치(HF/GitHub)라 **EC2 G7e(Nano 16B, RTX PRO 6000)에서 셀프 호스팅 가능**. 이게 AWS의 각도: "매니지드 호스트는 아니어도 최적 GPU로 직접 돌릴 수 있다".
 
 **의사결정 기준**: 매니지드 Cosmos NIM 필요 → 타 클라우드. 오픈 가중치 셀프호스팅·데이터 주권·기존 AWS 스택 통합 → EC2 G7e.
@@ -205,6 +208,7 @@ graph TD
 
 - **[AWS IoT TwinMaker](https://aws.amazon.com/iot-twinmaker/)** — GA, 공식 제품 페이지 활성, 폐기 배너 없음(2026-07-11 확인). ⚠️ innfactory.de/oneuptime.com 등의 "discontinued" 주장은 **미검증 루머**로 반복 금지. 단 2025~26 주요 신기능 없어 **저속도**.
 - **NVIDIA Omniverse on AWS** — Marketplace AMI(Developer/Production, Linux/Windows). **EC2 G6e/G7e** 실행. Production AMI는 AI Enterprise 라이선스 + 지원이 번들된 유상 구독. ⚠️ **전용 "OVX" 인스턴스 패밀리 없음** — Omniverse on AWS = G6e/G7e + AMI. 매니지드 "Omniverse Enterprise on AWS"는 명확한 근거 없음.
+- **현실→sim 파이프라인 3단계** `[2]`: ① **Reality Capture** — 실제 라인·셀을 as-is 실측 스캔(NavVis 등) → ② **OpenUSD 변환** — layer composition으로 정적 배경 레이어 + 로봇·센서 레이어를 분리 합성 → ③ **sim 검증 후 학습**. AWS에서는 Omniverse AMI(G6e/G7e) + Amazon DCV로 이 편집 환경을 원격에서 구동한다.
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (AMI 버전·가격 — 2026-07 확인)</summary>
 
@@ -231,6 +235,31 @@ graph TD
 
 ---
 
+## 6. 왜 시뮬레이션인가 — 실물의 경제학 (가격 · 원가 · 규제)  🟢 GA (안정 원리)
+
+**L0 TL;DR**: "sim이 싸다"를 숫자로. 실물 로봇은 **엔트리 4족 ~$1,600에서 미시판 휴머노이드 추정 ~$130K+까지 ~100배** 스프레드, 휴머노이드 원가의 **약 절반이 관절(액추에이터+손)**, 한국에선 법정 방호 셋업(→ [pillar-4 안전 규제](pillar-4.md))까지 얹힌다. 같은 돈이면 GPU 수만 시간 — **4,096-환경 병렬 학습 한 판이 Spot 기준 $11~12**다. 이 경제학이 이 필러 전체(1·2번)의 ROI 근거다.
+
+**고객 니즈/문제**: "시뮬레이션 인프라 투자를 경영진에게 어떻게 정당화하나?" — 실물 시행착오의 비용 구조가 곧 sim의 ROI 논거다.
+
+**솔루션 개요** `[1]/[3]`:
+
+- **로봇 한 대 가격 (공개가 기준 대략치, 시점 변동)**: Unitree Go2(4족 엔트리) ~$1,600 → Unitree G1(휴머노이드 엔트리) $13,500 → Franka Research 3(협동로봇 팔) ~$20–30K → Boston Dynamics Spot ~$74.5K부터(팔·LiDAR 풀구성 $150–300K+) → Unitree H1 ~$90K → Fourier GR-1 ~$150K. ⚠️ **가격표를 예산으로 읽지 말 것** — Tesla Optimus "$20–30K"는 판매가가 아니라 양산 목표가(현 제작원가 추정 $50–100K), BD Atlas는 일반 판매 안 함(애널리스트 추정 ~$130–145K), Figure·Apollo·Digit은 공개 단가 없음(파일럿/RaaS). 공개 10행 중 4행은 숫자로 살 수 없다.
+- **원가의 절반은 "지능"이 아니라 관절** `[3]`: 휴머노이드 BOM[^bom]에서 액추에이터(모터+정밀 감속기)+정밀 손이 **~48–57%**(Morgan Stanley 'The Humanoid 100', 2025-02 — Tesla Optimus Gen2 기준 액추에이터 ~56%, 유성 롤러 스크루 14개만 전체의 ~19%, ex-SW BOM $50–60K). 정밀 감속기 과점(Harmonic Drive ~85% 점유 인용)·희토류 자석 공급 편중·연 ~1.3만 대(2025 출하 추정)의 규모 부재가 겹쳐 단가가 쉽게 안 내려간다. **sim 안에서는 이 절반이 공짜다** — 관절의 마모·고장·교체 비용이 0.
+- **GPU 시간과의 등가 비교** `[2]`: 서울 리전 g6e.xlarge(L40S 48GB) On-Demand $2.288/hr, Spot 실측 ~$0.98/hr(2026-08, AWS Price List API — 시점·AZ 변동). ETH 레시피(4,096 환경, 보행 <4분~20분, → 2번) 기준 **학습 한 판 $11~12**. Spot 4족 한 대 값(~$75K)이면 g6e 수만 GPU-시간 — 실물 시행착오에는 마모·사고·인건비가 얹히지만 sim은 시간당 요금이 전부다.
+- **규제 셋업 0**: 실물 셀의 법정 방호(1.8m 울타리·KCs 인증 방호장치, → [pillar-4 안전 규제](pillar-4.md))와 리스크평가·인증 리드타임이 sim에는 없다. 고속 충돌·낙하·하드웨어 고장 같은 위험 시나리오도 안전하게 무한 반복 — AWS·NVIDIA 공식 문서도 같은 논거를 쓴다("실세계 로봇 훈련은 느리고, 비싸고, 잠재적으로 위험하다").
+
+**AWS 매핑**: 이 경제학이 1번(Isaac on EC2)·2번(Batch 병렬 RL)의 투자 정당화 그 자체. 가격은 AWS Price List API(ap-northeast-2) 실측 기준 — 인용 시 항상 시점 병기.
+
+**의사결정 기준**: 실물 셀 선(先)투자 vs sim 선행 → 거의 항상 **sim 선행**이 정답. 단 조작(manipulation)은 sim만으로 안 풀린다는 한계(→ [pillar-4 조작](pillar-4.md))를 같은 숨으로 말해야 정직하다.
+
+**고객 사례**: (프레임 자체는 공개 벤더·리서치 수치의 조합 — 개별 수치 출처는 본문 병기)
+
+**➡️ 다음 액션**: 경영진 대상 sim 투자 정당화 요청이 오면 **"관절이 원가의 절반, sim에선 공짜" + "학습 한 판 $12"** 두 숫자로 시작. 상세 가격은 변동이 크니 항상 시점을 병기하고, 안전·규제 축은 [pillar-4](pillar-4.md)로 연결.
+
+**🔗 관련 자산**: [pillar-4 안전 규제](pillar-4.md) · [decisions](decisions.md) · [exec 경영진 브리핑](exec.md)
+
+---
+
 ## 이 필러의 정직한 현실 (SA 필독)
 
 - **AWS RoboMaker는 죽었다(2025-09-10 지원 종료).** 절대 옵션으로 제시 금지. 후속 스택 = EC2 G6e/G7e + Isaac Sim AMI + AWS Batch MNP.
@@ -241,7 +270,7 @@ graph TD
 - **Genesis "430,000배"는 반박됨**, **MuJoCo Warp는 Alpha**, **Unity Robotics Hub는 사실상 방치(2022년 이후)**, **Habitat은 v0.3.4 이후 유지보수 중단** — 오픈소스 성숙도 과장 금지.
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 높음 (버전·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증. GitHub 릴리스 연도 일부 재확인 권고._
+_owner: Youngjin · updated: 2026-09 · volatility: 높음 (버전·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증. GitHub 릴리스 연도 일부 재확인 권고._
 
 <!-- 용어 각주 -->
 
@@ -256,3 +285,4 @@ _owner: Youngjin · updated: 2026-08 · volatility: 높음 (버전·인스턴스
 [^dtwin]: **디지털 트윈(digital twin)** — 실제 공장·창고·로봇을 물리적으로 충실하게 본뜬 가상 복제본. 실환경을 건드리지 않고 정책 학습·검증·시나리오 실험을 할 수 있게 한다.
 [^mnp]: **MNP (Multi-Node Parallel)** — AWS Batch가 하나의 잡을 여러 EC2 노드에 걸쳐 실행하는 모드. 노드 간 통신이 필요한 대규모 학습·시뮬레이션 잡을 배치 큐로 관리할 수 있게 한다.
 [^osmo]: **OSMO** — NVIDIA의 로보틱스 워크로드용 워크플로 오케스트레이션 플랫폼. 합성 데이터 생성·시뮬레이션·모델 학습 같은 멀티스테이지 잡을 온프레미스·클라우드의 여러 클러스터(Kubernetes 등)에 걸쳐 스케줄링한다.
+[^bom]: **BOM (Bill of Materials, 자재 명세서)** — 제품 한 대를 만드는 데 들어가는 부품·자재의 목록과 원가 구성. "휴머노이드 BOM의 절반이 관절"은 하드웨어 원가에서 액추에이터(모터+감속기)와 손이 차지하는 비중을 말한다.

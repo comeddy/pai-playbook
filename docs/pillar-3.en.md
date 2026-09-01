@@ -1,9 +1,9 @@
 ---
-ko_hash: 03a2bfb536f1aa2996363651492b4fa2547efbc8
+ko_hash: 9131854faa710f967d2e47febe0398f607f38852
 ---
 # Pillar 3 — Simulation
 
-_Last updated: 2026-08 · owner: Youngjin · volatility: high (versions/instances change often)_
+_Last updated: 2026-09 · owner: Youngjin · volatility: high (versions/instances change often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -17,7 +17,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 2. **"How do I scale thousands~tens of thousands of parallel RL environments in the cloud?"** → [Large-scale parallel RL](#2-large-scale-parallel-rl-simulation--ga)
 3. **"Do I have to bet everything on NVIDIA? What about open-source alternatives?"** → [Open-source alternatives](#3-open-source-simulator-alternatives--ga---partly-hype), [decisions](decisions.md)
 
-> **Stable principle (rarely changes)**: the value of simulation is (1) **parallelism** (thousands~8,000 environments at once on a single GPU)[^parallel], (2) **safety** (exploring risky policies without breaking real hardware), and (3) **automatic labeling** (perfect ground truth)[^gt]. Rendering **requires an RTX (RT Core)[^rtcore] GPU**, so A100/H100 (compute GPUs) cannot be used for Isaac Sim rendering — an invariant constraint that governs instance selection.
+> **Stable principle (rarely changes)**: the value of simulation is (1) **parallelism** (thousands~8,000 environments at once on a single GPU)[^parallel], (2) **safety** (exploring risky policies without breaking real hardware), and (3) **automatic labeling** (perfect ground truth)[^gt] — and the **economics of physical robots** that converts these into money (one robot's price = tens of thousands of GPU hours) is item 6 below. Rendering **requires an RTX (RT Core)[^rtcore] GPU**, so A100/H100 (compute GPUs) cannot be used for Isaac Sim rendering — an invariant constraint that governs instance selection.
 
 ---
 
@@ -102,6 +102,7 @@ graph LR
 **Solution overview** `[1]/[3]`:
 
 - Isaac Lab **simulates thousands~8,000 environments at once on a single GPU** and scales near-linearly across multiple nodes (concrete numbers in the collapsed block below — always cite with measurement conditions).
+- **The anchor evidence for convergence time** `[1]`: ETH Zurich trained ANYmal locomotion policies on a single workstation GPU with 4,096 parallel environments (PPO) in **under 4 minutes on flat terrain and about 20 minutes on rough terrain** ([Rudin et al., CoRL 2021, arXiv:2109.11978](https://arxiv.org/abs/2109.11978)) — the origin point that publicly proved massively parallel RL converges within practical time, and the research lineage behind ANYmal's deployed locomotion. Cite it as the basis for "make a robot walk in minutes" demos.
 - **[AWS Batch Multi-Node Parallel Jobs](https://docs.aws.amazon.com/batch/latest/userguide/multi-node-parallel-jobs.html)** is the AWS-recommended orchestrator (also the RoboMaker migration path). The AWS HPC/Physical AI blog has an Isaac Lab on G6e + Batch MNP + EFS + ECR reference.
 
 ```mermaid
@@ -186,6 +187,8 @@ graph TD
 
 **Solution overview** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)** (GA at GTC Taipei 2026-05-31) is the current flagship — Reasoner (VLM) + Generator (diffusion), MoT architecture. **Super 64B** (data center), **Nano 16B** (RTX PRO 6000, real-time robotics, includes Nano-Policy-DROID), **Edge** (Jetson, planned — parameters undisclosed). License **OpenMDW-1.1 (commercial OK)**. Distributed on HF/GitHub/NGC. ⚠️ The old Predict/Transfer/Reason lineup is in maintenance mode (advised to migrate to Cosmos 3).
 
+- **Drawing the line — the physics sim is the "body," the WFM is the "eyes"** `[1]`: a WFM is not a replacement for a physics simulator but a **generative data-amplification layer**. Where a physics sim like Isaac numerically computes rigid bodies, contact, and friction to drive the robot's "body," a WFM converts the sim's gray scenes into photoreal ones or diversifies lighting/textures/viewpoints to multiply data ([Cosmos-Transfer1, arXiv:2503.14492](https://arxiv.org/abs/2503.14492)). The one-line answer to the customer question "does Cosmos replace Isaac?"
+
 **AWS mapping**: **weak direct mapping** — Cosmos 3 does not have AWS as a named host. But because the weights are open (HF/GitHub), it **can be self-hosted on EC2 G7e (Nano 16B, RTX PRO 6000)**. That's AWS's angle: "not a managed host, but you can run it directly on the optimal GPU."
 
 **Decision criteria**: need managed Cosmos NIM → another cloud. Open-weight self-hosting · data sovereignty · integration with an existing AWS stack → EC2 G7e.
@@ -208,6 +211,7 @@ graph TD
 
 - **[AWS IoT TwinMaker](https://aws.amazon.com/iot-twinmaker/)** — GA, official product page active, no discontinuation banner (confirmed 2026-07-11). ⚠️ The "discontinued" claim from innfactory.de/oneuptime.com etc. is an **unverified rumor**; do not repeat. But with no major new features in 2025~26, it is **low velocity**.
 - **NVIDIA Omniverse on AWS** — Marketplace AMI (Developer/Production, Linux/Windows). Runs on **EC2 G6e/G7e**. The Production AMI is a paid subscription bundling an AI Enterprise license + support. ⚠️ **There is no dedicated "OVX" instance family** — Omniverse on AWS = G6e/G7e + AMI. There is no clear basis for a managed "Omniverse Enterprise on AWS."
+- **The reality→sim pipeline in 3 steps** `[2]`: ① **Reality Capture** — as-is scan of the actual line/cell (NavVis etc.) → ② **OpenUSD conversion** — layer composition combining a static background layer with separate robot/sensor layers → ③ **validate in sim, then train**. On AWS, run this editing environment remotely with the Omniverse AMI (G6e/G7e) + Amazon DCV.
 
 <details markdown="1"><summary>🔄 Volatile data (AMI versions/pricing — checked 2026-07)</summary>
 
@@ -234,6 +238,31 @@ graph TD
 
 ---
 
+## 6. Why simulation — the economics of physical robots (price · BOM · regulation)  🟢 GA (stable principle)
+
+**L0 TL;DR**: "Sim is cheap" in numbers. Physical robots span **~100× from an entry quadruped at ~$1,600 to an unsold humanoid at an estimated ~$130K+**, **about half of a humanoid's cost is joints (actuators + hands)**, and in Korea the legally required guarding setup (→ [pillar-4 safety regulation](pillar-4.md)) is added on top. The same money buys tens of thousands of GPU hours — **one 4,096-environment parallel training run costs $11~12 on Spot**. This economics underwrites the ROI of this whole pillar (items 1 · 2).
+
+**Customer need/problem**: "How do we justify simulation infrastructure investment to executives?" — knowing the cost structure of physical trial and error is itself the ROI argument for sim.
+
+**Solution overview** `[1]/[3]`:
+
+- **Price per robot (public prices, rough, time-varying)**: Unitree Go2 (entry quadruped) ~$1,600 → Unitree G1 (entry humanoid) $13,500 → Franka Research 3 (cobot arm) ~$20–30K → Boston Dynamics Spot from ~$74.5K (fully configured with arm/LiDAR $150–300K+) → Unitree H1 ~$90K → Fourier GR-1 ~$150K. ⚠️ **Do not read the price list as a budget** — Tesla Optimus "$20–30K" is a mass-production target, not a sale price (current build cost estimated $50–100K); BD Atlas is not sold (analyst estimates ~$130–145K); Figure·Apollo·Digit have no public unit price (pilot/RaaS). Of the ten public rows, four cannot be bought at any listed number.
+- **Half the cost is joints, not "intelligence"** `[3]`: in a humanoid BOM[^bom], actuators (motor + precision reducer) + precision hands account for **~48–57%** (Morgan Stanley 'The Humanoid 100', 2025-02 — on Tesla Optimus Gen2, actuators ~56%, and the 14 planetary roller screws alone ~19% of the total; ex-software BOM $50–60K). Precision-reducer oligopoly (Harmonic Drive cited at ~85% share), concentrated rare-earth magnet supply, and the absence of scale (~13K humanoid shipments estimated for 2025) stack up, so unit costs don't come down easily. **Inside sim, that half is free** — zero joint wear, breakage, or replacement cost.
+- **GPU-hour equivalence** `[2]`: Seoul Region g6e.xlarge (L40S 48GB) On-Demand $2.288/hr, Spot measured ~$0.98/hr (2026-08, AWS Price List API — varies by time/AZ). On the ETH recipe (4,096 environments, locomotion in <4~20 minutes, → item 2), **one training run is $11~12**. The price of one Spot quadruped (~$75K) buys tens of thousands of g6e GPU hours — physical trial and error also adds wear, accidents, and labor, while sim's hourly rate is the entire bill.
+- **Zero regulatory setup**: the legally required guarding of a physical cell (1.8 m fence, KCs-certified light curtains, etc. → [pillar-4 safety regulation](pillar-4.md)) and the risk-assessment/certification lead time do not exist in sim. Risky scenarios — high-speed collisions, drops, hardware failures — can be repeated safely without limit; AWS and NVIDIA official docs make the same argument ("training robots in the real world is slow, expensive, and potentially dangerous").
+
+**AWS mapping**: this economics is itself the investment justification for items 1 (Isaac on EC2) and 2 (Batch parallel RL). Prices are measured via the AWS Price List API (ap-northeast-2) — always cite with a date.
+
+**Decision criteria**: up-front physical cell investment vs sim-first → **sim-first** is almost always the answer. But say in the same breath that manipulation does not get solved by sim alone (→ [pillar-4 manipulation](pillar-4.md)) to stay honest.
+
+**Customer case**: (the framing itself is a combination of public vendor/research figures — sources are cited inline)
+
+**➡️ Next action**: when asked to justify sim investment to executives, start with two numbers — **"joints are half the cost, and free in sim" + "$12 per training run."** Detailed prices swing, so always attach the date, and connect the safety/regulation axis to [pillar-4](pillar-4.md).
+
+**🔗 Related assets**: [pillar-4 safety regulation](pillar-4.md) · [decisions](decisions.md) · [exec executive brief](exec.md)
+
+---
+
 ## The honest reality of this pillar (SA must-read)
 
 - **AWS RoboMaker is dead (support ended 2025-09-10).** Never present it as an option. The successor stack = EC2 G6e/G7e + Isaac Sim AMI + AWS Batch MNP.
@@ -244,7 +273,7 @@ graph TD
 - **Genesis "430,000×" is refuted**, **MuJoCo Warp is Alpha**, **Unity Robotics Hub is effectively abandoned (since 2022)**, **Habitat has been unmaintained since v0.3.4** — do not exaggerate open-source maturity.
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: high (versions · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified. Some GitHub release years advised to re-confirm._
+_owner: Youngjin · updated: 2026-09 · volatility: high (versions · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified. Some GitHub release years advised to re-confirm._
 
 <!-- 용어 각주 -->
 
@@ -259,3 +288,4 @@ _owner: Youngjin · updated: 2026-08 · volatility: high (versions · instances 
 [^dtwin]: **Digital twin** — A physically faithful virtual replica of a real factory, warehouse, or robot. Enables policy training, validation, and scenario experiments without touching the real environment.
 [^mnp]: **MNP (Multi-Node Parallel)** — the AWS Batch mode that runs a single job across multiple EC2 nodes. It lets large training/simulation jobs that need inter-node communication be managed through a batch queue.
 [^osmo]: **OSMO** — NVIDIA's workflow orchestration platform for robotics workloads. It schedules multi-stage jobs such as synthetic data generation, simulation, and model training across on-premises and cloud clusters (e.g., Kubernetes).
+[^bom]: **BOM (Bill of Materials)** — the list of parts and materials that go into building one unit of a product, and its cost composition. "Half of a humanoid's BOM is joints" refers to the share of hardware cost taken by actuators (motors + reducers) and hands.

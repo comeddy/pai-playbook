@@ -1,9 +1,9 @@
 ---
-ko_hash: e260e3f021dc962fc99d34f2bac7a78f8c64289b
+ko_hash: 522eea873e849c595119e05911784eb2d89ddd67
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
-_最终更新: 2026-08 · owner: Youngjin · volatility: 高（模型版本·许可证·实例经常变动）_
+_最终更新: 2026-09 · owner: Youngjin · volatility: 高（模型版本·许可证·实例经常变动）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -84,6 +84,16 @@ graph TD
 - **openpi (π0/π0.5)**: 推理 >8GB，LoRA >22.5GB(RTX 4090)，**全量微调 >70GB(A100/H100)**。官方 LoRA/full 配方，2025-09 新增 PyTorch 支持。数据 1~20 小时即可满足多数任务。
 - **GR00T (N1.5/N1.7)**: 微调 40GB+ GPU（推荐 H100/L40），推理 16GB+。NVIDIA 官方 post-training 配方。
 - **数据量的直觉**: LoRA 单任务 100~500 个演示 → 80%+ 成功率。少量·高质量的真实演示是关键（→ [pillar-1 遥操作](pillar-1.md)）。
+- **解冻（unfreeze）哪个部件 — 训练范围即成本** `[1]/[2]`: 最新 VLA 是 (1) 负责理解的 VLM + (2) 生成动作的 DiT[^dit] + (3) 适配机器人身体的适配器 MLP 的组装（[GR00T N1 结构, arXiv:2503.14734](https://arxiv.org/abs/2503.14734)）。"想改变什么"决定了要打开（unfreeze）哪个部件以及成本:
+
+| 想改变的 | MLP（适配器） | DiT（动作） | VLM（理解） | 成本直觉 `[2]` |
+|---|---|---|---|---|
+| 现有机器人 + 现有动作 | 保持 | 保持 | 保持 | 无需训练（直接使用） |
+| **新机器人**、现有动作 | **训练** | freeze | freeze | 遥操作演示 50~200 个、2~6 小时、g5.2xlarge 约 $10 |
+| 新动作（预训练中没有的 verb） | 训练 | **训练** | freeze | 半天 |
+| 特殊相机模态（红外等） | 训练 | 训练 | LoRA | 数天，最贵 |
+
+- ⚠️ **新机器人 = 必须有适配器** `[2]`: GR00T 只内置预注册 embodiment（GR-1·Franka 等）的 MLP。未注册的机器人直接部署会输出无意义结果（实测 0% 成功率）— 最低条件是**约 100 个演示 + 适配器训练**。fold·pour·stack 等常见动作已在预训练中，只调 MLP 即可；焊接等没有的动作则要打开 DiT。
 
 **AWS 映射**: LoRA 用 **EC2 G6e(L40S)·G7e(RTX PRO 6000)** 单/少数 GPU 即可。全量微调·多 embodiment 则用 **P6-B200 / HyperPod 多节点**（下方第 3 项）。
 
@@ -121,6 +131,8 @@ graph TD
 - **[SageMaker HyperPod](https://aws.amazon.com/sagemaker/hyperpod/)** —— 支持 Slurm + **EKS** + Training Jobs。**Checkpointless training**（故障时数分钟内自动恢复，无需人工介入）、**Elastic training**（按可用量·优先级自动伸缩，自动检查点/恢复）。**2026-04 新增 G7e + r5d.16xlarge 支持**。提供 HyperPod CLI/SDK。
 - **EC2 GPU 阶梯** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 最多 72 Blackwell/NVLink 域, 用 [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/) 获取)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 已公布。⚠️ **没有用 Trainium 训练 VLA/机器人的公开案例** —— 整个 VLA 工具链都是 CUDA/NVIDIA。Trainium-for-VLA 未经验证。
+- **首尔区域的最新一代** `[1]`: **[P6-B300](https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-ec2-p6-b300/)**（8×NVIDIA Blackwell Ultra，每实例 2.1TB HBM3e·6.4Tbps EFA）**2026-08-20 首尔区域 GA** —— 韩国团队无需等待海外区域，即可在数据驻留范围内使用最新加速器。以 Capacity Blocks/Savings Plans/On-Demand 消费。范围要诚实说明: 它是通用 FM 训练平台，Physical AI（仿真·VLA 训练）只是其上的一种工作负载。
+- **按规模推荐的模式（以 3B 级 VLA 为准，GR00T N1.6/N1.7 验证）** `[2]`: ① 演示 <200 个·LoRA（2~4 小时）→ **AWS Batch + EC2 Spot(g6e)** —— 短且便宜，推荐默认值。② 演示 ~500 个·全量微调（8~24 小时）→ **SageMaker Training Job** —— 自动检查点/恢复。③ 演示 500 个以上·多节点（数天）→ **HyperPod** —— 节点自动恢复 + EFA。为防 GPU 容量不足，提前在作业定义里写好**实例 fallback 顺序**（例: g6e → g6 → g5），即可不等待直接切换到下一类型。
 
 **HyperPod 实际提供的能力** `[1]`（docs 2026-07 核实）:
 
@@ -187,6 +199,9 @@ graph TD
 - **[Figure Helix](https://www.figure.ai/news/helix)**: System 2 = 板载互联网预训练 VLM @ 7~9Hz（场景/语言），System 1 = 反应式 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 延迟，System 2 = LLM 规划器（任务分解）。
 - **通用模式**: 重型 VLM 以 5~10Hz 重新规划，轻量 flow-matching/diffusion "action expert" 以最新计划为条件，以 50~200Hz 发出动作。用 **action chunking**（GR00T=40 timestep horizon）预测未来动作块。
+- **整个领域的双轴分类法** `[1]`: 在被模型名字淹没之前 —— 大多数 VLA 都落在 (1) **网络结构**: Monolithic（单网络端到端）vs Hierarchical（规划者+执行者分离），(2) **思考系统**: Single-system vs Dual-system（顺序 cascade / 并行 parallel）的 2×2 之上。GR00T 的"两个大脑"是 hierarchical × dual-system(parallel) 那一格的具体案例 —— System 1/2 不是某个模型的专属说法，而是整个领域的一级分类轴。
+- **有效控制频率 = 推理 Hz × chunk 大小**: 即使 π0.5 在 Jetson 上只有 ~10Hz 推理，只要一次输出 10 步的 chunk，机器人就能以 ~100Hz 运动（执行 chunk 期间预计算下一个 chunk）。这道算术是解开"大模型 = 慢机器人"误解的钥匙。
+- ⚠️ **警惕"VLA 已死（将被 WAM[^wam] 取代）"的标题党** `[1]/[4]`: WAM（World Action Model）以 video-diffusion 为骨干**同时预测**未来视频+动作 —— 得益于网络视频的物理先验，未学过动作的 zero-shot 是强项（[DreamZero, arXiv:2602.15922](https://arxiv.org/abs/2602.15922): 仅约 500 小时机器人数据就把 unseen task 从 16% 提到 40% 档），但因 14B 反复 denoising，closed-loop 仅 **~7Hz，是最慢的**。与"VLAs are dead"主题演讲同期，NVIDIA 自己发布了 GR00T N1.7（VLA）；独立比较中只要数据多样性充足，VLA（π0.5）与 WAM 表现相当 —— 真实图景是 **"VLA + World Model + RL 后训练的收敛"**。不要在客户对话中照搬标题（成熟度跟踪见 [radar 的 World-action models](radar.md)）。
 - ⚠️ **成熟度要诚实**: 这个*模式本身*已是标准，但全身人形的全栈大多处于试点/演示阶段。
 
 **AWS 映射**: 将 **System 2（规划器）放在云/Bedrock AgentCore，System 1（实时控制）放在边缘（Jetson）** 是自然的分工（→ [pillar-5](pillar-5.md)、[pillar-4](pillar-4.md)、[decisions](decisions.md)）。
@@ -228,6 +243,58 @@ graph TD
 
 ---
 
+## 6. 训练运营原则 — checkpoint 谱系与 IL 的天花板  🟢 GA（稳定原理）
+
+**L0 TL;DR**: 有两个陷阱反复摧毁客户的训练项目。(1) **checkpoint 是一棵树** —— specialize 是单向的，丢了 generalist 检查点就无法回头。(2) **loss 再低成功率也不涨** —— 这是模仿学习的 covariate shift[^covshift] 所致，评估只能用 **rollout 成功率**而非 loss。
+
+**客户需求/问题**: "微调越做越丢失之前的能力" / "training loss 一直在降，实际成功率却纹丝不动"。
+
+**解决方案概览** `[1]/[2]`:
+
+- **checkpoint tree 管理**: 权重按 generalist → embodiment 特化 → 任务特化（10~150 个演示）→ 实机部署校正的顺序分叉（spin-off）生长。**链是单向的** —— 一旦 specialize 的权重几乎无法还原回 generalist（catastrophic forgetting[^forget]）。若某个分支对特定动作过拟合而崩坏，不要继续硬推，而是**回到上一个（更 general 的）检查点重新分叉**。
+- **"把客户 A 的权重用到客户 B"这个问题的真实答案**: 不是 A 的 specialist 权重，而是**从其上层 generalist 向 B 重新微调**。如果当初用 LoRA 分叉，摘下适配器即可回到 generalist —— 这是从一开始就推荐 LoRA 分叉的运营理由。
+- **"open weights"的陷阱**: 先确认公开检查点处于谱系哪个阶段 —— 只放出 Stage 3 specialist 的模型在那台机器人·那个环境之外用不了（无法逆向还原）。OpenVLA·GR00T·π0/π0.5 公开 generalist（foundation）检查点的原因正在于此。
+- **IL 的天花板 = covariate shift**: BC 只学"专家所在状态 → 专家动作"的配对，执行中一点小误差就会进入演示分布之外（OOD）的状态，而数据里没有恢复方法，误差便像雪球一样累积 —— 最坏情况下随时间跨度 T 按 T² 累积（[Ross et al., DAgger, arXiv:1011.0686](https://arxiv.org/abs/1011.0686)）。**training loss 和 validation loss 都抓不到这个问题**（两者都在同一演示分布上测量）。
+- **处方**: 不是"更好的 val set"，而是**把策略实际访问的分布放进训练** —— DAgger[^dagger]（为策略走到的状态补充专家标签）→ on-policy 数据 → RFT（下面第 7 节）。诊断信号: loss ≈ 0 而成功率平坦 → 不是该继续训练，而是该换方法。
+
+**AWS 映射**: checkpoint 谱系 = S3 版本控制 + 按阶段单独保存（HyperPod 自动检查点见第 3 节）。评估 rollout = 仿真扫描（[pillar-3](pillar-3.md)，评估的局限见 [pillar-4 策略评估](pillar-4.md)）。
+
+**决策标准**: generalist 检查点在任何情况下都要单独保存（禁止覆盖）。以 loss 为评估指标的训练合同·里程碑属于需要重新谈判的对象。
+
+**客户案例**: 案例待定（原理本身有公开论文依据）。
+
+**➡️ 后续行动**: 审阅客户训练管道时先问两个问题 —— **"generalist 检查点存在哪里" + "评估用 loss 还是 rollout"**。这两点不稳，其余讨论都没有意义。
+
+**🔗 相关资产**: [pillar-4 策略评估](pillar-4.md) · [pillar-1 遥操作](pillar-1.md)
+
+---
+
+## 7. RL 微调 (RFT) — PPO vs GRPO 与奖励设计  🟢 GA（算法）/ 🔵 奖励自动化 Research
+
+**L0 TL;DR**: 只靠 SFT（模仿）连示范中的失误也会一并学会。用环境奖励收尾的阶段是 RFT[^rft] —— 算法上 **PPO[^ppo] 是长期标准，无 critic 的 GRPO[^grpo] 正在迅速崛起**（模型越大算力收益越大）。真正的胜负点不是算法而是**奖励设计** —— "simulator fidelity is reward fidelity"。
+
+**客户需求/问题**: "用 BC 做到了 80%，再上不去了。要用 RL 收尾该怎么用？"
+
+**解决方案概览** `[1]`:
+
+- **PPO**（[Schulman et al., arXiv:1707.06347](https://arxiv.org/abs/1707.06347)）—— "只在上一个策略附近小步前进"。RL 中策略自己生成自己的训练数据，一次大更新搞坏了策略就会收集更差的数据陷入恶性循环 —— clip 正是用来阻止这种突变。机器人 RL 的事实标准。
+- **GRPO**（[DeepSeekMath, arXiv:2402.03300](https://arxiv.org/abs/2402.03300)）—— 去掉 critic（value network），在同一状态跑 N 个 rollout，用**组平均 return 作为 baseline**。省掉了与策略网络同量级的 critic 计算·内存，对 VLA 级大模型有利。但组 baseline 方差可能偏大，需要把 N 取足够大。
+- **奖励设计才是胜负点**: sparse（只在成功时 +1）在首次成功前根本没有学习信号；dense（基于距离的 shaping）则有设计者偏见与 reward hacking[^rhack]（只刷分不干活）的风险。奖励必须测量**想达成的结果本身**，而仿真器对摩擦·接触·延迟的还原度就是奖励信号的还原度（→ [pillar-3](pillar-3.md)）。
+- **经过验证的实战配方 — Teacher-Student 管道** `[1]`: ① Teacher = **PPO + privileged state**（GT pose·contact 等特权信息，Isaac Lab 大规模并行）→ ② Student = **DAgger + BC 蒸馏**（只输入可部署的 RGB+proprioception）→ ③ 用 **GRPO + binary success reward** 引导提升。[VIRAL(arXiv:2511.15200)](https://arxiv.org/abs/2511.15200)·[DoorMan(arXiv:2512.01061)](https://arxiv.org/abs/2512.01061)（均为 CVPR 2026）实证 —— DoorMan 以 83% SR 超过专家遥操作基线（80%）。
+- 🔵 **奖励自动化（Research）**: 没法为每个任务手写 dense 奖励 —— 用 VLM 自动评分每步进度的 [GVL(arXiv:2411.04549)](https://arxiv.org/abs/2411.04549)·[TopReward(arXiv:2602.19313)](https://arxiv.org/abs/2602.19313)·[VLLR(arXiv:2604.00055)](https://arxiv.org/abs/2604.00055) 很活跃，但 2026 年"可商用 + 低延迟 + open-weight"三者兼备的 progress model 仍然稀少。若成功判定客观（到达·装配完成），用确定性 verifier 直接给奖励的 RLVR 是安全起点。
+
+**AWS 映射**: Teacher 大规模并行 RL = Isaac Lab on EC2 G6e/AWS Batch（→ [pillar-3](pillar-3.md)），蒸馏·GRPO 引导 = 直接复用第 3 节训练栈。[sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) 以 IaC 提供 IL/RL 两条路径（见下方相关资产）。
+
+**决策标准**: 能拿到数百个干净示范 → 用 IL warm-start。没有示范 + 有好的仿真器·奖励 → RL。**实战正解大多是 hybrid（IL → RFT）**。大型 VLA 中 critic 内存成瓶颈 → GRPO。
+
+**客户案例**: 案例待定（VIRAL/DoorMan 为论文实证 —— 非客户部署案例）。
+
+**➡️ 后续行动**: 对 BC 性能停滞的客户提议 **Teacher-Student（PPO→蒸馏→GRPO）三阶段配方** —— 全部阶段都在仿真内完成，可直接复用既有 AWS Batch/Isaac Lab 栈。
+
+**🔗 相关资产**: [pillar-3 并行 RL](pillar-3.md) · [sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) —— aws-samples，MIT-0。只需给出意图（IL 演示 or RL 任务）即可自动决定 Batch+Spot / SageMaker Training / HyperPod 三种模式的单命令微调平台。支持 GR00T·π0.5·ACT·SmolVLA + Isaac Lab RL 路径，含 MCP 服务器（7 tools），可在智能体会话中完成 submit·监控
+
+---
+
 ## 本支柱的诚实现实（SA 必读）
 
 - **GR00T 许可证是目前引用的最大风险。** N1.5 明确为非商业。N1.6/N1.7 允许商用仅来自二手来源 → **客户做商用判断前直接查看实时模型卡**。搞错就是法务风险。
@@ -236,7 +303,7 @@ graph TD
 - **Trainium-for-VLA 未经验证。** 整个 VLA 工具链是 CUDA。提议时明示风险。
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 高（模型版本·许可证·GPU 需求·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证_
+_owner: Youngjin · updated: 2026-09 · volatility: 高（模型版本·许可证·GPU 需求·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证_
 
 <!-- 용어 각주 -->
 
@@ -251,3 +318,12 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（模型版本·许可�
 [^slurm]: **Slurm** — HPC 集群的标准开源作业调度器。可在数千节点上排队·分配批处理作业，是研究室·超算出身团队最熟悉的工作流。
 [^efa]: **EFA（Elastic Fabric Adapter）** — 面向 EC2 的低延迟·绕过操作系统的网络接口。是消除多节点分布式训练中 GPU 间梯度同步（All-Reduce）瓶颈的关键。
 [^osmo]: **OSMO** — NVIDIA 面向机器人工作负载的工作流编排平台。将合成数据生成、仿真、模型训练等多阶段作业调度到本地与云端的多个集群（如 Kubernetes）。
+[^dit]: **DiT (Diffusion Transformer)** — 用 Transformer 结构构建的扩散（diffusion）生成器。在最新 VLA 中作为从噪声生成机器人关节命令（action chunk）的"动作引擎"部件使用。
+[^wam]: **WAM (World Action Model)** — 以视频生成模型为骨干、同时预测未来视频与机器人动作的模型。得益于从网络视频学到的物理知识，对未学过的动作较强，但因反复 denoising 控制频率偏低。注意不要与 WFM（只生成视频、不输出动作）混淆。
+[^covshift]: **covariate shift（协变量偏移）** — 训练时见过的状态分布与执行时实际遇到的状态分布错位的现象。模仿学习策略因小误差漂移到演示中没有的状态时，由于从未学过如何恢复，误差会不断累积。（正确写法是"covariate"而非"covariant"。）
+[^forget]: **catastrophic forgetting（灾难性遗忘）** — 神经网络在学习新任务时覆盖并丢失之前所学能力的现象。这是无法从 specialize 的检查点还原 generalist 的原因。
+[^dagger]: **DAgger (Dataset Aggregation)** — 实际运行已训练的策略，为策略访问过的状态额外收集专家正确标签并重新训练的模仿学习增强技术。是应对 covariate shift 的经典处方。
+[^rft]: **RFT (Reinforcement Fine-Tuning，强化微调)** — 用环境奖励信号进一步改进模仿学习（SFT）所得策略的收尾阶段。通过试错找到示范中没有的更优动作。
+[^ppo]: **PPO (Proximal Policy Optimization)** — 应用最广的强化学习算法。用 clip 限制更新幅度使其"不要离上一个策略太远"，从而稳定收敛 — 机器人 RL 的事实默认值。
+[^grpo]: **GRPO (Group Relative Policy Optimization)** — 不用单独的价值网络（critic），在同一状态跑多个 rollout、以组平均作为基线（baseline）的强化学习算法。省去 critic 训练成本，在大模型（LLM·VLA）中迅速崛起。
+[^rhack]: **reward hacking** — 奖励设计不当时，智能体不追求预期目标而是钻分数空子的现象（例: 对"前进距离"给奖励，就原地打转欺骗传感器）。奖励必须测量想达成的结果本身。

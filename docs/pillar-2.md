@@ -1,6 +1,6 @@
 # Pillar 2 — 모델 학습 (Model Training · VLA)
 
-_최종 갱신: 2026-08 · owner: Youngjin · volatility: 높음(모델 버전·라이선스·인스턴스가 자주 바뀜)_
+_최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음(모델 버전·라이선스·인스턴스가 자주 바뀜)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -81,6 +81,16 @@ graph TD
 - **openpi (π0/π0.5)**: 추론 >8GB, LoRA >22.5GB(RTX 4090), **풀 파인튜닝 >70GB(A100/H100)**. 공식 LoRA/full 레시피, 2025-09 PyTorch 지원 추가. 데이터 1~20시간이면 다수 태스크 충분.
 - **GR00T (N1.5/N1.7)**: 파인튜닝 40GB+ GPU(H100/L40 권장), 추론 16GB+. NVIDIA 공식 post-training 레시피.
 - **데이터량 감(感)**: LoRA 단일 태스크 100~500 데모 → 80%+ 성공. 소량·고품질 실데모가 핵심(→ [pillar-1 텔레옵](pillar-1.md)).
+- **무엇을 unfreeze하나 — 부품별 학습 범위가 곧 비용** `[1]/[2]`: 최신 VLA는 (1) 이해하는 VLM + (2) 행동을 생성하는 DiT[^dit] + (3) 로봇 몸에 맞추는 어댑터 MLP의 조립이다([GR00T N1 구조, arXiv:2503.14734](https://arxiv.org/abs/2503.14734)). "무엇을 바꾸려는가"가 어느 부품을 열지(unfreeze)와 비용을 결정한다:
+
+| 바꾸려는 것 | MLP(어댑터) | DiT(액션) | VLM(이해) | 비용 감각 `[2]` |
+|---|---|---|---|---|
+| 기존 로봇 + 기존 동작 | 유지 | 유지 | 유지 | 학습 불필요(바로 사용) |
+| **새 로봇**, 기존 동작 | **학습** | freeze | freeze | 텔레옵 데모 50~200개, 2~6시간, g5.2xlarge ~$10 |
+| 새 동작(사전학습에 없던 verb) | 학습 | **학습** | freeze | 반나절 |
+| 특수 카메라 모달리티(적외선 등) | 학습 | 학습 | LoRA | 수 일, 가장 비쌈 |
+
+- ⚠️ **새 로봇 = 어댑터 필수** `[2]`: GR00T는 사전 등록된 embodiment(GR-1·Franka 등)의 MLP만 내장한다. 미등록 로봇에 그대로 올리면 무의미한 출력이 나온다(실측 0% 성공) — 최소 조건은 **데모 ~100개 + 어댑터 학습**. fold·pour·stack 같은 흔한 동작은 사전학습에 있어 MLP만으로 되지만, 용접처럼 없던 동작은 DiT까지 열어야 한다.
 
 **AWS 매핑**: LoRA면 **EC2 G6e(L40S)·G7e(RTX PRO 6000)** 단일/소수 GPU로 충분. 풀 파인튜닝·멀티 embodiment면 **P6-B200 / HyperPod 멀티노드**(아래 3번).
 
@@ -118,6 +128,8 @@ graph TD
 - **[SageMaker HyperPod](https://aws.amazon.com/sagemaker/hyperpod/)** — Slurm + **EKS** + Training Jobs 지원. **Checkpointless training**(장애 시 수분 내 자동복구, 수동개입 없음), **Elastic training**(가용량·우선순위 따라 자동 스케일, 자동 체크포인트/재개). **2026-04 G7e + r5d.16xlarge 지원 추가**. HyperPod CLI/SDK 제공.
 - **EC2 GPU 사다리** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 최대 72 Blackwell/NVLink 도메인, [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/)로 확보).
 - **Trainium**: Trn2 GA(2024-12), **Trn3 UltraServers GA(2025-12 re:Invent)**, Trn4 발표. ⚠️ **VLA/로보틱스를 Trainium으로 학습한 공개 사례 없음** — 전체 VLA 툴체인이 CUDA/NVIDIA. Trainium-for-VLA는 미검증.
+- **서울 리전 최신 세대** `[1]`: **[P6-B300](https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-ec2-p6-b300/)**(8×NVIDIA Blackwell Ultra, 인스턴스당 2.1TB HBM3e·6.4Tbps EFA)이 **2026-08-20 서울 리전 GA** — 한국 팀이 최신 accelerator를 해외 리전 대기 없이 데이터 레지던시 안에서 쓴다. Capacity Blocks/Savings Plans/On-Demand 소비. 범위는 정직하게: 범용 FM 학습 플랫폼이고 Physical AI(시뮬·VLA 학습)는 그 위의 한 워크로드다.
+- **규모별 권장 패턴 (3B급 VLA 기준, GR00T N1.6/N1.7 검증)** `[2]`: ① 데모 <200개·LoRA(2~4시간) → **AWS Batch + EC2 Spot(g6e)** — 짧고 저렴, 권장 기본값. ② 데모 ~500개·풀 파인튜닝(8~24시간) → **SageMaker Training Job** — 자동 체크포인트/재개. ③ 데모 500개+·멀티노드(며칠) → **HyperPod** — 노드 자동복구 + EFA. GPU 용량 부족에 대비해 **인스턴스 fallback 순서**(예: g6e → g6 → g5)를 잡 정의에 미리 넣어두면 대기 없이 다음 유형으로 넘어간다.
 
 **HyperPod가 실제로 해주는 것** `[1]` (docs 2026-07 확인):
 
@@ -185,6 +197,9 @@ graph TD
 - **[Figure Helix](https://www.figure.ai/news/helix)**: System 2 = 온보드 인터넷 사전학습 VLM @ 7~9Hz(장면/언어), System 1 = 반응형 visuomotor @ 200Hz. `[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 지연, System 2 = LLM 플래너(태스크 분해).
 - **일반 패턴**: 무거운 VLM이 5~10Hz로 재계획, 경량 flow-matching/diffusion "action expert"가 최신 계획 조건으로 50~200Hz 액션 방출. **action chunking**(GR00T=40 timestep horizon)으로 미래 액션 청크 예측.
+- **필드 전체의 2축 taxonomy** `[1]`: 모델 이름에 파묻히기 전에 — 대부분의 VLA는 (1) **망 구조**: Monolithic(단일망 end-to-end) vs Hierarchical(계획자+실행자 분리), (2) **사고 시스템**: Single-system vs Dual-system(순차 cascade / 병렬 parallel)의 2×2 위에 놓인다. GR00T의 "두 개의 뇌"는 hierarchical × dual-system(parallel) 칸의 구체 사례 — System 1/2는 특정 모델 얘기가 아니라 필드의 1차 분류축이다.
+- **실효 제어 주기 = 추론 Hz × chunk 크기**: π0.5가 Jetson에서 ~10Hz로 추론해도 한 번에 10스텝 chunk를 뱉으면 로봇은 ~100Hz로 움직인다(chunk 실행 중 다음 chunk 선계산). 이 산수가 "큰 모델 = 느린 로봇" 오해를 푸는 열쇠.
+- ⚠️ **"VLA는 죽었다(WAM[^wam]이 대체)" 헤드라인 주의** `[1]/[4]`: WAM(World Action Model)은 video-diffusion 백본으로 미래 영상+행동을 **동시 예측**한다 — 웹 비디오의 물리 prior 덕에 미학습 동작 zero-shot이 강점([DreamZero, arXiv:2602.15922](https://arxiv.org/abs/2602.15922): 로봇 데이터 ~500시간만으로 unseen task 16%→40%대)이나, 14B 반복 denoising 탓에 closed-loop **~7Hz로 가장 느리다**. "VLAs are dead" 키노트와 같은 시기에 NVIDIA 본체가 GR00T N1.7(VLA)을 출시했고, 독립 비교에선 데이터 다양성이 충분하면 VLA(π0.5)가 WAM과 대등 — 실제 그림은 **"VLA + World Model + RL 후학습의 수렴"**이다. 고객 대화에서 헤드라인을 그대로 옮기지 말 것(성숙도 추적은 [radar의 World-action models](radar.md)).
 - ⚠️ **성숙도 정직**: 이 *패턴 자체*는 표준이지만, 전신 휴머노이드 풀스택은 대부분 파일럿/데모 단계.
 
 **AWS 매핑**: **System 2(플래너)는 클라우드/Bedrock AgentCore에, System 1(실시간 제어)은 엣지(Jetson)에** 두는 것이 자연스러운 분할(→ [pillar-5](pillar-5.md), [pillar-4](pillar-4.md), [decisions](decisions.md)).
@@ -226,6 +241,58 @@ graph TD
 
 ---
 
+## 6. 학습 운영 원리 — 체크포인트 계보와 IL의 천장  🟢 GA (안정 원리)
+
+**L0 TL;DR**: 고객 학습 프로젝트를 반복적으로 무너뜨리는 함정 둘. (1) **체크포인트는 나무다** — specialize는 단방향이라 generalist 체크포인트를 잃으면 되돌릴 수 없다. (2) **loss가 낮아도 성공률은 안 오른다** — 모방학습의 covariate shift[^covshift] 때문이며, 평가는 loss가 아니라 **rollout 성공률로만** 한다.
+
+**고객 니즈/문제**: "파인튜닝을 거듭할수록 이전 능력이 사라진다" / "training loss는 계속 내려가는데 실제 성공률이 안 움직인다".
+
+**솔루션 개요** `[1]/[2]`:
+
+- **체크포인트 tree 관리**: 가중치는 generalist → embodiment 특화 → task 특화(데모 10~150개) → 실배포 보정 순으로 가지를 치며(spin-off) 자란다. **chain은 단방향** — 한 번 specialize된 가중치에서 generalist 역복원은 사실상 불가(catastrophic forgetting[^forget]). 어떤 가지가 특정 동작에 과적합해 무너지면 그 가지를 더 밀지 말고 **이전(더 general한) 체크포인트로 되돌아가 재분기**한다.
+- **"고객 A의 가중치를 고객 B에 적용" 질문의 실제 답**: A의 specialist weight가 아니라 **그 위 generalist에서 B로 새로 파인튜닝**이다. LoRA로 분기해 뒀다면 어댑터만 떼어 generalist로 복귀할 수 있다 — 처음부터 LoRA 분기를 권하는 운영상 이유.
+- **"open weights"의 함정**: 공개 체크포인트가 계보의 어느 단계인지 먼저 확인 — Stage 3 specialist 하나만 풀린 모델은 그 로봇·환경 밖에서 못 쓴다(역복원 불가). OpenVLA·GR00T·π0/π0.5가 generalist(foundation) 체크포인트를 공개하는 이유가 이것.
+- **IL의 천장 = covariate shift**: BC는 "전문가가 있던 상태 → 전문가 행동" 쌍만 배우므로, 실행 중 작은 오차로 데모 분포 밖(OOD) 상태에 들어가면 회복 방법이 데이터에 없어 오차가 눈덩이처럼 누적된다 — 최악의 경우 시간 지평 T에 대해 T²로([Ross et al., DAgger, arXiv:1011.0686](https://arxiv.org/abs/1011.0686)). **training loss도 validation loss도 이 문제를 못 잡는다**(둘 다 같은 데모 분포에서 재기 때문).
+- **처방**: "더 좋은 val set"이 아니라 **정책이 실제 방문하는 분포를 학습에 넣는 것** — DAgger[^dagger](정책이 간 상태에 전문가 라벨 추가) → on-policy 데이터 → RFT(아래 7번). 진단 신호: loss ≈ 0인데 성공률 평탄 → 더 학습할 게 아니라 접근을 바꿀 때.
+
+**AWS 매핑**: 체크포인트 계보 = S3 버전닝 + 단계별 별도 보존(HyperPod 자동 체크포인트는 3번). 평가 rollout = 시뮬레이션 스윕([pillar-3](pillar-3.md), 평가의 한계는 [pillar-4 정책 평가](pillar-4.md)).
+
+**의사결정 기준**: generalist 체크포인트는 어떤 경우에도 별도 보존(덮어쓰기 금지). 평가 지표를 loss로 잡은 학습 계약·마일스톤은 재협상 대상.
+
+**고객 사례**: 사례 대기 (원리 자체는 공개 논문 근거).
+
+**➡️ 다음 액션**: 고객 학습 파이프라인 리뷰에서 **"generalist 체크포인트를 어디 보관하나" + "평가를 loss로 하나 rollout으로 하나"** 두 질문부터. 이 둘이 흔들리면 나머지 논의가 무의미하다.
+
+**🔗 관련 자산**: [pillar-4 정책 평가](pillar-4.md) · [pillar-1 텔레옵](pillar-1.md)
+
+---
+
+## 7. RL 파인튜닝 (RFT) — PPO vs GRPO와 보상 설계  🟢 GA (알고리즘) / 🔵 보상 자동화 Research
+
+**L0 TL;DR**: SFT(모방)만으로는 시연의 실수까지 배운다. 환경 보상으로 마무리하는 단계가 RFT[^rft] — 알고리즘은 **PPO[^ppo]가 오랜 표준, critic 없는 GRPO[^grpo]가 급부상**(대형 모델일수록 compute 이득). 진짜 승부처는 알고리즘이 아니라 **보상 설계**다 — "simulator fidelity is reward fidelity".
+
+**고객 니즈/문제**: "BC로 80%까지 왔는데 그 이상이 안 나온다. RL로 마무리하려면 뭘 어떻게 쓰나?"
+
+**솔루션 개요** `[1]`:
+
+- **PPO** ([Schulman et al., arXiv:1707.06347](https://arxiv.org/abs/1707.06347)) — "직전 정책 근처로만 조금씩". RL은 정책이 자기 학습 데이터를 스스로 만들므로, 한 번의 큰 업데이트로 망가지면 더 나쁜 데이터를 모아 악순환에 빠진다 — clip이 그 급변을 막는다. 로봇 RL 사실상 표준.
+- **GRPO** ([DeepSeekMath, arXiv:2402.03300](https://arxiv.org/abs/2402.03300)) — critic(value network)을 없애고, 같은 상태에서 N개 rollout을 돌려 **그룹 평균 return을 baseline**으로 쓴다. 정책망만큼 들던 critic의 연산·메모리가 사라져 VLA급 대형 모델에서 이득. 단 그룹 baseline은 분산이 클 수 있어 N을 충분히 키운다.
+- **보상 설계가 승부처**: sparse(성공 시만 +1)는 첫 성공 전까지 학습 신호 자체가 없고, dense(거리 기반 shaping)는 설계자 편견과 reward hacking[^rhack](점수만 올리고 목표는 안 함) 위험. 보상은 **달성하려는 결과 그 자체**를 재야 하며, 시뮬레이터가 마찰·접촉·지연을 얼마나 충실히 재현하느냐가 곧 보상 신호의 충실도다(→ [pillar-3](pillar-3.md)).
+- **검증된 실전 레시피 — Teacher-Student 파이프라인** `[1]`: ① Teacher = **PPO + privileged state**(GT pose·contact 등 특권 정보, Isaac Lab 대규모 병렬) → ② Student = **DAgger + BC 증류**(배포 가능한 RGB+proprioception 입력만) → ③ **GRPO + binary success reward**로 부트스트랩. [VIRAL(arXiv:2511.15200)](https://arxiv.org/abs/2511.15200)·[DoorMan(arXiv:2512.01061)](https://arxiv.org/abs/2512.01061)(둘 다 CVPR 2026) 실증 — DoorMan은 83% SR로 전문가 텔레옵 기준선(80%)을 상회.
+- 🔵 **보상 자동화(Research)**: 태스크마다 dense 보상을 손으로 못 짠다 — VLM으로 매 스텝 진행도를 자동 채점하는 [GVL(arXiv:2411.04549)](https://arxiv.org/abs/2411.04549)·[TopReward(arXiv:2602.19313)](https://arxiv.org/abs/2602.19313)·[VLLR(arXiv:2604.00055)](https://arxiv.org/abs/2604.00055)이 활발하나, 2026 기준 "상업 이용 가능 + 저지연 + open-weight"를 모두 만족하는 progress model은 드물다. 성공 판정이 객관적이면(도착·조립 완료) 결정론적 verifier로 직접 보상을 주는 RLVR이 안전한 출발점.
+
+**AWS 매핑**: Teacher 대규모 병렬 RL = Isaac Lab on EC2 G6e/AWS Batch(→ [pillar-3](pillar-3.md)), 증류·GRPO 부트스트랩 = 3번 학습 스택 그대로. [sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning)이 IL/RL 두 경로를 IaC로 제공(아래 관련 자산).
+
+**의사결정 기준**: 깨끗한 시연 수백 개 확보 가능 → IL로 warm-start. 시연 없음 + 좋은 시뮬레이터·보상 → RL. **실전 정답은 대개 hybrid(IL → RFT)**. 대형 VLA에서 critic 메모리가 병목 → GRPO.
+
+**고객 사례**: 사례 대기 (VIRAL/DoorMan은 논문 실증 — 고객 배포 사례 아님).
+
+**➡️ 다음 액션**: BC 성능 정체 고객에게 **Teacher-Student(PPO→증류→GRPO) 3단계 레시피**를 제안 — 전 단계가 시뮬레이션 안에서 완결되므로 기존 AWS Batch/Isaac Lab 스택을 그대로 재사용한다.
+
+**🔗 관련 자산**: [pillar-3 병렬 RL](pillar-3.md) · [sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) — aws-samples, MIT-0. 의도(IL 데모 or RL 태스크)만 주면 Batch+Spot / SageMaker Training / HyperPod 3패턴을 자동 결정하는 원-커맨드 파인튜닝 플랫폼. GR00T·π0.5·ACT·SmolVLA + Isaac Lab RL 경로, MCP 서버(7 tools)로 에이전트 세션에서 submit·모니터링까지
+
+---
+
 ## 이 필러의 정직한 현실 (SA 필독)
 
 - **GR00T 라이선스는 지금 인용 최대 위험.** N1.5는 명백히 비상업. N1.6/N1.7 상업 허용은 2차 출처뿐 → **고객 상용 판단 전 라이브 모델 카드 직접 확인**. 틀리면 법무 리스크.
@@ -234,7 +301,7 @@ graph TD
 - **Trainium-for-VLA는 미검증.** 전체 VLA 툴체인이 CUDA. 제안 시 리스크 명시.
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 높음 (모델 버전·라이선스·GPU 요구·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증_
+_owner: Youngjin · updated: 2026-09 · volatility: 높음 (모델 버전·라이선스·GPU 요구·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증_
 
 <!-- 용어 각주 -->
 
@@ -249,3 +316,12 @@ _owner: Youngjin · updated: 2026-08 · volatility: 높음 (모델 버전·라�
 [^slurm]: **Slurm** — HPC 클러스터의 표준 오픈소스 잡 스케줄러. 수천 노드에 배치 잡을 큐잉·할당하며, 연구실·슈퍼컴 출신 팀에게 가장 익숙한 워크플로우다.
 [^efa]: **EFA (Elastic Fabric Adapter)** — EC2용 저지연·OS 바이패스 네트워크 인터페이스. 멀티노드 분산 학습에서 GPU 간 그래디언트 동기화(All-Reduce) 병목을 줄이는 핵심이다.
 [^osmo]: **OSMO** — NVIDIA의 로보틱스 워크로드용 워크플로 오케스트레이션 플랫폼. 합성 데이터 생성·시뮬레이션·모델 학습 같은 멀티스테이지 잡을 온프레미스·클라우드의 여러 클러스터(Kubernetes 등)에 걸쳐 스케줄링한다.
+[^dit]: **DiT (Diffusion Transformer)** — Transformer 구조로 만든 확산(diffusion) 생성기. 최신 VLA에서 노이즈로부터 로봇 관절 명령(action chunk)을 생성하는 "행동 엔진" 부품으로 쓰인다.
+[^wam]: **WAM (World Action Model)** — 비디오 생성 모델을 백본으로 미래 영상과 로봇 행동을 동시에 예측하는 모델. 웹 비디오로 배운 물리 지식 덕에 안 배운 동작에 강하지만, 반복 denoising 탓에 제어 주파수가 낮다. WFM(영상만 생성, 행동 출력 없음)과 혼동 주의.
+[^covshift]: **covariate shift(공변량 이동)** — 학습 때 본 상태 분포와 실행 때 실제 마주치는 상태 분포가 어긋나는 현상. 모방학습 정책이 작은 오차로 데모에 없던 상태로 표류하면 회복 방법을 배운 적이 없어 오차가 누적된다. ("covariant"가 아니라 "covariate"가 맞는 표기.)
+[^forget]: **catastrophic forgetting(파국적 망각)** — 신경망이 새 작업을 학습하면서 이전에 배운 능력을 덮어써 잃어버리는 현상. specialize된 체크포인트에서 generalist를 복원할 수 없는 이유다.
+[^dagger]: **DAgger (Dataset Aggregation)** — 학습된 정책을 실제로 실행시켜 정책이 방문한 상태들에 전문가 정답 라벨을 추가로 모아 재학습하는 모방학습 보강 기법. covariate shift에 대한 고전적 처방이다.
+[^rft]: **RFT (Reinforcement Fine-Tuning, 강화 미세조정)** — 모방학습(SFT)으로 만든 정책을 환경 보상 신호로 추가 개선하는 마무리 단계. 시연에 없던 더 나은 행동을 시행착오로 찾아낸다.
+[^ppo]: **PPO (Proximal Policy Optimization)** — 가장 널리 쓰이는 강화학습 알고리즘. "직전 정책에서 너무 멀리 가지 않게" 업데이트 폭을 clip으로 제한해 안정적으로 수렴한다 — 로봇 RL의 사실상 기본값.
+[^grpo]: **GRPO (Group Relative Policy Optimization)** — 별도 가치망(critic) 없이, 같은 상태에서 여러 rollout을 돌려 그 그룹 평균을 기준선(baseline)으로 쓰는 강화학습 알고리즘. critic 학습 비용이 사라져 대형 모델(LLM·VLA)에서 급부상했다.
+[^rhack]: **reward hacking** — 보상을 잘못 설계하면 에이전트가 의도한 목표 대신 점수 자체를 파고드는 현상(예: "전진 거리" 보상에 제자리 회전으로 센서 속이기). 보상은 달성하려는 결과 그 자체를 재야 한다.

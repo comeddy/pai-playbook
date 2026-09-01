@@ -1,10 +1,10 @@
 ---
-ko_hash: 7f96f7f33bffa4fab8ca65c8cb5dd1084f0ed4d3
+ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
 
-_最終更新: 2026-08 · owner: Youngjin · volatility: 高（AgentCore の機能・リージョンが頻繁に拡張）_
+_最終更新: 2026-09 · owner: Youngjin · volatility: 高（AgentCore の機能・リージョンが頻繁に拡張）_
 _個別項目は別途表記がない限りページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターを追加します。_
 [← index へ](index.md)
 
@@ -168,7 +168,7 @@ graph TD
 
 **➡️ 次のアクション**: オフライン顧客に **AWS Greengrass エージェント Guidance + サンプルコードを出発点として** 提示します（GA 製品ではないことを正直に）。オン/オフラインのハイブリッド（エッジ SLM ↔ クラウド AgentCore）を設計します。
 
-**🔗 関連アセット**: [pillar-4 エッジデプロイ](pillar-4.md) · [pillar-1](pillar-1.md)
+**🔗 関連アセット**: [pillar-4 エッジデプロイ](pillar-4.md) · [pillar-1](pillar-1.md) · [MCP+MQTT on AWS IoT Core パターン](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/) — 公式ブログ。ロボット・エッジ機器を MCP ツールのように扱う Physical AI エージェントを IoT Core(MQTT) 上に編む実戦パターン — エッジ運用(P4)と多数機器の協調(P5)をつなぐ現行の標準経路
 
 ---
 
@@ -203,7 +203,7 @@ graph TD
 
 **意思決定基準**: 倉庫/AMR フリート協調 → 検証済み領域（DeepFleet 式アプローチを参照）。ヒューマノイドエージェントフリート → まだ初期。開発ワークロード → OSMO(NVIDIA) または AWS Batch/Step Functions。
 
-**顧客事例**（⚠️ 韓国は初期/デモ/発表）: **Lotte Global Logistics×CoEvolution**(30%、単一出典)、**LG CNS** 倉庫デモ（ヒューマノイド+ロボット犬+モバイル）、**Naver** AI Agent Platform 2026 下半期予定（NVIDIA ブループリント）。
+**顧客事例**（⚠️ 韓国は初期/デモ/発表）: **Lotte Global Logistics×CoEvolution**(30%、単一出典)、**LG CNS** 倉庫デモ（ヒューマノイド+ロボット犬+モバイル）、**Naver** AI Agent Platform 2026 下半期予定（NVIDIA ブループリント）。海外の本番事例: **Certis**（セキュリティサービス）— [自律パトロールロボットを AWS 上でデプロイ・運用](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/)した公式顧客事例 `[1]` — フリートを実際の現場で動かすエッジ+協調の観点での希少な公開リファレンスです。
 
 **➡️ 次のアクション**: フリート顧客に **「協調ロジックは AgentCore、接続は IoT、学習は SageMaker」** の 3 階層として整理します。DeepFleet を LLM エージェントと誤解しないよう正確に説明します。
 
@@ -235,6 +235,31 @@ graph TD
 
 ---
 
+## 6. 物理世界のエージェント標準 — Anthropic MHS & AWS Strands Robots  🟡 Research Preview
+
+**L0 TL;DR**: 2026-08-27、Anthropic が **[Model Hardware Standard(MHS)](https://www.anthropic.com/news/model-hardware-standard-research-preview)** の research preview を公開 — AI エージェントが物理デバイス（顕微鏡・liquid handler・ロボットアーム）を **標準化されたドライバー（read/write primitive）** で操作し、複数デバイスを並列オーケストレーションできるようにする共有規格です。MCP がデータ・ツールに対して果たしたことのハードウェア版。**AWS は Strands Robots で MHS をサポート**（preview 参加者向けの private pre-release）、**Doosan Robotics（韓国）がローンチパートナー**。⚠️ research preview — 顧客への本番提案は禁止、方向性の指標としてのみ。
+
+**顧客ニーズ/課題**: 「デバイスごとにカスタム統合（数週間~数か月）を繰り返している。エージェント-ハードウェア連携に標準はないのか？」
+
+**ソリューション概要** `[1]/[3]`:
+
+- **動作方式**: デバイスを read（例: get temperature）/write（set temperature）の primitive 集合として公開する **標準ドライバー** + 自然言語タグから生成される reference file（そのデバイスの測定・調整可能な項目と **強制される安全限界（safety limits）** を記載）。エージェントは 3 つのメカニズム（MCP・CLI・code files/API）でデバイスを制御し、手順を組み、結果を観測してリアルタイムでパラメータを調整します。model-agnostic — 統合期間が数週間~数か月から数時間~数分に縮むというのが核心の主張です。
+- **AWS の立ち位置**: Anthropic の発表文が "AWS will support MHS through **Strands Robots**, the library for connecting AI agents to physical devices" と明記。公開されている [strands-labs/robots](https://github.com/strands-labs/robots)（Apache-2.0 — Strands Agents + GR00T VLA + LeRobot 統合のロボット制御ライブラリ）につながりますが、⚠️ **公開パッケージ自体は MHS に言及していません** — MHS 対応ビルドは別の private pre-release です。
+- **韓国との関連性** `[3]`: Doosan Robotics がローンチパートナーとして、ロボットアームでの自動品質検査（QA）・複数ロボットの協調に MHS をテスト中（Universal Robots・Tecan・QIAGEN などとともに）。
+- **正直な限界**: LLM は物理世界をテキスト・画像で学ぶため、**空間・物理の推論には専門家の監督が依然として必要** — Anthropic 自身、Genentech の研究者が「サンプルの foaming はソフトウェアのバグではなく物理的な失敗」であることを Claude に教える必要があった例を挙げています。オープンソース化が予定されています。
+
+**AWS マッピング**: AgentCore（1 番）がエージェントランタイム・Policy ゲートを、MHS/Strands Robots がデバイス接続標準を担う絵 — 5 番の多層防御の「ツールゲート」の下に **「デバイスドライバー + safety limits」** の層がもう一つ生まれる形です。
+
+**意思決定基準**: 今日の設計に入れる段階ではありません（research preview）。ただしデバイス統合のバックログが大きい顧客（ラボ自動化・多品種セル）には **ウォッチリスト第一候補** として案内。
+
+**顧客事例**: Doosan Robotics（ローンチパートナー、テスト段階）`[3]`。
+
+**➡️ 次のアクション**: MCP をすでに使っている顧客に **「MCP はデータ・ツール、MHS はハードウェア」** のフレームで紹介し、公開されたら Strands Robots 経由の検証 PoC を計画します。それまでの現行の代替は [MCP+MQTT on IoT Core パターン](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/)（3 番の関連アセット）です。
+
+**🔗 関連アセット**: [strands-labs/robots](https://github.com/strands-labs/robots) · [pillar-4 エッジ](pillar-4.md)
+
+---
+
 ## このピラーの正直な現実（SA 必読）
 
 - **AgentCore はソウルリージョン完全対応**（Policy·Evaluations を含む）。「ソウル非対応」は GA 初期の話 — 現在は誤り。データレジデンシーを安心させてください。
@@ -245,7 +270,7 @@ graph TD
 - **Lotte 30% など韓国数値は単一出典** — ハード引用の前に要再確認。
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 高（AgentCore の機能・リージョンは折りたたみブロックで管理）· sources: [1] 公式, [3] ベンダー/press, [4] 研究/コミュニティ_
+_owner: Youngjin · updated: 2026-09 · volatility: 高（AgentCore の機能・リージョンは折りたたみブロックで管理）· sources: [1] 公式, [3] ベンダー/press, [4] 研究/コミュニティ_
 
 <!-- 용어 각주 -->
 

@@ -1,9 +1,9 @@
 ---
-ko_hash: 7f96f7f33bffa4fab8ca65c8cb5dd1084f0ed4d3
+ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
 ---
 # Pillar 5 — Agentic Orchestration
 
-_Last updated: 2026-08 · owner: Youngjin · volatility: high (AgentCore features/regions expand often)_
+_Last updated: 2026-09 · owner: Youngjin · volatility: high (AgentCore features/regions expand often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -167,7 +167,7 @@ graph TD
 
 **➡️ Next action**: for offline customers, **present the AWS Greengrass agent Guidance + sample code as a starting point** (honestly, not a GA product). Design an on/offline hybrid (edge SLM ↔ cloud AgentCore).
 
-**🔗 Related assets**: [pillar-4 edge deployment](pillar-4.md) · [pillar-1](pillar-1.md)
+**🔗 Related assets**: [pillar-4 edge deployment](pillar-4.md) · [pillar-1](pillar-1.md) · [MCP+MQTT on AWS IoT Core pattern](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/) — official blog. A practical pattern weaving Physical AI agents that treat robots/edge devices like MCP tools on top of IoT Core (MQTT) — the current standard path linking edge operations (P4) and multi-device coordination (P5)
 
 ---
 
@@ -202,7 +202,7 @@ graph TD
 
 **Decision criteria**: warehouse/AMR fleet coordination → a validated area (reference the DeepFleet-style approach). Humanoid agent fleet → still early. Development workload → OSMO (NVIDIA) or AWS Batch/Step Functions.
 
-**Customer case** (⚠️ Korean cases are early/demo/announced): **Lotte Global Logistics×CoEvolution** (30%, single source), **LG CNS** warehouse demo (humanoid + robot dog + mobile), **Naver** AI Agent Platform planned H2 2026 (NVIDIA blueprint).
+**Customer case** (⚠️ Korean cases are early/demo/announced): **Lotte Global Logistics×CoEvolution** (30%, single source), **LG CNS** warehouse demo (humanoid + robot dog + mobile), **Naver** AI Agent Platform planned H2 2026 (NVIDIA blueprint). Overseas production case: **Certis** (security services) — an official customer case that [deploys and operates autonomous patrol robots on AWS](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/) `[1]` — a rare public reference from the edge+coordination perspective of running a fleet in the field.
 
 **➡️ Next action**: for fleet customers, organize into 3 layers — **"orchestration logic on AgentCore, connectivity on IoT, training on SageMaker."** Explain precisely so DeepFleet is not mistaken for an LLM agent.
 
@@ -234,6 +234,31 @@ graph TD
 
 ---
 
+## 6. Agent standards for the physical world — Anthropic MHS & AWS Strands Robots  🟡 Research Preview
+
+**L0 TL;DR**: On 2026-08-27 Anthropic opened the research preview of the **[Model Hardware Standard (MHS)](https://www.anthropic.com/news/model-hardware-standard-research-preview)** — a shared specification that lets AI agents operate physical devices (microscopes, liquid handlers, robot arms) through a **standardized driver (read/write primitives)** and orchestrate many devices in parallel. The hardware counterpart to what MCP did for data and tools. **AWS supports MHS through Strands Robots** (a private pre-release for preview participants), and **Doosan Robotics (Korea) is a launch partner**. ⚠️ Research preview — do not propose for customer production; directional indicator only.
+
+**Customer need/problem**: "We keep repeating bespoke integration (weeks~months) per device. Is there no standard for agent-hardware connection?"
+
+**Solution overview** `[1]/[3]`:
+
+- **How it works**: a **standard driver** exposing each device as a set of read (e.g., get temperature) / write (set temperature) primitives, plus a reference file generated from natural-language tags (listing what the device can measure/adjust and the **enforced safety limits**). The agent controls hardware through three mechanisms (MCP · CLI · code files/APIs), sequencing steps, monitoring results, and adjusting parameters in real time. Model-agnostic — the core claim is that integration drops from weeks~months to hours~minutes.
+- **AWS's place**: the Anthropic announcement states "AWS will support MHS through **Strands Robots**, the library for connecting AI agents to physical devices." It connects to the public [strands-labs/robots](https://github.com/strands-labs/robots) (Apache-2.0 — a robot-control library integrating Strands Agents + GR00T VLA + LeRobot), but ⚠️ **the public package itself does not mention MHS** — the MHS-enabled build is a separate private pre-release.
+- **Korean relevance** `[3]`: Doosan Robotics is a launch partner, testing MHS for automated quality inspection (QA) on robot arms and multi-robot coordination (alongside Universal Robots, Tecan, QIAGEN, and others).
+- **Honest limits**: LLMs learn the physical world through text and images, so **spatial/physical reasoning still needs expert supervision** — Anthropic itself cites Genentech researchers having to teach Claude that "sample foaming is a physical failure, not a software bug." Open-sourcing is planned.
+
+**AWS mapping**: the picture is AgentCore (item 1) providing the agent runtime and Policy gate, with MHS/Strands Robots providing the device-connection standard — one more layer, **"device driver + safety limits,"** appears beneath the "tool gate" of the item-5 layered defense.
+
+**Decision criteria**: not something to put in today's designs (research preview). But for customers with a large device-integration backlog (lab automation, high-mix cells), flag it as **#1 on the watch list**.
+
+**Customer case**: Doosan Robotics (launch partner, testing stage) `[3]`.
+
+**➡️ Next action**: introduce it to customers already using MCP with the frame **"MCP: data & tools ↔ MHS: hardware,"** and once it opens, set up a validation PoC via the Strands Robots path. Until then, the current alternative is the [MCP+MQTT on IoT Core pattern](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/) (item-3 related assets).
+
+**🔗 Related assets**: [strands-labs/robots](https://github.com/strands-labs/robots) · [pillar-4 edge](pillar-4.md)
+
+---
+
 ## The honest reality of this pillar (SA must-read)
 
 - **AgentCore fully supports the Seoul region** (including Policy · Evaluations). "Not supported in Seoul" was the GA-early story — it's wrong now. Reassure on data residency.
@@ -244,7 +269,7 @@ graph TD
 - **Korean figures like Lotte 30% are single-source** — re-confirm before hard citation.
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_
+_owner: Youngjin · updated: 2026-09 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_
 
 <!-- 용어 각주 -->
 

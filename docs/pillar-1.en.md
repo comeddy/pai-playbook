@@ -1,9 +1,9 @@
 ---
-ko_hash: f7e4f3e40d911870cb03d15519dafa65271f879e
+ko_hash: a9cf88814e03cff0e4bc7460b12f2f59e01126f7
 ---
 # Pillar 1 — Data Collection & Processing
 
-_Last updated: 2026-08 · owner: Youngjin · volatility: medium (dataset versions/sizes are high)_
+_Last updated: 2026-09 · owner: Youngjin · volatility: medium (dataset versions/sizes are high)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -27,6 +27,8 @@ graph LR
     LAKE --> PIPE["Conversion · quality checks<br>Glue / Batch"]
     PIPE --> TRAIN["Training pipeline<br>SageMaker / HyperPod"]
 ```
+
+> **Scale sense — the data pyramid** `[1]`: representative scales of the three layers are (1) internet image-text **~5.85B pairs** ([LAION-5B](https://arxiv.org/abs/2210.08402)), (2) human egocentric work video **3,670 hours** ([Ego4D](https://arxiv.org/abs/2110.07058) — 931 people, 74 cities, 9 countries), (3) robot teleoperation **~1M episodes** ([OXE](https://arxiv.org/abs/2310.08864) total; single sets like DROID are 76k). The units differ per layer (pairs, hours, episodes), so read this **only as an order-of-magnitude comparison** — lining them up on one axis would mean quoting ratios that don't exist. Two key insights: ① **the only layer that contains joint commands is the bottom one (teleoperation)** — the upper two give object knowledge and action ordering but can never hand over actions. ② **Simulation is not a layer of this pyramid** — it is generated, not collected, so its scale is set by compute, not by "how many human hours you can buy" (→ [pillar-3](pillar-3.md)). This pillar's practical question is ultimately "how much of the bottom layer can you extract from the layers above."
 
 ---
 
@@ -87,6 +89,8 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 **Customer need/problem**: "We have almost no data for our factory/warehouse environment, and can't afford the labeling cost. Can we create it with simulation?"
 
 **Solution overview** `[1]`: With [Isaac Sim](https://developer.nvidia.com/isaac/sim)'s **Replicator**, generate synthetic images/segmentation/bounding boxes based on domain randomization[^dr] (lighting, texture, pose, camera) programmatically (Replicator Functional API). Isaac Sim **5.0 GA (2025-08 SIGGRAPH)**, open source (GitHub), 5.1 GA, and 6.0 is the GTC'26 early developer release (2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
+
+- **WFM-based data amplification — GR00T-Dreams/DreamGen** `[1]/[3]`: a path that generates "dream" trajectories from a handful of real demos to amplify training data. NVIDIA announced it cut the data collection needed for the GR00T N1→N1.5 update from **~3 months of manual teleoperation to about 36 hours** ([DreamGen, arXiv:2505.12705](https://arxiv.org/abs/2505.12705)). ⚠️ The time-reduction figure is the vendor's own — cite as a directional indicator only.
 
 **AWS mapping**: run Isaac Sim on EC2 **G6e** (L40S) · **G7e** (RTX PRO 6000 Blackwell) GPU instances + parallelize large-scale offline data-generation jobs with **AWS Batch** + store in S3. Remote streaming via NICE DCV (→ see [pillar-3](pillar-3.md)).
 
@@ -248,7 +252,7 @@ graph LR
 - **The license is the first risk.** Just pointing out that AgiBot World (the largest) is non-commercial earns customer trust.
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: medium (dataset versions/sizes are high in the collapsed block) · sources: [1] official/paper, [3] vendor blog, [4] unverified_
+_owner: Youngjin · updated: 2026-09 · volatility: medium (dataset versions/sizes are high in the collapsed block) · sources: [1] official/paper, [3] vendor blog, [4] unverified_
 
 <!-- 용어 각주 -->
 

@@ -1,6 +1,6 @@
 # Pillar 1 — 데이터 수집 & 처리 (Data Collection & Processing)
 
-_최종 갱신: 2026-08 · owner: Youngjin · volatility: 중간(데이터셋 버전·크기는 높음)_
+_최종 갱신: 2026-09 · owner: Youngjin · volatility: 중간(데이터셋 버전·크기는 높음)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -24,6 +24,8 @@ graph LR
     LAKE --> PIPE["변환 · 품질검사<br>Glue / Batch"]
     PIPE --> TRAIN["학습 파이프라인<br>SageMaker / HyperPod"]
 ```
+
+> **규모 감각 — 데이터 피라미드** `[1]`: 세 층의 대표 규모는 (1) 인터넷 이미지·텍스트 **~58.5억 pair**([LAION-5B](https://arxiv.org/abs/2210.08402)), (2) 사람 1인칭 작업 영상 **3,670시간**([Ego4D](https://arxiv.org/abs/2110.07058) — 931명·74개 도시·9개국), (3) 로봇 텔레옵 **~100만 에피소드**([OXE](https://arxiv.org/abs/2310.08864) 합계; 단일 셋은 DROID 76k). 단위가 층마다 달라(pair·시간·에피소드) **자릿수 비교로만** 읽을 것 — 한 축에 늘어놓으면 존재하지 않는 비율을 인용하게 된다. 핵심 통찰 둘: ① **관절 명령(joint command)을 담은 층은 최하층(텔레옵)뿐** — 위 두 층은 물체 지식·동작 순서는 주지만 action은 절대 못 준다. ② **시뮬레이션은 이 피라미드의 층이 아니다** — 수집이 아니라 생성이므로, 규모가 "사람을 몇 시간 쓸 수 있나"가 아니라 컴퓨트로 정해진다(→ [pillar-3](pillar-3.md)). 그래서 이 필러의 실무 질문은 결국 "위층들에서 최하층을 얼마나 뽑아내는가"다.
 
 ---
 
@@ -84,6 +86,8 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 **고객 니즈/문제**: "우리 공장/창고 환경 데이터가 거의 없다. 라벨링 비용도 감당 안 된다. 시뮬레이션으로 만들 수 있나?"
 
 **솔루션 개요** `[1]`: [Isaac Sim](https://developer.nvidia.com/isaac/sim)의 **Replicator**로 도메인 랜덤화[^dr](조명·질감·포즈·카메라) 기반 합성 이미지/세그멘테이션/바운딩박스를 프로그래밍 방식(Replicator Functional API)으로 생성. Isaac Sim **5.0 GA(2025-08 SIGGRAPH)**, 오픈소스(GitHub), 5.1 GA, 6.0은 GTC'26 얼리 개발자 릴리스(2026-03/06). `[1]` developer.nvidia.com, github.com/isaac-sim
+
+- **WFM 기반 데이터 증폭 — GR00T-Dreams/DreamGen** `[1]/[3]`: 소수의 실데모에서 "dream" 궤적을 생성해 학습 데이터를 증폭하는 경로. NVIDIA는 GR00T N1→N1.5 갱신에 필요한 데이터 확보를 **수동 텔레옵 ~3개월 → 약 36시간**으로 줄였다고 발표([DreamGen, arXiv:2505.12705](https://arxiv.org/abs/2505.12705)). ⚠️ 시간 단축치는 벤더 자체 수치 — 방향 지표로만 인용.
 
 **AWS 매핑**: EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 인스턴스에서 Isaac Sim 실행 + **AWS Batch**로 대규모 오프라인 데이터 생성 잡 병렬화 + S3 저장. NICE DCV로 원격 스트리밍(→ [pillar-3](pillar-3.md) 참조).
 
@@ -245,7 +249,7 @@ graph LR
 - **라이선스가 첫 리스크.** AgiBot World(최대 규모)가 비상업이라는 사실 하나만 짚어도 고객 신뢰를 얻는다.
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
+_owner: Youngjin · updated: 2026-09 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
 
 <!-- 용어 각주 -->
 

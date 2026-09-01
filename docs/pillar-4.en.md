@@ -1,9 +1,9 @@
 ---
-ko_hash: 46fa4dce36a82cc019b01f166e352c358b20dc7d
+ko_hash: 819f32f517dc3f2d9e2989eb6ed0222cd8851d5c
 ---
 # Pillar 4 — Sim-to-Real
 
-_Last updated: 2026-08 · owner: Youngjin · volatility: medium (edge HW/models are high)_
+_Last updated: 2026-09 · owner: Youngjin · volatility: medium (edge HW/models are high)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -47,7 +47,8 @@ graph LR
 
 | Item | Value | Source |
 |---|---|---|
-| Jetson Thor GA | announced 2025-08-25, dev kit $3,499, shipping began 2025-11 | NVIDIA `[3]` |
+| Jetson Thor GA | announced 2025-08-25, dev kit $3,499 (→ raised to $5,499 in 2026-07), shipping began 2025-11 | NVIDIA `[3]` |
+| Jetson price increases (2026-07-22) | Orin Nano Super devkit $249→$399 · Orin NX 16GB module $599→$999 · AGX Orin 64GB module $1,599→$2,999 · **AGX Thor devkit $3,499→$5,499** · T5000 (Thor module) $2,999→$4,999 — beware old-price quotes in edge BOM estimates | NVIDIA store `[3]` |
 | AGX Thor specs | Blackwell GPU, 128GB unified LPDDR5X, 130W, FP4 support | NVIDIA `[3]` |
 | Thor vs Orin | NVIDIA official: ~7.5× normalized AI compute, ~3.5× energy efficiency. ⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS — do not directly compare raw numbers | NVIDIA `[3]` |
 | ONNX→TensorRT acceleration | ~7× (vendor number, NVIDIA Jetson blog 2025, model/HW dependent — include conditions when citing) | NVIDIA `[3]` |
@@ -69,7 +70,8 @@ graph LR
 **Decision criteria** (details → [decisions Cloud vs Edge](decisions.md)):
 
 - **30~100Hz+ reactive control** (balance · force · grasp · walking) → **must be on-board Jetson**. Cloud round-trip not viable.
-- **sub-1Hz~few-Hz high-level planning · VLA inference** → cloud/async possible. **action chunking** is the bridge between the two rates.
+- **sub-1Hz~few-Hz high-level planning · VLA inference** → cloud/async possible. **action chunking** is the bridge between the two rates — **effective control rate = inference Hz × chunk size** (even at ~10Hz inference on a Jetson, π0.5 with 10-step chunks is effectively ~100Hz).
+- ⚠️ **A chunk is part of the policy, not a storage format** `[2]`: splitting a native chunk and executing it 1 step at a time breaks the policy (measured: 20-step execution 3/10 success → 1-step execution 0/48). **Execute the trained native chunk as-is; store per-step only.**
 - Want a managed edge service → honestly say there is none, and provide an ONNX+Greengrass V2 design.
 
 **Customer case**: (public AWS robot cases of edge deployment itself are limited — centered on reference architectures)
@@ -131,6 +133,7 @@ graph LR
 - **System identification (SysID) + selective DR** 🟢 — measure and calibrate the key dynamics parameters, then apply selective DR. The current best practice.
 - **RL-over-MPC hybrid** 🟢 — not pure end-to-end RL but a classical MPC base + a learned policy for robustness. **Boston Dynamics uses this hybrid too = closest to real deployment**.
 - **Research stage** (not production): residual real2sim2real (ASAP), distributional SysID (Spot research), VLM-based SysID (Vid2Sid) — 🔵 impressive but single-lab demos.
+- **Deploy-side gap — most deployment failures are "wiring," not physics** `[2]`: separate from the training-side gap (physics/render mismatch), most failures at the stage of executing a trained policy on real hardware come from **observation-layout and actuation-scale mismatches**. Example: Unitree G1 whole-body control requires the observation array of 86 slots × 6 ticks = 516 dimensions and constants like `action_scale=0.25` to match the sim exactly (matched: stable ~0.38 m/s walk on a 0.5 m/s command; mismatched: cannot walk). Number one on the policy-porting checklist — check this before discussing DR/SysID.
 
 ```mermaid
 graph LR
@@ -205,6 +208,31 @@ graph LR
 
 ---
 
+## 6. Safety regulation for physical robot cells — international standards and Korean legal requirements  🟢 GA (regulation — low volatility)
+
+**L0 TL;DR**: A robot that moves near people must be guarded by law. Internationally it is **ISO 10218-1/-2:2025 + ISO/TS 15066 (collaborative robots)**; Korea adds **Article 223 of the Rules on Occupational Safety and Health Standards (in principle a fence at least 1.8 m high) + KCs[^kcs] mandatory-safety-certified protective devices**. This setup cost and lead time is the third wall slowing physical-hardware validation — and, flipped around, the economic argument for simulation (→ [pillar-3](pillar-3.md)).
+
+**Customer need/problem**: "What do we legally need to install a robot cell in a Korean factory? If it's a collaborative robot, can we skip the fence?"
+
+**Solution overview** `[1]`:
+
+- **International standards map**: [ISO 10218-1:2025](https://www.iso.org/standard/73933.html) (robot itself) · ISO 10218-2:2025 (robot cell/integration) · ISO/TS 15066:2016 (collaborative robots) · IEC 61496-2/-3 (light curtains[^aopd] / safety laser scanners) · ISO 12100 (risk assessment) · ANSI/RIA R15.06 (US).
+- **The four collaborative safety modes** (ISO/TS 15066): ① safety-rated monitored stop ② hand guiding ③ speed & separation monitoring ④ power & force limiting. To share space with people, one of these must be **implemented and verified with certified sensors/equipment**. **In the 2025 revision, ISO/TS 15066's contact force/pressure limits were absorbed into the ISO 10218-2 main text.**
+- **Korea's legally required combination** — [Article 223 of the Rules on Occupational Safety and Health Standards](https://www.law.go.kr/법령/산업안전보건기준에관한규칙): to protect workers during industrial-robot operation, it requires in principle a **fence (barrier) at least 1.8 m high**; where a fence is impossible (openings/entries), contact must be blocked by sensing protective devices such as safety mats or photoelectric devices (light curtains). Those protective devices must be **KCs mandatory-safety-certified products** under [Article 84 of the Occupational Safety and Health Act](https://www.law.go.kr/법령/산업안전보건법) (light curtain = IEC 61496-2, laser scanner = IEC 61496-3 per the Ministry of Employment and Labor's protective-device certification notice). In short, a robot work zone in Korea is effectively the statutory combination of **"1.8 m fence + (at openings) KCs-certified light curtain/safety mat."** ⚠️ Confirm exact articles/clauses against the original text in the National Law Information Center.
+- **Sense of cost** `[4]`: safety laser scanners run thousands of dollars each; safety fencing roughly $60–120 per meter (rough estimates with wide vendor/spec variance) + risk-assessment/certification lead time. Guarding is a hidden cost beyond the robot itself.
+
+**AWS mapping**: no direct mapping (regulation sits outside AWS) — but this regulatory burden is the premise of the [pillar-3 simulation economics](pillar-3.md) ("sim has no fences, certification, or accidents") and of the [pillar-5 layered defense](pillar-5.md) (agent-layer Policy + robot-layer deterministic ISO safety).
+
+**Decision criteria**: "collaborative robot, therefore no fence" is not automatic — **the risk assessment (ISO 12100) decides which of the four modes must be implemented with which certified equipment**. For Korean installation consultations, connect to clause verification + the KIRIA (Korea Institute for Robot Industry Advancement) industrial-robot safety manual.
+
+**Customer case**: (regulatory compliance is a precondition of deployment, not a case study)
+
+**➡️ Next action**: advise customers to put **guarding costs and KCs certification lead time as line items from the start** of any physical PoC proposal — discovered late, they push the whole schedule. Proposing "sim-first validation" (→ [pillar-3](pillar-3.md)) on the same slide completes the argument.
+
+**🔗 Related assets**: [pillar-3 why simulation](pillar-3.md) · [pillar-5 safety & guardrails](pillar-5.md)
+
+---
+
 ## The honest reality of this pillar (SA must-read)
 
 - **Locomotion works, manipulation doesn't yet.** This one sentence is the backbone of the sim-to-real conversation. Over-promising loses trust.
@@ -215,7 +243,7 @@ graph LR
 - **Humanoid "production" metrics are mostly vendor PR** — no independent autonomy audit. Only Digit@GXO · Figure@BMW are customer cross-confirmed. 1X Neo is "a product, but actually teleoperated."
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: medium (edge HW · vendor metrics are high) · sources: [1] official/paper, [3] vendor/PR, [4] unverified. 2026 arXiv preprints are non-peer-reviewed (illustrative)._
+_owner: Youngjin · updated: 2026-09 · volatility: medium (edge HW · vendor metrics are high) · sources: [1] official/paper, [3] vendor/PR, [4] unverified. 2026 arXiv preprints are non-peer-reviewed (illustrative)._
 
 <!-- 용어 각주 -->
 
@@ -230,3 +258,5 @@ _owner: Youngjin · updated: 2026-08 · volatility: medium (edge HW · vendor me
 [^ota]: **OTA (Over-The-Air)** — updating and deploying a robot's models and software remotely over the network.
 [^latency]: **latency budget** — the maximum inference time a real-time control loop allows. At 30~100Hz control, one cycle is 10~33ms, so inference must finish within it — the reason a cloud round-trip is impossible.
 [^mqtt]: **MQTT** — the standard lightweight publish/subscribe messaging protocol for IoT. It carries robot telemetry and commands over small bandwidth even on unstable networks.
+[^kcs]: **KCs (safety certification)** — the mandatory safety-certification mark for hazardous machines, equipment, and protective devices under Article 84 of Korea's Occupational Safety and Health Act. Only KCs-certified protective devices such as light curtains and laser scanners count as statutory protective devices.
+[^aopd]: **Light curtain (AOPD, active opto-electronic protective device)** — a sensing protective device that forms a virtual "wall of light" from many infrared beams and stops the machine instantly when a body part interrupts a beam. Used at openings where a fence cannot be installed; the international standard is IEC 61496-2 (area-scanning safety laser scanners are IEC 61496-3).

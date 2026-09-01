@@ -1,9 +1,9 @@
 ---
-ko_hash: f7e4f3e40d911870cb03d15519dafa65271f879e
+ko_hash: a9cf88814e03cff0e4bc7460b12f2f59e01126f7
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
-_最终更新: 2026-08 · owner: Youngjin · volatility: 中（数据集版本·大小为高）_
+_最终更新: 2026-09 · owner: Youngjin · volatility: 中（数据集版本·大小为高）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -27,6 +27,8 @@ graph LR
     LAKE --> PIPE["转换 · 质检<br>Glue / Batch"]
     PIPE --> TRAIN["训练管道<br>SageMaker / HyperPod"]
 ```
+
+> **规模感 — 数据金字塔** `[1]`: 三层的代表性规模为 (1) 互联网图像·文本 **~58.5 亿 pair**（[LAION-5B](https://arxiv.org/abs/2210.08402)），(2) 人类第一人称作业视频 **3,670 小时**（[Ego4D](https://arxiv.org/abs/2110.07058) — 931 人·74 个城市·9 个国家），(3) 机器人遥操作 **~100 万回合(episode)**（[OXE](https://arxiv.org/abs/2310.08864) 合计；单一数据集如 DROID 为 76k）。各层单位不同（pair·小时·episode），**只能作数量级比较** — 若放到同一坐标轴上，就会引用出根本不存在的比率。两个核心洞察：① **含有关节命令（joint command）的层只有最底层（遥操作）** — 上面两层能给出物体知识·动作顺序，但绝对给不出 action。② **仿真不是这个金字塔的一层** — 它不是被采集而是被生成的，其规模不由"能雇人多少小时"决定，而由算力决定（→ [pillar-3](pillar-3.md)）。所以本支柱的实务问题归根结底是"能从上层榨取出多少最底层"。
 
 ---
 
@@ -87,6 +89,8 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 **客户需求/问题**: "我们工厂/仓库环境的数据几乎没有。标注成本也承受不起。能用仿真生成吗？"
 
 **解决方案概览** `[1]`: 用 [Isaac Sim](https://developer.nvidia.com/isaac/sim) 的 **Replicator** 以域随机化[^dr]（光照·纹理·姿态·相机）为基础，通过编程方式（Replicator Functional API）生成合成图像/分割/边界框。Isaac Sim **5.0 GA（2025-08 SIGGRAPH）**、开源（GitHub）、5.1 GA，6.0 为 GTC'26 早期开发者版本（2026-03/06）。`[1]` developer.nvidia.com, github.com/isaac-sim
+
+- **基于 WFM 的数据增幅 — GR00T-Dreams/DreamGen** `[1]/[3]`: 从少量真实演示生成"dream"轨迹以增幅训练数据的路径。NVIDIA 宣称将 GR00T N1→N1.5 更新所需的数据获取从**人工遥操作约 3 个月 → 约 36 小时**（[DreamGen, arXiv:2505.12705](https://arxiv.org/abs/2505.12705)）。⚠️ 时间缩短数值为厂商自报 — 仅作方向性指标引用。
 
 **AWS 映射**: 在 EC2 **G6e**(L40S)·**G7e**(RTX PRO 6000 Blackwell) GPU 实例上运行 Isaac Sim + 用 **AWS Batch** 并行化大规模离线数据生成作业 + 存入 S3。用 NICE DCV 进行远程流传输（→ 参见 [pillar-3](pillar-3.md)）。
 
@@ -248,7 +252,7 @@ graph LR
 - **许可证是首要风险。** 仅点出 AgiBot World（规模最大）为非商业这一事实，就能赢得客户信任。
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 中（数据集版本·大小在折叠块中为高）· sources: [1] 官方/论文, [3] 厂商博客, [4] 未经验证_
+_owner: Youngjin · updated: 2026-09 · volatility: 中（数据集版本·大小在折叠块中为高）· sources: [1] 官方/论文, [3] 厂商博客, [4] 未经验证_
 
 <!-- 용어 각주 -->
 

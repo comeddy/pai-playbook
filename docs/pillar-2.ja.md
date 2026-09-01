@@ -1,10 +1,10 @@
 ---
-ko_hash: e260e3f021dc962fc99d34f2bac7a78f8c64289b
+ko_hash: 522eea873e849c595119e05911784eb2d89ddd67
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
 
-_最終更新: 2026-08 · owner: Youngjin · volatility: 高（モデルバージョン・ライセンス・インスタンスが頻繁に変わる）_
+_最終更新: 2026-09 · owner: Youngjin · volatility: 高（モデルバージョン・ライセンス・インスタンスが頻繁に変わる）_
 _個別項目は別途表記がない限りページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターを追加します。_
 [← index へ](index.md)
 
@@ -85,6 +85,16 @@ graph TD
 - **openpi (π0/π0.5)**: 推論 >8GB、LoRA >22.5GB(RTX 4090)、**フルファインチューニング >70GB(A100/H100)**。公式 LoRA/full レシピ、2025-09 に PyTorch サポート追加。データ 1~20 時間あれば多数のタスクに十分。
 - **GR00T (N1.5/N1.7)**: ファインチューニング 40GB+ GPU（H100/L40 推奨）、推論 16GB+。NVIDIA 公式 post-training レシピ。
 - **データ量の感覚**: LoRA 単一タスク 100~500 デモ → 80%+ 成功率。少量・高品質の実デモが鍵（→ [pillar-1 テレオペレーション](pillar-1.md)）。
+- **何を unfreeze するか — 部品ごとの学習範囲がそのままコスト** `[1]/[2]`: 最新の VLA は (1) 理解する VLM + (2) 行動を生成する DiT[^dit] + (3) ロボットの身体に合わせるアダプタ MLP の組み立てです（[GR00T N1 構造, arXiv:2503.14734](https://arxiv.org/abs/2503.14734)）。「何を変えたいか」がどの部品を開く（unfreeze する）かとコストを決めます:
+
+| 変えたいもの | MLP（アダプタ） | DiT（アクション） | VLM（理解） | コスト感覚 `[2]` |
+|---|---|---|---|---|
+| 既存ロボット + 既存動作 | 維持 | 維持 | 維持 | 学習不要（すぐ使用） |
+| **新しいロボット**、既存動作 | **学習** | freeze | freeze | テレオペレーションデモ 50~200 個、2~6 時間、g5.2xlarge ~$10 |
+| 新しい動作（事前学習にない verb） | 学習 | **学習** | freeze | 半日 |
+| 特殊なカメラモダリティ（赤外線など） | 学習 | 学習 | LoRA | 数日、最も高価 |
+
+- ⚠️ **新しいロボット = アダプタ必須** `[2]`: GR00T は事前登録された embodiment（GR-1・Franka など）の MLP のみ内蔵しています。未登録のロボットにそのまま載せると無意味な出力になります（実測 0% 成功）— 最低条件は **デモ ~100 個 + アダプタ学習**。fold・pour・stack のような一般的な動作は事前学習に含まれ MLP だけで済みますが、溶接のような未知の動作は DiT まで開く必要があります。
 
 **AWS マッピング**: LoRA なら **EC2 G6e(L40S)・G7e(RTX PRO 6000)** 単一/少数 GPU で十分。フルファインチューニング・マルチ embodiment なら **P6-B200 / HyperPod マルチノード**（下記 3 番）。
 
@@ -122,6 +132,8 @@ graph TD
 - **[SageMaker HyperPod](https://aws.amazon.com/sagemaker/hyperpod/)** —— Slurm + **EKS** + Training Jobs をサポート。**Checkpointless training**（障害時に数分内で自動復旧、手動介入なし）、**Elastic training**（可用量・優先度に応じて自動スケール、自動チェックポイント/再開）。**2026-04 に G7e + r5d.16xlarge サポート追加**。HyperPod CLI/SDK を提供。
 - **EC2 GPU の梯子** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 最大 72 Blackwell/NVLink ドメイン, [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/) で確保)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 発表。⚠️ **Trainium で VLA/ロボティクスを学習した公開事例なし** —— VLA ツールチェーン全体が CUDA/NVIDIA。Trainium-for-VLA は未検証。
+- **ソウルリージョンの最新世代** `[1]`: **[P6-B300](https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-ec2-p6-b300/)**（8×NVIDIA Blackwell Ultra、インスタンスあたり 2.1TB HBM3e・6.4Tbps EFA）が **2026-08-20 ソウルリージョンで GA** — 韓国のチームが最新アクセラレータを海外リージョン待ちなしに、データレジデンシーの範囲内で使えます。Capacity Blocks/Savings Plans/On-Demand で消費。範囲は正直に: 汎用 FM 学習プラットフォームであり、Physical AI（シミュレーション・VLA 学習）はその上の一つのワークロードです。
+- **規模別の推奨パターン（3B 級 VLA 基準、GR00T N1.6/N1.7 検証）** `[2]`: ① デモ <200 個・LoRA（2~4 時間）→ **AWS Batch + EC2 Spot(g6e)** — 短く安価、推奨デフォルト。② デモ ~500 個・フルファインチューニング（8~24 時間）→ **SageMaker Training Job** — 自動チェックポイント/再開。③ デモ 500 個+・マルチノード（数日）→ **HyperPod** — ノード自動復旧 + EFA。GPU 容量不足に備えて **インスタンス fallback 順序**（例: g6e → g6 → g5）をジョブ定義にあらかじめ入れておけば、待たずに次のタイプへ移れます。
 
 **HyperPod が実際に提供するもの** `[1]`（docs 2026-07 確認）:
 
@@ -188,6 +200,9 @@ graph TD
 - **[Figure Helix](https://www.figure.ai/news/helix)**: System 2 = オンボードのインターネット事前学習 VLM @ 7~9Hz（シーン/言語）、System 1 = 反応型 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
 - **GR00T N1**: System 1 = diffusion policy ~10ms 遅延、System 2 = LLM プランナー（タスク分解）。
 - **一般パターン**: 重量級 VLM が 5~10Hz で再計画し、軽量な flow-matching/diffusion "action expert" が最新の計画を条件として 50~200Hz でアクションを放出。**action chunking**（GR00T=40 timestep horizon）で未来のアクションチャンクを予測。
+- **フィールド全体の 2 軸 taxonomy** `[1]`: モデル名に埋もれる前に — ほとんどの VLA は (1) **ネットワーク構造**: Monolithic（単一ネットワークのエンドツーエンド）vs Hierarchical（プランナー+実行器の分離）、(2) **思考システム**: Single-system vs Dual-system（逐次 cascade / 並列 parallel）の 2×2 上に置けます。GR00T の「二つの脳」は hierarchical × dual-system(parallel) のマスの具体例 — System 1/2 は特定モデルの話ではなく、フィールドの一次分類軸です。
+- **実効制御周波数 = 推論 Hz × chunk サイズ**: π0.5 が Jetson 上で ~10Hz の推論でも、一度に 10 ステップの chunk を出せばロボットは ~100Hz で動きます（chunk 実行中に次の chunk を先読み計算）。この算数が「大きなモデル = 遅いロボット」という誤解を解く鍵です。
+- ⚠️ **「VLA は死んだ（WAM[^wam] が代替）」というヘッドラインに注意** `[1]/[4]`: WAM（World Action Model）は video-diffusion バックボーンで未来の映像+行動を **同時予測** します — Web ビデオの物理 prior のおかげで未学習動作の zero-shot に強い（[DreamZero, arXiv:2602.15922](https://arxiv.org/abs/2602.15922): ロボットデータ ~500 時間だけで unseen task 16%→40% 台）ものの、14B の反復 denoising のため closed-loop **~7Hz と最も遅い**です。「VLAs are dead」キーノートと同時期に NVIDIA 本体が GR00T N1.7（VLA）をリリースし、独立比較ではデータ多様性が十分なら VLA（π0.5）が WAM と同等 — 実際の絵は **「VLA + World Model + RL 事後学習の収束」** です。顧客との会話でヘッドラインをそのまま伝えないこと（成熟度の追跡は [radar の World-action models](radar.md)）。
 - ⚠️ **成熟度は正直に**: この*パターン自体*は標準だが、全身ヒューマノイドのフルスタックは大半がパイロット/デモ段階。
 
 **AWS マッピング**: **System 2（プランナー）はクラウド/Bedrock AgentCore に、System 1（リアルタイム制御）はエッジ（Jetson）に** 置くのが自然な分担（→ [pillar-5](pillar-5.md)、[pillar-4](pillar-4.md)、[decisions](decisions.md)）。
@@ -229,6 +244,58 @@ graph TD
 
 ---
 
+## 6. 学習運用の原則 — チェックポイント系譜と IL の天井  🟢 GA（安定原理）
+
+**L0 TL;DR**: 顧客の学習プロジェクトを繰り返し崩壊させる二つの落とし穴。(1) **チェックポイントは木である** — specialize は一方通行で、generalist チェックポイントを失うと元に戻せません。(2) **loss が下がっても成功率は上がらない** — 模倣学習の covariate shift[^covshift] が原因で、評価は loss ではなく **rollout 成功率のみ** で行います。
+
+**顧客ニーズ/課題**: 「ファインチューニングを重ねるほど以前の能力が消えていく」/「training loss は下がり続けるのに実際の成功率が動かない」。
+
+**ソリューション概要** `[1]/[2]`:
+
+- **チェックポイント tree 管理**: 重みは generalist → embodiment 特化 → task 特化（デモ 10~150 個）→ 実デプロイ補正の順に枝分かれ（spin-off）しながら育ちます。**chain は一方通行** — 一度 specialize された重みから generalist の逆復元は事実上不可能（catastrophic forgetting[^forget]）。ある枝が特定の動作に過学習して崩れたら、その枝をさらに押すのではなく **前の（より general な）チェックポイントに戻って再分岐** します。
+- **「顧客 A の重みを顧客 B に適用」という質問への実際の答え**: A の specialist weight ではなく **その上の generalist から B へ新たにファインチューニング** です。LoRA で分岐しておけばアダプタだけ外して generalist に復帰できます — 最初から LoRA 分岐を勧める運用上の理由です。
+- **「open weights」の落とし穴**: 公開チェックポイントが系譜のどの段階かをまず確認 — Stage 3 の specialist だけが公開されたモデルは、そのロボット・環境の外では使えません（逆復元不可）。OpenVLA・GR00T・π0/π0.5 が generalist（foundation）チェックポイントを公開する理由がこれです。
+- **IL の天井 = covariate shift**: BC は「エキスパートがいた状態 → エキスパートの行動」のペアだけを学ぶため、実行中の小さな誤差でデモ分布の外（OOD）の状態に入ると、回復方法がデータになく誤差が雪だるま式に累積します — 最悪の場合、時間ホライズン T に対して T² で（[Ross et al., DAgger, arXiv:1011.0686](https://arxiv.org/abs/1011.0686)）。**training loss も validation loss もこの問題を捉えられません**（どちらも同じデモ分布で測るため）。
+- **処方**: 「より良い val set」ではなく **ポリシーが実際に訪れる分布を学習に入れること** — DAgger[^dagger]（ポリシーが行った状態にエキスパートのラベルを追加）→ on-policy データ → RFT（下記 7 番）。診断シグナル: loss ≈ 0 なのに成功率が横ばい → さらに学習するのではなくアプローチを変えるとき。
+
+**AWS マッピング**: チェックポイント系譜 = S3 バージョニング + 段階別の別途保存（HyperPod 自動チェックポイントは 3 番）。評価 rollout = シミュレーションスイープ（[pillar-3](pillar-3.md)、評価の限界は [pillar-4 ポリシー評価](pillar-4.md)）。
+
+**意思決定基準**: generalist チェックポイントはどんな場合でも別途保存（上書き禁止）。評価指標を loss に置いた学習契約・マイルストーンは再交渉の対象。
+
+**顧客事例**: 事例待ち（原則自体は公開論文に基づく）。
+
+**➡️ 次のアクション**: 顧客の学習パイプラインレビューでは **「generalist チェックポイントをどこに保管しているか」+「評価を loss で行うか rollout で行うか」** の二つの質問から。この二つが揺らぐと残りの議論は無意味です。
+
+**🔗 関連資産**: [pillar-4 ポリシー評価](pillar-4.md) · [pillar-1 テレオペレーション](pillar-1.md)
+
+---
+
+## 7. RL ファインチューニング (RFT) — PPO vs GRPO と報酬設計  🟢 GA（アルゴリズム）/ 🔵 報酬自動化は Research
+
+**L0 TL;DR**: SFT（模倣）だけでは実演のミスまで学びます。環境の報酬で仕上げる段階が RFT[^rft] — アルゴリズムは **PPO[^ppo] が長年の標準、critic 不要の GRPO[^grpo] が急浮上**（大型モデルほどコンピュートの利得）。真の勝負所はアルゴリズムではなく **報酬設計** です — "simulator fidelity is reward fidelity"。
+
+**顧客ニーズ/課題**: 「BC で 80% まで来たがそれ以上が出ない。RL で仕上げるには何をどう使うのか？」
+
+**ソリューション概要** `[1]`:
+
+- **PPO**（[Schulman et al., arXiv:1707.06347](https://arxiv.org/abs/1707.06347)）— 「直前のポリシーの近くだけを少しずつ」。RL はポリシーが自分の学習データを自ら作るため、一度の大きな更新で壊れると、より悪いデータを集めて悪循環に陥ります — clip がその急変を防ぎます。ロボット RL の事実上の標準。
+- **GRPO**（[DeepSeekMath, arXiv:2402.03300](https://arxiv.org/abs/2402.03300)）— critic（value network）をなくし、同じ状態で N 個の rollout を回して **グループ平均 return を baseline** に使います。ポリシーネットワーク並みにかかっていた critic の演算・メモリが消え、VLA 級の大型モデルで有利。ただしグループ baseline は分散が大きくなり得るため N を十分に増やします。
+- **報酬設計が勝負所**: sparse（成功時のみ +1）は最初の成功まで学習シグナル自体がなく、dense（距離ベースの shaping）は設計者のバイアスと reward hacking[^rhack]（点数だけ稼いで目標は達成しない）のリスク。報酬は **達成したい結果そのもの** を測るべきで、シミュレーターが摩擦・接触・遅延をどれだけ忠実に再現するかがそのまま報酬シグナルの忠実度です（→ [pillar-3](pillar-3.md)）。
+- **検証済みの実戦レシピ — Teacher-Student パイプライン** `[1]`: ① Teacher = **PPO + privileged state**（GT pose・contact などの特権情報、Isaac Lab 大規模並列）→ ② Student = **DAgger + BC 蒸留**（デプロイ可能な RGB+proprioception 入力のみ）→ ③ **GRPO + binary success reward** でブートストラップ。[VIRAL(arXiv:2511.15200)](https://arxiv.org/abs/2511.15200)・[DoorMan(arXiv:2512.01061)](https://arxiv.org/abs/2512.01061)（いずれも CVPR 2026）が実証 — DoorMan は 83% SR でエキスパートテレオペレーションの基準線（80%）を上回りました。
+- 🔵 **報酬自動化（Research）**: タスクごとに dense 報酬を手で書くのは非現実的 — VLM で毎ステップの進捗を自動採点する [GVL(arXiv:2411.04549)](https://arxiv.org/abs/2411.04549)・[TopReward(arXiv:2602.19313)](https://arxiv.org/abs/2602.19313)・[VLLR(arXiv:2604.00055)](https://arxiv.org/abs/2604.00055) が活発ですが、2026 年時点で「商用利用可 + 低遅延 + open-weight」をすべて満たす progress model は稀です。成功判定が客観的なら（到着・組立完了）決定論的 verifier で直接報酬を与える RLVR が安全な出発点。
+
+**AWS マッピング**: Teacher の大規模並列 RL = Isaac Lab on EC2 G6e/AWS Batch（→ [pillar-3](pillar-3.md)）、蒸留・GRPO ブートストラップ = 3 番の学習スタックをそのまま。[sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) が IL/RL の両経路を IaC で提供（下記関連資産）。
+
+**意思決定基準**: きれいな実演を数百個確保できる → IL で warm-start。実演なし + 良いシミュレーター・報酬 → RL。**実戦の正解はたいてい hybrid（IL → RFT）**。大型 VLA で critic のメモリがボトルネック → GRPO。
+
+**顧客事例**: 事例待ち（VIRAL/DoorMan は論文実証 — 顧客デプロイ事例ではない）。
+
+**➡️ 次のアクション**: BC の性能が頭打ちの顧客に **Teacher-Student（PPO→蒸留→GRPO）3 段階レシピ** を提案 — 全段階がシミュレーション内で完結するため、既存の AWS Batch/Isaac Lab スタックをそのまま再利用できます。
+
+**🔗 関連資産**: [pillar-3 並列 RL](pillar-3.md) · [sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) — aws-samples、MIT-0。意図（IL デモ or RL タスク）を与えるだけで Batch+Spot / SageMaker Training / HyperPod の 3 パターンを自動決定するワンコマンドのファインチューニングプラットフォーム。GR00T・π0.5・ACT・SmolVLA + Isaac Lab RL 経路、MCP サーバー（7 tools）でエージェントセッションから submit・モニタリングまで
+
+---
+
 ## このピラーの正直な現実（SA 必読）
 
 - **GR00T ライセンスは今、引用の最大リスク。** N1.5 は明確に非商用。N1.6/N1.7 の商用許可は2次出典のみ → **顧客の商用判断の前にライブモデルカードを直接確認**。間違えれば法務リスク。
@@ -237,7 +304,7 @@ graph TD
 - **Trainium-for-VLA は未検証。** VLA ツールチェーン全体が CUDA。提案時はリスクを明示。
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 高（モデルバージョン・ライセンス・GPU 要件・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証_
+_owner: Youngjin · updated: 2026-09 · volatility: 高（モデルバージョン・ライセンス・GPU 要件・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証_
 
 <!-- 용어 각주 -->
 
@@ -252,3 +319,12 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（モデルバージョ�
 [^slurm]: **Slurm** — HPC クラスターの標準的なオープンソースジョブスケジューラーです。数千ノードにバッチジョブをキューイング・割り当てし、研究室・スパコン出身のチームに最もなじみのあるワークフローです。
 [^efa]: **EFA（Elastic Fabric Adapter）** — EC2 向けの低遅延・OS バイパスのネットワークインターフェースです。マルチノード分散学習で GPU 間の勾配同期（All-Reduce）ボトルネックを減らす鍵になります。
 [^osmo]: **OSMO** — NVIDIA のロボティクスワークロード向けワークフローオーケストレーションプラットフォームです。合成データ生成・シミュレーション・モデル学習などのマルチステージジョブを、オンプレミスとクラウドの複数クラスター（Kubernetes など）にスケジューリングします。
+[^dit]: **DiT (Diffusion Transformer)** — Transformer 構造で作られた拡散（diffusion）生成器です。最新の VLA では、ノイズからロボットの関節コマンド（action chunk）を生成する「行動エンジン」部品として使われます。
+[^wam]: **WAM (World Action Model)** — ビデオ生成モデルをバックボーンに、未来の映像とロボットの行動を同時に予測するモデルです。Web ビデオで学んだ物理知識のおかげで未学習の動作に強い一方、反復 denoising のため制御周波数が低くなります。WFM（映像のみ生成、行動出力なし）との混同に注意。
+[^covshift]: **covariate shift（共変量シフト）** — 学習時に見た状態分布と実行時に実際に遭遇する状態分布がずれる現象です。模倣学習のポリシーが小さな誤差でデモにない状態へ漂流すると、回復方法を学んだことがないため誤差が累積します。（「covariant」ではなく「covariate」が正しい表記です。）
+[^forget]: **catastrophic forgetting（破滅的忘却）** — ニューラルネットワークが新しいタスクを学習する過程で、以前に学んだ能力を上書きして失う現象です。specialize されたチェックポイントから generalist を復元できない理由です。
+[^dagger]: **DAgger (Dataset Aggregation)** — 学習したポリシーを実際に実行させ、ポリシーが訪れた状態にエキスパートの正解ラベルを追加で集めて再学習する模倣学習の補強手法です。covariate shift への古典的な処方です。
+[^rft]: **RFT (Reinforcement Fine-Tuning、強化ファインチューニング)** — 模倣学習（SFT）で作ったポリシーを環境の報酬シグナルで追加改善する仕上げ段階です。実演になかったより良い行動を試行錯誤で見つけ出します。
+[^ppo]: **PPO (Proximal Policy Optimization)** — 最も広く使われる強化学習アルゴリズムです。「直前のポリシーから離れすぎない」よう更新幅を clip で制限して安定的に収束します — ロボット RL の事実上のデフォルトです。
+[^grpo]: **GRPO (Group Relative Policy Optimization)** — 別途の価値ネットワーク（critic）なしに、同じ状態で複数の rollout を回してそのグループ平均を基準線（baseline）に使う強化学習アルゴリズムです。critic の学習コストが消えるため、大型モデル（LLM・VLA）で急浮上しました。
+[^rhack]: **reward hacking** — 報酬設計を誤ると、エージェントが意図した目標の代わりに点数そのものを攻略する現象です（例:「前進距離」の報酬にその場回転でセンサーを騙す）。報酬は達成したい結果そのものを測るべきです。

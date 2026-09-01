@@ -20,9 +20,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Register AWS Physical AI Recipes (hi-space, Korean, MIT — the code behind the Physical AI E2E workshop: Isaac Lab→GR00T fine-tuning→inference→monitoring E2E via CDK, HyperPod VLA/RL distributed-training infrastructure, a GR00T-N1.6-3B SageMaker fine-tuning pipeline, NVIDIA OSMO on EKS) as a related asset on pillars 2 and 3, with a new OSMO glossary footnote, in all four languages
 - Register the robot foundation model paper-review section of the Physical AI on AWS GitBook (Korean; reasoning VLM Cosmos-Reason 1 and VLA papers RT-2, OpenVLA, Gemini Robotics, GR00T N1, π0.6) as a pillar-2 open-VLA-model related asset, in all four languages
+- Promote commercial-grade content from the Physical AI 101 concept map into new per-pillar sections: "training operations — checkpoint lineage and the imitation-learning ceiling" and "RL fine-tuning (RFT) — PPO vs GRPO and reward design" (pillar 2); "why simulation — the economics of physical robots" (price ladder, actuator-dominated BOM, GPU-hour equivalence) (pillar 3); "safety regulation for physical robot cells — international standards and Korean legal requirements" (ISO 10218:2025, ISO/TS 15066 four collaborative modes, Korean Article 223 1.8 m fence + KCs certification) (pillar 4); "agent standards for the physical world — Anthropic MHS & AWS Strands Robots" (research preview, Doosan Robotics launch partner) (pillar 5) — with 12 new glossary footnotes, in all four languages
 
 ### Changed
 
+- Enrich existing pillar sections from the Physical AI 101 source: data-pyramid scale framing (LAION-5B/Ego4D/OXE) and the DreamGen data flywheel (pillar 1); GR00T freeze/unfreeze cost table with the new-robot-adapter requirement, size-tiered training patterns (Batch+Spot / Training Job / HyperPod), P6-B300 Seoul GA, the 2-axis model taxonomy, and a WAM/"VLAs are dead" caution (pillar 2); ETH 4,096-env parallel-RL anchor, the "physics sim = body, WFM = eyes" boundary, and the reality-capture→OpenUSD pipeline (pillar 3); deploy-side gap, effective control rate = inference Hz × chunk size with the native-chunk caveat, and the 2026-07 Jetson price increases (pillar 4); the Certis autonomous-patrol customer case and the MCP+MQTT on IoT Core pattern (pillar 5), in all four languages
 - Expand the pillar-1 "LeRobot teleop collection on Greengrass" related-asset entry with repo details (Greengrass v2 component, SO-ARM101 + dual cameras → LeRobot v3 → S3 auto-upload, MQTT web-console control, KVS live/replay, validated on Jetson AGX Thor) and the README's not-for-production caveat (MIT-0), in all four languages
 - Refresh the `updated` metadata to 2026-08 on 9 pages that received substantive August changes (index, exec-guide, maintenance, radar, pillars 1–5), in all four languages
 
@@ -162,9 +164,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - AWS Physical AI Recipes(hi-space, 한국어, MIT — Physical AI E2E 워크숍의 코드 저장소: Isaac Lab→GR00T 파인튜닝→추론→모니터링 E2E(CDK), HyperPod VLA/RL 분산 학습 인프라, GR00T-N1.6-3B SageMaker 파인튜닝 파이프라인, NVIDIA OSMO on EKS)를 pillar 2·3 관련 자산으로 등재 — OSMO 용어 각주 신설, 4개 언어 반영
 - Physical AI on AWS GitBook의 로봇 파운데이션 모델 페이퍼 리뷰 섹션(한국어 — 추론 VLM Cosmos-Reason 1, VLA 논문 RT-2·OpenVLA·Gemini Robotics·GR00T N1·π0.6)을 pillar-2 오픈 VLA 모델 관련 자산으로 등재, 4개 언어 반영
+- Physical AI 101 개념 지도의 상용급 콘텐츠를 필러별 신규 섹션으로 승격: "학습 운영 원리 — 체크포인트 계보와 IL의 천장"·"RL 파인튜닝(RFT) — PPO vs GRPO와 보상 설계"(pillar 2); "왜 시뮬레이션인가 — 실물의 경제학"(가격 사다리·관절 지배 BOM·GPU 시간 등가)(pillar 3); "실기체 셀의 안전 규제 — 국제 표준과 한국 법정 요구"(ISO 10218:2025·ISO/TS 15066 4모드·제223조 1.8m 울타리+KCs 인증)(pillar 4); "물리 세계의 에이전트 표준 — Anthropic MHS & AWS Strands Robots"(research preview, Doosan Robotics 런치 파트너)(pillar 5) — 신규 용어 각주 12개, 4개 언어 반영
 
 ### Changed
 
+- Physical AI 101 소스로 기존 필러 섹션 보강: 데이터 피라미드 규모 감각(LAION-5B/Ego4D/OXE)·DreamGen 데이터 플라이휠(pillar 1); GR00T freeze/unfreeze 비용표(새 로봇=어댑터 필수)·규모별 학습 패턴(Batch+Spot/Training Job/HyperPod)·P6-B300 서울 GA·2축 모델 taxonomy·WAM "VLA는 죽었다" 주의(pillar 2); ETH 4,096-env 병렬 RL 기준점·"물리 sim=몸, WFM=눈" 선긋기·Reality Capture→OpenUSD 파이프라인(pillar 3); deploy-side gap·실효 제어 주기=추론 Hz×chunk 크기(native chunk 캐비앗)·2026-07 Jetson 가격 인상(pillar 4); Certis 자율 순찰 고객 사례·MCP+MQTT on IoT Core 패턴(pillar 5), 4개 언어 반영
 - pillar-1 "LeRobot 텔레옵 수집 on Greengrass" 관련 자산 항목을 리포 상세(Greengrass v2 컴포넌트, SO-ARM101+듀얼 카메라→LeRobot v3→S3 자동 업로드, 웹 콘솔 MQTT 제어, KVS 라이브·재생, Jetson AGX Thor 검증)와 README의 production 사용 금지 캐비앗(MIT-0)으로 보강, 4개 언어 반영
 - 8월 실질 변경이 있었던 9개 페이지(index, exec-guide, maintenance, radar, pillar 1~5)의 `updated` 메타를 2026-08로 갱신, 4개 언어 반영
 
@@ -304,9 +308,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - 将 AWS Physical AI Recipes（hi-space，韩语，MIT — Physical AI E2E 研讨会的代码仓库: Isaac Lab→GR00T 微调→推理→监控 E2E（CDK）、HyperPod VLA/RL 分布式训练基础设施、GR00T-N1.6-3B SageMaker 微调管道、NVIDIA OSMO on EKS）登记为 pillar 2·3 相关资产 — 新增 OSMO 术语脚注，四种语言同步
 - 将 Physical AI on AWS GitBook 的机器人基础模型论文评读部分（韩语 — 推理 VLM Cosmos-Reason 1，VLA 论文 RT-2、OpenVLA、Gemini Robotics、GR00T N1、π0.6）登记为 pillar-2 开放 VLA 模型相关资产，四种语言同步
+- 将 Physical AI 101 概念地图中的商用级内容提升为各支柱的新章节："训练运营原则 — checkpoint 谱系与模仿学习的天花板"及"RL 微调（RFT）— PPO vs GRPO 与奖励设计"（pillar 2）；"为什么选择仿真 — 实体机器人的经济学"（价格阶梯、执行器主导的 BOM、GPU 小时等价）（pillar 3）；"实体机器人单元的安全法规 — 国际标准与韩国法定要求"（ISO 10218:2025、ISO/TS 15066 四种协作模式、韩国第223条 1.8m 围栏 + KCs 认证）（pillar 4）；"物理世界的智能体标准 — Anthropic MHS & AWS Strands Robots"（research preview，Doosan Robotics 为发布合作伙伴）（pillar 5）— 新增 12 条术语脚注，四种语言同步
 
 ### Changed
 
+- 以 Physical AI 101 素材充实既有支柱章节：数据金字塔规模框架（LAION-5B/Ego4D/OXE）与 DreamGen 数据飞轮（pillar 1）；GR00T freeze/unfreeze 成本表（新机器人=必须适配器）、按规模分层的训练模式（Batch+Spot / Training Job / HyperPod）、P6-B300 首尔 GA、双轴模型分类法及 WAM"VLA 已死"警示（pillar 2）；ETH 4,096 环境并行 RL 基准点、"物理仿真=身体，WFM=眼睛"的界线、Reality Capture→OpenUSD 管道（pillar 3）；deploy-side gap、有效控制频率=推理 Hz×chunk 大小（native chunk 注意事项）、2026-07 Jetson 涨价（pillar 4）；Certis 自主巡逻客户案例与 MCP+MQTT on IoT Core 模式（pillar 5），四种语言同步
 - 以仓库详情（Greengrass v2 组件、SO-ARM101+双摄像头→LeRobot v3→S3 自动上传、Web 控制台 MQTT 控制、KVS 直播·回放、已在 Jetson AGX Thor 上验证）及 README 的禁止生产使用注意事项（MIT-0）充实 pillar-1 "LeRobot 遥操作采集 on Greengrass" 相关资产条目，四种语言同步
 - 将 8 月发生实质变更的 9 个页面（index、exec-guide、maintenance、radar、pillar 1~5）的 `updated` 元数据刷新为 2026-08，四种语言同步
 
@@ -446,9 +452,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - AWS Physical AI Recipes（hi-space、韓国語、MIT — Physical AI E2E ワークショップのコードリポジトリ: Isaac Lab→GR00T ファインチューニング→推論→モニタリング E2E（CDK）、HyperPod VLA/RL 分散学習インフラ、GR00T-N1.6-3B SageMaker ファインチューニングパイプライン、NVIDIA OSMO on EKS）を pillar 2·3 の関連資産として登録 — OSMO 用語脚注を新設、4言語反映
 - Physical AI on AWS GitBook のロボット基盤モデル論文レビューセクション（韓国語 — 推論 VLM Cosmos-Reason 1、VLA 論文 RT-2・OpenVLA・Gemini Robotics・GR00T N1・π0.6）を pillar-2 オープン VLA モデルの関連資産として登録、4言語反映
+- Physical AI 101 概念マップの商用レベルのコンテンツを各ピラーの新セクションとして昇格："学習運用の原則 — チェックポイント系譜と模倣学習の天井"・"RL ファインチューニング（RFT）— PPO vs GRPO と報酬設計"（pillar 2）；"なぜシミュレーションか — 実機の経済学"（価格ラダー・アクチュエータ支配の BOM・GPU 時間等価）（pillar 3）；"実機セルの安全規制 — 国際標準と韓国の法定要件"（ISO 10218:2025・ISO/TS 15066 の4協働モード・韓国第223条 1.8m フェンス + KCs 認証）（pillar 4）；"物理世界のエージェント標準 — Anthropic MHS & AWS Strands Robots"（research preview、Doosan Robotics がローンチパートナー）（pillar 5）— 用語脚注 12 件を新設、4言語反映
 
 ### Changed
 
+- Physical AI 101 ソースで既存ピラーセクションを拡充：データピラミッドの規模感（LAION-5B/Ego4D/OXE）と DreamGen データフライホイール（pillar 1）；GR00T freeze/unfreeze コスト表（新ロボット=アダプタ必須）・規模別学習パターン（Batch+Spot / Training Job / HyperPod）・P6-B300 ソウル GA・2軸モデル分類・WAM「VLA は死んだ」への注意（pillar 2）；ETH 4,096 環境並列 RL の基準点・「物理シミュレーション=身体、WFM=目」の線引き・Reality Capture→OpenUSD パイプライン（pillar 3）；deploy-side gap・実効制御周波数=推論 Hz×chunk サイズ（native chunk の注意）・2026-07 Jetson 値上げ（pillar 4）；Certis 自律パトロール顧客事例・MCP+MQTT on IoT Core パターン（pillar 5）、4言語反映
 - pillar-1 の「LeRobot テレオペ収集 on Greengrass」関連資産項目を、リポジトリ詳細（Greengrass v2 コンポーネント、SO-ARM101+デュアルカメラ→LeRobot v3→S3 自動アップロード、Web コンソール MQTT 制御、KVS ライブ・再生、Jetson AGX Thor 検証済み）と README の本番使用禁止の注意（MIT-0）で拡充、4言語反映
 - 8月に実質的な変更があった 9 ページ（index、exec-guide、maintenance、radar、pillar 1~5）の `updated` メタデータを 2026-08 に更新、4言語反映
 

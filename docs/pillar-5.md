@@ -1,6 +1,6 @@
 # Pillar 5 — 에이전트 오케스트레이션 (Agentic Orchestration)
 
-_최종 갱신: 2026-08 · owner: Youngjin · volatility: 높음(AgentCore 기능·리전 자주 확장)_
+_최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음(AgentCore 기능·리전 자주 확장)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -165,7 +165,7 @@ graph TD
 
 **➡️ 다음 액션**: 오프라인 고객에게 **AWS Greengrass 에이전트 Guidance + 샘플코드를 출발점으로** 제시(GA 제품 아님을 정직히). 온/오프라인 하이브리드(엣지 SLM ↔ 클라우드 AgentCore) 설계.
 
-**🔗 관련 자산**: [pillar-4 엣지 배포](pillar-4.md) · [pillar-1](pillar-1.md)
+**🔗 관련 자산**: [pillar-4 엣지 배포](pillar-4.md) · [pillar-1](pillar-1.md) · [MCP+MQTT on AWS IoT Core 패턴](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/) — 공식 블로그. 로봇·엣지 장비를 MCP 툴처럼 다루는 Physical AI 에이전트를 IoT Core(MQTT) 위에 엮는 실전 패턴 — 엣지 운영(P4)과 다수 장비 조율(P5)을 잇는 현행 표준 경로
 
 ---
 
@@ -200,7 +200,7 @@ graph TD
 
 **의사결정 기준**: 창고/AMR 플릿 조율 → 검증된 영역(DeepFleet식 접근 참조). 휴머노이드 에이전트 플릿 → 아직 초기. 개발 워크로드 → OSMO(NVIDIA) 또는 AWS Batch/Step Functions.
 
-**고객 사례** (⚠️ 국내는 초기/데모/발표): **Lotte Global Logistics×CoEvolution**(30%, 단일출처), **LG CNS** 창고 데모(휴머노이드+로봇개+모바일), **Naver** AI Agent Platform 2026 하반기 예정(NVIDIA 블루프린트).
+**고객 사례** (⚠️ 국내는 초기/데모/발표): **Lotte Global Logistics×CoEvolution**(30%, 단일출처), **LG CNS** 창고 데모(휴머노이드+로봇개+모바일), **Naver** AI Agent Platform 2026 하반기 예정(NVIDIA 블루프린트). 해외 프로덕션 사례: **Certis**(보안 서비스) — [자율 순찰 로봇을 AWS 위에서 배포·운영](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/)한 공식 고객 사례 `[1]` — 플릿을 실제 현장에 굴리는 엣지+조율 관점의 드문 공개 레퍼런스.
 
 **➡️ 다음 액션**: 플릿 고객에게 **"조율 로직은 AgentCore, 연결은 IoT, 학습은 SageMaker"** 3계층으로 정리. DeepFleet을 LLM 에이전트로 오해하지 않게 정확히 설명.
 
@@ -232,6 +232,31 @@ graph TD
 
 ---
 
+## 6. 물리 세계의 에이전트 표준 — Anthropic MHS & AWS Strands Robots  🟡 Research Preview
+
+**L0 TL;DR**: 2026-08-27 Anthropic이 **[Model Hardware Standard(MHS)](https://www.anthropic.com/news/model-hardware-standard-research-preview)** research preview를 공개 — AI 에이전트가 물리 장치(현미경·liquid handler·로봇 팔)를 **표준화된 드라이버(read/write primitive)**로 조작하고 다중 장치를 병렬 오케스트레이션하게 하는 공유 규격이다. MCP가 데이터·툴에 한 일의 하드웨어 짝. **AWS는 Strands Robots로 MHS를 지원**(preview 참가자 대상 private pre-release), **Doosan Robotics(한국)가 런치 파트너**. ⚠️ research preview — 고객 프로덕션 제안 금지, 방향 지표로만.
+
+**고객 니즈/문제**: "장치마다 맞춤 통합(주~개월)을 반복하고 있다. 에이전트-하드웨어 연결에 표준은 없나?"
+
+**솔루션 개요** `[1]/[3]`:
+
+- **동작 방식**: 장치를 read(예: get temperature)/write(set temperature) primitive 집합으로 노출하는 **표준 드라이버** + 자연어 태그로 생성되는 reference file(그 장치의 측정·조정 가능 항목과 **강제되는 안전 한계(safety limits)** 기재). 에이전트는 3가지 메커니즘(MCP·CLI·code files/API)으로 장치를 제어하고, 순서를 짜고 결과를 관측해 실시간으로 파라미터를 조정한다. model-agnostic — 통합 기간이 주~개월에서 시간~분으로 준다는 것이 핵심 주장.
+- **AWS의 자리**: Anthropic 발표문이 "AWS will support MHS through **Strands Robots**, the library for connecting AI agents to physical devices"를 명시. 공개 [strands-labs/robots](https://github.com/strands-labs/robots)(Apache-2.0 — Strands Agents + GR00T VLA + LeRobot 통합 로봇 제어 라이브러리)와 이어지지만, ⚠️ **공개 패키지 자체는 MHS를 언급하지 않는다** — MHS 지원 빌드는 별도의 private pre-release다.
+- **한국 관련성** `[3]`: Doosan Robotics가 런치 파트너로 로봇 팔 자동 품질검사(QA)·다중 로봇 협조에 MHS를 테스트 중(Universal Robots·Tecan·QIAGEN 등과 함께).
+- **정직한 한계**: LLM은 물리 세계를 텍스트·이미지로 배우므로 **공간·물리 추론에는 전문가 감독이 여전히 필요** — Anthropic 스스로, Genentech 연구진이 "시료의 foaming은 소프트웨어 버그가 아니라 물리적 실패"임을 Claude에게 가르쳐야 했던 예를 든다. 오픈소스화 예정.
+
+**AWS 매핑**: AgentCore(1번)가 에이전트 런타임·Policy 게이트를, MHS/Strands Robots가 장치 연결 표준을 맡는 그림 — 5번 계층 방어의 "툴 게이트" 아래에 **"장치 드라이버 + safety limits"** 층이 하나 더 생기는 셈이다.
+
+**의사결정 기준**: 오늘 설계에 넣을 단계가 아니다(research preview). 다만 장치 통합 백로그가 큰 고객(랩 자동화·다품종 셀)에겐 **워칭 리스트 1순위**로 안내.
+
+**고객 사례**: Doosan Robotics(런치 파트너, 테스트 단계) `[3]`.
+
+**➡️ 다음 액션**: MCP를 이미 쓰는 고객에게 **"MCP는 데이터·툴, MHS는 하드웨어"** 프레임으로 소개하고, 공개되면 Strands Robots 경로로 검증 PoC를 잡는다. 그 전까지의 현행 대안은 [MCP+MQTT on IoT Core 패턴](https://aws.amazon.com/blogs/physical-ai/building-physical-ai-agents-with-mcp-and-mqtt-on-aws-iot-core/)(3번 관련 자산).
+
+**🔗 관련 자산**: [strands-labs/robots](https://github.com/strands-labs/robots) · [pillar-4 엣지](pillar-4.md)
+
+---
+
 ## 이 필러의 정직한 현실 (SA 필독)
 
 - **AgentCore는 서울 리전 완전 지원**(Policy·Evaluations 포함). "서울 미지원"은 GA 초기 얘기 — 지금은 틀림. 데이터 레지던시 안심시켜라.
@@ -242,7 +267,7 @@ graph TD
 - **Lotte 30% 등 국내 수치는 단일 출처** — 하드 인용 전 재확인.
 
 ---
-_owner: Youngjin · updated: 2026-08 · volatility: 높음 (AgentCore 기능·리전은 접힌 블록에서 관리) · sources: [1] 공식, [3] 벤더/press, [4] 연구/커뮤니티_
+_owner: Youngjin · updated: 2026-09 · volatility: 높음 (AgentCore 기능·리전은 접힌 블록에서 관리) · sources: [1] 공식, [3] 벤더/press, [4] 연구/커뮤니티_
 
 <!-- 용어 각주 -->
 
