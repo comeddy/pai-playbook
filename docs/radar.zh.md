@@ -1,5 +1,5 @@
 ---
-ko_hash: 97c3f1faaf0ff5e04fdb19298324440cb500b0a9
+ko_hash: 371ad88d76913058c1523fee9960ea663d997d9a
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,13 +54,12 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-08-31 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-09-02 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
 | 项目 | 标签 | 要点 | 晋升条件 |
 |---|---|---|---|
-| **[RLWRLD RLDX-1](https://huggingface.co/RLWRLD)**（灵巧手[^dex]优先的基础模型） | 🟡 Preview | ✨ **关注**：韩国初创公司的灵巧手操作专用基础模型 —— 三大仿真基准自报 SOTA 叠加权重实际公开，可直接上手实测<br>⏳ **待定**：权重公开属实，但 ⚠️ 并非开源 —— RLWRLD Model License v1.0（非商业·禁止商业分发）`[3]`，7~9B 变体系列（主力 8.1B）。RoboCasa/LIBERO/SIMPLER[^simbench] SOTA 为自报，无独立复现（[aws-samples VLA Simulator](https://github.com/aws-samples/sample-vla-simulator-on-aws) 在 EC2 上提供 n=5 冒烟[^smoke]实测 —— 并非完整基准复现）。AWS 关联仅限仿真基准测试（非商业许可证明确允许的用途，不可用于商业定位）—— "未发现关联"表述已更新（2026-07）。真实客户部署为 0 | 独立基准复现 + 验证过的部署案例 |
 | **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute 分拆，Large Behavior Models[^lbm] 人形机器人） | 🟡 试点 | ✨ **关注**：曾执掌 TRI 机器人研究的 Russ Tedrake 的分拆公司 + 3 亿美元种子轮 —— LBM 商业化最前线，拥有 Toyota 工厂实际试点<br>⏳ **待定**：公司官方发布（2026-07-15）`[4]` —— 2026-01 从 TRI 分拆（创始人 Russ Tedrake，前 TRI SVP），Toyota·Deviation Capital 联合领投 + NVIDIA·Boeing·Samsung Ventures 等参与的 3 亿美元种子轮（估值 11 亿美元）。人形上半身+轮式移动底座，基于 Diffusion Policy[^diffpol]·Large Behavior Models 的策略，宣称自 2026-02 起在北美 Toyota 工厂实现试点→"量产转换"，无第三方验证 | 第三方审计·独立验证 + 部署规模扩大案例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] 基础模型，10 万+小时真实世界 UMI[^umi] 轨迹） | 🔵 Research | ✨ **关注**：凭借 10 万+小时真实世界 UMI 轨迹的数据规模在四个基准上自报 SOTA —— 中国大厂正式加入 VLA 竞争的信号<br>⏳ **待定**：小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）等四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。⚠️ **更正（2026-08-10）**：已确认 2026-08-03 在 GitHub 实际发布代码与权重（5B 基础模型 + RoboCasa/RoboCasa365/VLABench 三个任务专用版本）—— **Apache-2.0**（与 RLDX-1 不同，明确允许商用，具备 AWS 映射可能性）。仓库自报的排行榜数据与 arXiv 论文的表述方式不同，需直接对照；独立复现与实际部署仍为零 | 独立基准复现 + 实际部署案例 |
 | **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind，全身控制 VLA） | 🟡 Preview | ✨ **关注**：前沿实验室 VLA 从上半身操作扩展到全身（行走·双手协调）控制 —— 改变竞品栈格局的代际转换信号<br>⏳ **待定**：官方发布（2026-07-30）`[4]` —— 从此前仅上半身控制扩展为全身控制（行走·弯腰·双手协调），同时推出推理模型 Gemini Robotics ER 2 与端侧模型 On-Device 2。在 Apptronik Apollo 2 实机演示（拧灯泡 92% 成功率），自报基准，无独立验证。仅 ER 2 公开预览（AI Studio/Enterprise Agent Platform），VLA·On-Device 2 仅限早期访问合作伙伴。⚠️ [pillar-2](pillar-2.md) 中"Gemini Robotics"竞品栈章节为本次发布前的快照（确认于 2026-07，仅覆盖 ER 1.6/On-Device/1.5）—— 需 pillar owner 更新 | 早期访问结束·GA 公开 + 独立基准验证 |
@@ -70,6 +69,7 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[ROBOTIS AI Sapiens K1](https://github.com/ROBOTIS-GIT/ai_sapiens)**（基于 DYNAMIXEL-Q 的开源人形机器人平台） | 🟡 Preview | ✨ **关注**：韩国企业 ROBOTIS 的开源人形机器人 —— 仅凭智能手机视频学习 K-pop 舞蹈动作(视频动作捕捉→重定向→仿真 RL→sim-to-real)并演示，还集成 NVIDIA Kimodo 实现文本→动作生成的扩展 —— 韩国客户接触点上会直接被提及的本地开放人形机器人案例<br>⏳ **待定**：GitHub 官方仓库（`ROBOTIS-GIT/ai_sapiens`，Apache-2.0）`[4]` —— ROS 2 软件包（机器人描述·控制器接口·sim2real 工具）已公开，但视频→动作生成完整流程的开源化仅是 ROBOTIS 自身的预告计划（时间表未确定）。K-pop 舞蹈演示为自报，无独立验证·实际部署案例 | 完整流程公开确认 + 独立验证 |
 | **[AWS-NVIDIA Physical AI 基础设施扩展](https://press.aboutamazon.com/aws/2026/8/aws-and-nvidia-to-deliver-2-million-additional-gpus-and-next-generation-infrastructure-for-agentic-and-physical-ai)**（Amazon Robotics × NVIDIA 合作） | ⚪ 路线图 | ✨ **关注**：AWS 官方宣布将把物理 AI 基础设施（仿真·SDG[^sdg]·机器人训练·功能安全·real-to-sim 验证，GPU 加速 EC2）投入 Amazon Robotics 下一代机器人开发 —— Radar 迄今最直接的"AWS 自家"物理 AI 案例<br>⏳ **待定**：2026-08-26 AWS·NVIDIA 联合公布 `[4]`（一手来源 press.aboutamazon.com/nvidianews.nvidia.com，多家二手媒体交叉确认）—— 属于新增 200 万张 GPU（2027~2028）计划的一部分。仅公开 Jetson·Omniverse·Isaac 平台的使用范围，Amazon Robotics 具体机器人·量化成果·服务名称均未公开 —— 路线图阶段，实际部署为 0 | 公开具体机器人/服务 + 确定 AWS 服务映射 |
 | **[LG × NVIDIA 双足人形机器人 + CLOiD](https://www.prnewswire.com/news-releases/lg-to-unveil-its-next-gen-humanoid-robot-built-on-nvidia-isaac-gr00t-302851652.html)** | ⚪ 路线图 | ✨ **关注**：韩国大型企业集团（LG）与 NVIDIA 签署 MOU —— 基于 Jetson Thor·Isaac GR00T·Halos（机器人安全框架）的双足人形机器人计划 2027 年第一季度公开，配套的轮式 CLOiD 将在 2026 年内投入田纳西州洗衣机工厂实战验证 —— 韩国客户对话中可直接引用的本地大企业赛道（与现代·BD Atlas 角度类似）<br>⏳ **待定**：2026-08-13 MOU 签署官方公布（LG Corp 具光谟会长与 Jensen Huang 出席）`[4]`。CLOiD 投入田纳西工厂在 2026 年内但仍属验证阶段（非商业规模），双足人形机器人样机尚未公开（计划 2027 年 Q1 公开）—— 当前实际运行为 0 | 双足人形机器人实机公开 + CLOiD 工厂验证结果公开 |
+| **[GHOST](https://arxiv.org/abs/2608.29080)**（仅凭机载摄像头即可让 1 人同时操作 2 台机器人的 VR 遥操作系统） | 🔵 Research | ✨ **关注**：Brown University（Tellex 实验室）在 Amazon 资金支持下开发 —— 无需外部动作捕捉，仅凭机载 RGB-D，1 名操作员即可通过 VR 同时遥操作 2 台 Boston Dynamics Spot，已在 IEEE RA-L 发表（通过同行评审）。实测新手成功率提升 1.6~4 倍、专家作业速度提升 1.47 倍 —— 有望降低基于遥操作的机器人数据采集管道成本的开源案例<br>⏳ **待定**：arXiv 2608.29080（2026-08-29，IEEE RA-L 2026-08 accept）`[4]` —— 专家评测者即论文作者本人 3 人（可能存在偏差），新手评测 n=15（9 项任务中仅完成 2 项），专用于 Boston Dynamics Spot 硬件·专用 Wi-Fi 环境（生产环境可靠性未验证） | 扩大独立用户评测 + 验证多样硬件·网络环境 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
@@ -107,9 +107,6 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（Radar 本质上快速�
 [^ros]: **ROS 2（Robot Operating System 2）** — 机器人软件事实上的标准开源中间件。传感器·控制节点通过话题（topic）通信的分布式架构，是工业·研究机器人栈的公共基础。
 [^agent]: **LLM 智能体** — 大语言模型自行制定计划、挑选并调用工具（API·机器人技能）、执行多步任务的软件。与简单问答不同，关键在于它有"行动"。
 [^vla]: **VLA (Vision-Language-Action)** — 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^dex]: **灵巧性（dexterity）** — 手指级的精细·灵活操作能力。其接触物理远比行走复杂，被视为机器人学习中最难的轴。
-[^simbench]: **LIBERO · RoboCasa · SIMPLER** — 无需真机即可比较 VLA/操作策略性能的标准仿真基准套件。仿真分数并不保证真机性能。
-[^smoke]: **冒烟测试（smoke test）** — 只确认"基本能跑"的小规模运行，不是完整验证。n=5 这样的样本无法支撑统计意义上的性能主张。
 [^lbm]: **Large Behavior Models (LBM)** — LLM 的"机器人行为"版：Toyota Research Institute 用该术语指代用大规模示范数据训练、以单一模型执行多种操作任务的机器人基础模型。
 [^diffpol]: **Diffusion Policy** — 用图像生成中的扩散（diffusion）模型来生成机器人动作序列的策略架构。它能稳定学习包含多种有效做法的示范数据，已成为模仿学习的事实标准。
 [^umi]: **UMI (Universal Manipulation Interface)** — 无需机器人、由人手持带相机的便携夹爪采集示范数据的方式。可以在不投入机器人的情况下大量获取真实世界数据。
