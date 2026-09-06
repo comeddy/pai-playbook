@@ -1,5 +1,5 @@
 ---
-ko_hash: 671d98ec43d44c1b27058a91e367b01042a521a1
+ko_hash: 2c1008a629f7ee0cfa0ba8bdb852732284afb21d
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,13 +55,12 @@ _最終更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ✨ **注目**: LLM の意味レベルのリスクを扱う標準の空白地帯 — 規制・調達要件として浮上する可能性<br>⏳ **待機**: ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ✨ **注目**: ロボットエージェントの商取引・レジストリ基盤の AWS ネイティブ軸 — ソウルリージョン開放後は即提案可能<br>⏳ **待機**: ソウルリージョン未提供 — Agent Registry は東京 ✅、Payments は東京にも未提供（APAC はシドニーのみ）`[1]` | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-09-05 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-09-06 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
 | 項目 | ラベル | 要点 | 昇格条件 |
 |---|---|---|---|
-| **[Walden Robotics](https://www.waldenrobotics.com/news/walden-robotics-launches-from-stealth)**（Toyota Research Institute からのスピンアウト、Large Behavior Models[^lbm] ヒューマノイド） | 🟡 パイロット | ✨ **注目**: TRI ロボティクスを率いた Russ Tedrake のスピンアウト + シード 3 億ドル — LBM 商用化の最前線、Toyota 工場での実パイロットを保有<br>⏳ **待機**: 公式発表（2026-07-15）`[4]` —— 2026-01 に TRI からスピンアウト（創業者 Russ Tedrake、元 TRI SVP）、Toyota・Deviation Capital 共同リード + NVIDIA・Boeing・Samsung Ventures などが参加したシード 3 億ドル（バリュエーション 11 億ドル）。ヒューマノイド上半身+ホイール式移動ベース、Diffusion Policy[^diffpol]・Large Behavior Models ベースの方策で、北米 Toyota 工場にて 2026-02 からパイロット→「本番転換」を自社主張、第三者検証なし | 第三者監査・独立検証 + 展開規模拡大の事例 |
 | **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] ファウンデーションモデル、10 万時間超の実世界 UMI[^umi] 軌跡） | 🔵 Research | ✨ **注目**: UMI 10 万時間超の実世界軌跡というデータスケールで 4 ベンチマークの SOTA を主張 — 中国ビッグテックが VLA 競争へ本格参入するシグナル<br>⏳ **待機**: Xiaomi 公式 arXiv 発表（2607.15330、2026-07-16）`[4]` —— Qwen3-VL ベースの MoT（VLM+DiT）、RoboCasa365（57.4%、従来 SOTA 46.6% から向上）など 4 ベンチマークで自己申告 SOTA（RLDX-1・GR00T N1.6 などと比較、独立再現なし）。⚠️ **訂正（2026-08-10）**: 2026-08-03 に GitHub でコード・チェックポイント（ベース 5B + RoboCasa/RoboCasa365/VLABench タスク別 3 種）の実公開を確認 — **Apache-2.0**（RLDX-1 と異なり商用利用を明示的に許可、AWS マッピングの可能性あり）。リポジトリ自身のリーダーボード数値は arXiv 論文と表記方式が異なり直接対照が必要、独立再現・実導入は依然ゼロ | 独立ベンチマーク再現 + 実導入事例 |
 | **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind、全身制御 VLA） | 🟡 Preview | ✨ **注目**: フロンティアラボの VLA が上半身マニピュレーションを超えて全身（歩行・両手協調）制御へ拡張 — 競合スタックの地形を変える世代転換のシグナル<br>⏳ **待機**: 公式発表（2026-07-30）`[4]` —— これまでの上半身のみの制御を全身制御（歩行・屈曲・両手協調）に拡張、推論モデル Gemini Robotics ER 2・エッジモデル On-Device 2 を同時発表。Apptronik Apollo 2 で実機デモ（電球の取り外し 92% 成功）、自己申告ベンチマークで独立検証なし。公開プレビューは ER 2 のみ（AI Studio/Enterprise Agent Platform）、VLA・On-Device 2 はアーリーアクセスパートナー限定。⚠️ [pillar-2](pillar-2.md) の「Gemini Robotics」競合スタック節は本発表以前のスナップショット（確認 2026-07、ER 1.6/On-Device/1.5 が対象）—— pillar owner による更新が必要 | アーリーアクセス終了・GA 公開 + 独立ベンチマーク検証 |
 | **[XYZ Robotics DEUX](https://zdnet.co.kr/view/?no=20260727093315)**（BrainX・GloveX・TwinX をつなぐ「Physical AI Data Flywheel」を基盤とした双腕セミヒューマノイド） | 🟡 Preview | ✨ **注目**: 韓国のスタートアップが自社カフェ・配送ロボットの商用運用（バリスタロボットは 100 万件超の注文を処理）から得られる実データで BrainX を学習し、テレオペレーション収集デバイス GloveX → デジタルツイン TwinX での検証 → 実機への再展開までをつなぐ自社データフライホイール構造 —— 韓国の顧客接点で直接挙がりうるローカルな Physical AI データパイプライン事例<br>⏳ **待機**: ソウル・ラウンジエックス聖水本店で実証を開始（2026-07-27）`[4]` —— 双腕 32DoF + 3 指ハンド、シリーズ B 130 億ウォンを調達（2026-03）。DEUX の商用ローンチ（2026 年下半期予定）・GloveX の外部販売（2026 年末予定）はいずれも未リリース。自律性能・展開規模は未検証 | 実証拡大 + 自律性能の独立検証 |
@@ -71,6 +70,7 @@ _最終更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[GHOST](https://arxiv.org/abs/2608.29080)**（オンボードカメラのみで 1 人が 2 台のロボットを同時遠隔操作する VR テレオペレーション） | 🔵 Research | ✨ **注目**: Brown University（Tellex lab）が Amazon の資金支援を受けて開発 — 外部モーションキャプチャなしでオンボード RGB-D のみを使い、1 人のオペレーターが Boston Dynamics Spot 2 台を VR で同時遠隔操作、IEEE RA-L に掲載(peer-review 通過)。初心者の成功率 1.6~4 倍、エキスパートの作業速度 1.47 倍向上を実測 — テレオペレーションによるロボットデータ収集パイプラインのコストを下げうるオープンソース事例<br>⏳ **待機**: arXiv 2608.29080（2026-08-29、IEEE RA-L 2026-08 accept）`[4]` — エキスパート評価者は論文著者本人 3 名（バイアスの可能性）、初心者評価は n=15（9 タスク中 2 タスクのみ実施）、Boston Dynamics Spot 専用ハードウェア・専用 Wi-Fi 環境（本番環境での信頼性は未検証） | 独立ユーザー評価の拡大 + 多様なハードウェア・ネットワーク環境での検証 |
 | **[Perceptron Isaac 0.5](https://github.com/perceptron-ai-inc/isaac)**（オープンウェイト埋め込み型ファウンデーションモデル、360 億パラメータ） | 🔵 Research | ✨ **注目**: 動画理解・エンボディード推論・ロボット制御を単一のスパースバックボーンに統合し、オープンウェイトとして公開 — 35 以上のロボットシステム・10 万時間超のロボット経験・100 万時間の動画・3T のマルチモーダルトークンで学習、π0.5・GR00T N1.7 を上回ると自己申告し、コード・重みを同時公開（コードは Apache-2.0）<br>⏳ **待機**: 公式発表 + GitHub 公式リポジトリ（2026-08-27/28、元 Meta 研究者によるスタートアップ Perceptron AI）`[4]` —— 自己申告ベンチマークで、独立再現・peer-review なし。重み自体のライセンス条件は Hugging Face リポジトリに別途記載（本調査ではアクセス未確認） | 独立ベンチマーク再現 + 実導入事例 |
 | **[ABEJA×村田製作所 GR00T N1.7 双腕 PoC](https://prtimes.jp/main/html/rd/p/000000229.000010628.html)**（VLA ベースの物理AI技術検証） | 🟡 Preview | ✨ **注目**: 日本の製造大手・村田製作所が NVIDIA GR00T N1.7（商用ライセンスのオープン VLA）で双腕ロボットの部品受け渡し・姿勢転換・挿入という連続動作を実機で検証 —— 実際の製造大手が商用ライセンスのオープン VLA を検証した初期事例、ラボオートメーションの角度<br>⏳ **待機**: ABEJA・村田製作所の公式発表（2026-08-31、PR TIMES）`[4]` —— 数百件のテレオペレーション実演データで模倣学習、検証（テスト）環境下で実機成功。量産規模の展開・自律性能の独立検証はなし。⚠️ リンクは PR TIMES の公式発表だが、本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | 量産ラインへの展開 + 独立検証 |
+| **[NEURA Robotics 4NE1 / Neuraverse × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale)**（ドイツのフルスタックロボティクス企業、AWS 戦略的協業） | ⚪ ロードマップ | ✨ **注目**: AWS が Neuraverse の主要クラウドプロバイダーとなり、Gym トレーニング環境を SageMaker と統合、NEURA が AWS Partner Network に参加 — サービス名まで具体的な AWS パートナーシップで、Radar 内の「AWS 自社」物理 AI 事例（AWS-NVIDIA インフラ拡大）に次いで具体性が高い、注目すべき欧州ヒューマノイドトラック<br>⏳ **待機**: AWS・NEURA の公式発表（2026-04-21、press.aboutamazon.com）`[4]` — Amazon フルフィルメントセンターへの配備は「検討中」段階に過ぎず実デプロイではない。最大 14 億ドルのシリーズ C（2026-06-10、Amazon・NVIDIA・Tether などが参加、フルスタックロボティクス企業史上最大の調達額）と IFA ベルリン 2026 キーノート（2026-09-05、4NE1 実機展示）で話題が再燃、第三者検証なし。⚠️ リンクは press.aboutamazon.com の公式発表だが、本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | Amazon フルフィルメントセンターなどの公開デプロイ事例 + 独立した性能検証 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 
@@ -108,7 +108,5 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（Radar は本質的に�
 [^ros]: **ROS 2 (Robot Operating System 2)** — ロボットソフトウェアの事実上の標準オープンソースミドルウェアです。センサー・制御ノードがトピック（topic）で通信する分散構造で、産業・研究ロボットスタックの共通基盤です。
 [^agent]: **LLM エージェント** — 大規模言語モデルが自ら計画を立て、ツール（API・ロボットスキル）を選んで呼び出し、多段階のタスクを遂行するソフトウェアです。単純な質疑応答と異なり「行動」がある点が核心です。
 [^vla]: **VLA (Vision-Language-Action)** — カメラ映像（Vision）と自然言語の指示（Language）を入力に、ロボットの動作（Action）を直接出力する基盤モデルです。「コップを掴んで」と言えば関節の動きを生成する、という具合です。🎥 [NVIDIA Isaac GR00T N1 紹介](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^lbm]: **Large Behavior Models (LBM)** — LLM の「ロボット行動」版。大規模な実演データで学習し、1 つのモデルで多様なマニピュレーションタスクを実行するロボット基盤モデルを指す Toyota Research Institute の用語です。
-[^diffpol]: **Diffusion Policy** — 画像生成に使われる拡散（diffusion）モデルでロボットの動作シーケンスを生成するポリシーアーキテクチャです。複数の有効なやり方を含む実演データを安定して学習でき、模倣学習の事実上の標準になりました。
 [^umi]: **UMI (Universal Manipulation Interface)** — ロボットなしで、人がカメラ付きのハンドヘルドグリッパーを持って実演データを集める収集方式です。ロボットを投入せずに実世界データを大量に確保できます。
 [^sdg]: **合成データ生成（SDG, Synthetic Data Generation）** — シミュレーターで学習用画像とアノテーション（ラベル）を自動生成する技法です。ラベリングコストがゼロに収束するのが最大の利点です。🎥 [Isaac Sim Replicator SDG チュートリアル](https://www.youtube.com/watch?v=HHzNIh72B_Y)
