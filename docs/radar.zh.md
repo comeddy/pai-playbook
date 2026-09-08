@@ -1,5 +1,5 @@
 ---
-ko_hash: 2c1008a629f7ee0cfa0ba8bdb852732284afb21d
+ko_hash: 1d2b011b07c42cdcf0942182641a8080be3afd0e
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,14 +54,12 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-09-06 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-09-08 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
 | 项目 | 标签 | 要点 | 晋升条件 |
 |---|---|---|---|
-| **[Xiaomi-Robotics-1](https://github.com/XiaomiRobotics/Xiaomi-Robotics-1)**（VLA[^vla] 基础模型，10 万+小时真实世界 UMI[^umi] 轨迹） | 🔵 Research | ✨ **关注**：凭借 10 万+小时真实世界 UMI 轨迹的数据规模在四个基准上自报 SOTA —— 中国大厂正式加入 VLA 竞争的信号<br>⏳ **待定**：小米官方 arXiv 发布（2607.15330，2026-07-16）`[4]` —— 基于 Qwen3-VL 的 MoT（VLM+DiT）架构，在 RoboCasa365（57.4%，此前 SOTA 为 46.6%）等四个基准上自报 SOTA（与 RLDX-1·GR00T N1.6 等对比，无独立复现）。⚠️ **更正（2026-08-10）**：已确认 2026-08-03 在 GitHub 实际发布代码与权重（5B 基础模型 + RoboCasa/RoboCasa365/VLABench 三个任务专用版本）—— **Apache-2.0**（与 RLDX-1 不同，明确允许商用，具备 AWS 映射可能性）。仓库自报的排行榜数据与 arXiv 论文的表述方式不同，需直接对照；独立复现与实际部署仍为零 | 独立基准复现 + 实际部署案例 |
-| **[Gemini Robotics 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind，全身控制 VLA） | 🟡 Preview | ✨ **关注**：前沿实验室 VLA 从上半身操作扩展到全身（行走·双手协调）控制 —— 改变竞品栈格局的代际转换信号<br>⏳ **待定**：官方发布（2026-07-30）`[4]` —— 从此前仅上半身控制扩展为全身控制（行走·弯腰·双手协调），同时推出推理模型 Gemini Robotics ER 2 与端侧模型 On-Device 2。在 Apptronik Apollo 2 实机演示（拧灯泡 92% 成功率），自报基准，无独立验证。仅 ER 2 公开预览（AI Studio/Enterprise Agent Platform），VLA·On-Device 2 仅限早期访问合作伙伴。⚠️ [pillar-2](pillar-2.md) 中"Gemini Robotics"竞品栈章节为本次发布前的快照（确认于 2026-07，仅覆盖 ER 1.6/On-Device/1.5）—— 需 pillar owner 更新 | 早期访问结束·GA 公开 + 独立基准验证 |
 | **[XYZ Robotics DEUX](https://zdnet.co.kr/view/?no=20260727093315)**（以 BrainX·GloveX·TwinX 串联的"Physical AI Data Flywheel"为基础的双臂半人形机器人） | 🟡 Preview | ✨ **关注**：韩国初创公司利用自家咖啡·配送机器人商业运营中产生的真实数据训练 BrainX，再串联遥操作采集设备 GloveX → 数字孪生 TwinX 验证 → 重新部署到实机的自建数据飞轮 —— 韩国客户接触点上可能直接被提及的本地 Physical AI 数据管道案例<br>⏳ **待定**：在首尔 LoungeX 城水旗舰店启动实地试验（2026-07-27）`[4]` —— 双臂 32 自由度+三指手，已完成 130 亿韩元 B 轮融资（2026-03）。DEUX 商业化上市（计划 2026 下半年）与 GloveX 对外销售（计划 2026 年末）均尚未落地。自主性能与部署规模尚未验证 | 扩大实地试验 + 自主性能独立验证 |
 | **[ROBOTIS AI Sapiens K1](https://github.com/ROBOTIS-GIT/ai_sapiens)**（基于 DYNAMIXEL-Q 的开源人形机器人平台） | 🟡 Preview | ✨ **关注**：韩国企业 ROBOTIS 的开源人形机器人 —— 仅凭智能手机视频学习 K-pop 舞蹈动作(视频动作捕捉→重定向→仿真 RL→sim-to-real)并演示，还集成 NVIDIA Kimodo 实现文本→动作生成的扩展 —— 韩国客户接触点上会直接被提及的本地开放人形机器人案例<br>⏳ **待定**：GitHub 官方仓库（`ROBOTIS-GIT/ai_sapiens`，Apache-2.0）`[4]` —— ROS 2 软件包（机器人描述·控制器接口·sim2real 工具）已公开，但视频→动作生成完整流程的开源化仅是 ROBOTIS 自身的预告计划（时间表未确定）。K-pop 舞蹈演示为自报，无独立验证·实际部署案例 | 完整流程公开确认 + 独立验证 |
 | **[AWS-NVIDIA Physical AI 基础设施扩展](https://press.aboutamazon.com/aws/2026/8/aws-and-nvidia-to-deliver-2-million-additional-gpus-and-next-generation-infrastructure-for-agentic-and-physical-ai)**（Amazon Robotics × NVIDIA 合作） | ⚪ 路线图 | ✨ **关注**：AWS 官方宣布将把物理 AI 基础设施（仿真·SDG[^sdg]·机器人训练·功能安全·real-to-sim 验证，GPU 加速 EC2）投入 Amazon Robotics 下一代机器人开发 —— Radar 迄今最直接的"AWS 自家"物理 AI 案例<br>⏳ **待定**：2026-08-26 AWS·NVIDIA 联合公布 `[4]`（一手来源 press.aboutamazon.com/nvidianews.nvidia.com，多家二手媒体交叉确认）—— 属于新增 200 万张 GPU（2027~2028）计划的一部分。仅公开 Jetson·Omniverse·Isaac 平台的使用范围，Amazon Robotics 具体机器人·量化成果·服务名称均未公开 —— 路线图阶段，实际部署为 0 | 公开具体机器人/服务 + 确定 AWS 服务映射 |
@@ -70,6 +68,8 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[Perceptron Isaac 0.5](https://github.com/perceptron-ai-inc/isaac)**（开源权重具身基础模型，360 亿参数） | 🔵 Research | ✨ **关注**：将视频理解·具身推理·机器人控制统一到单一稀疏骨干网络中并开放权重 —— 使用 35 个以上机器人系统·10 万+小时机器人经验·100 万小时视频·3T 多模态 token 训练，自报优于 π0.5·GR00T N1.7，代码与权重同时公开（代码 Apache-2.0）<br>⏳ **待定**：公司官方发布 + GitHub 官方仓库（2026-08-27/28，来自前 Meta 研究员创立的初创公司 Perceptron AI）`[4]` —— 自报基准，无独立复现·peer-review。权重本身的许可条款在 Hugging Face 仓库另有说明（此处未能访问核实） | 独立基准复现 + 实际部署案例 |
 | **[ABEJA × 村田制作所 GR00T N1.7 双臂 PoC](https://prtimes.jp/main/html/rd/p/000000229.000010628.html)**（基于 VLA 的物理 AI 技术验证） | 🟡 Preview | ✨ **关注**：日本制造巨头村田制作所使用 NVIDIA GR00T N1.7（商业许可的开源 VLA）在真实硬件上验证双臂机器人的零件传递·姿态转换·插入连续动作 —— 真实制造企业验证商业许可开源 VLA 的早期案例，切入实验室自动化角度<br>⏳ **待定**：ABEJA·村田制作所官方公布（2026-08-31，PR TIMES）`[4]` —— 通过数百次遥操作示范进行模仿学习，在验证（测试）环境中于实机成功。尚无生产规模部署或自主性能的独立验证。⚠️ 链接为 PR TIMES 官方发布稿，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 生产线部署 + 独立验证 |
 | **[NEURA Robotics 4NE1 / Neuraverse × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale)**（德国全栈机器人公司，AWS 战略合作） | ⚪ 路线图 | ✨ **关注**：AWS 成为 Neuraverse 的主要云服务商，把 Gym 训练环境与 SageMaker 集成，NEURA 加入 AWS Partner Network —— 服务名称具体明确的 AWS 合作，映射具体程度仅次于 Radar 中的"AWS 自家"物理 AI 案例（AWS-NVIDIA 基础设施扩展），一条值得关注的欧洲人形机器人赛道<br>⏳ **待定**：AWS·NEURA 官方公布（2026-04-21，press.aboutamazon.com）`[4]` —— 在 Amazon 履约中心的部署仅处于"探讨中"阶段，并非实际部署。因最高 14 亿美元的 C 轮融资（2026-06-10，Amazon·NVIDIA·Tether 等参与，全栈机器人公司史上最大融资）与 IFA 柏林 2026 主题演讲（2026-09-05，4NE1 实机展示）而重新引发关注，无第三方验证。⚠️ 链接为 press.aboutamazon.com 官方发布稿，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开部署案例（如 Amazon 履约中心）+ 独立性能验证 |
+| **[AGIBOT WORLD 2026 Theme 3: Reinforcement Learning](https://www.agibot.com/article/231/detail/88.html)**（涵盖成功·失败·人工介入的真实世界 RL 数据集） | 🔵 Research | ✨ **关注**：[pillar-1](pillar-1.md) 中已有的 AgiBot World（100 万+轨迹，CC BY-NC-SA 非商业）的后续主题 —— 不仅包含成功演示，还纳入自主策略执行中的失败·错误·人工介入修正，标志数据飞轮从模仿学习扩展到 RL 轴（机器人数据管道角度）<br>⏳ **待定**：AGIBOT 官方发布（agibot.com，2026-08-07）`[4]` —— 首批发布覆盖 14 项任务（网线插接·用钥匙开门·条码标签粘贴·台灯打包等），9,638 条轨迹·164+小时（完整发布共 11,430 条轨迹）。仍为 **CC BY-NC-SA 4.0 非商业**（与 pillar-1 条目相同的许可风险），无独立基准·实际部署验证 | 商业许可转换/明确化 + 独立基准复现 |
+| **[Figure × Nscale 35 亿美元算力合作](https://www.prnewswire.com/news-releases/nscale-and-figure-sign-strategic-partnership-to-power-the-next-generation-of-physical-ai-302868918.html)**（最多 10 万张 NVIDIA Vera Rubin GPU，Nscale 同时对 Figure 进行股权投资） | ⚪ 路线图 | ✨ **关注**：竞争人形机器人公司首次把大规模训练算力绑定给欧洲新兴云厂商而非 AWS —— 为 AWS SA 提供竞品算力采购格局与物理 AI 训练基础设施需求规模的参考信号<br>⏳ **待定**：Figure·Nscale 官方公布（2026-09-03）`[4]` —— 初始承诺 35 亿美元（最多 10 万张 Vera Rubin GPU），有意扩大至 60 亿美元以上，并伴随 Nscale 对 Figure 的股权投资。部署目标为 2027 年下半年（美国德州 Barstow）—— 路线图阶段，实际运行为 0 | 确认部署启动 + 与 AWS 竞品案例的对比依据 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
@@ -106,6 +106,4 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（Radar 本质上快速�
 [^mcp]: **MCP（Model Context Protocol）** — 连接智能体与工具·数据源的开放标准协议。常被比作"智能体的 USB-C"，把机器人技能暴露为 MCP 服务器的实验正在增多。
 [^ros]: **ROS 2（Robot Operating System 2）** — 机器人软件事实上的标准开源中间件。传感器·控制节点通过话题（topic）通信的分布式架构，是工业·研究机器人栈的公共基础。
 [^agent]: **LLM 智能体** — 大语言模型自行制定计划、挑选并调用工具（API·机器人技能）、执行多步任务的软件。与简单问答不同，关键在于它有"行动"。
-[^vla]: **VLA (Vision-Language-Action)** — 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^umi]: **UMI (Universal Manipulation Interface)** — 无需机器人、由人手持带相机的便携夹爪采集示范数据的方式。可以在不投入机器人的情况下大量获取真实世界数据。
 [^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** — 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
