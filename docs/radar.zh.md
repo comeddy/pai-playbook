@@ -1,5 +1,5 @@
 ---
-ko_hash: 1d2b011b07c42cdcf0942182641a8080be3afd0e
+ko_hash: 0e22bd3d54dbe540420121903e9b5b50e84a25e0
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-09-08 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-09-09 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -68,8 +68,8 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[Perceptron Isaac 0.5](https://github.com/perceptron-ai-inc/isaac)**（开源权重具身基础模型，360 亿参数） | 🔵 Research | ✨ **关注**：将视频理解·具身推理·机器人控制统一到单一稀疏骨干网络中并开放权重 —— 使用 35 个以上机器人系统·10 万+小时机器人经验·100 万小时视频·3T 多模态 token 训练，自报优于 π0.5·GR00T N1.7，代码与权重同时公开（代码 Apache-2.0）<br>⏳ **待定**：公司官方发布 + GitHub 官方仓库（2026-08-27/28，来自前 Meta 研究员创立的初创公司 Perceptron AI）`[4]` —— 自报基准，无独立复现·peer-review。权重本身的许可条款在 Hugging Face 仓库另有说明（此处未能访问核实） | 独立基准复现 + 实际部署案例 |
 | **[ABEJA × 村田制作所 GR00T N1.7 双臂 PoC](https://prtimes.jp/main/html/rd/p/000000229.000010628.html)**（基于 VLA 的物理 AI 技术验证） | 🟡 Preview | ✨ **关注**：日本制造巨头村田制作所使用 NVIDIA GR00T N1.7（商业许可的开源 VLA）在真实硬件上验证双臂机器人的零件传递·姿态转换·插入连续动作 —— 真实制造企业验证商业许可开源 VLA 的早期案例，切入实验室自动化角度<br>⏳ **待定**：ABEJA·村田制作所官方公布（2026-08-31，PR TIMES）`[4]` —— 通过数百次遥操作示范进行模仿学习，在验证（测试）环境中于实机成功。尚无生产规模部署或自主性能的独立验证。⚠️ 链接为 PR TIMES 官方发布稿，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 生产线部署 + 独立验证 |
 | **[NEURA Robotics 4NE1 / Neuraverse × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale)**（德国全栈机器人公司，AWS 战略合作） | ⚪ 路线图 | ✨ **关注**：AWS 成为 Neuraverse 的主要云服务商，把 Gym 训练环境与 SageMaker 集成，NEURA 加入 AWS Partner Network —— 服务名称具体明确的 AWS 合作，映射具体程度仅次于 Radar 中的"AWS 自家"物理 AI 案例（AWS-NVIDIA 基础设施扩展），一条值得关注的欧洲人形机器人赛道<br>⏳ **待定**：AWS·NEURA 官方公布（2026-04-21，press.aboutamazon.com）`[4]` —— 在 Amazon 履约中心的部署仅处于"探讨中"阶段，并非实际部署。因最高 14 亿美元的 C 轮融资（2026-06-10，Amazon·NVIDIA·Tether 等参与，全栈机器人公司史上最大融资）与 IFA 柏林 2026 主题演讲（2026-09-05，4NE1 实机展示）而重新引发关注，无第三方验证。⚠️ 链接为 press.aboutamazon.com 官方发布稿，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开部署案例（如 Amazon 履约中心）+ 独立性能验证 |
-| **[AGIBOT WORLD 2026 Theme 3: Reinforcement Learning](https://www.agibot.com/article/231/detail/88.html)**（涵盖成功·失败·人工介入的真实世界 RL 数据集） | 🔵 Research | ✨ **关注**：[pillar-1](pillar-1.md) 中已有的 AgiBot World（100 万+轨迹，CC BY-NC-SA 非商业）的后续主题 —— 不仅包含成功演示，还纳入自主策略执行中的失败·错误·人工介入修正，标志数据飞轮从模仿学习扩展到 RL 轴（机器人数据管道角度）<br>⏳ **待定**：AGIBOT 官方发布（agibot.com，2026-08-07）`[4]` —— 首批发布覆盖 14 项任务（网线插接·用钥匙开门·条码标签粘贴·台灯打包等），9,638 条轨迹·164+小时（完整发布共 11,430 条轨迹）。仍为 **CC BY-NC-SA 4.0 非商业**（与 pillar-1 条目相同的许可风险），无独立基准·实际部署验证 | 商业许可转换/明确化 + 独立基准复现 |
-| **[Figure × Nscale 35 亿美元算力合作](https://www.prnewswire.com/news-releases/nscale-and-figure-sign-strategic-partnership-to-power-the-next-generation-of-physical-ai-302868918.html)**（最多 10 万张 NVIDIA Vera Rubin GPU，Nscale 同时对 Figure 进行股权投资） | ⚪ 路线图 | ✨ **关注**：竞争人形机器人公司首次把大规模训练算力绑定给欧洲新兴云厂商而非 AWS —— 为 AWS SA 提供竞品算力采购格局与物理 AI 训练基础设施需求规模的参考信号<br>⏳ **待定**：Figure·Nscale 官方公布（2026-09-03）`[4]` —— 初始承诺 35 亿美元（最多 10 万张 Vera Rubin GPU），有意扩大至 60 亿美元以上，并伴随 Nscale 对 Figure 的股权投资。部署目标为 2027 年下半年（美国德州 Barstow）—— 路线图阶段，实际运行为 0 | 确认部署启动 + 与 AWS 竞品案例的对比依据 |
+| **[RLWRLD RLDX-1](https://arxiv.org/abs/2605.03269)**（81 亿参数的灵巧操作[^dext]基础模型，AWS Generative AI Accelerator 参与项目） | 🔵 Research | ✨ **关注**：一家 KAIST 背景的首尔初创公司利用 AWS Generative AI Accelerator 算力训练的开源机器人基础模型，被 AWS 官方博客直接报道 —— 专攻五指手精细操作，自报在基准测试上优于 GR00T N1.6·π0.5，是韩国发起的"AWS 自家"合作案例（继 RLWRLD·NEURA·AWS-NVIDIA 之后 Radar 中第三个官方 AWS 合作案例）<br>⏳ **待定**：RLWRLD 官方发布 + arXiv 技术报告（2026-05，arXiv 2605.03269）`[4]` —— 8 项公开基准的自测数据（如 GR-1 Tabletop 得分 58.7，比 GR00T N1.6 高 10.7 个百分点），无独立复现·同行评审。与 AWS 的关系仍处于 accelerator 参与阶段，实际部署目标为 2030 年与乐天酒店及度假村合作（早期阶段）。⚠️ 链接为 arXiv 原文，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 独立基准复现 + 实际部署案例 |
+| **[XPeng Robotics IRON](https://www.xpeng.com/pressroom/news/01a03797fccda01e0de68a02a256006a)**（9 亿美元以上单轮融资，63 亿美元估值） | ⚪ 路线图 | ✨ **关注**：中国具身智能行业史上最大单轮民间融资（IDG Capital 领投，腾讯·阿里巴巴战略参投）—— 人形机器人竞争格局的资金门槛被再次抬高的信号，可在客户对话中作为竞品参考引用<br>⏳ **待定**：XPeng 官方公布（2026-08-24）`[4]` —— 年内（2026）的"量产"目标仅限于自家门店·园区内的初期商用部署，面向中国·海外客户的正式上市·交付要到 2027 年才开始。当前实际运行为 0，无第三方验证。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 确认量产启动 + 公开实际运行案例 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
@@ -107,3 +107,4 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（Radar 本质上快速�
 [^ros]: **ROS 2（Robot Operating System 2）** — 机器人软件事实上的标准开源中间件。传感器·控制节点通过话题（topic）通信的分布式架构，是工业·研究机器人栈的公共基础。
 [^agent]: **LLM 智能体** — 大语言模型自行制定计划、挑选并调用工具（API·机器人技能）、执行多步任务的软件。与简单问答不同，关键在于它有"行动"。
 [^sdg]: **合成数据生成（SDG, Synthetic Data Generation）** — 用仿真器自动生成训练图像与标注（标签）的技术。最大优点是标注成本趋近于零。🎥 [Isaac Sim Replicator SDG 教程](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^dext]: **灵巧操作（dexterity）** — 机器人手·臂像人手一样精细·灵巧地操纵物体的能力。与简单夹爪的抓取·放置不同，指用五指手转动物体或操作工具等接触密集、复杂的操作。

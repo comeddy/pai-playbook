@@ -1,5 +1,5 @@
 ---
-ko_hash: 1d2b011b07c42cdcf0942182641a8080be3afd0e
+ko_hash: 0e22bd3d54dbe540420121903e9b5b50e84a25e0
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,7 +55,7 @@ _最終更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ✨ **注目**: LLM の意味レベルのリスクを扱う標準の空白地帯 — 規制・調達要件として浮上する可能性<br>⏳ **待機**: ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ✨ **注目**: ロボットエージェントの商取引・レジストリ基盤の AWS ネイティブ軸 — ソウルリージョン開放後は即提案可能<br>⏳ **待機**: ソウルリージョン未提供 — Agent Registry は東京 ✅、Payments は東京にも未提供（APAC はシドニーのみ）`[1]` | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-09-08 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-09-09 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
@@ -69,8 +69,8 @@ _最終更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[Perceptron Isaac 0.5](https://github.com/perceptron-ai-inc/isaac)**（オープンウェイト埋め込み型ファウンデーションモデル、360 億パラメータ） | 🔵 Research | ✨ **注目**: 動画理解・エンボディード推論・ロボット制御を単一のスパースバックボーンに統合し、オープンウェイトとして公開 — 35 以上のロボットシステム・10 万時間超のロボット経験・100 万時間の動画・3T のマルチモーダルトークンで学習、π0.5・GR00T N1.7 を上回ると自己申告し、コード・重みを同時公開（コードは Apache-2.0）<br>⏳ **待機**: 公式発表 + GitHub 公式リポジトリ（2026-08-27/28、元 Meta 研究者によるスタートアップ Perceptron AI）`[4]` —— 自己申告ベンチマークで、独立再現・peer-review なし。重み自体のライセンス条件は Hugging Face リポジトリに別途記載（本調査ではアクセス未確認） | 独立ベンチマーク再現 + 実導入事例 |
 | **[ABEJA×村田製作所 GR00T N1.7 双腕 PoC](https://prtimes.jp/main/html/rd/p/000000229.000010628.html)**（VLA ベースの物理AI技術検証） | 🟡 Preview | ✨ **注目**: 日本の製造大手・村田製作所が NVIDIA GR00T N1.7（商用ライセンスのオープン VLA）で双腕ロボットの部品受け渡し・姿勢転換・挿入という連続動作を実機で検証 —— 実際の製造大手が商用ライセンスのオープン VLA を検証した初期事例、ラボオートメーションの角度<br>⏳ **待機**: ABEJA・村田製作所の公式発表（2026-08-31、PR TIMES）`[4]` —— 数百件のテレオペレーション実演データで模倣学習、検証（テスト）環境下で実機成功。量産規模の展開・自律性能の独立検証はなし。⚠️ リンクは PR TIMES の公式発表だが、本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | 量産ラインへの展開 + 独立検証 |
 | **[NEURA Robotics 4NE1 / Neuraverse × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale)**（ドイツのフルスタックロボティクス企業、AWS 戦略的協業） | ⚪ ロードマップ | ✨ **注目**: AWS が Neuraverse の主要クラウドプロバイダーとなり、Gym トレーニング環境を SageMaker と統合、NEURA が AWS Partner Network に参加 — サービス名まで具体的な AWS パートナーシップで、Radar 内の「AWS 自社」物理 AI 事例（AWS-NVIDIA インフラ拡大）に次いで具体性が高い、注目すべき欧州ヒューマノイドトラック<br>⏳ **待機**: AWS・NEURA の公式発表（2026-04-21、press.aboutamazon.com）`[4]` — Amazon フルフィルメントセンターへの配備は「検討中」段階に過ぎず実デプロイではない。最大 14 億ドルのシリーズ C（2026-06-10、Amazon・NVIDIA・Tether などが参加、フルスタックロボティクス企業史上最大の調達額）と IFA ベルリン 2026 キーノート（2026-09-05、4NE1 実機展示）で話題が再燃、第三者検証なし。⚠️ リンクは press.aboutamazon.com の公式発表だが、本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | Amazon フルフィルメントセンターなどの公開デプロイ事例 + 独立した性能検証 |
-| **[AGIBOT WORLD 2026 Theme 3: Reinforcement Learning](https://www.agibot.com/article/231/detail/88.html)**（成功・失敗・人間の介入までを含む実世界 RL データセット） | 🔵 Research | ✨ **注目**: [pillar-1](pillar-1.md) に既にある AgiBot World（100 万+軌跡、CC BY-NC-SA 非商用）の後続テーマ —— 成功デモだけでなく自律ポリシーのロールアウトにおける失敗・エラー・人間介入による修正までを収録し、模倣学習を超えて RL 軸へデータフライホイールを広げるシグナル（ロボットデータパイプラインの角度）<br>⏳ **待機**: AGIBOT 公式発表（agibot.com、2026-08-07）`[4]` — 第一次リリースは 14 タスク（イーサネットケーブル挿入・鍵でのドア解錠・バーコードラベル貼付・デスクランプ梱包など）、9,638 軌跡・164 時間超（全体公開分は 11,430 軌跡）。依然として **CC BY-NC-SA 4.0 非商用**（pillar-1 の項目と同じライセンスリスク）、独立ベンチマーク・実導入の検証なし | 商用ライセンスへの転換/明確化 + 独立ベンチマーク再現 |
-| **[Figure × Nscale 35 億ドルのコンピュート提携](https://www.prnewswire.com/news-releases/nscale-and-figure-sign-strategic-partnership-to-power-the-next-generation-of-physical-ai-302868918.html)**（NVIDIA Vera Rubin GPU 最大 10 万基、Nscale による Figure への出資を伴う） | ⚪ ロードマップ | ✨ **注目**: 競合ヒューマノイド企業が大規模な訓練用コンピュートを AWS ではなく欧州系ネオクラウドと組んだ初の事例 — AWS SA にとっては競合のコンピュート調達構図と Physical AI 訓練インフラ需要の規模を示す参考シグナル<br>⏳ **待機**: Figure・Nscale の公式発表（2026-09-03）`[4]` — 初期コミットメントは 35 億ドル（最大 10 万基の Vera Rubin GPU）、60 億ドル以上への拡大意向、加えて Nscale による Figure への出資を伴う。デプロイは 2027 年下半期（テキサス州 Barstow）を目標とするロードマップ段階で、実稼働は 0 | 実際のデプロイ開始の確認 + AWS 側の対応事例との比較根拠 |
+| **[RLWRLD RLDX-1](https://arxiv.org/abs/2605.03269)**（81 億パラメータのデクステリティ[^dext]基盤モデル、AWS Generative AI Accelerator 参加） | 🔵 Research | ✨ **注目**: KAIST 出身のソウルのスタートアップが AWS Generative AI Accelerator のコンピュートで学習したオープンロボティクス基盤モデルを AWS 公式ブログが直接紹介 — 5 指ハンドによる精密操作に特化し、GR00T N1.6・π0.5 に対する優位性を自社ベンチマークで主張する韓国発の「AWS 自社」パートナーシップ事例（RLWRLD・NEURA・AWS-NVIDIA に続き Radar 内で 3 件目の公式 AWS 協業事例）<br>⏳ **待機**: RLWRLD 公式発表 + arXiv 技術レポート（2026-05、arXiv 2605.03269）`[4]` — 8 件の公開ベンチマークでの自己測定値（例: GR-1 Tabletop 58.7 点、GR00T N1.6 比 +10.7pt）、独立再現・peer-review なし。AWS との関係は accelerator 参加段階、実導入は LOTTE HOTEL & RESORT との 2030 年目標（初期段階）。⚠️ リンクは arXiv 原文だが、本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | 独立ベンチマーク再現 + 実導入事例 |
+| **[XPeng Robotics IRON](https://www.xpeng.com/pressroom/news/01a03797fccda01e0de68a02a256006a)**（9 億ドル超の単独ラウンド、63 億ドルのバリュエーション） | ⚪ ロードマップ | ✨ **注目**: 中国のエンボディード AI 業界史上最大の単独ラウンド民間資金調達（IDG Capital 主導、Tencent・Alibaba が戦略的参加）— ヒューマノイド競争構図における資金力の基準点が再び動いたシグナルで、顧客対話で競合ベンチマークとして引用可能<br>⏳ **待機**: XPeng 公式発表（2026-08-24）`[4]` — 年内（2026）の「量産」目標は自社店舗・キャンパス内での初期商用展開に限られ、中国・海外顧客向けの正式ローンチ・配送は 2027 年からとなる。現在の実稼働は 0、第三者検証なし。⚠️ 本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | 量産開始の確認 + 実稼働事例の公開 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 
@@ -108,3 +108,4 @@ _owner: Youngjin · updated: 2026-08 · volatility: 高（Radar は本質的に�
 [^ros]: **ROS 2 (Robot Operating System 2)** — ロボットソフトウェアの事実上の標準オープンソースミドルウェアです。センサー・制御ノードがトピック（topic）で通信する分散構造で、産業・研究ロボットスタックの共通基盤です。
 [^agent]: **LLM エージェント** — 大規模言語モデルが自ら計画を立て、ツール（API・ロボットスキル）を選んで呼び出し、多段階のタスクを遂行するソフトウェアです。単純な質疑応答と異なり「行動」がある点が核心です。
 [^sdg]: **合成データ生成（SDG, Synthetic Data Generation）** — シミュレーターで学習用画像とアノテーション（ラベル）を自動生成する技法です。ラベリングコストがゼロに収束するのが最大の利点です。🎥 [Isaac Sim Replicator SDG チュートリアル](https://www.youtube.com/watch?v=HHzNIh72B_Y)
+[^dext]: **デクステリティ（dexterity）** — ロボットの手・アームが人の手のように精緻かつ器用に物体を扱う能力です。単純なグリッパーの把持・配置とは異なり、5 指ハンドで物体を回転させたり道具を操作したりするなど、接触の多い複雑な操作を指します。
