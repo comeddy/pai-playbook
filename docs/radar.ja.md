@@ -1,5 +1,5 @@
 ---
-ko_hash: 99c0509381e47cdc19fce3191d46a0855493705a
+ko_hash: c66c0b2a8c63fc78464659512cfa680f35a3deae
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -55,7 +55,7 @@ _最終更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **エージェント物理安全標準**（[RoboGuard](https://arxiv.org/abs/2503.07885) など） | 🔵 Research | ✨ **注目**: LLM の意味レベルのリスクを扱う標準の空白地帯 — 規制・調達要件として浮上する可能性<br>⏳ **待機**: ISO は物理のみ、LLM の意味的リスク標準が不在 | 標準化の進展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（ソウル）** | 🟡 Preview/未提供 | ✨ **注目**: ロボットエージェントの商取引・レジストリ基盤の AWS ネイティブ軸 — ソウルリージョン開放後は即提案可能<br>⏳ **待機**: ソウルリージョン未提供 — Agent Registry は東京 ✅、Payments は東京にも未提供（APAC はシドニーのみ）`[1]` | ソウルリージョン拡張 |
 
-## 🆕 最新スキャン流入（2026-09-11 · 一次検証完了 2026-07-21）
+## 🆕 最新スキャン流入（2026-09-12 · 一次検証完了 2026-07-21）
 
 <!-- 自動スキャン（arXiv/ウェブ）の流入分。2026-07-21 に一次ソース検証完了（検証エージェント 4 式、公式発表・arXiv 原文と照合）—— 昇格 0 件、訂正 6 件。THE FILTER を通過するまで顧客提案での使用禁止。定期更新は scripts/radar_scan.md を参照。 -->
 
@@ -69,8 +69,8 @@ _最終更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[NEURA Robotics 4NE1 / Neuraverse × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale)**（ドイツのフルスタックロボティクス企業、AWS 戦略的協業） | ⚪ ロードマップ | ✨ **注目**: AWS が Neuraverse の主要クラウドプロバイダーとなり、Gym トレーニング環境を SageMaker と統合、NEURA が AWS Partner Network に参加 — サービス名まで具体的な AWS パートナーシップで、Radar 内の「AWS 自社」物理 AI 事例（AWS-NVIDIA インフラ拡大）に次いで具体性が高い、注目すべき欧州ヒューマノイドトラック<br>⏳ **待機**: AWS・NEURA の公式発表（2026-04-21、press.aboutamazon.com）`[4]` — Amazon フルフィルメントセンターへの配備は「検討中」段階に過ぎず実デプロイではない。最大 14 億ドルのシリーズ C（2026-06-10、Amazon・NVIDIA・Tether などが参加、フルスタックロボティクス企業史上最大の調達額）と IFA ベルリン 2026 キーノート（2026-09-05、4NE1 実機展示）で話題が再燃、第三者検証なし。⚠️ リンクは press.aboutamazon.com の公式発表だが、本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | Amazon フルフィルメントセンターなどの公開デプロイ事例 + 独立した性能検証 |
 | **[RLWRLD RLDX-1](https://arxiv.org/abs/2605.03269)**（81 億パラメータのデクステリティ[^dext]基盤モデル、AWS Generative AI Accelerator 参加） | 🔵 Research | ✨ **注目**: KAIST 出身のソウルのスタートアップが AWS Generative AI Accelerator のコンピュートで学習したオープンロボティクス基盤モデルを AWS 公式ブログが直接紹介 — 5 指ハンドによる精密操作に特化し、GR00T N1.6・π0.5 に対する優位性を自社ベンチマークで主張する韓国発の「AWS 自社」パートナーシップ事例（RLWRLD・NEURA・AWS-NVIDIA に続き Radar 内で 3 件目の公式 AWS 協業事例）<br>⏳ **待機**: RLWRLD 公式発表 + arXiv 技術レポート（2026-05、arXiv 2605.03269）`[4]` — 8 件の公開ベンチマークでの自己測定値（例: GR-1 Tabletop 58.7 点、GR00T N1.6 比 +10.7pt）、独立再現・peer-review なし。AWS との関係は accelerator 参加段階、実導入は LOTTE HOTEL & RESORT との 2030 年目標（初期段階）。⚠️ リンクは arXiv 原文だが、本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | 独立ベンチマーク再現 + 実導入事例 |
 | **[Figure Index](https://www.figure.ai/index-app)**（人間の映像をもとにしたクラウドソーシング型ロボットデータ収集アプリ） | 🟡 Preview | ✨ **注目**: Figure AI が自社 VLA「Helix」の学習データを、ベンダーからの購入ではなく一般人向けの有料クラウドソーシングアプリで直接収集 — 2026-08-25 の公開後、108 か国で週間アクティブユーザー 4.4 万人超、アップロード映像 1,600 万本超（毎秒約 30 分相当）、今後 12 か月でデータ・コンピュートに 10 億ドル超を投資すると公表 — 実世界映像データパイプラインを自社運営する稀有な事例<br>⏳ **待機**: Figure 公式（figure.ai）`[4]` —— コントリビューターへの累計支払いは 1,500 万ドルとの発表のみで、収集映像が Helix のポリシー性能に実際どれだけ寄与しているかの定量成果・品質管理方式は独立検証されていない。⚠️ 本実行環境の egress 制限により curl 200 の手動確認は未実施（コミットメッセージ・issue 参照） | Helix ポリシー性能改善の実測公開 + 独立検証 |
-| **[AWS GenAIIC × Config](https://aws.amazon.com/blogs/physical-ai/how-config-scales-robot-training-data-without-scaling-data-collection/)**（合成データでロボット学習データの多様性を拡張） | 🔵 Research | ✨ **注目**: AWS Generative AI Innovation Center（GenAIIC）がロボット基盤モデルのデータ企業 Config Intelligence と協業 —— 実データ収集量を増やさず（累計 20 万時間超、月 2 万時間規模で収集中）、マルチビュー生成モデルで既存の実演映像の表面・照明を変えてデータの多様性だけを増幅 —— AWS GenAIIC が物理 AI データパイプラインに直接関与する稀有な「AWS 自社」一次事例<br>⏳ **待機**: AWS Physical AI 公式ブログ（2026-07-16）`[4]` —— Config 自社の非公開パイプライン内での適用にとどまり、実際のポリシー成功率への定量的効果・独立再現はなし | ポリシー性能改善の定量公開 + AWS サービスマッピングの確定 |
 | **[KIMM KAIROS V0.7](https://www.kimm.re.kr/eng/sub011001/view/id/1565)**（K-Moonshot 国家戦略技術課題による国産 AI ヒューマノイド） | ⚪ ロードマップ | ✨ **注目**: 韓国機械研究院（KIMM）が科学技術情報通信部支援の「AI ヒューマノイド・グローバルトップ研究団」として開発する国策ヒューマノイド —— 2026-09-07 の「2026 グローバル機械技術フォーラム」で V0.7 を公開、国民体操や伝統仮面舞（タルチュム）の動作まで実演（4 月の V0.5 は握手・手振りのみ）—— 韓国の顧客対話で直接挙がりうる「国策研究機関発」ヒューマノイドのトラック（現代・BD Atlas や LG × NVIDIA とは異なる角度）<br>⏳ **待機**: KIMM 公式発表 `[4]`（二次: 韓国国内の複数メディアで交差確認 —— 体操・仮面舞の実演は自己申告。⚠️ 本実行環境の egress 制限により kimm.re.kr の curl 200 手動確認は未実施、コミットメッセージ・issue 参照）—— V1.0 公開は 2027-04 目標、追加開発費（約 30 億ウォン）が必要と報じられている。商用化・自律性能は現状ゼロ、まだデモ段階 | V1.0 公開 + 自動車組立・家庭用の実証事例公開 |
+| **[Generalist AI GEN-1.5](https://generalistai.com/blog/gen-1.5)**（物理相互作用データで 8 か月以上事前学習したエンボディード基盤モデル。単一の 3~12 秒デモだけで、勾配更新やファインチューニングなしに新タスクを即座に実行するワンショット学習） | 🔵 Research | ✨ **注目**: 3~12 秒のデモ映像を「物理的プロンプト」としてコンテキストに挿入し、ファインチューニングなしで新タスクを即座に試行 —— VLA のタスクごとのファインチューニング依存を下げうる軸で、複数メディアが「ロボティクスの GPT-3 モーメント」と評価<br>⏳ **待機**: 会社の公式発表のみ（2026-08-19、generalistai.com）`[4]` —— 10 タスクでの自己申告ベンチマーク（ワンショット平均成功率 59%、5 分のデータ+10 勾配ステップ後に 83%）、独立再現・peer-review なし。⚠️ 本実行環境の egress 制限により generalistai.com の curl 200 手動確認は未実施（コミットメッセージ・issue 参照） | 独立ベンチマーク再現 + 多様なタスク・ハードウェアでの検証 |
 
 ## ⚰️ 廃止済み — 提案禁止（記録保存用）
 

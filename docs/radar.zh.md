@@ -1,5 +1,5 @@
 ---
-ko_hash: 99c0509381e47cdc19fce3191d46a0855493705a
+ko_hash: c66c0b2a8c63fc78464659512cfa680f35a3deae
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-09-11 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-09-12 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -68,8 +68,8 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[NEURA Robotics 4NE1 / Neuraverse × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale)**（德国全栈机器人公司，AWS 战略合作） | ⚪ 路线图 | ✨ **关注**：AWS 成为 Neuraverse 的主要云服务商，把 Gym 训练环境与 SageMaker 集成，NEURA 加入 AWS Partner Network —— 服务名称具体明确的 AWS 合作，映射具体程度仅次于 Radar 中的"AWS 自家"物理 AI 案例（AWS-NVIDIA 基础设施扩展），一条值得关注的欧洲人形机器人赛道<br>⏳ **待定**：AWS·NEURA 官方公布（2026-04-21，press.aboutamazon.com）`[4]` —— 在 Amazon 履约中心的部署仅处于"探讨中"阶段，并非实际部署。因最高 14 亿美元的 C 轮融资（2026-06-10，Amazon·NVIDIA·Tether 等参与，全栈机器人公司史上最大融资）与 IFA 柏林 2026 主题演讲（2026-09-05，4NE1 实机展示）而重新引发关注，无第三方验证。⚠️ 链接为 press.aboutamazon.com 官方发布稿，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开部署案例（如 Amazon 履约中心）+ 独立性能验证 |
 | **[RLWRLD RLDX-1](https://arxiv.org/abs/2605.03269)**（81 亿参数的灵巧操作[^dext]基础模型，AWS Generative AI Accelerator 参与项目） | 🔵 Research | ✨ **关注**：一家 KAIST 背景的首尔初创公司利用 AWS Generative AI Accelerator 算力训练的开源机器人基础模型，被 AWS 官方博客直接报道 —— 专攻五指手精细操作，自报在基准测试上优于 GR00T N1.6·π0.5，是韩国发起的"AWS 自家"合作案例（继 RLWRLD·NEURA·AWS-NVIDIA 之后 Radar 中第三个官方 AWS 合作案例）<br>⏳ **待定**：RLWRLD 官方发布 + arXiv 技术报告（2026-05，arXiv 2605.03269）`[4]` —— 8 项公开基准的自测数据（如 GR-1 Tabletop 得分 58.7，比 GR00T N1.6 高 10.7 个百分点），无独立复现·同行评审。与 AWS 的关系仍处于 accelerator 参与阶段，实际部署目标为 2030 年与乐天酒店及度假村合作（早期阶段）。⚠️ 链接为 arXiv 原文，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 独立基准复现 + 实际部署案例 |
 | **[Figure Index](https://www.figure.ai/index-app)**（基于人类视频的众包机器人数据采集应用） | 🟡 Preview | ✨ **关注**：Figure AI 训练自有 VLA Helix 所需的数据并非通过供应商采购，而是直接面向大众运营付费众包应用采集 —— 2026-08-25 上线后，覆盖 108 个国家、周活跃用户 4.4 万+，已上传视频 1,600 万+ 条（约每秒 30 分钟时长），并公布未来 12 个月在数据·算力上投入 10 亿美元以上 —— 企业自建真实场景视频数据管道的罕见案例<br>⏳ **待定**：Figure 官方（figure.ai）`[4]` —— 目前仅公布已向贡献者支付 1,500 万美元报酬，采集的视频对 Helix 策略性能的实际提升幅度及质量管控方式均无独立验证。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开 Helix 策略性能改进实测数据 + 独立验证 |
-| **[AWS GenAIIC × Config](https://aws.amazon.com/blogs/physical-ai/how-config-scales-robot-training-data-without-scaling-data-collection/)**（用合成数据扩展机器人训练数据多样性） | 🔵 Research | ✨ **关注**：AWS Generative AI Innovation Center（GenAIIC）与机器人基础模型数据公司 Config Intelligence 合作 —— 在不增加实测数据采集量的前提下（累计 20 万+小时，月采集约 2 万小时），用多视角生成模型为已有示范视频更换表面与光照，仅放大数据多样性 —— AWS GenAIIC 直接参与物理 AI 数据管道的罕见"AWS 自家"一手案例<br>⏳ **待定**：AWS Physical AI 官方博客（2026-07-16）`[4]` —— 应用于 Config 自身的非公开管道内部，增强数据对实际策略成功率的量化效果及独立复现均缺失 | 公开策略性能改进量化数据 + 确定 AWS 服务映射 |
 | **[KIMM KAIROS V0.7](https://www.kimm.re.kr/eng/sub011001/view/id/1565)**（K-Moonshot 国家战略技术课题下的国产 AI 人形机器人） | ⚪ 路线图 | ✨ **关注**：韩国机械研究院（KIMM）作为科技情通部支持的"AI 人形机器人全球顶尖研究团"开发的国策人形机器人 —— 2026-09-07 在"2026 全球机械技术论坛"上公开 V0.7，已能完成国民体操、传统假面舞（탈춤）等动作（4 月的 V0.5 仅能握手·挥手）—— 韩国客户对话中可能被提及的"国策研究机构发"人形机器人赛道（与现代·BD Atlas、LG × NVIDIA 角度不同）<br>⏳ **待定**：KIMM 官方公布 `[4]`（二手：多家韩国国内媒体交叉确认——体操·假面舞演示为自报。⚠️ 本次运行环境的出网限制导致未能对 kimm.re.kr 执行人工 curl 200 检查，详见提交说明/issue）—— V1.0 公开目标为 2027-04，据报道 KIMM 需要约 30 亿韩元的额外开发经费。商业化·自主性能尚为 0，仍处演示阶段 | V1.0 公开 + 汽车装配·家用场景实证案例公开 |
+| **[Generalist AI GEN-1.5](https://generalistai.com/blog/gen-1.5)**（基于物理交互数据预训练 8 个月以上的具身基础模型；仅凭单次 3~12 秒示范即可立即执行新任务，无需梯度更新或微调的单样本学习） | 🔵 Research | ✨ **关注**：把 3~12 秒示范视频作为"物理提示"插入上下文，无需微调即可立即尝试新任务 —— 有望降低 VLA 对逐任务微调的依赖，多家媒体称其为机器人领域的"GPT-3 时刻"<br>⏳ **待定**：仅有公司官方发布（2026-08-19，generalistai.com）`[4]` —— 10 项任务的自测基准（单样本平均成功率 59%，追加 5 分钟数据+10 步梯度更新后升至 83%），无独立复现·同行评审。⚠️ 本次运行环境的出网限制导致未能对 generalistai.com 执行人工 curl 200 检查（详见提交说明/issue） | 独立基准复现 + 多样任务·硬件验证 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
