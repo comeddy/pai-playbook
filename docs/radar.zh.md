@@ -1,5 +1,5 @@
 ---
-ko_hash: d53c0728060cfa89492e70e1df51bf30ecea741a
+ko_hash: 5a01582f22ddf818a41cf718bdc7cd7412d8202f
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,14 +54,12 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-09-13 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-09-14 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
 | 项目 | 标签 | 要点 | 晋升条件 |
 |---|---|---|---|
-| **[GHOST](https://arxiv.org/abs/2608.29080)**（仅凭机载摄像头即可让 1 人同时操作 2 台机器人的 VR 遥操作系统） | 🔵 Research | ✨ **关注**：Brown University（Tellex 实验室）在 Amazon 资金支持下开发 —— 无需外部动作捕捉，仅凭机载 RGB-D，1 名操作员即可通过 VR 同时遥操作 2 台 Boston Dynamics Spot，已在 IEEE RA-L 发表（通过同行评审）。实测新手成功率提升 1.6~4 倍、专家作业速度提升 1.47 倍 —— 有望降低基于遥操作的机器人数据采集管道成本的开源案例<br>⏳ **待定**：arXiv 2608.29080（2026-08-29，IEEE RA-L 2026-08 accept）`[4]` —— 专家评测者即论文作者本人 3 人（可能存在偏差），新手评测 n=15（9 项任务中仅完成 2 项），专用于 Boston Dynamics Spot 硬件·专用 Wi-Fi 环境（生产环境可靠性未验证） | 扩大独立用户评测 + 验证多样硬件·网络环境 |
-| **[Perceptron Isaac 0.5](https://github.com/perceptron-ai-inc/isaac)**（开源权重具身基础模型，360 亿参数） | 🔵 Research | ✨ **关注**：将视频理解·具身推理·机器人控制统一到单一稀疏骨干网络中并开放权重 —— 使用 35 个以上机器人系统·10 万+小时机器人经验·100 万小时视频·3T 多模态 token 训练，自报优于 π0.5·GR00T N1.7，代码与权重同时公开（代码 Apache-2.0）<br>⏳ **待定**：公司官方发布 + GitHub 官方仓库（2026-08-27/28，来自前 Meta 研究员创立的初创公司 Perceptron AI）`[4]` —— 自报基准，无独立复现·peer-review。权重本身的许可条款在 Hugging Face 仓库另有说明（此处未能访问核实） | 独立基准复现 + 实际部署案例 |
 | **[ABEJA × 村田制作所 GR00T N1.7 双臂 PoC](https://prtimes.jp/main/html/rd/p/000000229.000010628.html)**（基于 VLA 的物理 AI 技术验证） | 🟡 Preview | ✨ **关注**：日本制造巨头村田制作所使用 NVIDIA GR00T N1.7（商业许可的开源 VLA）在真实硬件上验证双臂机器人的零件传递·姿态转换·插入连续动作 —— 真实制造企业验证商业许可开源 VLA 的早期案例，切入实验室自动化角度<br>⏳ **待定**：ABEJA·村田制作所官方公布（2026-08-31，PR TIMES）`[4]` —— 通过数百次遥操作示范进行模仿学习，在验证（测试）环境中于实机成功。尚无生产规模部署或自主性能的独立验证。⚠️ 链接为 PR TIMES 官方发布稿，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 生产线部署 + 独立验证 |
 | **[NEURA Robotics 4NE1 / Neuraverse × AWS](https://press.aboutamazon.com/aws/2026/4/neura-robotics-and-aws-enter-strategic-collaboration-to-accelerate-physical-ai-at-scale)**（德国全栈机器人公司，AWS 战略合作） | ⚪ 路线图 | ✨ **关注**：AWS 成为 Neuraverse 的主要云服务商，把 Gym 训练环境与 SageMaker 集成，NEURA 加入 AWS Partner Network —— 服务名称具体明确的 AWS 合作，是 Radar 中映射最具体的"AWS 自家"物理 AI 案例之一，一条值得关注的欧洲人形机器人赛道<br>⏳ **待定**：AWS·NEURA 官方公布（2026-04-21，press.aboutamazon.com）`[4]` —— 在 Amazon 履约中心的部署仅处于"探讨中"阶段，并非实际部署。因最高 14 亿美元的 C 轮融资（2026-06-10，Amazon·NVIDIA·Tether 等参与，全栈机器人公司史上最大融资）与 IFA 柏林 2026 主题演讲（2026-09-05，4NE1 实机展示）而重新引发关注，无第三方验证。⚠️ 链接为 press.aboutamazon.com 官方发布稿，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开部署案例（如 Amazon 履约中心）+ 独立性能验证 |
 | **[RLWRLD RLDX-1](https://arxiv.org/abs/2605.03269)**（81 亿参数的灵巧操作[^dext]基础模型，AWS Generative AI Accelerator 参与项目） | 🔵 Research | ✨ **关注**：一家 KAIST 背景的首尔初创公司利用 AWS Generative AI Accelerator 算力训练的开源机器人基础模型，被 AWS 官方博客直接报道 —— 专攻五指手精细操作，自报在基准测试上优于 GR00T N1.6·π0.5，是韩国发起的"AWS 自家"合作案例（与 NEURA 同为 Radar 中的官方 AWS 合作案例）<br>⏳ **待定**：RLWRLD 官方发布 + arXiv 技术报告（2026-05，arXiv 2605.03269）`[4]` —— 8 项公开基准的自测数据（如 GR-1 Tabletop 得分 58.7，比 GR00T N1.6 高 10.7 个百分点），无独立复现·同行评审。与 AWS 的关系仍处于 accelerator 参与阶段，实际部署目标为 2030 年与乐天酒店及度假村合作（早期阶段）。⚠️ 链接为 arXiv 原文，但本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 独立基准复现 + 实际部署案例 |
@@ -70,6 +68,8 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[Generalist AI GEN-1.5](https://generalistai.com/blog/gen-1.5)**（基于物理交互数据预训练 8 个月以上的具身基础模型；仅凭单次 3~12 秒示范即可立即执行新任务，无需梯度更新或微调的单样本学习） | 🔵 Research | ✨ **关注**：把 3~12 秒示范视频作为"物理提示"插入上下文，无需微调即可立即尝试新任务 —— 有望降低 VLA 对逐任务微调的依赖，多家媒体称其为机器人领域的"GPT-3 时刻"<br>⏳ **待定**：仅有公司官方发布（2026-08-19，generalistai.com）`[4]` —— 10 项任务的自测基准（单样本平均成功率 59%，追加 5 分钟数据+10 步梯度更新后升至 83%），无独立复现·同行评审。⚠️ 本次运行环境的出网限制导致未能对 generalistai.com 执行人工 curl 200 检查（详见提交说明/issue） | 独立基准复现 + 多样任务·硬件验证 |
 | **[NVIDIA Isaac GR00T Reference Humanoid Robot](https://nvidianews.nvidia.com/news/nvidia-open-humanoid-robot-reference-design)**（开放参考人形机器人硬件，于 GTC Taipei 发布） | 🟡 Preview | ✨ **关注**：NVIDIA 首款完整参考人形机器人硬件 —— Unitree H2 Plus 底盘（31 DOF）+ Sharpa Wave 触觉五指手（22 DOF）+ Jetson AGX Thor T5000 车载算力 + Isaac GR00T 软件栈 —— Radar 中已收录的 NEURA Robotics·1X 等已作为生态伙伴加入，标志 GR00T 正从软件向硬件垂直整合<br>⏳ **待定**：NVIDIA 官方公布（2026-06-01，GTC Taipei）`[4]`（一手来源 nvidianews.nvidia.com —— 本次运行环境的出网限制导致未能执行人工 curl 200 检查，详见提交说明/issue）—— 通过 Unitree 出货计划在"2026 年底"，面向学术研究（Stanford·ETH Zurich·Ai2·UC San Diego 为发布合作伙伴），目前实际出货·研究成果均为 0 | 实际出货 + 公开研究机构应用成果 |
 | **[UBTech UWORLD U1](https://www.prnewswire.com/news-releases/ubtech-launches-uworld-u1-the-worlds-first-full-size-mass-produced-ultra-bionic-humanoid-robot-302815272.html)**（中国家用陪伴人形机器人，88 DOF） | 🟡 Preview | ✨ **关注**：UBTECH 以"全球首款全尺寸量产型"家用陪伴人形机器人发布 —— 3 个产品系列（1.76 万~14.5 万美元），预订量超 1.3 万台后计划 2026-09-16 开始首批交付 —— 消费级人形机器人量产赛道上与 1X Neo 不同的角度（中国发起的大规模量产·公开量产价）<br>⏳ **待定**：UBTECH 官方公布（2026-06-30）`[4]`（一手来源为 PRNewswire 官方发布稿 —— 本次运行环境的出网限制导致未能执行人工 curl 200 检查，详见提交说明/issue）—— "量产"主张仍处于发布·预订阶段，实际交付·自主性能（如遥操作比例）尚无独立验证 | 完成实际交付 + 独立用户评测·自主性能验证 |
+| **[Unitree UnifoLM-X2-1.0](https://x.com/UnitreeRobotics/status/2096932273602048258)**（基于实时世界模型的完全自主人形机器人拳击演示） | ⚪ Hype·路线图 | ✨ **关注**：Unitree 让 G1 人形机器人在无遥操作的情况下完全自主完成拳击对战（变换站姿·闪避·直拳·侧踢），由实时世界模型驱动的规划·决策系统支撑 —— 是其 2025 年 9 月开源的 UnifoLM-WMA-0 框架的实战版，是世界模型驱动高动态实时交互的早期案例，引发关注<br>⏳ **待定**：Unitree 官方公布（2026-09-07，官方 X 账号）`[4]` —— 仅为一次性精心策划的演示（1 场拳击对战），技术报告·论文尚未公开，无独立验证及格斗以外通用任务性能·安全性数据。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开技术报告 + 通用任务性能·独立验证 |
+| **[Skild AI S1](https://skild.ai/blogs/s1)**（仅凭单个人类示范视频、无需微调即可执行最长 10 分钟长时任务的上下文学习机器人基础模型） | 🟡 Preview | ✨ **关注**：Skild AI 以 1 个人类示范视频作为"视觉提示"，无需微调·权重不变即可执行最长 10 分钟·数十步的未学习长时任务（种花盆·煎薯饼·手冲咖啡·组装套件），成功率达 66%（零样本仅 9%）—— 与 Generalist AI GEN-1.5 同属"无需微调的单样本/上下文学习"赛道的又一重要案例，并宣布"从今天起向少数产业合作伙伴部署"<br>⏳ **待定**：Skild AI 官方公布（2026-08-25，skild.ai 官方博客）`[4]` —— 仅为自测基准（4 项未学习任务），论文·权重·API 均未公开（闭源模型），产业合作伙伴部署仅为"启动"宣告，尚无实际使用成果或独立验证。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开产业合作伙伴实际部署成果 + 独立基准/论文公开 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
