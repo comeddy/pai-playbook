@@ -1,9 +1,9 @@
 ---
-ko_hash: 2516ae28ab4a3201184ae9b9a4c5af28d03d0276
+ko_hash: 2cd1c401f6fc4a8c415db3ccacd5ca921ee0b21a
 ---
 # Physical AI Playbook — Introduction
 
-_Last updated: 2026-08 · owner: Youngjin · status: initial build in progress_
+_Last updated: 2026-09 · owner: Youngjin · status: initial build in progress_
 
 > **L0 TL;DR**: A reference asset that lets you answer a customer's Physical AI question with **architecture direction, AWS mapping, and next actions in under 5 minutes from this single playbook** — no digging through Slack. This is neither a paper-summary collection nor a news archive.
 
@@ -21,6 +21,7 @@ _Last updated: 2026-08 · owner: Youngjin · status: initial build in progress_
 2. **Once the topic is clear**: enter one of the 5 pillars. Each item is layered as **L0 (1–2 sentences) → L1 (1 page) → L2 (deep-dive links)** — reading only the top gives you direction.
 3. **At a crossroads**: [Decision trees](decisions.md) — Cloud vs Edge, NVIDIA vs open source, securing GPUs, Build vs Buy.
 4. **"Why isn't this here?"**: check the [Radar](radar.md) first. Items that fell short of the inclusion criteria and are on hold live there. Submit new candidates via the promotion pipeline in the [maintenance guide](maintenance.md).
+5. **For recent resources**: use [News](news.md) for official articles and customer technical stories, and [Workshops & Resources](workshops.md) for learning and implementation paths.
 
 ### How to read the labels
 
@@ -86,6 +87,8 @@ _Last updated: 2026-08 · owner: Youngjin · status: initial build in progress_
 ## Page list
 
 - [guide — how this playbook is built and maintained (the full verification pipeline)](guide.md)
+- [News — recent official articles and pillar links](news.md)
+- [Workshops & Resources — public workshops, guides, and samples](workshops.md)
 - [Executive Brief — a 5-minute judgment frame for executives (now/soon/not-yet matrix)](exec.md)
 - [Executive Conversation Guide — SA prep for executive meetings (pitches, top-10 Q&A, forbidden claims)](exec-guide.md)
 - [pillar-1 — Data Collection & Processing](pillar-1.md)
@@ -107,7 +110,7 @@ _Last updated: 2026-08 · owner: Youngjin · status: initial build in progress_
 
 ---
 
-_owner: Youngjin · updated: 2026-08 · volatility: low (structural page — only the FAQ Top 20 ranking is reviewed quarterly)_
+_owner: Youngjin · updated: 2026-09 · volatility: low (structural page — only the FAQ Top 20 ranking is reviewed quarterly)_
 
 <!-- 용어 각주 -->
 

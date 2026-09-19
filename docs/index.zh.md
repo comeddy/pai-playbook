@@ -1,9 +1,9 @@
 ---
-ko_hash: 2516ae28ab4a3201184ae9b9a4c5af28d03d0276
+ko_hash: 2cd1c401f6fc4a8c415db3ccacd5ca921ee0b21a
 ---
 # Physical AI Playbook 介绍
 
-_最终更新: 2026-08 · owner: Youngjin · 状态: 初期构建中_
+_最终更新: 2026-09 · owner: Youngjin · 状态: 初期构建中_
 
 > **L0 TL;DR**: 当客户抛出 Physical AI 问题时，无需翻查 Slack，**仅凭这一份 playbook 就能在 5 分钟内**给出架构方向、AWS 映射与后续行动的参考资产。它既不是论文摘要集，也不是新闻归档。
 
@@ -21,6 +21,7 @@ _最终更新: 2026-08 · owner: Youngjin · 状态: 初期构建中_
 2. **主题明确后**：进入 5 个支柱之一。每个条目按 **L0（1~2 句）→ L1（1 页）→ L2（deep-dive 链接）** 分层——只读顶部即可确定方向。
 3. **面临岔路口**：[决策树](decisions.md) —— Cloud vs Edge、NVIDIA vs 开源、GPU 获取、Build vs Buy。
 4. **"这个为什么没有？"**：先查看 [Radar](radar.md)。因未达纳入标准而待定的条目在那里。新候选的上报走 [维护指南](maintenance.md) 的晋升管道。
+5. **查找近期资料**：在[新消息](news.md)阅读官方文章及客户技术案例，在[工作坊与资料](workshops.md)选择学习和实现路径。
 
 ### 如何阅读标签
 
@@ -86,6 +87,8 @@ _最终更新: 2026-08 · owner: Youngjin · 状态: 初期构建中_
 ## 页面列表
 
 - [guide — 本手册的构建与维护方式（完整验证管道）](guide.md)
+- [新消息 — 近期官方文章与支柱链接](news.md)
+- [工作坊与资料 — 公开工作坊、指南、样本](workshops.md)
 - [高管简报 — 面向高管的 5 分钟判断框架（现在/即将/尚未 矩阵）](exec.md)
 - [高管对话指南 — SA 的高管会议准备（电梯演讲·Top 10 问答·禁用表述）](exec-guide.md)
 - [pillar-1 — 数据采集 & 处理](pillar-1.md)
@@ -107,7 +110,7 @@ _最终更新: 2026-08 · owner: Youngjin · 状态: 初期构建中_
 
 ---
 
-_owner: Youngjin · updated: 2026-08 · volatility: 低（结构性页面 —— 仅 FAQ Top 20 排名按季度复核）_
+_owner: Youngjin · updated: 2026-09 · volatility: 低（结构性页面 —— 仅 FAQ Top 20 排名按季度复核）_
 
 <!-- 용어 각주 -->
 

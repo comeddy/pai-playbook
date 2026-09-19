@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Add News and Workshops & Resources to the existing navigation, in all four languages: six recent AWS Physical AI articles with publication dates and scope notes, plus eight workshops/guides/samples with prerequisites and source-access notes (checked 2026-09-19).
+
 - Register AWS Physical AI Recipes (hi-space, Korean, MIT — the code behind the Physical AI E2E workshop: Isaac Lab→GR00T fine-tuning→inference→monitoring E2E via CDK, HyperPod VLA/RL distributed-training infrastructure, a GR00T-N1.6-3B SageMaker fine-tuning pipeline, NVIDIA OSMO on EKS) as a related asset on pillars 2 and 3, with a new OSMO glossary footnote, in all four languages
 - Register the robot foundation model paper-review section of the Physical AI on AWS GitBook (Korean; reasoning VLM Cosmos-Reason 1 and VLA papers RT-2, OpenVLA, Gemini Robotics, GR00T N1, π0.6) as a pillar-2 open-VLA-model related asset, in all four languages
 - Promote commercial-grade content from the Physical AI 101 concept map into new per-pillar sections: "training operations — checkpoint lineage and the imitation-learning ceiling" and "RL fine-tuning (RFT) — PPO vs GRPO and reward design" (pillar 2); "why simulation — the economics of physical robots" (price ladder, actuator-dominated BOM, GPU-hour equivalence) (pillar 3); "safety regulation for physical robot cells — international standards and Korean legal requirements" (ISO 10218:2025, ISO/TS 15066 four collaborative modes, Korean Article 223 1.8 m fence + KCs certification) (pillar 4); "agent standards for the physical world — Anthropic MHS & AWS Strands Robots" (research preview, Doosan Robotics launch partner) (pillar 5) — with 12 new glossary footnotes, in all four languages
@@ -161,6 +163,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
+
+- 기존 메뉴에 새 소식·워크숍·자료를 4개 언어로 추가: 최근 AWS Physical AI 글 6건의 발행일·범위·필러 연결, 워크숍/가이드/샘플 8건의 준비 조건·접근 상태를 정리(2026-09-19 확인).
 
 - AWS Physical AI Recipes(hi-space, 한국어, MIT — Physical AI E2E 워크숍의 코드 저장소: Isaac Lab→GR00T 파인튜닝→추론→모니터링 E2E(CDK), HyperPod VLA/RL 분산 학습 인프라, GR00T-N1.6-3B SageMaker 파인튜닝 파이프라인, NVIDIA OSMO on EKS)를 pillar 2·3 관련 자산으로 등재 — OSMO 용어 각주 신설, 4개 언어 반영
 - Physical AI on AWS GitBook의 로봇 파운데이션 모델 페이퍼 리뷰 섹션(한국어 — 추론 VLM Cosmos-Reason 1, VLA 논문 RT-2·OpenVLA·Gemini Robotics·GR00T N1·π0.6)을 pillar-2 오픈 VLA 모델 관련 자산으로 등재, 4개 언어 반영
@@ -306,6 +310,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 在现有菜单添加四语言“新消息”“工作坊与资料”：六篇近期 AWS Physical AI 文章的发布日期、范围及支柱链接，八项工作坊/指南/样本的准备条件和访问说明（2026-09-19 确认）。
+
 - 将 AWS Physical AI Recipes（hi-space，韩语，MIT — Physical AI E2E 研讨会的代码仓库: Isaac Lab→GR00T 微调→推理→监控 E2E（CDK）、HyperPod VLA/RL 分布式训练基础设施、GR00T-N1.6-3B SageMaker 微调管道、NVIDIA OSMO on EKS）登记为 pillar 2·3 相关资产 — 新增 OSMO 术语脚注，四种语言同步
 - 将 Physical AI on AWS GitBook 的机器人基础模型论文评读部分（韩语 — 推理 VLM Cosmos-Reason 1，VLA 论文 RT-2、OpenVLA、Gemini Robotics、GR00T N1、π0.6）登记为 pillar-2 开放 VLA 模型相关资产，四种语言同步
 - 将 Physical AI 101 概念地图中的商用级内容提升为各支柱的新章节："训练运营原则 — checkpoint 谱系与模仿学习的天花板"及"RL 微调（RFT）— PPO vs GRPO 与奖励设计"（pillar 2）；"为什么选择仿真 — 实体机器人的经济学"（价格阶梯、执行器主导的 BOM、GPU 小时等价）（pillar 3）；"实体机器人单元的安全法规 — 国际标准与韩国法定要求"（ISO 10218:2025、ISO/TS 15066 四种协作模式、韩国第223条 1.8m 围栏 + KCs 认证）（pillar 4）；"物理世界的智能体标准 — Anthropic MHS & AWS Strands Robots"（research preview，Doosan Robotics 为发布合作伙伴）（pillar 5）— 新增 12 条术语脚注，四种语言同步
@@ -449,6 +455,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
+
+- 既存メニューに4言語の新着情報・ワークショップ資料を追加。最近のAWS Physical AI記事6件に公開日・範囲・ピラー接続、実習/ガイド/サンプル8件に前提・アクセス状態を記載（2026-09-19確認）。
 
 - AWS Physical AI Recipes（hi-space、韓国語、MIT — Physical AI E2E ワークショップのコードリポジトリ: Isaac Lab→GR00T ファインチューニング→推論→モニタリング E2E（CDK）、HyperPod VLA/RL 分散学習インフラ、GR00T-N1.6-3B SageMaker ファインチューニングパイプライン、NVIDIA OSMO on EKS）を pillar 2·3 の関連資産として登録 — OSMO 用語脚注を新設、4言語反映
 - Physical AI on AWS GitBook のロボット基盤モデル論文レビューセクション（韓国語 — 推論 VLM Cosmos-Reason 1、VLA 論文 RT-2・OpenVLA・Gemini Robotics・GR00T N1・π0.6）を pillar-2 オープン VLA モデルの関連資産として登録、4言語反映

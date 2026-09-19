@@ -11,6 +11,8 @@ docs_dir: docs
 nav:
   - 홈: index.md
   - 가이드: guide.md
+  - "새 소식": news.md
+  - "워크숍·자료": workshops.md
   - "경영진 브리핑": exec.md
   - "임원 대화 가이드": exec-guide.md
   - "P1 · 데이터 수집 & 처리": pillar-1.md
@@ -93,6 +95,8 @@ plugins:
           nav_translations:
             홈: Home
             가이드: Guide
+            "새 소식": News
+            "워크숍·자료": "Workshops & Resources"
             "경영진 브리핑": "Executive Brief"
             "임원 대화 가이드": "Executive Conversation Guide"
             "P1 · 데이터 수집 & 처리": "P1 · Data Collection & Processing"
@@ -109,6 +113,8 @@ plugins:
           nav_translations:
             홈: 首页
             가이드: 指南
+            "새 소식": 新消息
+            "워크숍·자료": 工作坊与资料
             "경영진 브리핑": "高管简报"
             "임원 대화 가이드": "高管对话指南"
             "P1 · 데이터 수집 & 처리": "P1 · 数据采集与处理"
@@ -125,6 +131,8 @@ plugins:
           nav_translations:
             홈: ホーム
             가이드: ガイド
+            "새 소식": 新着情報
+            "워크숍·자료": ワークショップ・資料
             "경영진 브리핑": "経営層ブリーフィング"
             "임원 대화 가이드": "経営層対話ガイド"
             "P1 · 데이터 수집 & 처리": "P1 · データ収集と処理"
