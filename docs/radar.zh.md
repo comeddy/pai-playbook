@@ -1,5 +1,5 @@
 ---
-ko_hash: 55345b6775f1e49a891941305177eb227bb8b7ed
+ko_hash: 2bd32a3b25acd28cb7d6f15df5b9dd6f7b8be1a8
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-09-18 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-09-19 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -65,11 +65,11 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[Figure Index](https://www.figure.ai/index-app)**（基于人类视频的众包机器人数据采集应用） | 🟡 Preview | ✨ **关注**：Figure AI 训练自有 VLA Helix 所需的数据并非通过供应商采购，而是直接面向大众运营付费众包应用采集 —— 2026-08-25 上线后，覆盖 108 个国家、周活跃用户 4.4 万+，已上传视频 1,600 万+ 条（约每秒 30 分钟时长），并公布未来 12 个月在数据·算力上投入 10 亿美元以上 —— 企业自建真实场景视频数据管道的罕见案例<br>⏳ **待定**：Figure 官方（figure.ai）`[4]` —— 目前仅公布已向贡献者支付 1,500 万美元报酬，采集的视频对 Helix 策略性能的实际提升幅度及质量管控方式均无独立验证。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开 Helix 策略性能改进实测数据 + 独立验证 |
 | **[KIMM KAIROS V0.7](https://www.kimm.re.kr/eng/sub011001/view/id/1565)**（K-Moonshot 国家战略技术课题下的国产 AI 人形机器人） | ⚪ 路线图 | ✨ **关注**：韩国机械研究院（KIMM）作为科技情通部支持的"AI 人形机器人全球顶尖研究团"开发的国策人形机器人 —— 2026-09-07 在"2026 全球机械技术论坛"上公开 V0.7，已能完成国民体操、传统假面舞（탈춤）等动作（4 月的 V0.5 仅能握手·挥手）—— 韩国客户对话中可能被提及的"国策研究机构发"人形机器人赛道（与现代·BD Atlas 角度不同）<br>⏳ **待定**：KIMM 官方公布 `[4]`（二手：多家韩国国内媒体交叉确认——体操·假面舞演示为自报。⚠️ 本次运行环境的出网限制导致未能对 kimm.re.kr 执行人工 curl 200 检查，详见提交说明/issue）—— V1.0 公开目标为 2027-04，据报道 KIMM 需要约 30 亿韩元的额外开发经费。商业化·自主性能尚为 0，仍处演示阶段 | V1.0 公开 + 汽车装配·家用场景实证案例公开 |
 | **[Generalist AI GEN-1.5](https://generalistai.com/blog/gen-1.5)**（基于物理交互数据预训练 8 个月以上的具身基础模型；仅凭单次 3~12 秒示范即可立即执行新任务，无需梯度更新或微调的单样本学习） | 🔵 Research | ✨ **关注**：把 3~12 秒示范视频作为"物理提示"插入上下文，无需微调即可立即尝试新任务 —— 有望降低 VLA 对逐任务微调的依赖，多家媒体称其为机器人领域的"GPT-3 时刻"<br>⏳ **待定**：仅有公司官方发布（2026-08-19，generalistai.com）`[4]` —— 10 项任务的自测基准（单样本平均成功率 59%，追加 5 分钟数据+10 步梯度更新后升至 83%），无独立复现·同行评审。⚠️ 本次运行环境的出网限制导致未能对 generalistai.com 执行人工 curl 200 检查（详见提交说明/issue） | 独立基准复现 + 多样任务·硬件验证 |
-| **[UBTech UWORLD U1](https://www.prnewswire.com/news-releases/ubtech-launches-uworld-u1-the-worlds-first-full-size-mass-produced-ultra-bionic-humanoid-robot-302815272.html)**（中国家用陪伴人形机器人，88 DOF） | 🟡 Preview | ✨ **关注**：UBTECH 以"全球首款全尺寸量产型"家用陪伴人形机器人发布 —— 3 个产品系列（1.76 万~14.5 万美元），预订量超 1.3 万台后计划 2026-09-16 开始首批交付 —— 消费级人形机器人量产赛道上与 1X Neo 不同的角度（中国发起的大规模量产·公开量产价）<br>⏳ **待定**：UBTECH 官方公布（2026-06-30）`[4]`（一手来源为 PRNewswire 官方发布稿 —— 本次运行环境的出网限制导致未能执行人工 curl 200 检查，详见提交说明/issue）—— "量产"主张仍处于发布·预订阶段，实际交付·自主性能（如遥操作比例）尚无独立验证 | 完成实际交付 + 独立用户评测·自主性能验证 |
 | **[TANGO](https://arxiv.org/abs/2609.09158)**（直接预测关节空间动作的全身控制型人形机器人导航 VLA） | 🔵 Research | ✨ **关注**：不同于预测 2D 路点，该全身（whole-body）VLA 直接预测 29 自由度的关节空间动作，在障碍物密集的室内环境中根据语言指令自主决定弯身·侧移·跨越障碍 —— 使用自研仿真数据管道（Plan-Edit-Track，6.46 万条轨迹）训练后，在 Unitree G1 上实现零样本 sim-to-real[^s2r] 迁移，是同时触及 VLA 与 sim-to-real 两条主线的学术案例<br>⏳ **待定**：arXiv 预印本（2026-09-08，UC Berkeley·Peking Univ·Tsinghua·HKU·Princeton 联合）`[4]` —— 仅有自测基准（成功率/SPL/碰撞率），无同行评审·独立复现。数据管道·模型·检查点计划开源但尚未发布。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 同行评审 + 开源后独立复现 |
 | **[GE-Act 2.0](https://arxiv.org/abs/2609.05588)**（AgiBot Genie 团队从零预训练的世界-动作模型） | 🔵 Research | ✨ **关注**：与现有世界-动作模型（WAM）直接继承预训练视频生成模型不同，该模型的生成·动作组件完全基于操作数据从零训练 —— 为 Radar 的世界-动作模型主线（DreamZero→GR00T N2、Genie 3）增添一个中国 AgiBot 发起的开放研究案例<br>⏳ **待定**：arXiv 预印本（2026-09-04，AgiBot Genie Team·NUS LV-Lab·BUAA 联合）`[4]` —— 仅有自测基准（仿真·实机操作成功率），无同行评审·独立复现。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 同行评审 + 独立复现 + 开源发布 |
 | **[Skild AI S1](https://skild.ai/blogs/s1)**（仅凭单个人类示范视频、无需微调即可执行最长 10 分钟长时任务的上下文学习机器人基础模型） | 🟡 Preview | ✨ **关注**：Skild AI 以 1 个人类示范视频作为"视觉提示"，无需微调·权重不变即可执行未学习长时任务 —— [NVIDIA 官方博客](https://blogs.nvidia.com/blog/skild-ai-s1-physical-ai/)（2026-09-10）确认 Skild·NVIDIA·Foxconn 已在 NVIDIA Blackwell 系统组装线（安装busbar和limit block、拧紧16颗螺丝等）实际部署，付费客户超 60 家，首次商业部署仅 10 个月即达成年化经常性收入（ARR）1 亿美元 —— 从"启动向少数合作伙伴部署"的宣告阶段，升级为实际产生产业收入的早期案例<br>⏳ **待定**：NVIDIA·Skild AI 官方公布（2026-09-10）`[4]` —— 营收·客户数为公司自报数据，无第三方审计或独立性能验证（通用任务成功率等细节未公开）。无 AWS 映射·首尔区域关联案例。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 独立性能·营收审计（第三方）+ 公开 AWS 映射案例 |
 | **[Robot Data Factory (RDF)](https://arxiv.org/abs/2609.16705)**（通过任务链路 mission→task→skill→episode→dataset→benchmark 将机器人"经验"采集·验证标准化的基础设施，MBZUAI） | 🔵 Research | ✨ **关注**：Radar 流入项中首次不是以模型或合作关系，而是以数据基础设施本身正面对应"物理 AI 数据管道"这一主线 —— 以参考 120 台机器人机群量化出每月约 12PB 留存存储、训练 7B 模型 1 个 epoch 需 170~2,566 台参考加速器（随表示方式·数据筛选而变），并把记录了失败原因的失败片段也视为资产<br>⏳ **待定**：arXiv 预印本（2026-09，仅 MBZUAI 单一机构作者）`[4]` —— 仅有 3 个实验舱·仪表盘在自有机构内运行的快照，作者自述"RDF 数据能否改善策略性能的实证仍是未来工作"。无其他机构采用或外部复现。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 其他机构联合（federated）采用 + 学习性能改进实证 + 同行评审 |
+| **[Gemini Robotics 2 / ER 2](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/)**（Google DeepMind 全身控制 VLA + 具身推理"大脑"模型） | 🟢 GA（API）/🔵（实际部署） | ✨ **关注**：在此前以上半身为主的 Gemini Robotics 基础上，Google DeepMind 把行走·平衡·下蹲等全身控制统一到单一 VLA（Gemini Robotics 2）中，并通过 Gemini API·AI Studio 发布具备实时视频理解·多机器人协作能力的具身推理"大脑"模型（ER 2）—— 与 GR00T·π0 系列竞争的大厂 whole-body VLA 方向，Google 首次以具体模型形式进入 Radar 的竞争对手人形机器人观察清单<br>⏳ **待定**：Google DeepMind 官方公布（2026-07-30，deepmind.google）`[4]` —— 以 Safety Instruction Following·Human Proximity 等自测基准为主，无独立复现或指名合作伙伴机器人的实际部署案例公开。⚠️ 本次运行环境的出网限制导致未能对 deepmind.google 执行人工 curl 200 检查（详见提交说明/issue） | 独立基准验证 + 公开合作伙伴机器人实际部署案例 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
