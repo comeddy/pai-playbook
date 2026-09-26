@@ -179,8 +179,9 @@ let chain = Promise.resolve(); // 요청 순서대로 응답
 readline.createInterface({ input: process.stdin, crlfDelay: Infinity }).on("line", (line) => {
   if (!line.trim()) return;
   let msg;
-  try { msg = JSON.parse(line); } catch { fail(null, -32700, "JSON 파싱 실패"); return; }
-  if (!isRequestObject(msg)) { fail(null, -32600, "Invalid Request"); return; }
+  // 오류 응답도 chain에 태워 입력 순서대로 출력한다 (동기 write는 앞선 요청의 비동기 응답을 추월함)
+  try { msg = JSON.parse(line); } catch { chain = chain.then(() => fail(null, -32700, "JSON 파싱 실패")); return; }
+  if (!isRequestObject(msg)) { chain = chain.then(() => fail(null, -32600, "Invalid Request")); return; }
   chain = chain
     .then(() => dispatch(msg))
     .catch((e) => { log("dispatch error:", e?.message); if (msg?.id != null) fail(msg.id, -32603, String(e?.message)); });
