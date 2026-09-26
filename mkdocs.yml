@@ -23,6 +23,7 @@ nav:
   - "의사결정 트리": decisions.md
   - "Radar (대기열)": radar.md
   - "유지보수 규칙": maintenance.md
+  - "설정 · MCP 연결": mcp.md
 
 theme:
   name: material
@@ -61,6 +62,8 @@ markdown_extensions:
   - md_in_html            # <details markdown="1"> 내부 마크다운(표) 렌더링에 필수
   - admonition
   - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true   # 설정 · MCP 연결 페이지의 클라이언트 탭 (Claude Code/Codex/Kiro/Quick)
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -106,6 +109,7 @@ plugins:
             "의사결정 트리": "Decision Trees"
             "Radar (대기열)": "Radar (Queue)"
             "유지보수 규칙": "Maintenance Rules"
+            "설정 · MCP 연결": "Settings · MCP Connection"
         - locale: zh
           name: 中文
           build: true
@@ -124,6 +128,7 @@ plugins:
             "의사결정 트리": "决策树"
             "Radar (대기열)": "Radar（队列）"
             "유지보수 규칙": "维护规则"
+            "설정 · MCP 연결": "设置 · MCP 连接"
         - locale: ja
           name: 日本語
           build: true
@@ -142,6 +147,7 @@ plugins:
             "의사결정 트리": "意思決定ツリー"
             "Radar (대기열)": "Radar（キュー）"
             "유지보수 규칙": "メンテナンスルール"
+            "설정 · MCP 연결": "設定 · MCP 接続"
 
 validation:
   omitted_files: warn

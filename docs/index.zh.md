@@ -1,5 +1,5 @@
 ---
-ko_hash: 2cd1c401f6fc4a8c415db3ccacd5ca921ee0b21a
+ko_hash: 8c87caf709a6389d5c1aec27de00d99d5d74b886
 ---
 # Physical AI Playbook 介绍
 
@@ -99,6 +99,7 @@ _最终更新: 2026-09 · owner: Youngjin · 状态: 初期构建中_
 - [decisions — 横向决策树](decisions.md)
 - [radar — 队列/观察列表](radar.md)
 - [maintenance — 所有权 · 更新规则 · 晋升管道](maintenance.md)
+- [设置 · MCP 连接](mcp.md)
 
 ---
 

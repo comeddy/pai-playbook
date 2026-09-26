@@ -96,6 +96,7 @@ _최종 갱신: 2026-09 · owner: Youngjin · 상태: 초기 구축 중_
 - [decisions — 교차 의사결정 트리](decisions.md)
 - [radar — 대기열/관찰 목록](radar.md)
 - [maintenance — 소유권 · 갱신 규칙 · 승격 파이프라인](maintenance.md)
+- [설정 · MCP 연결](mcp.md)
 
 ---
 

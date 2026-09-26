@@ -1,5 +1,5 @@
 ---
-ko_hash: 2cd1c401f6fc4a8c415db3ccacd5ca921ee0b21a
+ko_hash: 8c87caf709a6389d5c1aec27de00d99d5d74b886
 ---
 # Physical AI Playbook のご案内
 
@@ -100,6 +100,7 @@ _最終更新: 2026-09 · owner: Youngjin · ステータス: 初期構築中_
 - [decisions — 横断的意思決定ツリー](decisions.md)
 - [radar — キュー/ウォッチリスト](radar.md)
 - [maintenance — オーナーシップ · 更新ルール · 昇格パイプライン](maintenance.md)
+- [設定 · MCP 接続](mcp.md)
 
 ---
 

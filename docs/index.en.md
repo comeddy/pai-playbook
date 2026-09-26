@@ -1,5 +1,5 @@
 ---
-ko_hash: 2cd1c401f6fc4a8c415db3ccacd5ca921ee0b21a
+ko_hash: 8c87caf709a6389d5c1aec27de00d99d5d74b886
 ---
 # Physical AI Playbook — Introduction
 
@@ -99,6 +99,7 @@ _Last updated: 2026-09 · owner: Youngjin · status: initial build in progress_
 - [decisions — Cross-cutting decision trees](decisions.md)
 - [radar — Queue / watchlist](radar.md)
 - [maintenance — Ownership · update rules · promotion pipeline](maintenance.md)
+- [Settings · MCP Connection](mcp.md)
 
 ---
 
