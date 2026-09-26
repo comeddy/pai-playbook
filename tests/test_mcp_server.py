@@ -10,9 +10,9 @@ import pytest
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SERVER = ROOT / "docs" / "mcp" / "pai-playbook-mcp.mjs"
-NODE = shutil.which("node")
+NODE = shutil.which("node") or "node"
 
-pytestmark = pytest.mark.skipif(NODE is None, reason="node 미설치")
+pytestmark = pytest.mark.skipif(shutil.which("node") is None, reason="node 미설치")
 
 MKDOCS = """site_name: fixture
 nav:
@@ -31,10 +31,8 @@ CLAIMS = {"schema_version": 1, "claims": [{
 }]}
 
 
-@pytest.fixture(scope="module")
-def docs_dir(tmp_path_factory):
-    """서버가 읽는 최소 콘텐츠: mkdocs.yml(nav) + docs/*.md(ko·en) + docs/assets/claims.json."""
-    root = tmp_path_factory.mktemp("fixture")
+def make_docs(root, with_claims=True):
+    """서버가 읽는 최소 콘텐츠: mkdocs.yml(nav) + docs/*.md(ko·en) [+ docs/assets/claims.json]."""
     docs = root / "docs"
     (docs / "assets").mkdir(parents=True)
     (root / "mkdocs.yml").write_text(MKDOCS, encoding="utf-8")
@@ -42,8 +40,19 @@ def docs_dir(tmp_path_factory):
     for stem, (ko, en) in pages.items():
         (docs / f"{stem}.md").write_text(f"# {ko}\n\n본문 Radar 언급.\n", encoding="utf-8")
         (docs / f"{stem}.en.md").write_text(f"---\nko_hash: {'0' * 40}\n---\n# {en}\n\nBody.\n", encoding="utf-8")
-    (docs / "assets" / "claims.json").write_text(json.dumps(CLAIMS), encoding="utf-8")
+    if with_claims:
+        (docs / "assets" / "claims.json").write_text(json.dumps(CLAIMS), encoding="utf-8")
     return docs
+
+
+@pytest.fixture(scope="module")
+def docs_dir(tmp_path_factory):
+    return make_docs(tmp_path_factory.mktemp("fixture"))
+
+
+@pytest.fixture(scope="module")
+def docs_dir_no_claims(tmp_path_factory):
+    return make_docs(tmp_path_factory.mktemp("fixture-noclaims"), with_claims=False)
 
 
 def run_raw(docs_dir, payload, timeout=20):
@@ -105,6 +114,22 @@ def test_parse_error_returns_32700_and_keeps_running(docs_dir):
     assert out[1] == {"jsonrpc": "2.0", "id": 9, "result": {}}
 
 
+def test_non_object_json_lines_get_invalid_request_and_do_not_poison_queue(docs_dir):
+    """null · 배열 · 문자열은 유효 JSON이지만 요청 객체가 아니다 — -32600 후 다음 요청은 정상 처리, 종료 코드 0."""
+    payload = "null\n[]\n\"x\"\n" + json.dumps({"jsonrpc": "2.0", "id": 2, "method": "ping"}) + "\nnull\n"
+    proc = run_raw(docs_dir, payload)
+    out = [json.loads(l) for l in proc.stdout.splitlines() if l.strip()]
+    assert [o["error"]["code"] for o in out[:3]] == [-32600, -32600, -32600]
+    assert all(o["id"] is None for o in out[:3])
+    assert out[3] == {"jsonrpc": "2.0", "id": 2, "result": {}}
+    assert out[4]["error"]["code"] == -32600 and proc.returncode == 0
+
+
+def test_tools_call_with_null_params_is_invalid_params(docs_dir):
+    out, _ = rpc(docs_dir, [{"jsonrpc": "2.0", "id": 5, "method": "tools/call", "params": None}])
+    assert out[0]["error"]["code"] == -32602
+
+
 def test_unknown_method_returns_32601(docs_dir):
     out, _ = rpc(docs_dir, [{"jsonrpc": "2.0", "id": 2, "method": "resources/list"}])
     assert out[0]["error"]["code"] == -32601
@@ -159,6 +184,13 @@ def test_evidence_summary_and_single_claim(docs_dir):
     assert out[2]["result"]["isError"] is True
 
 
-def test_unknown_tool_is_invalid_params(docs_dir):
-    out, _ = rpc(docs_dir, [call(15, "playbook_nope", {})])
-    assert out[0]["error"]["code"] == -32602
+def test_evidence_missing_file_says_not_published_yet(docs_dir_no_claims):
+    """claims.json이 아직 게시되지 않은 사이트에서는 원시 ENOENT/404 대신 안내 문구를 돌려준다."""
+    out, _ = rpc(docs_dir_no_claims, [call(16, "playbook_evidence", {})])
+    assert out[0]["result"]["isError"] is True
+    assert "아직 게시되지 않았습니다" in text_of(out[0]) and "ENOENT" not in text_of(out[0])
+
+
+def test_unknown_and_prototype_tool_names_are_invalid_params(docs_dir):
+    out, _ = rpc(docs_dir, [call(15, "playbook_nope", {}), call(17, "constructor", {}), call(18, "toString", {})])
+    assert [o["error"]["code"] for o in out] == [-32602, -32602, -32602]

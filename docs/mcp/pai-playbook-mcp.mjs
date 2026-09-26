@@ -38,6 +38,8 @@ async function source(rel) {
   return text;
 }
 
+const isMissing = (e) => /ENOENT|HTTP 404/.test(e?.message || "");
+
 async function pages() {
   const lines = (await source("mkdocs.yml")).split("\n");
   const start = lines.findIndex((l) => l.trimEnd() === "nav:");
@@ -76,7 +78,7 @@ const TOOLS = [
   },
   {
     name: "playbook_read_page",
-    description: "Playbook 페이지 1개의 마크다운 원문을 읽는다 (예: start, execution, pillar-2, radar, evidence).",
+    description: "Playbook 페이지 1개의 마크다운 원문을 읽는다 (예: index, guide, pillar-2, radar, decisions).",
     inputSchema: {
       type: "object", required: ["page"],
       properties: { page: { type: "string", description: "페이지 id (playbook_list_pages 참고)" },
@@ -127,8 +129,14 @@ const handlers = {
     return hits.length ? hits.join("\n") : `검색 결과 없음: ${query}`;
   },
   async playbook_evidence({ claim_id }) {
-    const data = JSON.parse(await source("docs/assets/claims.json"));
-    const claims = data.claims || [];
+    let raw;
+    try {
+      raw = await source("docs/assets/claims.json");
+    } catch (e) {
+      if (isMissing(e)) throw new Error("근거 기록(assets/claims.json)이 아직 게시되지 않았습니다 — 근거 기록 페이지가 배포되면 사용할 수 있습니다");
+      throw e;
+    }
+    const claims = JSON.parse(raw).claims || [];
     if (claim_id) {
       const c = claims.find((x) => x.id === claim_id);
       if (!c) throw new Error(`알 수 없는 claim_id: ${claim_id}. 사용 가능: ${claims.map((x) => x.id).join(", ")}`);
@@ -140,9 +148,11 @@ const handlers = {
 
 const reply = (id, result) => process.stdout.write(JSON.stringify({ jsonrpc: "2.0", id, result }) + "\n");
 const fail = (id, code, message) => process.stdout.write(JSON.stringify({ jsonrpc: "2.0", id, error: { code, message } }) + "\n");
+const isRequestObject = (m) => typeof m === "object" && m !== null && !Array.isArray(m);
 
 async function dispatch(msg) {
-  const { id, method, params = {} } = msg;
+  const { id, method } = msg;
+  const params = isRequestObject(msg.params) ? msg.params : {};
   if (id === undefined || id === null) return; // notifications/initialized 등 알림 — 응답 금지
   switch (method) {
     case "initialize": {
@@ -152,10 +162,10 @@ async function dispatch(msg) {
     case "ping": return reply(id, {});
     case "tools/list": return reply(id, { tools: TOOLS });
     case "tools/call": {
-      const fn = handlers[params.name];
-      if (!fn) return fail(id, -32602, `알 수 없는 도구: ${params.name}`);
+      const name = params.name;
+      if (typeof name !== "string" || !Object.hasOwn(handlers, name)) return fail(id, -32602, `알 수 없는 도구: ${name}`);
       try {
-        const text = await fn(params.arguments || {});
+        const text = await handlers[name](isRequestObject(params.arguments) ? params.arguments : {});
         return reply(id, { content: [{ type: "text", text }] });
       } catch (e) {
         return reply(id, { content: [{ type: "text", text: e.message }], isError: true });
@@ -170,8 +180,9 @@ readline.createInterface({ input: process.stdin, crlfDelay: Infinity }).on("line
   if (!line.trim()) return;
   let msg;
   try { msg = JSON.parse(line); } catch { fail(null, -32700, "JSON 파싱 실패"); return; }
+  if (!isRequestObject(msg)) { fail(null, -32600, "Invalid Request"); return; }
   chain = chain
     .then(() => dispatch(msg))
-    .catch((e) => { log("dispatch error:", e.message); if (msg.id != null) fail(msg.id, -32603, e.message); });
+    .catch((e) => { log("dispatch error:", e?.message); if (msg?.id != null) fail(msg.id, -32603, String(e?.message)); });
 });
-process.stdin.on("end", () => chain.then(() => process.exit(0)));
+process.stdin.on("end", () => chain.catch(() => {}).then(() => process.exit(0)));
