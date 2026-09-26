@@ -1,5 +1,5 @@
 ---
-ko_hash: 26a9fa5df0685a4bc269e0c1e961743405b175bd
+ko_hash: 60b24afbc9edeb9509c8357229ca1bb17b1bce5d
 ---
 # 设置 — MCP 连接
 
@@ -147,7 +147,7 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
     3. 用连接器的 Sync 加载工具列表，然后发起查询。Quick 的任务超时为 60 秒。
 
     ```text
-    在 Playbook 证据记录中核对 OpenVLA 许可证主张
+    总结 Playbook 决策树页面中 Cloud vs Edge 的判断标准
     ```
 
     [Amazon Quick MCP 文档 ↗](https://docs.aws.amazon.com/quick/latest/userguide/mcp-integration.html)
@@ -187,7 +187,7 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
     ```
 
     ```text
-    总结 Playbook 的执行路径页面
+    总结 Playbook 的 P4 Sim-to-Real 页面
     ```
 
     ??? info "远程 · HTTP — 地址未配置"
@@ -225,13 +225,14 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
 ```
 
 ```text
-显示 Playbook 证据记录中 OpenVLA 许可证主张的来源与核对日期
+把 Playbook 决策树中 Build vs Buy 的判断标准整理成表格
 ```
 
 ## 验证范围与限制 { #scope }
 
-- Claude Code 的步骤在本仓库部署后通过实际注册与查询确认。Codex、Kiro Crew、Amazon Quick、Kiro CLI 的命令以各自官方文档为准，未验证（`[4]`）。
+- Claude Code 的步骤已于 2026-09-26 通过在用户范围注册本仓库的服务器文件并确认 `/mcp` connected 与页面列表查询完成验证。Codex、Kiro Crew、Amazon Quick、Kiro CLI 的命令以各自官方文档为准，未验证（`[4]`）。
 - 服务器读取 `main` 分支的 Markdown。网站更新前的已提交内容可能先出现；缓存为 10 分钟。
+- 在证据记录（`assets/claims.json`）发布到网站之前，`playbook_evidence` 会返回"尚未发布"的提示。
 - 服务器文件没有写入工具，也不处理凭证。离线使用可克隆仓库后设置环境变量 `PAI_PLAYBOOK_DOCS_DIR=<克隆目录>/docs`。
 - 问题与改进建议请提交到 [GitHub 议题](https://github.com/comeddy/pai-playbook/issues)。
 

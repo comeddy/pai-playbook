@@ -1,5 +1,5 @@
 ---
-ko_hash: 26a9fa5df0685a4bc269e0c1e961743405b175bd
+ko_hash: 60b24afbc9edeb9509c8357229ca1bb17b1bce5d
 ---
 # 設定 — MCP 接続
 
@@ -147,7 +147,7 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 低_
     3. コネクタの Sync でツール一覧を反映し、照会を依頼する。Quick のタスク制限時間は 60 秒。
 
     ```text
-    Playbook の根拠記録で OpenVLA ライセンスの主張を確認して
+    Playbook の意思決定ツリーページから Cloud vs Edge の判断基準を要約して
     ```
 
     [Amazon Quick MCP ドキュメント ↗](https://docs.aws.amazon.com/quick/latest/userguide/mcp-integration.html)
@@ -187,7 +187,7 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 低_
     ```
 
     ```text
-    Playbook の実行手順ページを要約して
+    Playbook の P4 Sim-to-Real ページを要約して
     ```
 
     ??? info "リモート · HTTP — アドレス未設定"
@@ -225,13 +225,14 @@ Playbook Radar の最新流入項目を表に整理して
 ```
 
 ```text
-Playbook の根拠記録で OpenVLA ライセンスの主張の出典と確認日を見せて
+Playbook の意思決定ツリーから Build vs Buy の判断基準を表に整理して
 ```
 
 ## 検証範囲と制限 { #scope }
 
-- Claude Code の手順は本リポジトリのデプロイ後に実際の登録・照会で確認した。Codex・Kiro Crew・Amazon Quick・Kiro CLI のコマンドは各公式ドキュメントに基づき、未検証（`[4]`）。
+- Claude Code の手順は 2026-09-26 に本リポジトリのサーバーファイルをユーザースコープに登録し、`/mcp` connected とページ一覧の照会で確認した。Codex・Kiro Crew・Amazon Quick・Kiro CLI のコマンドは各公式ドキュメントに基づき、未検証（`[4]`）。
 - サーバーは `main` ブランチの Markdown を読む。サイト反映前のコミット内容が見えることがあり、キャッシュは 10 分。
+- 根拠記録（`assets/claims.json`）がサイトに公開されるまでは、`playbook_evidence` は「まだ公開されていません」という案内を返す。
 - サーバーファイルには書き込みツールがなく、資格情報も扱わない。オフライン利用はリポジトリをクローンし、環境変数 `PAI_PLAYBOOK_DOCS_DIR=<クローン>/docs` を設定すれば可能。
 - 問題・改善提案は [GitHub Issues](https://github.com/comeddy/pai-playbook/issues) に残す。
 

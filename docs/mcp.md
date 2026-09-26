@@ -144,7 +144,7 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
     3. 커넥터의 Sync로 도구 목록을 반영하고 조회를 요청한다. Quick의 작업 제한 시간은 60초다.
 
     ```text
-    Playbook 근거 기록에서 OpenVLA 라이선스 주장을 확인해줘
+    Playbook 의사결정 트리 페이지에서 Cloud vs Edge 판단 기준을 요약해줘
     ```
 
     [Amazon Quick MCP 문서 ↗](https://docs.aws.amazon.com/quick/latest/userguide/mcp-integration.html)
@@ -184,7 +184,7 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
     ```
 
     ```text
-    Playbook에서 실행 경로 페이지를 요약해줘
+    Playbook에서 P4 Sim-to-Real 페이지를 요약해줘
     ```
 
     ??? info "원격 · HTTP — 주소 미설정"
@@ -222,13 +222,14 @@ Playbook Radar의 최신 유입 항목을 표로 정리해줘
 ```
 
 ```text
-Playbook 근거 기록에서 OpenVLA 라이선스 주장의 출처와 확인일을 보여줘
+Playbook 의사결정 트리에서 Build vs Buy 판단 기준을 표로 정리해줘
 ```
 
 ## 검증 범위와 한계 { #scope }
 
-- Claude Code 절차는 이 리포 배포 후 실제 등록·조회로 확인했다. Codex·Kiro Crew·Amazon Quick·Kiro CLI의 명령은 각 공식 문서 기준이며 미검증(`[4]`)이다.
+- Claude Code 절차는 2026-09-26에 이 리포의 서버 파일을 사용자 범위에 등록해 `/mcp` connected와 페이지 목록 조회를 확인했다. Codex·Kiro Crew·Amazon Quick·Kiro CLI의 명령은 각 공식 문서 기준이며 미검증(`[4]`)이다.
 - 서버는 `main` 브랜치의 마크다운을 읽는다. 사이트 반영 전 커밋 내용이 보일 수 있고, 캐시는 10분이다.
+- 근거 기록(`assets/claims.json`)이 사이트에 게시되기 전에는 `playbook_evidence`가 "아직 게시되지 않았습니다" 안내를 돌려준다.
 - 서버 파일은 쓰기 도구가 없고 자격증명을 다루지 않는다. 오프라인 사용은 리포를 클론한 뒤 `PAI_PLAYBOOK_DOCS_DIR=<클론>/docs` 환경변수로 가능하다.
 - 문제·개선 제안은 [GitHub 이슈](https://github.com/comeddy/pai-playbook/issues)로 남긴다.
 

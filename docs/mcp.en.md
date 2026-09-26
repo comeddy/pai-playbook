@@ -1,5 +1,5 @@
 ---
-ko_hash: 26a9fa5df0685a4bc269e0c1e961743405b175bd
+ko_hash: 60b24afbc9edeb9509c8357229ca1bb17b1bce5d
 ---
 # Settings — MCP Connection
 
@@ -147,7 +147,7 @@ Four tools are provided:
     3. Use the connector's Sync to load the tool list, then ask for a lookup. Quick's task timeout is 60 seconds.
 
     ```text
-    Check the OpenVLA license claim in the Playbook evidence records
+    Summarize the Cloud vs Edge decision criteria from the Playbook decision trees page
     ```
 
     [Amazon Quick MCP docs ↗](https://docs.aws.amazon.com/quick/latest/userguide/mcp-integration.html)
@@ -187,7 +187,7 @@ Four tools are provided:
     ```
 
     ```text
-    Summarize the Execution Paths page from the Playbook
+    Summarize the P4 Sim-to-Real page from the Playbook
     ```
 
     ??? info "Remote · HTTP — address not configured"
@@ -225,13 +225,14 @@ Put the latest intake items on the Playbook Radar into a table
 ```
 
 ```text
-Show the sources and check date of the OpenVLA license claim in the Playbook evidence records
+Put the Build vs Buy decision criteria from the Playbook decision trees into a table
 ```
 
 ## Verification scope and limits { #scope }
 
-- The Claude Code procedure was confirmed by real registration and lookup after this repo was deployed. The Codex, Kiro Crew, Amazon Quick, and Kiro CLI commands follow their official docs and are unverified (`[4]`).
+- The Claude Code procedure was confirmed on 2026-09-26 by registering this repo's server file at user scope and checking `/mcp` connected plus a page-list lookup. The Codex, Kiro Crew, Amazon Quick, and Kiro CLI commands follow their official docs and are unverified (`[4]`).
 - The server reads markdown from the `main` branch. Committed content may appear before the site reflects it; the cache lasts 10 minutes.
+- Until the evidence records (`assets/claims.json`) are published on the site, `playbook_evidence` returns a "not published yet" notice.
 - The server file has no write tools and handles no credentials. For offline use, clone the repo and set the `PAI_PLAYBOOK_DOCS_DIR=<clone>/docs` environment variable.
 - Report problems and suggestions as [GitHub issues](https://github.com/comeddy/pai-playbook/issues).
 
