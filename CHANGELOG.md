@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Add a "Settings · MCP Connection" page and a single-file stdio MCP server (docs/mcp/pai-playbook-mcp.mjs) so Claude Code, Codex, Kiro CLI/Crew, and Amazon Quick can read Playbook pages, Radar, and evidence records via four tools; client tabs follow the TTOBAK connection-guide structure, HTTP is marked as not configured, in all four languages
+
 - Add News and Workshops & Resources to the existing navigation, in all four languages: six recent AWS Physical AI articles with publication dates and scope notes, plus eight workshops/guides/samples with prerequisites and source-access notes (checked 2026-09-19).
 
 - Register AWS Physical AI Recipes (hi-space, Korean, MIT — the code behind the Physical AI E2E workshop: Isaac Lab→GR00T fine-tuning→inference→monitoring E2E via CDK, HyperPod VLA/RL distributed-training infrastructure, a GR00T-N1.6-3B SageMaker fine-tuning pipeline, NVIDIA OSMO on EKS) as a related asset on pillars 2 and 3, with a new OSMO glossary footnote, in all four languages
@@ -163,6 +165,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
+
+- "설정 · MCP 연결" 페이지와 단일 파일 stdio MCP 서버(docs/mcp/pai-playbook-mcp.mjs) 추가 — Claude Code·Codex·Kiro CLI/Crew·Amazon Quick에서 도구 4개로 Playbook 페이지·Radar·근거 기록을 조회, TTOBAK 연결 가이드 구조의 클라이언트 탭, HTTP는 미설정 표기, 4개 언어
 
 - 기존 메뉴에 새 소식·워크숍·자료를 4개 언어로 추가: 최근 AWS Physical AI 글 6건의 발행일·범위·필러 연결, 워크숍/가이드/샘플 8건의 준비 조건·접근 상태를 정리(2026-09-19 확인).
 
@@ -310,6 +314,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 新增"设置 · MCP 连接"页面与单文件 stdio MCP 服务器（docs/mcp/pai-playbook-mcp.mjs），Claude Code、Codex、Kiro CLI/Crew、Amazon Quick 可通过 4 个工具读取 Playbook 页面、Radar 与证据记录；客户端标签沿用 TTOBAK 连接指南结构，HTTP 标记为未配置，四种语言
+
 - 在现有菜单添加四语言“新消息”“工作坊与资料”：六篇近期 AWS Physical AI 文章的发布日期、范围及支柱链接，八项工作坊/指南/样本的准备条件和访问说明（2026-09-19 确认）。
 
 - 将 AWS Physical AI Recipes（hi-space，韩语，MIT — Physical AI E2E 研讨会的代码仓库: Isaac Lab→GR00T 微调→推理→监控 E2E（CDK）、HyperPod VLA/RL 分布式训练基础设施、GR00T-N1.6-3B SageMaker 微调管道、NVIDIA OSMO on EKS）登记为 pillar 2·3 相关资产 — 新增 OSMO 术语脚注，四种语言同步
@@ -455,6 +461,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased]
 
 ### Added
+
+- 「設定 · MCP 接続」ページと単一ファイル stdio MCP サーバー（docs/mcp/pai-playbook-mcp.mjs）を追加 — Claude Code・Codex・Kiro CLI/Crew・Amazon Quick から 4 つのツールで Playbook ページ・Radar・根拠記録を参照、TTOBAK 接続ガイド構造のクライアントタブ、HTTP は未設定と表記、4 言語
 
 - 既存メニューに4言語の新着情報・ワークショップ資料を追加。最近のAWS Physical AI記事6件に公開日・範囲・ピラー接続、実習/ガイド/サンプル8件に前提・アクセス状態を記載（2026-09-19確認）。
 
