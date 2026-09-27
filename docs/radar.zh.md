@@ -1,5 +1,5 @@
 ---
-ko_hash: 52ae1a661fe754530f2136acac29fe00cb800eba
+ko_hash: 305f438e1c65bf1fdb93ff3f250841009e226b4f
 ---
 # Radar — 队列 / 观察列表
 
@@ -54,7 +54,7 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-09-26 · 一手验证完成 2026-07-21）
+## 🆕 最新扫描流入（2026-09-27 · 一手验证完成 2026-07-21）
 
 <!-- 自动扫描（arXiv/网络）流入项。2026-07-21 完成一手来源验证（4 个验证代理，对照官方发布与 arXiv 原文）—— 晋升 0 项，更正 6 项。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
@@ -66,10 +66,10 @@ _最终更新: 2026-08 · owner: Youngjin · volatility: 高_
 | **[KIMM KAIROS V0.7](https://www.kimm.re.kr/eng/sub011001/view/id/1565)**（K-Moonshot 国家战略技术课题下的国产 AI 人形机器人） | ⚪ 路线图 | ✨ **关注**：韩国机械研究院（KIMM）作为科技情通部支持的"AI 人形机器人全球顶尖研究团"开发的国策人形机器人 —— 2026-09-07 在"2026 全球机械技术论坛"上公开 V0.7，已能完成国民体操、传统假面舞（탈춤）等动作（4 月的 V0.5 仅能握手·挥手）—— 韩国客户对话中可能被提及的"国策研究机构发"人形机器人赛道（与现代·BD Atlas 角度不同）<br>⏳ **待定**：KIMM 官方公布 `[4]`（二手：多家韩国国内媒体交叉确认——体操·假面舞演示为自报。⚠️ 本次运行环境的出网限制导致未能对 kimm.re.kr 执行人工 curl 200 检查，详见提交说明/issue）—— V1.0 公开目标为 2027-04，据报道 KIMM 需要约 30 亿韩元的额外开发经费。商业化·自主性能尚为 0，仍处演示阶段 | V1.0 公开 + 汽车装配·家用场景实证案例公开 |
 | **[XPENG IRON](https://www.xpeng.com/news/01a080371029a057bc8e8a02a2c6012b)**（中国车企 XPENG 的人形机器人，首台整机在汽车级量产线上自主行走下线） | ⚪ 路线图 | ✨ **关注**：整车厂将自家 EV 生产know-how（工艺自动化率 80%+）直接移植到人形机器人量产线 —— 与仍停留在"学习·数据采集"阶段的 Tesla Optimus形成对照，XPENG 展示了整机在产线上自主行走下线的画面（76 个自由度，单手各 21 个自由度）—— 为韩国客户对话新增"中国 EV 系人形机器人"竞争赛道<br>⏳ **待定**：XPENG 官方发布（2026-09-07/08，xpeng.com）+ CnEVPost·Electrek 交叉确认 `[4]` —— "量产启动"只是 2026 年底的目标，首批用于自家门店·园区，海外·一般商业交付要到 2027 年才开始。无独立性能·安全验证。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 实际量产出货启动 + 第三方安全·性能验证 |
 | **[Skild AI S1](https://skild.ai/blogs/s1)**（仅凭单个人类示范视频、无需微调即可执行最长 10 分钟长时任务的上下文学习机器人基础模型） | 🟡 Preview | ✨ **关注**：Skild AI 以 1 个人类示范视频作为"视觉提示"，无需微调·权重不变即可执行未学习长时任务 —— [NVIDIA 官方博客](https://blogs.nvidia.com/blog/skild-ai-s1-physical-ai/)（2026-09-10）确认 Skild·NVIDIA·Foxconn 已在 NVIDIA Blackwell 系统组装线（安装busbar和limit block、拧紧16颗螺丝等）实际部署，付费客户超 60 家，首次商业部署仅 10 个月即达成年化经常性收入（ARR）1 亿美元 —— 从"启动向少数合作伙伴部署"的宣告阶段，升级为实际产生产业收入的早期案例<br>⏳ **待定**：NVIDIA·Skild AI 官方公布（2026-09-10）`[4]` —— 营收·客户数为公司自报数据，无第三方审计或独立性能验证（通用任务成功率等细节未公开）。无 AWS 映射·首尔区域关联案例。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 独立性能·营收审计（第三方）+ 公开 AWS 映射案例 |
-| **[Opt2VLA](https://opt2vla.github.io/)**（面向接触密集型人形机器人全身操作的力（force）感知 VLA —— 在预测几何动作目标的同时预测接触力参考值） | 🔵 Research | ✨ **关注**：以往 VLA 只预测动作目标，接触发生后视觉信息变得不可靠那一刻的力控制则交给全身控制器 —— Opt2VLA 让单个多任务 VLA 同时预测动作目标与接触力参考值，再由各任务专用的 RL 全身控制器负责跟踪；训练数据通过带显式力参考的轨迹优化（TO）生成，保证与接触一致。与 TANGO（全身导航）从不同角度互补，补上"全身控制型 VLA"中操作（manipulation）这一轴<br>⏳ **待定**：arXiv 预印本（2026-09-21，Georgia Tech 及 Ye Zhao/Zsolt Kira 实验室等）`[4]` —— 仅有 3 项接触密集任务的自测基准，无同行评审·独立复现·开源发布。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 同行评审 + 代码/检查点开源后的独立复现 |
 | **[OpenAI 确认研发人形机器人](https://sources.news/p/introducing-the-sources-podcast-with)**（Sam Altman 在 Sources 播客中直接确认公司正在研发自家人形机器人） | ⚪ Hype·路线图 | ✨ **关注**：OpenAI CEO 首次直接表态"我们肯定会做人形机器人"—— 暗示将正式扩展到机器人硬件形态，是 OpenAI 首次进入 Radar 的竞争对手人形机器人观察清单（与 Tesla/Figure/1X/Google 并列），也可能是客户对话中话题度最高的项目之一<br>⏳ **待定**：仅有 2026-09-01 Sources 播客节目中的一句表态 `[4]` —— 未披露任何原型机·上市时间表·制造合作伙伴（Forbes 等已确认），同时提及数据中心等"其他形态"，也让人形机器人是否为专门战略仍不明确。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 官方公布原型机·制造合作伙伴·上市时间表 |
 | **[Intrinsic Core](https://www.intrinsic.ai/blog/posts/introducing-intrinsic-core)**（Alphabet 机器人子公司 Intrinsic 开源的工业机器人技术栈 —— 实时控制·基于 NVIDIA FoundationPose 的位姿估计·运动/抓取规划·仿真·相机标定·ROS 兼容驱动） | 🟢 GA（开源） | ✨ **关注**：Intrinsic 在 ROSCon 2026（多伦多）上以 Apache 2.0 协议整体开源了其自家生产部署所用的技术栈 —— 是 Isaac 生态一家独大格局中首次出现的 Alphabet 系替代方案，为 Radar 🖥️ 仿真/工具主线（Isaac/MuJoCo/Newton）新增一个值得关注的竞争对手<br>⏳ **待定**：Intrinsic 官方博客 + The Robot Report（2026-09-22/23）`[4]` —— 代码本身已在 GitHub 公开（Apache 2.0），但尚无 Intrinsic 之外的独立采用案例，也无 AWS 映射案例。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开独立采用案例 + 经验证的 AWS 基础设施映射 |
 | **[Agility Robotics Digit 5](https://www.agilityrobotics.com/content/agility-unveils-digit-5-humanoid-robot-built-for-cooperatively-safe-work-at-scale)**（在现有 Digit@GXO 基础上新增近距离协作安全架构·90 分钟续航电池的第五代通用人形机器人） | 🟡 Preview | ✨ **关注**：已在 Radar pillar-4 中被列为"验证最充分的付费人形机器人作业"的 Agility Digit（@GXO）的下一代型号 —— 具备检测到碰撞风险时停止/坐下、并配合视听警示的近距离协作安全设计，在获得 3 亿美元以上多年期订单后首次宣布向欧盟·英国扩展商业部署（并计划取得 CE 认证）<br>⏳ **待定**：Agility 官方公布（2026-09-15，agilityrobotics.com）`[4]` —— 目前仅为订单储备与 CE 认证计划，Digit 5 本身尚无实际部署案例（现有 GXO 案例为上一代 Digit）。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 公开 Digit 5 实际部署案例（欧盟/北美）+ 安全架构第三方验证 |
+| **[Qualcomm 收购 PickNik（MoveIt）](https://www.qualcomm.com/news/releases/2026/09/qualcomm-to-acquire-picknik-to-advance-the-future-of-open-roboti)**（收购 ROS 操作标准 MoveIt 的维护方，计划整合进 Dragonwing 边缘 AI 平台及 Arduino） | ⚪ 路线图 | ✨ **关注**：Qualcomm 收购机器人开源操作框架 MoveIt 的长期维护方 PickNik，计划将其整合进自家 Dragonwing 边缘 AI 平台及 Arduino（VENTUNO Q）—— 与同在 ROSCon 2026 Toronto 发布的 Intrinsic Core（Alphabet）一起，在 Isaac 一强格局中新增一条芯片/边缘厂商主导的开放机器人技术栈竞争线，为 pillar-4 边缘推理轴（NVIDIA Jetson 的替代方案）增加观察对象<br>⏳ **待定**：Qualcomm 官方公布（2026-09-23，qualcomm.com）`[4]` —— 交易条款未披露，且交易本身尚未完成（以"惯常完成条件"为前提）。MoveIt 本身维持开源方针，但 Dragonwing 整合·Arduino 扩展仍处路线图阶段，尚无已发布的整合产品。⚠️ 本次运行环境的出网限制导致未能执行人工 curl 200 检查（详见提交说明/issue） | 交易完成 + Dragonwing/Arduino 整合产品发布 |
 
 ## ⚰️ 已废弃 — 禁止提议（存档保留）
 
