@@ -28,6 +28,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Radar 2026-09-26 intake: re-verified all 10 items on 2026-09-27 with egress available — 20/20 links live (HTTP 200), primary sources compared; corrected the RLDX-1 benchmark margin (+11.1 pts, Table 1(b)) and sourcing (AWS Physical AI blog, GitHub CC BY 4.0), replaced the KIMM link with the 09-07 official V0.7 news and the OpenAI link with the episode page (quote marked secondary), reflected Skild's self-reported benchmarks and ARR post, sourced the Figure Index figures separately, removed the unsupported NEURA IFA live-demo claim; added per-item AWS-angle and Korea-touchpoint tags and 'self-reported, do not quote to customers' markers; fixed header/footer dates (checked 2026-09-27, updated 2026-09), in all four languages
+
 - Enrich existing pillar sections from the Physical AI 101 source: data-pyramid scale framing (LAION-5B/Ego4D/OXE) and the DreamGen data flywheel (pillar 1); GR00T freeze/unfreeze cost table with the new-robot-adapter requirement, size-tiered training patterns (Batch+Spot / Training Job / HyperPod), P6-B300 Seoul GA, the 2-axis model taxonomy, and a WAM/"VLAs are dead" caution (pillar 2); ETH 4,096-env parallel-RL anchor, the "physics sim = body, WFM = eyes" boundary, and the reality-capture→OpenUSD pipeline (pillar 3); deploy-side gap, effective control rate = inference Hz × chunk size with the native-chunk caveat, and the 2026-07 Jetson price increases (pillar 4); the Certis autonomous-patrol customer case and the MCP+MQTT on IoT Core pattern (pillar 5), in all four languages
 - Expand the pillar-1 "LeRobot teleop collection on Greengrass" related-asset entry with repo details (Greengrass v2 component, SO-ARM101 + dual cameras → LeRobot v3 → S3 auto-upload, MQTT web-console control, KVS live/replay, validated on Jetson AGX Thor) and the README's not-for-production caveat (MIT-0), in all four languages
 - Refresh the `updated` metadata to 2026-08 on 9 pages that received substantive August changes (index, exec-guide, maintenance, radar, pillars 1–5), in all four languages
@@ -175,6 +177,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Physical AI 101 개념 지도의 상용급 콘텐츠를 필러별 신규 섹션으로 승격: "학습 운영 원리 — 체크포인트 계보와 IL의 천장"·"RL 파인튜닝(RFT) — PPO vs GRPO와 보상 설계"(pillar 2); "왜 시뮬레이션인가 — 실물의 경제학"(가격 사다리·관절 지배 BOM·GPU 시간 등가)(pillar 3); "실기체 셀의 안전 규제 — 국제 표준과 한국 법정 요구"(ISO 10218:2025·ISO/TS 15066 4모드·제223조 1.8m 울타리+KCs 인증)(pillar 4); "물리 세계의 에이전트 표준 — Anthropic MHS & AWS Strands Robots"(research preview, Doosan Robotics 런치 파트너)(pillar 5) — 신규 용어 각주 12개, 4개 언어 반영
 
 ### Changed
+
+- Radar 2026-09-26 유입분 10건을 2026-09-27 egress 가능 환경에서 재검증 — 링크 20/20 200, 1차 출처 원문 대조; RLDX-1 벤치 마진(+11.1p, 표 1(b))·출처(AWS Physical AI 블로그, GitHub CC BY 4.0) 정정, KIMM 링크를 09-07 공식 V0.7 뉴스로·OpenAI 링크를 에피소드 페이지로 교체(인용은 2차 표기), Skild 자체 벤치·ARR 포스트 반영, Figure Index 수치 출처 분리, 근거 없는 NEURA IFA 실기 전시 삭제; 항목별 AWS 각도·한국 접점 태그와 '자체 공표치, 고객 인용 금지' 표기 추가; 헤더·푸터 날짜 정정(대조일 2026-09-27, updated 2026-09), 4개 언어
 
 - Physical AI 101 소스로 기존 필러 섹션 보강: 데이터 피라미드 규모 감각(LAION-5B/Ego4D/OXE)·DreamGen 데이터 플라이휠(pillar 1); GR00T freeze/unfreeze 비용표(새 로봇=어댑터 필수)·규모별 학습 패턴(Batch+Spot/Training Job/HyperPod)·P6-B300 서울 GA·2축 모델 taxonomy·WAM "VLA는 죽었다" 주의(pillar 2); ETH 4,096-env 병렬 RL 기준점·"물리 sim=몸, WFM=눈" 선긋기·Reality Capture→OpenUSD 파이프라인(pillar 3); deploy-side gap·실효 제어 주기=추론 Hz×chunk 크기(native chunk 캐비앗)·2026-07 Jetson 가격 인상(pillar 4); Certis 자율 순찰 고객 사례·MCP+MQTT on IoT Core 패턴(pillar 5), 4개 언어 반영
 - pillar-1 "LeRobot 텔레옵 수집 on Greengrass" 관련 자산 항목을 리포 상세(Greengrass v2 컴포넌트, SO-ARM101+듀얼 카메라→LeRobot v3→S3 자동 업로드, 웹 콘솔 MQTT 제어, KVS 라이브·재생, Jetson AGX Thor 검증)와 README의 production 사용 금지 캐비앗(MIT-0)으로 보강, 4개 언어 반영
@@ -324,6 +328,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Radar 2026-09-26 流入的 10 项于 2026-09-27 在可出网环境重新验证 —— 链接 20/20 存活（HTTP 200）、对照一手来源；更正 RLDX-1 基准差距（+11.1 分，表 1(b)）与出处（AWS Physical AI 博客、GitHub CC BY 4.0），KIMM 链接更换为 09-07 官方 V0.7 新闻、OpenAI 链接更换为节目页（引语标为二手），反映 Skild 自报基准与 ARR 文章，Figure Index 数字单独注明出处，删除无依据的 NEURA IFA 实机展示说法；为各项添加 AWS 角度·韩国触点标签及"自行公布数据，禁止向客户引用"标记；修正页眉/页脚日期（核对日 2026-09-27，updated 2026-09），四种语言
+
 - 以 Physical AI 101 素材充实既有支柱章节：数据金字塔规模框架（LAION-5B/Ego4D/OXE）与 DreamGen 数据飞轮（pillar 1）；GR00T freeze/unfreeze 成本表（新机器人=必须适配器）、按规模分层的训练模式（Batch+Spot / Training Job / HyperPod）、P6-B300 首尔 GA、双轴模型分类法及 WAM"VLA 已死"警示（pillar 2）；ETH 4,096 环境并行 RL 基准点、"物理仿真=身体，WFM=眼睛"的界线、Reality Capture→OpenUSD 管道（pillar 3）；deploy-side gap、有效控制频率=推理 Hz×chunk 大小（native chunk 注意事项）、2026-07 Jetson 涨价（pillar 4）；Certis 自主巡逻客户案例与 MCP+MQTT on IoT Core 模式（pillar 5），四种语言同步
 - 以仓库详情（Greengrass v2 组件、SO-ARM101+双摄像头→LeRobot v3→S3 自动上传、Web 控制台 MQTT 控制、KVS 直播·回放、已在 Jetson AGX Thor 上验证）及 README 的禁止生产使用注意事项（MIT-0）充实 pillar-1 "LeRobot 遥操作采集 on Greengrass" 相关资产条目，四种语言同步
 - 将 8 月发生实质变更的 9 个页面（index、exec-guide、maintenance、radar、pillar 1~5）的 `updated` 元数据刷新为 2026-08，四种语言同步
@@ -471,6 +477,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Physical AI 101 概念マップの商用レベルのコンテンツを各ピラーの新セクションとして昇格："学習運用の原則 — チェックポイント系譜と模倣学習の天井"・"RL ファインチューニング（RFT）— PPO vs GRPO と報酬設計"（pillar 2）；"なぜシミュレーションか — 実機の経済学"（価格ラダー・アクチュエータ支配の BOM・GPU 時間等価）（pillar 3）；"実機セルの安全規制 — 国際標準と韓国の法定要件"（ISO 10218:2025・ISO/TS 15066 の4協働モード・韓国第223条 1.8m フェンス + KCs 認証）（pillar 4）；"物理世界のエージェント標準 — Anthropic MHS & AWS Strands Robots"（research preview、Doosan Robotics がローンチパートナー）（pillar 5）— 用語脚注 12 件を新設、4言語反映
 
 ### Changed
+
+- Radar 2026-09-26 流入分 10 件を 2026-09-27 に egress 可能な環境で再検証 —— リンク 20/20 生存（HTTP 200）、一次ソース原文照合；RLDX-1 ベンチマーク差（+11.1pt、表 1(b)）・出典（AWS Physical AI ブログ、GitHub CC BY 4.0）を訂正、KIMM リンクを 09-07 公式 V0.7 ニュースに・OpenAI リンクをエピソードページに差し替え（引用は二次表記）、Skild 自社ベンチ・ARR 記事を反映、Figure Index 数値の出典を分離、根拠のない NEURA IFA 実機展示を削除；項目別に AWS 角度・韓国接点タグと「自社公表値、顧客への引用禁止」表記を追加；ヘッダー/フッター日付を訂正（照合日 2026-09-27、updated 2026-09）、4 言語
 
 - Physical AI 101 ソースで既存ピラーセクションを拡充：データピラミッドの規模感（LAION-5B/Ego4D/OXE）と DreamGen データフライホイール（pillar 1）；GR00T freeze/unfreeze コスト表（新ロボット=アダプタ必須）・規模別学習パターン（Batch+Spot / Training Job / HyperPod）・P6-B300 ソウル GA・2軸モデル分類・WAM「VLA は死んだ」への注意（pillar 2）；ETH 4,096 環境並列 RL の基準点・「物理シミュレーション=身体、WFM=目」の線引き・Reality Capture→OpenUSD パイプライン（pillar 3）；deploy-side gap・実効制御周波数=推論 Hz×chunk サイズ（native chunk の注意）・2026-07 Jetson 値上げ（pillar 4）；Certis 自律パトロール顧客事例・MCP+MQTT on IoT Core パターン（pillar 5）、4言語反映
 - pillar-1 の「LeRobot テレオペ収集 on Greengrass」関連資産項目を、リポジトリ詳細（Greengrass v2 コンポーネント、SO-ARM101+デュアルカメラ→LeRobot v3→S3 自動アップロード、Web コンソール MQTT 制御、KVS ライブ・再生、Jetson AGX Thor 検証済み）と README の本番使用禁止の注意（MIT-0）で拡充、4言語反映
