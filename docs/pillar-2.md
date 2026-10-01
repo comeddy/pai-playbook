@@ -106,6 +106,8 @@ graph TD
 
 **🔗 관련 자산**: [pillar-1 데이터 파이프라인](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
 
+- [DreamZero 파인튜닝 on SageMaker](https://github.com/aws-samples/sample-dreamzero-finetuning-on-sagemaker) — aws-samples. NVIDIA DreamZero(14B World Action Model)를 LeRobot 포맷 커스텀 로봇 데이터셋으로 Amazon SageMaker에서 파인튜닝하는 9단계 파이프라인(fetch→detect→convert→validate→prep→stage→smoke test→train→merge), 단계 경계마다 재시작 지점 제공. 병합하지 않은 LoRA 가중치를 그대로 서빙하면 성능이 9.9배 나빠진다는 경고 포함. ⚠️ README 자기 선언: "샘플 코드이며 production-certified 워크로드가 아님" — 보안 문서에 프로덕션 전 해결 필요한 갭 10종(루트 권한 컨테이너 실행, 버전관리 미적용 S3 객체, 버전 고정 안 된 Python 의존성 등) 명시
+
 <details markdown="1"><summary>🔄 휘발성 데이터 (GPU 요구 — 2026-07 공식 레포 기준)</summary>
 
 | 모델 | 추론 | LoRA 파인튜닝 | 풀 파인튜닝 |

@@ -1,5 +1,5 @@
 ---
-ko_hash: 819f32f517dc3f2d9e2989eb6ed0222cd8851d5c
+ko_hash: 249117eb55a945284d794e8284e16263dd2dd48d
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -181,6 +181,8 @@ graph LR
 **➡️ Next action**: for manipulation customers, **manage expectations honestly** — say first "it's not solved as well as locomotion, real data is key," then connect to the [pillar-1 real-data pipeline](pillar-1.md). No over-promising.
 
 **🔗 Related assets**: [pillar-1 teleoperation/real data](pillar-1.md) · [pillar-2 VLA fine-tuning](pillar-2.md)
+
+- [VLA mobile manipulation on AWS](https://github.com/aws-samples/sample-vla-mobile-manipulation-on-aws) — aws-samples. An end-to-end pipeline for mobile manipulation on a Unitree Go2 quadruped + D1 arm — a custom four-phase task spec (navigate→grasp→carry→place), leader-follower teleop data collection with phase labeling, Bedrock annotation (multi-frame voting cuts hallucination from 15–20% to <1%), openpi/OpenVLA-OFT fine-tuning (10-D actions, 7-D state, dual-camera), a rolling-window end-effector error protocol across checkpoints, and phase-routed model deployment. ⚠️ README self-declared: "sample code, non-production usage" — explicitly built for cases where the standard VLA building blocks don't fit, so treat it as experimental territory; safety guards (LiDAR velocity clamping, odometry limits) run on-device, independent of the policy and network, as a defensive measure
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 522eea873e849c595119e05911784eb2d89ddd67
+ko_hash: 37cb74d5fa1d1a516985b3447e76a1ff13c045e1
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -108,6 +108,8 @@ graph TD
 **➡️ 后续行动**: **将"在单张 G7e 上做 LoRA 微调 1 天 PoC"作为默认入门提议**。若客户数据超过 100 个演示，即可立即展示实测成功率。GPU 获取受阻 → [decisions](decisions.md)。
 
 **🔗 相关资产**: [pillar-1 数据管道](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
+
+- [DreamZero 在 SageMaker 上的微调](https://github.com/aws-samples/sample-dreamzero-finetuning-on-sagemaker) —— aws-samples。在 Amazon SageMaker 上用 LeRobot 格式的自定义机器人数据集微调 NVIDIA DreamZero（14B World Action Model）的 9 阶段流水线（fetch→detect→convert→validate→prep→stage→smoke test→train→merge），每个阶段边界均可作为恢复点。包含一条警告：若直接提供未合并的 LoRA 权重而非合并后的检查点，性能会差 9.9 倍。⚠️ README 自述："这是一个示例，并非经过生产认证的工作负载"——其安全文档列出了投产前需先修复的 10 项缺口（以 root 权限运行容器、S3 对象未开启版本控制、Python 依赖未锁定版本等）
 
 <details markdown="1"><summary>🔄 易变数据（GPU 需求 —— 2026-07 官方仓库为准）</summary>
 

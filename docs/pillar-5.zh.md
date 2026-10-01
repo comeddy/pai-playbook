@@ -1,5 +1,5 @@
 ---
-ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
+ko_hash: 734ba619564216f522762ce7cebf24198644a781
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -79,6 +79,7 @@ graph LR
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) —— aws-samples。Bedrock 智能体通过 IoT 控制 Isaac Sim 与实体机器人 SO-ARM101/XGO2/Zumi，借助智能体记忆进行 sim-to-real 迭代学习
 - [Agentic AI Robot — 工业安全监控](https://github.com/aws-samples/sample-agentic-ai-robot) —— aws-samples。AgentCore+IoT+机器人自主巡逻·边缘推理演示，曾在 AWS AI x Industry Week 2025 展示，含韩语 README。⚠️ 明确标注为实验·教育用途 —— 非生产环境
 - [Smart Machines — 工业设备混合 Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) —— aws-samples。智能体完成机群遥测异常检测→根因诊断→建单·调整设备参数的全栈演示（多智能体对话·自然语言场景构建器·KVS 视频→Bedrock 分析·Jetson YOLOWorld+VLM 边缘监控）。⚠️ README 明示为演示 —— 目前仅挖掘机（模拟遥测）完整可用，机械臂为 WIP
+- [ROS2 + 智能体控制 on AWS](https://github.com/aws-samples/sample-ros2-with-agentic-control-on-aws) —— aws-samples。用 Amazon Nova Sonic 语音智能体控制 Unitree Go2 机器狗——在 EC2 上运行的 ROS2 容器接收语音指令行走、跳舞、站立，并通过 Bedrock 视觉模型回答实时摄像头画面的"你看到了什么？"。提供两种连接方式：Cloud 模式（经由 Unitree 云端 WebRTC 的 SSM 隧道）与 AP 模式（机器人自带 Wi-Fi 热点，不依赖 Unitree 云端）。⚠️ README 自述："面向学习目的发布的演示示例，非生产就绪，不含 AWS SLA 或支持协议"——Foxglove 桥（tcp/8765）无身份验证（任何能连到它的人都能完全控制机器人），会话没有花费上限，且系统会记录和处理人物影像，需具备合法的记录依据与留存政策
 
 <details markdown="1"><summary>🔄 易变数据（组件·区域·价格 —— 2026-07 确认）</summary>
 

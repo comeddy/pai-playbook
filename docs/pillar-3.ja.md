@@ -1,5 +1,5 @@
 ---
-ko_hash: 9131854faa710f967d2e47febe0398f607f38852
+ko_hash: 69b729111240542576a68a31b37918c360f57273
 ---
 # Pillar 3 — シミュレーション (Simulation)
 
@@ -78,6 +78,7 @@ graph LR
 - [AWS Physical AI Recipes — マルチユーザー Isaac Lab GPU 環境](https://github.com/hi-space/aws-physical-ai-recipes) — 韓国語、MIT。上記 E2E ワークショップのコードリポジトリ: CDK ワンクリックでマルチユーザー Isaac Lab GPU 環境（DCV·EFS·Batch）をデプロイ、NVIDIA OSMO[^osmo] on EKS オーケストレーションレシピを含む
 - [（社内）AWS·NVIDIA ロボティクスリファレンスアーキテクチャ](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS 社内ネットワークが必要
 - [Physical AI Scaffolding Kit — Isaac Sim ワークステーション](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples。EC2 上に Isaac Sim/Lab 開発環境を構築
+- [Remote AWS Development Station (RADS)](https://github.com/aws-samples/sample-remote-aws-development-station) — aws-samples。Physical AI/ロボティクス開発向けセルフサービス型リモート開発ステーション — 開発者ごとの EC2（DCV リモートデスクトップ・code-server ブラウザ IDE）に ROS 2 Jazzy・NVIDIA Isaac Sim 6.0.1・MoveIt・Nav2 と AI コーディングエージェント（Claude Code など）を事前インストール、DCV・SSM・IDE・CPU に加え CloudTrail 検知の Bedrock 呼び出しまで見るスマートオートストップ付き。⚠️ README 自己申告: 「サンプルコード、非本番用途 — デプロイ前に組織の要件を満たすようセキュリティ・法務チームと確認すること」— DCV Gateway は既定でインターネット公開（0.0.0.0/0）・自己署名証明書を使用し、常時稼働インフラのためコストが高くなり得る
 - [VLA Simulator — 1-Click VLA シミュレーション on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples。CDK ワンコマンドで EC2 GPU（g5/g6/g6e）にデプロイし、LIBERO/RoboCasa/SimplerEnv/Isaac Lab 上で GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1 をデモ·ベンチマーク。結果は MP4→S3+SNS で自動受信、EC2 は自動終了。ポリシーごとの実測成功率·検証日を明記
 - [robotic-cellsim-tools — マルチロボット産業セル・シミュレーションツール](https://github.com/aws-samples/sample-robotic-cellsim-tools) — aws-samples。市販の URDF を入力に Isaac Sim 5.1+ の USDA ステージ（PhysX アーティキュレーション・ROS 2 トピック・リンク別接触テレメトリ）を組み立て・検証・駆動する Rust CLI ツール群。決定的（同入力=同出力）・バージョン付き REST API — エージェント/MCP が組み合わせるシミュレーションプリミティブとして設計
 

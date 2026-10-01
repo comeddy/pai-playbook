@@ -1,5 +1,5 @@
 ---
-ko_hash: 9131854faa710f967d2e47febe0398f607f38852
+ko_hash: 69b729111240542576a68a31b37918c360f57273
 ---
 # Pillar 3 — 仿真 (Simulation)
 
@@ -77,6 +77,7 @@ graph LR
 - [AWS Physical AI Recipes — 多用户 Isaac Lab GPU 环境](https://github.com/hi-space/aws-physical-ai-recipes) —— 韩语，MIT。上述 E2E 研讨会的代码仓库: 以 CDK 一键部署多用户 Isaac Lab GPU 环境（DCV·EFS·Batch），并包含 NVIDIA OSMO[^osmo] on EKS 编排配方
 - [（内部）AWS·NVIDIA 机器人参考架构](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) —— 需 AWS 内网
 - [Physical AI Scaffolding Kit — Isaac Sim 工作站](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) —— aws-samples。在 EC2 上构建 Isaac Sim/Lab 开发环境
+- [Remote AWS Development Station (RADS)](https://github.com/aws-samples/sample-remote-aws-development-station) —— aws-samples。面向 Physical AI/机器人开发的自助式远程开发站 —— 为每位开发者提供预装 ROS 2 Jazzy、NVIDIA Isaac Sim 6.0.1、MoveIt、Nav2 及 AI 编码智能体（Claude Code 等）的 EC2（DCV 远程桌面 + code-server 浏览器 IDE），智能自动停止功能除监控 DCV/SSM/IDE/CPU 外还能识别 CloudTrail 记录的 Bedrock 调用。⚠️ README 自述："示例代码，非生产用途 —— 部署前请与安全和法务团队确认组织要求"——DCV Gateway 默认对整个互联网开放（0.0.0.0/0）并使用自签名证书，常驻基础设施可能导致成本较高
 - [VLA Simulator — 1-Click VLA 仿真 on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) —— aws-samples。通过 CDK 一键部署到 EC2 GPU（g5/g6/g6e），在 LIBERO/RoboCasa/SimplerEnv/Isaac Lab 上演示·基准测试 GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1。结果以 MP4→S3+SNS 自动送达并自动终止 EC2，逐策略实测成功率·验证日期均有记录
 - [robotic-cellsim-tools — 多机器人工业单元仿真工具](https://github.com/aws-samples/sample-robotic-cellsim-tools) —— aws-samples。接收现成 URDF，装配·验证·驱动 Isaac Sim 5.1+ USDA 场景（PhysX 关节·ROS 2 话题·逐链接接触遥测）的 Rust CLI 工具集。确定性（相同输入=相同输出）·带版本化 REST API —— 为智能体/MCP 可组合的仿真原语而设计
 

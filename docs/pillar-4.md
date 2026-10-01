@@ -179,6 +179,8 @@ graph LR
 
 **🔗 관련 자산**: [pillar-1 텔레옵/실데이터](pillar-1.md) · [pillar-2 VLA 파인튜닝](pillar-2.md)
 
+- [VLA 모바일 매니퓰레이션 on AWS](https://github.com/aws-samples/sample-vla-mobile-manipulation-on-aws) — aws-samples. Unitree Go2(쿼드러퍼드)+D1 암 모바일 조작의 엔드투엔드 파이프라인 — 4단계 태스크(이동→파지→운반→배치) 커스텀 정의, 리더-팔로워 텔레옵 데이터 수집(위상 라벨링), Bedrock 어노테이션(멀티프레임 투표로 환각률 15~20%→<1%), openpi/OpenVLA-OFT 파인튜닝(10차원 액션·7차원 상태·듀얼카메라), 체크포인트 간 롤링윈도우 엔드이펙터 오차 평가, 위상별 모델 라우팅 배포. ⚠️ README 자기 선언: "샘플 코드, 비프로덕션용" — 표준 VLA 빌딩블록이 맞지 않는 상황을 위한 실험적 영역이라고 명시, 정책·네트워크와 독립적으로 동작하는 온디바이스 안전가드(LiDAR 속도 클램프·오도메트리 제한)를 방어적으로 둠
+
 ---
 
 ## 5. 정책 평가 — 배포 전 검증  🔵 Research (미해결 문제)
