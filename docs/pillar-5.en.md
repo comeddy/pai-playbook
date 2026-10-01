@@ -1,5 +1,5 @@
 ---
-ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
+ko_hash: 734ba619564216f522762ce7cebf24198644a781
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -79,6 +79,7 @@ graph LR
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples. Bedrock agents control Isaac Sim and real robots SO-ARM101/XGO2/Zumi via IoT, iterative sim-to-real learning with agent memory
 - [Agentic AI Robot — industrial safety monitoring](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples. AgentCore+IoT+robot autonomous patrol and edge inference demo, shown at AWS AI x Industry Week 2025, Korean README. ⚠️ Explicitly experimental/educational — not for production
 - [Smart Machines — hybrid Physical AI for industrial equipment](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples. Full-stack demo where agents detect fleet telemetry anomalies → diagnose root causes → create tickets and adjust machine parameters (multi-agent chat, natural-language scenario builder, KVS video → Bedrock analysis, Jetson YOLOWorld+VLM edge monitoring). ⚠️ README-stated demo — only excavators (simulated telemetry) fully work today; robot arms are WIP
+- [ROS2 with agentic control on AWS](https://github.com/aws-samples/sample-ros2-with-agentic-control-on-aws) — aws-samples. Drives a Unitree Go2 robot dog with an Amazon Nova Sonic voice agent — a ROS2 container runs on EC2, taking voice commands to walk, dance, or stand, and answering "what do you see?" from Bedrock vision models over the live camera feed. Two connection modes: Cloud (SSM tunnel over Unitree's cloud WebRTC) and AP (the robot's own Wi-Fi hotspot, no Unitree cloud dependency). ⚠️ README self-declared: "a demonstration sample published for learning purposes, not production-ready, no AWS SLA or support" — the Foxglove bridge (tcp/8765) has no authentication (anyone who can reach it has full control of the robot), there is no spend limit on a session, and the system records and processes imagery of people, requiring a lawful recording basis and retention policy
 
 <details markdown="1"><summary>🔄 Volatile data (components · regions · pricing — checked 2026-07)</summary>
 

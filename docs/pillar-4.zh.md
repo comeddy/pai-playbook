@@ -1,5 +1,5 @@
 ---
-ko_hash: 819f32f517dc3f2d9e2989eb6ed0222cd8851d5c
+ko_hash: 249117eb55a945284d794e8284e16263dd2dd48d
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -181,6 +181,8 @@ graph LR
 **➡️ 后续行动**: 对操作客户要**诚实地管理预期** —— 先说明"没有像 locomotion 那样解决，真实数据是关键"，再连接到 [pillar-1 真实数据管道](pillar-1.md)。禁止过度承诺。
 
 **🔗 相关资产**: [pillar-1 遥操作/真实数据](pillar-1.md) · [pillar-2 VLA 微调](pillar-2.md)
+
+- [AWS 上的 VLA 移动操作](https://github.com/aws-samples/sample-vla-mobile-manipulation-on-aws) —— aws-samples。面向 Unitree Go2（四足）+ D1 机械臂移动操作的端到端流水线 —— 自定义四阶段任务规范（导航→抓取→搬运→放置）、带阶段标注的 leader-follower 遥操作数据采集、Bedrock 标注（多帧投票将幻觉率从 15~20% 降到 <1%）、openpi/OpenVLA-OFT 微调（10 维动作·7 维状态·双摄像头）、跨检查点的滚动窗口末端执行器误差评估协议，以及按阶段路由的模型部署。⚠️ README 自述："示例代码，非生产用途"——明确声明为标准 VLA 构建模块不适用场景而打造，应视为实验性领域；安全防护（LiDAR 速度限幅、里程计限制）独立于策略与网络在设备端运行，作为防御性保障
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
+ko_hash: 734ba619564216f522762ce7cebf24198644a781
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -80,6 +80,7 @@ graph LR
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples。Bedrock エージェントが Isaac Sim と実機 SO-ARM101/XGO2/Zumi を IoT 経由で制御、エージェントメモリで sim-to-real 反復学習
 - [Agentic AI Robot — 産業安全モニタリング](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples。AgentCore+IoT+ロボットの自律パトロール·エッジ推論デモ、AWS AI x Industry Week 2025 で展示、韓国語 README あり。⚠️ 実験·教育用と明記 — 本番環境向けではありません
 - [Smart Machines — 産業設備ハイブリッド Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples。エージェントがフリートテレメトリの異常検知→原因診断→チケット作成・パラメータ調整まで行うフルスタックデモ（マルチエージェントチャット・自然言語シナリオビルダー・KVS 映像→Bedrock 分析・Jetson YOLOWorld+VLM エッジモニタリング）。⚠️ README 明記のデモ — 現在ショベル（シミュレーションテレメトリ）のみ完動、ロボットアームは WIP
+- [ROS2 + エージェンティック制御 on AWS](https://github.com/aws-samples/sample-ros2-with-agentic-control-on-aws) — aws-samples。Amazon Nova Sonic 音声エージェントで Unitree Go2 ロボット犬を操作 — EC2 上で動く ROS2 コンテナに音声で歩行・ダンス・起立を指示し、ライブカメラ映像に対する「何が見える?」への回答を Bedrock ビジョンモデルから得る。Cloud モード（Unitree クラウド WebRTC 経由の SSM トンネル）と AP モード（ロボット自身の Wi-Fi ホットスポット、Unitree クラウド非依存）の 2 接続方式。⚠️ README 自己申告: 「学習目的で公開されたデモンストレーションサンプルであり、本番対応ではなく、AWS SLA・サポート対象外」— Foxglove ブリッジ（tcp/8765）に認証がなく到達できる者がロボットを完全に制御できる、セッションに支出上限がない、システムが人物の映像を記録・処理するため合法的な記録根拠と保持ポリシーが必要と明記
 
 <details markdown="1"><summary>🔄 揮発性データ（コンポーネント・リージョン・価格 — 2026-07 確認）</summary>
 

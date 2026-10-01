@@ -1,5 +1,5 @@
 ---
-ko_hash: 522eea873e849c595119e05911784eb2d89ddd67
+ko_hash: 37cb74d5fa1d1a516985b3447e76a1ff13c045e1
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
@@ -109,6 +109,8 @@ graph TD
 **➡️ 次のアクション**: **「単一 G7e での LoRA ファインチューニング 1 日 PoC」** をデフォルトのエントリー提案に。顧客データが 100 デモ以上あれば、すぐに実測成功率を見せられる。GPU 確保が詰まったら → [decisions](decisions.md)。
 
 **🔗 関連資産**: [pillar-1 データパイプライン](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
+
+- [DreamZero ファインチューニング on SageMaker](https://github.com/aws-samples/sample-dreamzero-finetuning-on-sagemaker) — aws-samples。NVIDIA DreamZero（14B の World Action Model）を LeRobot 形式のカスタムロボットデータセットで Amazon SageMaker 上でファインチューニングする 9 段階パイプライン（fetch→detect→convert→validate→prep→stage→smoke test→train→merge）、各段階境界が再開ポイント。マージ済みチェックポイントではなく未マージの LoRA 重みをそのまま配信すると性能が 9.9 倍悪化するという警告を含む。⚠️ README 自己申告: 「これはサンプルであり、production-certified ワークロードではない」— セキュリティ文書に本番投入前に解決すべきギャップ10種（root 権限でのコンテナ実行、バージョニング未設定の S3 オブジェクト、ピン留めされていない Python 依存関係など）を明記
 
 <details markdown="1"><summary>🔄 揮発性データ（GPU 要件 —— 2026-07 公式リポジトリ基準）</summary>
 

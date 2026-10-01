@@ -77,6 +77,7 @@ graph LR
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples. Bedrock 에이전트가 Isaac Sim·실기 SO-ARM101/XGO2/Zumi를 IoT로 제어, 에이전트 메모리로 sim-to-real 반복 학습
 - [Agentic AI Robot — 산업 안전 모니터링](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples. AgentCore+IoT+로봇 자율 순찰·엣지 추론 데모, AWS AI x Industry Week 2025 시연, 한국어 README. ⚠️ 실험·교육용 명시 — 프로덕션 아님
 - [Smart Machines — 산업 장비 하이브리드 Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples. 에이전트가 플릿 텔레메트리 이상 감지→원인 진단→티켓 생성·파라미터 조정까지 수행하는 풀스택 데모(멀티에이전트 챗·자연어 시나리오 빌더·KVS 영상→Bedrock 분석·Jetson YOLOWorld+VLM 엣지 모니터링). ⚠️ README 명시 데모 — 현재 굴착기(시뮬 텔레메트리)만 완동, 로봇 암은 WIP
+- [ROS2 + 에이전틱 제어 on AWS](https://github.com/aws-samples/sample-ros2-with-agentic-control-on-aws) — aws-samples. Unitree Go2 로봇 개를 Amazon Nova Sonic 음성 에이전트로 제어 — EC2에서 돌아가는 ROS2 컨테이너에 음성으로 걷기·춤·기립 명령, Bedrock 비전 모델로 라이브 카메라에 "뭐가 보여?" 질의. Cloud 모드(Unitree 클라우드 WebRTC 경유 SSM 터널)·AP 모드(로봇 자체 Wi-Fi 핫스팟, Unitree 클라우드 비의존) 2가지 연결 방식. ⚠️ README 자기 선언: "학습용 데모, 프로덕션 아님, AWS SLA·지원 미포함" — Foxglove 브릿지(tcp/8765) 인증 없음(도달 가능자는 로봇 전권 획득), 세션 지출 한도 없음, 사람 이미지를 녹화·처리하므로 합법적 근거·보관정책 필요 명시
 
 <details markdown="1"><summary>🔄 휘발성 데이터 (컴포넌트·리전·가격 — 2026-07 확인)</summary>
 

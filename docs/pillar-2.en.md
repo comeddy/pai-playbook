@@ -1,5 +1,5 @@
 ---
-ko_hash: 522eea873e849c595119e05911784eb2d89ddd67
+ko_hash: 37cb74d5fa1d1a516985b3447e76a1ff13c045e1
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -108,6 +108,8 @@ graph TD
 **➡️ Next action**: use **"LoRA fine-tuning 1-day PoC on a single G7e"** as the default entry proposal. If the customer has 100+ demos, you can show measured success rates right away. If GPU procurement gets blocked → [decisions](decisions.md).
 
 **🔗 Related assets**: [pillar-1 data pipeline](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
+
+- [DreamZero fine-tuning on SageMaker](https://github.com/aws-samples/sample-dreamzero-finetuning-on-sagemaker) — aws-samples. Fine-tunes NVIDIA DreamZero (a 14B World Action Model) on a custom LeRobot-format robot dataset using Amazon SageMaker via a 9-stage pipeline (fetch→detect→convert→validate→prep→stage→smoke test→train→merge), with every stage boundary as a resume point. Includes a warning that serving un-merged LoRA weights instead of the merged checkpoint is 9.9x worse. ⚠️ README self-declared: "this is a sample, not a production-certified workload" — its security docs list 10 production gaps to remediate first (root container execution, unversioned S3 objects, unpinned Python dependencies, among others)
 
 <details markdown="1"><summary>🔄 Volatile data (GPU requirements — per official repos as of 2026-07)</summary>
 
