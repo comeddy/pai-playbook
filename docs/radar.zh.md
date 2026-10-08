@@ -1,16 +1,18 @@
 ---
-ko_hash: fe8ae4264744cbdff41aef87bdc1addcf7f2601a
+ko_hash: da1efa6b77872b7f3ff918555593f0de4399bbcd
 ---
 # Radar — 队列 / 观察列表
 
 _最终更新: 2026-09 · owner: Youngjin · volatility: 高_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: 尚未通过纳入标准（[2.5 THE FILTER](maintenance.md#纳入标准-the-filter)）但**值得关注**的东西。每个条目一句话 —— 成熟度标签 + **为何受关注 + 为何待定**。一旦通过门禁（4 项中 2 项），由负责的支柱 owner 用标准模板晋升。
+> **L0 TL;DR**: 需要进一步原文、复现或现场验证的候选。晋升需满足全部[收录条件](maintenance.md#纳入标准-the-filter)并由 owner 审查用途，扫描不能批准。
 >
 > ⚠️ **不要把这里的条目当作"成熟能力"用于客户提案。** 华丽的演示常常掩盖可部署性。
 
 ---
+
+> **复核范围**：页面修改日不代表所有技术条目已重验。核心修正日期、复现/人工状态见[证据](evidence.md)，旧条目仍使用各自确认日期。
 
 ## 🔬 模型 / 算法（待验证）
 
@@ -71,10 +73,11 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 高_
 | **[Agility Robotics Digit 5](https://www.agilityrobotics.com/content/agility-unveils-digit-5-humanoid-robot-built-for-cooperatively-safe-work-at-scale)**（相较现有 Digit@GXO，具备近距离协作安全架构与 90 分钟续航电池的第五代通用人形机器人） | 🟡 Preview | ✨ **为何关注**：已在 pillar-4 中列为"验证最充分的付费人形机器人"的 Agility Digit（@GXO）的下一代机型 —— 检测到碰撞风险时回避、停止或坐下，并以视听信号与人近距离协作的安全设计，90 分钟续航、9 分钟充电，并宣布以 CE 标志进入欧盟与英国的计划<br>⏳ **为何等待**：Agility 官方发布（2026-09-15，agilityrobotics.com）`[4]` —— 3 亿美元以上的多年订单为"截至 2026-05，以合同里程碑为前提"，Digit 5 实际运行为 0（既有 65,000 小时以上的成绩属于 Digit 4）。早期访问计划在 2027 年上半年，面向制造与仓储客户的 GA 预计 2027 年底。🔗 链接 200 · 一手来源核对 2026-09-27。**AWS 角度：无** | 公开 Digit 5 实际运行客户案例（欧盟/北美）+ 安全架构第三方验证 |
 | **[Qualcomm 收购 PickNik（MoveIt）](https://www.qualcomm.com/news/releases/2026/09/qualcomm-to-acquire-picknik-to-advance-the-future-of-open-roboti)**（收购 ROS 操作标准 MoveIt 的维护方，计划整合进 Dragonwing 边缘 AI 平台及 Arduino） | ⚪ 路线图 | ✨ **为何关注**：Qualcomm 收购机器人开源操作框架 MoveIt 的长期维护方 PickNik，计划将 MoveIt·MoveIt Pro 整合进自家 Dragonwing 机器人平台及 Arduino（从 VENTUNO Q 板开始）—— 与同一周 ROSCon 2026 Toronto 的 Intrinsic Core（Alphabet）一起，在 Isaac 一强格局中新增一条芯片/边缘厂商主导的开放机器人技术栈竞争线，为 pillar-4 边缘推理轴（NVIDIA Jetson 的替代方案）增加观察对象<br>⏳ **为何等待**：Qualcomm 官方发布（2026-09-23，qualcomm.com）`[4]` —— 交易条款未披露，且交易尚未完成（以"惯常完成条件"为前提）。MoveIt 1·2 维持开源方针，但 Dragonwing 整合·Arduino 扩展仍处路线图阶段，尚无已发布的整合产品。🔗 链接 200 · 一手来源核对 2026-09-27（发布日期、收购对象与 Dragonwing/Arduino 整合方针由页面元数据确认，条款未披露与开源承诺经 The Robot Report 交叉核对）。**AWS 角度：无（竞争边缘技术栈）** | 交易完成 + Dragonwing/Arduino 整合产品发布 |
 
-## ⚰️ 已废弃 — 禁止提议（存档保留）
+## 终止或限制 — 分别确认 { #-已废弃--禁止提议存档保留 }
 
 | 条目 | 状态 | 替代 |
 |---|---|---|
+| **[AWS IoT FleetWise](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html)** | 不接受新客户，现有客户可继续 `[1]` | 不用于新机器人默认方案 — [证据](evidence.md#fleetwise-new-customers) |
 | **[AWS RoboMaker](https://aws.amazon.com/robomaker/)** | 🔴 终止 (2025-09-10) `[1]` | EC2 G6e/G7e + Isaac Sim AMI + AWS Batch |
 | **[SageMaker Edge Manager](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)** | 🔴 终止 (2024-04-26) `[1]` | ONNX + IoT Greengrass V2 (+ SageMaker Neo) |
 | **[IoT Greengrass V1](https://docs.aws.amazon.com/greengrass/v1/developerguide/what-is-gg.html)** | 🔴 终止 (2026-06-01) `[1]` | Greengrass V2 |
@@ -88,7 +91,7 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 高_
 ## 晋升流程（摘要）
 
 1. **捕获**: 用指定频道/表情收集候选
-2. **过滤**: 应用 [2.5 门禁](maintenance.md#纳入标准-the-filter)（4 项中 2 项以上）
+2. **过滤**：满足全部[收录条件](maintenance.md#纳入标准-the-filter)，区分发布、证据、用途和支持。
 3. **通过时**: 由负责的支柱 owner 用[标准模板](maintenance.md#标准模板)编入，并从 Radar 移除
 4. **未达时**: 在此保留一句话，明示晋升条件
 

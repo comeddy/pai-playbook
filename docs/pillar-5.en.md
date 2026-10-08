@@ -1,5 +1,5 @@
 ---
-ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
+ko_hash: 301fcc497bdcab115a9021056c5f9f79cba38358
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -7,67 +7,43 @@ _Last updated: 2026-09 · owner: Youngjin · volatility: high (AgentCore feature
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: The layer where an LLM agent[^agent] directs robots/equipment. This is **the pillar where AWS is strongest** — **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) is GA (2025-10) with full Seoul region support**, and **Policy (Cedar), which intercepts tool calls[^tool] in real time, is also GA (2026-03)**. The canonical structure is the **System 2[^sys] (slow LLM planner, cloud) + System 1 (fast control, edge)** split. ⚠️ Amazon DeepFleet is not an "LLM agent" but a warehouse robot coordination foundation model, so don't confuse them.
+> **L0 TL;DR**: Separate business planning, robot skill calls, and fleet connectivity requirements. Use AgentCore selectively for needed agent functions; [validate control, safety, and data-processing locations separately](operations.md).
 
 ---
 
+> **Review scope**: the page edit date does not revalidate every technical item. See [Evidence](evidence.md) for core corrections, check dates, and reproduction/human review status; legacy item dates still apply.
+
 ## Top 3 questions customers ask most in this pillar
+
+> These are discovery examples, not a measured ranking of customer inquiries.
 
 1. **"Does directing robots/equipment with an LLM agent actually work? What does AWS have?"** → [Bedrock AgentCore](#1-amazon-bedrock-agentcore--ga)
 2. **"How do you put an agent on a real-time robot? Even offline at the edge?"** → [Edge agentic orchestration](#3-edge-agentic-orchestration--preview-reference-architecture)
 3. **"When an agent controls a physical system, how is safety guaranteed?"** → [Safety & guardrails](#5-safety--guardrails--ga-agent-layer---unsolved-physical-semantic-gap)
 
-> **Stable principle (rarely changes)**: an agent does not "directly control a robot in real time." The agent handles **high-level planning and tool selection (System 2)**, while an edge policy handles **low-level real-time control (System 1)** (→ [pillar-2](pillar-2.md), [pillar-4](pillar-4.md)). What truly runs in production is (1) **warehouse fleet[^fleet] coordination** (DeepFleet, CoEvolution) and (2) **development/data workload orchestration**[^orch] (OSMO); full-stack humanoid agents and MCP[^mcp]-robot connections are mostly research/demo.
+> **L0/L1**: Business planning, observation-based policies, low-level control, and independent safety are separate responsibilities. Distinguish service release from customer-site validation.
 
 ---
 
 ## 1. Amazon Bedrock AgentCore  🟢 GA
 
-**L0 TL;DR**: A managed stack for production agents — Runtime, Memory, Gateway (tool connectivity), Identity, Observability, and **Policy (a Cedar-based real-time tool-call gate)**. **Full Seoul region support**. The harness is free; only resource usage is billed.
+**L0 TL;DR**: AgentCore provides agent execution, tool access, identity, and observability. **Separate service GA from robot-site validation, and Seoul availability from Korea-only processing.**
 
-**Customer need/problem**: "We want to take our agent beyond PoC to production. We don't want to build session management, tool connectivity, permissions/security, and observability from scratch every time."
-
-**Solution overview** `[1]`:
-
-- **GA history**: preview 2025-07 → **GA 2025-10-13**. Components: **Runtime, Memory, Gateway, Identity, Observability, Built-in Tools (Browser · Code Interpreter)**. At re:Invent 2025-12, Policy · Evaluations preview, episodic Memory GA, and bidirectional streaming Runtime GA for voice were added. **Policy is GA as of 2026-03-03**.
-- **Policy (core)**: integrated with Gateway to **intercept every agent→tool call in real time** and evaluate a policy (allow/deny) in milliseconds. Authored in natural language → compiled to **[Cedar](https://www.cedarpolicy.com/)** (AWS's open-source policy language). **GA in 13 regions including Seoul**. → a direct primitive for constraining physical-system tool calls (item 5, safety).
-- **[Strands Agents SDK](https://strandsagents.com/)** (companion): a model- and cloud-neutral orchestration SDK, **reached 1.0 (GA-class)**. Used internally by Amazon Q Developer · Glue. Pairs with AgentCore. (Versions/metrics in the collapsed block)
-- **[Nova Act](https://nova.amazon.com/act)** (related): a browser/UI automation agent, **GA at re:Invent 2025**. The vendor claims high task reliability (the number is in the collapsed block — measurement conditions undisclosed).
-
-**What each component actually does** `[1]` (docs verified 2026-07):
-
-| Component | Technical summary | For robot workloads |
+| Component | Role to assess | Limit |
 |---|---|---|
-| **Runtime** | Serverless execution in a dedicated microVM[^microvm] per session (isolated CPU/memory/filesystem, memory sanitized on termination). Long-running sessions **up to 8 hours**; **no billing while waiting** for LLM/tool responses. Framework- and model-agnostic (LangGraph, CrewAI, Strands, …) | Where the System 2 planner lives — a long task plan stays in one isolated session |
-| **Gateway** | **Turns Lambda, OpenAPI, Smithy, existing MCP servers, and API Gateway into MCP tools**, aggregated as one virtual MCP server. Semantic tool search; managed inbound and outbound auth | The point where robot skills (pick, move, inspect APIs) become agent tools in a few lines of code |
-| **Memory** | Two tiers: short-term (raw session events) + long-term (extraction strategies: summary, semantic, user preference + episodic). **Long-term retrieval also passes through Policy** | Keeps task context ("that shelf from earlier") and accumulates site know-how across sessions |
-| **Identity** | Agent workload identity + OAuth2/API-key token vault — safe delegated auth on tool calls | Keeps human credentials out of robot-fleet APIs |
-| **Policy** | Intercepts every agent→tool call in real time and evaluates Cedar policies in milliseconds (written in natural language → compiled to Cedar) | The last safety gate right before physical action (→ section 5) |
-| **Observability** | OTEL[^otel]-compatible traces, spans, and metrics; CloudWatch integration | Reconstructs "why did it do that" step by step — incident investigation and audits |
-| **Built-in Tools** | Managed Browser (isolated microVM) and Code Interpreter | Auxiliary work such as manual lookups and calculations |
+| Runtime | Business-planning agent execution | Not a real-time robot controller |
+| Gateway/Identity | Connect/authenticate permitted robot skill APIs | Completion, cancellation, and deduplication need implementation |
+| Policy | Policy checks for tool calls through Gateway | Does not replace physical-state checks or independent safety |
+| Memory/Evaluations | Context and evaluation | Check storage and inference processing separately |
+| Observability | Trace tasks/tool calls | Correlate with device/control/safety logs |
 
-**AWS mapping**: the services themselves are the mapping. Register robot skills as tools on Gateway → the agent invokes them via natural-language planning, gated by Policy, session maintained by Memory, traced by Observability.
-```mermaid
-graph LR
-    U["Operator<br>natural-language instruction"] --> RT["AgentCore Runtime<br>System 2 planner (LLM)"]
-    RT <--> M["Memory<br>short- and long-term context"]
-    RT -- tool call --> P{"Policy<br>Cedar allow/deny"}
-    P -- allow --> GW["Gateway<br>robot skill = MCP tool"]
-    P -- deny --> X["blocked + logged"]
-    GW --> ROB["Robot/equipment API<br>(IoT · edge System 1)"]
-    RT -. traces .-> O["Observability<br>OTEL / CloudWatch"]
-```
+**Region/data correction** `[1]`: Seoul availability alone does not settle data residency. [AWS cross-region inference documentation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/cross-region-inference.html) states Memory and other inputs/outputs may be processed outside the primary Region. Seoul-origin Evaluations uses global cross-region inference. Record processing countries per feature, model, and external tool ([evidence](evidence.md#agentcore-residency)).
 
-**Decision criteria**:
+**Decision criteria**: consider direct model calls for single inference. Select AgentCore components when persistent sessions, tool permissions, or tracing are needed. Check feature-specific [Regions](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) and [pricing](https://aws.amazon.com/bedrock/agentcore/pricing/), including model/API, network, and log costs. “Free harness” is not a total-cost estimate.
 
-- Production agent (needs sessions · tools · permissions · observability) → **AgentCore Runtime + Gateway + Policy**.
-- Simple one-off inference → a direct Bedrock call suffices; AgentCore is overkill.
-- Multi-agent · A2A[^a2a] → Strands 1.0.
-- Offline · low-latency edge needed → item 3 (edge).
+**Customer case**: the existing AWS/SoftServe reference is a demo/showcase, not proof of customer production-line operation.
 
-**Customer case**: **AWS×SoftServe autonomous production line** (AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) — Hannover Messe 2026 **demo/showcase** ([1]/[3]).
-
-**➡️ Next action**: first confirm for Korean customers that **"AgentCore is GA in the Seoul region — no data residency issue"** (correcting outdated "not supported in Seoul" info), then propose a PoC registering robot skills as Gateway tools. Reassure on pricing with "harness free, only resources billed."
+**➡️ Next action**: define robot skill inputs, permissions, completion/cancellation, and processing routes; connect [operations/recovery tests](operations.md).
 
 **🔗 Related assets**:
 
@@ -80,72 +56,17 @@ graph LR
 - [Agentic AI Robot — industrial safety monitoring](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples. AgentCore+IoT+robot autonomous patrol and edge inference demo, shown at AWS AI x Industry Week 2025, Korean README. ⚠️ Explicitly experimental/educational — not for production
 - [Smart Machines — hybrid Physical AI for industrial equipment](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples. Full-stack demo where agents detect fleet telemetry anomalies → diagnose root causes → create tickets and adjust machine parameters (multi-agent chat, natural-language scenario builder, KVS video → Bedrock analysis, Jetson YOLOWorld+VLM edge monitoring). ⚠️ README-stated demo — only excavators (simulated telemetry) fully work today; robot arms are WIP
 
-<details markdown="1"><summary>🔄 Volatile data (components · regions · pricing — checked 2026-07)</summary>
-
-| Component | Status | Seoul |
-|---|---|---|
-| Runtime / Memory / Gateway / Identity / Observability / Built-in Tools | 🟢 GA | ✅ |
-| Policy (Cedar tool gate) | 🟢 GA (2026-03) | ✅ |
-| Evaluations | 🟡 Preview→ | ✅ |
-| Payments | 🟡 Preview | ❌ |
-| Agent Registry | 🟡 Preview | ❌ (Tokyo ✅) |
-
-**Pricing** — the harness (control plane) is free; you pay only for resources used:
-
-| Item | Rate |
-|---|---|
-| Runtime · Browser · Code Interpreter | $0.0895/vCPU-hour + $0.00945/GB-hour (billed per second) |
-| Gateway | $0.005 per 1,000 calls |
-| Memory — short-term | $0.25 per 1,000 events |
-| Memory — long-term storage | $0.75 per 1,000 records per month |
-
-**Regions** (AWS official region table `[1]`, checked directly 2026-07):
-
-| Region | Coverage |
-|---|---|
-| **Seoul** (ap-northeast-2) | All core components + Policy + Evaluations ✅ |
-| Tokyo (ap-northeast-1) | Core components + **Agent Registry** ✅ (not yet in Seoul) |
-
-**Companion-tool indicators**:
-
-| Item | Value | Note |
-|---|---|---|
-| Strands Python 1.0 | 2026-05-21 | ~16.7M downloads/month (2026-06, `[3]`) |
-| Strands TypeScript 1.0 | 2026-04-30 | |
-| Nova Act | "90%+ task reliability" | Amazon-announced figure, measurement conditions undisclosed (2025-12, `[3]`) — **do not cite as fact without conditions** |
-</details>
-
 ---
 
-## 2. System 2 + System 1 orchestration pattern  🟢 GA (stable principle)
+## 2. Separate business planning and robot control { #2-system-2--system-1-orchestration-pattern--ga-stable-principle }
 
-**L0 TL;DR**: The architectural skeleton of agentic orchestration. A **heavy VLM/LLM plans/replans at 5~10Hz (System 2)**, and a **lightweight policy executes at 50~200Hz (System 1)**. This separation decides "what goes in the cloud and what goes at the edge."
+**L0 TL;DR**: Separate business-planning agents from robot execution, control, and safety without treating this as a model's internal System 1/2 split.
 
-**Customer need/problem**: "How do I fit a large reasoning model and real-time control into one system?"
+**Placement**: first set allowable cloud delay, outage duration, and processing countries. Place observation-based policies, local control, and independent safety according to deadlines/risk assessment. Both Helix models are onboard; see [P2](pillar-2.md) and [evidence](evidence.md#action-chunking).
 
-**Solution overview** `[1]/[4]`: Evolved from the SayCan/PaLM-E (2022~23 research) lineage. The current dominant pattern = high-level planner (task decomposition · tool-calling, slow) + low-level action policy (fast). Example numbers (vendor-disclosed, for order-of-magnitude sense): Figure Helix S2 7~9Hz + S1 200Hz (Figure, 2025), GR00T N1 S1 diffusion ~10ms (NVIDIA, 2025). ⚠️ **The pattern itself is standard, but full-stack whole-body humanoids are mostly pilot/demo**.
+**AWS mapping**: AgentCore is an option for eligible business planning. Skill calls need IDs, expiry, preconditions, and completion checks. Action chunking alone solves neither network latency nor safety.
 
-**AWS mapping**: **System 2 = cloud Bedrock AgentCore** (planning · tool orchestration · guardrails[^guardrail]), **System 1 = edge Jetson** (real-time control, → [pillar-4](pillar-4.md)). If latency is tolerable, System 2 in the cloud; otherwise edge on-board.
-
-```mermaid
-graph TD
-    subgraph CLOUD["Cloud (latency-tolerant · seconds)"]
-        S2["System 2 · slow LLM planner<br>5~10Hz plan/replan · tool-call<br>Bedrock AgentCore"]
-        POL["Policy(Cedar) · tool-call gate"]
-        S2 --> POL
-    end
-    subgraph EDGE["Edge on-board (real-time · milliseconds)"]
-        S1["System 1 · fast action policy<br>50~200Hz real-time control<br>Jetson"]
-    end
-    POL -. high-level plan · action chunking .-> S1
-    S1 --> ROB["Robot · equipment"]
-```
-
-**Decision criteria**: see [decisions Cloud vs Edge](decisions.md). Real-time control loop → edge unconditionally. Planning/replanning → cloud/async possible.
-
-**Customer case**: Figure, GR00T (open). Validated production is limited.
-
-**➡️ Next action**: for the misconception "does the agent control the robot in real time?", clarify the picture as **"the agent plans, an edge policy does real-time control."** Present the AgentCore (planning) + Jetson (control) combination.
+**➡️ Next action**: use the four-layer diagram and failure matrix in [Operations](operations.md) to assign ownership, cancellation, and recovery.
 
 **🔗 Related assets**: [pillar-2 VLA structure](pillar-2.md) · [pillar-4 edge](pillar-4.md) · [decisions](decisions.md)
 
@@ -171,40 +92,19 @@ graph TD
 
 ---
 
-## 4. Fleet orchestration  🟢 GA (partly) / mixed
+## 4. Fleet operations — product, control, and cloud boundaries { #4-fleet-orchestration--ga-partly--mixed }
 
-**L0 TL;DR**: The layer that coordinates multiple robots. **The actual production cases are warehouse fleet coordination** (Amazon DeepFleet, CoEvolution) and **development workload orchestration** (NVIDIA OSMO). ⚠️ DeepFleet is not an LLM agent but a multi-robot coordination foundation model.
+**L0 TL;DR**: Fleet task/traffic coordination, device operations, and development-job scheduling are different problems. Compare fleet products, SI, and custom logic against requirements.
 
-**Customer need/problem**: "How do I centrally coordinate and monitor hundreds~thousands of robots?"
+**Reference scope**: [Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model) is an internal Amazon coordination case, not a customer-purchasable AgentCore feature `[3]`. [NVIDIA OSMO](https://developer.nvidia.com/osmo) schedules development/data/training workloads, not site traffic.
 
-**Solution overview** `[1]/[3]`:
+**AWS mapping**: design IoT Core/Greengrass connectivity/state collection and needed storage/analytics. Consider AgentCore only when business planning needs an agent. Assign collision avoidance, task allocation, and offline recovery to defined robot/fleet solution responsibilities.
 
-- **[Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model)** 🟢 — a generative foundation model for coordinating Amazon warehouse robot fleets ("traffic control"), ~10% travel-time efficiency improvement, announced with the 1-millionth robot (2025-07). **Production (Amazon internal)**. ⚠️ **Not an LLM agent orchestrator** — "multi-agent" in the multi-robot RL sense. Do not misclassify.
-- **[NVIDIA Isaac OSMO](https://developer.nvidia.com/osmo)** 🟢 — orchestration of robotics **development/data/training workloads** (synthetic data · training · RL · SIL). At GTC 2026, integrated coding agents (Claude Code/Codex/Cursor). ⚠️ **Not real-time control of a field robot fleet** — development-pipeline orchestration.
-- **Formant** 🟡 — fleet management SaaS. Running in hundreds of organizations but small-scale (concrete metrics per `[3]` PitchBook/Crunchbase — 644 organizations · <$5M ARR, 2026-05, changes often), not acquired.
-- **CoEvolution** — coordinates multi-fleet across Lotte Global Logistics 417 superstores, claims 30% efficiency (⚠️ single [3] source, re-confirmation needed).
+**FleetWise correction** `[1]`: [AWS IoT FleetWise](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html) is **closed to new customers**. Existing customers may continue, but it is not a default for new robot architectures ([evidence](evidence.md#fleetwise-new-customers)).
 
-**AWS mapping**: IoT Core/Greengrass (fleet connectivity) + AgentCore (orchestration logic) + IoT FleetWise/SiteWise (telemetry). Train a DeepFleet-style coordination model with SageMaker.
+**Customer case**: [Certis patrol robots](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/) is a public AWS case, not a guarantee of equivalent outcomes elsewhere.
 
-```mermaid
-graph TD
-    ORCH["Orchestration logic<br>AgentCore"]
-    CONN["Connectivity layer<br>IoT Core / Greengrass"]
-    TEL["Telemetry<br>IoT FleetWise / SiteWise"]
-    TRAIN["Coordination-model training<br>SageMaker"]
-    FLEET["Robot fleet (warehouse · AMR)"]
-    ORCH --> CONN
-    CONN --> FLEET
-    FLEET -. state · location .-> TEL
-    TEL --> ORCH
-    TRAIN -. DeepFleet-style coordination model .-> ORCH
-```
-
-**Decision criteria**: warehouse/AMR fleet coordination → a validated area (reference the DeepFleet-style approach). Humanoid agent fleet → still early. Development workload → OSMO (NVIDIA) or AWS Batch/Step Functions.
-
-**Customer case** (⚠️ Korean cases are early/demo/announced): **Lotte Global Logistics×CoEvolution** (30%, single source), **LG CNS** warehouse demo (humanoid + robot dog + mobile), **Naver** AI Agent Platform planned H2 2026 (NVIDIA blueprint). Overseas production case: **Certis** (security services) — an official customer case that [deploys and operates autonomous patrol robots on AWS](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/) `[1]` — a rare public reference from the edge+coordination perspective of running a fleet in the field.
-
-**➡️ Next action**: for fleet customers, organize into 3 layers — **"orchestration logic on AgentCore, connectivity on IoT, training on SageMaker."** Explain precisely so DeepFleet is not mistaken for an LLM agent.
+**➡️ Next action**: record product boundaries, completion, outages, intervention, and recovery in the [pilot card](start.md#pilot); perform [failure tests](operations.md#failure).
 
 **🔗 Related assets**: [pillar-2 training](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
 
@@ -218,7 +118,7 @@ graph TD
 
 **Solution overview** `[1]/[4]`:
 
-- **Agent layer (AWS-native)**: **AgentCore Policy** — real-time allow/deny (ms) via Cedar on every agent→tool call. A practical layer for constraining physical-action tool calls. **[Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)** — filters LLM input/output (content · topic · PII) (not the actuation itself).
+- **Agent layer (AWS-native)**: **AgentCore Policy** — real-time allow/deny (ms) via Cedar on each agent→tool call through Gateway. A practical layer for constraining physical-action tool calls. **[Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)** — filters LLM input/output (content · topic · PII) (not the actuation itself).
 - **Robot layer (functional safety)**: **[ISO 10218-1/2](https://www.iso.org/standard/73933.html)** (robots · integrated systems), **ISO/TS 15066** (collaborative robots), **ISO 13482** (personal care robots). ⚠️ These cover **physical safety only** — LLM semantic misuse/hallucination is not covered.
 - **Research**: RoboGuard (safety-rule grounding), BadRobot (embedded-LLM jailbreak attacks), LLM semantic DoS — 🔵 research stage. An **open gap** where standards don't bridge functional safety (ISO) and LLM risk.
 
@@ -261,7 +161,7 @@ graph TD
 
 ## The honest reality of this pillar (SA must-read)
 
-- **AgentCore fully supports the Seoul region** (including Policy · Evaluations). "Not supported in Seoul" was the GA-early story — it's wrong now. Reassure on data residency.
+- **Separate Seoul availability from processing location.** Check [cross-region inference](evidence.md#agentcore-residency) per feature, model, and route.
 - **Policy is GA (2026-03)** — do not call it "preview."
 - **DeepFleet ≠ LLM agent orchestrator.** A warehouse robot coordination foundation model (multi-robot RL). No misclassification.
 - **Real production is fleet coordination (DeepFleet/CoEvolution) and development workloads (OSMO).** MCP-robot connections and full-stack humanoid agents are mostly research/demo.
@@ -272,14 +172,3 @@ graph TD
 _owner: Youngjin · updated: 2026-09 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_
 
 <!-- 용어 각주 -->
-
-[^agent]: **LLM agent** — software in which a large language model plans on its own, selects and calls tools (APIs, robot skills), and carries out multi-step tasks. Unlike simple Q&A, the key point is that it "acts."
-[^orch]: **Orchestration** — the layer that coordinates and directs multiple agents, robots, and workflows as one system. It decides "who does what, and when" rather than controlling individual robots.
-[^sys]: **System 2 / System 1** — the cognitive-science "slow thinking / fast reaction" distinction applied to robot architecture. System 2 is a slow LLM planner that handles planning (cloud); System 1 is a small policy that handles real-time control (edge).
-[^tool]: **Tool calling** — the mechanism by which an agent calls external functions (APIs, robot skills) with a defined schema during reasoning. It is the agent's only path to affecting the physical world, so the safety gate (Policy) sits exactly at this point.
-[^mcp]: **MCP (Model Context Protocol)** — an open standard protocol connecting agents to tools and data sources. Often likened to "USB-C for agents"; experiments exposing robot skills as MCP servers are growing.
-[^guardrail]: **Guardrail** — A safety mechanism that constrains an agent's inputs/outputs and behavior with policies. In physical systems this means blocking dangerous tool calls and limiting the range of actions.
-[^fleet]: **Fleet coordination** — scheduling and route allocation for a large group of robots as one system. Already production-proven at the hundreds-to-thousands scale, as with warehouse robots.
-[^a2a]: **A2A (Agent-to-Agent)** — A multi-agent communication approach in which different agents collaborate via a standard protocol.
-[^microvm]: **microVM (micro virtual machine)** — an ultra-light VM (e.g., AWS Firecracker) with stronger isolation than containers. Each session gets its own CPU, memory, and filesystem, and memory is sanitized on termination — structurally preventing cross-session data leakage.
-[^otel]: **OTEL (OpenTelemetry)** — the industry-standard specification for collecting traces, metrics, and logs. It exports an agent's step-by-step execution records in a vendor-neutral format for observability tooling.

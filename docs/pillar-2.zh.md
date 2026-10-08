@@ -1,5 +1,5 @@
 ---
-ko_hash: 522eea873e849c595119e05911784eb2d89ddd67
+ko_hash: 63e5a3e8cb3004a7dc553bf04fe7c4d473451f3a
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
@@ -7,116 +7,74 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 高（模型版本·许
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: 大多数客户**不会从零训练 VLA[^vla] —— 而是微调[^ft]开放基础模型**。所以核心问题有三个: (1) 用哪个模型（**许可证决定能否商用**），(2) LoRA[^lora] 还是全量微调（决定 GPU 规模），(3) 在 AWS 上怎么跑（HyperPod + EC2 GPU）。用 Trainium 训练 VLA 的公开案例尚不存在。
+> **L0 TL;DR**: 选择模型适配前，先与[现有方式、采购及 SI](decisions.md)比较。需要学习时确认模型数据权利、观测动作兼容、实测资源和独立评估。
 
 ---
 
+> **复核范围**：页面修改日不代表所有技术条目已重验。核心修正日期、复现/人工状态见[证据](evidence.md)，旧条目仍使用各自确认日期。
+
 ## 本支柱中客户最常问的问题 Top 3
+
+> 以下为探索问题示例，不是已验证的客户咨询频率排名。
 
 1. **"从哪个 VLA 模型开始？哪些可以商用？"** → [开放 VLA 基础模型](#1-开放-vla-基础模型--许可证--ga)（⚠️ GR00T 许可证陷阱）
 2. **"微调需要几张 GPU？用 LoRA 一张就够吗？"** → [VLA 微调实战](#2-vla-微调实战-lora-vs-full-ft--ga)
 3. **"在 AWS 上怎么跑 VLA 训练？用 HyperPod？能用 Trainium 吗？"** → [AWS 训练栈](#3-aws-训练栈-hyperpod--ec2-gpu--ga)
 
-> **稳定原理（几乎不变）**: (1) 几乎没有客户会预训练前沿 VLA —— **微调才是 99% 的现实**。(2) VLA 正收敛于 **System 2[^sys]（慢速 VLM[^vlm] 规划器，5~10Hz）+ System 1（快速动作策略，50~200Hz）** 结构，而这种双层结构决定了"推理放云上还是边缘"（→ [pillar-4](pillar-4.md)、[decisions](decisions.md)）。(3) 连续动作生成以 **flow-matching[^flow] / diffusion action head + action chunking[^chunk]** 为标准。
+> **L0/L1**: 分别验证模型、训练范围、部署位置。System 1/2[^sys] 不是云部署规则，action chunking[^chunk] 不自动提高反馈频率。
 
 ---
 
-## 1. 开放 VLA 基础模型 & 许可证  🟢 GA
+## 1. 开放 VLA 选型与许可证 — 逐模型确认 { #1-开放-vla-基础模型--许可证--ga }
 
-**L0 TL;DR**: 微调的起点。**许可证与性能同样重要** —— 最热门的 NVIDIA GR00T 可能因版本不同而为非商业，而 Physical Intelligence π（Apache-2.0）与 OpenVLA（MIT）**采用宽松许可证，对商业友好**。
+**L0 TL;DR**: 同时评估性能、机器人适配和使用权。**区分代码、预训练权重、基础模型和数据集的许可证**，核对具体版本的官方模型卡。公开权重不代表客户现场验证。
 
-**客户需求/问题**: "想引入面向人形/机械臂的 VLA。哪个开放模型好，能商用在我们产品上吗？"
+**客户需求/问题**：“能否将该模型用于我们的机器人/任务，进行商业或研究使用？”
 
-**解决方案概览** `[1]`:
+| 候选 | 要核对的一手来源 | 判断范围 |
+|---|---|---|
+| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 所选版本模型卡、权重条款、代码 LICENSE | 不将所有代际归为同一许可证 |
+| [Physical Intelligence openpi](https://github.com/Physical-Intelligence/openpi) | 代码 LICENSE、checkpoint、基础模型访问/使用条件 | 代码 Apache-2.0 不决定所有权重/数据权利 |
+| [OpenVLA](https://github.com/openvla/openvla#pretrained-vlas) | README 的 Model Licensing & Commercial Use | **代码 MIT / Llama-2 派生权重 Llama Community License** `[1]` |
 
-- **[NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T)** —— 开放人形基础模型。N1(2B)、N1.5(3B, flow-matching DiT action head)、N1.6(CES 2026, Cosmos Reason 2 骨干)、N1.7（GitHub 上声称 GA）。⚠️ **许可证注意**: N1.5 模型卡为**非商业（NVIDIA license, non-commercial）**。N1.6/N1.7 允许商用的说法**仅来自二手来源，未经验证** → 做商用判断前**务必直接查看实时模型卡**。`[1]` github.com/NVIDIA/Isaac-GR00T
-- **[Physical Intelligence π (openpi)](https://github.com/Physical-Intelligence/openpi)** —— π0、π0-FAST、π0.5 全部为 **Apache-2.0**（可商用）。提供 DROID/ALOHA/LIBERO 微调检查点。`[1]` github.com/Physical-Intelligence/openpi。⚠️ π0.7 仅存在于二手来源（未经验证）。
-- **[OpenVLA](https://github.com/openvla/openvla)** —— 7B、**MIT 许可证**（可商用），基于 Llama2 的 VLM 骨干。提供官方微调脚本。`[1]` github.com/openvla/openvla（LICENSE 文件 2026-07 直接确认）
+**OpenVLA 修正**：撤回“MIT 因而可商用”的表述。官方 README 区分代码与预训练权重条件。[确认日期及来源](evidence.md#openvla-license)。
 
-**AWS 映射**: 将模型权重从 HF 镜像到 S3 → 在 EC2 GPU(P6/G7e) 或 SageMaker HyperPod 上微调（下方第 2·3 项）。可用 [LeRobot](https://github.com/huggingface/lerobot)（`groot` policy type）对 GR00T 做 post-train/eval。
+**AWS 映射**：将具有使用权的权重及数据存入 S3，先测量单 GPU 显存和吞吐量。选择所需 EC2、Batch、SageMaker 环境，公开样本不是 AWS 运营保证。
 
-**决策标准**:
+**决策标准**：分别核对商业、内部 PoC、研究用途条款。称作 PoC 不自动满足非商业条件。检查机器人观测/动作定义与 checkpoint 兼容性。
 
-- **发布商用产品** → 优先 π（Apache-2.0）或 OpenVLA（MIT）。GR00T 仅在确定许可证后使用。
-- **人形全身控制** → GR00T 最完整（SONIC controller、Cosmos Reason 骨干），但需确认许可证。
-- **研究·PoC** → 全部可用，按性能/embodiment[^embodiment] 适配性选择。
+**客户案例**：该表是许可证审查路径，不是部署证据。
 
-```mermaid
-graph TD
-    Q{发布商用产品?} -- 是 --> L{许可证}
-    Q -- 研究 · PoC --> ALL["全部可用<br>按 embodiment 适配性选择"]
-    L -- Apache-2.0 --> PI["π (openpi) 🟢<br>可商用"]
-    L -- MIT --> OV["OpenVLA 🟢<br>可商用"]
-    L -- NVIDIA license --> GR["GR00T ⚠️<br>务必查看实时模型卡"]
-```
-
-**客户案例**: 案例待定（未确认韩国公开的 VLA 微调案例）。
-
-**➡️ 后续行动**: 若客户正在选型，则**将"许可证矩阵（GR00T=需确认 / π=Apache-2.0 / OpenVLA=MIT）作为第一张幻灯片"**呈现。若为商用，则提议在 EC2 G7e 上做 π0.5 或 OpenVLA 微调 PoC。
+**➡️ 后续行动**：记录代码/权重/基础模型/数据、版本、允许用途、来源 URL/日期及复核人，再进入[微调路径](execution.md#finetuning)。
 
 **🔗 相关资产**: [pillar-1 数据集许可证](pillar-1.md) · [pillar-4 边缘部署](pillar-4.md) · [机器人基础模型论文评读](https://hi-space.gitbook.io/physical-ai-on-aws/paper-review-tbd/robot-foundation-model) —— 韩语。推理 VLM（Cosmos-Reason 1）与 VLA（RT-2、OpenVLA、Gemini Robotics、GR00T N1、π0.6）论文整理
 
-<details markdown="1"><summary>🔄 易变数据（模型版本·许可证 —— 更新对象，2026-07 确认）</summary>
-
-| 模型 | 参数 | 许可证 | 商用 | 骨干 / 动作头 | 备注 |
-|---|---|---|---|---|---|
-| GR00T N1 | 2B | NVIDIA（非商业） | ❌ | SigLip2+T5 / flow-matching DiT | |
-| GR00T N1.5 | 3B | NVIDIA（非商业） | ❌ | / flow-matching DiT | 模型卡明示 |
-| GR00T N1.6 | ~3B | 声称商用 [4] | ⚠️未验证 | Cosmos Reason 2 | CES 2026 |
-| GR00T N1.7 | 3B | NVIDIA Open Model | ⚠️未验证 | Cosmos-Reason2-2B / diffusion | GitHub 声称 GA, 40 timestep horizon |
-| π0 / π0-FAST / π0.5 | 未公开 | **Apache-2.0** | ✅ | flow-matching (π0-FAST=autoregressive) | |
-| OpenVLA | 7B | **MIT** | ✅ | Llama2 VLM | 许可证 2026-07 直接确认 |
-
-⚠️ **N1.5 vs N1.6 vs N1.7 的版本-许可证映射在各来源间不一致。** 做商用声明前直接查看实时 HF/GitHub 模型卡。此条目在支柱 2 中引用风险最大。
-</details>
-
 ---
 
-## 2. VLA 微调实战 (LoRA vs Full-FT)  🟢 GA
+## 2. VLA 微调 — 资源估算与评估 { #2-vla-微调实战-lora-vs-full-ft--ga }
 
-**L0 TL;DR**: 好消息 —— **LoRA 微调用一张 GPU（24GB 级）就能做**，每个任务 100~500 个演示即可让单任务成功率达 80%+。全量微调则需要 70~100GB（H100/A100 级）。
+**L0 TL;DR**: 部分模型/配置可用单 GPU 微调，但**显存或演示数量不保证成功率及周期**。先做兼容性检查，再用客户数据测量训练/评估成本。
 
-**客户需求/问题**: "想按我们的任务调整 VLA，需要准备多少 GPU、需要多少数据？"
+**客户需求/问题**：“如何估算数据、GPU 及完成条件？”
 
-**解决方案概览** `[1]`:
+**解决方案概览** `[1]`：核对所选版 [OpenVLA LoRA](https://github.com/openvla/openvla#fine-tuning-openvla-via-lora) 和 [openpi](https://github.com/Physical-Intelligence/openpi)。显存需按模型、精度、图像数/分辨率、序列长度、batch、训练模块实测。根据机器人和任务变化，实验确定动作头、适配器、VLM 的训练范围。
 
-- **OpenVLA**: LoRA(rank 32) ~24GB 单 GPU(A100/RTX 4090)。48GB→batch 12，80GB→batch 24。全量微调 ~100GB。官方 `vla-scripts/finetune.py`。
-- **openpi (π0/π0.5)**: 推理 >8GB，LoRA >22.5GB(RTX 4090)，**全量微调 >70GB(A100/H100)**。官方 LoRA/full 配方，2025-09 新增 PyTorch 支持。数据 1~20 小时即可满足多数任务。
-- **GR00T (N1.5/N1.7)**: 微调 40GB+ GPU（推荐 H100/L40），推理 16GB+。NVIDIA 官方 post-training 配方。
-- **数据量的直觉**: LoRA 单任务 100~500 个演示 → 80%+ 成功率。少量·高质量的真实演示是关键（→ [pillar-1 遥操作](pillar-1.md)）。
-- **解冻（unfreeze）哪个部件 — 训练范围即成本** `[1]/[2]`: 最新 VLA 是 (1) 负责理解的 VLM + (2) 生成动作的 DiT[^dit] + (3) 适配机器人身体的适配器 MLP 的组装（[GR00T N1 结构, arXiv:2503.14734](https://arxiv.org/abs/2503.14734)）。"想改变什么"决定了要打开（unfreeze）哪个部件以及成本:
+| 阶段 | 所需证据 | 费用/扩展判断 |
+|---|---|---|
+| 数据/模型兼容 | 观测动作格式、单位、加载与推理 | 先用小数据确认 |
+| 基线评估 | 训练前成功分子/分母、周期、介入 | 判断是否需要微调 |
+| 限制训练 | 固定数据/配置、耗时、峰值显存、checkpoint | 单 GPU 可容纳则保持小规模 |
+| 独立评估 | 分离任务/环境、重复实验、性能波动/延迟 | 未达标则重审数据与假设 |
 
-| 想改变的 | MLP（适配器） | DiT（动作） | VLM（理解） | 成本直觉 `[2]` |
-|---|---|---|---|---|
-| 现有机器人 + 现有动作 | 保持 | 保持 | 保持 | 无需训练（直接使用） |
-| **新机器人**、现有动作 | **训练** | freeze | freeze | 遥操作演示 50~200 个、2~6 小时、g5.2xlarge 约 $10 |
-| 新动作（预训练中没有的 verb） | 训练 | **训练** | freeze | 半天 |
-| 特殊相机模态（红外等） | 训练 | 训练 | LoRA | 数天，最贵 |
+**修正**：不泛化“100~500 演示达 80%+”“100 演示一天 PoC”“新机器人只需适配器”。旧费用及 0% 成功测量缺少复现日志和条件，不作为客户承诺依据。[证据记录](evidence.md#finetuning-outcomes)。
 
-- ⚠️ **新机器人 = 必须有适配器** `[2]`: GR00T 只内置预注册 embodiment（GR-1·Franka 等）的 MLP。未注册的机器人直接部署会输出无意义结果（实测 0% 成功率）— 最低条件是**约 100 个演示 + 适配器训练**。fold·pour·stack 等常见动作已在预训练中，只调 MLP 即可；焊接等没有的动作则要打开 DiT。
+**AWS 映射及选择**：单 GPU 实验先考虑 EC2/Batch；长管理型任务考虑 SageMaker Training；证实多节点需求后考虑 HyperPod。不按演示数量决定服务。
 
-**AWS 映射**: LoRA 用 **EC2 G6e(L40S)·G7e(RTX PRO 6000)** 单/少数 GPU 即可。全量微调·多 embodiment 则用 **P6-B200 / HyperPod 多节点**（下方第 3 项）。
+**客户案例**：区分样本运行与客户现场成果。
 
-**决策标准**:
-
-- 任务特化·数据少 → **LoRA + 单张 G7e**。最便宜·最快。大多从这里开始。
-- 多 embodiment·大规模·连骨干一起调 → **全量微调 + P6/HyperPod**。
-- 数据 <1 小时 → 优先考虑 few-shot/提示而非微调。
-
-**客户案例**: 案例待定（无官方 AWS VLA 微调案例 —— 第 3 项的 Unitree H1 是 RL locomotion 而非 VLA）。
-
-**➡️ 后续行动**: **将"在单张 G7e 上做 LoRA 微调 1 天 PoC"作为默认入门提议**。若客户数据超过 100 个演示，即可立即展示实测成功率。GPU 获取受阻 → [decisions](decisions.md)。
+**➡️ 后续行动**：按[路径 C](execution.md#finetuning)的准备、dry-run、评估及停止条件制定客户特定周期和成本范围。
 
 **🔗 相关资产**: [pillar-1 数据管道](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
-
-<details markdown="1"><summary>🔄 易变数据（GPU 需求 —— 2026-07 官方仓库为准）</summary>
-
-| 模型 | 推理 | LoRA 微调 | 全量微调 |
-|---|---|---|---|
-| OpenVLA (7B) | — | ~24GB（单张） | ~100GB |
-| π0 / π0.5 | >8GB | >22.5GB | >70GB (A100/H100) |
-| GR00T N1.5/N1.7 | 16GB+ | 40GB+ (H100/L40) | — |
-</details>
 
 ---
 
@@ -132,7 +90,7 @@ graph TD
 - **EC2 GPU 阶梯** `[1]`: **G7**(RTX PRO 4500, 2026-06 GA) · **G7e**(RTX PRO 6000 Blackwell, 2026-01 GA) · **G6e**(L40S) → **P6-B200**(8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)**(GB200 NVL72, 最多 72 Blackwell/NVLink 域, 用 [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/) 获取)。
 - **Trainium**: Trn2 GA(2024-12)、**Trn3 UltraServers GA(2025-12 re:Invent)**、Trn4 已公布。⚠️ **没有用 Trainium 训练 VLA/机器人的公开案例** —— 整个 VLA 工具链都是 CUDA/NVIDIA。Trainium-for-VLA 未经验证。
 - **首尔区域的最新一代** `[1]`: **[P6-B300](https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-ec2-p6-b300/)**（8×NVIDIA Blackwell Ultra，每实例 2.1TB HBM3e·6.4Tbps EFA）**2026-08-20 首尔区域 GA** —— 韩国团队无需等待海外区域，即可在数据驻留范围内使用最新加速器。以 Capacity Blocks/Savings Plans/On-Demand 消费。范围要诚实说明: 它是通用 FM 训练平台，Physical AI（仿真·VLA 训练）只是其上的一种工作负载。
-- **按规模推荐的模式（以 3B 级 VLA 为准，GR00T N1.6/N1.7 验证）** `[2]`: ① 演示 <200 个·LoRA（2~4 小时）→ **AWS Batch + EC2 Spot(g6e)** —— 短且便宜，推荐默认值。② 演示 ~500 个·全量微调（8~24 小时）→ **SageMaker Training Job** —— 自动检查点/恢复。③ 演示 500 个以上·多节点（数天）→ **HyperPod** —— 节点自动恢复 + EFA。为防 GPU 容量不足，提前在作业定义里写好**实例 fallback 顺序**（例: g6e → g6 → g5），即可不等待直接切换到下一类型。
+- **训练规模**：按模型、精度、输入、峰值显存、实测耗时及通信量选择单 GPU、单节点多 GPU、多节点。不按演示数分配 Batch/Training/HyperPod，先检查[路径 C](execution.md#finetuning)。
 
 **HyperPod 实际提供的能力** `[1]`（docs 2026-07 核实）:
 
@@ -188,29 +146,19 @@ graph TD
 
 ---
 
-## 4. System 2 + System 1 架构  🟢 GA（稳定原理）
+## 4. System 2 + System 1 — 模型结构与部署 { #4-system-2--system-1-架构--ga稳定原理 }
 
-**L0 TL;DR**: 2026 年主导的 VLA 结构。**慢速 VLM（System 2, 5~10Hz）规划"做什么"**，**快速动作策略（System 1, 50~200Hz）执行"怎么动"**。这种分离**决定了推理部署的位置（云 vs 边缘）**，是 SA 必须理解的概念。
+**L0 TL;DR**: System 1/2 描述模型组件的不同处理时序，**不自动决定云/边缘部署**。分别设计业务规划和基于观测的控制时限及断网行为。
 
-**客户需求/问题**: "实时控制场景下，大模型怎么跑？云延迟不成问题吗？"
+**解决方案概览** `[1]`：[Figure Helix](https://www.figure.ai/news/helix) 描述板载 S2（7~9Hz）和板载 S1（200Hz），通过潜在表示连接。不能假定它等同于云 AgentCore 工具调用接口。
 
-**解决方案概览** `[1]/[4]`:
+**Action chunking[^chunk]**：一次推理生成多个未来动作。**动作执行、新观测、推理完成、重新规划的频率不同**。不能以推理 Hz 乘 chunk 大小作为反馈控制频率。[PI RTC](https://www.physicalintelligence.company/research/real_time_chunking) 单独处理切换及延迟；应逐模型验证执行 horizon 和切换方式（[证据](evidence.md#action-chunking)）。
 
-- **[Figure Helix](https://www.figure.ai/news/helix)**: System 2 = 板载互联网预训练 VLM @ 7~9Hz（场景/语言），System 1 = 反应式 visuomotor @ 200Hz。`[1]` figure.ai/news/helix
-- **GR00T N1**: System 1 = diffusion policy ~10ms 延迟，System 2 = LLM 规划器（任务分解）。
-- **通用模式**: 重型 VLM 以 5~10Hz 重新规划，轻量 flow-matching/diffusion "action expert" 以最新计划为条件，以 50~200Hz 发出动作。用 **action chunking**（GR00T=40 timestep horizon）预测未来动作块。
-- **整个领域的双轴分类法** `[1]`: 在被模型名字淹没之前 —— 大多数 VLA 都落在 (1) **网络结构**: Monolithic（单网络端到端）vs Hierarchical（规划者+执行者分离），(2) **思考系统**: Single-system vs Dual-system（顺序 cascade / 并行 parallel）的 2×2 之上。GR00T 的"两个大脑"是 hierarchical × dual-system(parallel) 那一格的具体案例 —— System 1/2 不是某个模型的专属说法，而是整个领域的一级分类轴。
-- **有效控制频率 = 推理 Hz × chunk 大小**: 即使 π0.5 在 Jetson 上只有 ~10Hz 推理，只要一次输出 10 步的 chunk，机器人就能以 ~100Hz 运动（执行 chunk 期间预计算下一个 chunk）。这道算术是解开"大模型 = 慢机器人"误解的钥匙。
-- ⚠️ **警惕"VLA 已死（将被 WAM[^wam] 取代）"的标题党** `[1]/[4]`: WAM（World Action Model）以 video-diffusion 为骨干**同时预测**未来视频+动作 —— 得益于网络视频的物理先验，未学过动作的 zero-shot 是强项（[DreamZero, arXiv:2602.15922](https://arxiv.org/abs/2602.15922): 仅约 500 小时机器人数据就把 unseen task 从 16% 提到 40% 档），但因 14B 反复 denoising，closed-loop 仅 **~7Hz，是最慢的**。与"VLAs are dead"主题演讲同期，NVIDIA 自己发布了 GR00T N1.7（VLA）；独立比较中只要数据多样性充足，VLA（π0.5）与 WAM 表现相当 —— 真实图景是 **"VLA + World Model + RL 后训练的收敛"**。不要在客户对话中照搬标题（成熟度跟踪见 [radar 的 World-action models](radar.md)）。
-- ⚠️ **成熟度要诚实**: 这个*模式本身*已是标准，但全身人形的全栈大多处于试点/演示阶段。
+**AWS 映射及决策**：满足延迟和处理条件时考虑 AgentCore 业务规划。严格时限的观测策略/控制保留现场并实测。结合[四层及负责人](operations.md#layers)和 [Cloud vs Edge](decisions.md)。
 
-**AWS 映射**: 将 **System 2（规划器）放在云/Bedrock AgentCore，System 1（实时控制）放在边缘（Jetson）** 是自然的分工（→ [pillar-5](pillar-5.md)、[pillar-4](pillar-4.md)、[decisions](decisions.md)）。
+**客户案例**：Helix 是厂商架构公开，不是 AWS 云部署案例。
 
-**决策标准**: 要求 30~100Hz 实时控制 → System 1 **必须在边缘板载**。System 2（规划·推理）在能容忍延迟时可放云上。这条边界是 [decisions 的 Cloud vs Edge 树](decisions.md)的核心。
-
-**客户案例**: Figure（演示/PR）、GR00T（开放模型）。经过验证的生产环境有限。
-
-**➡️ 后续行动**: 客户问"实时场景能用云吗？"时，**画出 System1/System2 图，归纳为"控制回路在边缘、规划在云上"**。仅此一点就能理清架构对话。
+**➡️ 后续行动**：记录观测到动作延迟、最坏抖动、断网及取消行为后确定部署位置。
 
 **🔗 相关资产**: [pillar-4 边缘推理](pillar-4.md) · [pillar-5 编排](pillar-5.md) · [decisions](decisions.md)
 
@@ -243,7 +191,7 @@ graph TD
 
 ---
 
-## 6. 训练运营原则 — checkpoint 谱系与 IL 的天花板  🟢 GA（稳定原理）
+## 6. 训练运营 — checkpoint 与评估 { #6-训练运营原则--checkpoint-谱系与-il-的天花板--ga稳定原理 }
 
 **L0 TL;DR**: 有两个陷阱反复摧毁客户的训练项目。(1) **checkpoint 是一棵树** —— specialize 是单向的，丢了 generalist 检查点就无法回头。(2) **loss 再低成功率也不涨** —— 这是模仿学习的 covariate shift[^covshift] 所致，评估只能用 **rollout 成功率**而非 loss。
 
@@ -269,7 +217,7 @@ graph TD
 
 ---
 
-## 7. RL 微调 (RFT) — PPO vs GRPO 与奖励设计  🟢 GA（算法）/ 🔵 奖励自动化 Research
+## 7. RL 微调 — 算法及研究范围 { #7-rl-微调-rft--ppo-vs-grpo-与奖励设计--ga算法--奖励自动化-research }
 
 **L0 TL;DR**: 只靠 SFT（模仿）连示范中的失误也会一并学会。用环境奖励收尾的阶段是 RFT[^rft] —— 算法上 **PPO[^ppo] 是长期标准，无 critic 的 GRPO[^grpo] 正在迅速崛起**（模型越大算力收益越大）。真正的胜负点不是算法而是**奖励设计** —— "simulator fidelity is reward fidelity"。
 
@@ -289,15 +237,15 @@ graph TD
 
 **客户案例**: 案例待定（VIRAL/DoorMan 为论文实证 —— 非客户部署案例）。
 
-**➡️ 后续行动**: 对 BC 性能停滞的客户提议 **Teacher-Student（PPO→蒸馏→GRPO）三阶段配方** —— 全部阶段都在仿真内完成，可直接复用既有 AWS Batch/Isaac Lab 栈。
+**➡️ 后续行动**：将 Teacher-Student/RL 后训练作为任务特定研究假设，明确奖励、仿真器、实数据、评估条件，并与模仿学习基线比较。另查[样本验证范围](execution.md#finetuning)。
 
-**🔗 相关资产**: [pillar-3 并行 RL](pillar-3.md) · [sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) —— aws-samples，MIT-0。只需给出意图（IL 演示 or RL 任务）即可自动决定 Batch+Spot / SageMaker Training / HyperPod 三种模式的单命令微调平台。支持 GR00T·π0.5·ACT·SmolVLA + Isaac Lab RL 路径，含 MCP 服务器（7 tools），可在智能体会话中完成 submit·监控
+**🔗 相关资产**：[sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) — MIT-0 样本。作者报告 IL Pattern A（Batch）完成。B/C 部署、RL GPU 执行、强制 Spot 恢复未验证。[固定提交及步骤](execution.md#finetuning)。
 
 ---
 
 ## 本支柱的诚实现实（SA 必读）
 
-- **GR00T 许可证是目前引用的最大风险。** N1.5 明确为非商业。N1.6/N1.7 允许商用仅来自二手来源 → **客户做商用判断前直接查看实时模型卡**。搞错就是法务风险。
+- **分别核对代码、权重、基础模型、数据许可证。** 使用具体版本模型卡及[证据记录](evidence.md#openvla-license)。
 - **禁止说"PI(Physical Intelligence) 用 AWS"。** openpi 检查点放在 GCS(`gs://`)，是 **GCP 信号**。无 AWS-PI 案例。
 - **没有官方的 AWS VLA 微调案例。** 唯一的 AWS 机器人训练参考是 **Unitree H1 RL locomotion**（非 VLA）。不要夸大 VLA 故事。
 - **Trainium-for-VLA 未经验证。** 整个 VLA 工具链是 CUDA。提议时明示风险。
@@ -307,19 +255,11 @@ _owner: Youngjin · updated: 2026-09 · volatility: 高（模型版本·许可�
 
 <!-- 용어 각주 -->
 
-[^vla]: **VLA (Vision-Language-Action)** — 以相机图像（Vision）与自然语言指令（Language）为输入、直接输出机器人动作（Action）的基础模型。对它说"把杯子拿起来"，它就会生成关节运动。🎥 [NVIDIA Isaac GR00T N1 介绍](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^ft]: **微调（fine-tuning）** — 用自己任务·机器人的少量数据，对经过大规模数据预训练的模型进行追加训练。相比从零训练，数据·GPU 可节省数十~数百倍。
-[^lora]: **LoRA (Low-Rank Adaptation)** — 冻结原始权重、只额外训练小型低秩（low-rank）矩阵的轻量微调技术。GPU 内存需求仅为全量微调的几分之一，一张 24GB 级 GPU 即可完成。
-[^sys]: **System 2 / System 1** — 把认知科学中"慢思考 / 快反应"的区分应用到机器人架构的结构。System 2 由慢速大模型负责规划（5~10Hz），System 1 由小型策略负责实时控制（50~200Hz）。它是决定推理放云上还是边缘的标准。
-[^flow]: **flow-matching / diffusion action head** — 通过从噪声逐步细化来生成机器人连续动作的扩散（diffusion）·流（flow）系输出模块。能表达平滑且多模态（multi-modal）的动作分布，是最新 VLA 的标准动作头。
-[^chunk]: **action chunking** — 不是每步只预测 1 个动作，而是一次预测未来多步动作（块）的技术。减少推理次数，更容易满足实时控制频率。
-[^vlm]: **VLM (Vision-Language Model)** — 同时理解图像和文本的模型（例如看照片回答问题）。VLA 通常以 VLM 作为"眼睛+大脑"骨干，并在其上加装动作头。
-[^embodiment]: **embodiment（具身形态）** — 机器人的物理形态·自由度·传感器配置。即使模型相同，机械臂与人形机器人的 embodiment 不同，数据·策略无法直接移植。
+[^sys]: **System 2 / System 1** — 描述不同处理时序的模型层。频率及部署因模型而异，两层均可板载运行。
+[^chunk]: **Action chunking** — 一次推理生成多个未来动作。执行频率不同于新观测响应频率，需逐模型验证执行区间、切换及延迟。
 [^slurm]: **Slurm** — HPC 集群的标准开源作业调度器。可在数千节点上排队·分配批处理作业，是研究室·超算出身团队最熟悉的工作流。
 [^efa]: **EFA（Elastic Fabric Adapter）** — 面向 EC2 的低延迟·绕过操作系统的网络接口。是消除多节点分布式训练中 GPU 间梯度同步（All-Reduce）瓶颈的关键。
 [^osmo]: **OSMO** — NVIDIA 面向机器人工作负载的工作流编排平台。将合成数据生成、仿真、模型训练等多阶段作业调度到本地与云端的多个集群（如 Kubernetes）。
-[^dit]: **DiT (Diffusion Transformer)** — 用 Transformer 结构构建的扩散（diffusion）生成器。在最新 VLA 中作为从噪声生成机器人关节命令（action chunk）的"动作引擎"部件使用。
-[^wam]: **WAM (World Action Model)** — 以视频生成模型为骨干、同时预测未来视频与机器人动作的模型。得益于从网络视频学到的物理知识，对未学过的动作较强，但因反复 denoising 控制频率偏低。注意不要与 WFM（只生成视频、不输出动作）混淆。
 [^covshift]: **covariate shift（协变量偏移）** — 训练时见过的状态分布与执行时实际遇到的状态分布错位的现象。模仿学习策略因小误差漂移到演示中没有的状态时，由于从未学过如何恢复，误差会不断累积。（正确写法是"covariate"而非"covariant"。）
 [^forget]: **catastrophic forgetting（灾难性遗忘）** — 神经网络在学习新任务时覆盖并丢失之前所学能力的现象。这是无法从 specialize 的检查点还原 generalist 的原因。
 [^dagger]: **DAgger (Dataset Aggregation)** — 实际运行已训练的策略，为策略访问过的状态额外收集专家正确标签并重新训练的模仿学习增强技术。是应对 covariate shift 的经典处方。

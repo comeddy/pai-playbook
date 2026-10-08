@@ -1,167 +1,83 @@
 ---
-ko_hash: 816585a0026e445581edb5a90cb047d6a2c09e54
+ko_hash: a807f67585d61891d2c7c61ee39e5b9254205160
 ---
-# Maintenance — Ownership · Update Rules · Promotion Pipeline
+# Maintenance — inclusion, evidence, and review
 
-_Last updated: 2026-08 · owner: Youngjin · volatility: low_
-[← back to index](index.md)
+_Last updated: 2026-09 · owner: Youngjin · volatility: medium_
 
-> **L0 TL;DR**: This defines the **structure that keeps this playbook from going stale**. It separates volatile from stable information, attaches an owner, update date, and volatility to every item, and filters Slack candidates through a gate before promotion. **This page is itself the operating rules.**
+**L0 TL;DR**: Separate relevance, release status, evidence, permitted use, and support. Automation detects missing/inconsistent records; people own factual review and customer-site approval.
 
----
+## Inclusion criteria (THE FILTER)
 
-## Volatile / stable separation
+The old “2 of 4” rule is now only a **relevance signal**: customer demand, AWS mapping, release status, and site cases. AWS mapping plus a roadmap does not establish verification.
 
-A playbook goes stale because it mixes volatile and stable information. We isolate them structurally.
+Inclusion requires **all** of: (1) a customer problem or R&D question, (2) exact primary source/check date/version, (3) evidence, limits, and permitted use, (4) an owner and actionable next step. Numbers need conditions, samples, and units. Items without primary-source checks stay in Radar.
 
-| Layer | Content | Where | Update cadence |
-|---|---|---|---|
-| **Stable layer** | Principles · architecture patterns · sim-to-real methodology · decision trees | Pillar body (L0/L1) | Rarely |
-| **Volatile layer** | Model versions · GPU price/availability · Preview→GA transitions · benchmark numbers · regions | Each item's `<details>` collapsed block or the [Radar](radar.md) | Often (monthly–quarterly) |
+Research can support hypothesis-driven R&D guidance, not operational performance promises. Expansion recommendations additionally need the [pilot card](start.md#pilot) and [site gates](operations.md#release).
 
-> **Rule**: Volatile information **must be isolated in collapsed blocks/tables**. Do not embed version numbers in the body (stable layer). Updating should touch only the collapsed block.
+## Maturity, sources, and use
 
----
-
-## Required metadata
-
-**Do not create an item without an owner.** At the bottom of every page and item:
-
-```
-_owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatility: high/medium/low_
-```
-
-- `owner`: **always exactly one person** (single-accountability principle). If undecided, mark as `TBD ⚠️` to **keep it on the books as debt** (do not hide it).
-- `verified by` (optional): the people who performed primary-source verification (cross-checking official announcements, original papers, licenses) — **multiple allowed**, comma-separated. Omit if identical to the owner.
-- `updated`: the year-month of last actual review. An absolute date (no relative dates).
-- `volatility`: high/medium/low. Determines the staleness[^staleness] cadence.
-
-> ✅ **All pages owner: Youngjin** — pillars P1–P5 · index · radar (assigned 2026-07) + decisions · maintenance (assigned 2026-08); the owner debt is closed.
-
----
-
-## Staleness rules
-
-When `updated` exceeds the threshold number of months, a **⏳ review needed** badge is placed at the top of the page.
-
-| volatility | Review cadence | When exceeded |
+| Dimension | Label | Interpretation |
 |---|---|---|
-| high | **1 month** | ⏳ review needed (model versions · GPU · regions · benchmarks) |
-| medium | 3 months | ⏳ review needed |
-| low | 6 months | ⏳ review needed (principles · trees) |
+| Release | GA / Preview / Research / not applicable | Per product; do not label principles, laws, or algorithms GA |
+| Evidence | Vendor announcement / source comparison / reproduction / customer-site validation | Do not infer the next stage automatically |
+| Use | Learning/R&D / PoC evaluation / operational expansion review | Record validated scope and limitations |
+| Support | AWS service / model provider / partner-SI / sample maintainer | Separate contracts and site responsibilities |
 
-> High-volatility items (pillar-2/3/5, radar) get a shorter cadence. In particular, **AgentCore regions/features, model licenses, and EC2 instance GA** change quickly.
+`[1]` official documentation/paper, `[2]` documented reproduction, `[3]` vendor announcement, `[4]` unverified are **source types**, not a ranking or official AWS endorsement. `[2]` requires operator, versions, environment, logs, and measurement conditions. Legacy `[2]` without logs is not reproduction evidence. An announcement is not GA; one run is not production validation.
 
-**⚙️ Automated**: badges are not placed manually. CI (`scripts/check_staleness.py`) **injects them automatically just before the build**, and a **daily 00:00 UTC cron redeploy** refreshes the badges without any push. If a page's `updated`/`volatility` metadata is missing, the build fails — the metadata is the contract.
+## Metadata and freshness
 
----
+Keep page `_owner: name · updated: YYYY-MM · volatility: high/medium/low_` metadata. This date describes the **page edit/review scope**; partial edits do not refresh unrelated claim dates. Page badges warn after high 1 / medium 3 / low 6 months.
 
-## Inclusion Criteria (THE FILTER)
+Add decision-critical claims to [evidence records](evidence.md). `checked_on` is the source comparison date, `review_after_days` the claim review interval, and `pages` identifies affected summaries/pillars. Unmigrated legacy claims remain explicitly outside the register.
 
-A candidate must meet **at least 2 of the 4** below to go into the body. If it falls short, it gets only a one-liner in the [Radar](radar.md).
+## Standard template
 
-- [ ] ⓐ **Validated in production or an actual customer deployment** (a demo video alone is insufficient)
-- [ ] ⓑ **Concretely mappable to an AWS service/infrastructure**
-- [ ] ⓒ **Has a history of an actual customer or SA asking about it**
-- [ ] ⓓ **Is GA or has a clear GA roadmap**
-
-> **Hype boundary**: a flashy humanoid demo masks a "mature capability." **Always separate "impressive demo" from "deployable."** (e.g., Figure 03 "8-hour autonomy" = demo vs Digit@GXO = validated)
-
-### Maturity labels (required on every item)
-
-`🟢 GA` / `🟡 Preview` / `🔵 Research-only` / `⚪ Hype (demo only)`
-
-### Source grades (attached to every claim)
-
-`[1] Official docs/paper` > `[2] AWS internal validation` > `[3] Vendor official blog` > `[4] Unverified (Slack/rumor)`
-
-- For numbers/benchmarks, cite **date + source + measurement conditions**. (e.g., "humanoid 82,000 FPS — 4,096 envs · 1×RTX 4090, NVIDIA, 2026")
-- Delete unverified claims or mark them clearly as `[4]`. **Do not state them as fact.**
-
----
-
-## Standard Template
-
-Promoted items are written in this format.
-
-```
-### {item name}  {maturity label}
-**L0 TL;DR**: (1–2 sentences, what it is and when to use it)
-**Customer need/problem**: (in what situation does it come up)
-**Solution overview**: (core approach + source grade)
-**AWS mapping**: (specific services)
-**Decision criteria**: (when to use this / when to use the alternative — state conditions)
-**Customer case**: (if any; otherwise "case pending")
-**➡️ Next action**: (demo/workshop/asset link — always filled in)
-**🔗 Related assets**: (internal skill/workshop/deck deep link)
----
-_owner: {name} · verified by: {name, name…} · updated: {YYYY-MM} · volatility: high/low_
+```text
+Item / customer problem:
+Release / evidence level / intended use / support owner:
+L0: what it is and under which conditions it applies:
+Alternatives / AWS mapping and prerequisites:
+Evidence ID / exact source URL / version / check date:
+Experiment: environment, sample, units, logs / reproducer:
+Limitations / cost, success, and stop criteria:
+Next action / execution asset / operating handover:
+Owner / human reviewer or pending:
 ```
 
-**Enforce the depth hierarchy**: L0 at the very top. L2 deep-dives are separated into `<details>` folds/links to keep the body short.
+Keep L0 short; link or collapse details. Define unfamiliar terms with a first-use `[^term]` and 1–2 sentences under the final `<!-- 용어 각주 -->` marker. Preserve footnote IDs, URLs, and structure in translations. Executive summaries must retain pillar conditions/limits. Keep internal customer information and sales strategy out of public pages.
 
-- **Executive-page (exec/exec-guide) principle**: no new technical claims — carry only executive-language translations of the pillar/radar verification verdicts.
+## Playbook promotion pipeline
 
-**Glossary-footnote convention (ongoing)**: whenever content is added or updated, handle terms an SA can't immediately parse with `[^label]` footnotes in the same change — reuse an existing label if one exists; for a new term, add a "**Term** — 1–2 sentence explanation" entry to the `<!-- 용어 각주 -->` block at the very bottom of the page. If a verified official video exists, attach a 🎥 link at the end of the definition (cross-check title and channel via the oEmbed[^oembed] response before merging). Markers go only at the first body occurrence — never in headings or mermaid blocks. Labels are mechanical identifiers and must never be translated; apply identically across all 4 languages (same labels, same URLs) — detailed rules in `i18n/glossary.md`.
+1. Record topic, primary source, and customer problem in Radar or the candidate form.
+2. Owner checks inclusion requirements and assigns specialist review; scans cannot promote automatically.
+3. Compare evidence, versions, dates, and measurement conditions; state R&D/PoC/site-validation scope.
+4. Update Korean originals, affected summaries, and en/zh/ja together.
+5. Render evidence, sync hashes, run checks, then review and integrate.
 
----
-
-## playbook promotion pipeline
-
-```mermaid
-graph TD
-    S["Slack/blog/paper/demo<br>candidate arises"] --> C["① Capture<br>collect candidates via a designated channel + emoji reaction (e.g., 📌)<br>or the GitHub issue form '📌 Playbook candidate submission' (THE FILTER checklist built in)"]
-    C --> F{"② Filter<br>the 2.5 gate (2 or more of 4?)"}
-    F -- falls short --> RD["one line on the Radar page<br>(label + why on hold + promotion condition)"]
-    F -- passes --> PR["③ Promote — the owning pillar's owner incorporates it via the standard template<br>· attach maturity label + source grade<br>· isolate volatile info in a collapsed block<br>· fill in owner/verifiers/updated"]
-    PR --> M["④ merge after passing the pre-creation self-check (below)"]
-```
-
-### Roles
+## Roles and outstanding review
 
 | Role | Responsibility |
 |---|---|
-| **Capture owner** | Monitor the channel, collect emoji candidates |
-| **Verifiers (multiple allowed)** | Primary-source verification of intake items — cross-check official announcements, original papers, and licenses. Participants are recorded in the promotion issue and the item's `verified by:` field |
-| **Pillar owner** | Gate judgment, promote/Radar decision, template authoring, updates |
-| **Playbook maintainer (Youngjin)** | Staleness badges, structural consistency, quarterly review |
+| Owner Youngjin | Assign reviews, decide inclusion, manage updates |
+| Human specialists — unassigned | Licensing / AWS services-Regions / robotics-safety / reproduction |
+| Automation/comparison tools | Candidate intake, assisted source comparison, metadata/link/sync checks |
 
----
+Naming one owner does not resolve review bottlenecks. Record specialist owners after they accept. Distinguish automated comparison from human approval; never invent reviewers.
 
-## Pre-creation self-check (before merging each page)
+## Checks and limitations
 
-- [ ] Do all included items pass 2 or more inclusion criteria? Did you avoid putting anything that falls short into the body?
-- [ ] Does every item have a maturity label + source grade?
-- [ ] Does every item end with "➡️ Next action"?
-- [ ] Did you avoid describing something demo-only as if it were deployable?
-- [ ] Did you avoid mixing volatile information into the stable layer?
-- [ ] Does every item have owner/updated?
-- [ ] Did you avoid stating unverified information as fact?
+```bash
+python3 scripts/check_evidence.py
+python3 scripts/check_translation_sync.py
+python3 scripts/check_nav_index_sync.py
+python3 scripts/check_staleness.py --check
+mkdocs build --strict
+```
 
-> If any one fails, rewrite that page.
+Invalid evidence/rendering, nav drift, missing metadata, and internal document link/anchor errors block deployment. Overdue/human-pending review is reported; translation drift is currently warn-only in CI. Separately require **zero translation drift before commit**. Builds do not verify external reachability, facts, translation meaning, or robot execution.
 
----
+**➡️ Next action**: assign pending [evidence reviews](evidence.md#review) by specialty and review the earliest-due sources with every affected page.
 
-## Known technical debt (as of 2026-07)
-
-1. ~~All items have no owner~~ → **All pages owner: Youngjin assigned** — P1–P5 · index · radar (2026-07), decisions · maintenance (2026-08), and the playbook-maintainer role (2026-08). All owner/role debt is closed.
-2. ~~FAQ Top 10 is a seed~~ → **Expanded to Top 20 with a source column (2026-07)**. Remaining: re-rank by frequency once actual Slack inquiry history is available ([index](index.md)).
-3. **Internal asset deep links not connected** — workshop/deck/skill links are in "confirm needed ⚠️" state.
-4. **Insufficient domestic (Korea) customer cases** — mostly "case pending." Korean robotics companies are NVIDIA-aligned, so this is AWS whitespace.
-5. **Some GitHub release years to be re-confirmed** — Isaac Sim 6.0.1 (🟡 Preview/Early Developer Release — latest GA is 5.1.0), Isaac Lab 2.3.2/3.0 tag years.
-6. **Re-confirm single-source numbers** — Lotte 30%, DROID episode count, some vendor metrics.
-7. **Zensical migration pending** — the successor to our build stack (Material for MkDocs). `mkdocs-static-i18n` is not yet supported by Zensical (Tier 2 backlog), so migrating now would break the 4-language build. **Migration condition: Zensical ships static-i18n support (or native multilingual) + strict validation & Korean slug compatibility confirmed.** Until then the footer notice stays truthful.
-
----
-
-## This prompt is itself a living document
-
-Look at the actual generation results and **adjust the inclusion criteria, template, and pillar weighting**. Master prompt: [`physical-ai-playbook-master-prompt.md`](https://github.com/comeddy/pai-playbook/blob/main/physical-ai-playbook-master-prompt.md).
-
----
-_owner: Youngjin · updated: 2026-08 · volatility: low (operating rules — updated only when the rules change)_
-
-<!-- 용어 각주 -->
-
-[^staleness]: **staleness** — the degree to which a document or dataset has drifted from reality since its last review. This playbook sets an allowed window (1/3/6 months) per page via its volatility grade and automatically attaches a badge when it is exceeded.
-[^oembed]: **oEmbed** — a standard API that returns a piece of content's embed information (title, author, etc.) as JSON from a single URL. Used to mechanically verify, before publishing, that a video link actually exists and that its title and channel match.
+_owner: Youngjin · updated: 2026-09 · volatility: medium_

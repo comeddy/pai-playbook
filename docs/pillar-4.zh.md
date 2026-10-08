@@ -1,5 +1,5 @@
 ---
-ko_hash: 819f32f517dc3f2d9e2989eb6ed0222cd8851d5c
+ko_hash: 8b74642f2b58adf563d6ce1bbdaf3cf22973ae08
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -7,11 +7,15 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 中（边缘 HW·模型
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: 诚实的一句话 —— **locomotion（行走）[^loco]的 sim-to-real[^s2r] 基本已解决且已部署**（ANYmal、Agility Digit）。**操作(manipulation)[^manip] 的 sim-to-real 还没有** —— 即便是前沿 VLA 也不是靠仿真，而是用**真实机体数据训练**，仿真主要用于评估/适配。还有架构不变定律: **30~100Hz 实时控制必须在边缘（板载）**，只有高层规划放到云上。
+> **L0 TL;DR**: 按机器人、任务、环境验证仿真到实机结果。按观测到动作时限及断网要求部署，设计[独立安全、取消、恢复](operations.md)。不只按步行/操作类别判定可部署。
 
 ---
 
+> **复核范围**：页面修改日不代表所有技术条目已重验。核心修正日期、复现/人工状态见[证据](evidence.md)，旧条目仍使用各自确认日期。
+
 ## 本支柱中客户最常问的问题 Top 3
+
+> 以下为探索问题示例，不是已验证的客户咨询频率排名。
 
 1. **"sim-to-real 实际可行吗？有经过验证的案例吗？"** → [locomotion（可以）](#2-locomotion-sim-to-real--已验证生产)、[操作（还不行）](#4-操作-manipulation-sim-to-real--research---狭窄生产)
 2. **"实时控制场景，推理该放边缘还是云上？"** → [边缘推理部署](#1-边缘推理部署--ga)、[decisions](decisions.md)
@@ -21,62 +25,24 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 ---
 
-## 1. 边缘推理部署  🟢 GA
+## 1. 边缘推理部署 — 逐模型验证 { #1-边缘推理部署--ga }
 
-**L0 TL;DR**: 实时控制推理必须在机器人板载运行。2026 年的标准路径 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**。⚠️ **SageMaker Edge Manager 已于 2024-04 终止** —— 没有替代品，走 ONNX+Greengrass。
+**L0 TL;DR**: 按模型、设备和控制时序验证部署。严格时限控制在本地运行；云用于训练、管理、可容忍延迟的业务规划。
 
-**客户需求/问题**: "训练在云上做了，怎么部署到机器人并用 OTA[^ota] 管理？实时场景下云端往返不是不行吗？"
+**概览**：[Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html) 支持组件部署管理 `[1]`。按策略选择受支持的 PyTorch 或 ONNX/TensorRT 路径，不假定所有 VLA 有相同导出和延迟能力。[Edge Manager 终止](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)后，项目仍需负责转换、设备验证和运营。
 
-**解决方案概览** `[1]/[3]`:
+| 检查项 | 证据 |
+|---|---|
+| 模型/设备兼容 | 权重、runtime、驱动、传感器、动作单位及归一化 |
+| 时间条件 | 观测刷新、推理延迟、动作执行周期、最坏抖动 |
+| 更新 | 模型/应用/配置版本、签名哈希、上一个正常组合 |
+| 运营 | 断网、取消超时、人工介入、恢复测试 |
 
-- **边缘 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**，T5000 生产模块已流通。Jetson Orin 系列仍在生产（低功耗）。规格·价格见下方折叠块。
-- **部署/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) —— Lambda/Docker/自定义组件、ML 推理组件、MQTT[^mqtt] 遥测。⚠️ **Greengrass V1 于 2026-06-01 支持终止** —— 只有 V2 是现行的。
-- **模型路径**: PyTorch 策略 → **[ONNX](https://onnx.ai/)** → 编译 **[TensorRT](https://developer.nvidia.com/tensorrt)** 引擎（端侧加速）以满足实时控制的延迟预算（sub-20~30ms 级）[^latency]是标准路径。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（边缘编译）仍在，可与 Greengrass 组合。
-- ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** —— 控制台·API 全部不可用。**没有可直接替换的托管后续服务**。AWS 建议 = ONNX + Greengrass V2（+ 可选 SageMaker Neo）。
+**Action chunking 修正**：未来动作输出不等于新观测反馈。不能用推理 Hz × chunk 长度表示控制频率，也没有始终执行整个 native chunk 的通用规则。按模型、执行 horizon、切换方法重新评估（[PI RTC](https://www.physicalintelligence.company/research/real_time_chunking)、[证据](evidence.md#action-chunking)）。
 
-```mermaid
-graph LR
-    PT["PyTorch 策略<br>（云端训练）"] --> ONNX[ONNX 转换]
-    ONNX --> TRT["TensorRT 引擎<br>端侧加速"]
-    TRT --> JET["Jetson Thor<br>板载实时控制"]
-    GG["AWS IoT Greengrass V2<br>OTA · 组件 · MQTT"] -. 部署 · 管理 .-> JET
-    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x 无后续 .-> GG
-```
+**AWS 映射**：按需组合 S3 模型产物、Greengrass V2/IoT Jobs 部署管理、IoT Core 状态事件。该组合不代表安全认证或实时控制保证。
 
-<details markdown="1"><summary>🔄 易变数据（边缘 HW 规格·价格 —— 2026-07 确认）</summary>
-
-| 项目 | 值 | 来源 |
-|---|---|---|
-| Jetson Thor GA | 2025-08-25 公布, dev kit $3,499（→ 2026-07 涨价至 $5,499）, 2025-11 开始出货 | NVIDIA `[3]` |
-| Jetson 涨价 (2026-07-22) | Orin Nano Super devkit $249→$399 · Orin NX 16GB 模块 $599→$999 · AGX Orin 64GB 模块 $1,599→$2,999 · **AGX Thor devkit $3,499→$5,499** · T5000（Thor 模块）$2,999→$4,999 —— 核算边缘 BOM 时注意旧价报价 | NVIDIA 商店 `[3]` |
-| AGX Thor 规格 | Blackwell GPU, 128GB 统一 LPDDR5X, 130W, 支持 FP4 | NVIDIA `[3]` |
-| Thor vs Orin | NVIDIA 官方: 归一化 AI 算力 ~7.5 倍, 能效 ~3.5 倍。⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS —— 禁止直接比较原始数值 | NVIDIA `[3]` |
-| ONNX→TensorRT 加速 | ~7 倍（厂商数值, NVIDIA Jetson 博客 2025, 依赖模型·HW —— 引用时并列注明条件） | NVIDIA `[3]` |
-</details>
-
-**部署栈实际提供的能力** `[1]`（docs 2026-07 核实）:
-
-| 组件 | 技术要点 | 边缘部署视角 |
-|---|---|---|
-| **Jetson Thor** | 搭载 Blackwell GPU 的机载边缘计算机（128GB 统一内存）—— 在机器人内部解决实时推理 | System 1 策略的驻地 |
-| **Greengrass V2** | 以**组件**（配方 + S3 工件）为单位的软件部署运行时 —— 机群 OTA、进程间通信（IPC）·MQTT 代理、日志管理器 | 向机器人机群按版本交付模型·推理应用的通道 |
-| **ONNX → TensorRT** | 导出为框架中立格式后，针对设备 GPU 做算子融合·精度优化编译 | 满足 sub-20~30ms 延迟预算的标准路径 |
-| **SageMaker Neo** | 面向目标硬件的托管模型编译服务（可选） | 难以直接驾驭 TensorRT 的团队的替代方案 |
-| **IoT Core (MQTT)** | 轻量发布/订阅消息代理 —— 遥测上行、命令下行 | 机器人状态·事件的云端连接点 |
-| **IoT Jobs** | 面向机群的远程作业（OTA）编排 —— 分阶段发布·中止·重试 | 把模型 v2 安全推送到 100 台机器人的机制 |
-
-**AWS 映射**: IoT Greengrass V2 + IoT Core(MQTT) + SageMaker Neo（编译）+ S3（模型工件）+ IoT Jobs(OTA)。用 Model Monitor 采集边缘遥测。
-
-**决策标准**（详情 → [decisions Cloud vs Edge](decisions.md)）:
-
-- **30~100Hz+ 反应式控制**（平衡·力·抓取·行走）→ **必须板载 Jetson**。不能云端往返。
-- **sub-1Hz~few-Hz 高层规划·VLA 推理** → 可放云/异步。**action chunking** 是连接两种 rate 的桥梁 —— **有效控制频率 = 推理 Hz × chunk 大小**（π0.5 在 Jetson 上即便只有 ~10Hz 推理，chunk 为 10 步时有效频率约 100Hz）。
-- ⚠️ **chunk 不是存储格式，而是策略的一部分** `[2]`: 把 native chunk 拆成 1 步 1 步执行会让策略崩坏（实测: 20 步执行 3/10 成功 → 1 步执行 0/48）。**执行时保持训练所得的 native chunk 原样，仅存储时按 per-step 保存**。
-- 想要托管的边缘服务 → 诚实说明没有，并提供 ONNX+Greengrass V2 设计。
-
-**客户案例**: （边缘部署本身的公开 AWS 机器人案例有限 —— 以参考架构为主）
-
-**➡️ 后续行动**: **画出 "Jetson Thor（板载控制）+ Greengrass V2(OTA/管理) + ONNX→TensorRT" 边缘参考架构**，并主动告知"Edge Manager 已消失"以更正客户的错误预期。询问实时要求的 Hz 来确定边缘/云边界。
+**决策及后续行动**：指定[四层负责人](operations.md#layers)，制定[故障测试](operations.md#failure)，将[路径 C](execution.md#finetuning)的结果交接至有监督的小规模设备试验。
 
 **🔗 相关资产**:
 
@@ -121,7 +87,7 @@ graph LR
 
 ---
 
-## 3. Sim-to-Real 方法论  🟢 GA（稳定原理）
+## 3. Sim-to-Real 方法 — 评估适用条件 { #3-sim-to-real-方法论--ga稳定原理 }
 
 **L0 TL;DR**: 经过验证的处方不是花哨的新技法，而是 **选择性 DR + SysID + 把 RL 叠加在 MPC 之上的混合**。盲目地全部随机化会让 RL 不稳定。
 
@@ -208,7 +174,7 @@ graph LR
 
 ---
 
-## 6. 真机单元的安全法规 — 国际标准与韩国法定要求  🟢 GA（法规 — 低变动）
+## 6. 机器人工作站安全要求 — 按安装类型确认 { #6-真机单元的安全法规--国际标准与韩国法定要求--ga法规--低变动 }
 
 **L0 TL;DR**: 在人身边运动的机器人依法必须配备防护装置。国际上是 **ISO 10218-1/-2:2025 + ISO/TS 15066（协作机器人）**，在韩国还要叠加**《产业安全保健基准规则》第223条（原则上高度 1.8m 以上围栏）+ KCs[^kcs] 强制安全认证防护装置**。这套配置的成本·交付周期是拖慢真机验证的第三堵墙，反过来说正是仿真的经济学论据（→ [pillar-3](pillar-3.md)）。
 
@@ -247,16 +213,9 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中（边缘 HW·厂商指�
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — 把在仿真中训练的策略迁移到真实机器人上，或指其方法论。由于仿真与现实的物理·视觉差异（域间差异），直接迁移会导致性能崩溃。🎥 [NVIDIA sim-to-real 机器人展示](https://www.youtube.com/watch?v=sffNvv3GkRA)
-[^loco]: **locomotion（行走/移动）** — 行走·行驶等机器人的移动能力。得益于机器人与地面接触这种相对简单的物理，它是 sim-to-real 最先被解决的领域。
-[^manip]: **操作（manipulation）** — 抓取、搬运、装配物体的能力。指尖接触的物理很复杂，是 sim-to-real 尚未解决的领域。
 [^dyn]: **动力学（dynamics）** — 力·摩擦·碰撞所产生的运动物理。尤其是抓取物体时的接触动力学，是仿真器最难精确再现的部分。
 [^dr]: **域随机化（Domain Randomization）** — 随机改变仿真的光照·纹理·物体位置·相机角度·物理参数来生成数据或进行训练的技法。使策略能承受任何环境变化 — sim-to-real 的代表性处方。
 [^sysid]: **系统辨识（SysID, System Identification）** — 测量真实机器人的物理参数（摩擦·质量·电机响应），把仿真器校准到与实物一致的工作。
 [^mpc]: **MPC（Model Predictive Control）** — 反复预测·优化短期未来来进行控制的经典控制技法。把学习到的 RL 策略叠加在 MPC 之上的混合已成为经过验证的处方。
-[^onnx]: **ONNX / TensorRT** — ONNX 是框架间模型交换的标准格式，TensorRT 是面向 NVIDIA GPU 的推理优化编译器。"PyTorch → ONNX → TensorRT" 转换是边缘实时推理的标准路径。
-[^ota]: **OTA（Over-The-Air）** — 通过网络远程更新·部署机器人的模型·软件的方式。
-[^latency]: **延迟预算（latency budget）** — 实时控制回路允许的最大推理时间。30~100Hz 控制下一个周期为 10~33ms，推理必须在此之内完成 —— 这就是云端往返不可行的原因。
-[^mqtt]: **MQTT** — IoT 标准的轻量发布/订阅（pub/sub）消息协议。即使在不稳定网络下也能以极小带宽收发机器人遥测与命令。
 [^kcs]: **KCs（安全认证）** — 依据韩国产业安全保健法第84条，对危险机械·器具·防护装置实施的强制安全认证标志。光幕·激光扫描仪等防护装置只有 KCs 认证品才被认可为法定防护装置。
 [^aopd]: **光幕（AOPD，光电式防护装置）** — 用多束红外光束构成虚拟"光之墙"，当人体遮挡光束时立即停止机器的感应型防护装置。用于无法设置围栏的开口处，国际规格为 IEC 61496-2（面积监视型激光扫描仪为 IEC 61496-3）。

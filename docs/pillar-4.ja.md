@@ -1,5 +1,5 @@
 ---
-ko_hash: 819f32f517dc3f2d9e2989eb6ed0222cd8851d5c
+ko_hash: 8b74642f2b58adf563d6ce1bbdaf3cf22973ae08
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -8,11 +8,15 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 中（エッジ HW・�
 _特に注記がない限り、各項目はページのメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターに追記します。_
 [← index へ](index.md)
 
-> **L0 TL;DR**: 正直な一言 — **locomotion（歩行）[^loco]の sim-to-real[^s2r] はほぼ解決され、デプロイ済みです**（ANYmal、Agility Digit）。**マニピュレーション(manipulation)[^manip] の sim-to-real はまだです** — フロンティア VLA でさえシミュレーションではなく、**実機体データで学習**しており、シミュレーションは主に評価/適応に使われます。さらにアーキテクチャの不変法則: **30~100Hz のリアルタイム制御は必ずエッジ（オンボード）**、高レベルの計画のみをクラウドに置きます。
+> **L0 TL;DR**: ロボット・業務・環境ごとに実機検証します。観測→動作期限と通信断要件で配置し、[独立安全・取消・復旧](operations.md)を設計します。歩行・操作の分類だけで配備可否を決めません。
 
 ---
 
+> **確認範囲**：ページ更新日は全項目の再確認日ではありません。主要訂正の日付・再現/人の確認状態は[根拠](evidence.md)を参照し、既存項目の確認日は従来どおり適用します。
+
 ## このピラーで顧客が最もよく尋ねる質問 Top 3
+
+> 質問は探索例であり、実測した問い合わせ頻度順位ではありません。
 
 1. **「sim-to-real は実際に可能ですか？検証された事例はありますか？」** → [locomotion（可能）](#2-locomotion-sim-to-real--検証済み本番)、[マニピュレーション（まだ）](#4-マニピュレーション-manipulation-sim-to-real--research---狭い本番)
 2. **「リアルタイム制御ですが、推論はエッジに置くべきですか、クラウドに置くべきですか？」** → [エッジ推論デプロイ](#1-エッジ推論デプロイ--ga)、[decisions](decisions.md)
@@ -22,62 +26,24 @@ _特に注記がない限り、各項目はページのメタデータ（owner/u
 
 ---
 
-## 1. エッジ推論デプロイ  🟢 GA
+## 1. エッジ推論配備 — モデル別検証 { #1-エッジ推論デプロイ--ga }
 
-**L0 TL;DR**: リアルタイム制御の推論はロボットのオンボードで動かす必要があります。2026 年の標準経路 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**。⚠️ **SageMaker Edge Manager は 2024-04 に終了** — 代替はありません、ONNX+Greengrass で進めます。
+**L0 TL;DR**: モデル・機器・制御時序に合わせ配備を検証します。厳しい期限の制御はローカルで実行し、クラウドは学習・管理・遅延許容の業務計画に使用します。
 
-**顧客ニーズ/問題**: 「学習はクラウドで行いましたが、ロボットにどうデプロイして OTA[^ota] で管理しますか？リアルタイムなのにクラウド往復はできないのでは？」
+**概要**：[Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)はコンポーネント配備・管理を支援します `[1]`。モデルが対応するPyTorch・ONNX/TensorRT等を選び、全VLAに同一export・遅延を仮定しません。[Edge Manager終了](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)後も、変換・機器検証・運用の責任をプロジェクトで定めます。
 
-**ソリューション概要** `[1]/[3]`:
+| 確認項目 | 証拠 |
+|---|---|
+| モデル・機器互換性 | 重み、ランタイム、ドライバー、センサー、動作単位・正規化 |
+| 時間条件 | 観測更新、推論遅延、動作周期、最悪ジッター |
+| 更新 | モデル・アプリ・設定版、署名・ハッシュ、前回正常な組 |
+| 運用 | 通信断、取消・タイムアウト、介入、復旧試験 |
 
-- **エッジ HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**、T5000 本番モジュールが流通中。Jetson Orin 系列も引き続き生産（低消費電力）。スペック・価格は下の折りたたみブロック参照。
-- **デプロイ/管理**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/カスタムコンポーネント、ML 推論コンポーネント、MQTT[^mqtt] テレメトリ。⚠️ **Greengrass V1 は 2026-06-01 にサポート終了** — V2 のみが現行です。
-- **モデル経路**: PyTorch ポリシー → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** エンジンのコンパイル（オンデバイス高速化）でリアルタイム制御の遅延予算（sub-20~30ms 級）[^latency]を満たすのが標準経路です。[SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)（エッジコンパイル）は存続しており、Greengrass と組み合わせられます。
-- ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — コンソール・API がすべて利用不可。**ドロップイン可能なマネージド後継サービスはありません**。AWS の推奨 = ONNX + Greengrass V2（+ オプションで SageMaker Neo）。
+**Action chunking訂正**：未来動作の出力は新観測へのフィードバックとは異なります。推論Hz×chunk長を制御周波数にしません。native chunk全体を必ず実行する共通規則もなく、モデル・実行horizon・切替方式ごとに評価します（[PI RTC](https://www.physicalintelligence.company/research/real_time_chunking)、[根拠](evidence.md#action-chunking)）。
 
-```mermaid
-graph LR
-    PT["PyTorch ポリシー<br>（クラウド学習）"] --> ONNX[ONNX 変換]
-    ONNX --> TRT["TensorRT エンジン<br>オンデバイス高速化"]
-    TRT --> JET["Jetson Thor<br>オンボードリアルタイム制御"]
-    GG["AWS IoT Greengrass V2<br>OTA · コンポーネント · MQTT"] -. デプロイ · 管理 .-> JET
-    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x 後継なし .-> GG
-```
+**AWSマッピング**：S3モデル資産、Greengrass V2・IoT Jobs配備管理、IoT Core状態・イベントを必要に応じて組み合わせます。安全認証やリアルタイム制御の保証ではありません。
 
-<details markdown="1"><summary>🔄 揮発性データ（エッジ HW スペック・価格 — 2026-07 確認）</summary>
-
-| 項目 | 値 | 出典 |
-|---|---|---|
-| Jetson Thor GA | 2025-08-25 発表, dev kit $3,499（→ 2026-07 値上げで $5,499）, 2025-11 出荷開始 | NVIDIA `[3]` |
-| Jetson 値上げ (2026-07-22) | Orin Nano Super devkit $249→$399 · Orin NX 16GB モジュール $599→$999 · AGX Orin 64GB モジュール $1,599→$2,999 · **AGX Thor devkit $3,499→$5,499** · T5000（Thor モジュール）$2,999→$4,999 — エッジ BOM 算定時に旧価格見積もりに注意 | NVIDIA ストア `[3]` |
-| AGX Thor スペック | Blackwell GPU, 128GB 統合 LPDDR5X, 130W, FP4 サポート | NVIDIA `[3]` |
-| Thor vs Orin | NVIDIA 公式: 正規化 AI コンピュート ~7.5 倍, エネルギー効率 ~3.5 倍。⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS — 生の数値の直接比較は禁止 | NVIDIA `[3]` |
-| ONNX→TensorRT 高速化 | ~7 倍（ベンダー数値, NVIDIA Jetson ブログ 2025, モデル・HW に依存 — 引用時は条件を併記） | NVIDIA `[3]` |
-</details>
-
-**デプロイスタックが実際に担うもの** `[1]`（docs 2026-07 確認）:
-
-| 構成要素 | 技術要約 | エッジデプロイの観点 |
-|---|---|---|
-| **Jetson Thor** | Blackwell GPU 搭載のオンボードエッジコンピューター（128GB ユニファイドメモリ）— リアルタイム推論をロボットの中で解決 | System 1 ポリシーの住処 |
-| **Greengrass V2** | **コンポーネント**（レシピ + S3 アーティファクト）単位のソフトウェアデプロイランタイム — フリート OTA、プロセス間通信（IPC）・MQTT プロキシ、ログマネージャー | モデル・推論アプリをロボットフリートへバージョン管理しつつ配布する経路 |
-| **ONNX → TensorRT** | フレームワーク中立フォーマットへ export 後、デバイス GPU に合わせてカーネル融合・精度最適化コンパイル | sub-20~30ms の遅延予算を満たす標準経路 |
-| **SageMaker Neo** | ターゲットハードウェア別のマネージドモデルコンパイルサービス（任意） | TensorRT を直接扱いにくいチームの代替手段 |
-| **IoT Core (MQTT)** | 軽量な発行/購読メッセージングブローカー — テレメトリ上り、コマンド下り | ロボットの状態・イベントのクラウド接続点 |
-| **IoT Jobs** | フリート対象のリモート作業（OTA）オーケストレーション — 段階的ロールアウト・中断・再試行 | モデル v2 を 100 台へ安全に配布するメカニズム |
-
-**AWS マッピング**: IoT Greengrass V2 + IoT Core(MQTT) + SageMaker Neo（コンパイル）+ S3（モデルアーティファクト）+ IoT Jobs(OTA)。Model Monitor でエッジテレメトリを収集。
-
-**意思決定基準**（詳細 → [decisions Cloud vs Edge](decisions.md)）:
-
-- **30~100Hz+ の反応型制御**（バランス・力・把持・歩行）→ **必ずオンボード Jetson**。クラウド往復は不可。
-- **sub-1Hz~few-Hz の高レベル計画・VLA 推論** → クラウド/非同期が可能。**action chunking** が 2 つの rate をつなぐ橋です — **実効制御周波数 = 推論 Hz × chunk サイズ**（π0.5 が Jetson で ~10Hz 推論でも chunk 10 ステップなら実効 ~100Hz）。
-- ⚠️ **chunk は保存フォーマットではなくポリシーの一部** `[2]`: native chunk を分割して 1-step ずつ実行するとポリシーが崩壊します（実測: 20-step 実行 3/10 成功 → 1-step 実行 0/48）。**実行は学習された native chunk のまま、保存だけ per-step で**。
-- マネージドのエッジサービスを希望 → 存在しないと正直に伝え、ONNX+Greengrass V2 の設計を提供。
-
-**顧客事例**: （エッジデプロイ自体の公開 AWS ロボット事例は限定的 — リファレンスアーキテクチャ中心）
-
-**➡️ 次のアクション**: **「Jetson Thor（オンボード制御）+ Greengrass V2(OTA/管理) + ONNX→TensorRT」エッジリファレンスアーキテクチャを描き**、「Edge Manager は無くなった」という点を先手で伝えて顧客の誤った期待を訂正します。リアルタイム要求の Hz を尋ねてエッジ/クラウドの境界を確定します。
+**判断・次のアクション**：[4階層の責任者](operations.md#layers)と[障害試験](operations.md#failure)を定め、[手順C](execution.md#finetuning)の出力を監督下の少数機試験に引き継ぎます。
 
 **🔗 関連資産**:
 
@@ -122,7 +88,7 @@ graph LR
 
 ---
 
-## 3. Sim-to-Real 方法論  🟢 GA（安定原理）
+## 3. Sim-to-Real手法 — 適用条件確認 { #3-sim-to-real-方法論--ga安定原理 }
 
 **L0 TL;DR**: 検証された処方は派手な新技法ではなく、**選択的 DR + SysID + RL を MPC の上に載せるハイブリッド**です。むやみにすべてをランダム化すると RL が不安定になります。
 
@@ -209,7 +175,7 @@ graph LR
 
 ---
 
-## 6. 実機セルの安全規制 — 国際標準と韓国の法定要件  🟢 GA（規制 — 低変動）
+## 6. 実機セルの安全要求 — 設置別確認 { #6-実機セルの安全規制--国際標準と韓国の法定要件--ga規制--低変動 }
 
 **L0 TL;DR**: 人のそばで動くロボットは、法律により防護装置を備える必要があります。国際的には **ISO 10218-1/-2:2025 + ISO/TS 15066（協働ロボット）**、韓国ではさらに **「産業安全保健基準に関する規則」第223条（原則として高さ 1.8m 以上のフェンス）+ KCs[^kcs] 義務安全認証の防護装置** が上乗せされます。このセットアップのコスト・リードタイムが実機検証を遅くする第三の壁であり、裏を返せばシミュレーションの経済的論拠です（→ [pillar-3](pillar-3.md)）。
 
@@ -248,16 +214,9 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中（エッジ HW・ベン�
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — シミュレーションで学習したポリシーを実際のロボットへ移すこと、またはその方法論です。シミュレーションと現実の物理・視覚の差（ドメインギャップ）のため、そのまま移すと性能が崩れます。🎥 [NVIDIA sim-to-real ロボティクスショーケース](https://www.youtube.com/watch?v=sffNvv3GkRA)
-[^loco]: **locomotion（ロコモーション）** — 歩行・走行などロボットが移動する能力です。ロボットと地面の接触という比較的シンプルな物理のおかげで、sim-to-real が最初に解決された領域です。
-[^manip]: **マニピュレーション（manipulation, 操作）** — 物体をつかみ、運び、組み立てる能力です。指先の接触の物理が複雑なため、sim-to-real がまだ解決されていない領域です。
 [^dyn]: **動力学（dynamics）** — 力・摩擦・衝突が生み出す運動の物理です。特に物体をつかむ際の接触動力学は、シミュレーターが正確に再現するのが最も難しい部分です。
 [^dr]: **ドメインランダマイゼーション（Domain Randomization）** — シミュレーションの照明・質感・物体位置・カメラ角度・物理パラメータをランダムに変えながらデータ生成・学習を行う技法です。ポリシーがどんな環境変化にも耐えられるようになります — sim-to-real の代表的な処方です。
 [^sysid]: **システム同定（SysID, System Identification）** — 実機ロボットの物理パラメータ（摩擦・質量・モーター応答）を測定し、シミュレーターを実物に合わせて校正する作業です。
 [^mpc]: **MPC（Model Predictive Control）** — 短い未来を繰り返し予測・最適化しながら制御する古典制御技法です。学習した RL ポリシーを MPC の上に載せるハイブリッドが検証済みの処方として定着しました。
-[^onnx]: **ONNX / TensorRT** — ONNX はフレームワーク間のモデル交換の標準フォーマット、TensorRT は NVIDIA GPU 向けの推論最適化コンパイラです。「PyTorch → ONNX → TensorRT」変換がエッジのリアルタイム推論の標準経路です。
-[^ota]: **OTA（Over-The-Air）** — ネットワーク経由でリモートからロボットのモデル・ソフトウェアを更新・配布する方式です。
-[^latency]: **遅延予算（latency budget）** — リアルタイム制御ループが許容する最大推論時間です。30~100Hz 制御なら 1 サイクルは 10~33ms なので、推論はこの範囲内に収まる必要があります — クラウド往復が不可能な理由です。
-[^mqtt]: **MQTT** — IoT 標準の軽量な発行/購読（pub/sub）メッセージングプロトコルです。不安定なネットワークでも小さな帯域でロボットのテレメトリとコマンドをやり取りできます。
 [^kcs]: **KCs（安全認証）** — 韓国の産業安全保健法第84条に基づく危険な機械・器具・防護装置の義務安全認証マークです。ライトカーテン・レーザースキャナのような防護装置は KCs 認証品のみが法定の防護装置として認められます。
 [^aopd]: **ライトカーテン（AOPD、光電子式防護装置）** — 多数の赤外線ビームで仮想の「光の壁」を作り、人の身体がビームを遮ると即座に機械を停止させる感応型防護装置です。フェンスを設置できない開口部に使われ、国際規格は IEC 61496-2（面積監視型のレーザースキャナは IEC 61496-3）です。

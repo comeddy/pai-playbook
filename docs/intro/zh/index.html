@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Physical AI Playbook — 5 分钟给出方向的 SA 参考资产</title>
-<meta name="description" content="面向 AWS Korea SA 的参考资产：无需翻遍 Slack，5 分钟内给出架构方向、AWS 映射与后续行动。5 大支柱、FAQ Top 20、4 个决策树。">
+<title>Physical AI Playbook — 客户与 AWS 员工执行指南</title>
+<meta name="description" content="帮助客户与 AWS 员工判断业务适配、总成本、执行条件，连接五个技术支柱与实验恢复流程。">
 <link rel="alternate" hreflang="ko" href="../">
 <link rel="alternate" hreflang="en" href="../en/">
 <link rel="alternate" hreflang="zh-Hans" href="../zh/">
@@ -222,9 +222,10 @@ document.documentElement.setAttribute('data-theme',t);})();
 <!-- ================= HERO ================= -->
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">AWS Korea SA Reference Asset</p>
-    <h1>客户的 Physical AI 问题，<br><span class="u">5 分钟内</span>给出方向</h1>
-    <p class="sub">不用再翻 Slack。一份 playbook 直达<strong>架构方向 · AWS 映射 · 后续行动</strong> — 不是论文摘要集，也不是新闻档案，而是为一线 SA 打造的参考资产。</p>
+    <p class="eyebrow">For customers and AWS staff</p>
+    <h1>从业务判断<br>到<span class="u">实验与运营</span></h1>
+    <p class="sub">帮助客户与 AWS 员工判断业务适配、总成本、执行条件，连接五个技术支柱与实验恢复流程。</p>
+    <p class="spec-note">非官方个人资料。服务 GA 与样本代码不保证客户现场成果。</p>
     <ul class="chips" aria-label="核心指标">
       <li><b>5</b> 大支柱</li>
       <li>FAQ Top <b>20</b></li>
@@ -233,7 +234,7 @@ document.documentElement.setAttribute('data-theme',t);})();
       <li><b>4</b> 种语言</li>
     </ul>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/zh/">立即打开 Playbook</a>
+      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/zh/start/">立即打开 Playbook</a>
       <a class="btn btn-ghost" href="https://github.com/comeddy/pai-playbook">GitHub 仓库</a>
     </div>
   </div>
@@ -247,23 +248,23 @@ document.documentElement.setAttribute('data-theme',t);})();
       <h2>Physical AI 是一个答案四散的领域</h2>
     </div>
     <div class="problem">
-      <p>Isaac Sim 在 AWS 上怎么跑？VLA 微调的 GPU 规模怎么定？sim-to-real gap 真能克服吗？— 答案散落在 Slack 线程、厂商博客和论文里。<b>这份 playbook 用验证标准过滤这些碎片，并在一处分层整理。</b>客户会议前 5 分钟打开，也能抓住方向。</p>
+      <p>先判断要改善的业务及现有自动化、采购、SI 是否足够。按需选择数据、仿真、训练，并约定成功及停止条件。</p>
     </div>
     <div class="pillars">
       <article class="pillar">
         <p class="num">01</p>
-        <h3>5 分钟内定方向</h3>
-        <p>赶时间就直奔 FAQ Top 20；主题明确就进入 5 大支柱；站在岔路口就用决策树。每个条目按 L0（1~2 句）→ L1（1 页）→ L2（deep-dive 链接）分层，只读顶部也能把握方向。</p>
+        <h3>按角色开始</h3>
+        <p>决策者看适配/ROI，技术团队看执行/运营，AWS 员工确认需求及支持边界。</p>
       </article>
       <article class="pillar">
         <p class="num">02</p>
-        <h3>只收录经过验证的内容</h3>
-        <p>成熟度标签（GA / Preview / Research-only / Hype）与来源等级 [1]~[4] 明示每个条目的可信度，区分“惊艳的演示”与“可部署”。未达收录标准的条目只存在于 Radar 队列，不进正文。</p>
+        <h3>区分证据范围</h3>
+        <p>发布、原文对照、复现和现场验证不同。逐项记录来源、日期、复核状态，自动检查不保证事实。</p>
       </article>
       <article class="pillar">
         <p class="num">03</p>
-        <h3>以行动收尾</h3>
-        <p>止步于概念解释的条目视为未完成。每个条目都以“➡️ SA 下一步行动”结尾 — 读完就知道该向客户提什么。</p>
+        <h3>落实实验与恢复</h3>
+        <p>三个固定提交路径包含准备、费用、评估、停止及清理。机器人运营另需现场批准和恢复测试。</p>
       </article>
     </div>
   </div>
@@ -274,8 +275,8 @@ document.documentElement.setAttribute('data-theme',t);})();
   <div class="wrap">
     <div class="sec-head">
       <p class="kicker">What</p>
-      <h2>5 大支柱 + 3 个运营页面</h2>
-      <p>各支柱权重均等；支柱内部按客户真实需求 × production-readiness 排序。每个支柱顶部列有“客户最常问的 Top 3 问题”。</p>
+      <h2>五个支柱与执行指南</h2>
+      <p>支柱提供技术参考，专页提供适配、ROI、执行、运营及证据。FAQ 是探索示例，不是实测频率排名。</p>
     </div>
     <div class="cards">
       <article class="card">
@@ -339,7 +340,7 @@ document.documentElement.setAttribute('data-theme',t);})();
         <tr>
           <td class="name">Cloud vs Edge</td>
           <td class="q">“这个推理能放云端，还是必须放边缘？”</td>
-          <td class="rule">最关键的判别因素是<b>控制频率</b>。实时安全/反应回路放边缘，有思考余地就放云端 — action chunking 是桥梁。</td>
+          <td class="rule">按观测到动作时限、抖动及断网要求部署。内部 System 1/2 不决定云部署。</td>
         </tr>
         <tr>
           <td class="name">NVIDIA vs 开源</td>
@@ -353,8 +354,8 @@ document.documentElement.setAttribute('data-theme',t);})();
         </tr>
         <tr>
           <td class="name">Build vs Buy</td>
-          <td class="q">“微调基础模型，还是自研训练？”</td>
-          <td class="rule"><b>几乎总是微调（Buy+adapt）。</b>从零预训练只属于极少数 — 商用时许可证是第一道门槛。</td>
+          <td class="q">“现有方式、采购、SI、模型适配，哪个合适？”</td>
+          <td class="rule">比较业务成果、总成本及支持责任，分别核对代码、权重、基础模型、数据条件。</td>
         </tr>
       </tbody>
     </table>
@@ -364,9 +365,9 @@ document.documentElement.setAttribute('data-theme',t);})();
       <div class="label-box">
         <h3>成熟度标签 — 4 级</h3>
         <div class="badges">
-          <span class="badge">🟢 GA — 可用于生产</span>
+          <span class="badge">🟢 GA — 产品发布状态</span>
           <span class="badge">🟡 Preview</span>
-          <span class="badge">🔵 Research-only — 禁止提案</span>
+          <span class="badge">🔵 Research — R&D 范围</span>
           <span class="badge">⚪ Hype — 仅有演示</span>
         </div>
         <p>“惊艳的演示”≠“可部署”。标签守住这条边界。</p>
@@ -375,7 +376,7 @@ document.documentElement.setAttribute('data-theme',t);})();
         <h3>来源等级 — [1]~[4]</h3>
         <div class="badges">
           <span class="badge mono">[1] 官方文档 / 论文</span>
-          <span class="badge mono">[2] AWS 内部验证</span>
+          <span class="badge mono">[2] 有记录的复现</span>
           <span class="badge mono">[3] 厂商官方博客</span>
           <span class="badge mono">[4] 未验证 — 引用前必须复核</span>
         </div>
@@ -500,9 +501,9 @@ document.documentElement.setAttribute('data-theme',t);})();
     <rect x="1014" y="320" width="118" height="44" rx="8" fill="#FBF1EC" stroke="#EEBFAA"/>
     <text x="1073" y="340" text-anchor="middle" font-weight="700" fill="#8E4830">升入正文</text>
     <text x="1073" y="356" text-anchor="middle" fill="#8E4830">满足标准时</text>
-    <text x="840" y="392" fill="#5F5A4D">收录标准 — 4 项中至少 2 项：</text>
-    <text x="840" y="412" fill="#1F1E1D">ⓐ production 验证  ⓑ 可映射 AWS</text>
-    <text x="840" y="432" fill="#1F1E1D">ⓒ 真实咨询记录  ⓓ GA（路线图）</text>
+    <text x="840" y="392" fill="#5F5A4D">收录条件 — 全部满足</text>
+    <text x="840" y="412" fill="#1F1E1D">客户问题 · 准确一手来源</text>
+    <text x="840" y="432" fill="#1F1E1D">证据用途 · owner/后续行动</text>
     <text x="840" y="452" fill="#6B665A">所有条目均以“➡️ SA 下一步行动”结尾</text>
   </g>
   <line x1="764" y1="370" x2="812" y2="370" stroke="#8A8474" stroke-width="1.6" marker-end="url(#arr)"/>
@@ -520,7 +521,7 @@ document.documentElement.setAttribute('data-theme',t);})();
 </svg>
     </figure>
     <p class="arch-rot-hint">在移动端，图表将旋转为竖向显示。</p>
-    <p class="arch-caption">进入正文须满足 4 项标准中的<strong>至少 2 项</strong> — ⓐ production 验证 ⓑ 可映射 AWS ⓒ 真实咨询记录 ⓓ GA（路线图）。未达标条目仅以一行存在于 Radar。</p>
+    <p class="arch-caption">须确认客户问题、准确来源/日期/版本、证据用途限制、owner/后续行动。区分研究指导与客户运营验证。</p>
   </div>
 </section>
 
@@ -545,7 +546,7 @@ document.documentElement.setAttribute('data-theme',t);})();
       <article class="card">
         <span class="tag">Governance</span>
         <h3>明示的维护规则</h3>
-        <p>每页标注 owner · 更新时间 · volatility。FAQ Top 20 排名每季度复审，新候选仅经晋升流水线进入。</p>
+        <p>区分页面日期与主张确认日。证据、翻译和链接检查保证记录一致性，不替代事实或执行验证。</p>
       </article>
     </div>
   </div>
@@ -554,10 +555,10 @@ document.documentElement.setAttribute('data-theme',t);})();
 <!-- ================= CTA ================= -->
 <section class="cta-final">
   <div class="wrap">
-    <h2>下一场 Physical AI 会议前，5 分钟。</h2>
-    <p>从 FAQ Top 20 开始。方向、AWS 映射与后续行动都在那里。</p>
+    <h2>下次会议确定一个任务。</h2>
+    <p>填写业务适配/ROI 表，连接有成功及停止条件的实验。</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/zh/">打开 Playbook</a>
+      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/zh/start/">打开 Playbook</a>
       <a class="btn btn-ghost" href="https://github.com/comeddy/pai-playbook">参与贡献 (GitHub)</a>
     </div>
   </div>

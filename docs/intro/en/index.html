@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Physical AI Playbook — The SA reference asset that gives direction in 5 minutes</title>
-<meta name="description" content="An AWS Korea SA reference asset that delivers architecture direction, AWS mapping, and next actions in 5 minutes — without digging through Slack. 5 pillars, FAQ Top 20, 4 decision trees.">
+<title>Physical AI Playbook — a guide for customers and AWS staff</title>
+<meta name="description" content="A guide for customers and AWS staff to assess fit, total cost, and execution requirements, connecting five technical pillars with experiments and recovery.">
 <link rel="alternate" hreflang="ko" href="../">
 <link rel="alternate" hreflang="en" href="../en/">
 <link rel="alternate" hreflang="zh-Hans" href="../zh/">
@@ -222,9 +222,10 @@ document.documentElement.setAttribute('data-theme',t);})();
 <!-- ================= HERO ================= -->
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">AWS Korea SA Reference Asset</p>
-    <h1>A customer's Physical AI question —<br>direction <span class="u">in 5 minutes</span></h1>
-    <p class="sub">No more digging through Slack. One playbook covers <strong>architecture direction · AWS mapping · next actions</strong> — not a paper digest, not a news archive: a reference asset built for field SAs.</p>
+    <p class="eyebrow">For customers and AWS staff</p>
+    <h1>From business decisions<br>to <span class="u">experiments and operations</span></h1>
+    <p class="sub">A guide for customers and AWS staff to assess fit, total cost, and execution requirements, connecting five technical pillars with experiments and recovery.</p>
+    <p class="spec-note">Unofficial personal reference. Service GA and sample code do not guarantee customer-site outcomes.</p>
     <ul class="chips" aria-label="Key metrics">
       <li><b>5</b> pillars</li>
       <li>FAQ Top <b>20</b></li>
@@ -233,7 +234,7 @@ document.documentElement.setAttribute('data-theme',t);})();
       <li><b>4</b> languages</li>
     </ul>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/en/">Open the Playbook</a>
+      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/en/start/">Open the Playbook</a>
       <a class="btn btn-ghost" href="https://github.com/comeddy/pai-playbook">GitHub repository</a>
     </div>
   </div>
@@ -247,23 +248,23 @@ document.documentElement.setAttribute('data-theme',t);})();
       <h2>Physical AI is a domain where answers are scattered</h2>
     </div>
     <div class="problem">
-      <p>How do you run Isaac Sim on AWS? What GPU scale does VLA fine-tuning need? Is the sim-to-real gap really solvable? — The answers are fragmented across Slack threads, vendor blogs, and papers. <b>This playbook filters those fragments through verification criteria and layers them in one place</b> — so that opening it five minutes before a customer meeting is enough to find direction.</p>
+      <p>Decide which task to improve and whether existing automation, a purchase, or SI is sufficient. Choose data, simulation, or training when needed, and agree on success and stop conditions.</p>
     </div>
     <div class="pillars">
       <article class="pillar">
         <p class="num">01</p>
-        <h3>Direction in 5 minutes</h3>
-        <p>In a hurry, go straight to FAQ Top 20; once the topic is clear, enter one of the 5 pillars; at a crossroads, use the decision trees. Every item is layered L0 (1–2 sentences) → L1 (one page) → L2 (deep-dive links) — reading just the top gives you direction.</p>
+        <h3>Start by role</h3>
+        <p>Decision makers assess fit/ROI, engineers use execution/operations, and AWS staff clarify discovery and support boundaries.</p>
       </article>
       <article class="pillar">
         <p class="num">02</p>
-        <h3>Only verified content</h3>
-        <p>Maturity labels (GA / Preview / Research-only / Hype) and source grades [1]–[4] make every item's trust level explicit, separating “impressive demo” from “deployable.” Items below the inclusion bar live only in the Radar queue, never in the body.</p>
+        <h3>Distinguish evidence scope</h3>
+        <p>Release, source comparison, reproduction, and site validation differ. Record claim sources, dates, and review status; automated checks do not certify facts.</p>
       </article>
       <article class="pillar">
         <p class="num">03</p>
-        <h3>Ends with an action</h3>
-        <p>An item that ends as a concept explanation is considered unfinished. Every item closes with “➡️ SA next action” — after reading, you know what to propose to the customer.</p>
+        <h3>Through execution and recovery</h3>
+        <p>Three pinned sample paths connect prerequisites, costs, evaluation, stopping, and cleanup. Robot operation requires separate site approval and recovery tests.</p>
       </article>
     </div>
   </div>
@@ -274,8 +275,8 @@ document.documentElement.setAttribute('data-theme',t);})();
   <div class="wrap">
     <div class="sec-head">
       <p class="kicker">What</p>
-      <h2>5 pillars + 3 operational pages</h2>
-      <p>Pillars carry equal weight; within each pillar, items are sorted by real customer demand × production-readiness. Each pillar opens with its “Top 3 most-asked customer questions.”</p>
+      <h2>Five pillars and execution guides</h2>
+      <p>Use pillars for technical reference and dedicated pages for fit, ROI, execution, operations, and evidence. FAQs are discovery examples, not measured frequency rankings.</p>
     </div>
     <div class="cards">
       <article class="card">
@@ -339,7 +340,7 @@ document.documentElement.setAttribute('data-theme',t);})();
         <tr>
           <td class="name">Cloud vs Edge</td>
           <td class="q">“Can this inference live in the cloud, or must it sit at the edge?”</td>
-          <td class="rule">The single most important discriminator is <b>control frequency</b>. Real-time safety/reaction loops go to the edge; if there's time to think, the cloud — action chunking is the bridge.</td>
+          <td class="rule">Place functions by observation-to-action deadlines, jitter, and outage needs. Internal System 1/2 does not determine cloud placement.</td>
         </tr>
         <tr>
           <td class="name">NVIDIA vs Open Source</td>
@@ -353,8 +354,8 @@ document.documentElement.setAttribute('data-theme',t);})();
         </tr>
         <tr>
           <td class="name">Build vs Buy</td>
-          <td class="q">“Fine-tune a foundation model, or train our own?”</td>
-          <td class="rule"><b>Fine-tuning (Buy + adapt) is almost always the answer.</b> From-scratch pretraining is for the very few — for commercial use, licensing is the first gate.</td>
+          <td class="q">“Which fits: existing methods, purchase, SI, or adaptation?”</td>
+          <td class="rule">Compare outcomes, total cost, and support responsibilities. Separate open-model code, weight, base-model, and data terms.</td>
         </tr>
       </tbody>
     </table>
@@ -364,9 +365,9 @@ document.documentElement.setAttribute('data-theme',t);})();
       <div class="label-box">
         <h3>Maturity labels — 4 levels</h3>
         <div class="badges">
-          <span class="badge">🟢 GA — production-ready</span>
+          <span class="badge">🟢 GA — product release status</span>
           <span class="badge">🟡 Preview</span>
-          <span class="badge">🔵 Research-only — do not propose</span>
+          <span class="badge">🔵 Research — R&D scope</span>
           <span class="badge">⚪ Hype — demo only</span>
         </div>
         <p>“Impressive demo” ≠ “deployable.” The labels guard that boundary.</p>
@@ -375,7 +376,7 @@ document.documentElement.setAttribute('data-theme',t);})();
         <h3>Source grades — [1]–[4]</h3>
         <div class="badges">
           <span class="badge mono">[1] Official docs / papers</span>
-          <span class="badge mono">[2] AWS internally verified</span>
+          <span class="badge mono">[2] Documented reproduction</span>
           <span class="badge mono">[3] Vendor official blog</span>
           <span class="badge mono">[4] Unverified — recheck required</span>
         </div>
@@ -500,9 +501,9 @@ document.documentElement.setAttribute('data-theme',t);})();
     <rect x="1014" y="320" width="118" height="44" rx="8" fill="#FBF1EC" stroke="#EEBFAA"/>
     <text x="1073" y="340" text-anchor="middle" font-weight="700" fill="#8E4830">Promoted</text>
     <text x="1073" y="356" text-anchor="middle" fill="#8E4830">criteria met</text>
-    <text x="840" y="392" fill="#5F5A4D">Inclusion bar — at least 2 of 4:</text>
-    <text x="840" y="412" fill="#1F1E1D">ⓐ Production-verified  ⓑ AWS-mappable</text>
-    <text x="840" y="432" fill="#1F1E1D">ⓒ Real inquiry history  ⓓ GA (roadmap)</text>
+    <text x="840" y="392" fill="#5F5A4D">Inclusion — all required</text>
+    <text x="840" y="412" fill="#1F1E1D">Customer problem · primary source</text>
+    <text x="840" y="432" fill="#1F1E1D">Evidence/use · owner/next action</text>
     <text x="840" y="452" fill="#6B665A">Every item ends with "➡️ SA next action"</text>
   </g>
   <line x1="764" y1="370" x2="812" y2="370" stroke="#8A8474" stroke-width="1.6" marker-end="url(#arr)"/>
@@ -520,7 +521,7 @@ document.documentElement.setAttribute('data-theme',t);})();
 </svg>
     </figure>
     <p class="arch-rot-hint">On mobile, the diagram is rotated vertically.</p>
-    <p class="arch-caption">To enter the body, an item must meet <strong>at least 2</strong> of 4 criteria — ⓐ production-verified ⓑ AWS-mappable ⓒ real inquiry history ⓓ GA (roadmap). Items below the bar exist only as one line in Radar.</p>
+    <p class="arch-caption">Require a customer problem, exact primary source/date/version, evidence/use limits, and an owner/next step. Separate research guidance from customer operating validation.</p>
   </div>
 </section>
 
@@ -545,7 +546,7 @@ document.documentElement.setAttribute('data-theme',t);})();
       <article class="card">
         <span class="tag">Governance</span>
         <h3>Explicit maintenance rules</h3>
-        <p>Every page carries owner · last-updated · volatility. FAQ Top 20 rankings are reviewed quarterly; new candidates enter only via the promotion pipeline.</p>
+        <p>Separate page dates from claim check dates. Evidence, translation, and link checks establish record consistency, not factual or execution validation.</p>
       </article>
     </div>
   </div>
@@ -554,10 +555,10 @@ document.documentElement.setAttribute('data-theme',t);})();
 <!-- ================= CTA ================= -->
 <section class="cta-final">
   <div class="wrap">
-    <h2>Before your next Physical AI meeting: 5 minutes.</h2>
-    <p>Start with FAQ Top 20. Direction, AWS mapping, and next actions are right there.</p>
+    <h2>Choose one task at your next meeting.</h2>
+    <p>Complete the fit/ROI worksheet and define an experiment with success and stop criteria.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/en/">Open the Playbook</a>
+      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/en/start/">Open the Playbook</a>
       <a class="btn btn-ghost" href="https://github.com/comeddy/pai-playbook">Contribute (GitHub)</a>
     </div>
   </div>

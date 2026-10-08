@@ -1,5 +1,5 @@
 ---
-ko_hash: fe8ae4264744cbdff41aef87bdc1addcf7f2601a
+ko_hash: da1efa6b77872b7f3ff918555593f0de4399bbcd
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -7,11 +7,13 @@ ko_hash: fe8ae4264744cbdff41aef87bdc1addcf7f2601a
 _最終更新: 2026-09 · owner: Youngjin · volatility: 高_
 [← index へ](index.md)
 
-> **L0 TL;DR**: 包含基準（[2.5 THE FILTER](maintenance.md#包含基準-the-filter)）はまだ通過していないものの、**注目すべきもの**。各項目は一行 — 成熟度ラベル + **なぜ注目か + なぜ待機中か**。ゲート（4 項目中 2 項目）を通過すると、担当ピラーの owner が標準テンプレートで昇格します。
+> **L0 TL;DR**: 原文・再現・現場確認が必要な候補です。[掲載条件](maintenance.md#掲載基準-the-filter)を全て満たしownerが用途を確認して昇格します。走査は承認しません。
 >
 > ⚠️ **ここにある項目を顧客提案で「成熟した能力」のように扱わないでください。** 華やかなデモがデプロイ可能性を覆い隠すことがよくあります。
 
 ---
+
+> **確認範囲**：ページ更新日は全項目の再確認日ではありません。主要訂正の日付・再現/人の確認状態は[根拠](evidence.md)を参照し、既存項目の確認日は従来どおり適用します。
 
 ## 🔬 モデル / アルゴリズム（検証待ち）
 
@@ -72,10 +74,11 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 高_
 | **[Agility Robotics Digit 5](https://www.agilityrobotics.com/content/agility-unveils-digit-5-humanoid-robot-built-for-cooperatively-safe-work-at-scale)**（既存の Digit@GXO に対し、近接協働の安全アーキテクチャと 90 分駆動バッテリーを備えた第 5 世代汎用ヒューマノイド） | 🟡 Preview | ✨ **注目**：pillar-4 で「最もよく検証された有償ヒューマノイド」としてすでに掲載されている Agility Digit（@GXO）の次世代モデル —— 衝突リスク検知時に回避・停止・着座し、視聴覚信号で人との近接作業を可能にする安全設計、90 分駆動・9 分充電、CE マーキングで EU・英国へ参入する計画を発表<br>⏳ **待機**：Agility 公式発表（2026-09-15、agilityrobotics.com）`[4]` —— 3 億ドル超の複数年受注は「2026-05 時点、契約マイルストーン達成が条件」で、Digit 5 の実稼働は 0（既存の 65,000 時間超の実績は Digit 4）。アーリーアクセスは 2027 年上半期、製造・倉庫顧客向け GA は 2027 年末予定。🔗 リンク 200 · 一次ソース照合 2026-09-27。**AWS 角度：なし** | Digit 5 実稼働顧客事例の公開（EU/北米）+ 安全アーキテクチャの第三者検証 |
 | **[Qualcomm × PickNik（MoveIt）買収](https://www.qualcomm.com/news/releases/2026/09/qualcomm-to-acquire-picknik-to-advance-the-future-of-open-roboti)**（ROS マニピュレーション標準 MoveIt のメンテナーを買収、Dragonwing エッジ AI プラットフォーム・Arduino への統合を計画） | ⚪ ロードマップ | ✨ **注目**：Qualcomm がオープンソースのロボットマニピュレーションフレームワーク MoveIt の長年のメンテナーである PickNik を買収し、MoveIt・MoveIt Pro を自社の Dragonwing ロボティクスプラットフォームと Arduino（VENTUNO Q ボードから）に統合する計画 —— 同じ週の ROSCon 2026 Toronto の Intrinsic Core（Alphabet）と並び、Isaac 一強の構図にシリコン・エッジベンダー発のオープンロボティクススタック競争が重なって出現、pillar-4 のエッジ推論軸（NVIDIA Jetson の代替）に観察対象を追加<br>⏳ **待機**：Qualcomm 公式発表（2026-09-23、qualcomm.com）`[4]` —— 契約条件は非公開で、取引も「通常の完了条件」を前提に未完了。MoveIt 1・2 はオープンソース維持の方針だが、Dragonwing 統合・Arduino 拡張はロードマップ段階で、統合済み製品の出荷はまだない。🔗 リンク 200 · 一次ソース照合 2026-09-27（発表日・買収対象・Dragonwing/Arduino 統合方針はページのメタデータで確認、条件非公開・オープンソース維持は The Robot Report で照合）。**AWS 角度：なし（競合エッジスタック）** | 取引完了 + Dragonwing/Arduino 統合製品の出荷 |
 
-## ⚰️ 廃止済み — 提案禁止（記録保存用）
+## 終了・受付制限 — 状態別確認 { #-廃止済み--提案禁止記録保存用 }
 
 | 項目 | 状態 | 代替 |
 |---|---|---|
+| **[AWS IoT FleetWise](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html)** | 新規受付停止、既存顧客は継続可 `[1]` | 新規の既定構成から除外 — [根拠](evidence.md#fleetwise-new-customers) |
 | **[AWS RoboMaker](https://aws.amazon.com/robomaker/)** | 🔴 終了 (2025-09-10) `[1]` | EC2 G6e/G7e + Isaac Sim AMI + AWS Batch |
 | **[SageMaker Edge Manager](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)** | 🔴 終了 (2024-04-26) `[1]` | ONNX + IoT Greengrass V2 (+ SageMaker Neo) |
 | **[IoT Greengrass V1](https://docs.aws.amazon.com/greengrass/v1/developerguide/what-is-gg.html)** | 🔴 終了 (2026-06-01) `[1]` | Greengrass V2 |
@@ -89,7 +92,7 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 高_
 ## 昇格手順（要約）
 
 1. **キャプチャ**: 指定チャンネル/絵文字で候補を収集
-2. **フィルタ**: [2.5 ゲート](maintenance.md#包含基準-the-filter)を適用（4 項目中 2 項目以上）
+2. **確認**：[掲載条件](maintenance.md#掲載基準-the-filter)を全て満たし、発売・根拠・用途・支援を分けます。
 3. **通過時**: 担当ピラーの owner が[標準テンプレート](maintenance.md#標準テンプレート)で編入し、Radar から削除
 4. **未達時**: ここに一行で保持し、昇格条件を明示
 

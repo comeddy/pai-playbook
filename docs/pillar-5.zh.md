@@ -1,5 +1,5 @@
 ---
-ko_hash: 53bb0bb84f22793b6a579ab278073dae24976dd3
+ko_hash: 301fcc497bdcab115a9021056c5f9f79cba38358
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -7,67 +7,43 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 高（AgentCore 功能�
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
-> **L0 TL;DR**: LLM 智能体[^agent]指挥机器人·设备的层。这里是 **AWS 最强的支柱** —— **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/) 已 GA(2025-10) 且首尔区域完全支持**，实时拦截工具调用[^tool]的 **Policy(Cedar) 也已 GA(2026-03)**。结构上以 **System 2[^sys]（慢速 LLM 规划器，云）+ System 1（快速控制，边缘）** 分离为正统。⚠️ Amazon DeepFleet 不是"LLM 智能体"，而是仓库机器人协调的基础模型，切勿混淆。
+> **L0 TL;DR**: 区分业务规划、机器人技能调用、机群连接。按需选择 AgentCore 功能；控制、安全和数据处理位置需[单独验证](operations.md)。
 
 ---
 
+> **复核范围**：页面修改日不代表所有技术条目已重验。核心修正日期、复现/人工状态见[证据](evidence.md)，旧条目仍使用各自确认日期。
+
 ## 本支柱中客户最常问的问题 Top 3
+
+> 以下为探索问题示例，不是已验证的客户咨询频率排名。
 
 1. **"用 LLM 智能体指挥机器人/设备实际可行吗？AWS 上有什么？"** → [Bedrock AgentCore](#1-amazon-bedrock-agentcore--ga)
 2. **"实时机器人上怎么用智能体？能在边缘离线运行吗？"** → [边缘智能体编排](#3-边缘智能体编排--preview参考架构)
 3. **"智能体控制物理系统时，安全怎么保证？"** → [安全 & 护栏](#5-安全--护栏--ga智能体层--未解决物理-语义-gap)
 
-> **稳定原理（几乎不变）**: 智能体不"直接实时控制"机器人。**高层规划·工具选择(System 2) 由智能体承担，低层实时控制(System 1) 由边缘策略承担**（→ [pillar-2](pillar-2.md)、[pillar-4](pillar-4.md)）。生产中真正跑起来的是 (1) **仓库机群[^fleet]协调**(DeepFleet, CoEvolution) 与 (2) **开发/数据工作负载编排**[^orch](OSMO)，而人形全栈智能体或 MCP[^mcp]-机器人连接大多为研究/演示。
+> **L0/L1**: 业务规划、观测策略、底层控制和独立安全职责不同。区分服务发布与客户现场验证。
 
 ---
 
 ## 1. Amazon Bedrock AgentCore  🟢 GA
 
-**L0 TL;DR**: 面向生产智能体的托管栈 —— Runtime、Memory、Gateway（工具连接）、Identity、Observability，以及 **Policy（基于 Cedar 的实时工具调用门禁）**。**首尔区域完全支持**。框架免费，仅按资源用量计费。
+**L0 TL;DR**: AgentCore 提供智能体运行、工具访问、身份与观测。**区分服务 GA 和机器人现场验证，以及首尔可用和韩国境内处理。**
 
-**客户需求/问题**: "想把智能体从 PoC 推进到生产。不想每次都自己搭建会话管理、工具连接、权限·安全、可观测性。"
-
-**解决方案概览** `[1]`:
-
-- **GA 历程**: 预览 2025-07 → **GA 2025-10-13**。组件: **Runtime、Memory、Gateway、Identity、Observability、Built-in Tools（Browser·Code Interpreter）**。re:Invent 2025-12 新增 Policy·Evaluations 预览、episodic Memory GA、面向语音的双向流式 Runtime GA。**Policy 于 2026-03-03 GA**。
-- **Policy（核心）**: 与 Gateway 整合，**实时拦截所有 智能体→工具 调用**，以 ms 级评估策略(allow/deny)。用自然语言编写 → 编译为 **[Cedar](https://www.cedarpolicy.com/)**（AWS 开源策略语言）。**含首尔在内 13 个区域 GA**。→ 约束物理系统工具调用的直接原语（第 5 项安全）。
-- **[Strands Agents SDK](https://strandsagents.com/)**（配套）: 模型·云中立的编排 SDK，**已达 1.0（GA 级）**。Amazon Q Developer·Glue 内部使用。与 AgentCore 配对。（版本·指标见折叠块）
-- **[Nova Act](https://nova.amazon.com/act)**（相关）: 浏览器/UI 自动化智能体，re:Invent 2025 **GA**。厂商声称高任务可靠性（数值见折叠块 —— 测量条件未公开）。
-
-**各组件实际提供的能力** `[1]`（docs 2026-07 核实）:
-
-| 组件 | 技术要点 | 机器人工作负载视角 |
+| 组件 | 应评估的职责 | 限制 |
 |---|---|---|
-| **Runtime** | 每个会话在专属 microVM[^microvm] 中无服务器运行（CPU·内存·文件系统隔离，终止时清除内存）。长会话**最长 8 小时**；等待 LLM·工具响应的时间**不计费**。框架·模型中立（LangGraph·CrewAI·Strands 等） | 承载 System 2 规划器的地方 —— 长任务规划保持在同一个隔离会话中 |
-| **Gateway** | **把 Lambda·OpenAPI·Smithy·既有 MCP 服务器·API Gateway 转换为 MCP 工具**，聚合为一个虚拟 MCP 服务器。语义工具搜索，入站·出站认证全托管 | 用几行代码把机器人技能（抓取·移动·检查 API）工具化的接入点 |
-| **Memory** | 双层：短期（会话原始事件）+ 长期（提取策略：摘要·语义·用户偏好 + episodic）。**长期记忆的检索也要经过 Policy** | 保持任务上下文（"刚才那个货架"）并跨会话积累现场知识 |
-| **Identity** | 智能体工作负载身份 + OAuth2/API 密钥令牌保险库 —— 工具调用时安全代理认证 | 避免在机器人机群 API 中硬编码人的凭证 |
-| **Policy** | 实时拦截所有智能体→工具调用，以毫秒级评估 Cedar 策略（自然语言编写 → 编译为 Cedar） | 物理动作前的最后安全闸门（→ 第 5 节） |
-| **Observability** | 兼容 OTEL[^otel] 的追踪·跨度·指标，集成 CloudWatch | 按步骤重构"它为什么那么做" —— 事故调查·审计 |
-| **Built-in Tools** | 托管 Browser（隔离 microVM）·Code Interpreter | 手册查询·数值计算等辅助工作 |
+| Runtime | 业务规划智能体运行 | 不是保证机器人控制时限的实时控制器 |
+| Gateway/Identity | 连接认证允许的机器人技能 API | 完成、取消、去重需另行实现 |
+| Policy | 检查通过 Gateway 的工具调用策略 | 不替代物理状态检查及独立安全 |
+| Memory/Evaluations | 上下文与评估 | 分别确认存储及推理处理地点 |
+| Observability | 任务及工具追踪 | 需关联设备、控制、安全日志 |
 
-**AWS 映射**: 服务本身即映射。将机器人技能作为工具注册到 Gateway → 智能体以自然语言计划调用，用 Policy 门控，用 Memory 维持会话，用 Observability 追踪。
-```mermaid
-graph LR
-    U["操作员<br>自然语言指令"] --> RT["AgentCore Runtime<br>System 2 规划器 (LLM)"]
-    RT <--> M["Memory<br>短期·长期上下文"]
-    RT -- 工具调用 --> P{"Policy<br>Cedar allow/deny"}
-    P -- 允许 --> GW["Gateway<br>机器人技能 = MCP 工具"]
-    P -- 拒绝 --> X["拦截 + 记录"]
-    GW --> ROB["机器人/设备 API<br>(IoT · 边缘 System 1)"]
-    RT -. 追踪 .-> O["Observability<br>OTEL / CloudWatch"]
-```
+**区域/数据修正** `[1]`：首尔可用不自动解决数据驻留。[AWS 跨区域推理文档](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/cross-region-inference.html)说明 Memory 等输入输出可在主区域之外处理。首尔发起的 Evaluations 使用全球跨区域推理。按功能、模型、外部工具记录处理国家（[证据](evidence.md#agentcore-residency)）。
 
-**决策标准**:
+**决策标准**：单次推理先考虑直接模型调用，需要持续会话、工具权限、追踪时选择 AgentCore 组件。核对功能[区域表](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html)及[价格](https://aws.amazon.com/bedrock/agentcore/pricing/)，计入模型/API、网络、日志费用。“harness 免费”不是总成本估算。
 
-- 生产智能体（需要会话·工具·权限·可观测性）→ **AgentCore Runtime + Gateway + Policy**。
-- 简单一次性推理 → 直接调用 Bedrock 即够，AgentCore 过重。
-- 多智能体·A2A[^a2a] → Strands 1.0。
-- 需要离线·低延迟边缘 → 第 3 项（边缘）。
+**客户案例**：已有 AWS×SoftServe 材料是演示展示，不证明客户生产线运营。
 
-**客户案例**: **AWS×SoftServe 自主生产线**(AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) —— Hannover Messe 2026 **演示/展示**([1]/[3])。
-
-**➡️ 后续行动**: 先让韩国客户确认 **"AgentCore 在首尔区域 GA —— 无数据驻留问题"**（更正过时的"首尔不支持"信息），再提议把机器人技能注册为 Gateway 工具的 PoC。价格以"框架免费，仅按资源计费"来安心。
+**➡️ 后续行动**：定义技能输入、权限、完成取消契约、数据处理路径，连接[运营恢复测试](operations.md)。
 
 **🔗 相关资产**:
 
@@ -80,72 +56,17 @@ graph LR
 - [Agentic AI Robot — 工业安全监控](https://github.com/aws-samples/sample-agentic-ai-robot) —— aws-samples。AgentCore+IoT+机器人自主巡逻·边缘推理演示，曾在 AWS AI x Industry Week 2025 展示，含韩语 README。⚠️ 明确标注为实验·教育用途 —— 非生产环境
 - [Smart Machines — 工业设备混合 Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) —— aws-samples。智能体完成机群遥测异常检测→根因诊断→建单·调整设备参数的全栈演示（多智能体对话·自然语言场景构建器·KVS 视频→Bedrock 分析·Jetson YOLOWorld+VLM 边缘监控）。⚠️ README 明示为演示 —— 目前仅挖掘机（模拟遥测）完整可用，机械臂为 WIP
 
-<details markdown="1"><summary>🔄 易变数据（组件·区域·价格 —— 2026-07 确认）</summary>
-
-| 组件 | 状态 | 首尔 |
-|---|---|---|
-| Runtime / Memory / Gateway / Identity / Observability / Built-in Tools | 🟢 GA | ✅ |
-| Policy (Cedar 工具门禁) | 🟢 GA (2026-03) | ✅ |
-| Evaluations | 🟡 Preview→ | ✅ |
-| Payments | 🟡 Preview | ❌ |
-| Agent Registry | 🟡 Preview | ❌（东京 ✅） |
-
-**价格** —— 框架（控制面）免费，只按实际使用的资源计费:
-
-| 项目 | 费率 |
-|---|---|
-| Runtime · Browser · Code Interpreter | $0.0895/vCPU-小时 + $0.00945/GB-小时（按秒计费） |
-| Gateway | 每 1,000 次调用 $0.005 |
-| Memory —— 短期 | 每 1,000 事件 $0.25 |
-| Memory —— 长期存储 | 每 1,000 记录每月 $0.75 |
-
-**区域**（AWS 官方区域表 `[1]`，2026-07 直接确认）:
-
-| 区域 | 覆盖范围 |
-|---|---|
-| **首尔** (ap-northeast-2) | 全部核心组件 + Policy + Evaluations ✅ |
-| 东京 (ap-northeast-1) | 核心组件 + **Agent Registry** ✅（首尔尚未支持） |
-
-**配套工具指标**:
-
-| 项目 | 值 | 备注 |
-|---|---|---|
-| Strands Python 1.0 | 2026-05-21 | 下载约 16.7M/月（2026-06, `[3]`） |
-| Strands TypeScript 1.0 | 2026-04-30 | |
-| Nova Act | "90%+ 任务可靠性" | Amazon 公布数值，测量条件未公开（2025-12, `[3]`）—— **禁止无条件断言引用** |
-</details>
-
 ---
 
-## 2. System 2 + System 1 编排模式  🟢 GA（稳定原理）
+## 2. 业务规划与机器人控制分离 { #2-system-2--system-1-编排模式--ga稳定原理 }
 
-**L0 TL;DR**: 智能体编排的架构骨架。**重型 VLM/LLM 以 5~10Hz 规划·重规划(System 2)**，**轻量策略以 50~200Hz 执行(System 1)**。这种分离决定了"什么放云、什么放边缘"。
+**L0 TL;DR**: 区分业务规划智能体、机器人执行、控制及安全，不将其等同于模型内部 System 1/2。
 
-**客户需求/问题**: "大型推理模型和实时控制怎么放进一个系统？"
+**部署**：先定义可接受的云延迟、断网时间及处理国家，再按时限和风险评估部署观测策略、本地控制、独立安全。Helix 两个模型都在板载，见 [P2](pillar-2.md)及[证据](evidence.md#action-chunking)。
 
-**解决方案概览** `[1]/[4]`: 从 SayCan/PaLM-E(2022~23 研究) 谱系演进。当前主导模式 = 高层规划器（任务分解·工具调用，慢）+ 低层动作策略（快）。示例数值（厂商公开，用于建立量级感）: Figure Helix S2 7~9Hz + S1 200Hz(Figure, 2025)、GR00T N1 S1 diffusion ~10ms(NVIDIA, 2025)。⚠️ **模式本身是标准，但全身人形全栈大多为试点/演示**。
+**AWS 映射**：AgentCore 是满足条件的业务规划选项。技能调用需 ID、过期、前置条件及完成检查，action chunking 本身不解决网络延迟和安全。
 
-**AWS 映射**: **System 2 = 云端 Bedrock AgentCore**（规划·工具编排·护栏[^guardrail]），**System 1 = 边缘 Jetson**（实时控制，→ [pillar-4](pillar-4.md)）。能容忍延迟则 System 2 放云上，否则边缘板载。
-
-```mermaid
-graph TD
-    subgraph CLOUD["云（可容忍延迟 · 秒级）"]
-        S2["System 2 · 慢速 LLM 规划器<br>5~10Hz 规划/重规划 · 工具调用<br>Bedrock AgentCore"]
-        POL["Policy(Cedar) · 工具调用门禁"]
-        S2 --> POL
-    end
-    subgraph EDGE["边缘板载（实时 · 毫秒级）"]
-        S1["System 1 · 快速动作策略<br>50~200Hz 实时控制<br>Jetson"]
-    end
-    POL -. 高层规划 · action chunking .-> S1
-    S1 --> ROB["机器人 · 设备"]
-```
-
-**决策标准**: 参见 [decisions Cloud vs Edge](decisions.md)。实时控制回路 → 无条件边缘。规划·重规划 → 可放云/异步。
-
-**客户案例**: Figure、GR00T（开放）。经过验证的生产环境有限。
-
-**➡️ 后续行动**: 针对"智能体实时控制机器人吗？"的误解，**用"智能体做规划，实时控制交给边缘策略"来理清图示**。提出 AgentCore（规划）+ Jetson（控制）的组合。
+**➡️ 后续行动**：使用[运营](operations.md)的四层图和故障表设计负责人、取消及恢复。
 
 **🔗 相关资产**: [pillar-2 VLA 结构](pillar-2.md) · [pillar-4 边缘](pillar-4.md) · [decisions](decisions.md)
 
@@ -171,40 +92,19 @@ graph TD
 
 ---
 
-## 4. 机群编排  🟢 GA（部分）/ mixed
+## 4. 机群运营 — 产品、控制与云的边界 { #4-机群编排--ga部分-mixed }
 
-**L0 TL;DR**: 协调多个机器人的层。**真正的生产是仓库机群协调**(Amazon DeepFleet, CoEvolution) 与 **开发工作负载编排**(NVIDIA OSMO)。⚠️ DeepFleet 不是 LLM 智能体，而是多机器人协调基础模型。
+**L0 TL;DR**: 现场任务/交通协调、设备运营、开发任务调度是不同问题。按需求比较机群产品、SI 和自研逻辑。
 
-**客户需求/问题**: "怎么从中央协调·监控数百~数千台机器人？"
+**参考范围**：[Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model) 是 Amazon 内部协调案例，不是客户可购买的 AgentCore 功能 `[3]`。[NVIDIA OSMO](https://developer.nvidia.com/osmo) 调度开发/数据/训练工作负载，不是现场交通控制。
 
-**解决方案概览** `[1]/[3]`:
+**AWS 映射**：设计 IoT Core/Greengrass 连接状态采集及所需存储分析。仅在业务规划需要智能体时考虑 AgentCore。明确机器人/机群方案的避碰、任务分配、离线恢复职责。
 
-- **[Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model)** 🟢 —— Amazon 仓库机器人机群协调的生成式基础模型（"交通管制"），移动时间效率提升 ~10%，与第 100 万台机器人一同公布(2025-07)。**生产（Amazon 内部）**。⚠️ **不是 LLM 智能体编排器** —— 是多机器人 RL 意义上的"多智能体"。禁止错误归类。
-- **[NVIDIA Isaac OSMO](https://developer.nvidia.com/osmo)** 🟢 —— 机器人**开发/数据/训练工作负载**编排（合成数据·训练·RL·SIL）。GTC 2026 整合编码智能体(Claude Code/Codex/Cursor)。⚠️ **不是现场机器人机群的实时控制** —— 是开发管道编排。
-- **Formant** 🟡 —— 机群管理 SaaS。在数百个组织中运行但规模较小（具体指标以 `[3]` PitchBook/Crunchbase 为准 —— 644 个组织·<$5M ARR, 2026-05, 变动频繁），未被收购。
-- **CoEvolution** —— Lotte Global Logistics 417 家超级门店的多机群协调，声称 30% 效率（⚠️ 单一 [3] 来源，需再确认）。
+**FleetWise 修正** `[1]`：[AWS IoT FleetWise](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html) **不接受新客户**。现有客户可继续使用，但不作为新机器人架构的默认方案（[证据](evidence.md#fleetwise-new-customers)）。
 
-**AWS 映射**: IoT Core/Greengrass（机群连接）+ AgentCore（编排逻辑）+ IoT FleetWise/SiteWise（遥测）。DeepFleet 式协调模型用 SageMaker 训练。
+**客户案例**：[Certis 巡逻机器人](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/) 是 AWS 公开案例，不保证其他客户获得相同结果。
 
-```mermaid
-graph TD
-    ORCH["编排逻辑<br>AgentCore"]
-    CONN["连接层<br>IoT Core / Greengrass"]
-    TEL["遥测<br>IoT FleetWise / SiteWise"]
-    TRAIN["协调模型训练<br>SageMaker"]
-    FLEET["机器人机群（仓库 · AMR）"]
-    ORCH --> CONN
-    CONN --> FLEET
-    FLEET -. 状态 · 位置 .-> TEL
-    TEL --> ORCH
-    TRAIN -. DeepFleet 式协调模型 .-> ORCH
-```
-
-**决策标准**: 仓库/AMR 机群协调 → 已验证领域（参考 DeepFleet 式方法）。人形智能体机群 → 仍处早期。开发工作负载 → OSMO(NVIDIA) 或 AWS Batch/Step Functions。
-
-**客户案例**（⚠️ 韩国为早期/演示/公布）: **Lotte Global Logistics×CoEvolution**(30%，单一来源)、**LG CNS** 仓库演示（人形+机器狗+移动）、**Naver** AI Agent Platform 计划于 2026 下半年（NVIDIA 蓝图）。海外生产案例: **Certis**（安保服务）—— [在 AWS 上部署·运营自主巡逻机器人](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/)的官方客户案例 `[1]` —— 把机群真正投入现场运行的边缘+协调视角下少见的公开参考。
-
-**➡️ 后续行动**: 向机群客户**以"协调逻辑用 AgentCore，连接用 IoT，训练用 SageMaker"三层来梳理**。准确说明，避免把 DeepFleet 误解为 LLM 智能体。
+**➡️ 后续行动**：在[试点卡](start.md#pilot)记录产品边界、完成、断网、介入、恢复要求，执行[故障测试](operations.md#failure)。
 
 **🔗 相关资产**: [pillar-2 训练](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
 
@@ -261,7 +161,7 @@ graph TD
 
 ## 本支柱的诚实现实（SA 必读）
 
-- **AgentCore 首尔区域完全支持**（含 Policy·Evaluations）。"首尔不支持"是 GA 初期的说法 —— 现在已错。让客户对数据驻留放心。
+- **区分首尔可用和处理地点。** 按功能、模型、路径检查[跨区域推理](evidence.md#agentcore-residency)。
 - **Policy 已 GA(2026-03)** —— 不要称其为"预览"。
 - **DeepFleet ≠ LLM 智能体编排器。** 是仓库机器人协调基础模型（多机器人 RL）。禁止错误归类。
 - **真正的生产是机群协调(DeepFleet/CoEvolution) 与开发工作负载(OSMO)。** MCP-机器人连接与人形全栈智能体大多为研究/演示。
@@ -272,14 +172,3 @@ graph TD
 _owner: Youngjin · updated: 2026-09 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
 
 <!-- 용어 각주 -->
-
-[^agent]: **LLM 智能体** — 大语言模型自行制定计划、挑选并调用工具（API·机器人技能）、执行多步任务的软件。与简单问答不同，关键在于它有"行动"。
-[^orch]: **编排（orchestration）** — 把多个智能体·机器人·工作流作为一个系统进行协调·指挥的层。它决定的不是单个机器人的控制，而是"什么事由谁在何时做"。
-[^sys]: **System 2 / System 1** — 把认知科学中"慢思考 / 快反应"的区分应用到机器人架构的结构。System 2 由慢速 LLM 规划器负责规划（云），System 1 由小型策略负责实时控制（边缘）。
-[^tool]: **工具调用（tool calling）** — 智能体在推理过程中按既定 schema 调用外部功能（API、机器人技能）的机制。这是智能体影响物理世界的唯一通道，因此安全门禁（Policy）正设在这一点上。
-[^mcp]: **MCP（Model Context Protocol）** — 连接智能体与工具·数据源的开放标准协议。常被比作"智能体的 USB-C"，把机器人技能暴露为 MCP 服务器的实验正在增多。
-[^guardrail]: **护栏（guardrail）** — 用策略限制智能体输入输出与行为的安全装置。在物理系统中对应拦截危险的工具调用、限制行动范围。
-[^fleet]: **机群（fleet）协调** — 把大量机器人作为一个系统进行调度·路径分配。像仓库机器人那样在数百~数千台规模上已经过生产验证的领域。
-[^a2a]: **A2A（Agent-to-Agent）** — 不同智能体之间通过标准协议协作的多智能体通信方式。
-[^microvm]: **microVM（微型虚拟机）** — 比容器隔离性更强的超轻量虚拟机（如 AWS Firecracker）。每个会话独占 CPU·内存·文件系统，终止时清除内存，从结构上防止会话间数据泄漏。
-[^otel]: **OTEL（OpenTelemetry）** — 追踪·指标·日志采集的行业标准规范。不绑定特定厂商，可将智能体的逐步执行记录以标准格式导出并对接可观测性工具。

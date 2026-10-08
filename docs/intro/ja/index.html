@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Physical AI Playbook — 5分で方向性を示す SA リファレンス資産</title>
-<meta name="description" content="AWS Korea SA 向けリファレンス資産 — Slack を漁らずに、アーキテクチャの方向性・AWS マッピング・次のアクションを5分で提示。5つのピラー、FAQ Top 20、4つの意思決定ツリー。">
+<title>Physical AI Playbook — 顧客とAWS担当者の実行ガイド</title>
+<meta name="description" content="顧客とAWS担当者が業務適合性・総費用・実行条件を確認し、5つの技術ピラーと実験・復旧をつなぐガイドです。">
 <link rel="alternate" hreflang="ko" href="../">
 <link rel="alternate" hreflang="en" href="../en/">
 <link rel="alternate" hreflang="zh-Hans" href="../zh/">
@@ -222,9 +222,10 @@ document.documentElement.setAttribute('data-theme',t);})();
 <!-- ================= HERO ================= -->
 <header class="hero">
   <div class="wrap">
-    <p class="eyebrow">AWS Korea SA Reference Asset</p>
-    <h1>顧客の Physical AI の質問に、<br><span class="u">5分で</span>方向性を示す</h1>
-    <p class="sub">Slack を漁らない。この playbook ひとつで<strong>アーキテクチャの方向性 · AWS マッピング · 次のアクション</strong>まで — 論文要約集でもニュースアーカイブでもない、現場 SA のためのリファレンス資産。</p>
+    <p class="eyebrow">For customers and AWS staff</p>
+    <h1>業務判断から<br><span class="u">実験・運用</span>まで</h1>
+    <p class="sub">顧客とAWS担当者が業務適合性・総費用・実行条件を確認し、5つの技術ピラーと実験・復旧をつなぐガイドです。</p>
+    <p class="spec-note">非公式の個人資料です。サービスGA・サンプルコードは顧客現場の成果を保証しません。</p>
     <ul class="chips" aria-label="主要指標">
       <li><b>5</b> ピラー</li>
       <li>FAQ Top <b>20</b></li>
@@ -233,7 +234,7 @@ document.documentElement.setAttribute('data-theme',t);})();
       <li><b>4</b>言語</li>
     </ul>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/ja/">Playbook を開く</a>
+      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/ja/start/">Playbook を開く</a>
       <a class="btn btn-ghost" href="https://github.com/comeddy/pai-playbook">GitHub リポジトリ</a>
     </div>
   </div>
@@ -247,23 +248,23 @@ document.documentElement.setAttribute('data-theme',t);})();
       <h2>Physical AI は答えが散在するドメイン</h2>
     </div>
     <div class="problem">
-      <p>Isaac Sim を AWS でどう動かすか、VLA ファインチューニングの GPU 規模は、sim-to-real gap は本当に克服できるのか — 答えは Slack スレッド、ベンダーブログ、論文に散らばっている。<b>この playbook はその断片を検証基準でふるいにかけ、一箇所に階層化した。</b>顧客ミーティングの5分前に開いても方向性がつかめるように。</p>
+      <p>改善業務と既存自動化・購入・SIの適合を先に判断します。必要に応じデータ・シミュレーション・学習を選び、成功・中止条件を合意します。</p>
     </div>
     <div class="pillars">
       <article class="pillar">
         <p class="num">01</p>
-        <h3>5分で方向性</h3>
-        <p>急ぎなら FAQ Top 20 へ直行、テーマが決まれば 5 つのピラーへ、岐路に立ったら意思決定ツリーへ。全項目は L0（1~2文）→ L1（1ページ）→ L2（deep-dive リンク）に階層化され、上部を読むだけで方向がつかめる。</p>
+        <h3>役割別に開始</h3>
+        <p>意思決定者は適合性・ROI、技術者は実行運用、AWS担当者は質問・支援境界を確認します。</p>
       </article>
       <article class="pillar">
         <p class="num">02</p>
-        <h3>検証済みだけを載せる</h3>
-        <p>成熟度ラベル（GA / Preview / Research-only / Hype）と出典グレード [1]~[4] で全項目の信頼水準を明示。「印象的なデモ」と「デプロイ可能」を区別する。基準未達の項目は本文ではなく Radar キューにのみ存在する。</p>
+        <h3>根拠範囲を区別</h3>
+        <p>発売・原文照合・再現・現場検証は別です。主張ごとの出典・日付・確認状態を記録し、自動検査を事実保証としません。</p>
       </article>
       <article class="pillar">
         <p class="num">03</p>
-        <h3>アクションで終わる</h3>
-        <p>概念説明で終わる項目は未完成とみなす。全項目は「➡️ SA 次のアクション」で締めくくられ、読み終えれば顧客に何を提案するかが残る。</p>
+        <h3>実行と復旧まで</h3>
+        <p>固定コミットの3手順で準備・費用・評価・停止・後片付けをつなぎます。運用には別途現場承認と復旧試験が必要です。</p>
       </article>
     </div>
   </div>
@@ -274,8 +275,8 @@ document.documentElement.setAttribute('data-theme',t);})();
   <div class="wrap">
     <div class="sec-head">
       <p class="kicker">What</p>
-      <h2>5つのピラー + 3つの運用ページ</h2>
-      <p>ピラー間の比重は均等。各ピラー内は顧客の実需要 × production-readiness 順に整列し、上部には「顧客が最もよく聞く質問 Top 3」がある。</p>
+      <h2>5つのピラーと実行ガイド</h2>
+      <p>技術はピラー、適合性・ROI・実行・運用・根拠は目的別ページを使います。FAQは実測順位ではなく探索例です。</p>
     </div>
     <div class="cards">
       <article class="card">
@@ -339,7 +340,7 @@ document.documentElement.setAttribute('data-theme',t);})();
         <tr>
           <td class="name">Cloud vs Edge</td>
           <td class="q">「この推論はクラウドに置けるか、エッジに置くべきか？」</td>
-          <td class="rule">最重要の判別因子は<b>制御周波数</b>。リアルタイムの安全・反応ループならエッジ、考える時間があるならクラウド — action chunking が橋渡し。</td>
+          <td class="rule">観測→動作期限・ジッター・通信断で配置します。モデル内System 1/2は配置を決めません。</td>
         </tr>
         <tr>
           <td class="name">NVIDIA vs オープンソース</td>
@@ -353,8 +354,8 @@ document.documentElement.setAttribute('data-theme',t);})();
         </tr>
         <tr>
           <td class="name">Build vs Buy</td>
-          <td class="q">「基盤モデルをファインチューニングするか、自前で学習するか？」</td>
-          <td class="rule"><b>ほぼ常にファインチューニング（Buy+adapt）が答え。</b>ゼロからの事前学習はごく少数 — 商用ではライセンスが最初のゲート。</td>
+          <td class="q">「既存方式・購入・SI・適応のどれが適切ですか？」</td>
+          <td class="rule">成果・総費用・支援責任を比較します。コード・重み・基盤モデル・データ条件を分けます。</td>
         </tr>
       </tbody>
     </table>
@@ -364,9 +365,9 @@ document.documentElement.setAttribute('data-theme',t);})();
       <div class="label-box">
         <h3>成熟度ラベル — 4段階</h3>
         <div class="badges">
-          <span class="badge">🟢 GA — 本番利用可</span>
+          <span class="badge">🟢 GA — 製品発売状態</span>
           <span class="badge">🟡 Preview</span>
-          <span class="badge">🔵 Research-only — 提案禁止</span>
+          <span class="badge">🔵 Research — R&D範囲</span>
           <span class="badge">⚪ Hype — デモのみ</span>
         </div>
         <p>「印象的なデモ」≠「デプロイ可能」。ラベルがその境界を守る。</p>
@@ -375,7 +376,7 @@ document.documentElement.setAttribute('data-theme',t);})();
         <h3>出典グレード — [1]~[4]</h3>
         <div class="badges">
           <span class="badge mono">[1] 公式ドキュメント / 論文</span>
-          <span class="badge mono">[2] AWS 内部検証</span>
+          <span class="badge mono">[2] 記録付き再現</span>
           <span class="badge mono">[3] ベンダー公式ブログ</span>
           <span class="badge mono">[4] 未検証 — 引用時は再確認必須</span>
         </div>
@@ -500,9 +501,9 @@ document.documentElement.setAttribute('data-theme',t);})();
     <rect x="1014" y="320" width="118" height="44" rx="8" fill="#FBF1EC" stroke="#EEBFAA"/>
     <text x="1073" y="340" text-anchor="middle" font-weight="700" fill="#8E4830">本文へ昇格</text>
     <text x="1073" y="356" text-anchor="middle" fill="#8E4830">基準充足時</text>
-    <text x="840" y="392" fill="#5F5A4D">収録基準 — 4 つ中 2 つ以上：</text>
-    <text x="840" y="412" fill="#1F1E1D">ⓐ production 検証  ⓑ AWS マッピング可</text>
-    <text x="840" y="432" fill="#1F1E1D">ⓒ 実問い合わせ履歴  ⓓ GA（ロードマップ）</text>
+    <text x="840" y="392" fill="#5F5A4D">掲載条件 — 全て必要</text>
+    <text x="840" y="412" fill="#1F1E1D">顧客課題・正確な一次資料</text>
+    <text x="840" y="432" fill="#1F1E1D">根拠・用途・owner・次の行動</text>
     <text x="840" y="452" fill="#6B665A">全項目は「➡️ SA 次のアクション」で終わる</text>
   </g>
   <line x1="764" y1="370" x2="812" y2="370" stroke="#8A8474" stroke-width="1.6" marker-end="url(#arr)"/>
@@ -520,7 +521,7 @@ document.documentElement.setAttribute('data-theme',t);})();
 </svg>
     </figure>
     <p class="arch-rot-hint">モバイルではダイアグラムが縦向きに回転して表示されます。</p>
-    <p class="arch-caption">本文に載るには ⓐ production 検証 ⓑ AWS マッピング可能 ⓒ 実際の問い合わせ履歴 ⓓ GA（ロードマップ）— 4 基準中<strong>2 つ以上</strong>を満たす必要がある。未達項目は Radar に 1 行でのみ存在する。</p>
+    <p class="arch-caption">顧客課題、正確な出典・日付・版、根拠・用途、owner・次の行動を全て確認し、研究案内と顧客運用検証を分けます。</p>
   </div>
 </section>
 
@@ -545,7 +546,7 @@ document.documentElement.setAttribute('data-theme',t);})();
       <article class="card">
         <span class="tag">Governance</span>
         <h3>明示されたメンテナンスルール</h3>
-        <p>各ページに owner · 更新時期 · volatility を表記。FAQ Top 20 の順位は四半期ごとに再検討、新候補は昇格パイプライン経由でのみ反映。</p>
+        <p>ページ日付と主張確認日を分けます。根拠・翻訳・リンク検査は記録整合性を確認し、事実・実行検証を代替しません。</p>
       </article>
     </div>
   </div>
@@ -554,10 +555,10 @@ document.documentElement.setAttribute('data-theme',t);})();
 <!-- ================= CTA ================= -->
 <section class="cta-final">
   <div class="wrap">
-    <h2>次の Physical AI ミーティングの前に、5分。</h2>
-    <p>FAQ Top 20 から始めてください。方向性 · AWS マッピング · 次のアクションがそこにあります。</p>
+    <h2>次回面談で業務を1つ決めます。</h2>
+    <p>業務適合性・ROI用紙を埋め、成功・中止条件のある実験へ進みます。</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/ja/">Playbook を開く</a>
+      <a class="btn btn-primary" href="https://comeddy.github.io/pai-playbook/ja/start/">Playbook を開く</a>
       <a class="btn btn-ghost" href="https://github.com/comeddy/pai-playbook">コントリビュート (GitHub)</a>
     </div>
   </div>

@@ -1,16 +1,18 @@
 ---
-ko_hash: fe8ae4264744cbdff41aef87bdc1addcf7f2601a
+ko_hash: da1efa6b77872b7f3ff918555593f0de4399bbcd
 ---
 # Radar — Queue / Watchlist
 
 _Last updated: 2026-09 · owner: Youngjin · volatility: high_
 [← back to index](index.md)
 
-> **L0 TL;DR**: Things **worth watching** that have not yet passed the inclusion criteria ([2.5 THE FILTER](maintenance.md#inclusion-criteria-the-filter)). Each item is one line — a maturity label + **why it's noteworthy + why it is on hold**. Once it clears the gate (2 of 4), the owning pillar's owner promotes it using the standard template.
+> **L0 TL;DR**: Candidates needing further source, reproduction, or site checks. Promotion requires all [inclusion criteria](maintenance.md#inclusion-criteria-the-filter) and owner review of intended use. Scans cannot approve promotion.
 >
 > ⚠️ **Do not present items here as "mature capabilities" in customer proposals.** A flashy demo often masks how deployable something actually is.
 
 ---
+
+> **Review scope**: the page edit date does not revalidate every technical item. See [Evidence](evidence.md) for core corrections, check dates, and reproduction/human review status; legacy item dates still apply.
 
 ## 🔬 Models / algorithms (awaiting validation)
 
@@ -71,10 +73,11 @@ _Last updated: 2026-09 · owner: Youngjin · volatility: high_
 | **[Agility Robotics Digit 5](https://www.agilityrobotics.com/content/agility-unveils-digit-5-humanoid-robot-built-for-cooperatively-safe-work-at-scale)** (fifth-generation general-purpose humanoid with a close-collaboration safety architecture and a 90-minute-runtime battery, versus the existing Digit@GXO) | 🟡 Preview | ✨ **Why it matters**: the next-generation model of Agility Digit (@GXO), already listed on pillar-4 as "the best-validated paid humanoid" — a safety design that avoids, stops or sits when a collision risk is detected plus visual and auditory cues for close work with people, 90-minute runtime with a 9-minute charge, and an announced plan to enter the EU and UK with CE marking<br>⏳ **Why waiting**: official Agility announcement (2026-09-15, agilityrobotics.com) `[4]` — the $300M+ multi-year orders are "as of May 2026, subject to contractual milestones", and no Digit 5 is in operation yet (the 65,000+ hours belong to Digit 4). Early access is planned for H1 2027 and general availability for manufacturing and warehouse operators by end-2027. 🔗 Links 200 · primary sources checked 2026-09-27. **AWS angle: none** | Published Digit 5 customer deployments (EU/North America) + third-party validation of the safety architecture |
 | **[Qualcomm × PickNik (MoveIt) acquisition](https://www.qualcomm.com/news/releases/2026/09/qualcomm-to-acquire-picknik-to-advance-the-future-of-open-roboti)** (acquiring the maintainer of MoveIt, the de facto ROS manipulation standard; planned integration into the Dragonwing edge-AI platform and Arduino) | ⚪ Roadmap | ✨ **Why it matters**: Qualcomm is acquiring PickNik, the long-time steward of the open-source robot manipulation framework MoveIt, and plans to integrate MoveIt and MoveIt Pro into its Dragonwing robotics platforms and Arduino (starting with VENTUNO Q boards) — together with Intrinsic Core (Alphabet, the same week as ROSCon 2026 Toronto), a silicon/edge-vendor-driven open-robotics-stack rival appears in the Isaac-dominated landscape, a watch item for pillar-4's edge-inference axis (an NVIDIA Jetson alternative)<br>⏳ **Why waiting**: official Qualcomm announcement (2026-09-23, qualcomm.com) `[4]` — deal terms undisclosed and the deal has not closed ("customary closing conditions"). MoveIt 1 and 2 are to stay open source, but the Dragonwing integration and Arduino extension are roadmap-stage with no shipped integrated product. 🔗 Links 200 · primary sources checked 2026-09-27 (date, target and Dragonwing/Arduino integration plan confirmed from the page metadata; undisclosed terms and open-source commitment cross-checked with The Robot Report). **AWS angle: none (competing edge stack)** | Deal closes + a Dragonwing/Arduino-integrated product ships |
 
-## ⚰️ Retired — do not propose (kept for the record)
+## Retired or restricted — check each status { #-retired--do-not-propose-kept-for-the-record }
 
 | Item | Status | Replacement |
 |---|---|---|
+| **[AWS IoT FleetWise](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html)** | Closed to new customers; existing customers may continue `[1]` | Exclude from new-robot defaults — [evidence](evidence.md#fleetwise-new-customers) |
 | **[AWS RoboMaker](https://aws.amazon.com/robomaker/)** | 🔴 Discontinued (2025-09-10) `[1]` | EC2 G6e/G7e + Isaac Sim AMI + AWS Batch |
 | **[SageMaker Edge Manager](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)** | 🔴 Discontinued (2024-04-26) `[1]` | ONNX + IoT Greengrass V2 (+ SageMaker Neo) |
 | **[IoT Greengrass V1](https://docs.aws.amazon.com/greengrass/v1/developerguide/what-is-gg.html)** | 🔴 Discontinued (2026-06-01) `[1]` | Greengrass V2 |
@@ -88,7 +91,7 @@ _Last updated: 2026-09 · owner: Youngjin · volatility: high_
 ## Promotion procedure (summary)
 
 1. **Capture**: collect candidates via a designated channel/emoji
-2. **Filter**: apply the [2.5 gate](maintenance.md#inclusion-criteria-the-filter) (2 or more of 4)
+2. **Filter**: satisfy all [inclusion conditions](maintenance.md#inclusion-criteria-the-filter); separate release, evidence, use, and support.
 3. **If it passes**: the owning pillar's owner incorporates it via the [standard template](maintenance.md#standard-template) and removes it from the Radar
 4. **If it falls short**: keep it here as a one-liner, with the promotion condition stated
 

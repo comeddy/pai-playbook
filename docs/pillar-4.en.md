@@ -1,5 +1,5 @@
 ---
-ko_hash: 819f32f517dc3f2d9e2989eb6ed0222cd8851d5c
+ko_hash: 8b74642f2b58adf563d6ce1bbdaf3cf22973ae08
 ---
 # Pillar 4 — Sim-to-Real
 
@@ -7,11 +7,15 @@ _Last updated: 2026-09 · owner: Youngjin · volatility: medium (edge HW/models 
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: The honest one-liner — **locomotion (walking)[^loco] sim-to-real[^s2r] is essentially solved and deployed** (ANYmal, Agility Digit). **Manipulation[^manip] sim-to-real is not yet** — even frontier VLAs are trained on **real-hardware data**, not simulation, and simulation is used mainly for evaluation/adaptation. And the invariant architecture law: **30~100Hz real-time control must be at the edge (on-board)**, with only high-level planning in the cloud.
+> **L0 TL;DR**: Validate simulation results on the specific robot, task, and environment. Place functions using observation-to-action deadlines and outage needs; design [independent safety, cancellation, and recovery](operations.md). Locomotion/manipulation labels alone do not approve deployment.
 
 ---
 
+> **Review scope**: the page edit date does not revalidate every technical item. See [Evidence](evidence.md) for core corrections, check dates, and reproduction/human review status; legacy item dates still apply.
+
 ## Top 3 questions customers ask most in this pillar
+
+> These are discovery examples, not a measured ranking of customer inquiries.
 
 1. **"Does sim-to-real actually work? Are there validated cases?"** → [Locomotion (it works)](#2-locomotion-sim-to-real--validated-production), [Manipulation (not yet)](#4-manipulation-sim-to-real--research---narrow-production)
 2. **"It's real-time control — should inference be at the edge or in the cloud?"** → [Edge inference deployment](#1-edge-inference-deployment--ga), [decisions](decisions.md)
@@ -21,67 +25,29 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 ---
 
-## 1. Edge inference deployment  🟢 GA
+## 1. Edge inference deployment — validate per model { #1-edge-inference-deployment--ga }
 
-**L0 TL;DR**: Real-time control inference must run on the robot on-board. The 2026 standard path = **NVIDIA Jetson Thor (GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**. ⚠️ **SageMaker Edge Manager was discontinued 2024-04** — there is no replacement; go with ONNX+Greengrass.
+**L0 TL;DR**: Validate deployment for the model, device, and control timing. Run deadline-critical control locally; use cloud resources for training, management, and latency-tolerant business planning.
 
-**Customer need/problem**: "We trained in the cloud — how do we deploy to the robot and manage it OTA[^ota]? It's real-time, so a cloud round-trip won't work, right?"
+**Overview**: [Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html) supports component deployment/management `[1]`. Choose supported PyTorch or ONNX/TensorRT paths per policy; do not assume identical export or latency for every VLA. After [Edge Manager retirement](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html), the project still owns conversion, device validation, and operations.
 
-**Solution overview** `[1]/[3]`:
+| Check | Evidence |
+|---|---|
+| Model/device compatibility | Weights, runtime, drivers, sensors, action units/normalization |
+| Timing | Observation refresh, inference delay, action execution interval, worst-case jitter |
+| Updates | Model/app/config versions, signatures/hashes, last working bundle |
+| Operations | Network loss, cancellation/timeouts, interventions, recovery tests |
 
-- **Edge HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor (Blackwell) GA**, T5000 production module in distribution. The Jetson Orin line is still produced (low power). Specs/prices in the collapsed block below.
-- **Deployment/management**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)** (GA) — Lambda/Docker/custom components, ML inference components, MQTT[^mqtt] telemetry. ⚠️ **Greengrass V1 support ended 2026-06-01** — only V2 is current.
-- **Model path**: PyTorch policy → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** engine compilation (on-device acceleration) is the standard path to meet the real-time control latency budget (sub-20~30ms class)[^latency]. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html) (edge compilation) survives and combines with Greengrass.
-- ⚠️ **SageMaker Edge Manager EOL (2024-04-26)** — console/API all unavailable. **No drop-in managed successor service**. AWS recommendation = ONNX + Greengrass V2 (+ optionally SageMaker Neo).
+**Action chunking correction**: outputting future actions differs from feedback on new observations. Inference Hz × chunk size is not control frequency. Nor is always executing the entire native chunk a universal rule. Re-evaluate per model, execution horizon, and transition method ([PI RTC](https://www.physicalintelligence.company/research/real_time_chunking), [evidence](evidence.md#action-chunking)).
 
-```mermaid
-graph LR
-    PT["PyTorch policy<br>(cloud training)"] --> ONNX[ONNX conversion]
-    ONNX --> TRT["TensorRT engine<br>on-device acceleration"]
-    TRT --> JET["Jetson Thor<br>on-board real-time control"]
-    GG["AWS IoT Greengrass V2<br>OTA · components · MQTT"] -. deploy · manage .-> JET
-    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x no successor .-> GG
-```
+**AWS mapping**: combine S3 artifacts, Greengrass V2/IoT Jobs deployment management, and IoT Core state/events as needed. This combination does not certify safety or guarantee real-time control.
 
-<details markdown="1"><summary>🔄 Volatile data (edge HW specs/prices — checked 2026-07)</summary>
-
-| Item | Value | Source |
-|---|---|---|
-| Jetson Thor GA | announced 2025-08-25, dev kit $3,499 (→ raised to $5,499 in 2026-07), shipping began 2025-11 | NVIDIA `[3]` |
-| Jetson price increases (2026-07-22) | Orin Nano Super devkit $249→$399 · Orin NX 16GB module $599→$999 · AGX Orin 64GB module $1,599→$2,999 · **AGX Thor devkit $3,499→$5,499** · T5000 (Thor module) $2,999→$4,999 — beware old-price quotes in edge BOM estimates | NVIDIA store `[3]` |
-| AGX Thor specs | Blackwell GPU, 128GB unified LPDDR5X, 130W, FP4 support | NVIDIA `[3]` |
-| Thor vs Orin | NVIDIA official: ~7.5× normalized AI compute, ~3.5× energy efficiency. ⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS — do not directly compare raw numbers | NVIDIA `[3]` |
-| ONNX→TensorRT acceleration | ~7× (vendor number, NVIDIA Jetson blog 2025, model/HW dependent — include conditions when citing) | NVIDIA `[3]` |
-</details>
-
-**What the deployment stack actually does** `[1]` (docs verified 2026-07):
-
-| Component | Technical summary | For edge deployment |
-|---|---|---|
-| **Jetson Thor** | An onboard edge computer with a Blackwell GPU (128GB unified memory) — real-time inference solved inside the robot | Where the System 1 policy lives |
-| **Greengrass V2** | A software-deployment runtime built on **components** (recipe + S3 artifacts) — fleet OTA, inter-process communication (IPC) and MQTT proxying, log manager | The channel for versioned delivery of models and inference apps to a robot fleet |
-| **ONNX → TensorRT** | Export to a framework-neutral format, then compile with kernel fusion and precision optimization for the device GPU | The standard path to meeting the sub-20–30ms latency budget |
-| **SageMaker Neo** | A managed per-target-hardware model compilation service (optional) | An alternative for teams that find raw TensorRT hard to handle |
-| **IoT Core (MQTT)** | A lightweight publish/subscribe messaging broker — telemetry up, commands down | The cloud connection point for robot state and events |
-| **IoT Jobs** | Fleet-wide remote-operation (OTA) orchestration — staged rollout, abort, retry | The mechanism for safely pushing model v2 to 100 robots |
-
-**AWS mapping**: IoT Greengrass V2 + IoT Core (MQTT) + SageMaker Neo (compilation) + S3 (model artifacts) + IoT Jobs (OTA). Collect edge telemetry with Model Monitor.
-
-**Decision criteria** (details → [decisions Cloud vs Edge](decisions.md)):
-
-- **30~100Hz+ reactive control** (balance · force · grasp · walking) → **must be on-board Jetson**. Cloud round-trip not viable.
-- **sub-1Hz~few-Hz high-level planning · VLA inference** → cloud/async possible. **action chunking** is the bridge between the two rates — **effective control rate = inference Hz × chunk size** (even at ~10Hz inference on a Jetson, π0.5 with 10-step chunks is effectively ~100Hz).
-- ⚠️ **A chunk is part of the policy, not a storage format** `[2]`: splitting a native chunk and executing it 1 step at a time breaks the policy (measured: 20-step execution 3/10 success → 1-step execution 0/48). **Execute the trained native chunk as-is; store per-step only.**
-- Want a managed edge service → honestly say there is none, and provide an ONNX+Greengrass V2 design.
-
-**Customer case**: (public AWS robot cases of edge deployment itself are limited — centered on reference architectures)
-
-**➡️ Next action**: **draw the "Jetson Thor (on-board control) + Greengrass V2 (OTA/management) + ONNX→TensorRT" edge reference architecture**, and proactively inform the customer that "Edge Manager is gone" to correct wrong expectations. Ask the real-time Hz requirement to fix the edge/cloud boundary.
+**Decision and next action**: assign [four-layer owners](operations.md#layers), define [failure tests](operations.md#failure), and hand over [path C](execution.md#finetuning) outputs to a supervised small-device trial.
 
 **🔗 Related assets**:
 
 - Playbook: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 orchestration](pillar-5.md) · [decisions](decisions.md)
-- [VLA Hub — real-time VLA inference hub on AWS](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples. Deploys six OSS VLAs (GR00T N1.6/N1.7 · π0.5 · OpenVLA-7B · SmolVLA-450M · LAP-3B) as independent per-model gRPC endpoints via CDK (ECS on EC2 g5/g6, internal NLB). Probes GPU-available AZs at deploy time; includes a Jetson (Orin/Thor) single-device track with the same container/proto — one codebase covering the System 2 cloud/edge inference paths. Its capability matrix (per-model licenses, adaptation cost, scenario picks) is useful in customer conversations. ⚠️ Early-stage (created 2026-05) · internal NLB only (clients must sit in the same VPC) · GR00T requires a license check
+- [VLA Hub — real-time VLA inference hub on AWS](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples. Deploys six OSS VLAs (GR00T N1.6/N1.7 · π0.5 · OpenVLA-7B · SmolVLA-450M · LAP-3B) as independent per-model gRPC endpoints via CDK (ECS on EC2 g5/g6, internal NLB). Probes GPU-available AZs at deploy time; includes a Jetson (Orin/Thor) single-device track with the same container/proto — one codebase covering the VLA cloud/edge inference paths. Its capability matrix (per-model licenses, adaptation cost, scenario picks) is useful in customer conversations. ⚠️ Early-stage (created 2026-05) · internal NLB only (clients must sit in the same VPC) · GR00T requires a license check
 - [ROS2 OTA firmware updates](https://github.com/aws-samples/ros2-ota-firmware-updates) — aws-samples. Reference implementation of OTA firmware updates for ROS2 fleets with Greengrass V2 + IoT Jobs — a device agent pulls images from a Docker registry, auto-rolls back to the last known-good version on failure, and devices without internet access go through the Greengrass proxy. Shows the IoT Jobs row of the table above as working code
 
 ---
@@ -121,7 +87,7 @@ graph LR
 
 ---
 
-## 3. Sim-to-Real methodology  🟢 GA (stable principle)
+## 3. Sim-to-Real methods — assess applicability { #3-sim-to-real-methodology--ga-stable-principle }
 
 **L0 TL;DR**: The proven prescription is not some flashy new technique but a **hybrid of selective DR + SysID + RL layered on MPC**. Randomizing everything indiscriminately makes RL unstable.
 
@@ -208,7 +174,7 @@ graph LR
 
 ---
 
-## 6. Safety regulation for physical robot cells — international standards and Korean legal requirements  🟢 GA (regulation — low volatility)
+## 6. Robot-cell safety requirements — assess each installation { #6-safety-regulation-for-physical-robot-cells--international-standards-and-korean-legal-requirements--ga-regulation--low-volatility }
 
 **L0 TL;DR**: A robot that moves near people must be guarded by law. Internationally it is **ISO 10218-1/-2:2025 + ISO/TS 15066 (collaborative robots)**; Korea adds **Article 223 of the Rules on Occupational Safety and Health Standards (in principle a fence at least 1.8 m high) + KCs[^kcs] mandatory-safety-certified protective devices**. This setup cost and lead time is the third wall slowing physical-hardware validation — and, flipped around, the economic argument for simulation (→ [pillar-3](pillar-3.md)).
 
@@ -247,16 +213,9 @@ _owner: Youngjin · updated: 2026-09 · volatility: medium (edge HW · vendor me
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — transferring a policy trained in simulation to a real robot, or the methodology for doing so. The physical and visual differences between simulation and reality (the domain gap) mean a naive transfer collapses performance. 🎥 [NVIDIA sim-to-real robotics showcase](https://www.youtube.com/watch?v=sffNvv3GkRA)
-[^loco]: **locomotion** — A robot's ability to move: walking, driving, etc. Thanks to the relatively simple physics of robot-ground contact, it is the area where sim-to-real was solved first.
-[^manip]: **manipulation** — the ability to grasp, move, and assemble objects. The physics of fingertip contact is complex, so this is the area where sim-to-real remains unsolved.
 [^dyn]: **dynamics** — the physics of motion produced by force, friction, and collision. Contact dynamics when grasping an object is the hardest part for a simulator to reproduce accurately.
 [^dr]: **Domain Randomization (DR)** — a technique that randomly varies the simulation's lighting, textures, object positions, camera angles, and physics parameters during data generation or training. The policy withstands any environmental change — the signature sim-to-real prescription.
 [^sysid]: **SysID (System Identification)** — measuring the real robot's physical parameters (friction, mass, motor response) to calibrate the simulator to the real hardware.
 [^mpc]: **MPC (Model Predictive Control)** — A classical control technique that controls by repeatedly predicting and optimizing over a short future horizon. The hybrid of a learned RL policy layered on MPC has become the proven prescription.
-[^onnx]: **ONNX / TensorRT** — ONNX is the standard format for exchanging models between frameworks; TensorRT is NVIDIA's inference-optimization compiler for its GPUs. The "PyTorch → ONNX → TensorRT" conversion is the standard path for real-time edge inference.
-[^ota]: **OTA (Over-The-Air)** — updating and deploying a robot's models and software remotely over the network.
-[^latency]: **latency budget** — the maximum inference time a real-time control loop allows. At 30~100Hz control, one cycle is 10~33ms, so inference must finish within it — the reason a cloud round-trip is impossible.
-[^mqtt]: **MQTT** — the standard lightweight publish/subscribe messaging protocol for IoT. It carries robot telemetry and commands over small bandwidth even on unstable networks.
 [^kcs]: **KCs (safety certification)** — the mandatory safety-certification mark for hazardous machines, equipment, and protective devices under Article 84 of Korea's Occupational Safety and Health Act. Only KCs-certified protective devices such as light curtains and laser scanners count as statutory protective devices.
 [^aopd]: **Light curtain (AOPD, active opto-electronic protective device)** — a sensing protective device that forms a virtual "wall of light" from many infrared beams and stops the machine instantly when a body part interrupts a beam. Used at openings where a fence cannot be installed; the international standard is IEC 61496-2 (area-scanning safety laser scanners are IEC 61496-3).

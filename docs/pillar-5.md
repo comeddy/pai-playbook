@@ -4,68 +4,43 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음(AgentCore 기�
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
-> **L0 TL;DR**: LLM 에이전트[^agent]가 로봇·설비를 지휘하는 계층. 여기가 **AWS가 가장 강한 필러**다 — **[Amazon Bedrock AgentCore](https://aws.amazon.com/bedrock/agentcore/)가 GA(2025-10)이고 서울 리전 완전 지원**, 툴 호출[^tool]을 실시간 가로채는 **Policy(Cedar)도 GA(2026-03)**. 구조는 **System 2[^sys](느린 LLM 플래너, 클라우드) + System 1(빠른 제어, 엣지)** 분리가 정석. ⚠️ Amazon DeepFleet은 "LLM 에이전트"가 아니라 창고 로봇 조율 파운데이션 모델이니 혼동 금지.
+> **L0 TL;DR**: 업무 계획·로봇 스킬 호출·플릿 연결의 요구를 구분한다. AgentCore는 필요한 에이전트 기능에 선택적으로 사용하며, 로봇 제어·안전과 데이터 처리 위치는 [별도 검증](operations.md)이 필요하다.
 
 ---
 
+> **검토 범위**: 페이지 수정일은 모든 기술 항목의 재검증일이 아니다. 핵심 정정의 확인일·재현/사람 검토 상태는 [근거 기록](evidence.md)에 있으며, 기존 항목의 개별 확인일은 그대로 적용한다.
+
 ## 이 필러에서 고객이 가장 자주 묻는 질문 Top 3
+
+> 질문은 탐색용 예시다. 실제 문의 빈도 순위로 검증되지 않았다.
 
 1. **"LLM 에이전트로 로봇/설비를 지휘하는 게 실제로 되나요? AWS엔 뭐가 있죠?"** → [Bedrock AgentCore](#1-amazon-bedrock-agentcore--ga)
 2. **"실시간 로봇에 에이전트를 어떻게? 엣지에서 오프라인으로도?"** → [엣지 에이전트 오케스트레이션](#3-엣지-에이전트-오케스트레이션--preview-참조-아키텍처)
 3. **"에이전트가 물리 시스템을 제어할 때 안전은 어떻게 보장하죠?"** → [안전 & 가드레일](#5-안전--가드레일--ga-에이전트층---미해결-물리-의미-갭)
 
-> **안정 원리 (잘 안 바뀜)**: 에이전트가 로봇을 "직접 실시간 제어"하지 않는다. **고수준 계획·툴 선택(System 2)은 에이전트가, 저수준 실시간 제어(System 1)는 엣지 정책이** 맡는다(→ [pillar-2](pillar-2.md), [pillar-4](pillar-4.md)). 프로덕션에서 진짜 돌아가는 것은 (1) **창고 플릿[^fleet] 조율**(DeepFleet, CoEvolution)과 (2) **개발/데이터 워크로드 오케스트레이션**[^orch](OSMO)이고, 휴머노이드 풀스택 에이전트나 MCP[^mcp]-로봇 연결은 대부분 연구/데모다.
+> **L0/L1**: 업무 계획, 관측 기반 정책, 저수준 제어, 독립 안전은 서로 다른 책임이다. 서비스 출시 상태와 고객 현장의 검증 수준을 구분한다.
 
 ---
 
 ## 1. Amazon Bedrock AgentCore  🟢 GA
 
-**L0 TL;DR**: 프로덕션 에이전트를 위한 매니지드 스택 — Runtime, Memory, Gateway(툴 연결), Identity, Observability, 그리고 **Policy(Cedar 기반 실시간 툴 호출 게이트)**. **서울 리전 완전 지원**. 하네스는 무료, 리소스 사용량만 과금.
+**L0 TL;DR**: AgentCore는 에이전트 실행·툴 접근·권한·관측을 위한 서비스다. **서비스 GA와 로봇 현장의 검증, 서울 제공과 국내 데이터 처리를 구분**한다.
 
-**고객 니즈/문제**: "에이전트를 PoC 넘어 프로덕션으로 올리고 싶다. 세션 관리, 툴 연결, 권한·보안, 관측을 매번 직접 만들기 싫다."
-
-**솔루션 개요** `[1]`:
-
-- **GA 이력**: 프리뷰 2025-07 → **GA 2025-10-13**. 컴포넌트: **Runtime, Memory, Gateway, Identity, Observability, Built-in Tools(Browser·Code Interpreter)**. re:Invent 2025-12에 Policy·Evaluations 프리뷰, episodic Memory GA, 음성용 양방향 스트리밍 Runtime GA 추가. **Policy는 2026-03-03 GA**.
-- **Policy(핵심)**: Gateway와 통합해 **모든 에이전트→툴 호출을 실시간 가로채** 정책(allow/deny)을 ms 단위 평가. 자연어로 작성 → **[Cedar](https://www.cedarpolicy.com/)**(AWS 오픈소스 정책 언어)로 컴파일. **서울 포함 13개 리전 GA**. → 물리 시스템 툴 호출을 제약하는 직접 프리미티브(5번 안전).
-- **[Strands Agents SDK](https://strandsagents.com/)**(동반): 모델·클라우드 중립 오케스트레이션 SDK, **1.0 도달(GA급)**. Amazon Q Developer·Glue가 내부 사용. AgentCore와 페어링. (버전·지표는 접힌 블록)
-- **[Nova Act](https://nova.amazon.com/act)**(관련): 브라우저/UI 자동화 에이전트, re:Invent 2025 **GA**. 벤더가 높은 태스크 신뢰성을 주장(수치는 접힌 블록 — 측정 조건 미공개).
-
-**컴포넌트가 실제로 해주는 것** `[1]` (docs 2026-07 확인):
-
-| 컴포넌트 | 기술 요약 | 로봇 워크로드 관점 |
+| 구성 | 로봇 워크로드에서 검토할 역할 | 한계 |
 |---|---|---|
-| **Runtime** | 세션마다 전용 microVM[^microvm](CPU·메모리·파일시스템 격리, 종료 시 메모리 소거)에서 서버리스 실행. **최장 8시간** 장기 세션, LLM·툴 응답 **대기 시간은 과금 제외**. LangGraph·CrewAI·Strands 등 프레임워크·모델 중립 | System 2 플래너를 올리는 곳 — 긴 작업 계획도 하나의 격리 세션으로 유지 |
-| **Gateway** | **Lambda·OpenAPI·Smithy·기존 MCP 서버·API Gateway를 MCP 툴로 변환**하고 가상 MCP 서버 하나로 집계. 시맨틱 툴 검색, 인바운드·아웃바운드 인증 모두 매니지드 | 로봇 스킬(집기·이동·검사 API)을 코드 몇 줄로 에이전트 툴화하는 지점 |
-| **Memory** | 단기(세션 원본 이벤트) + 장기(추출 전략: 요약·시맨틱·사용자 선호 + episodic) 이층 구조. **장기 기억 인출도 Policy를 통과** | 태스크 맥락("아까 그 선반") 유지 + 현장별 노하우의 세션 간 축적 |
-| **Identity** | 에이전트 워크로드 아이덴티티 + OAuth2/API 키 토큰 볼트 — 툴 호출 시 안전하게 대리 인증 | 로봇 플릿 API에 사람 자격증명을 하드코딩하지 않게 해줌 |
-| **Policy** | 모든 에이전트→툴 호출을 실시간 가로채 Cedar 정책으로 ms 단위 allow/deny. 자연어 작성 → Cedar 컴파일 | 물리 행동 직전의 마지막 안전 게이트(→ 5번 안전 절) |
-| **Observability** | OTEL[^otel] 호환 트레이스·스팬·지표, CloudWatch 통합 | "왜 그 행동을 했나"를 스텝 단위로 재구성 — 사고 조사·감사 대응 |
-| **Built-in Tools** | Browser(격리 microVM)·Code Interpreter 매니지드 제공 | 매뉴얼 조회·수치 계산 등 보조 작업 |
+| Runtime | 업무 계획 에이전트 실행 | 로봇 제어 기한을 보장하는 실시간 제어기 아님 |
+| Gateway·Identity | 허용된 로봇 스킬 API 연결·인증 | 장치 동작 완료·취소·중복 처리는 별도 구현 |
+| Policy | Gateway를 통한 툴 호출의 정책 검사 | 물리 상태 확인·독립 안전 기능 대체 불가 |
+| Memory·Evaluations | 맥락 저장·평가 | 저장 위치와 추론 처리 위치를 각각 확인 |
+| Observability | 업무 실행·툴 호출 추적 | 장치·제어·안전 로그와 연결 필요 |
 
-**AWS 매핑**: 서비스 자체가 매핑. 로봇 스킬을 Gateway에 툴로 등록 → 에이전트가 자연어 계획으로 호출, Policy로 게이팅, Memory로 세션 유지, Observability로 추적.
+**리전·데이터 처리 정정** `[1]`: 서울에서 서비스를 사용할 수 있다는 사실만으로 데이터 레지던시 문제가 해소되지 않는다. [AWS 교차 리전 추론 문서](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/cross-region-inference.html)는 Memory 등의 입력·출력이 기본 리전 밖에서 처리될 수 있음을 명시한다. 서울발 Evaluations는 글로벌 교차 리전 추론 대상이다. 기능·모델·외부 툴별 처리 국가를 기록한다([근거](evidence.md#agentcore-residency)).
 
-```mermaid
-graph LR
-    U["운영자<br>자연어 지시"] --> RT["AgentCore Runtime<br>System 2 플래너 (LLM)"]
-    RT <--> M["Memory<br>단기·장기 맥락"]
-    RT -- 툴 호출 --> P{"Policy<br>Cedar allow/deny"}
-    P -- 허용 --> GW["Gateway<br>로봇 스킬 = MCP 툴"]
-    P -- 차단 --> X["거부 + 기록"]
-    GW --> ROB["로봇/설비 API<br>(IoT · 엣지 System 1)"]
-    RT -. 트레이스 .-> O["Observability<br>OTEL / CloudWatch"]
-```
+**의사결정 기준**: 단발 추론은 직접 모델 호출부터 검토한다. 지속 세션·툴 권한·관측이 필요할 때 AgentCore 구성요소를 선택한다. 사용 기능의 [리전 표](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html)와 [가격](https://aws.amazon.com/bedrock/agentcore/pricing/)을 확인하고 모델/API·네트워크·로그 요금까지 견적한다. ‘하네스 무료’로 전체 비용을 설명하지 않는다.
 
-**의사결정 기준**:
+**고객 사례**: 기존 AWS×SoftServe 소개는 데모/쇼케이스이며 고객 생산라인 운영을 입증하지 않는다.
 
-- 프로덕션 에이전트(세션·툴·권한·관측 필요) → **AgentCore Runtime + Gateway + Policy**.
-- 단순 단발 추론 → Bedrock 직접 호출로 충분, AgentCore 과함.
-- 멀티에이전트·A2A[^a2a] → Strands 1.0.
-- 오프라인·저지연 엣지 필요 → 3번(엣지).
-
-**고객 사례**: **AWS×SoftServe 자율 생산라인**(AgentCore + IoT Greengrass + Nova Pro + Jetson Thor) — Hannover Messe 2026 **데모/쇼케이스**([1]/[3]).
-
-**➡️ 다음 액션**: 국내 고객에게 **"AgentCore는 서울 리전 GA — 데이터 레지던시 문제 없다"** 를 먼저 확인시키고(오래된 "서울 미지원" 정보 정정), 로봇 스킬을 Gateway 툴로 등록하는 PoC 제안. 가격은 "하네스 무료, 리소스만 과금" 으로 안심시킴.
+**➡️ 다음 액션**: 로봇 스킬의 입력·권한·완료·취소 계약과 데이터 처리 경로를 정의하고 [운영·복구 시험](operations.md)을 연결한다.
 
 **🔗 관련 자산**:
 
@@ -78,72 +53,17 @@ graph LR
 - [Agentic AI Robot — 산업 안전 모니터링](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples. AgentCore+IoT+로봇 자율 순찰·엣지 추론 데모, AWS AI x Industry Week 2025 시연, 한국어 README. ⚠️ 실험·교육용 명시 — 프로덕션 아님
 - [Smart Machines — 산업 장비 하이브리드 Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples. 에이전트가 플릿 텔레메트리 이상 감지→원인 진단→티켓 생성·파라미터 조정까지 수행하는 풀스택 데모(멀티에이전트 챗·자연어 시나리오 빌더·KVS 영상→Bedrock 분석·Jetson YOLOWorld+VLM 엣지 모니터링). ⚠️ README 명시 데모 — 현재 굴착기(시뮬 텔레메트리)만 완동, 로봇 암은 WIP
 
-<details markdown="1"><summary>🔄 휘발성 데이터 (컴포넌트·리전·가격 — 2026-07 확인)</summary>
-
-| 컴포넌트 | 상태 | 서울 |
-|---|---|---|
-| Runtime / Memory / Gateway / Identity / Observability / Built-in Tools | 🟢 GA | ✅ |
-| Policy (Cedar 툴 게이트) | 🟢 GA (2026-03) | ✅ |
-| Evaluations | 🟡 Preview→ | ✅ |
-| Payments | 🟡 Preview | ❌ |
-| Agent Registry | 🟡 Preview | ❌ (도쿄 ✅) |
-
-**가격** — 하네스(제어부)는 무료, 사용한 리소스만 과금:
-
-| 항목 | 요금 |
-|---|---|
-| Runtime · Browser · Code Interpreter | $0.0895/vCPU-시간 + $0.00945/GB-시간 (초 단위 과금) |
-| Gateway | 호출 1,000건당 $0.005 |
-| Memory — 단기 | 이벤트 1,000건당 $0.25 |
-| Memory — 장기 저장 | 레코드 1,000건당 월 $0.75 |
-
-**리전** (AWS 공식 리전 표 `[1]`, 2026-07 직접 확인):
-
-| 리전 | 지원 범위 |
-|---|---|
-| **서울** (ap-northeast-2) | 전 코어 컴포넌트 + Policy + Evaluations ✅ |
-| 도쿄 (ap-northeast-1) | 코어 컴포넌트 + **Agent Registry** ✅ (서울 미지원분) |
-
-**동반 도구 지표**:
-
-| 항목 | 값 | 비고 |
-|---|---|---|
-| Strands Python 1.0 | 2026-05-21 | 다운로드 ~16.7M/월 (2026-06, `[3]`) |
-| Strands TypeScript 1.0 | 2026-04-30 | |
-| Nova Act | "90%+ 태스크 신뢰성" | Amazon 발표 수치, 측정 조건 미공개 (2025-12, `[3]`) — **조건 없이 단정 인용 금지** |
-</details>
-
 ---
 
-## 2. System 2 + System 1 오케스트레이션 패턴  🟢 GA (안정 원리)
+## 2. 업무 계획과 로봇 제어의 분리 { #2-system-2--system-1-오케스트레이션-패턴--ga-안정-원리 }
 
-**L0 TL;DR**: 에이전트 오케스트레이션의 아키텍처 뼈대. **무거운 VLM/LLM이 5~10Hz로 계획·재계획(System 2)**, **경량 정책이 50~200Hz로 실행(System 1)**. 이 분리가 "무엇을 클라우드에, 무엇을 엣지에" 를 결정한다.
+**L0 TL;DR**: 업무 계획 에이전트와 로봇 실행·제어·안전을 나누되, 모델 내부 System 1/2와 같은 구분으로 취급하지 않는다.
 
-**고객 니즈/문제**: "큰 추론 모델과 실시간 제어를 어떻게 한 시스템에 담나?"
+**배치 기준**: 클라우드에서 허용할 지연·단절 시간·처리 국가를 먼저 정한다. 로봇의 관측 기반 정책, 로컬 제어, 독립 안전 기능은 해당 기한과 위험 평가에 따라 배치한다. Helix의 두 모델이 모두 온보드라는 점은 [P2](pillar-2.md)와 [근거 기록](evidence.md#action-chunking)을 참조한다.
 
-**솔루션 개요** `[1]/[4]`: SayCan/PaLM-E(2022~23 연구) 계보에서 진화. 현재 지배 패턴 = 고수준 플래너(태스크 분해·툴콜, 느림) + 저수준 액션 정책(빠름). 예시 수치(벤더 공개, 자릿수 감각용): Figure Helix S2 7~9Hz + S1 200Hz(Figure, 2025), GR00T N1 S1 diffusion ~10ms(NVIDIA, 2025). ⚠️ **패턴 자체는 표준이나, 전신 휴머노이드 풀스택은 대부분 파일럿/데모**.
+**AWS 매핑**: AgentCore는 조건을 충족하는 업무 계획의 선택지다. 로봇 스킬 호출에는 ID·만료·사전 조건·완료 확인이 필요하며 action chunking만으로 네트워크 지연과 안전 문제가 해결되지는 않는다.
 
-**AWS 매핑**: **System 2 = 클라우드 Bedrock AgentCore**(계획·툴 오케스트레이션·가드레일[^guardrail]), **System 1 = 엣지 Jetson**(실시간 제어, → [pillar-4](pillar-4.md)). 지연 허용되면 System 2 클라우드, 아니면 엣지 온보드.
-
-```mermaid
-graph TD
-    subgraph CLOUD["클라우드 (지연 허용 · 초 단위)"]
-        S2["System 2 · 느린 LLM 플래너<br>5~10Hz 계획·재계획·툴콜<br>Bedrock AgentCore"]
-        POL["Policy(Cedar) · 툴 호출 게이트"]
-        S2 --> POL
-    end
-    subgraph EDGE["엣지 온보드 (실시간 · 밀리초)"]
-        S1["System 1 · 빠른 액션 정책<br>50~200Hz 실시간 제어<br>Jetson"]
-    end
-    POL -. 고수준 계획 · action chunking .-> S1
-    S1 --> ROB["로봇 · 설비"]
-```
-
-**의사결정 기준**: [decisions Cloud vs Edge](decisions.md) 참조. 실시간 제어 루프 → 무조건 엣지. 계획·재계획 → 클라우드/비동기 가능.
-
-**고객 사례**: Figure, GR00T(오픈). 검증 프로덕션 제한적.
-
-**➡️ 다음 액션**: "에이전트가 로봇을 실시간 제어하나?" 오해에 대해 **"에이전트는 계획, 실시간 제어는 엣지 정책"** 으로 그림 정리. AgentCore(계획) + Jetson(제어) 조합 제시.
+**➡️ 다음 액션**: [운영·복구](operations.md)의 네 계층 그림과 장애 시험 표를 사용해 책임자·취소·복구를 설계한다.
 
 **🔗 관련 자산**: [pillar-2 VLA 구조](pillar-2.md) · [pillar-4 엣지](pillar-4.md) · [decisions](decisions.md)
 
@@ -169,40 +89,19 @@ graph TD
 
 ---
 
-## 4. 플릿 오케스트레이션  🟢 GA (일부) / mixed
+## 4. 플릿 운영 — 제품·제어·클라우드의 경계 { #4-플릿-오케스트레이션--ga-일부--mixed }
 
-**L0 TL;DR**: 여러 로봇을 조율하는 계층. **실제 프로덕션은 창고 플릿 조율**(Amazon DeepFleet, CoEvolution)과 **개발 워크로드 오케스트레이션**(NVIDIA OSMO)이다. ⚠️ DeepFleet은 LLM 에이전트가 아니라 멀티로봇 조율 파운데이션 모델.
+**L0 TL;DR**: 현장 플릿의 작업 할당·교통 조율, 장치 운영, 개발 잡 스케줄링은 다른 문제다. 요구에 맞는 기존 플릿 제품·SI·자체 로직을 비교한다.
 
-**고객 니즈/문제**: "수백~수천 대 로봇을 어떻게 중앙에서 조율·모니터링하나?"
+**참조 범위**: [Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model)은 Amazon 내부 로봇 조율 사례이며 고객이 구매하는 AgentCore 기능이 아니다 `[3]`. [NVIDIA OSMO](https://developer.nvidia.com/osmo)는 개발·데이터·학습 워크로드용으로 현장 교통 제어와 구분한다.
 
-**솔루션 개요** `[1]/[3]`:
+**AWS 매핑**: IoT Core/Greengrass 연결과 상태 수집, 필요한 저장·분석을 설계한다. 업무 계획에 에이전트가 필요한 경우에만 AgentCore를 검토한다. 경로 충돌·작업 할당·오프라인 복구는 로봇/플릿 솔루션이 담당할 범위를 명시한다.
 
-- **[Amazon DeepFleet](https://www.aboutamazon.com/news/operations/amazon-million-robots-ai-foundation-model)** 🟢 — Amazon 창고 로봇 플릿 조율 생성형 파운데이션 모델("교통 관제"), ~10% 이동시간 효율 개선, 100만 번째 로봇과 함께 발표(2025-07). **프로덕션(Amazon 내부)**. ⚠️ **LLM 에이전트 오케스트레이터 아님** — 멀티로봇 RL 의미의 "멀티에이전트". 잘못 분류 금지.
-- **[NVIDIA Isaac OSMO](https://developer.nvidia.com/osmo)** 🟢 — 로보틱스 **개발/데이터/학습 워크로드** 오케스트레이션(합성데이터·학습·RL·SIL). GTC 2026에 코딩 에이전트(Claude Code/Codex/Cursor) 통합. ⚠️ **현장 로봇 플릿 실시간 제어가 아님** — 개발 파이프라인 오케스트레이션.
-- **Formant** 🟡 — 플릿 관리 SaaS. 수백 개 조직에서 운영 중이나 소규모(구체 지표는 `[3]` PitchBook/Crunchbase 기준 — 644개 조직·<$5M ARR, 2026-05, 변동 잦음), 미인수.
-- **CoEvolution** — Lotte Global Logistics 417 슈퍼스토어 멀티플릿 조율, 30% 효율 주장(⚠️ 단일 [3] 출처, 재확인 필요).
+**FleetWise 정정** `[1]`: [AWS IoT FleetWise](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html)는 **신규 고객을 받지 않는다**. 기존 고객은 계속 사용할 수 있지만 신규 로봇 아키텍처의 기본 서비스로 제안하지 않는다([근거](evidence.md#fleetwise-new-customers)).
 
-**AWS 매핑**: IoT Core/Greengrass(플릿 연결) + AgentCore(오케스트레이션 로직) + IoT FleetWise/SiteWise(텔레메트리). DeepFleet식 조율 모델은 SageMaker로 학습.
+**고객 사례**: [Certis 순찰 로봇](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/)은 공개 AWS 사례다. 다른 고객에게 같은 효과를 보장하지 않는다.
 
-```mermaid
-graph TD
-    ORCH["조율 로직<br>AgentCore"]
-    CONN["연결 계층<br>IoT Core / Greengrass"]
-    TEL["텔레메트리<br>IoT FleetWise / SiteWise"]
-    TRAIN["조율 모델 학습<br>SageMaker"]
-    FLEET["로봇 플릿 (창고 · AMR)"]
-    ORCH --> CONN
-    CONN --> FLEET
-    FLEET -. 상태 · 위치 .-> TEL
-    TEL --> ORCH
-    TRAIN -. DeepFleet식 조율 모델 .-> ORCH
-```
-
-**의사결정 기준**: 창고/AMR 플릿 조율 → 검증된 영역(DeepFleet식 접근 참조). 휴머노이드 에이전트 플릿 → 아직 초기. 개발 워크로드 → OSMO(NVIDIA) 또는 AWS Batch/Step Functions.
-
-**고객 사례** (⚠️ 국내는 초기/데모/발표): **Lotte Global Logistics×CoEvolution**(30%, 단일출처), **LG CNS** 창고 데모(휴머노이드+로봇개+모바일), **Naver** AI Agent Platform 2026 하반기 예정(NVIDIA 블루프린트). 해외 프로덕션 사례: **Certis**(보안 서비스) — [자율 순찰 로봇을 AWS 위에서 배포·운영](https://aws.amazon.com/blogs/physical-ai/how-certis-achieved-autonomous-robot-security-patrols-with-aws/)한 공식 고객 사례 `[1]` — 플릿을 실제 현장에 굴리는 엣지+조율 관점의 드문 공개 레퍼런스.
-
-**➡️ 다음 액션**: 플릿 고객에게 **"조율 로직은 AgentCore, 연결은 IoT, 학습은 SageMaker"** 3계층으로 정리. DeepFleet을 LLM 에이전트로 오해하지 않게 정확히 설명.
+**➡️ 다음 액션**: 기존 플릿 솔루션과의 기능 경계, 작업 완료·단절·사람 개입·복구 요구를 [파일럿 카드](start.md#pilot)에 적고 [운영 시험](operations.md#failure)을 수행한다.
 
 **🔗 관련 자산**: [pillar-2 학습](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
 
@@ -216,7 +115,7 @@ graph TD
 
 **솔루션 개요** `[1]/[4]`:
 
-- **에이전트층(AWS 네이티브)**: **AgentCore Policy** — 모든 에이전트→툴 호출을 Cedar로 실시간 allow/deny(ms). 물리 액션 툴 호출을 제약하는 실용 계층. **[Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)** — LLM 입출력(콘텐츠·주제·PII) 필터(액추에이션 자체는 아님).
+- **에이전트층(AWS 네이티브)**: **AgentCore Policy** — Gateway를 통과하는 에이전트→툴 호출을 Cedar로 실시간 allow/deny(ms). 물리 액션 툴 호출을 제약하는 실용 계층. **[Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)** — LLM 입출력(콘텐츠·주제·PII) 필터(액추에이션 자체는 아님).
 - **로봇층(기능 안전)**: **[ISO 10218-1/2](https://www.iso.org/standard/73933.html)**(로봇·통합시스템), **ISO/TS 15066**(협동로봇), **ISO 13482**(개인지원로봇). ⚠️ 이들은 **물리 안전만** — LLM 의미적 악용/환각은 미커버.
 - **연구**: RoboGuard(안전규칙 grounding), BadRobot(임베디드 LLM 탈옥 공격), LLM 의미적 DoS — 🔵 연구단계. 표준이 기능안전(ISO)과 LLM 위험을 잇지 못하는 **열린 갭**.
 
@@ -259,7 +158,7 @@ graph TD
 
 ## 이 필러의 정직한 현실 (SA 필독)
 
-- **AgentCore는 서울 리전 완전 지원**(Policy·Evaluations 포함). "서울 미지원"은 GA 초기 얘기 — 지금은 틀림. 데이터 레지던시 안심시켜라.
+- **서울 제공과 데이터 처리 위치를 구분한다.** 기능·모델·경로별로 [교차 리전 추론](evidence.md#agentcore-residency)을 확인한다.
 - **Policy는 GA(2026-03)** — "프리뷰"라 부르지 말 것.
 - **DeepFleet ≠ LLM 에이전트 오케스트레이터.** 창고 로봇 조율 파운데이션 모델(멀티로봇 RL). 오분류 금지.
 - **진짜 프로덕션은 플릿 조율(DeepFleet/CoEvolution)과 개발 워크로드(OSMO).** MCP-로봇 연결과 휴머노이드 풀스택 에이전트는 대부분 연구/데모.
@@ -270,14 +169,3 @@ graph TD
 _owner: Youngjin · updated: 2026-09 · volatility: 높음 (AgentCore 기능·리전은 접힌 블록에서 관리) · sources: [1] 공식, [3] 벤더/press, [4] 연구/커뮤니티_
 
 <!-- 용어 각주 -->
-
-[^agent]: **LLM 에이전트** — 대형 언어 모델이 스스로 계획을 세우고 툴(API·로봇 스킬)을 골라 호출하며 다단계 작업을 수행하는 소프트웨어. 단순 질의응답과 달리 "행동"이 있다는 점이 핵심이다.
-[^orch]: **오케스트레이션(orchestration)** — 여러 에이전트·로봇·작업 흐름을 하나의 시스템으로 조율·지휘하는 계층. 개별 로봇의 제어가 아니라 "무엇을 누가 언제 할지"를 결정한다.
-[^sys]: **System 2 / System 1** — 인지과학의 "느린 사고 / 빠른 반응" 구분을 로봇 아키텍처에 적용한 구조. System 2는 느린 LLM 플래너가 계획을(클라우드), System 1은 작은 정책이 실시간 제어를(엣지) 맡는다.
-[^tool]: **툴 호출(tool calling)** — 에이전트가 추론 중에 외부 기능(API, 로봇 스킬)을 정해진 스키마로 호출하는 메커니즘. 에이전트가 물리 세계에 영향을 주는 유일한 통로라서, 안전 게이트(Policy)가 바로 이 지점에 걸린다.
-[^mcp]: **MCP (Model Context Protocol)** — 에이전트와 툴·데이터 소스를 잇는 개방형 표준 프로토콜. "에이전트용 USB-C"에 비유되며, 로봇 스킬을 MCP 서버로 노출하는 실험이 늘고 있다.
-[^guardrail]: **가드레일(guardrail)** — 에이전트의 입출력과 행동을 정책으로 제한하는 안전장치. 물리 시스템에서는 위험한 툴 호출 차단, 행동 범위 제한이 이에 해당한다.
-[^fleet]: **플릿(fleet) 조율** — 다수의 로봇 무리를 하나의 시스템으로 스케줄링·경로 배분하는 것. 창고 로봇처럼 수백~수천 대 규모에서 이미 프로덕션 검증된 영역이다.
-[^a2a]: **A2A (Agent-to-Agent)** — 서로 다른 에이전트끼리 표준 프로토콜로 협업하는 멀티에이전트 통신 방식.
-[^microvm]: **microVM(마이크로 가상 머신)** — 컨테이너보다 강한 격리를 제공하는 초경량 가상 머신(예: AWS Firecracker). 세션마다 CPU·메모리·파일시스템을 통째로 분리하고 종료 시 메모리를 소거해, 세션 간 데이터 유출을 구조적으로 막는다.
-[^otel]: **OTEL (OpenTelemetry)** — 트레이스·지표·로그 수집의 업계 표준 규격. 특정 벤더에 묶이지 않고 에이전트의 단계별 실행 기록을 표준 형식으로 내보내 관측 도구와 연동할 수 있다.

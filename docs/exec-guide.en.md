@@ -1,62 +1,46 @@
 ---
-ko_hash: 2ce31417f5c626dbd06c8a584b1cdd3ea96dd2f6
+ko_hash: 9fe285bbff72c7e9e5f35f761991bd3297d745ae
 ---
-# Executive Conversation Guide — For SAs
+# Customer conversation guide — for AWS staff
 
-_Last updated: 2026-08 · owner: Youngjin · volatility: medium_
-[← to index](index.md)
+_Last updated: 2026-09 · owner: Youngjin · volatility: medium_
 
-> **L0 TL;DR**: A practical asset to skim 30 minutes before an executive meeting. If the [Executive Brief](exec.md) is what you "show," this page is how you "say" it.
+**L0 TL;DR**: Establish task, cost, and operating requirements before helping choose technology. This public guide contains no confidential customer or sales records. Show the [Executive Brief](exec.md) and complete [Start](start.md) with the customer.
 
-## 1. Three elevator pitches
+## 1. Meeting flow
 
-- **30 seconds (hallway)**: "Robotics is meeting foundation models and the industry is at an inflection point. But **what to invest in now differs from what to watch.** What's verified is data and simulation infrastructure; large-scale humanoid adoption is still an item to watch."
-- **2 minutes (meeting opener)**: Add the three pieces of evidence above — Digit has run for 65,000+ hours under a multi-year paid contract at GXO, open VLA (π0 = Apache-2.0) has made commercial fine-tuning possible, and yet no independent autonomy audit of humanoids exists yet ([pillar-4](pillar-4.md), [pillar-2](pillar-2.md)). "So our proposal is **data first**."
-- **5 minutes (whiteboard)**: Pull up the [Executive Brief](exec.md) and walk it in h2 order — [① Why now](exec.md#①-why-now) → [② Industry meaning](exec.md#②-what-it-means-for-our-industry) → [③ The matrix](exec.md#③-what-is-real-and-what-is-hype) → [④ What first](exec.md#④-so-what-do-we-do-first) → [⑤ Why AWS](exec.md#⑤-why-do-it-with-aws) → [If you want to start a review](exec.md#if-you-want-to-start-a-review). Stop at the matrix and ask "where are you?" — that opens the conversation.
+1. **Task**: identify repetitive work whose time, failures, or interventions should decrease.
+2. **Alternatives**: compare existing automation, products, robot SI, and model adaptation.
+3. **Experiment**: confirm rights, staffing, and limits; test one bottleneck.
+4. **Exit conditions**: agree on success, stopping, handover, and evidence for the next meeting.
 
-## 2. Top 10 anticipated executive questions
+## 2. Key questions
 
-| # | Question | Answer summary | Basis |
-|---|---|---|---|
-| 1 | ROI/cost? | LoRA is possible with a single GPU, so pilot entry cost is low. Building assets from data/sim PoCs first keeps the initial investment small | [pillar-2](pillar-2.md) |
-| 2 | Why AWS (vs. NVIDIA)? | AWS is a neutral position that runs both NVIDIA and open source. There is an official case that trained Unitree H1 RL on Isaac Lab + HyperPod | [decisions](decisions.md) |
-| 3 | Competitors? | Foundation labs and humanoid vendors look ahead, but most are pilots/demos. Gemini Robotics-ER is also Preview | [pillar-2](pillar-2.md), [radar](radar.md) |
-| 4 | Are we late? | The bottleneck is not the model but the data. Data assets must be built now to stay ahead — models keep coming out as open releases | [pillar-1](pillar-1.md) |
-| 5 | How much does it cost? | A single G7e LoRA 1-day PoC is the basic entry. Unless it's very large pretraining, large-scale GPUs are unnecessary | [decisions](decisions.md) |
-| 6 | Staffing? | You can start with open-model fine-tuning and sim PoCs even without ML experts | [index FAQ](index.md#top-20-frequently-asked-questions) |
-| 7 | When are results? | Data/sim now, VLA pilot in 12–24 months, large-scale humanoid adoption TBD | [exec ③](exec.md#③-what-is-real-and-what-is-hype) |
-| 8 | Risks? | Manipulation sim-to-real is unsolved, and humanoid "production" metrics are mostly vendor PR. Manage with narrow tasks | [pillar-4](pillar-4.md) |
-| 9 | Partner criteria? | License (commercially viable) and data sovereignty. π0 and OpenVLA are commercially friendly; for GR00T, checking the model card is a must | [pillar-2](pillar-2.md) |
-| 10 | First project? | Data pipeline → sim PoC → narrow VLA fine-tuning. Diagnose data assets in a 1-day workshop | [exec ④](exec.md#④-so-what-do-we-do-first) |
+| Question | Include in the answer | Tool |
+|---|---|---|
+| ROI? | Total hardware/SI/data/staff/safety/operations cost and realizable benefit, beyond GPU | [ROI](start.md#roi) |
+| Why AWS? | Reuse of existing infrastructure, measured bottlenecks, needed services/support boundaries | [Decisions](decisions.md) |
+| Staffing? | Robotics, ML, cloud, and site safety roles; partner/SI scope for gaps | [Owners](operations.md#layers) |
+| When will we see results? | Range based on readiness/evaluation; no universal one-day or 12–24-month promise | [Execution](execution.md) |
+| Safety? | Tool permissions plus independent physical safety, local control, cancellation/recovery tests, site approval | [Operations](operations.md) |
+| Processing within Korea? | Check storage, inference, Memory/Evaluations, and external-tool routes separately | [Evidence](evidence.md#agentcore-residency) |
+| Are open models commercial? | Version-specific code, weight, base-model, and dataset terms | [P2](pillar-2.md) |
+| Partner selection? | Comparable site outcomes, robot support, integration/safety responsibility, recovery/maintenance scope | [Pilot card](start.md#pilot) |
 
-## 3. Handling pushback and concerns
+## 3. Handover and support
 
-**Three beats: acknowledge → reframe → verified next step.**
+AWS staff clarify service architecture, quotas, pricing, and service support. Robotics/ML teams own data, model/device compatibility, and evaluation. SI/site teams own process integration, safety, and operating recovery. Do not assume sample maintainers offer a customer operations SLA. Record owners and unresolved items.
 
-- **"Isn't this just a humanoid demo?"** — True, there are many demos → but locomotion is already deployed for pay (Digit@GXO) → our proposal is the data/sim infrastructure beneath it ([pillar-4](pillar-4.md)).
-- **"What about safety and regulation?"** — Important → that's why 30–100 Hz control must be at the edge, with only planning in the cloud → AgentCore Policy (Cedar) gates tool calls at the millisecond level ([pillar-5](pillar-5.md)).
-- **"What about the workforce-replacement debate?"** — Sensitive → what's verified is narrow, repetitive tasks (tote moving), not general-purpose replacement → start narrow from the angle of hazardous/assistive work ([pillar-4](pillar-4.md)).
-- **"Isn't this hype?"** — There's a lot of hype → that's why a continuous verification system that scans every week separates real from hype → [Radar](radar.md) shows the maturity labels as-is.
-- **"What about vendor lock-in?"** — A legitimate concern → AWS runs both NVIDIA and open source → self-hosting π0/OpenVLA means freedom without lock-in ([decisions](decisions.md)).
+## 4. Promises to avoid
 
-## 4. Industry angles
-
-| Industry | Hook | Verified case | First proposal |
-|---|---|---|---|
-| Manufacturing | A path has opened to fine-tune open VLA to your own process | Figure 02@BMW verification pilot ([radar](radar.md#-hardware--deployment-roadmap--demo)) | Verify a narrow task with a single G7e LoRA 1-day PoC |
-| Logistics | Locomotion robots are already at paid commercial sites | Digit@GXO 65,000+ operating hours ([pillar-4](pillar-4.md)) | Scope to narrow, structured movement tasks |
-| Automotive | The training pipeline for moving policies trained in sim to real hardware has matured | Zoox HyperPod training (⚠️ AV, 64+ GPUs at 95% utilization — [pillar-2](pillar-2.md)) | Lower the barrier with a cloud parallel-sim PoC |
-
-## 5. ⚠️ Phrases to avoid or handle with care in front of executives
-
-| ❌ Don't say this | ⭕ Say this instead |
+| Avoid | Say instead |
 |---|---|
-| "Optimus goes into mass production soon" | "Humanoids are at the verification-pilot stage. Our proposal is the earlier stage — data/sim infrastructure" |
-| (Citing radar ⚪/🔵 items as if they were mature capabilities) | (Maturity label as-is: "It was announced, but it's not yet production-verified") |
-| "Figure 03 runs an 8-hour autonomous shift" | "That's a CEO tweet with no independent verification. What's verified is the Figure 02@BMW pilot" ([radar](radar.md#-hardware--deployment-roadmap--demo)) |
-| "1X Neo does household chores fully autonomously" | "The 1X CEO openly acknowledges it runs on mixed autonomy + VR teleoperation. Even the '60–70% autonomy' figure has no primary source" ([radar](radar.md#-hardware--deployment-roadmap--demo)) |
-| "Simulation alone completes a manipulation policy" | "Manipulation sim-to-real is still unsolved. Fine-tuning on real data is essential" ([pillar-4](pillar-4.md)) |
+| “Seoul GA means no residency problem” | “We will inspect storage and processing per feature/model” |
+| “OpenVLA is MIT, so commercial use is allowed” | “We will check code and weight terms separately” |
+| “100 demos gives 80% in one day” | “We will measure data/time needs under fixed evaluation conditions” |
+| “Cedar guarantees robot safety” | “Independent safety, local control, and site validation are also required” |
+| “Open models eliminate lock-in” | “We will compare migration costs for models, data, and operating tools” |
 
-Always check the maturity labels in [Radar](radar.md) for the latest status before you speak.
+**➡️ Next action**: share a one-page decision, spend/time caps, owners, and evidence required for the next stage.
 
-_owner: Youngjin · updated: 2026-08 · volatility: medium_
+_owner: Youngjin · updated: 2026-09 · volatility: medium_

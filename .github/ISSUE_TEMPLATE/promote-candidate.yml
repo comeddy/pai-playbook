@@ -1,12 +1,12 @@
 name: "📌 Playbook 후보 제보 (슬랙 → playbook 승격)"
-description: "THE FILTER 게이트 내장 제출 양식 — 4개 중 2개 이상 충족 시 필러 승격, 미달 시 Radar"
+description: "고객 문제·1차 출처·근거 범위·소유자를 확인한 뒤 수록을 검토합니다."
 title: "[후보] "
 labels: ["candidate"]
 body:
   - type: markdown
     attributes:
       value: |
-        **승격 파이프라인**: 이 이슈 → 담당 필러 owner가 게이트 판정 → **2개 이상 충족 시** 표준 템플릿으로 필러 편입 / **미달 시** [Radar](https://comeddy.github.io/pai-playbook/radar/)에 한 줄 기록.
+        **승격 파이프라인**: 이 이슈 → owner가 고객 문제·출처·근거 범위·소유자를 모두 확인 → 사람 검토 후 수록 / 미확인 항목은 [Radar](https://comeddy.github.io/pai-playbook/radar/)에 유지.
         제출 전 [Radar](https://comeddy.github.io/pai-playbook/radar/)에 이미 있는지 먼저 확인하세요.
 
   - type: input
@@ -35,13 +35,14 @@ body:
   - type: dropdown
     id: maturity
     attributes:
-      label: 성숙도 라벨
-      description: "⚠️ '인상적 데모'와 '배포 가능'을 분리할 것 — 데모만 있으면 ⚪"
+      label: 출시 상태
+      description: "출시 상태와 현장 검증·권장 용도·지원 주체는 별개입니다."
       options:
         - "🟢 GA"
         - "🟡 Preview"
         - "🔵 Research-only"
         - "⚪ Hype (데모만)"
+        - "해당 없음 (원리·규제·방법론)"
     validations:
       required: true
 
@@ -59,7 +60,7 @@ body:
       label: 출처 등급
       options:
         - "[1] 공식 문서/논문"
-        - "[2] AWS 내부 검증 (직접 돌려봄)"
+        - "[2] 기록된 재현 실험 (버전·환경·로그 필요)"
         - "[3] 벤더 공식 블로그"
         - "[4] 미검증 (슬랙/소문)"
     validations:
@@ -68,13 +69,21 @@ body:
   - type: checkboxes
     id: the-filter
     attributes:
-      label: "THE FILTER — 포함 기준 (최소 2개 충족해야 필러 본문 승격)"
-      description: "정직하게 체크할 것. 2개 미만이면 이 항목은 Radar에 한 줄로만 기록됩니다."
+      label: "관련성 신호 — 이것만으로 수록·운영 검증을 승인하지 않습니다"
+      description: "아래 항목은 참고 신호입니다. 수록 필수 조건은 다음 항목을 모두 채워야 합니다."
       options:
         - label: "ⓐ production 또는 실제 고객 배포에서 검증됨 (데모 영상만으로는 불충분)"
         - label: "ⓑ AWS 서비스/인프라와 구체적으로 매핑 가능"
         - label: "ⓒ 실제 고객 또는 SA가 물어본 이력이 있음"
         - label: "ⓓ GA이거나 명확한 GA 로드맵이 있음"
+
+  - type: textarea
+    id: evidence-scope
+    attributes:
+      label: "수록 필수 조건과 검토 기록"
+      description: "고객 문제/R&D 질문, 정확한 1차 출처·버전·확인일, 근거 수준·한계·권장 용도·지원 주체, owner·다음 액션을 모두 적어 주세요. 실험은 표본·단위·환경·로그를 포함합니다."
+    validations:
+      required: true
 
   - type: textarea
     id: l0-tldr
@@ -88,7 +97,7 @@ body:
     id: customer-context
     attributes:
       label: "고객/SA 문의 맥락 (있으면)"
-      description: "어떤 고객 상황에서 나온 질문인지, 슬랙 스레드 링크 등 — ⓒ 체크의 근거"
+      description: "공개 가능한 업무 맥락만 기록하세요. 고객 기밀·사내 Slack 링크를 공개 이슈에 넣지 마세요."
 
   - type: input
     id: proposed-owner

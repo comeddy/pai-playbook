@@ -4,11 +4,15 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 중간(엣지 HW·모�
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
-> **L0 TL;DR**: 정직한 한 줄 — **로코모션(보행)[^loco] sim-to-real[^s2r]은 사실상 풀렸고 배포됐다**(ANYmal, Agility Digit). **조작(manipulation)[^manip] sim-to-real은 아직 아니다** — 프런티어 VLA조차 시뮬레이션이 아니라 **실기체 데이터로 학습**하고, 시뮬레이션은 주로 평가/적응에 쓴다. 그리고 아키텍처 불변 법칙: **30~100Hz 실시간 제어는 반드시 엣지(온보드)**, 고수준 계획만 클라우드로.
+> **L0 TL;DR**: 시뮬레이션의 결과는 로봇·태스크·환경별로 실기 검증한다. 배포 위치는 관측→동작 기한과 통신 단절 요구로 정하고, [독립 안전·취소·복구](operations.md)를 설계한다. 보행이나 조작이라는 분류만으로 배포 가능을 판정하지 않는다.
 
 ---
 
+> **검토 범위**: 페이지 수정일은 모든 기술 항목의 재검증일이 아니다. 핵심 정정의 확인일·재현/사람 검토 상태는 [근거 기록](evidence.md)에 있으며, 기존 항목의 개별 확인일은 그대로 적용한다.
+
 ## 이 필러에서 고객이 가장 자주 묻는 질문 Top 3
+
+> 질문은 탐색용 예시다. 실제 문의 빈도 순위로 검증되지 않았다.
 
 1. **"sim-to-real이 실제로 되나요? 검증된 사례가 있나요?"** → [로코모션(된다)](#2-로코모션-sim-to-real--검증됨-프로덕션), [조작(아직)](#4-조작-manipulation-sim-to-real--research---좁은-프로덕션)
 2. **"실시간 제어인데 추론을 엣지에 둬야 하나요, 클라우드에 둬야 하나요?"** → [엣지 추론 배포](#1-엣지-추론-배포--ga), [decisions](decisions.md)
@@ -18,67 +22,29 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 ---
 
-## 1. 엣지 추론 배포  🟢 GA
+## 1. 엣지 추론 배포 — 모델별 검증 { #1-엣지-추론-배포--ga }
 
-**L0 TL;DR**: 실시간 제어 추론은 로봇 온보드에서 돌려야 한다. 2026년 표준 경로 = **NVIDIA Jetson Thor(GA) + AWS IoT Greengrass V2 + ONNX[^onnx]/TensorRT**. ⚠️ **SageMaker Edge Manager는 2024-04 종료** — 대체 없다, ONNX+Greengrass로 간다.
+**L0 TL;DR**: 로봇 정책의 배포는 모델·장치·제어 주기에 맞춰 검증한다. 시간 제한이 엄격한 제어는 로컬 컨트롤러에서 실행하고 클라우드는 학습·관리·지연 허용 업무 계획에 사용한다.
 
-**고객 니즈/문제**: "학습은 클라우드에서 했는데, 로봇에 어떻게 배포하고 OTA[^ota]로 관리하나? 실시간인데 클라우드 왕복은 안 되지 않나?"
+**솔루션 개요**: [Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)는 컴포넌트 배포·관리를 지원한다 `[1]`. 정책별 지원 경로에 따라 PyTorch·ONNX/TensorRT 등을 선택하되 모든 VLA가 같은 export·지연을 지원한다고 가정하지 않는다. [Edge Manager 종료](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html) 이후에도 모델 변환·장치 검증·운영 책임은 프로젝트에서 정해야 한다.
 
-**솔루션 개요** `[1]/[3]`:
+| 확인 항목 | 기록할 증거 |
+|---|---|
+| 모델/장치 호환성 | 가중치·런타임·드라이버·센서·행동 단위와 정규화 |
+| 시간 조건 | 관측 갱신, 추론 지연, 동작 실행 주기, 최악 지터 |
+| 업데이트 | 모델·앱·설정 버전과 서명/해시, 이전 정상 묶음 |
+| 운영 | 통신 단절, 취소·시간 초과, 사람 개입, 복구 시험 |
 
-- **엣지 HW**: **[Jetson](https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-thor/) Thor(Blackwell) GA**, T5000 프로덕션 모듈 유통. Jetson Orin 계열도 여전히 생산(저전력). 스펙·가격은 아래 접힌 블록.
-- **배포/관리**: **[AWS IoT Greengrass V2](https://docs.aws.amazon.com/greengrass/v2/developerguide/what-is-iot-greengrass.html)**(GA) — Lambda/Docker/커스텀 컴포넌트, ML 추론 컴포넌트, MQTT[^mqtt] 텔레메트리. ⚠️ **Greengrass V1은 2026-06-01 지원 종료** — V2만 현행.
-- **모델 경로**: PyTorch 정책 → **[ONNX](https://onnx.ai/)** → **[TensorRT](https://developer.nvidia.com/tensorrt)** 엔진 컴파일(온디바이스 가속)로 실시간 제어 지연 예산(sub-20~30ms급)[^latency]을 맞추는 것이 표준 경로. [SageMaker Neo](https://docs.aws.amazon.com/sagemaker/latest/dg/neo.html)(엣지 컴파일)는 존속하며 Greengrass와 조합.
-- ⚠️ **SageMaker Edge Manager EOL(2024-04-26)** — 콘솔·API 전부 불가. **드롭인 매니지드 후속 서비스 없음**. AWS 권고 = ONNX + Greengrass V2 (+ 선택적 SageMaker Neo).
+**action chunking 정정**: 여러 미래 동작의 출력은 새로운 관측에 대한 피드백과 다르다. 추론 Hz × chunk 크기를 제어 주파수라고 쓰지 않는다. native chunk 전체를 항상 실행해야 한다는 보편 규칙도 없다. 모델·실행 horizon·전환 방식별로 재평가한다([PI RTC](https://www.physicalintelligence.company/research/real_time_chunking), [근거 기록](evidence.md#action-chunking)).
 
-```mermaid
-graph LR
-    PT["PyTorch 정책<br>(클라우드 학습)"] --> ONNX[ONNX 변환]
-    ONNX --> TRT["TensorRT 엔진<br>온디바이스 가속"]
-    TRT --> JET["Jetson Thor<br>온보드 실시간 제어"]
-    GG["AWS IoT Greengrass V2<br>OTA · 컴포넌트 · MQTT"] -. 배포 · 관리 .-> JET
-    EM["SageMaker Edge Manager<br>2024-04 EOL"] -. x 후속 없음 .-> GG
-```
+**AWS 매핑**: S3 모델 아티팩트, Greengrass V2·IoT Jobs 배포 관리, IoT Core 상태·이벤트를 필요에 맞게 조합한다. 이 조합은 안전 인증이나 실시간 제어 보증이 아니다.
 
-<details markdown="1"><summary>🔄 휘발성 데이터 (엣지 HW 스펙·가격 — 2026-07 확인)</summary>
-
-| 항목 | 값 | 출처 |
-|---|---|---|
-| Jetson Thor GA | 2025-08-25 발표, dev kit $3,499(→ 2026-07 인상 $5,499), 2025-11 출하 시작 | NVIDIA `[3]` |
-| Jetson 가격 인상 (2026-07-22) | Orin Nano Super devkit $249→$399 · Orin NX 16GB 모듈 $599→$999 · AGX Orin 64GB 모듈 $1,599→$2,999 · **AGX Thor devkit $3,499→$5,499** · T5000(Thor 모듈) $2,999→$4,999 — 엣지 BOM 산정 시 구가격 견적 주의 | NVIDIA 스토어 `[3]` |
-| AGX Thor 스펙 | Blackwell GPU, 128GB 통합 LPDDR5X, 130W, FP4 지원 | NVIDIA `[3]` |
-| Thor vs Orin | NVIDIA 공식: 정규화 AI 컴퓨트 ~7.5배, 에너지효율 ~3.5배. ⚠️ Thor=FP4/FP8 TFLOPS, Orin=INT8 TOPS — 원시 수치 직접 비교 금지 | NVIDIA `[3]` |
-| ONNX→TensorRT 가속 | ~7배(벤더 수치, NVIDIA Jetson 블로그 2025, 모델·HW 의존 — 인용 시 조건 병기) | NVIDIA `[3]` |
-</details>
-
-**배포 스택이 실제로 해주는 것** `[1]` (docs 2026-07 확인):
-
-| 구성요소 | 기술 요약 | 엣지 배포 관점 |
-|---|---|---|
-| **Jetson Thor** | Blackwell GPU 온보드 엣지 컴퓨터(128GB 통합 메모리) — 실시간 추론을 로봇 안에서 해결 | System 1 정책이 사는 곳 |
-| **Greengrass V2** | **컴포넌트**(레시피 + S3 아티팩트) 단위 소프트웨어 배포 런타임 — 플릿 OTA, 프로세스 간 통신(IPC)·MQTT 프록시, 로그 매니저 | 모델·추론 앱을 로봇 플릿에 버전 관리하며 배포하는 통로 |
-| **ONNX → TensorRT** | 프레임워크 중립 포맷으로 export 후 디바이스 GPU에 맞춰 커널 융합·정밀도 최적화 컴파일 | sub-20~30ms 지연 예산을 맞추는 표준 경로 |
-| **SageMaker Neo** | 타깃 하드웨어별 모델 컴파일 매니지드 서비스(선택) | TensorRT를 직접 다루기 어려운 팀의 대안 |
-| **IoT Core (MQTT)** | 경량 발행/구독 메시징 브로커 — 텔레메트리 상향, 명령 하향 | 로봇 상태·이벤트의 클라우드 연결점 |
-| **IoT Jobs** | 플릿 대상 원격 작업(OTA) 오케스트레이션 — 단계적 롤아웃·중단·재시도 | 모델 v2를 100대에 안전하게 밀어넣는 메커니즘 |
-
-**AWS 매핑**: IoT Greengrass V2 + IoT Core(MQTT) + SageMaker Neo(컴파일) + S3(모델 아티팩트) + IoT Jobs(OTA). Model Monitor로 엣지 텔레메트리 수집.
-
-**의사결정 기준** (상세 → [decisions Cloud vs Edge](decisions.md)):
-
-- **30~100Hz+ 반응형 제어**(균형·힘·파지·보행) → **반드시 온보드 Jetson**. 클라우드 왕복 불가.
-- **sub-1Hz~few-Hz 고수준 계획·VLA 추론** → 클라우드/비동기 가능. **action chunking**이 두 rate를 잇는 다리 — **실효 제어 주기 = 추론 Hz × chunk 크기**(π0.5가 Jetson에서 ~10Hz 추론이어도 chunk 10스텝이면 실효 ~100Hz).
-- ⚠️ **chunk는 저장 포맷이 아니라 정책의 일부** `[2]`: native chunk를 쪼개 1-step씩 실행하면 정책이 무너진다(실측: 20-step 실행 3/10 성공 → 1-step 실행 0/48). **실행은 학습된 native chunk 그대로, 저장만 per-step으로**.
-- 매니지드 엣지 서비스 원함 → 없다고 정직히 말하고 ONNX+Greengrass V2 설계 제공.
-
-**고객 사례**: (엣지 배포 자체의 공개 AWS 로봇 사례 제한적 — 참조 아키텍처 중심)
-
-**➡️ 다음 액션**: **"Jetson Thor(온보드 제어) + Greengrass V2(OTA/관리) + ONNX→TensorRT" 엣지 참조 아키텍처를 그려주고**, "Edge Manager 없어졌다"는 점을 선제적으로 알려 고객의 잘못된 기대를 정정. 실시간 요구 Hz를 물어 엣지/클라우드 경계 확정.
+**의사결정 기준·다음 액션**: [네 계층](operations.md#layers)에 책임자를 지정하고 [장애 시험](operations.md#failure)을 작성한다. [실행 경로 C](execution.md#finetuning)에서 학습 결과를 넘겨받아 감독하에 소수 장치로 검증한다.
 
 **🔗 관련 자산**:
 
 - 플레이북: [pillar-2 System1/System2](pillar-2.md) · [pillar-5 오케스트레이션](pillar-5.md) · [decisions](decisions.md)
-- [VLA Hub — 실시간 VLA 추론 허브 on AWS](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples. OSS VLA 6종(GR00T N1.6/N1.7·π0.5·OpenVLA-7B·SmolVLA-450M·LAP-3B)을 모델별 독립 gRPC 엔드포인트로 CDK 배포(ECS on EC2 g5/g6, 내부 NLB). 배포 시점에 GPU 가용 AZ 자동 탐지, 동일 컨테이너·proto의 Jetson(Orin/Thor) 단일 디바이스 트랙 포함 — System 2 클라우드/엣지 추론 경로를 한 코드베이스로. 모델별 라이선스·적응 비용·시나리오 추천을 정리한 capability matrix가 고객 상담용으로 유용. ⚠️ 초기 단계(2026-05 생성)·내부 NLB 전용(클라이언트 동일 VPC 필수)·GR00T는 라이선스 확인 필수
+- [VLA Hub — 실시간 VLA 추론 허브 on AWS](https://github.com/aws-samples/sample-vla-hub-on-aws) — aws-samples. OSS VLA 6종(GR00T N1.6/N1.7·π0.5·OpenVLA-7B·SmolVLA-450M·LAP-3B)을 모델별 독립 gRPC 엔드포인트로 CDK 배포(ECS on EC2 g5/g6, 내부 NLB). 배포 시점에 GPU 가용 AZ 자동 탐지, 동일 컨테이너·proto의 Jetson(Orin/Thor) 단일 디바이스 트랙 포함 — VLA 클라우드/엣지 추론 경로를 한 코드베이스로. 모델별 라이선스·적응 비용·시나리오 추천을 정리한 capability matrix가 고객 상담용으로 유용. ⚠️ 초기 단계(2026-05 생성)·내부 NLB 전용(클라이언트 동일 VPC 필수)·GR00T는 라이선스 확인 필수
 - [ROS2 OTA 펌웨어 업데이트](https://github.com/aws-samples/ros2-ota-firmware-updates) — aws-samples. Greengrass V2 + IoT Jobs로 ROS2 플릿 펌웨어 OTA 참조 구현 — 디바이스 에이전트가 Docker 레지스트리에서 이미지 풀, 실패 시 이전 정상 버전 자동 롤백, 인터넷 미연결 디바이스는 Greengrass 프록시 경유. 위 표의 IoT Jobs 행을 실코드로 보여주는 자산
 
 ---
@@ -118,7 +84,7 @@ graph LR
 
 ---
 
-## 3. Sim-to-Real 방법론  🟢 GA (안정 원리)
+## 3. Sim-to-Real 방법론 — 적용 조건 검토 { #3-sim-to-real-방법론--ga-안정-원리 }
 
 **L0 TL;DR**: 검증된 처방은 화려한 신기법이 아니라 **선택적 DR + SysID + RL을 MPC 위에 얹는 하이브리드**다. 무작정 다 랜덤화하면 RL이 불안정해진다.
 
@@ -205,7 +171,7 @@ graph LR
 
 ---
 
-## 6. 실기체 셀의 안전 규제 — 국제 표준과 한국 법정 요구  🟢 GA (규제 — 저변동)
+## 6. 실기체 셀의 안전 규제 — 설치별 적용 확인 { #6-실기체-셀의-안전-규제--국제-표준과-한국-법정-요구--ga-규제--저변동 }
 
 **L0 TL;DR**: 사람 곁에서 움직이는 로봇은 법으로 방호장치를 갖춰야 한다. 국제적으로는 **ISO 10218-1/-2:2025 + ISO/TS 15066(협동로봇)**, 한국은 여기에 **「산업안전보건기준에 관한 규칙」 제223조(원칙적 높이 1.8m 이상 울타리) + KCs[^kcs] 의무안전인증 방호장치**가 얹힌다. 이 셋업 비용·리드타임이 실기체 검증을 느리게 만드는 세 번째 벽이고, 뒤집으면 시뮬레이션의 경제 논거다(→ [pillar-3](pillar-3.md)).
 
@@ -244,16 +210,9 @@ _owner: Youngjin · updated: 2026-09 · volatility: 중간 (엣지 HW·벤더 �
 
 <!-- 용어 각주 -->
 
-[^s2r]: **sim-to-real** — 시뮬레이션에서 학습한 정책을 실제 로봇으로 옮기는 것, 또는 그 방법론. 시뮬레이션과 현실의 물리·시각 차이(도메인 갭) 때문에 그냥 옮기면 성능이 무너진다. 🎥 [NVIDIA sim-to-real 로보틱스 쇼케이스](https://www.youtube.com/watch?v=sffNvv3GkRA)
-[^loco]: **로코모션(locomotion)** — 보행·주행 등 로봇이 이동하는 능력. 로봇과 지면의 접촉이라는 상대적으로 단순한 물리 덕분에 sim-to-real이 가장 먼저 풀린 영역이다.
-[^manip]: **매니퓰레이션(manipulation, 조작)** — 물체를 집고 옮기고 조립하는 능력. 손끝 접촉의 물리가 복잡해 sim-to-real이 아직 풀리지 않은 영역이다.
 [^dyn]: **동역학(dynamics)** — 힘·마찰·충돌이 만드는 운동의 물리. 특히 물체를 쥘 때의 접촉 동역학은 시뮬레이터가 정확히 재현하기 가장 어려운 부분이다.
 [^dr]: **도메인 랜덤화(Domain Randomization)** — 시뮬레이션의 조명·질감·물체 위치·카메라 각도·물리 파라미터를 무작위로 바꿔가며 데이터를 생성·학습시키는 기법. 정책이 어떤 환경 변화에도 견디게 만든다 — sim-to-real의 대표 처방.
 [^sysid]: **시스템 식별(SysID, System Identification)** — 실물 로봇의 물리 파라미터(마찰·질량·모터 응답)를 측정해 시뮬레이터를 실물에 맞게 보정하는 작업.
 [^mpc]: **MPC (Model Predictive Control)** — 짧은 미래를 반복 예측·최적화하며 제어하는 고전 제어 기법. 학습된 RL 정책을 MPC 위에 얹는 하이브리드가 검증된 처방으로 자리 잡았다.
-[^onnx]: **ONNX / TensorRT** — ONNX는 프레임워크 간 모델 교환 표준 포맷, TensorRT는 NVIDIA GPU용 추론 최적화 컴파일러. "PyTorch → ONNX → TensorRT" 변환이 엣지 실시간 추론의 표준 경로다.
-[^ota]: **OTA (Over-The-Air)** — 네트워크로 원격에서 로봇의 모델·소프트웨어를 갱신·배포하는 방식.
-[^latency]: **지연 예산(latency budget)** — 실시간 제어 루프가 허용하는 최대 추론 시간. 30~100Hz 제어면 한 사이클이 10~33ms이므로, 추론이 이 안에 끝나야 한다 — 클라우드 왕복이 불가능한 이유다.
-[^mqtt]: **MQTT** — IoT 표준 경량 발행/구독(pub/sub) 메시징 프로토콜. 불안정한 네트워크에서도 작은 대역폭으로 로봇 텔레메트리와 명령을 주고받는 데 쓰인다.
 [^kcs]: **KCs (안전인증)** — 한국 산업안전보건법 제84조에 따른 위험 기계·기구·방호장치의 의무 안전인증 마크. 라이트커튼·레이저 스캐너 같은 방호장치는 KCs 인증품만 법정 방호장치로 인정된다.
 [^aopd]: **라이트커튼 (AOPD, 광전자식 방호장치)** — 다수의 적외선 빔으로 가상의 "빛의 벽"을 만들어, 사람 신체가 빔을 가리면 즉시 기계를 정지시키는 감응형 방호장치. 울타리를 칠 수 없는 개구부에 쓰며, 국제 규격은 IEC 61496-2(면적 감시형 레이저 스캐너는 IEC 61496-3)다.

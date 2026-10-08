@@ -1,46 +1,51 @@
 ---
-ko_hash: 62cdee875eec2ac591bec215c23b02eed13b0298
+ko_hash: 31a7299c4c1d83b76d8c7996a7b2032c7473f488
 ---
-# Executive Brief — Physical AI: What to Do and What to Wait On
+# Executive Brief — business value and investment approval
 
-_Last updated: 2026-07 · owner: Youngjin · volatility: medium_
-[← to index](index.md)
+_Last updated: 2026-09 · owner: Youngjin · volatility: medium_
 
-> **L0 TL;DR**: Robotics is meeting foundation models, putting the industry at an inflection point. But **what to invest in now differs from what to watch**. This page draws that line without the hype — 5 minutes.
+**L0 TL;DR**: Choose one business task and compare existing automation and products. Expand investment after a bounded experiment establishes benefit, total cost, and operability.
 
-## ① Why now
+## ① Why now?
 
-Three verification signals have stacked up. First, Agility Digit has run for pay under a multi-year RaaS contract at GXO logistics sites, logging more than 65,000 hours as of 2025-11 with customer cross-confirmation — the best-verified paid humanoid work to date. Second, Figure 02 ran a verification pilot on a BMW line (whereas Figure 03's "8-hour autonomous shift" is only a CEO tweet with no independent verification). Third, open foundation models such as Physical Intelligence's π0 have been released under Apache-2.0, making commercial fine-tuning possible. That said, no independent third-party autonomy audit of humanoids exists anywhere yet ([pillar-4](pillar-4.md)), so large-scale deployment forecasts remain items to watch, grounded only in vendor and customer PR.
+Public models and simulation/training assets can be evaluated, but product releases and service GA do not establish customer profitability. Connect [model choices](pillar-2.md), [execution paths](execution.md), and [evidence](evidence.md) to form a hypothesis for your environment.
 
-## ② What it means for our industry
+## ② What does this mean for our industry?
 
-**Manufacturing**: A path has opened to fine-tune open VLA models to your own tasks. Rather than training from scratch, the realistic approach is to teach a specific process with a small number of real demonstrations ([pillar-2](pillar-2.md)).
-**Logistics**: Locomotion-based (walking) robots are already deployed at paid commercial sites. Precision manipulation, by contrast, is still at the research/preview stage, so task scope must be kept narrow ([pillar-4](pillar-4.md)).
-**Automotive**: The training pipeline for moving policies trained at scale in simulation to real hardware has matured. Parallel simulation on cloud GPUs lowers the barrier to entry ([pillar-3](pillar-3.md)).
-
-## ③ What is real and what is hype
-
-| Verdict | Meaning | Representative areas |
+| Example task | Measure first | Alternatives |
 |---|---|---|
-| 🟢 **Invest now** | Verified foundational capabilities | Robot data pipelines · simulation infrastructure · synthetic data |
-| 🟡 **Soon (12–24 months)** | Worth a pilot | VLA fine-tuning capability · edge inference stack · agent orchestration |
-| ⚪ **Not yet** | Items to watch | Large-scale humanoid adoption · fully autonomous shifts |
+| Manufacturing inspection/part handling | Defects, rework, cycle time, interventions | Existing vision/control improvements, commercial cells, SI |
+| Logistics transport/loading | Throughput, downtime/recovery, environmental changes | Existing AMR/fleet products, process improvements |
+| Robot product development | Data preparation/training/evaluation time, physical failures | Existing development-stack improvements, cloud experiments |
 
-This distinction is not arbitrary. 🟢 holds because data pipelines and synthetic data ([pillar-1](pillar-1.md)) and simulation infrastructure ([pillar-3](pillar-3.md)) are GA and usable in production. 🟡 reflects that VLA fine-tuning is GA but lacks public real-world cases ([pillar-2](pillar-2.md)), and that edge/agents ([pillar-5](pillar-5.md)) are early in verification. ⚪ comes from the verdict that large-scale humanoid adoption such as Optimus and Figure 03 remains at the demo/roadmap stage ([radar](radar.md#-hardware--deployment-roadmap--demo)). This verdict is not made once and left alone — a continuous verification system that scans every week ([radar](radar.md)) updates it through promotions and demotions.
+These are discovery examples. A particular model or humanoid is not the default answer for every task.
 
-## ④ So what do we do first
+## ③ What is real and what is hype?
 
-The honest answer is "data first." The bottleneck in robot learning is not the model but the data, and the real-world recipe is almost always a three-stage mix of **open-dataset pretraining → synthetic data augmentation → fine-tuning on a small number of real demonstrations** ([pillar-1](pillar-1.md)). Set the order as three steps. (1) Stand up the data pipeline first to accumulate assets, (2) secure low-cost, high-diversity data with a simulation PoC, and (3) on top of that, verify a VLA fine-tuning pilot on a narrow task. LoRA fine-tuning is possible with a single GPU, so the pilot entry cost is low ([pillar-2](pillar-2.md)).
+| Decision | Required conditions | Action |
+|---|---|---|
+| Bounded experiment | Measurable baseline, usage rights, owners, spending cap | Approve the [pilot card](start.md#pilot) |
+| Site pilot | Improvement on separate evaluation; latency/safety/recovery test plan | Limited scope under supervision |
+| Expand operations | Site outcomes, actual operating cost, interventions/recovery, support owners | Expand in stages |
+| Hold/alternative | Unclear rights/safety ownership, more economical alternatives, repeated missed targets | Resolve gaps or choose another approach |
 
-## ⑤ Why do it with AWS
+Do not use a generic “invest now because GA” or “results in 12–24 months” timetable. Separate product release, reproduction, and customer-site validation.
 
-Three verified facts are enough. First, there is an official AWS blog case that trained Unitree H1 humanoid RL on Isaac Lab + SageMaker HyperPod (noting explicitly that this is RL locomotion, not VLA) ([pillar-2](pillar-2.md)). Second, Amazon Bedrock AgentCore is GA with full support in the Seoul region, so you can put agent orchestration on it without data residency concerns ([pillar-5](pillar-5.md)). Third, you can self-host open models such as π0 (Apache-2.0) and OpenVLA (MIT) and use them freely without vendor lock-in ([pillar-2](pillar-2.md)).
+## ④ Where do we start?
 
-## If you want to start a review
+Complete the [eight discovery questions](start.md#fit) and compare the current approach. If learning is needed, choose data collection, simulation, or fine-tuning for the present bottleneck. Separate preparation time from training runtime.
 
-**1-day architecture workshop**: We recommend a diagnosis of your data assets plus applying the judgment matrix above to your situation. Reach out via your AWS SA or [GitHub](https://github.com/comeddy/pai-playbook).
+**Calculate ROI on total cost**: initial hardware, integration, data, staff, and safety validation; recurring maintenance, interventions, and cloud. Check payback in low/base/high scenarios using the [ROI worksheet](start.md#roi).
 
----
-**Go deeper**: [Technical Guide](guide.md) · [P1 Data](pillar-1.md) · [P3 Simulation](pillar-3.md) · [Decision Tree](decisions.md)
+## ⑤ Why work with AWS?
 
-_owner: Youngjin · updated: 2026-07 · volatility: medium (the judgment matrix is updated on radar promotions/demotions)_
+Assess reuse of existing AWS data, security, and operations; measure small, then add services only as needed. [Decisions](decisions.md) covers single-GPU, managed, and multi-node choices. Assign cloud support, model-provider support, and robot/SI site responsibility separately.
+
+Seoul availability does not guarantee Korea-only processing ([AgentCore evidence](evidence.md#agentcore-residency)). Code licenses alone do not establish commercial weight rights ([OpenVLA evidence](evidence.md#openvla-license)). Evaluate portability without promising “no lock-in.”
+
+## To begin
+
+The business owner, technical team, and AWS contact complete the [pilot approval card](start.md#pilot): **one task, baseline, spending/time caps, operations/safety owners, success/stop criteria**. Then follow [execution paths](execution.md) and [release gates](operations.md#release).
+
+_owner: Youngjin · updated: 2026-09 · volatility: medium_

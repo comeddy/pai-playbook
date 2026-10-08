@@ -7,8 +7,8 @@
 [![English](https://img.shields.io/badge/lang-English-blue)](#english)
 [![한국어](https://img.shields.io/badge/lang-%ED%95%9C%EA%B5%AD%EC%96%B4-red)](#한국어)
 
-A verification-first Physical AI reference for AWS solutions architects — architecture direction, AWS mapping, and next actions in four languages.
-AWS SA를 위한 검증 우선 Physical AI 참조 자산 — 아키텍처 방향·AWS 매핑·다음 액션을 4개 언어로 제공합니다.
+Physical AI guidance for customers and AWS staff — business fit, ROI, execution, and operations in four languages.
+고객과 AWS 직원을 위한 Physical AI 가이드 — 업무 적합성·ROI·실행·운영을 4개 언어로 제공합니다.
 
 ---
 
@@ -16,23 +16,26 @@ AWS SA를 위한 검증 우선 Physical AI 참조 자산 — 아키텍처 방향
 
 ## Overview
 
-Physical AI Playbook is a curated reference site that lets an AWS solutions architect answer a customer's Physical AI question — robotics simulation, VLA model training, sim-to-real, data pipelines, agentic orchestration — with architecture direction, AWS mapping, and a concrete next action in under five minutes. Unlike a news archive, every item must pass a verification gate (THE FILTER) before it enters the body, and the site continuously monitors its own freshness and translation drift. The site is published in Korean (source), English, Chinese, and Japanese at [comeddy.github.io/pai-playbook](https://comeddy.github.io/pai-playbook/).
+Physical AI Playbook helps customers and AWS staff compare business alternatives, define pilot economics, and move through data collection, simulation, fine-tuning, and operating validation. Korean is the source of truth; English, Chinese, and Japanese follow it. Start with [business fit and ROI](docs/start.md), then use [execution paths](docs/execution.md), [operations and recovery](docs/operations.md), and [claim evidence](docs/evidence.md).
 
 > **Disclaimer**: This is a personal project. It is **not** official AWS (Amazon Web Services) documentation and does not represent AWS positions. Service specifications, pricing, and regional availability on this site must always be re-verified against the [official AWS documentation](https://docs.aws.amazon.com/).
 
 ## Features
 
-- **Verification pipeline (THE FILTER)** — candidates enter a Radar queue as unverified, and only items meeting 2 of 4 criteria (production-validated, AWS-mappable, real inquiry history, GA) are promoted to the body with maturity labels and source grades.
+- **Customer and staff paths** — discovery/ROI worksheet, a budget CSV, three pinned sample walkthroughs, and failure/recovery gates.
+- **Claim-level records** — `docs/assets/claims.json` records sources, check dates, affected pages, and human-review status. CI checks structure and four-language rendering; source comparison is not execution or AWS endorsement.
+
+- **Inclusion and evidence** — require a customer problem, primary sources/date/version, evidence/use limits, and an owner/next step. Release status, reproduction, site validation, and support are separate.
 - **Four-language i18n with drift detection** — Korean is the source of truth; each translation records a `ko_hash` fingerprint so CI automatically flags translations that fall behind.
-- **Weekly automated radar scan** — a scheduled cloud agent scans recent papers and news every Monday and refreshes the Radar intake section across all four languages.
+- **Radar intake** — the daily scan runbook collects unverified candidates; human owners decide promotion.
 - **Automatic staleness badges** — every page carries volatility metadata (1/3/6-month review cadence); CI injects a "review needed" badge when a page is overdue, refreshed by a weekly redeploy.
-- **Strict build gate** — every deploy must pass `mkdocs build --strict`, so no broken link or anchor ever reaches the live site.
+- **Structural build gate** — `mkdocs build --strict` checks internal document links/anchors. It does not verify external reachability, factual accuracy, translation meaning, or robot execution.
 
 ## Prerequisites
 
 - Python >= 3.9
 - Git
-- pip (packages are pinned in `requirements.txt`)
+- pip (package ranges are defined in `requirements.txt`)
 
 ## Installation
 
@@ -60,11 +63,14 @@ mkdocs build --strict
 
 # Check page freshness (volatility-based review cadence)
 python3 scripts/check_staleness.py --check
-# -> prints a 10-row report; exit 1 only when page metadata is missing
+# -> prints a 16-row report; exit 1 only when page metadata is missing
 
 # Check translation drift against the Korean source
 python3 scripts/check_translation_sync.py
-# -> "비동기: 0 / 30" means all 30 translations are in sync
+
+# Validate per-claim records and rendered evidence (read-only)
+python3 scripts/check_evidence.py
+# -> "비동기: 0 / 48" means all 48 translations are in sync
 ```
 
 Pushing to `main` triggers the GitHub Actions workflow, which runs the checks above and deploys to GitHub Pages.
@@ -73,7 +79,7 @@ Pushing to `main` triggers the GitHub Actions workflow, which runs the checks ab
 
 ```text
 pai-playbook/
-├── docs/                  # site content: 10 Korean source pages + .en/.zh/.ja translations
+├── docs/                  # site content: 16 Korean source pages + .en/.zh/.ja translations
 ├── i18n/glossary.md       # translation rules: fixed renderings, do-not-translate terms
 ├── scripts/
 │   ├── check_staleness.py         # freshness check + badge injection (CI)
@@ -123,23 +129,26 @@ This project is licensed under the Creative Commons Attribution 4.0 Internationa
 
 ## 개요
 
-Physical AI Playbook은 AWS 솔루션즈 아키텍트가 고객의 Physical AI 질문 — 로보틱스 시뮬레이션, VLA 모델 학습, sim-to-real, 데이터 파이프라인, 에이전트 오케스트레이션 — 에 대해 아키텍처 방향·AWS 매핑·다음 액션을 5분 안에 제시할 수 있게 하는 큐레이션 참조 사이트입니다. 뉴스 아카이브와 달리 모든 항목은 검증 관문(THE FILTER)을 통과해야 본문에 실리며, 사이트 스스로 신선도와 번역 표류를 상시 감시합니다. 한국어(원본)·영어·중국어·일본어 4개 언어로 [comeddy.github.io/pai-playbook](https://comeddy.github.io/pai-playbook/)에 배포됩니다.
+Physical AI Playbook은 고객과 AWS 직원이 업무 대안을 비교하고 파일럿 경제성을 정한 뒤 데이터 수집·시뮬레이션·파인튜닝·운영 검증으로 진행하도록 돕습니다. 한국어가 원본이며 영어·중국어·일본어가 함께 제공됩니다. [업무 적합성·ROI](docs/start.md), [실행 경로](docs/execution.md), [운영·복구](docs/operations.md), [주장별 근거](docs/evidence.md)를 사용합니다.
 
 > **면책 안내**: 이 사이트는 개인 프로젝트이며, **AWS(Amazon Web Services)의 공식 문서·공식 입장이 아닙니다.** 이 사이트의 서비스 사양·가격·리전 지원은 반드시 [AWS 공식 문서](https://docs.aws.amazon.com/)에서 재확인합니다.
 
 ## 주요 기능
 
-- **검증 파이프라인 (THE FILTER)** — 후보는 미검증 상태로 Radar 대기열에 먼저 들어가고, 4개 기준(production 검증·AWS 매핑·실제 문의 이력·GA) 중 2개 이상을 충족한 항목만 성숙도 라벨·출처 등급과 함께 본문으로 승격됩니다.
+- **고객·직원별 경로** — 업무·ROI 양식, 예산 CSV, 고정 커밋 기반 실행 경로 3개, 장애·복구 게이트를 제공합니다.
+- **주장별 근거 기록** — `docs/assets/claims.json`에 출처·확인일·영향 페이지·사람 검토 상태를 남깁니다. CI는 구조와 4개 언어 표시를 검사하며 원문 대조를 실실행이나 AWS 승인으로 취급하지 않습니다.
+
+- **수록·근거 기준** — 고객 문제, 1차 출처/날짜/버전, 근거/사용 한계, 소유자/다음 액션을 모두 요구합니다. 출시 상태·재현·현장 검증·지원 주체는 별개입니다.
 - **표류 감지가 있는 4개 언어 i18n** — 한국어가 원본이며, 각 번역은 `ko_hash` 지문을 기록해 원본보다 뒤처진 번역을 CI가 자동으로 경고합니다.
-- **주간 자동 Radar 스캔** — 스케줄된 클라우드 에이전트가 매주 월요일 최신 논문·뉴스를 스캔해 4개 언어의 Radar 유입 섹션을 갱신합니다.
+- **Radar 유입** — 일간 스캔 런북은 미검증 후보를 모으고 사람 owner가 승격을 판단합니다.
 - **자동 신선도 배지** — 모든 페이지가 변동성 메타데이터(1/3/6개월 검토 주기)를 가지며, 기한이 지나면 CI가 "검토 필요" 배지를 자동 주입하고 주간 재배포로 최신 상태를 유지합니다.
-- **strict 빌드 게이트** — 모든 배포는 `mkdocs build --strict`를 통과해야 하므로, 깨진 링크·앵커는 라이브 사이트에 도달하지 못합니다.
+- **구조 빌드 게이트** — `mkdocs build --strict`는 문서 내부 링크·앵커를 검사합니다. 외부 링크 접속·사실·번역 의미·로봇 실행을 검증하지 않습니다.
 
 ## 사전 요구 사항
 
 - Python >= 3.9
 - Git
-- pip (패키지는 `requirements.txt`에 고정되어 있습니다)
+- pip (패키지 범위는 `requirements.txt`에 정의되어 있습니다)
 
 ## 설치 방법
 
@@ -167,11 +176,14 @@ mkdocs build --strict
 
 # 페이지 신선도를 검사합니다 (변동성 기반 검토 주기)
 python3 scripts/check_staleness.py --check
-# -> 10행 리포트 출력; 페이지 메타데이터 누락 시에만 exit 1
+# -> 16행 리포트 출력; 페이지 메타데이터 누락 시에만 exit 1
 
 # 한국어 원본 대비 번역 표류를 검사합니다
 python3 scripts/check_translation_sync.py
-# -> "비동기: 0 / 30" 이면 30개 번역 전부 동기화 상태
+
+# Validate per-claim records and rendered evidence (read-only)
+python3 scripts/check_evidence.py
+# -> "비동기: 0 / 48" 이면 48개 번역 전부 동기화 상태
 ```
 
 `main`에 푸시하면 GitHub Actions 워크플로우가 위 검사를 수행한 뒤 GitHub Pages로 배포합니다.
@@ -180,7 +192,7 @@ python3 scripts/check_translation_sync.py
 
 ```text
 pai-playbook/
-├── docs/                  # 사이트 콘텐츠: 한국어 원본 10페이지 + .en/.zh/.ja 번역
+├── docs/                  # 사이트 콘텐츠: 한국어 원본 16페이지 + .en/.zh/.ja 번역
 ├── i18n/glossary.md       # 번역 규칙: 고정 역어, 번역 금지 용어
 ├── scripts/
 │   ├── check_staleness.py         # 신선도 검사 + 배지 주입 (CI)

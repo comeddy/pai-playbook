@@ -1,5 +1,5 @@
 ---
-ko_hash: a9cf88814e03cff0e4bc7460b12f2f59e01126f7
+ko_hash: ce0d72925b235ddb25e456a8d86a06c28bfb81ae
 ---
 # Pillar 1 — Data Collection & Processing
 
@@ -7,17 +7,21 @@ _Last updated: 2026-09 · owner: Youngjin · volatility: medium (dataset version
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: The bottleneck in Physical AI is not the model architecture but the **volume, diversity, and quality of robot behavior data**. Real data (teleoperation[^teleop]) is expensive and slow, open datasets are **a licensing minefield**, and synthetic data[^sdg] has only now become a practical pipeline. The SA's role is to design "where to get the data, and through which pipeline on AWS to turn it into a trainable form."
+> **L0 TL;DR**: For tasks that need robot learning, first check data rights, formats, and quality. Do not prescribe a data platform to every customer; use [business fit](start.md#fit) and the [collection path](execution.md#data) to scope it.
 
 ---
 
+> **Review scope**: the page edit date does not revalidate every technical item. See [Evidence](evidence.md) for core corrections, check dates, and reproduction/human review status; legacy item dates still apply.
+
 ## Top 3 questions customers ask most in this pillar
+
+> These are discovery examples, not a measured ranking of customer inquiries.
 
 1. **"Where do I get robot learning data? Can I just use open datasets?"** → [Open robot datasets](#1-open-robot-datasets--ga) (⚠️ check the license first)
 2. **"I'm short on real data — can I fill the gap with synthetic data?"** → [Synthetic data generation](#2-synthetic-data-generation--isaac-sim-sdg--replicator--ga), [Cosmos WFM](#3-nvidia-cosmos-world-foundation-models--ga-open-models--aws-is-self-hosted-compute)
 3. **"How do I turn our robot's teleoperation / ROS bag[^rosbag] data into a training pipeline on AWS?"** → [Data pipeline reference architecture](#4-robot-learning-data-pipeline-reference-architecture--ga), [Formats & conversion](#5-data-formats--conversion--lerobot-v3--rlds--ga)
 
-> **Stable principle (rarely changes)**: robot data is (1) **teleoperation/real data** — high quality, high cost, low diversity; (2) **synthetic/simulation data** — low cost, high diversity, with a domain gap[^gap]; (3) **open/web data** — for pretraining, mind the license. The practical recipe is almost always a 3-stage mix: **"open-dataset pretraining → synthetic-data augmentation → small-batch real-demo fine-tuning."**
+> **L0/L1**: Data paths differ by task. Choose real demonstrations, public data, and synthetic data based on baseline failures; preserve source rights and training/evaluation separation.
 
 ```mermaid
 graph LR
@@ -102,7 +106,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: case pending (no explicit Korean case confirmed).
 
-**➡️ Next action**: **propose an "Isaac Sim SDG pipeline on EC2 G6e/G7e + AWS Batch" workshop**. If the customer has CAD/USD assets of their real environment, demo a synthetic-dataset sample generation in a 1-day PoC.
+**➡️ Next action**: inspect CAD/USD assets, sensor/label requirements, and environment-creation time first. Use the [execution path](execution.md#simulation) to compare synthetic-data quality with the baseline, and estimate preparation separately from runtime.
 
 **🔗 Related assets**:
 
@@ -131,7 +135,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 **Customer case**: **NAVER Labs** — uses Cosmos to build a "Seoul World Model" from street-view/spatial data (2026-06 NVIDIA agreement). ⚠️ **NVIDIA-aligned (not AWS)** `[3]`. **Doosan Robotics** — integrates Cosmos into its Agentic Robot OS (NVIDIA-aligned) `[3]`.
 
-**➡️ Next action**: when a Korean robotics customer is interested in Cosmos → **propose from the angle of "open weights, so self-hostable on AWS EKS/Batch/G7e"** (drawing NVIDIA-aligned customers toward AWS compute). Be honest that it is not a managed host and that real-world training validation is at an early stage.
+**➡️ Next action**: compare managed versus self-hosted Cosmos for operating burden, processing locations, licensing, quality, and cost. Choose AWS when it meets those requirements.
 
 **🔗 Related assets**: [pillar-2 Model Training](pillar-2.md) · [pillar-3 Simulation](pillar-3.md)
 
@@ -139,7 +143,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 ## 4. Robot learning data pipeline reference architecture  🟢 GA
 
-**L0 TL;DR**: collection (teleoperation/sensor/ROS bag) → S3 lake → conversion & quality checks → FSx Lustre training channel → HyperPod training → validation. The individual services are all GA, but **there is still no public end-to-end case for manipulation robots** (an honest whitespace).
+**L0 TL;DR**: collection (teleoperation/sensor/ROS bag) → S3 lake → conversion & quality checks → FSx Lustre training channel → HyperPod training → validation. The individual services are all GA, but **there is still no public end-to-end case for manipulation robots** (an honest integration gap).
 
 **Customer need/problem**: "Our source data (robot logs, cameras, ROS bags) is just piling up in S3. We want to make it flow into a trainable form."
 
@@ -257,12 +261,9 @@ _owner: Youngjin · updated: 2026-09 · volatility: medium (dataset versions/siz
 <!-- 용어 각주 -->
 
 [^vla]: **VLA (Vision-Language-Action)** — a foundation model that takes camera images (Vision) and natural-language instructions (Language) as input and directly outputs robot actions (Action). Say "pick up the cup" and it generates the joint motions. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^teleop]: **Teleoperation** — a data-collection method in which a human remotely operates a robot with VR controllers, leader arms, etc., recording demonstration motions. Quality is the highest, but human time translates directly into cost. 🎥 [Stanford Mobile ALOHA teleoperation demo](https://www.youtube.com/watch?v=mnLVbwxSdNM)
-[^sdg]: **Synthetic Data Generation (SDG)** — a technique that uses a simulator to auto-generate training images and annotations (labels). Its biggest advantage: labeling cost converges to zero. 🎥 [Isaac Sim Replicator SDG tutorial](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^traj]: **Episode/trajectory** — one recording of a robot performing a task from start to finish. A time-series bundle of observations (cameras/sensors) and actions (joint commands); the basic unit of robot learning data.
 [^embodiment]: **Embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.
 [^dr]: **Domain Randomization (DR)** — a technique that randomly varies the simulation's lighting, textures, object positions, camera angles, and physics parameters during data generation or training. The model learns features that hold in any environment — the classic prescription for shrinking the sim-to-real gap.
-[^gap]: **Domain gap** — the phenomenon where a model that worked well in simulation loses performance on real hardware because of the differences (physical/visual) between simulation and reality. The methodology for handling this gap is sim-to-real in [pillar-4](pillar-4.md).
 [^wfm]: **World Foundation Model (WFM)** — a large model trained to predict/generate the next scenes of the physical world. From text/video prompts it creates physically plausible video and scenarios to augment robot training data. 🎥 [NVIDIA Cosmos introduction](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^rosbag]: **ROS bag (rosbag2)** — the standard log format in which the robot operating system ROS 2 records topics (sensor/command streams) wholesale. The de facto default form of robot companies' raw data, but it cannot be used for training as-is and requires conversion.
 [^fmt]: **RLDS / LeRobotDataset** — the two dominant storage formats for robot learning data. RLDS is based on TensorFlow Datasets and is read directly by major VLA training code; LeRobotDataset (v3) is the Parquet+MP4-based Hugging Face ecosystem standard.

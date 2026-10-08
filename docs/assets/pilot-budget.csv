@@ -1,0 +1,9 @@
+category,item,quantity,unit,unit_cost_usd,subtotal_usd,source_checked_at
+initial,robot_and_sensors,,set,,"=IF(OR(C2="""",E2=""""),""PENDING"",C2*E2)",
+initial,integration_and_safety,,hour,,"=IF(OR(C3="""",E3=""""),""PENDING"",C3*E3)",
+initial,data_and_environment,,hour,,"=IF(OR(C4="""",E4=""""),""PENDING"",C4*E4)",
+experiment,gpu_instances,,instance_hour,,"=IF(OR(C5="""",E5=""""),""PENDING"",C5*E5)",
+experiment,storage_network_logs,,month,,"=IF(OR(C6="""",E6=""""),""PENDING"",C6*E6)",
+experiment,engineering_and_retries,,hour,,"=IF(OR(C7="""",E7=""""),""PENDING"",C7*E7)",
+monthly,maintenance_and_interventions,,hour,,"=IF(OR(C8="""",E8=""""),""PENDING"",C8*E8)",
+monthly,cloud_inference_and_revalidation,,month,,"=IF(OR(C9="""",E9=""""),""PENDING"",C9*E9)",

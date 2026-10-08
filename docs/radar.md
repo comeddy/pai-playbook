@@ -3,11 +3,13 @@
 _최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음_
 [← index로](index.md)
 
-> **L0 TL;DR**: 포함 기준([2.5 THE FILTER](maintenance.md#포함-기준-the-filter))을 아직 통과 못했지만 **지켜볼 것들**. 각 항목은 한 줄 — 성숙도 라벨 + **왜 주목받는지 + 왜 대기 중인지**. 게이트(4개 중 2개)를 통과하면 담당 필러 owner가 표준 템플릿으로 승격한다.
+> **L0 TL;DR**: 원문·재현·현장 검증이 더 필요한 후보 목록이다. [수록 기준](maintenance.md#포함-기준-the-filter)을 모두 확인하고 owner가 사용 범위를 검토해야 본문으로 승격한다. 자동 스캔은 승격을 승인하지 않는다.
 >
 > ⚠️ **여기 있는 항목을 고객 제안에 "성숙한 역량"처럼 쓰지 말 것.** 화려한 데모가 배포 가능성을 가리는 경우가 많다.
 
 ---
+
+> **검토 범위**: 페이지 수정일은 모든 기술 항목의 재검증일이 아니다. 핵심 정정의 확인일·재현/사람 검토 상태는 [근거 기록](evidence.md)에 있으며, 기존 항목의 개별 확인일은 그대로 적용한다.
 
 ## 🔬 모델 / 알고리즘 (검증 대기)
 
@@ -68,10 +70,11 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음_
 | **[Agility Robotics Digit 5](https://www.agilityrobotics.com/content/agility-unveils-digit-5-humanoid-robot-built-for-cooperatively-safe-work-at-scale)** (기존 Digit@GXO 대비 근접 협업 안전 아키텍처·90분 러닝타임 배터리를 갖춘 5세대 범용 휴머노이드) | 🟡 Preview | ✨ **주목**: pillar-4에 "가장 잘 검증된 유료 휴머노이드"로 이미 오른 Agility Digit(@GXO)의 차세대 모델 — 충돌 위험 감지 시 회피·정지·착석 + 시청각 신호로 사람과 근접 작업이 가능한 안전 설계, 90분 구동·9분 충전, CE 마킹으로 EU·영국 진입 계획 발표<br>⏳ **대기**: Agility 공식 발표(2026-09-15, agilityrobotics.com) `[4]` — 다년 주문 3억 달러+는 "2026-05 기준, 계약 마일스톤 충족 조건부"이며 Digit 5 실가동은 0(기존 65,000시간+ 실적은 Digit 4). Early access 2027 상반기, 제조·창고 고객 GA는 2027년 말 예정. 🔗 링크 200 · 원문 대조 2026-09-27. **AWS 각도: 없음** | Digit 5 실가동 고객 사례 공개(EU/북미) + 안전 아키텍처 3자 검증 |
 | **[Qualcomm × PickNik(MoveIt) 인수](https://www.qualcomm.com/news/releases/2026/09/qualcomm-to-acquire-picknik-to-advance-the-future-of-open-roboti)** (ROS 매니퓰레이션 표준 MoveIt 메인테이너 인수, Dragonwing 엣지 AI 플랫폼·Arduino로 통합 예정) | ⚪ 로드맵 | ✨ **주목**: Qualcomm이 로보틱스 오픈소스 매니퓰레이션 프레임워크 MoveIt의 오랜 관리사 PickNik을 인수해 MoveIt·MoveIt Pro를 자사 Dragonwing 로보틱스 플랫폼과 Arduino(VENTUNO Q 보드부터)에 통합 예정 — Intrinsic Core(Alphabet, 같은 주 ROSCon 2026 Toronto)와 함께 Isaac 일강 구도에 반도체·엣지 벤더발 오픈 로보틱스 스택 경쟁이 겹쳐 등장, pillar-4 엣지 추론 축(NVIDIA Jetson 대안)에 관찰 대상 추가<br>⏳ **대기**: Qualcomm 공식 발표(2026-09-23, qualcomm.com) `[4]` — 계약 조건 비공개, "통상적 종료 조건" 전제로 딜 미종결. MoveIt 1·2는 오픈소스 유지 방침이나 Dragonwing 통합·Arduino 확장은 로드맵 단계, 실제 통합 제품 출시 없음. 🔗 링크 200 · 원문 대조 2026-09-27(발표일·인수 대상·Dragonwing/Arduino 통합 방침은 원문 메타데이터로 확인, 조건 비공개·오픈소스 유지는 The Robot Report 교차). **AWS 각도: 없음(경쟁 엣지 스택)** | 딜 종결 + Dragonwing/Arduino 통합 제품 출시 |
 
-## ⚰️ 폐기됨 — 제안 금지 (기록 보존용)
+## 종료·가입 제한 — 상태별 확인 { #-폐기됨--제안-금지-기록-보존용 }
 
 | 항목 | 상태 | 대체 |
 |---|---|---|
+| **[AWS IoT FleetWise](https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/what-is-iotfleetwise.html)** | 신규 고객 가입 제한, 기존 고객 이용 가능 `[1]` | 신규 로봇 기본 옵션에서 제외 — [근거](evidence.md#fleetwise-new-customers) |
 | **[AWS RoboMaker](https://aws.amazon.com/robomaker/)** | 🔴 종료 (2025-09-10) `[1]` | EC2 G6e/G7e + Isaac Sim AMI + AWS Batch |
 | **[SageMaker Edge Manager](https://docs.aws.amazon.com/sagemaker/latest/dg/edge-eol.html)** | 🔴 종료 (2024-04-26) `[1]` | ONNX + IoT Greengrass V2 (+ SageMaker Neo) |
 | **[IoT Greengrass V1](https://docs.aws.amazon.com/greengrass/v1/developerguide/what-is-gg.html)** | 🔴 종료 (2026-06-01) `[1]` | Greengrass V2 |
@@ -85,7 +88,7 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음_
 ## 승격 절차 (요약)
 
 1. **캡처**: 지정 채널/이모지로 후보 수집
-2. **필터**: [2.5 게이트](maintenance.md#포함-기준-the-filter) 적용 (4개 중 2개 이상)
+2. **필터**: [수록 조건](maintenance.md#포함-기준-the-filter)을 모두 확인하고 출시·근거·용도·지원 범위를 분리한다.
 3. **통과 시**: 담당 필러 owner가 [표준 템플릿](maintenance.md#표준-템플릿)으로 편입, Radar에서 제거
 4. **미달 시**: 여기 한 줄로 유지, 승격 조건 명시
 

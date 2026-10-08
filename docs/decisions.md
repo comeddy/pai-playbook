@@ -1,6 +1,6 @@
 # Decisions — 교차 의사결정 트리
 
-_최종 갱신: 2026-07 · owner: Youngjin · volatility: 중간_
+_최종 갱신: 2026-09 · owner: Youngjin · volatility: 중간_
 [← index로](index.md)
 
 > **L0 TL;DR**: 고객이 자주 부딪히는 4개 갈림길을 산문 대신 **결정 표/트리**로. 각 결정은 필러를 가로지른다. 급하면 해당 표만 보고 방향을 잡으라.
@@ -9,30 +9,20 @@ _최종 갱신: 2026-07 · owner: Youngjin · volatility: 중간_
 
 ---
 
+> **검토 범위**: 페이지 수정일은 모든 기술 항목의 재검증일이 아니다. 핵심 정정의 확인일·재현/사람 검토 상태는 [근거 기록](evidence.md)에 있으며, 기존 항목의 개별 확인일은 그대로 적용한다.
+
 ## 1) Cloud training vs Edge inference 경계
 
-**핵심 질문: "이 추론을 클라우드에 둘 수 있나, 엣지에 둬야 하나?"**
+**핵심 질문**: 관측부터 동작까지의 기한, 최악 지연·지터, 통신 단절 중 필요한 기능은 무엇인가?
 
-가장 중요한 판별자는 **제어 주파수**[^ctrlfreq]다.
-
-```mermaid
-graph TD
-    Q{추론 주파수 요구는?}
-    Q -- "30~100Hz+ 반응형 제어<br>(균형·힘·파지·보행·회피)" --> EDGE["🔴 반드시 엣지 온보드 (Jetson Thor/Orin)<br>클라우드 왕복 불가<br>System 1 (경량 diffusion/flow-matching 정책, sub-20ms)"]
-    Q -- "few-Hz ~ sub-1Hz<br>고수준 계획·재계획·툴 선택·씬 이해" --> CLOUD["🟢 클라우드/비동기 가능 (Bedrock AgentCore, 큰 VLM)<br>System 2 (무거운 VLM 플래너, 5~10Hz 또는 그 이하)"]
-    Q -- "둘 다 필요 (거의 모든 실로봇)" --> SPLIT["🟡 분리 배포: System 2=클라우드, System 1=엣지<br>action chunking 으로 두 rate 연결 ← 표준 아키텍처"]
-```
-
-| 구분 | System 2[^sys] (계획) | System 1 (제어) |
+| 기능 | 배치 판단 | 검증할 것 |
 |---|---|---|
-| 주파수 | 5~10Hz 이하 | 50~200Hz |
-| 지연 허용 | 있음(비동기) | 없음(sub-20ms) |
-| 위치 | **클라우드** (AgentCore) 또는 온보드 | **엣지 온보드** (Jetson) |
-| 모델 | 큰 VLM/LLM | 경량 diffusion/flow-matching[^flow] |
-| AWS | Bedrock AgentCore, EC2 | IoT Greengrass V2, SageMaker Neo, ONNX/TensorRT |
+| 업무 계획·분석 | 지연·데이터 처리 요건을 충족하면 클라우드 가능 | 처리 국가, timeout, 취소, 툴 권한 |
+| 관측 기반 로봇 스킬 | 모델·장치별 기한을 실측해 현장/클라우드 판단 | 최신 관측 반영 빈도, 지연 분포, 단절 시 동작 |
+| 저수준 제어 | 장치 기한을 만족하는 로컬 컨트롤러 | 제어 주기·최악 지터·모델 실패 |
+| 독립 안전 | LLM·네트워크와 독립적으로 설계·검증 | 위험 평가, 정지·제한, 현장 책임자 |
 
-> **판정 원칙**: "실시간 안전·반응이 걸린 루프면 엣지, 생각할 시간이 있으면 클라우드." action chunking[^chunk]이 다리.
-> 근거: [pillar-4 엣지](pillar-4.md), [pillar-2 System1/System2](pillar-2.md), [pillar-5](pillar-5.md).
+System 1/2라는 모델 이름만으로 배치를 정하지 않는다. Helix는 두 시스템 모두 온보드다. chunk 출력 수는 피드백 빈도가 아니다([근거](evidence.md#action-chunking)). [운영·복구](operations.md)에서 명령 계약과 장애 시험을 작성한다.
 
 ---
 
@@ -44,7 +34,7 @@ graph TD
 graph TD
     Q{워크로드 성격은?}
     Q -- "포토리얼 렌더 + 합성 데이터 생성(SDG) + 풀스택 통합" --> ISAAC["Isaac Sim/Lab (🟢 GA 5.1)<br>GPU는 RTX 필수 (G6e/G7e)"]
-    Q -- "빠른 RL 반복 · 미분가능 물리 · 크로스벤더 GPU · 경량" --> MUJOCO["MuJoCo/MJX (🟢)<br>컴퓨트 GPU(P5 A100/H100)도 활용 → 비용 이점<br>Unitree 실사용 [1] (프로덕션 검증 → pillar-3)"]
+    Q -- "빠른 RL 반복 · 미분가능 물리 · 크로스벤더 GPU · 경량" --> MUJOCO["MuJoCo/MJX (🟢)<br>컴퓨트 GPU(P4/P5 A100/H100)도 활용 → 비용 이점<br>Unitree 실사용 [1] (프로덕션 검증 → pillar-3)"]
     Q -- "ROS 2 네이티브 통합 · CPU · 전통 로보틱스" --> GAZEBO["Gazebo (🟢 Jetty/Harmonic)<br>⚠️ Classic 11은 EOL · GPU 병렬 RL엔 부적합"]
     Q -- "'화제성' Genesis?" --> GENESIS["⚪ PoC/실험만<br>'430,000배' 반박됨 [1] (→ pillar-3) · 프로덕션 의존 금지"]
 ```
@@ -91,54 +81,34 @@ graph TD
 
 ## 4) Build vs Buy (파운데이션 모델)
 
-**핵심 질문: "파운데이션 모델을 파인튜닝[^ft]할까, 자체 학습할까?"**
+**핵심 질문**: 이 업무를 기존 방식·구매·통합·모델 적응 중 무엇으로 해결하는 것이 효과적인가?
 
-```mermaid
-graph TD
-    Q{데이터·목표·자원은?}
-    Q -- "실데모 100~수천 개 · 특정 태스크 · 빠른 결과" --> LORA["오픈 VLA 파인튜닝 (LoRA)<br>단일 G7e, 1일 PoC ← 99%의 현실<br>상용이면 라이선스 확인: π=Apache-2.0 ✅, OpenVLA=MIT ✅, GR00T=확인필요 ⚠️"]
-    Q -- "다중 embodiment · 대규모 실데이터 · 백본까지 조정" --> FULL["풀 파인튜닝 (P6/HyperPod)<br>70~100GB+ GPU"]
-    Q -- "밑바닥 사전학습 (프런티어 VLA 자체 개발)" --> PRE["🔴 극소수만 · 멀티노드 Blackwell 클러스터·대규모 실데이터<br>대부분 고객에게 비권장 — 파인튜닝으로 충분"]
-    Q -- "추론·계획 레이어만 필요 (저수준 제어 불필요)" --> INFER["Gemini Robotics-ER(API) 또는 AgentCore로 오케스트레이션"]
-```
+| 선택 | 적합한 조건 | 먼저 요구할 증거 |
+|---|---|---|
+| 기존 자동화·제어 개선 | 환경이 구조화돼 있고 현재 문제의 원인이 명확 | 기준선 대비 시간·품질·비용 |
+| 상용 로봇/솔루션 구매 | 제품이 업무·안전·지원 요구를 충족 | 고객 환경 수용시험, 유지보수·총비용 |
+| SI·파트너 통합 | 다기종·공정 연결과 현장 구현이 핵심 | 유사 현장 실적, 책임·복구 범위 |
+| 오픈 모델 적응 | 학습이 필요한 변화와 사용 가능한 데이터 존재 | 코드/가중치/기반 모델/데이터 권리, 독립 평가 |
+| 자체 사전학습 | 기존 대안으로 해결되지 않는 모델 요구와 연구·데이터 자원 | 대안 대비 개선 근거, 전체 개발·운영비 |
 
-| 옵션 | 데이터 | GPU | 언제 |
-|---|---|---|---|
-| LoRA[^lora] 파인튜닝 | 100~수천 데모 | 단일 24~40GB | **기본 시작점** |
-| 풀 파인튜닝 | 대규모 실데이터 | 70~100GB+ / 멀티노드 | 다중 embodiment[^embodiment] |
-| 사전학습(Build)[^pretrain] | 초대규모 | Blackwell 클러스터 | 극소수 프런티어 |
-| 추론 레이어 Buy | — | — | 제어는 오픈모델, 계획은 API |
+오픈 모델을 선택한 다음에 LoRA·부분 학습·전체 학습을 비교한다([P2](pillar-2.md)). **‘거의 항상 파인튜닝’이나 ‘1일 PoC’로 시작하지 않는다.** [업무 적합성](start.md#fit)과 [총비용](start.md#roi)으로 결정하고 [실행 경로](execution.md)를 선택한다.
 
-> **판정 원칙**: **거의 항상 파인튜닝(Buy+adapt)이 답.** 밑바닥 사전학습은 극소수. 상용은 라이선스가 첫 게이트(GR00T 비상업 주의). "시뮬레이션만으로 조작 정책"은 함정 — 실데이터 필수([pillar-4](pillar-4.md)).
-> 근거: [pillar-2](pillar-2.md), [pillar-1 데이터·라이선스](pillar-1.md), [pillar-4](pillar-4.md).
+상용 판단은 [OpenVLA 코드/가중치 구분](evidence.md#openvla-license)을 포함해 버전별로 기록한다. 추론 API를 쓰는 경우도 저수준 제어, 데이터 처리, 복구 책임이 별도로 남는다.
 
 ---
 
 ## 부록 — 리전/데이터 레지던시 빠른 판정
 
-_(아래 표는 휘발성 — 2026-07, AWS 공식 리전 표 `[1]` 직접 확인 기준. 인용 전 최신 리전 표 재확인)_
+서비스 리전·인스턴스 종류·할당량·구매 방식은 실행 직전에 확인한다. 이 페이지의 기존 서울 지원 일괄 체크표는 제거했다.
 
-| 서비스 | 서울(ap-northeast-2) | 비고 |
-|---|---|---|
-| Bedrock AgentCore (코어+Policy+Evaluations) | ✅ | Agent Registry·Payments는 ✗ (도쿄는 Registry ✅) — 2026-07 리전 표 기준 |
-| EC2 G7e / G6e / P6 | ✅(리전별 확인) | Capacity Blocks 활용 |
-| SageMaker HyperPod | ✅ | Flexible Training Plans 리전 확장 중 |
-| IoT Greengrass V2 | ✅ | V1은 2026-06 EOL |
+**데이터 처리**: 저장 위치, 모델 추론, Memory/Evaluations, 외부 툴, 로그의 경로를 각각 기록한다. AgentCore의 서울 제공만으로 국내 처리를 보장하지 않는다([공식 근거](evidence.md#agentcore-residency)).
 
-> 데이터 레지던시 우려 고객: **AgentCore 서울 GA** 를 먼저 확인시켜 안심(오래된 "서울 미지원" 정보 정정). → [pillar-5](pillar-5.md).
+**용량·비용**: On-Demand도 확보를 보장하지 않는다. 메모리·렌더링·CPU 요구에 맞는 복수 인스턴스 후보를 확인하고, 체크포인트 재개가 검증된 잡에서 Spot을 검토한다. Capacity Blocks·Training Plans는 지원 인스턴스·리전·일정 조건을 확인한 뒤 비교한다.
 
 ---
-_owner: Youngjin · updated: 2026-07 · volatility: 중간 (트리 원리는 낮음, 인스턴스/리전 세부는 높음)_
+_owner: Youngjin · updated: 2026-09 · volatility: 중간 (트리 원리는 낮음, 인스턴스/리전 세부는 높음)_
 
 <!-- 용어 각주 -->
-[^ctrlfreq]: **제어 주파수(control frequency)** — 로봇이 초당 몇 번 제어 명령을 갱신하는지(Hz). 균형·파지 같은 반응 루프는 30~100Hz 이상이 필요해, 왕복 지연이 있는 클라우드로는 물리적으로 불가능하다 — 추론 배포 위치를 가르는 첫 판별자.
-[^sys]: **System 2 / System 1** — 인지과학의 "느린 사고 / 빠른 반응" 구분을 로봇 아키텍처에 적용한 구조. System 2는 느린 대형 모델이 계획을(5~10Hz), System 1은 작은 정책이 실시간 제어를(50~200Hz) 맡는다. 추론을 클라우드에 둘지 엣지에 둘지를 가르는 기준이 된다.
-[^flow]: **flow-matching / diffusion action head** — 로봇의 연속 동작을 노이즈에서 점진적으로 다듬어 생성하는 확산(diffusion)·플로우 계열의 출력 모듈. 부드럽고 여러 가지 가능한(multi-modal) 동작 분포를 표현할 수 있어 최신 VLA의 표준 액션 헤드다.
-[^chunk]: **action chunking** — 매 스텝 동작 1개가 아니라 앞으로의 동작 여러 스텝(청크)을 한 번에 예측하는 기법. 추론 횟수를 줄여 실시간 제어 주파수를 맞추기 쉽게 한다.
 [^sdg]: **합성 데이터 생성(SDG, Synthetic Data Generation)** — 시뮬레이터로 학습용 이미지와 주석(라벨)을 자동 생성하는 기법. 라벨링 비용이 0에 수렴하는 것이 최대 장점. 🎥 [Isaac Sim Replicator SDG 튜토리얼](https://www.youtube.com/watch?v=HHzNIh72B_Y)
 [^diffsim]: **미분가능 물리(differentiable physics)** — 시뮬레이션 계산 전체가 미분 가능해 결과에서 입력으로 그래디언트를 역전파할 수 있는 물리 엔진. 정책·파라미터를 경사하강법으로 직접 최적화할 수 있다(MJX가 대표).
 [^vla]: **VLA (Vision-Language-Action)** — 카메라 영상(Vision)과 자연어 지시(Language)를 입력받아 로봇의 동작(Action)을 직접 출력하는 파운데이션 모델. "컵을 집어"라고 말하면 관절 움직임을 생성하는 식. 🎥 [NVIDIA Isaac GR00T N1 소개](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^ft]: **파인튜닝(fine-tuning)** — 대규모 데이터로 사전학습된 모델을 자기 태스크·로봇의 소량 데이터로 추가 학습시키는 것. 밑바닥부터 학습하는 것보다 데이터·GPU가 수십~수백 배 절약된다.
-[^lora]: **LoRA (Low-Rank Adaptation)** — 원본 가중치는 얼려두고 작은 저랭크(low-rank) 행렬만 추가로 학습하는 경량 파인튜닝 기법. GPU 메모리 요구가 풀 파인튜닝의 수분의 1이라 24GB급 GPU 한 장으로도 가능하다.
-[^embodiment]: **embodiment(임바디먼트)** — 로봇의 물리적 형태·자유도·센서 구성. 같은 모델이라도 로봇 팔과 휴머노이드는 embodiment가 달라 데이터·정책을 그대로 이식할 수 없다.
-[^pretrain]: **사전학습(pre-training)** — 대규모 범용 데이터로 모델을 밑바닥부터 학습시켜 기초 능력을 만드는 단계. 이후 소량 데이터 파인튜닝으로 특정 태스크에 맞춘다. 프런티어 VLA 사전학습은 극소수 조직의 영역이다.

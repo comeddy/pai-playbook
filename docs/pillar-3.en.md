@@ -1,5 +1,5 @@
 ---
-ko_hash: 9131854faa710f967d2e47febe0398f607f38852
+ko_hash: 6f49bfdbc4288a4875710d9996607b54c913c45f
 ---
 # Pillar 3 — Simulation
 
@@ -7,11 +7,15 @@ _Last updated: 2026-09 · owner: Youngjin · volatility: high (versions/instance
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: Robot policies are trained thousands of times faster and more safely in simulation than on real hardware. The right stack on AWS is **EC2 G6e/G7e (RTX GPU) + NVIDIA Isaac Sim AMI (GUI) + AWS Batch (headless[^headless] large-scale RL[^rl])**. ⚠️ **AWS RoboMaker was discontinued 2025-09-10** — never propose it. The latest Isaac Sim GA is **5.1.0**, and 6.0 is still Preview.
+> **L0 TL;DR**: Choose simulators and instances for rendering, observation type, and environment count. Use the [pinned execution path](execution.md#simulation) and [cost worksheet](start.md#roi). Service GA does not guarantee physical results on a customer task.
 
 ---
 
+> **Review scope**: the page edit date does not revalidate every technical item. See [Evidence](evidence.md) for core corrections, check dates, and reproduction/human review status; legacy item dates still apply.
+
 ## Top 3 questions customers ask most in this pillar
+
+> These are discovery examples, not a measured ranking of customer inquiries.
 
 1. **"How do I run Isaac Sim/Lab on AWS? On which instances?"** → [Isaac on AWS](#1-isaac-sim--isaac-lab-on-aws--ga)
 2. **"How do I scale thousands~tens of thousands of parallel RL environments in the cloud?"** → [Large-scale parallel RL](#2-large-scale-parallel-rl-simulation--ga)
@@ -39,7 +43,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 |---|---|---|
 | **Isaac Sim** | High-fidelity simulator built on RTX ray tracing — USD scenes, camera/LiDAR sensor simulation, Replicator SDG | The axis for perception and synthetic data that needs realistic rendering |
 | **Isaac Lab** | The RL/imitation-learning framework on top of Isaac Sim — thousands of parallel environments on one GPU, integrations with skrl, rsl_rl, etc. | The standard entry point for locomotion/manipulation policy training |
-| **Marketplace AMI** | A pre-configured Isaac Sim image (free) — boots ready to use, no driver/dependency installs | Removes the entry barrier that makes the "30-minute hands-on" possible |
+| **Marketplace AMI** | A pre-configured Isaac Sim image (free) — boots ready to use, no driver/dependency installs | Removes the entry barrier that makes the "initial hands-on" possible |
 | **NICE DCV** | AWS's remote display protocol — high-quality, low-latency streaming with no extra license cost on EC2 | Operate the cloud GPU's Isaac Sim GUI as if local |
 | **AWS Batch MNP** | Multi-node parallel[^mnp] batch jobs — queues and schedules container jobs across nodes | Parallelizes large headless RL jobs without a GUI (item 2) |
 | **G6e / G7e** | Render-capable GPU instances with RT Cores | The only families satisfying the invariant constraint (no A100/H100) |
@@ -67,7 +71,7 @@ graph LR
 
 **Customer case**: case pending (for Unitree H1 training, see the AWS blog in [pillar-2](pillar-2.md)).
 
-**➡️ Next action**: use **"a 30-minute hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/aws-samples/sample-issac-lab-on-aws)** (Terraform provisions g6e → Isaac Lab quadruped PPO[^ppo] headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
+**➡️ Next action**: use **"a initial hands-on launching the Marketplace Isaac Sim AMI on g6e.4xlarge and connecting via NICE DCV"** as the first proposal, then connect to headless training with **[pai-sim-isaaclab end-to-end hands-on](https://github.com/aws-samples/sample-issac-lab-on-aws)** (Terraform provisions g6e → Isaac Lab quadruped PPO[^ppo] headless training → policy export, ~2h/$12). If license questions arise, precisely explain "source is Apache, but redistribution/SaaS requires AI Enterprise."
 
 **🔗 Related assets**:
 
@@ -238,26 +242,19 @@ graph TD
 
 ---
 
-## 6. Why simulation — the economics of physical robots (price · BOM · regulation)  🟢 GA (stable principle)
+## 6. Simulation economics — cost model and measurement scope { #6-why-simulation--the-economics-of-physical-robots-price--bom--regulation--ga-stable-principle }
 
-**L0 TL;DR**: "Sim is cheap" in numbers. Physical robots span **~100× from an entry quadruped at ~$1,600 to an unsold humanoid at an estimated ~$130K+**, **about half of a humanoid's cost is joints (actuators + hands)**, and in Korea the legally required guarding setup (→ [pillar-4 safety regulation](pillar-4.md)) is added on top. The same money buys tens of thousands of GPU hours — **one 4,096-environment parallel training run costs $11~12 on Spot**. This economics underwrites the ROI of this whole pillar (items 1 · 2).
+**L0 TL;DR**: Judge simulation investment against the customer's baseline and total cost. Dividing hardware prices by GPU rates is not an ROI case.
 
-**Customer need/problem**: "How do we justify simulation infrastructure investment to executives?" — knowing the cost structure of physical trial and error is itself the ROI argument for sim.
+**Estimate**: `compute cost = Σ(instance count × full billed hours × regional purchase-option hourly rate)`. Include setup, evaluation, idle time, and retries, plus storage, transfer, logs, licensing, environment creation, staff, calibration, and physical validation. Do not mix per-GPU and per-instance prices.
 
-**Solution overview** `[1]/[3]`:
+**Correction**: withdraw the generic “$11–12 per training run.” Combining ETH training time on a specific GPU with Seoul g6e.xlarge pricing is not an AWS measurement. $0.98/hour for 4–20 minutes gives an arithmetic $0.07–0.33, not a customer quote. [Evidence](evidence.md#simulation-cost).
 
-- **Price per robot (public prices, rough, time-varying)**: Unitree Go2 (entry quadruped) ~$1,600 → Unitree G1 (entry humanoid) $13,500 → Franka Research 3 (cobot arm) ~$20–30K → Boston Dynamics Spot from ~$74.5K (fully configured with arm/LiDAR $150–300K+) → Unitree H1 ~$90K → Fourier GR-1 ~$150K. ⚠️ **Do not read the price list as a budget** — Tesla Optimus "$20–30K" is a mass-production target, not a sale price (current build cost estimated $50–100K); BD Atlas is not sold (analyst estimates ~$130–145K); Figure·Apollo·Digit have no public unit price (pilot/RaaS). Of the ten public rows, four cannot be bought at any listed number.
-- **Half the cost is joints, not "intelligence"** `[3]`: in a humanoid BOM[^bom], actuators (motor + precision reducer) + precision hands account for **~48–57%** (Morgan Stanley 'The Humanoid 100', 2025-02 — on Tesla Optimus Gen2, actuators ~56%, and the 14 planetary roller screws alone ~19% of the total; ex-software BOM $50–60K). Precision-reducer oligopoly (Harmonic Drive cited at ~85% share), concentrated rare-earth magnet supply, and the absence of scale (~13K humanoid shipments estimated for 2025) stack up, so unit costs don't come down easily. **Inside sim, that half is free** — zero joint wear, breakage, or replacement cost.
-- **GPU-hour equivalence** `[2]`: Seoul Region g6e.xlarge (L40S 48GB) On-Demand $2.288/hr, Spot measured ~$0.98/hr (2026-08, AWS Price List API — varies by time/AZ). On the ETH recipe (4,096 environments, locomotion in <4~20 minutes, → item 2), **one training run is $11~12**. The price of one Spot quadruped (~$75K) buys tens of thousands of g6e GPU hours — physical trial and error also adds wear, accidents, and labor, while sim's hourly rate is the entire bill.
-- **Zero regulatory setup**: the legally required guarding of a physical cell (1.8 m fence, KCs-certified light curtains, etc. → [pillar-4 safety regulation](pillar-4.md)) and the risk-assessment/certification lead time do not exist in sim. Risky scenarios — high-speed collisions, drops, hardware failures — can be repeated safely without limit; AWS and NVIDIA official docs make the same argument ("training robots in the real world is slow, expensive, and potentially dangerous").
+**Reproduction scope**: the [pinned workshop](execution.md#simulation) estimate of roughly 2 hours/$12 uses a different version/instance setup and is author-reported. Recalculate using setup/run/evaluation and billing records.
 
-**AWS mapping**: this economics is itself the investment justification for items 1 (Isaac on EC2) and 2 (Batch parallel RL). Prices are measured via the AWS Price List API (ap-northeast-2) — always cite with a date.
+**Decision criteria**: compare benefits of safe repeat experiments/data generation with environment creation/calibration costs. Simulation still needs people/modeling and does not remove physical safety/validation obligations.
 
-**Decision criteria**: up-front physical cell investment vs sim-first → **sim-first** is almost always the answer. But say in the same breath that manipulation does not get solved by sim alone (→ [pillar-4 manipulation](pillar-4.md)) to stay honest.
-
-**Customer case**: (the framing itself is a combination of public vendor/research figures — sources are cited inline)
-
-**➡️ Next action**: when asked to justify sim investment to executives, start with two numbers — **"joints are half the cost, and free in sim" + "$12 per training run."** Detailed prices swing, so always attach the date, and connect the safety/regulation axis to [pillar-4](pillar-4.md).
+**➡️ Next action**: compare existing development and simulation-first workflows in low/base/high scenarios using the [ROI worksheet](start.md#roi).
 
 **🔗 Related assets**: [pillar-4 safety regulation](pillar-4.md) · [decisions](decisions.md) · [exec executive brief](exec.md)
 
@@ -277,9 +274,7 @@ _owner: Youngjin · updated: 2026-09 · volatility: high (versions · instances 
 
 <!-- 용어 각주 -->
 
-[^rl]: **Reinforcement learning (RL)** — training a policy through trial and error to maximize a reward signal. In simulation, thousands of parallel environments let robots learn control policies such as locomotion quickly.
 [^parallel]: **Parallel environments** — replicating the same simulation environment thousands of times on a single GPU and running them simultaneously. Speeds up RL experience collection by thousands of times — the core value of simulation.
-[^headless]: **Headless** — running the simulator without a GUI. No rendering overhead, so large-scale parallel training jobs run headless.
 [^rtcore]: **RT Core / RTX GPU** — the NVIDIA GPU family with dedicated ray-tracing hardware (RT Cores). Required for Isaac Sim's photoreal rendering, so A100/H100 (no RT Cores) cannot be used for rendering.
 [^gt]: **Ground truth** — the exact answer data that serves as the reference for training and evaluation. In simulation the engine already knows every object's position and segmentation mask, so perfect labels are generated automatically.
 [^usd]: **USD (Universal Scene Description)** — the standard 3D scene description format created by Pixar. Isaac Sim scenes, robots, and assets are all described in USD; it is the common language of the Omniverse ecosystem.
@@ -288,4 +283,3 @@ _owner: Youngjin · updated: 2026-09 · volatility: high (versions · instances 
 [^dtwin]: **Digital twin** — A physically faithful virtual replica of a real factory, warehouse, or robot. Enables policy training, validation, and scenario experiments without touching the real environment.
 [^mnp]: **MNP (Multi-Node Parallel)** — the AWS Batch mode that runs a single job across multiple EC2 nodes. It lets large training/simulation jobs that need inter-node communication be managed through a batch queue.
 [^osmo]: **OSMO** — NVIDIA's workflow orchestration platform for robotics workloads. It schedules multi-stage jobs such as synthetic data generation, simulation, and model training across on-premises and cloud clusters (e.g., Kubernetes).
-[^bom]: **BOM (Bill of Materials)** — the list of parts and materials that go into building one unit of a product, and its cost composition. "Half of a humanoid's BOM is joints" refers to the share of hardware cost taken by actuators (motors + reducers) and hands.

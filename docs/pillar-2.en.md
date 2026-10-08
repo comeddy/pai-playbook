@@ -1,5 +1,5 @@
 ---
-ko_hash: 522eea873e849c595119e05911784eb2d89ddd67
+ko_hash: 63e5a3e8cb3004a7dc553bf04fe7c4d473451f3a
 ---
 # Pillar 2 — Model Training (VLA)
 
@@ -7,116 +7,74 @@ _Last updated: 2026-09 · owner: Youngjin · volatility: high (model versions/li
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
-> **L0 TL;DR**: Most customers **do not train a VLA[^vla] from scratch — they fine-tune[^ft] an open foundation model**. So the core questions are three: (1) which model to use (**the license governs commercial use**), (2) LoRA[^lora] or full fine-tuning (determines GPU scale), and (3) how to run it on AWS (HyperPod + EC2 GPU). There is still no public case of training a VLA on Trainium.
+> **L0 TL;DR**: Compare [existing methods, purchases, and SI](decisions.md) before choosing model adaptation. If learning is selected, establish model/data rights, observation/action compatibility, measured resource requirements, and independent evaluation.
 
 ---
 
+> **Review scope**: the page edit date does not revalidate every technical item. See [Evidence](evidence.md) for core corrections, check dates, and reproduction/human review status; legacy item dates still apply.
+
 ## Top 3 questions customers ask most in this pillar
+
+> These are discovery examples, not a measured ranking of customer inquiries.
 
 1. **"Which VLA model do I start with? Which ones can I use commercially?"** → [Open VLA foundation models](#1-open-vla-foundation-models--licenses--ga) (⚠️ the GR00T license trap)
 2. **"How many GPUs do I need for fine-tuning? Can LoRA do it on one?"** → [VLA fine-tuning in practice](#2-vla-fine-tuning-in-practice-lora-vs-full-ft--ga)
 3. **"How do I run VLA training on AWS? With HyperPod? Can I use Trainium?"** → [AWS training stack](#3-aws-training-stack-hyperpod--ec2-gpu--ga)
 
-> **Stable principle (rarely changes)**: (1) Almost no customer pretrains a frontier VLA — **fine-tuning is 99% of reality**. (2) VLA is converging on a **System 2[^sys] (slow VLM[^vlm] planner, 5~10Hz) + System 1 (fast action policy, 50~200Hz)** structure, and this dual structure decides "whether to put inference in the cloud or at the edge" (→ [pillar-4](pillar-4.md), [decisions](decisions.md)). (3) Continuous action generation standardizes on **flow-matching[^flow] / diffusion action head + action chunking[^chunk]**.
+> **L0/L1**: Validate model choice, trainable scope, and placement separately. System 1/2[^sys] is not a cloud-placement rule; action chunking[^chunk] does not automatically increase feedback frequency.
 
 ---
 
-## 1. Open VLA foundation models & licenses  🟢 GA
+## 1. Open VLA selection and licenses — check each model { #1-open-vla-foundation-models--licenses--ga }
 
-**L0 TL;DR**: The starting point for fine-tuning. **The license matters as much as performance** — the most talked-about NVIDIA GR00T can be non-commercial depending on the version, while Physical Intelligence π (Apache-2.0) and OpenVLA (MIT) are **commercial-friendly with permissive licenses**.
+**L0 TL;DR**: Select for performance, robot compatibility, and usage rights. **Separate licenses for code, pretrained weights, base models, and datasets**, and check the exact version's official model card. Public weights do not establish customer-site validation.
 
-**Customer need/problem**: "We want to adopt a VLA for humanoids/manipulators. Which open models are good, and can we use them commercially in our product?"
+**Customer need/problem**: "Can we use this model for our robot/task commercially or for research?"
 
-**Solution overview** `[1]`:
+| Candidate | Primary source to inspect | Scope |
+|---|---|---|
+| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | Selected version's model card, weight terms, code LICENSE | Do not assign one license to every generation |
+| [Physical Intelligence openpi](https://github.com/Physical-Intelligence/openpi) | Code LICENSE, checkpoint, base-model access/use terms | Apache-2.0 code does not decide every weight/data right |
+| [OpenVLA](https://github.com/openvla/openvla#pretrained-vlas) | README: Model Licensing & Commercial Use | **MIT code / Llama Community License for Llama-2-derived weights** `[1]` |
 
-- **[NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T)** — open humanoid foundation model. N1 (2B), N1.5 (3B, flow-matching DiT action head), N1.6 (CES 2026, Cosmos Reason 2 backbone), N1.7 (claimed GA on GitHub). ⚠️ **License caution**: the N1.5 model card is **non-commercial (NVIDIA license, non-commercial)**. The claim that N1.6/N1.7 permit commercial use is **secondary-source only and unverified** → before any commercial judgment, **check the live model card directly**. `[1]` github.com/NVIDIA/Isaac-GR00T
-- **[Physical Intelligence π (openpi)](https://github.com/Physical-Intelligence/openpi)** — π0, π0-FAST, π0.5 are all **Apache-2.0** (commercial OK). Provides DROID/ALOHA/LIBERO fine-tuning checkpoints. `[1]` github.com/Physical-Intelligence/openpi. ⚠️ π0.7 exists in secondary sources only (unverified).
-- **[OpenVLA](https://github.com/openvla/openvla)** — 7B, **MIT license** (commercial OK), Llama2-based VLM backbone. Provides official fine-tuning scripts. `[1]` github.com/openvla/openvla (LICENSE file checked directly 2026-07)
+**OpenVLA correction**: withdraw “MIT, therefore commercial use is allowed.” The official README separates code and pretrained-weight terms. [Claim check date and sources](evidence.md#openvla-license).
 
-**AWS mapping**: mirror the model weights from HF to S3 → fine-tune on EC2 GPU (P6/G7e) or SageMaker HyperPod (items 2 · 3 below). GR00T post-train/eval is possible with [LeRobot](https://github.com/huggingface/lerobot) (`groot` policy type).
+**AWS mapping**: store permitted weights/data in S3 and first measure single-GPU memory/throughput. Choose the needed EC2, Batch, or SageMaker environment; public samples are not AWS operational guarantees.
 
-**Decision criteria**:
+**Decision criteria**: inspect terms for commercial use, internal PoCs, and research separately. Calling an activity a PoC does not establish non-commercial use. Check robot observation/action definitions and checkpoint compatibility.
 
-- **Commercial product launch** → prefer π (Apache-2.0) or OpenVLA (MIT). GR00T only after the license is confirmed.
-- **Full-body humanoid control** → GR00T is the most complete (SONIC controller, Cosmos Reason backbone), but confirm the license.
-- **Research/PoC** → all usable; choose by performance/embodiment[^embodiment] fit.
+**Customer case**: this table provides a licensing review path, not deployment evidence.
 
-```mermaid
-graph TD
-    Q{Commercial product launch?} -- Yes --> L{License}
-    Q -- Research · PoC --> ALL["All usable<br>choose by embodiment fit"]
-    L -- Apache-2.0 --> PI["π (openpi) 🟢<br>commercial OK"]
-    L -- MIT --> OV["OpenVLA 🟢<br>commercial OK"]
-    L -- NVIDIA license --> GR["GR00T ⚠️<br>check live model card"]
-```
-
-**Customer case**: case pending (no public Korean VLA fine-tuning case confirmed).
-
-**➡️ Next action**: if the customer is selecting a model, **present the "license matrix (GR00T=confirm needed / π=Apache-2.0 / OpenVLA=MIT) as the first slide."** For commercial use, propose a π0.5 or OpenVLA fine-tuning PoC on EC2 G7e.
+**➡️ Next action**: record candidate code/weights/base model/data, versions, permitted purpose, source URL/check date, and reviewer; proceed to the [fine-tuning path](execution.md#finetuning).
 
 **🔗 Related assets**: [pillar-1 dataset licenses](pillar-1.md) · [pillar-4 edge deployment](pillar-4.md) · [Robot foundation model paper reviews](https://hi-space.gitbook.io/physical-ai-on-aws/paper-review-tbd/robot-foundation-model) — Korean. Paper summaries of reasoning VLM (Cosmos-Reason 1) and VLA (RT-2, OpenVLA, Gemini Robotics, GR00T N1, π0.6)
 
-<details markdown="1"><summary>🔄 Volatile data (model versions/licenses — subject to update, checked 2026-07)</summary>
-
-| Model | Parameters | License | Commercial | Backbone / action head | Note |
-|---|---|---|---|---|---|
-| GR00T N1 | 2B | NVIDIA (non-commercial) | ❌ | SigLip2+T5 / flow-matching DiT | |
-| GR00T N1.5 | 3B | NVIDIA (non-commercial) | ❌ | / flow-matching DiT | stated on model card |
-| GR00T N1.6 | ~3B | commercial claimed [4] | ⚠️unverified | Cosmos Reason 2 | CES 2026 |
-| GR00T N1.7 | 3B | NVIDIA Open Model | ⚠️unverified | Cosmos-Reason2-2B / diffusion | claimed GA on GitHub, 40 timestep horizon |
-| π0 / π0-FAST / π0.5 | undisclosed | **Apache-2.0** | ✅ | flow-matching (π0-FAST=autoregressive) | |
-| OpenVLA | 7B | **MIT** | ✅ | Llama2 VLM | license checked directly 2026-07 |
-
-⚠️ **The N1.5 vs N1.6 vs N1.7 version-to-license mapping is inconsistent across sources.** Before any commercial claim, check the live HF/GitHub model card directly. This item carries the highest citation risk in Pillar 2.
-</details>
-
 ---
 
-## 2. VLA fine-tuning in practice (LoRA vs Full-FT)  🟢 GA
+## 2. VLA fine-tuning — sizing and evaluation { #2-vla-fine-tuning-in-practice-lora-vs-full-ft--ga }
 
-**L0 TL;DR**: The good news — **LoRA fine-tuning is possible on a single GPU (24GB class)**, and with 100~500 demos per task you get 80%+ success on a single task. Full fine-tuning needs 70~100GB (H100/A100 class).
+**L0 TL;DR**: Some models/configurations can fine-tune on one GPU, but **memory size or demo counts do not guarantee success or duration**. Start with compatibility checks, then measure training/evaluation costs on customer data.
 
-**Customer need/problem**: "We want to adapt a VLA to our task — how many GPUs do we need to secure, and how much data?"
+**Customer need/problem**: "How do we size data, GPU resources, and completion criteria?"
 
-**Solution overview** `[1]`:
+**Solution overview** `[1]`: inspect the selected versions of [OpenVLA LoRA](https://github.com/openvla/openvla#fine-tuning-openvla-via-lora) and [openpi](https://github.com/Physical-Intelligence/openpi). Measure memory for the model, precision, image count/resolution, sequence length, batch, and trainable modules. Test which action head, adapter, or VLM modules need training for the robot/task change.
 
-- **OpenVLA**: LoRA (rank 32) ~24GB single GPU (A100/RTX 4090). 48GB→batch 12, 80GB→batch 24. Full fine-tuning ~100GB. Official `vla-scripts/finetune.py`.
-- **openpi (π0/π0.5)**: inference >8GB, LoRA >22.5GB (RTX 4090), **full fine-tuning >70GB (A100/H100)**. Official LoRA/full recipes, PyTorch support added 2025-09. 1~20 hours of data is enough for many tasks.
-- **GR00T (N1.5/N1.7)**: fine-tuning 40GB+ GPU (H100/L40 recommended), inference 16GB+. NVIDIA official post-training recipe.
-- **Sense of data volume**: LoRA, single task, 100~500 demos → 80%+ success. A small batch of high-quality real demos is key (→ [pillar-1 teleoperation](pillar-1.md)).
-- **What to unfreeze — the component you train is the cost** `[1]/[2]`: a modern VLA is an assembly of (1) a VLM that understands, (2) a DiT[^dit] that generates actions, and (3) a per-robot adapter MLP ([GR00T N1 structure, arXiv:2503.14734](https://arxiv.org/abs/2503.14734)). "What you want to change" decides which component to open (unfreeze) and the cost:
+| Stage | Required evidence | Cost/scaling decision |
+|---|---|---|
+| Data/model compatibility | Observation/action formats, units, loading and inference | Check on a small dataset first |
+| Baseline evaluation | Pre-training success numerator/denominator, cycle time, interventions | Establish whether fine-tuning is needed |
+| Limited training | Fixed data/config, runtime, peak memory, checkpoint | Stay small when one GPU fits |
+| Independent evaluation | Separate tasks/environments, repeats, performance spread/latency | Revisit data/hypothesis if targets fail |
 
-| What you want to change | MLP (adapter) | DiT (action) | VLM (understanding) | Sense of cost `[2]` |
-|---|---|---|---|---|
-| Existing robot + existing motions | keep | keep | keep | no training needed (use as-is) |
-| **New robot**, existing motions | **train** | freeze | freeze | 50~200 teleop demos, 2~6 hours, ~$10 on g5.2xlarge |
-| New motion (verb not in pretraining) | train | **train** | freeze | half a day |
-| Special camera modality (IR etc.) | train | train | LoRA | days, the most expensive |
+**Correction**: do not generalize “100–500 demos yields 80%+,” “100 demos gives a one-day PoC,” or “an adapter alone solves a new robot.” Previous cost/0%-success measurements lack reproduction logs and conditions, so cannot support customer promises. [Evidence](evidence.md#finetuning-outcomes).
 
-- ⚠️ **New robot = adapter required** `[2]`: GR00T ships MLPs only for pre-registered embodiments (GR-1, Franka, etc.). Put it on an unregistered robot as-is and the output is meaningless (measured 0% success) — the minimum bar is **~100 demos + adapter training**. Common verbs like fold/pour/stack are already in pretraining, so the MLP alone suffices; unseen motions like welding need the DiT opened as well.
+**AWS mapping and choice**: consider EC2/Batch for one-GPU experiments, SageMaker Training for long managed jobs, and HyperPod when multi-node requirements are demonstrated. Demo count alone does not choose a service.
 
-**AWS mapping**: for LoRA, **EC2 G6e (L40S) · G7e (RTX PRO 6000)** single/few GPUs suffice. For full fine-tuning / multi-embodiment, **P6-B200 / HyperPod multi-node** (item 3 below).
+**Customer case**: distinguish sample runs from customer-site outcomes.
 
-**Decision criteria**:
-
-- Task-specific, small data → **LoRA + single G7e**. Cheapest, fastest. Most start here.
-- Multiple embodiments, large scale, tuning down to the backbone → **full fine-tuning + P6/HyperPod**.
-- Data <1 hour → consider few-shot/prompting before fine-tuning.
-
-**Customer case**: case pending (no official AWS VLA fine-tuning case — the Unitree H1 in item 3 is RL locomotion, not VLA).
-
-**➡️ Next action**: use **"LoRA fine-tuning 1-day PoC on a single G7e"** as the default entry proposal. If the customer has 100+ demos, you can show measured success rates right away. If GPU procurement gets blocked → [decisions](decisions.md).
+**➡️ Next action**: use [path C](execution.md#finetuning) prerequisites, dry-run, evaluation, and stop criteria to estimate customer-specific time/cost ranges.
 
 **🔗 Related assets**: [pillar-1 data pipeline](pillar-1.md) · [decisions: Build vs Buy](decisions.md)
-
-<details markdown="1"><summary>🔄 Volatile data (GPU requirements — per official repos as of 2026-07)</summary>
-
-| Model | Inference | LoRA fine-tuning | Full fine-tuning |
-|---|---|---|---|
-| OpenVLA (7B) | — | ~24GB (single) | ~100GB |
-| π0 / π0.5 | >8GB | >22.5GB | >70GB (A100/H100) |
-| GR00T N1.5/N1.7 | 16GB+ | 40GB+ (H100/L40) | — |
-</details>
 
 ---
 
@@ -132,7 +90,7 @@ graph TD
 - **EC2 GPU ladder** `[1]`: **G7** (RTX PRO 4500, GA 2026-06) · **G7e** (RTX PRO 6000 Blackwell, GA 2026-01) · **G6e** (L40S) → **P6-B200** (8×B200, 1440GB HBM) · **[P6e-GB200 UltraServers](https://aws.amazon.com/ec2/ultraservers/)** (GB200 NVL72, up to 72 Blackwell/NVLink domain, secured via [Capacity Blocks](https://aws.amazon.com/ec2/capacityblocks/)).
 - **Trainium**: Trn2 GA (2024-12), **Trn3 UltraServers GA (2025-12 re:Invent)**, Trn4 announced. ⚠️ **No public case of training VLA/robotics on Trainium** — the whole VLA toolchain is CUDA/NVIDIA. Trainium-for-VLA is unverified.
 - **Latest generation in the Seoul Region** `[1]`: **[P6-B300](https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-ec2-p6-b300/)** (8×NVIDIA Blackwell Ultra, 2.1TB HBM3e per instance, 6.4Tbps EFA) went **GA in the Seoul Region on 2026-08-20** — Korean teams get the latest accelerator within data residency, without waiting on overseas regions. Consumed via Capacity Blocks / Savings Plans / On-Demand. Honest scope: it is a general-purpose FM training platform, and Physical AI (simulation/VLA training) is one workload on top of it.
-- **Recommended patterns by scale (3B-class VLA, validated on GR00T N1.6/N1.7)** `[2]`: ① <200 demos, LoRA (2~4 hours) → **AWS Batch + EC2 Spot (g6e)** — short and cheap, the recommended default. ② ~500 demos, full fine-tuning (8~24 hours) → **SageMaker Training Job** — automatic checkpoint/resume. ③ 500+ demos, multi-node (days) → **HyperPod** — automatic node recovery + EFA. Against GPU capacity shortages, pre-define an **instance fallback order** (e.g., g6e → g6 → g5) in the job definition so it moves to the next type without waiting.
+- **Training scale**: choose one GPU, multiple GPUs on one node, or multiple nodes using model, precision, input size, peak memory, measured runtime, and communication volume. Demo count alone does not select Batch/Training/HyperPod. Check [path C](execution.md#finetuning) first.
 
 **What HyperPod actually does** `[1]` (docs verified 2026-07):
 
@@ -143,7 +101,7 @@ graph TD
 | **Task Governance** | Per-team/project quotas **down to individual GPUs**, priority scheduling, preemption of low-priority jobs (checkpoint, pause, resume later), and lending idle compute across teams | Managing GPU idle rates when robot and model teams share one cluster |
 | **Elastic training** | Jobs scale up/down automatically with capacity and priority, with automatic checkpoint/resume | Absorbs Capacity Blocks allocations as they fluctuate over time |
 | **Network & storage** | **EFA[^efa]** low-latency inter-node communication + FSx for Lustre training channels (→ the [pillar-1](pillar-1.md) pipeline) | Removes the multi-node gradient-sync bottleneck |
-| **Recipes** | Pre-validated training recipes for LLMs/FMs — ⚠️ **no VLA-specific recipes**; VLA training is DIY on the cluster | This gap is the SA's whitespace (an opportunity to build reusable fine-tuning recipes) |
+| **Recipes** | Pre-validated training recipes for LLMs/FMs — ⚠️ **no VLA-specific recipes**; VLA training is DIY on the cluster | This gap is the SA's integration gap (an opportunity to build reusable fine-tuning recipes) |
 
 **AWS mapping**: the services above are themselves the mapping. GPU-securing strategy (On-Demand vs Capacity Blocks vs Flexible Training Plans) → [decisions](decisions.md).
 ```mermaid
@@ -188,29 +146,19 @@ graph TD
 
 ---
 
-## 4. System 2 + System 1 architecture  🟢 GA (stable principle)
+## 4. System 2 + System 1 — model structure and placement { #4-system-2--system-1-architecture--ga-stable-principle }
 
-**L0 TL;DR**: The dominant VLA structure in 2026. A **slow VLM (System 2, 5~10Hz) plans "what to do,"** and a **fast action policy (System 1, 50~200Hz) executes "how to move."** This separation **determines the inference deployment location (cloud vs edge)**, so it is a concept an SA must understand.
+**L0 TL;DR**: System 1/2 describes model components operating at different timescales. **It does not automatically decide cloud/edge placement.** Design business planning and observation-based control deadlines/outage behavior separately.
 
-**Customer need/problem**: "It's real-time control — how do we run a large model? Isn't cloud latency a problem?"
+**Solution overview** `[1]`: [Figure Helix](https://www.figure.ai/news/helix) describes onboard S2 (7–9Hz) and onboard S1 (200Hz), linked by latent representations. Do not assume this is the same interface as cloud AgentCore tool calls.
 
-**Solution overview** `[1]/[4]`:
+**Action chunking[^chunk]** generates several future actions per inference. **Action execution, new observations, inference completion, and replanning have different rates.** Do not multiply inference Hz by chunk size to claim feedback-control frequency. [PI RTC](https://www.physicalintelligence.company/research/real_time_chunking) handles transitions and latency separately. Validate execution horizons and transitions per model ([evidence](evidence.md#action-chunking)).
 
-- **[Figure Helix](https://www.figure.ai/news/helix)**: System 2 = on-board internet-pretrained VLM @ 7~9Hz (scene/language), System 1 = reactive visuomotor @ 200Hz. `[1]` figure.ai/news/helix
-- **GR00T N1**: System 1 = diffusion policy ~10ms latency, System 2 = LLM planner (task decomposition).
-- **General pattern**: a heavy VLM replans at 5~10Hz, and a lightweight flow-matching/diffusion "action expert" emits actions at 50~200Hz conditioned on the latest plan. Predict future action chunks via **action chunking** (GR00T = 40 timestep horizon).
-- **The field-wide 2-axis taxonomy** `[1]`: before drowning in model names — most VLAs sit on a 2×2 of (1) **network structure**: Monolithic (single-net end-to-end) vs Hierarchical (planner + executor split), and (2) **thinking system**: Single-system vs Dual-system (sequential cascade / parallel). GR00T's "two brains" is a concrete instance of the hierarchical × dual-system (parallel) cell — System 1/2 is not a single model's story but the field's primary classification axis.
-- **Effective control rate = inference Hz × chunk size**: even if π0.5 infers at ~10Hz on a Jetson, emitting a 10-step chunk per inference moves the robot at ~100Hz (the next chunk is precomputed while the current one runs). This arithmetic is the key to dispelling the "big model = slow robot" misconception.
-- ⚠️ **Beware the "VLAs are dead (WAM[^wam] replaces them)" headline** `[1]/[4]`: a WAM (World Action Model) uses a video-diffusion backbone to **jointly predict** future video + actions — the physics prior from web video makes it strong at unseen-motion zero-shot ([DreamZero, arXiv:2602.15922](https://arxiv.org/abs/2602.15922): from only ~500 hours of robot data, unseen tasks 16%→40%s), but iterative denoising at 14B makes it **the slowest closed-loop, ~7Hz**. In the same period as the "VLAs are dead" keynote, NVIDIA itself shipped GR00T N1.7 (a VLA), and independent comparisons show a VLA (π0.5) matching a WAM when data diversity is sufficient — the real picture is **"VLA + World Model + RL post-training converging."** Do not repeat the headline verbatim in customer conversations (maturity tracking: [World-action models in the radar](radar.md)).
-- ⚠️ **Maturity honesty**: this *pattern itself* is standard, but full-stack whole-body humanoids are mostly at the pilot/demo stage.
+**AWS mapping/decision**: consider AgentCore for business planning when latency and processing requirements allow. Keep tightly timed observation-based policies/control on site and measure them. Use [four layers and owners](operations.md#layers) with [Cloud vs Edge](decisions.md).
 
-**AWS mapping**: putting **System 2 (planner) in the cloud/Bedrock AgentCore and System 1 (real-time control) at the edge (Jetson)** is the natural split (→ [pillar-5](pillar-5.md), [pillar-4](pillar-4.md), [decisions](decisions.md)).
+**Customer case**: Helix is a vendor architecture disclosure, not an AWS cloud deployment case.
 
-**Decision criteria**: 30~100Hz real-time control requirement → System 1 **must be edge on-board**. System 2 (planning/reasoning) can be in the cloud if latency is tolerable. This boundary is the core of the [Cloud vs Edge tree in decisions](decisions.md).
-
-**Customer case**: Figure (demo/PR), GR00T (open model). Validated production is limited.
-
-**➡️ Next action**: when the customer asks "it's real-time — can it go to the cloud?", **draw the System1/System2 picture and frame it as "control loop at the edge, planning in the cloud."** This alone organizes the architecture conversation.
+**➡️ Next action**: record observation-to-action delay, worst-case jitter, outages, and cancellation behavior before choosing placement.
 
 **🔗 Related assets**: [pillar-4 edge inference](pillar-4.md) · [pillar-5 orchestration](pillar-5.md) · [decisions](decisions.md)
 
@@ -243,7 +191,7 @@ graph TD
 
 ---
 
-## 6. Training operations principles — checkpoint lineage and the IL ceiling  🟢 GA (stable principle)
+## 6. Training operations — checkpoints and evaluation { #6-training-operations-principles--checkpoint-lineage-and-the-il-ceiling--ga-stable-principle }
 
 **L0 TL;DR**: Two traps that repeatedly wreck customer training projects. (1) **Checkpoints are a tree** — specialization is one-way, so if you lose the generalist checkpoint you cannot go back. (2) **Low loss does not raise success rates** — that is imitation learning's covariate shift[^covshift], and evaluation must be done **only by rollout success rate**, not loss.
 
@@ -269,7 +217,7 @@ graph TD
 
 ---
 
-## 7. RL fine-tuning (RFT) — PPO vs GRPO and reward design  🟢 GA (algorithms) / 🔵 reward automation Research
+## 7. RL fine-tuning — algorithms and research scope { #7-rl-fine-tuning-rft--ppo-vs-grpo-and-reward-design--ga-algorithms---reward-automation-research }
 
 **L0 TL;DR**: SFT (imitation) alone learns even the demonstrator's mistakes. The finishing stage driven by environment rewards is RFT[^rft] — algorithm-wise, **PPO[^ppo] is the long-standing standard and critic-free GRPO[^grpo] is surging** (the bigger the model, the bigger the compute win). The real battleground is not the algorithm but **reward design** — "simulator fidelity is reward fidelity."
 
@@ -289,15 +237,15 @@ graph TD
 
 **Customer case**: case pending (VIRAL/DoorMan are paper demonstrations — not customer deployments).
 
-**➡️ Next action**: for customers plateaued on BC, propose the **Teacher-Student (PPO→distill→GRPO) 3-stage recipe** — every stage completes inside simulation, so the existing AWS Batch/Isaac Lab stack is reused as-is.
+**➡️ Next action**: evaluate teacher-student/RL post-training as a task-specific research hypothesis. Specify reward, simulator, real data, and evaluation conditions; compare with the imitation baseline. Check the [sample validation scope](execution.md#finetuning) separately.
 
-**🔗 Related assets**: [pillar-3 parallel RL](pillar-3.md) · [sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) — aws-samples, MIT-0. A one-command fine-tuning platform: give it the intent (IL demos or an RL task) and it auto-selects among the Batch+Spot / SageMaker Training / HyperPod patterns. GR00T·π0.5·ACT·SmolVLA plus an Isaac Lab RL path, with an MCP server (7 tools) for submit/monitoring from agent sessions
+**🔗 Related assets**: [sample-vla-finetuning](https://github.com/aws-samples/sample-vla-finetuning) — MIT-0 sample. The author reports an IL Pattern A (Batch) completion. B/C deployment, RL GPU execution, and forced Spot recovery are unverified. [Pinned commit and procedure](execution.md#finetuning).
 
 ---
 
 ## The honest reality of this pillar (SA must-read)
 
-- **The GR00T license is the biggest citation risk right now.** N1.5 is clearly non-commercial. Commercial permission for N1.6/N1.7 is secondary-source only → **check the live model card directly before any customer commercial judgment**. Getting it wrong is a legal risk.
+- **Check code, weights, base models, and data licenses separately.** Use version-specific model cards and [evidence](evidence.md#openvla-license).
 - **Do not say "PI (Physical Intelligence) uses AWS."** The openpi checkpoints are on GCS (`gs://`), a **GCP signal**. There is no AWS-PI case.
 - **There is no official AWS VLA fine-tuning case.** The only AWS robotics training reference is the **Unitree H1 RL locomotion** (not VLA). Do not exaggerate the VLA story.
 - **Trainium-for-VLA is unverified.** The whole VLA toolchain is CUDA. State the risk when proposing.
@@ -307,19 +255,11 @@ _owner: Youngjin · updated: 2026-09 · volatility: high (model versions · lice
 
 <!-- 용어 각주 -->
 
-[^vla]: **VLA (Vision-Language-Action)** — a foundation model that takes camera images (Vision) and natural-language instructions (Language) as input and directly outputs robot actions (Action). Say "pick up the cup" and it generates the joint motions. 🎥 [NVIDIA Isaac GR00T N1 introduction](https://www.youtube.com/watch?v=m1CH-mgpdYg)
-[^ft]: **fine-tuning** — additionally training a model pretrained on large-scale data with a small amount of data from your own task/robot. Saves tens to hundreds of times the data and GPU compared to training from scratch.
-[^lora]: **LoRA (Low-Rank Adaptation)** — a lightweight fine-tuning technique that freezes the original weights and trains only small additional low-rank matrices. GPU memory demand is a fraction of full fine-tuning, so a single 24GB-class GPU is enough.
-[^sys]: **System 2 / System 1** — the cognitive-science "slow thinking / fast reaction" distinction applied to robot architecture. System 2 is a slow large model that plans (5~10Hz); System 1 is a small policy that runs real-time control (50~200Hz). This becomes the criterion for whether inference goes to the cloud or the edge.
-[^flow]: **flow-matching / diffusion action head** — an output module in the diffusion/flow family that generates a robot's continuous actions by gradually refining them from noise. It can express smooth, multi-modal action distributions, making it the standard action head of modern VLAs.
-[^chunk]: **action chunking** — predicting a chunk of several future action steps at once instead of one action per step. Reduces the number of inference calls, making it easier to meet real-time control frequencies.
-[^vlm]: **VLM (Vision-Language Model)** — a model that understands images and text together (e.g., answering questions about a photo). A VLA typically uses a VLM as its "eyes + brain" backbone and puts an action head on top.
-[^embodiment]: **Embodiment** — a robot's physical form, degrees of freedom, and sensor configuration. Even with the same model, a robot arm and a humanoid have different embodiments, so data and policies cannot be transplanted as-is.
+[^sys]: **System 2 / System 1** — Model layers operating at different timescales. Rates and placement depend on the model; both layers may run onboard.
+[^chunk]: **Action chunking** — Generating several future actions per inference. Execution rate differs from response to fresh observations; validate horizons, transitions, and latency per model.
 [^slurm]: **Slurm** — the standard open-source job scheduler for HPC clusters. It queues and allocates batch jobs across thousands of nodes, and is the workflow most familiar to teams from research labs and supercomputing.
 [^efa]: **EFA (Elastic Fabric Adapter)** — a low-latency, OS-bypass network interface for EC2. It is key to reducing the gradient-synchronization (All-Reduce) bottleneck between GPUs in multi-node distributed training.
 [^osmo]: **OSMO** — NVIDIA's workflow orchestration platform for robotics workloads. It schedules multi-stage jobs such as synthetic data generation, simulation, and model training across on-premises and cloud clusters (e.g., Kubernetes).
-[^dit]: **DiT (Diffusion Transformer)** — a diffusion generator built on the Transformer architecture. In modern VLAs it serves as the "action engine" component that generates robot joint commands (action chunks) from noise.
-[^wam]: **WAM (World Action Model)** — a model that uses a video-generation backbone to jointly predict future video and robot actions. Physics knowledge learned from web video makes it strong on unseen motions, but iterative denoising keeps its control frequency low. Not to be confused with a WFM (video generation only, no action output).
 [^covshift]: **covariate shift** — the mismatch between the state distribution seen during training and the one actually encountered at execution. When an imitation-learned policy drifts via small errors into states absent from the demos, it never learned how to recover, and errors compound. (The correct term is "covariate," not "covariant.")
 [^forget]: **catastrophic forgetting** — the phenomenon where a neural network overwrites and loses previously learned abilities while learning a new task. The reason a generalist cannot be recovered from a specialized checkpoint.
 [^dagger]: **DAgger (Dataset Aggregation)** — an imitation-learning augmentation technique: run the learned policy, collect expert ground-truth labels on the states the policy actually visited, and retrain. The classic prescription for covariate shift.
