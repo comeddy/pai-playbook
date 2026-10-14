@@ -1,5 +1,5 @@
 ---
-ko_hash: 6c812de4981e09fc57a08d454791c78c874795a4
+ko_hash: 227d863a1332653377eef63e6626faac6b80d97e
 ---
 # Workshops & Resources
 
@@ -68,7 +68,7 @@ Duration and cost depend on modules, account readiness, and GPU availability. Ch
 
 **Content**: New guide connecting data, training, evaluation, and cleanup on HyperPod EKS; published 2026-09-10.
 
-**Before starting**: Advanced setup. The article is public, but its linked code path returned 404 at review. Use as reading material until code access is resolved.
+**Before starting**: Advanced setup. The article is public, but its code link (`awsome-distributed-ai/…/3.test_cases/pytorch/pi0-lerobot`) returns 404 — the code was never merged to main and sits in [unmerged PR #1174](https://github.com/awslabs/awsome-distributed-ai/pull/1174) (checked 2026-10-14; PR last updated 2026-07-30). Unmerged code is unreviewed, so use this as reading material.
 
 **Related pillar**: [P2](pillar-2.md).
 

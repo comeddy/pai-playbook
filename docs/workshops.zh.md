@@ -1,5 +1,5 @@
 ---
-ko_hash: 6c812de4981e09fc57a08d454791c78c874795a4
+ko_hash: 227d863a1332653377eef63e6626faac6b80d97e
 ---
 # 工作坊与资料
 
@@ -68,7 +68,7 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中_
 
 **内容**: 连接 HyperPod EKS 数据、训练、评估、清理的新指南，2026-09-10 发布。
 
-**开始前确认**: 高级配置。正文公开，但复核时所链接代码路径返回 404；获得代码前作为阅读资料。
+**开始前确认**: 高级配置。正文公开，但正文中的代码链接（`awsome-distributed-ai/…/3.test_cases/pytorch/pi0-lerobot`）返回 404——该代码未合并到 main，仍停留在[未合并 PR #1174](https://github.com/awslabs/awsome-distributed-ai/pull/1174)（2026-10-14 确认，PR 最后更新 2026-07-30）。未合并代码未经审查，作为阅读资料使用。
 
 **相关支柱**: [P2](pillar-2.md).
 

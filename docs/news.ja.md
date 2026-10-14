@@ -1,5 +1,5 @@
 ---
-ko_hash: 5694ea64d5c0808c4703e3fc02a864757e025127
+ko_hash: 6b769997bb98b4208fbc3c7f93ee6438f7e4d731
 ---
 # 新着情報
 
@@ -70,7 +70,7 @@ Cosmos 3（2026-05 公開）は従来の Predict・Transfer・Reason の 3 モ�
 
 DROID・LIBEROでのπ0 VLA学習・評価を紹介し、HyperPod EKS、FSx for Lustre、学習ジョブ構成をつなぎます。
 
-**確認する範囲**: 公式実装ガイドです。報告値はn=5のopen-loop[^openloop]で、実機成功率ではありません。2026-09-19時点でリンク先コードに公開アクセスできず、まず本文を参照します。
+**確認する範囲**: 公式実装ガイドです。報告値はn=5のopen-loop[^openloop]で、実機成功率ではありません。本文のコードリンクは404です。コードはマージされておらず[未マージのPR #1174](https://github.com/awslabs/awsome-distributed-ai/pull/1174)にあります（2026-10-14確認）。まず本文を参照します。
 
 **次のアクション**: P2学習・π0読解経路 — [P2](pillar-2.md) · [π0](workshops.md#pi0-guide).
 

@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- π0 on HyperPod EKS code link (Workshops · News): the article's code link (`3.test_cases/pytorch/pi0-lerobot`) returns 404 because the code was never merged — the entry now explains the cause and links the unmerged PR #1174 (checked 2026-10-14).
 - Top navigation: regrouped the 19 flat header tabs into 6 group tabs (Home · Get Started · Technical Pillars · Executives · News & Resources · Reference) — pages within a group now appear in the left sidebar, tabs stay visible on scroll, and the home page list follows the same grouping, in all four languages
 - Radar 2026-09-26 intake: re-verified all 10 items on 2026-09-27 with egress available — 20/20 links live (HTTP 200), primary sources compared; corrected the RLDX-1 benchmark margin (+11.1 pts, Table 1(b)) and sourcing (AWS Physical AI blog, GitHub CC BY 4.0), replaced the KIMM link with the 09-07 official V0.7 news and the OpenAI link with the episode page (quote marked secondary), reflected Skild's self-reported benchmarks and ARR post, sourced the Figure Index figures separately, removed the unsupported NEURA IFA live-demo claim; added per-item AWS-angle and Korea-touchpoint tags and 'self-reported, do not quote to customers' markers; fixed header/footer dates (checked 2026-09-27, updated 2026-09), in all four languages
 
@@ -188,6 +189,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- π0 HyperPod EKS 코드 링크 (워크숍·새 소식): 블로그 본문의 코드 링크(`3.test_cases/pytorch/pi0-lerobot`)가 404인 원인이 미병합임을 확인 — 원인과 미병합 PR #1174 링크를 명시(2026-10-14 확인).
 - 상단 메뉴: 헤더에 평면 나열되던 19개 탭을 6개 그룹 탭(홈·시작하기·기술 필러·경영진·소식 · 자료·참고)으로 재구성 — 그룹 내 페이지는 왼쪽 사이드바로, 스크롤 시 탭 고정, 홈 '페이지 목록'도 같은 그룹으로 정리(4개 언어)
 - Radar 2026-09-26 유입분 10건을 2026-09-27 egress 가능 환경에서 재검증 — 링크 20/20 200, 1차 출처 원문 대조; RLDX-1 벤치 마진(+11.1p, 표 1(b))·출처(AWS Physical AI 블로그, GitHub CC BY 4.0) 정정, KIMM 링크를 09-07 공식 V0.7 뉴스로·OpenAI 링크를 에피소드 페이지로 교체(인용은 2차 표기), Skild 자체 벤치·ARR 포스트 반영, Figure Index 수치 출처 분리, 근거 없는 NEURA IFA 실기 전시 삭제; 항목별 AWS 각도·한국 접점 태그와 '자체 공표치, 고객 인용 금지' 표기 추가; 헤더·푸터 날짜 정정(대조일 2026-09-27, updated 2026-09), 4개 언어
 
@@ -345,6 +347,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- **π0 HyperPod EKS 代码链接**（工作坊·新动态）：确认正文代码链接（`3.test_cases/pytorch/pi0-lerobot`）404 的原因是代码未合并——注明原因并链接未合并 PR #1174（2026-10-14 确认）。
 - 顶部导航：将页眉中平铺的 19 个标签页重组为 6 个分组标签（首页·快速开始·技术支柱·高管·新闻与资料·参考）——组内页面显示在左侧边栏，滚动时标签保持可见，首页页面列表采用相同分组（四种语言）
 - Radar 2026-09-26 流入的 10 项于 2026-09-27 在可出网环境重新验证 —— 链接 20/20 存活（HTTP 200）、对照一手来源；更正 RLDX-1 基准差距（+11.1 分，表 1(b)）与出处（AWS Physical AI 博客、GitHub CC BY 4.0），KIMM 链接更换为 09-07 官方 V0.7 新闻、OpenAI 链接更换为节目页（引语标为二手），反映 Skild 自报基准与 ARR 文章，Figure Index 数字单独注明出处，删除无依据的 NEURA IFA 实机展示说法；为各项添加 AWS 角度·韩国触点标签及"自行公布数据，禁止向客户引用"标记；修正页眉/页脚日期（核对日 2026-09-27，updated 2026-09），四种语言
 
@@ -502,6 +505,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- **π0 HyperPod EKS コードリンク**（ワークショップ・新着）：本文のコードリンク（`3.test_cases/pytorch/pi0-lerobot`）が404の原因は未マージと確認——原因と未マージのPR #1174へのリンクを明記（2026-10-14確認）。
 - 上部メニュー：ヘッダーに平置きされていた 19 個のタブを 6 つのグループタブ（ホーム・はじめに・技術ピラー・経営層・ニュース・資料・リファレンス）に再編 — グループ内ページは左サイドバーに表示、スクロール時もタブを固定、ホームのページ一覧も同じグループに整理（4 言語）
 - Radar 2026-09-26 流入分 10 件を 2026-09-27 に egress 可能な環境で再検証 —— リンク 20/20 生存（HTTP 200）、一次ソース原文照合；RLDX-1 ベンチマーク差（+11.1pt、表 1(b)）・出典（AWS Physical AI ブログ、GitHub CC BY 4.0）を訂正、KIMM リンクを 09-07 公式 V0.7 ニュースに・OpenAI リンクをエピソードページに差し替え（引用は二次表記）、Skild 自社ベンチ・ARR 記事を反映、Figure Index 数値の出典を分離、根拠のない NEURA IFA 実機展示を削除；項目別に AWS 角度・韓国接点タグと「自社公表値、顧客への引用禁止」表記を追加；ヘッダー/フッター日付を訂正（照合日 2026-09-27、updated 2026-09）、4 言語
 

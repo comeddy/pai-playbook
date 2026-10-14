@@ -67,7 +67,7 @@ Cosmos 3(2026-05 공개)는 이전의 Predict·Transfer·Reason 3개 모델을 M
 
 DROID·LIBERO 데이터를 이용한 π0 VLA 학습·평가 과정을 소개한다. HyperPod EKS, FSx for Lustre와 학습 잡 구성을 연결해 볼 수 있다.
 
-**읽을 때 확인할 범위**: 공식 구현 가이드. 보고된 평가는 n=5 open-loop[^openloop]이며 실기 태스크 성공률이 아니다. 연결된 코드 경로는 2026-09-19 공개 접근 확인에 실패해, 우선 블로그 본문을 안내한다.
+**읽을 때 확인할 범위**: 공식 구현 가이드. 보고된 평가는 n=5 open-loop[^openloop]이며 실기 태스크 성공률이 아니다. 본문의 코드 링크는 404다 — 코드가 main에 병합되지 않고 [미병합 PR #1174](https://github.com/awslabs/awsome-distributed-ai/pull/1174)에 있다(2026-10-14 확인). 우선 블로그 본문을 안내한다.
 
 **다음 액션**: P2 모델 학습 · 워크숍의 π0 읽기 경로 — [P2](pillar-2.md) · [π0](workshops.md#pi0-guide).
 

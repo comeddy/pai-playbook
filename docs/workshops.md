@@ -65,7 +65,7 @@ _owner: Youngjin · updated: 2026-09 · volatility: 중간_
 
 **내용**: HyperPod EKS에서 데이터·학습·평가·정리를 연결하는 새 가이드. 2026-09-10 발행.
 
-**시작 전 확인**: 고급 구성. 본문은 공개되지만 연결된 코드 경로는 확인일에 404였다. 코드 접근을 확보하기 전에는 읽기 자료로 사용한다.
+**시작 전 확인**: 고급 구성. 본문은 공개되지만 본문의 코드 링크(`awsome-distributed-ai/…/3.test_cases/pytorch/pi0-lerobot`)는 404다 — 해당 코드가 main에 병합되지 않고 [미병합 PR #1174](https://github.com/awslabs/awsome-distributed-ai/pull/1174)에 머물러 있다(2026-10-14 확인, PR 최종 갱신 2026-07-30). 병합 전 코드는 검토되지 않은 상태이므로 읽기 자료로 사용한다.
 
 **관련 필러**: [P2](pillar-2.md).
 

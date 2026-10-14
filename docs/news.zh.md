@@ -1,5 +1,5 @@
 ---
-ko_hash: 5694ea64d5c0808c4703e3fc02a864757e025127
+ko_hash: 6b769997bb98b4208fbc3c7f93ee6438f7e4d731
 ---
 # 新消息
 
@@ -70,7 +70,7 @@ Cosmos 3（2026-05 发布）把此前的 Predict、Transfer、Reason 三个模�
 
 介绍使用 DROID、LIBERO 的 π0 VLA 训练评估，连接 HyperPod EKS、FSx for Lustre 与训练任务配置。
 
-**阅读范围**: 官方实现指南。报告的评估为 n=5 open-loop[^openloop]，不是实机任务成功率。2026-09-19 未能公开访问所链接代码路径，先阅读正文。
+**阅读范围**: 官方实现指南。报告的评估为 n=5 open-loop[^openloop]，不是实机任务成功率。正文中的代码链接返回 404——代码未合并，仍在[未合并 PR #1174](https://github.com/awslabs/awsome-distributed-ai/pull/1174)中（2026-10-14 确认），先阅读正文。
 
 **后续行动**: P2 训练 · π0 阅读路径 — [P2](pillar-2.md) · [π0](workshops.md#pi0-guide).
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 5694ea64d5c0808c4703e3fc02a864757e025127
+ko_hash: 6b769997bb98b4208fbc3c7f93ee6438f7e4d731
 ---
 # News
 
@@ -70,7 +70,7 @@ Cosmos 3 (released 2026-05) merges the earlier Predict, Transfer, and Reason mod
 
 Walks through π0 VLA training/evaluation on DROID and LIBERO, connecting HyperPod EKS, FSx for Lustre, and training-job configuration.
 
-**Scope to check**: Official implementation guide. Reported evaluation is n=5 open-loop[^openloop], not physical task success. The linked code path was not publicly accessible on 2026-09-19; start with the article.
+**Scope to check**: Official implementation guide. Reported evaluation is n=5 open-loop[^openloop], not physical task success. The article's code link returns 404 — the code was never merged and sits in [unmerged PR #1174](https://github.com/awslabs/awsome-distributed-ai/pull/1174) (checked 2026-10-14); start with the article.
 
 **Next action**: P2 Training · π0 reading path — [P2](pillar-2.md) · [π0](workshops.md#pi0-guide).
 
