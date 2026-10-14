@@ -1,5 +1,5 @@
 ---
-ko_hash: 65b0be28854136a23f62fbfab4bfa425d2c947db
+ko_hash: 1b052b6d4b8cf37352ecac992afd6a1ada13d3ec
 ---
 # Radar — 队列 / 观察列表
 
@@ -56,9 +56,9 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 高_
 | **智能体物理安全标准**（[RoboGuard](https://arxiv.org/abs/2503.07885) 等） | 🔵 Research | ✨ **关注**：LLM 语义层风险的标准空白地带 —— 可能上升为监管·采购要求<br>⏳ **待定**：ISO 只管物理，缺乏 LLM 语义风险标准 | 标准化进展 |
 | **[AgentCore Payments / Agent Registry](https://aws.amazon.com/bedrock/agentcore/)（首尔）** | 🟡 Preview/未提供 | ✨ **关注**：机器人智能体商务·注册基础设施的 AWS 原生方向 —— 首尔区域开放后可立即用于提案<br>⏳ **待定**：首尔区域未提供 —— Agent Registry 在东京 ✅，Payments 连东京也未提供（APAC 仅悉尼）`[1]` | 首尔区域扩展 |
 
-## 🆕 最新扫描流入（2026-10-09 · 链接与一手来源核对 2026-09-27）
+## 🆕 最新扫描流入（2026-10-14 · 链接与一手来源核对 2026-09-27）
 
-<!-- 自动扫描（arXiv/网络）流入项。2026-09-27 全部链接存活确认（20/20 HTTP 200）+ 10 项对照一手来源 —— 晋升 0 项，更正 6 项（RLDX 基准差距 +11.1 分、更换 KIMM 链接、更换 OpenAI 链接并将引语标为二手、反映 Skild 自报基准、Figure Index 数字单独注明来源、删除 NEURA IFA 实机展示说法）。按流入政策等级保持 [4]（自行公布、无独立验证）。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
+<!-- 自动扫描（arXiv/网络）流入项。2026-09-27 全部链接存活确认（20/20 HTTP 200）+ 10 项对照一手来源 —— 晋升 0 项，更正 6 项（RLDX 基准差距 +11.1 分、更换 KIMM 链接、更换 OpenAI 链接并将引语标为二手、反映 Skild 自报基准、Figure Index 数字单独注明来源、删除 NEURA IFA 实机展示说法）。2026-10-14：新增 1 项（AWS Physical AI Toolchain），移除 Magic-W0（AWS/韩国关联度最低）—— 新增项目的官方博客因本次运行环境 egress 限制未能 curl 200 验证，改用 WebFetch 交叉核对官方 GitHub 仓库（详见 GitHub issue #20）。按流入政策等级保持 [4]（自行公布、无独立验证）。在通过 THE FILTER 之前禁止用于客户提案。定期刷新参见 scripts/radar_scan.md。 -->
 
 | 条目 | 标签 | 要点 | 晋升条件 |
 |---|---|---|---|
@@ -71,7 +71,7 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 高_
 | **[Intrinsic Core](https://www.intrinsic.ai/blog/posts/introducing-intrinsic-core)**（Alphabet 机器人子公司 Intrinsic 开源其工业机器人技术栈 —— 实时控制、基于 NVIDIA FoundationPose 的位姿估计、运动/抓取规划、基于 Gazebo 的仿真、相机标定、ROS 兼容驱动） | 🟢 GA（开源） | ✨ **为何关注**：Intrinsic 在 ROSCon 2026（多伦多）以 Apache 2.0 整体公开了与其自身制造部署所用相同的技术栈（[GitHub](https://github.com/intrinsic-ai/intrinsic-core)）—— 在 Isaac 生态一家独大的格局中首次出现 Alphabet 出身的替代技术栈，为 Radar 🖥️ 仿真/工具轴（Isaac/MuJoCo/Newton）新增竞争观察对象<br>⏳ **为何等待**：Intrinsic 官方博客（2026-09-22）`[4]` —— 代码已公开，但没有 Intrinsic 之外的独立采用案例（原文仅提及 FANUC·UR 兼容与挑战赛参与人数），也无 AWS 映射案例。🔗 链接 200 · 一手来源核对 2026-09-27。**AWS 角度：无（竞争技术栈）** | 公开外部独立采用案例 + 验证 AWS 基础设施映射 |
 | **[Agility Robotics Digit 5](https://www.agilityrobotics.com/content/agility-unveils-digit-5-humanoid-robot-built-for-cooperatively-safe-work-at-scale)**（相较现有 Digit@GXO，具备近距离协作安全架构与 90 分钟续航电池的第五代通用人形机器人） | 🟡 Preview | ✨ **为何关注**：已在 pillar-4 中列为"验证最充分的付费人形机器人"的 Agility Digit（@GXO）的下一代机型 —— 检测到碰撞风险时回避、停止或坐下，并以视听信号与人近距离协作的安全设计，90 分钟续航、9 分钟充电，并宣布以 CE 标志进入欧盟与英国的计划<br>⏳ **为何等待**：Agility 官方发布（2026-09-15，agilityrobotics.com）`[4]` —— 3 亿美元以上的多年订单为"截至 2026-05，以合同里程碑为前提"，Digit 5 实际运行为 0（既有 65,000 小时以上的成绩属于 Digit 4）。早期访问计划在 2027 年上半年，面向制造与仓储客户的 GA 预计 2027 年底。🔗 链接 200 · 一手来源核对 2026-09-27。**AWS 角度：无** | 公开 Digit 5 实际运行客户案例（欧盟/北美）+ 安全架构第三方验证 |
 | **[Dyna Robotics DYNA-2 / DYNA 2.1](https://www.prnewswire.com/news-releases/dyna-robotics-launches-dyna-2-1-physical-agent-a-semi-humanoid-robot-that-completes-full-workflows-such-as-a-commercial-laundry-shift-302892411.html)**（完全不使用机器人实机数据、仅以 100 万+小时第一人称人类视频预训练的世界-动作模型，加上已在洗衣、酒店客房清洁、餐饮服务等完整工作流中实际部署的半人形 physical agent） | 🟡 Preview | ✨ **为何关注**：世界-动作模型（DYNA-2）完全不使用机器人实机数据、仅以人类第一人称视频预训练，再通过少量机器人数据微调，延伸为已在酒店、餐厅、洗衣店实际部署的半人形机器人（DYNA 2.1）—— "人类数据→机器人规模法则"的主张，为 Radar 🔬 World-action models 轴新增数据管道视角（无机器人数据预训练）的案例<br>⏳ **为何等待**：Dyna Robotics 官方发布（PR Newswire，DYNA-2 更正版 2026-08-10·DYNA 2.1 2026-09-29）`[4]` —— 成功率 20%→80~90%、相对 DYNA-1 提升 1.55 倍、客户现场 87% vs 46% 等数字均为**自行公布数据，禁止向客户引用**，无独立验证或同行评审。模型权重与 API 未公开（仅能通过自家运营的硬件接触）。⚠️ 本次执行环境的 egress 限制阻止了对 prnewswire.com 的人工 curl 200 验证（见提交信息/issue）。**AWS 角度：无（Amazon Industrial Innovation Fund 仅作为 2025-09 A 轮投资方参与，非基础设施合作）** | 独立性能验证（第三方审计）+ 公开更多实际部署案例 |
-| **[Magic-W0](https://arxiv.org/abs/2609.39870)**（Magiclab Robotics，将 3D 几何、运动与未来语义构成的结构化世界表示与动作生成双向耦合的世界-动作基础模型） | 🔵 Research | ✨ **为何关注**：以第一人称人类操作视频、真实机器人轨迹与仿真数据大规模预训练，自称在 RoboDojo-Sim 基准上排名第一 —— 为 Radar 🔬 World-action models 轴（DreamZero→GR00T N2）新增一个公开代码（GitHub）的中国机器人创业公司实现案例<br>⏳ **为何等待**：arXiv 预印本（2026-09-30 提交·v2 2026-10-03）`[4]` —— 以 RoboDojo-Sim·LIBERO 自测基准与自测实机测试为主，无同行评审或独立复现。代码已公开（MagiclabRobotics/Magic-W0），但训练权重是否公开尚不明确。⚠️ 本次执行环境的 egress 限制阻止了对 arxiv.org·github.com 的人工 curl 200 验证（见提交信息/issue）。**AWS 角度：无** | 同行评审 + 独立复现 + 实机部署案例 |
+| **[AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws)**（AWS 官方开源 Physical AI 参考架构·IaC·部署自动化，集成 NVIDIA Isaac/GR00T/Cosmos） | 🟢 GA（开源） | ✨ **为何关注**：AWS 以官方 aws-samples 组织公开了不绑定特定机器人·任务的 Physical AI 参考架构（Terraform/CDK）与部署自动化 —— 将 EC2（G6e/P5）、SageMaker、EKS、AWS Batch（EFA）、S3、FSx for Lustre 与 NVIDIA Isaac Sim、Isaac Lab、GR00T（N1.6）、Cosmos、OSMO 打通，是将 Radar 内多条轴线（World-action models·Isaac Sim 6.0·Cosmos 3·GR00T 许可）一次性接入 AWS 基础设施的最直接官方案例<br>⏳ **为何等待**：AWS 官方博客（推测 2026-10-07/08，aws.amazon.com/blogs/physical-ai）+ GitHub 公开（Apache 2.0）`[4]` —— "aws-samples" 仓库不含正式支持承诺，README 组件表中 Isaac Lab Arena Evaluation 标为 Preview、Jetson 边缘部署标为 Planned，尚未确认实际客户生产环境采用案例。⚠️ 本次执行环境的 egress 限制阻止了对 aws.amazon.com 的人工 curl 200 验证 —— 改用 WebFetch 交叉核对官方 GitHub 仓库（aws-samples 组织、README·许可证）（见提交信息/issue #20）。**AWS 角度：AWS 自家官方开源（最高等级）** | 公开实际客户生产环境采用案例 + AWS 官方博客一手验证 |
 
 ## 终止或限制 — 分别确认 { #-已废弃--禁止提议存档保留 }
 
