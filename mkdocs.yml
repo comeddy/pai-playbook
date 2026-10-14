@@ -9,25 +9,31 @@ edit_uri: edit/main/docs/
 docs_dir: docs
 
 nav:
+  # 상단 탭은 6개 그룹만 노출 — 그룹 안 페이지는 왼쪽 사이드바 (19개 평면 탭이 헤더를 넘쳐 재구성)
   - 홈: index.md
-  - "시작 · 업무 & ROI": start.md
-  - "실행 경로": execution.md
-  - "운영 · 복구": operations.md
-  - 가이드: guide.md
-  - "새 소식": news.md
-  - "워크숍·자료": workshops.md
-  - "경영진 브리핑": exec.md
-  - "임원 대화 가이드": exec-guide.md
-  - "P1 · 데이터 수집 & 처리": pillar-1.md
-  - "P2 · 모델 학습 (VLA)": pillar-2.md
-  - "P3 · 시뮬레이션": pillar-3.md
-  - "P4 · Sim-to-Real": pillar-4.md
-  - "P5 · 에이전트 오케스트레이션": pillar-5.md
-  - "의사결정 트리": decisions.md
-  - "Radar (대기열)": radar.md
-  - "근거 기록": evidence.md
-  - "유지보수 규칙": maintenance.md
-  - "설정 · MCP 연결": mcp.md
+  - 시작하기:
+      - "시작 · 업무 & ROI": start.md
+      - "실행 경로": execution.md
+      - "운영 · 복구": operations.md
+      - 가이드: guide.md
+  - "기술 필러":
+      - "P1 · 데이터 수집 & 처리": pillar-1.md
+      - "P2 · 모델 학습 (VLA)": pillar-2.md
+      - "P3 · 시뮬레이션": pillar-3.md
+      - "P4 · Sim-to-Real": pillar-4.md
+      - "P5 · 에이전트 오케스트레이션": pillar-5.md
+      - "의사결정 트리": decisions.md
+  - 경영진:
+      - "경영진 브리핑": exec.md
+      - "임원 대화 가이드": exec-guide.md
+  - "소식 · 자료":
+      - "새 소식": news.md
+      - "워크숍·자료": workshops.md
+      - "Radar (대기열)": radar.md
+  - 참고:
+      - "근거 기록": evidence.md
+      - "유지보수 규칙": maintenance.md
+      - "설정 · MCP 연결": mcp.md
 
 theme:
   name: material
@@ -50,7 +56,8 @@ theme:
         icon: material/brightness-4
         name: 라이트 모드로
   features:
-    - navigation.tabs      # 상단 가로 탭바 — 가이드 등 전 페이지를 헤더에 노출
+    - navigation.tabs      # 상단 가로 탭바 — nav 최상위 그룹(6개)만 노출, 그룹 내 페이지는 사이드바
+    - navigation.tabs.sticky  # 스크롤해도 그룹 탭 유지
     # navigation.instant 제거 — mkdocs-static-i18n 언어 전환기와 문서화된 비호환 (strict 빌드 게이트)
     - navigation.top
     - navigation.footer
@@ -101,6 +108,11 @@ plugins:
           site_description: "Physical AI for customers and AWS staff — business fit, ROI, experiments, and operations"
           nav_translations:
             홈: Home
+            시작하기: "Get Started"
+            "기술 필러": "Technical Pillars"
+            경영진: Executives
+            "소식 · 자료": "News & Resources"
+            참고: Reference
             "시작 · 업무 & ROI": "Start · Business & ROI"
             "실행 경로": "Execution Paths"
             "운영 · 복구": "Operations & Recovery"
@@ -124,6 +136,11 @@ plugins:
           site_description: "面向客户与 AWS 员工的 Physical AI — 业务适配、ROI、实验与运营"
           nav_translations:
             홈: 首页
+            시작하기: 快速开始
+            "기술 필러": 技术支柱
+            경영진: 高管
+            "소식 · 자료": "新闻与资料"
+            참고: 参考
             "시작 · 업무 & ROI": "开始 · 业务与 ROI"
             "실행 경로": "执行路径"
             "운영 · 복구": "运营与恢复"
@@ -147,6 +164,11 @@ plugins:
           site_description: "顧客と AWS 担当者向け Physical AI — 業務適合性・ROI・実験・運用"
           nav_translations:
             홈: ホーム
+            시작하기: はじめに
+            "기술 필러": 技術ピラー
+            경영진: 経営層
+            "소식 · 자료": "ニュース・資料"
+            참고: リファレンス
             "시작 · 업무 & ROI": "開始 · 業務・ROI"
             "실행 경로": "実行手順"
             "운영 · 복구": "運用・復旧"
