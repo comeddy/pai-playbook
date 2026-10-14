@@ -1,5 +1,5 @@
 ---
-ko_hash: a807f67585d61891d2c7c61ee39e5b9254205160
+ko_hash: 68bae8819be1a40b87dcb9f8e0f7cb5744b428ea
 ---
 # Maintenance — inclusion, evidence, and review
 
@@ -29,6 +29,8 @@ Research can support hypothesis-driven R&D guidance, not operational performance
 ## Metadata and freshness
 
 Keep page `_owner: name · updated: YYYY-MM · volatility: high/medium/low_` metadata. This date describes the **page edit/review scope**; partial edits do not refresh unrelated claim dates. Page badges warn after high 1 / medium 3 / low 6 months.
+
+**Declared refresh paths.** The metadata line names only who is responsible. Every nav page declares in the repository-root `refresh.yml` **what triggers its refresh and who does it** — `mode` (routine: scheduled automation / owner: periodic human review / event: on a specific change), `by`, `trigger`. Pages that follow an external source (e.g. [News](news.md) ← the AWS Physical AI blog RSS) declare `source`, and posts deliberately left out go into `exclude` with a reason. A missing declaration blocks deployment (`check_refresh_paths.py`), and GitHub Actions compares pages with their real sources daily, opening a `source-drift` issue for posts still missing 3 days after publication or for a stalled routine (`check_source_drift.py`). Badges watch dates; the watchdog watches sources — the 3-week News gap in 2026-10 prompted this rule.
 
 Add decision-critical claims to [evidence records](evidence.md). `checked_on` is the source comparison date, `review_after_days` the claim review interval, and `pages` identifies affected summaries/pillars. Unmigrated legacy claims remain explicitly outside the register.
 
@@ -72,11 +74,12 @@ Naming one owner does not resolve review bottlenecks. Record specialist owners a
 python3 scripts/check_evidence.py
 python3 scripts/check_translation_sync.py
 python3 scripts/check_nav_index_sync.py
+python3 scripts/check_refresh_paths.py
 python3 scripts/check_staleness.py --check
 mkdocs build --strict
 ```
 
-Invalid evidence/rendering, nav drift, missing metadata, and internal document link/anchor errors block deployment. Overdue/human-pending review is reported; translation drift is currently warn-only in CI. Separately require **zero translation drift before commit**. Builds do not verify external reachability, facts, translation meaning, or robot execution.
+Invalid evidence/rendering, nav drift, undeclared refresh paths, missing metadata, and internal document link/anchor errors block deployment. Overdue/human-pending review is reported; translation drift is currently warn-only in CI. Separately require **zero translation drift before commit**. Builds do not verify external reachability, facts, translation meaning, or robot execution.
 
 **➡️ Next action**: assign pending [evidence reviews](evidence.md#review) by specialty and review the earliest-due sources with every affected page.
 

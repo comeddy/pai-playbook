@@ -1,0 +1,78 @@
+# 페이지별 갱신 경로 등록부 — "무엇이 이 페이지의 갱신을 촉발하고, 누가 하는가"
+#
+# 배경: docs/news.md는 2026-09-19 생성 후 갱신 경로가 없어 블로그 신규 글 4건이 3주간 누락됐다.
+# 메타 줄(owner·updated·volatility)은 책임자만 말하고, staleness 배지는 월 단위 자기 신고 날짜만 본다.
+# 그래서 nav의 모든 페이지는 여기 갱신 경로를 선언해야 하며(scripts/check_refresh_paths.py, 배포 게이트),
+# 외부 소스를 따라가는 페이지는 source를 선언해 매일 실제 소스와 대조된다(scripts/check_source_drift.py).
+#
+# 필드
+#   mode     routine — 스케줄 자동화가 갱신 (runbook 필수, runbook이 docs/<page>를 언급해야 함)
+#            owner   — 사람이 주기 검토 (staleness 배지가 신호)
+#            event   — 특정 변경이 있을 때만 갱신 (trigger에 그 변경과 그것을 잡는 검사를 적는다)
+#   by       갱신 주체 (루틴 ID 또는 사람)
+#   trigger  언제·무엇을 보고 갱신하는가 (빈 값 금지)
+#   runbook  mode: routine일 때 절차 문서
+#   source   외부 소스를 미러링하는 페이지만 — rss(피드 URL) · since(이 날짜 이후 글만 대상) · grace_days(발행 후 반영 유예)
+#            exclude: 의도적으로 수록하지 않는 글 [{url, reason}] — 이유 없는 제외는 게이트가 거부, 루틴도 이 목록을 건너뛴다
+#   max_silence_days  routine 페이지가 이 일수 넘게 커밋이 없으면 감시가 경고 (루틴 정지 탐지)
+
+pages:
+  index.md:
+    mode: event
+    by: Youngjin
+    trigger: nav 페이지 추가·삭제 시 '페이지 목록' 갱신 — check_nav_index_sync.py가 배포 게이트
+  start.md: &owner
+    mode: owner
+    by: Youngjin
+    trigger: volatility 주기 검토(staleness 배지) + 근거 기록(claims.json) 검토 기한
+  execution.md: *owner
+  operations.md: *owner
+  guide.md: *owner
+  exec.md:
+    mode: owner
+    by: Youngjin
+    trigger: volatility 주기 검토 + 필러 결론이 바뀔 때 함께 갱신 (임원 요약은 필러 조건을 삭제하지 않는다)
+  exec-guide.md: *owner
+  pillar-1.md: &pillar
+    mode: owner
+    by: Youngjin
+    trigger: volatility 주기 검토 + Radar 항목 승격 시 (승격은 사람 owner — maintenance.md 승격 파이프라인)
+  pillar-2.md: *pillar
+  pillar-3.md: *pillar
+  pillar-4.md: *pillar
+  pillar-5.md: *pillar
+  decisions.md: *pillar
+  news.md:
+    mode: routine
+    by: trig_01KWwHEnRP6Di1gYTnP5uxJ8 (Radar 일간 자동 스캔) — 자동 추가분은 [4]·⏳, owner가 원문 대조 후 [3]
+    trigger: 매일 02:12 UTC — AWS Physical AI 블로그 RSS의 미반영 글
+    runbook: scripts/radar_scan.md
+    source:
+      rss: https://aws.amazon.com/blogs/physical-ai/feed/
+      since: 2026-07-15
+      grace_days: 3
+      exclude:
+        - url: https://aws.amazon.com/blogs/physical-ai/how-physna-and-aws-use-geometric-intelligence-to-bridge-engineering-design-and-procurement/
+          reason: 2026-09-19 최초 수록 때 제외된 글(제외 사유 기록 없음) — 엔지니어링 설계·조달 주제로 로봇 학습·운영 필러와 연결이 약함. 2026-10-14 사후 기록, owner 재검토 가능
+  workshops.md:
+    mode: owner
+    by: Youngjin
+    trigger: 일간 스캔 보고의 '신규 워크샵 후보'를 owner가 편입 (자동 편입 없음) + volatility 주기 검토
+  radar.md:
+    mode: routine
+    by: trig_01KWwHEnRP6Di1gYTnP5uxJ8 (Radar 일간 자동 스캔)
+    trigger: 매일 02:12 UTC — 웹·arXiv 스캔 유입 (하루 0~3건 정상)
+    runbook: scripts/radar_scan.md
+    max_silence_days: 14
+  evidence.md:
+    mode: event
+    by: Youngjin
+    trigger: docs/assets/claims.json 변경 시 check_evidence.py --render — 검토 기한은 check_evidence.py가 보고
+  maintenance.md:
+    mode: event
+    by: Youngjin
+    trigger: 유지보수 규칙·검사 스크립트가 바뀔 때 함께 갱신
+  mcp.md:
+    mode: event
+    by: Youngjin
+    trigger: docs/mcp/pai-playbook-mcp.mjs 또는 클라이언트 설정 절차가 바뀔 때 — tests/test_mcp_server.py

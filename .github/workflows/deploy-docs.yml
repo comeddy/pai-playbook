@@ -34,6 +34,9 @@ jobs:
       - run: python scripts/check_translation_sync.py
       # nav ↔ 홈 '페이지 목록' 동기화 — 새 페이지 목록 누락 시 배포 실패 (issue #5)
       - run: python scripts/check_nav_index_sync.py
+      # 갱신 경로 등록부 — nav 페이지마다 refresh.yml에 mode/by/trigger 선언 필수, 누락 시 배포 실패
+      # (소스와의 실제 대조는 source-drift.yml이 매일 별도 수행)
+      - run: python scripts/check_refresh_paths.py
       - run: python scripts/check_staleness.py --check
       - run: python scripts/check_staleness.py --inject
       # MCP 서버(docs/mcp/pai-playbook-mcp.mjs) 프로토콜·도구 검사 + 스크립트 단위 테스트 (러너 기본 Node 20 사용)

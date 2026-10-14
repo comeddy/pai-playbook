@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Refresh-path registry and source-drift watchdog: every nav page now declares in `refresh.yml` what triggers its refresh and who does it (`routine`/`owner`/`event`), enforced as a deploy gate (`check_refresh_paths.py`); pages mirroring an external source declare it (News ← AWS Physical AI blog RSS, with reasoned `exclude`), and a daily GitHub Actions job (`source-drift.yml`, `check_source_drift.py`) compares them with the real source and opens/closes a `source-drift` issue for posts missing 3+ days after publication or a stalled routine; rule documented in Maintenance Rules, in all four languages
 - News: added 4 AWS Physical AI blog posts missing since 2026-09-19 (Physical AI Toolchain 10-07, 3D Gaussian Splatting use cases 10-06, Isaac Lab on AWS 10-02, NVIDIA Cosmos 3 on AWS 09-28) — read against the originals with links checked (HTTP 200), each with scope notes (vendor claims vs. measurements, Isaac Lab on AWS available via account team), new term footnotes 3DGS/WFM/WAM; the daily scan runbook now also adds missing blog posts to News marked `[4]` · ⏳ awaiting source check, in all four languages
 - Add News and Workshops & Resources to the existing navigation, in all four languages: six recent AWS Physical AI articles with publication dates and scope notes, plus eight workshops/guides/samples with prerequisites and source-access notes (checked 2026-09-19).
 - Add a "Settings · MCP Connection" page and a single-file stdio MCP server (docs/mcp/pai-playbook-mcp.mjs) so Claude Code, Codex, Kiro CLI/Crew, and Amazon Quick can read Playbook pages, Radar, and evidence records via four tools; client tabs follow the TTOBAK connection-guide structure, HTTP is marked as not configured, in all four languages
@@ -174,6 +175,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 갱신 경로 등록부와 소스 드리프트 감시: nav 모든 페이지가 `refresh.yml`에 갱신을 촉발하는 것과 주체(`routine`/`owner`/`event`)를 선언, 배포 게이트로 강제(`check_refresh_paths.py`); 외부 소스를 따르는 페이지는 소스를 선언(새 소식 ← AWS Physical AI 블로그 RSS, 사유 있는 `exclude`)하고 GitHub Actions 일간 작업(`source-drift.yml`, `check_source_drift.py`)이 실제 소스와 대조해 발행 3일 넘은 미반영 글·루틴 정지를 `source-drift` 이슈로 열고 해소 시 닫음; 유지보수 규칙에 명문화(4개 언어)
 - 새 소식: 2026-09-19 이후 누락된 AWS Physical AI 블로그 글 4건 추가(Physical AI Toolchain 10-07, 3D Gaussian Splatting 활용 사례 10-06, Isaac Lab on AWS 10-02, NVIDIA Cosmos 3 on AWS 09-28) — 원문 대조·링크 200 확인, 항목별 확인 범위(벤더 표현과 실측 구분, Isaac Lab on AWS는 계정팀 제공) 명시, 용어 각주 3DGS/WFM/WAM 신설; 일간 스캔 런북에 블로그 미반영 글을 `[4]` · ⏳ 원문 대조 대기로 새 소식에 추가하는 단계 신설(4개 언어)
 - 기존 메뉴에 새 소식·워크숍·자료를 4개 언어로 추가: 최근 AWS Physical AI 글 6건의 발행일·범위·필러 연결, 워크숍/가이드/샘플 8건의 준비 조건·접근 상태를 정리(2026-09-19 확인).
 - "설정 · MCP 연결" 페이지와 단일 파일 stdio MCP 서버(docs/mcp/pai-playbook-mcp.mjs) 추가 — Claude Code·Codex·Kiro CLI/Crew·Amazon Quick에서 도구 4개로 Playbook 페이지·Radar·근거 기록을 조회, TTOBAK 연결 가이드 구조의 클라이언트 탭, HTTP는 미설정 표기, 4개 언어
@@ -330,6 +332,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 更新路径登记表与来源漂移监视：nav 所有页面在 `refresh.yml` 中声明触发更新的因素与执行者（`routine`/`owner`/`event`），作为部署门禁强制执行（`check_refresh_paths.py`）；跟随外部来源的页面声明来源（新消息 ← AWS Physical AI 博客 RSS，附理由的 `exclude`），GitHub Actions 每日任务（`source-drift.yml`、`check_source_drift.py`）与实际来源比对，对发布 3 天以上仍未收录的文章或停止的例程开启 `source-drift` 议题并在解决后关闭；写入维护规则（四种语言）
 - 新消息：补充 2026-09-19 以来遗漏的 4 篇 AWS Physical AI 博客文章（Physical AI Toolchain 10-07、3D Gaussian Splatting 应用案例 10-06、Isaac Lab on AWS 10-02、NVIDIA Cosmos 3 on AWS 09-28）——已核对原文、链接 200，逐条注明阅读范围（区分厂商表述与实测，Isaac Lab on AWS 通过客户团队提供），新增术语脚注 3DGS/WFM/WAM；每日扫描运行手册新增将博客遗漏文章以 `[4]` · ⏳ 待原文核对 标记加入新消息的步骤（四种语言）
 - 在现有菜单添加四语言“新消息”“工作坊与资料”：六篇近期 AWS Physical AI 文章的发布日期、范围及支柱链接，八项工作坊/指南/样本的准备条件和访问说明（2026-09-19 确认）。
 - 新增"设置 · MCP 连接"页面与单文件 stdio MCP 服务器（docs/mcp/pai-playbook-mcp.mjs），Claude Code、Codex、Kiro CLI/Crew、Amazon Quick 可通过 4 个工具读取 Playbook 页面、Radar 与证据记录；客户端标签沿用 TTOBAK 连接指南结构，HTTP 标记为未配置，四种语言
@@ -486,6 +489,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 更新経路の登録簿とソースドリフト監視：nav の全ページが `refresh.yml` に更新のきっかけと担い手（`routine`/`owner`/`event`）を宣言し、配備ゲートで強制（`check_refresh_paths.py`）；外部ソースを追うページはソースを宣言（新着情報 ← AWS Physical AI ブログ RSS、理由付きの `exclude`）し、GitHub Actions の日次ジョブ（`source-drift.yml`、`check_source_drift.py`）が実際のソースと照合して、公開 3 日超の未反映記事やルーチン停止を `source-drift` Issue で開き、解消時に閉じる；メンテナンスルールに明文化（4 言語）
 - 新着情報：2026-09-19 以降に漏れていた AWS Physical AI ブログ記事 4 件を追加（Physical AI Toolchain 10-07、3D Gaussian Splatting 活用事例 10-06、Isaac Lab on AWS 10-02、NVIDIA Cosmos 3 on AWS 09-28）— 原文照合・リンク 200 確認、項目ごとの確認範囲（ベンダー表現と実測の区別、Isaac Lab on AWS はアカウントチーム経由で提供）を明記、用語脚注 3DGS/WFM/WAM を新設；日次スキャンのランブックにブログ未反映記事を `[4]` · ⏳ 原文照合待ち で新着情報に追加する手順を新設（4 言語）
 - 既存メニューに4言語の新着情報・ワークショップ資料を追加。最近のAWS Physical AI記事6件に公開日・範囲・ピラー接続、実習/ガイド/サンプル8件に前提・アクセス状態を記載（2026-09-19確認）。
 - 「設定 · MCP 接続」ページと単一ファイル stdio MCP サーバー（docs/mcp/pai-playbook-mcp.mjs）を追加 — Claude Code・Codex・Kiro CLI/Crew・Amazon Quick から 4 つのツールで Playbook ページ・Radar・根拠記録を参照、TTOBAK 接続ガイド構造のクライアントタブ、HTTP は未設定と表記、4 言語

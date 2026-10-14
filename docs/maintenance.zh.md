@@ -1,5 +1,5 @@
 ---
-ko_hash: a807f67585d61891d2c7c61ee39e5b9254205160
+ko_hash: 68bae8819be1a40b87dcb9f8e0f7cb5744b428ea
 ---
 # 维护 — 收录、证据与更新规则
 
@@ -29,6 +29,8 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 中_
 ## 元数据与时效
 
 保留页面 `_owner: 姓名 · updated: YYYY-MM · volatility: 高/中/低_`。日期描述**页面修改/复核范围**，局部修改不刷新其他主张日期。页面徽章按高1/中3/低6个月超期提醒。
+
+**声明更新路径。** 元数据行只说明负责人。nav 中的每个页面都要在仓库根目录 `refresh.yml` 中声明**由什么触发更新、由谁执行** — `mode`（routine 定时自动化 / owner 人工定期复核 / event 特定变更时）、`by`、`trigger`。跟随外部来源的页面（例如 [新消息](news.md) ← AWS Physical AI 博客 RSS）声明 `source`，有意不收录的文章连同理由写入 `exclude`。缺少声明会阻断部署（`check_refresh_paths.py`）；GitHub Actions 每天与实际来源比对，对发布 3 天后仍未收录的文章或停止运行的例程开启 `source-drift` 议题（`check_source_drift.py`）。徽章看日期，监视看来源 — 2026-10 新消息遗漏 3 周是制定此规则的起因。
 
 影响决策的主张加入[证据记录](evidence.md)。`checked_on` 是原文对照日，`review_after_days` 是逐项周期，`pages` 列出受影响摘要及支柱。旧有未迁移主张明确留在记录范围之外。
 
@@ -72,11 +74,12 @@ L0 保持简短，细节折叠或链接。难词首次加 `[^term]`，末尾 `<!
 python3 scripts/check_evidence.py
 python3 scripts/check_translation_sync.py
 python3 scripts/check_nav_index_sync.py
+python3 scripts/check_refresh_paths.py
 python3 scripts/check_staleness.py --check
 mkdocs build --strict
 ```
 
-证据结构/显示错误、nav 不一致、元数据缺失、内部文档链接/锚点错误阻断部署。逾期及人工待复核会报告；当前 CI 对翻译漂移仅警告。提交前另行要求**翻译不一致为零**。构建不验证外链可达、事实、翻译含义或机器人执行。
+证据结构/显示错误、nav 不一致、未声明更新路径、元数据缺失、内部文档链接/锚点错误阻断部署。逾期及人工待复核会报告；当前 CI 对翻译漂移仅警告。提交前另行要求**翻译不一致为零**。构建不验证外链可达、事实、翻译含义或机器人执行。
 
 **➡️ 后续行动**：按专业分配[证据复核](evidence.md#review)，先检查即将到期的来源及所有影响页面。
 

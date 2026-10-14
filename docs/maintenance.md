@@ -27,6 +27,8 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 중간_
 
 페이지는 `_owner: 이름 · updated: YYYY-MM · volatility: 높음/중간/낮음_`를 유지한다. 이는 **페이지 편집·검토 범위의 날짜**다. 일부 수정으로 다른 주장의 확인일을 갱신하지 않는다. 페이지 자동 배지는 높음 1개월/중간 3개월/낮음 6개월 초과를 알린다.
 
+**갱신 경로 선언.** 메타 줄은 책임자만 말한다. nav의 모든 페이지는 저장소 루트 `refresh.yml`에 **무엇이 갱신을 촉발하고 누가 하는가**를 선언한다 — `mode`(routine 스케줄 자동화 / owner 사람 주기 검토 / event 특정 변경 시), `by`, `trigger`. 외부 소스를 따라가는 페이지(예: [새 소식](news.md) ← AWS Physical AI 블로그 RSS)는 `source`를 선언하고, 의도적으로 싣지 않는 글은 `exclude`에 사유와 함께 남긴다. 선언 누락은 배포를 막고(`check_refresh_paths.py`), GitHub Actions가 매일 실제 소스와 대조해 발행 3일이 지나도 미반영인 글이나 루틴 정지를 `source-drift` 이슈로 알린다(`check_source_drift.py`). 배지는 날짜를, 감시는 소스를 본다 — 2026-10 새 소식 3주 누락이 이 규칙의 계기다.
+
 고객 판단에 영향을 주는 주장에는 [근거 기록](evidence.md)을 추가한다. `checked_on`은 실제 원문 대조일, `review_after_days`는 주장별 검토 주기이며 `pages`는 영향을 받는 요약·필러를 가리킨다. 기록을 추가하지 않은 기존 주장은 미이관 상태로 남긴다.
 
 ## 표준 템플릿
@@ -69,11 +71,12 @@ L0를 짧게 유지하고 상세 자료는 링크·접힌 블록에 둔다. 어�
 python3 scripts/check_evidence.py
 python3 scripts/check_translation_sync.py
 python3 scripts/check_nav_index_sync.py
+python3 scripts/check_refresh_paths.py
 python3 scripts/check_staleness.py --check
 mkdocs build --strict
 ```
 
-근거 구조·표시 불일치, nav 불일치, 메타 누락, 문서 내부 링크/앵커 오류는 배포를 차단한다. 주장 검토 기한·사람 검토 대기는 보고하고, 번역 표류도 현재 CI에서는 경고다. **커밋 전 번역 불일치 0**을 별도로 확인한다. 빌드는 외부 링크 접속·주장 사실·번역 의미·로봇 실행을 검증하지 않는다.
+근거 구조·표시 불일치, nav 불일치, 갱신 경로 미선언, 메타 누락, 문서 내부 링크/앵커 오류는 배포를 차단한다. 주장 검토 기한·사람 검토 대기는 보고하고, 번역 표류도 현재 CI에서는 경고다. **커밋 전 번역 불일치 0**을 별도로 확인한다. 빌드는 외부 링크 접속·주장 사실·번역 의미·로봇 실행을 검증하지 않는다.
 
 **➡️ 다음 액션**: [근거 기록](evidence.md#review)의 검토 대기 항목을 분야별로 배정하고, 기한이 빠른 항목부터 출처와 영향 페이지를 함께 검토한다.
 

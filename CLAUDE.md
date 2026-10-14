@@ -8,6 +8,7 @@ AWS Korea SA용 Physical AI Playbook. MkDocs Material, 4개 언어(ko 원본 + e
 2. **용어 각주 관례 (지속)** — 내용을 추가·갱신할 때 SA가 바로 이해하기 어려운 용어는 같은 변경 안에서 `[^용어]` 각주로 처리한다. 기존 각주 id 재사용 우선, 새 용어는 페이지 하단 `<!-- 용어 각주 -->` 블록에 "**용어** — 1~2문장 설명" 추가(공식 영상 있으면 🎥 링크 — `https://www.youtube.com/oembed?url=...`로 실존 검증 후 부착). 마커는 본문 첫 등장 위치에만, 헤딩·mermaid 블록 금지. 4개 언어 동일 적용(마커 id·URL 동일). 규칙 원문: docs/maintenance.md 표준 템플릿 절.
 3. **커밋 전 게이트 (모두 통과 필수)** — `python3 scripts/check_evidence.py` + `python3 scripts/check_translation_sync.py`(모든 번역 비동기 0) + `mkdocs build --strict`(exit 0). 실패 상태로 커밋 금지.
    3-1. **nav에 페이지를 추가/삭제하면** docs/index.md '페이지 목록'(4개 언어)도 갱신 — `python3 scripts/check_nav_index_sync.py`가 CI에서 불일치를 배포 실패로 잡는다.
+   3-2. **nav 페이지를 추가하면 `refresh.yml`에 갱신 경로(mode·by·trigger, 외부 소스를 따라가면 source)를 같은 커밋에서 선언** — `python3 scripts/check_refresh_paths.py`가 배포 게이트. "누가·무엇을 보고 갱신하는가"가 없는 페이지는 조용히 낡는다(2026-10 news.md 3주 누락). 루틴 동작을 바꾸면 런북과 claude.ai 루틴 프롬프트를 함께 고친다.
 4. **번역 규칙** — `i18n/glossary.md`의 금지 용어·고정 역어·문체를 따른다.
 5. **발견 사항은 GitHub 이슈로** — 작업 중 발견했지만 이번 범위가 아닌 버그·개선 후보는 세션 메모리에만 남기지 말고 `gh issue create`로 기록한다(`bug`/`enhancement`/`documentation` 라벨, 템플릿: .github/ISSUE_TEMPLATE/). 사소한 것도 이슈가 곧 백로그다. 새 기술 항목 제안은 이슈가 아니라 후보 제보 폼(promote-candidate) 경로.
 

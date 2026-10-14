@@ -1,5 +1,5 @@
 ---
-ko_hash: a807f67585d61891d2c7c61ee39e5b9254205160
+ko_hash: 68bae8819be1a40b87dcb9f8e0f7cb5744b428ea
 ---
 # メンテナンス — 掲載・根拠・更新ルール
 
@@ -29,6 +29,8 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 中_
 ## メタデータと鮮度
 
 ページに`_owner: 名前 · updated: YYYY-MM · volatility: 高/中/低_`を保持します。日付は**ページ編集・確認範囲**であり、部分修正で別主張の日付を更新しません。ページバッジは高1・中3・低6か月超過を通知します。
+
+**更新経路の宣言。** メタ行は責任者しか示しません。nav のすべてのページは、リポジトリ直下の `refresh.yml` に**何が更新を引き起こし、誰が行うか**を宣言します — `mode`（routine: スケジュール自動化 / owner: 人による定期確認 / event: 特定の変更時）、`by`、`trigger`。外部ソースを追うページ（例：[新着情報](news.md) ← AWS Physical AI ブログ RSS）は `source` を宣言し、意図的に載せない記事は理由とともに `exclude` に残します。宣言漏れは配備を止め（`check_refresh_paths.py`）、GitHub Actions が毎日実際のソースと照合して、公開 3 日後も未反映の記事やルーチン停止を `source-drift` Issue で知らせます（`check_source_drift.py`）。バッジは日付を、監視はソースを見ます — 2026-10 の新着情報 3 週間漏れがこのルールのきっかけです。
 
 判断に影響する主張を[根拠記録](evidence.md)へ追加します。`checked_on`は原文照合日、`review_after_days`は主張別周期、`pages`は影響する要約・ピラーです。未移行の既存主張は記録外と明示します。
 
@@ -72,11 +74,12 @@ L0を短くし詳細はリンク・折り畳みにします。難語の初出に
 python3 scripts/check_evidence.py
 python3 scripts/check_translation_sync.py
 python3 scripts/check_nav_index_sync.py
+python3 scripts/check_refresh_paths.py
 python3 scripts/check_staleness.py --check
 mkdocs build --strict
 ```
 
-根拠構造・表示不一致、nav不一致、メタ欠落、内部リンク・アンカーエラーは配備を止めます。期限超過・人の確認待ちは報告し、翻訳ずれは現在CIで警告のみです。コミット前に別途**翻訳ずれゼロ**を確認します。ビルドは外部URL到達性、事実、翻訳の意味、ロボット実行を検証しません。
+根拠構造・表示不一致、nav不一致、更新経路の未宣言、メタ欠落、内部リンク・アンカーエラーは配備を止めます。期限超過・人の確認待ちは報告し、翻訳ずれは現在CIで警告のみです。コミット前に別途**翻訳ずれゼロ**を確認します。ビルドは外部URL到達性、事実、翻訳の意味、ロボット実行を検証しません。
 
 **➡️ 次のアクション**：[根拠確認](evidence.md#review)を専門別に割り当て、期限の近い資料と影響ページを一緒に確認します。
 

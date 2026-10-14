@@ -1,0 +1,28 @@
+name: source-drift
+
+# 갱신 경로 감시 — refresh.yml에 source/max_silence_days를 선언한 페이지를 실제 소스와 매일 대조한다.
+# 클라우드 루틴(Radar 일간 스캔)은 egress가 막힐 수 있어, 독립된 러너에서 감시자를 따로 둔다.
+# 드리프트 → 'source-drift' 이슈 1개를 생성/본문 갱신, 해소 → 자동 종료. 배포는 막지 않는다.
+on:
+  schedule:
+    - cron: "30 3 * * *"   # 루틴(02:12 UTC) 실행·배포 이후
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # max_silence_days 판정에 페이지별 마지막 커밋 날짜가 필요
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python scripts/check_source_drift.py --issue
+        env:
+          GH_TOKEN: ${{ github.token }}
