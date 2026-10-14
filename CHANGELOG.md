@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- News: added 4 AWS Physical AI blog posts missing since 2026-09-19 (Physical AI Toolchain 10-07, 3D Gaussian Splatting use cases 10-06, Isaac Lab on AWS 10-02, NVIDIA Cosmos 3 on AWS 09-28) — read against the originals with links checked (HTTP 200), each with scope notes (vendor claims vs. measurements, Isaac Lab on AWS available via account team), new term footnotes 3DGS/WFM/WAM; the daily scan runbook now also adds missing blog posts to News marked `[4]` · ⏳ awaiting source check, in all four languages
 - Add News and Workshops & Resources to the existing navigation, in all four languages: six recent AWS Physical AI articles with publication dates and scope notes, plus eight workshops/guides/samples with prerequisites and source-access notes (checked 2026-09-19).
 - Add a "Settings · MCP Connection" page and a single-file stdio MCP server (docs/mcp/pai-playbook-mcp.mjs) so Claude Code, Codex, Kiro CLI/Crew, and Amazon Quick can read Playbook pages, Radar, and evidence records via four tools; client tabs follow the TTOBAK connection-guide structure, HTTP is marked as not configured, in all four languages
 
@@ -173,6 +174,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 새 소식: 2026-09-19 이후 누락된 AWS Physical AI 블로그 글 4건 추가(Physical AI Toolchain 10-07, 3D Gaussian Splatting 활용 사례 10-06, Isaac Lab on AWS 10-02, NVIDIA Cosmos 3 on AWS 09-28) — 원문 대조·링크 200 확인, 항목별 확인 범위(벤더 표현과 실측 구분, Isaac Lab on AWS는 계정팀 제공) 명시, 용어 각주 3DGS/WFM/WAM 신설; 일간 스캔 런북에 블로그 미반영 글을 `[4]` · ⏳ 원문 대조 대기로 새 소식에 추가하는 단계 신설(4개 언어)
 - 기존 메뉴에 새 소식·워크숍·자료를 4개 언어로 추가: 최근 AWS Physical AI 글 6건의 발행일·범위·필러 연결, 워크숍/가이드/샘플 8건의 준비 조건·접근 상태를 정리(2026-09-19 확인).
 - "설정 · MCP 연결" 페이지와 단일 파일 stdio MCP 서버(docs/mcp/pai-playbook-mcp.mjs) 추가 — Claude Code·Codex·Kiro CLI/Crew·Amazon Quick에서 도구 4개로 Playbook 페이지·Radar·근거 기록을 조회, TTOBAK 연결 가이드 구조의 클라이언트 탭, HTTP는 미설정 표기, 4개 언어
 
@@ -328,6 +330,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 新消息：补充 2026-09-19 以来遗漏的 4 篇 AWS Physical AI 博客文章（Physical AI Toolchain 10-07、3D Gaussian Splatting 应用案例 10-06、Isaac Lab on AWS 10-02、NVIDIA Cosmos 3 on AWS 09-28）——已核对原文、链接 200，逐条注明阅读范围（区分厂商表述与实测，Isaac Lab on AWS 通过客户团队提供），新增术语脚注 3DGS/WFM/WAM；每日扫描运行手册新增将博客遗漏文章以 `[4]` · ⏳ 待原文核对 标记加入新消息的步骤（四种语言）
 - 在现有菜单添加四语言“新消息”“工作坊与资料”：六篇近期 AWS Physical AI 文章的发布日期、范围及支柱链接，八项工作坊/指南/样本的准备条件和访问说明（2026-09-19 确认）。
 - 新增"设置 · MCP 连接"页面与单文件 stdio MCP 服务器（docs/mcp/pai-playbook-mcp.mjs），Claude Code、Codex、Kiro CLI/Crew、Amazon Quick 可通过 4 个工具读取 Playbook 页面、Radar 与证据记录；客户端标签沿用 TTOBAK 连接指南结构，HTTP 标记为未配置，四种语言
 
@@ -483,6 +486,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 新着情報：2026-09-19 以降に漏れていた AWS Physical AI ブログ記事 4 件を追加（Physical AI Toolchain 10-07、3D Gaussian Splatting 活用事例 10-06、Isaac Lab on AWS 10-02、NVIDIA Cosmos 3 on AWS 09-28）— 原文照合・リンク 200 確認、項目ごとの確認範囲（ベンダー表現と実測の区別、Isaac Lab on AWS はアカウントチーム経由で提供）を明記、用語脚注 3DGS/WFM/WAM を新設；日次スキャンのランブックにブログ未反映記事を `[4]` · ⏳ 原文照合待ち で新着情報に追加する手順を新設（4 言語）
 - 既存メニューに4言語の新着情報・ワークショップ資料を追加。最近のAWS Physical AI記事6件に公開日・範囲・ピラー接続、実習/ガイド/サンプル8件に前提・アクセス状態を記載（2026-09-19確認）。
 - 「設定 · MCP 接続」ページと単一ファイル stdio MCP サーバー（docs/mcp/pai-playbook-mcp.mjs）を追加 — Claude Code・Codex・Kiro CLI/Crew・Amazon Quick から 4 つのツールで Playbook ページ・Radar・根拠記録を参照、TTOBAK 接続ガイド構造のクライアントタブ、HTTP は未設定と表記、4 言語
 
