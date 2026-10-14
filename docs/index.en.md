@@ -1,5 +1,5 @@
 ---
-ko_hash: 88810e6a4d48cdc1304577555aa665bc9fd2690b
+ko_hash: 261839ae86deb67b7a1995dd80a870ff51dd1a43
 ---
 # Physical AI Playbook
 
@@ -63,21 +63,35 @@ The questions below are discovery examples, not measured inquiry-frequency ranki
 
 ## Page list
 
+**Get Started**
+
 - [Start and ROI](start.md)
 - [Execution paths](execution.md)
 - [Operations and recovery](operations.md)
 - [Usage guide](guide.md)
-- [News — recent official articles and pillar links](news.md)
-- [Workshops & Resources — public workshops, guides, and samples](workshops.md)
-- [Executive Brief](exec.md)
-- [AWS staff conversation guide](exec-guide.md)
+
+**Technical Pillars**
+
 - [P1 Data](pillar-1.md)
 - [P2 Training](pillar-2.md)
 - [P3 Simulation](pillar-3.md)
 - [P4 Sim-to-Real](pillar-4.md)
 - [P5 Orchestration](pillar-5.md)
 - [Decisions](decisions.md)
+
+**Executives**
+
+- [Executive Brief](exec.md)
+- [AWS staff conversation guide](exec-guide.md)
+
+**News & Resources**
+
+- [News — recent official articles and pillar links](news.md)
+- [Workshops & Resources — public workshops, guides, and samples](workshops.md)
 - [Radar](radar.md)
+
+**Reference**
+
 - [Evidence](evidence.md)
 - [Maintenance](maintenance.md)
 - [Settings · MCP Connection](mcp.md)

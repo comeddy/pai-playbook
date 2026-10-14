@@ -1,5 +1,5 @@
 ---
-ko_hash: 88810e6a4d48cdc1304577555aa665bc9fd2690b
+ko_hash: 261839ae86deb67b7a1995dd80a870ff51dd1a43
 ---
 # Physical AI Playbook
 
@@ -63,21 +63,35 @@ GA/Preview/Research 是**发布状态**。原文对照、复现、现场验证�
 
 ## 页面列表
 
+**快速开始**
+
 - [开始与 ROI](start.md)
 - [执行路径](execution.md)
 - [运营恢复](operations.md)
 - [使用指南](guide.md)
-- [新消息 — 近期官方文章与支柱链接](news.md)
-- [工作坊与资料 — 公开工作坊、指南、样本](workshops.md)
-- [高管简报](exec.md)
-- [AWS 员工对话指南](exec-guide.md)
+
+**技术支柱**
+
 - [P1 数据](pillar-1.md)
 - [P2 训练](pillar-2.md)
 - [P3 仿真](pillar-3.md)
 - [P4 Sim-to-Real](pillar-4.md)
 - [P5 编排](pillar-5.md)
 - [决策](decisions.md)
+
+**高管**
+
+- [高管简报](exec.md)
+- [AWS 员工对话指南](exec-guide.md)
+
+**新闻与资料**
+
+- [新消息 — 近期官方文章与支柱链接](news.md)
+- [工作坊与资料 — 公开工作坊、指南、样本](workshops.md)
 - [Radar](radar.md)
+
+**参考**
+
 - [证据记录](evidence.md)
 - [维护](maintenance.md)
 - [设置 · MCP 连接](mcp.md)

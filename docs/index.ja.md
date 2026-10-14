@@ -1,5 +1,5 @@
 ---
-ko_hash: 88810e6a4d48cdc1304577555aa665bc9fd2690b
+ko_hash: 261839ae86deb67b7a1995dd80a870ff51dd1a43
 ---
 # Physical AI Playbook
 
@@ -63,21 +63,35 @@ GA/Preview/Researchは**発売状態**です。原文照合・再現・現場検
 
 ## ページ一覧
 
+**はじめに**
+
 - [開始・ROI](start.md)
 - [実行手順](execution.md)
 - [運用復旧](operations.md)
 - [利用ガイド](guide.md)
-- [新着情報 — 最近の公式記事とピラーへの接続](news.md)
-- [ワークショップ・資料 — 公開実習・ガイド・サンプル](workshops.md)
-- [経営層資料](exec.md)
-- [AWS担当者対話ガイド](exec-guide.md)
+
+**技術ピラー**
+
 - [P1 データ](pillar-1.md)
 - [P2 学習](pillar-2.md)
 - [P3 シミュレーション](pillar-3.md)
 - [P4 Sim-to-Real](pillar-4.md)
 - [P5 オーケストレーション](pillar-5.md)
 - [意思決定](decisions.md)
+
+**経営層**
+
+- [経営層資料](exec.md)
+- [AWS担当者対話ガイド](exec-guide.md)
+
+**ニュース・資料**
+
+- [新着情報 — 最近の公式記事とピラーへの接続](news.md)
+- [ワークショップ・資料 — 公開実習・ガイド・サンプル](workshops.md)
 - [Radar](radar.md)
+
+**リファレンス**
+
 - [根拠記録](evidence.md)
 - [維持管理](maintenance.md)
 - [設定 · MCP 接続](mcp.md)

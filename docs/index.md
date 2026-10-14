@@ -60,21 +60,35 @@ GA/Preview/Research는 **출시 상태**다. 원문 대조·실험 재현·현�
 
 ## 페이지 목록
 
+**시작하기**
+
 - [시작·ROI](start.md)
 - [실행 경로](execution.md)
 - [운영·복구](operations.md)
 - [사용 가이드](guide.md)
-- [새 소식 — 최근 공식 글과 기존 필러 연결](news.md)
-- [워크숍·자료 — 공개 워크숍·구현 가이드·샘플 모음](workshops.md)
-- [경영진 브리핑](exec.md)
-- [AWS 직원 대화 가이드](exec-guide.md)
+
+**기술 필러**
+
 - [P1 데이터](pillar-1.md)
 - [P2 모델 학습](pillar-2.md)
 - [P3 시뮬레이션](pillar-3.md)
 - [P4 Sim-to-Real](pillar-4.md)
 - [P5 오케스트레이션](pillar-5.md)
 - [의사결정](decisions.md)
+
+**경영진**
+
+- [경영진 브리핑](exec.md)
+- [AWS 직원 대화 가이드](exec-guide.md)
+
+**소식 · 자료**
+
+- [새 소식 — 최근 공식 글과 기존 필러 연결](news.md)
+- [워크숍·자료 — 공개 워크숍·구현 가이드·샘플 모음](workshops.md)
 - [Radar](radar.md)
+
+**참고**
+
 - [근거 기록](evidence.md)
 - [유지보수](maintenance.md)
 - [설정 · MCP 연결](mcp.md)
