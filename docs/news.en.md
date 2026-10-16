@@ -1,5 +1,5 @@
 ---
-ko_hash: 6b769997bb98b4208fbc3c7f93ee6438f7e4d731
+ko_hash: 97764a94d9bc250fc42d34b6187d4215bf85efa7
 ---
 # News
 
@@ -22,6 +22,7 @@ Summaries are based on official articles, not independent reproduction of their 
 | 2026-08-12 | [Luminous Robotics: AI for solar-panel placement](#luminous) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-08-10 | [WIRobotics: teaching humanoids to use tools](#wirobotics) | [P2](pillar-2.md) · [P4](pillar-4.md) |
 | 2026-07-31 | [Industrial digital twins with OpenUSD and SDMA](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
+| 2026-07-17 | [Edge Impulse and AWS — combining edge inference with cloud intelligence](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config: augmenting robot training data](#config) | [P1](pillar-1.md) |
 
 ## AWS Physical AI Toolchain released { #toolchain }
@@ -113,6 +114,16 @@ A staged implementation from static 3D scenes to sensor overlays, prediction, an
 **Scope to check**: Reference implementation. Distinguish synthetic sensor inputs from real equipment integration; start at the needed level.
 
 **Next action**: P3 Digital Twins · OpenUSD resources — [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial).
+
+## Edge Impulse and AWS — combining edge inference with cloud intelligence { #edge-impulse-aws }
+
+**Published: 2026-07-17 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/edge-impulse-and-aws-combining-edge-inference-with-cloud-intelligence-for-physical-ai/) `[4]` · ⏳ awaiting source check (auto-scan 2026-10-16)**
+
+A joint post from Edge Impulse (a Qualcomm company) and AWS describing a hybrid edge-to-cloud architecture, using warehouse asset tracking as the example. Camera edge devices make a first pass with Edge Impulse YOLO Pro object detection and a Qwen2-VL 8B vision-language model, and only confirmed detections go to the cloud, where Amazon Bedrock AgentCore (Nova Lite) answers natural-language queries such as "where is the forklift." AWS IoT Core handles device connectivity and MQTT messaging, Greengrass deploys and manages the edge models, and S3 stores images for retraining.
+
+**Scope to check**: A joint AWS×Edge Impulse partner-introduction article. The article does not clearly state where the code sample lives, so whether it's a public repository or an account-team path needs further confirmation. "Reduced latency and bandwidth" describes the benefit of the edge-first design, not a measured benchmark — separate vendor description from measurement.
+
+**Next action**: P4 Edge inference deployment · P5 Agentic orchestration (Bedrock AgentCore) — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## Config: augmenting robot training data { #config }
 

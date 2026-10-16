@@ -1,5 +1,5 @@
 ---
-ko_hash: 6b769997bb98b4208fbc3c7f93ee6438f7e4d731
+ko_hash: 97764a94d9bc250fc42d34b6187d4215bf85efa7
 ---
 # 新着情報
 
@@ -22,6 +22,7 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 | 2026-08-12 | [Luminous Roboticsの太陽光パネル設置AI](#luminous) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-08-10 | [WIRoboticsのヒューマノイド道具操作学習](#wirobotics) | [P2](pillar-2.md) · [P4](pillar-4.md) |
 | 2026-07-31 | [OpenUSD・SDMAによる産業デジタルツイン](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
+| 2026-07-17 | [Edge ImpulseとAWS — エッジ推論とクラウドインテリジェンスの統合](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Configのロボット学習データ拡張](#config) | [P1](pillar-1.md) |
 
 ## AWS Physical AI Toolchain 公開 { #toolchain }
@@ -113,6 +114,16 @@ DROID・LIBEROでのπ0 VLA学習・評価を紹介し、HyperPod EKS、FSx for 
 **確認する範囲**: 参照実装です。合成センサー入力と実設備連携を分け、必要な段階から確認します。
 
 **次のアクション**: P3デジタルツイン・OpenUSD資料 — [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial).
+
+## Edge ImpulseとAWS — エッジ推論とクラウドインテリジェンスの統合 { #edge-impulse-aws }
+
+**公開日: 2026-07-17 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/edge-impulse-and-aws-combining-edge-inference-with-cloud-intelligence-for-physical-ai/) `[4]` · ⏳ 原文照合待ち (自動スキャン 2026-10-16)**
+
+Edge Impulse（Qualcomm傘下）とAWSの共同記事で、倉庫設備の位置追跡を例にハイブリッドなエッジ・クラウドアーキテクチャを紹介します。カメラのエッジデバイスでEdge Impulse YOLO Proの物体検出とQwen2-VL 8Bビジョン言語モデルによる一次判定を行い、確定した検知のみクラウドへ送って、Amazon Bedrock AgentCore（Nova Lite）が「フォークリフトはどこか」といった自然言語の問い合わせに答えます。AWS IoT Coreがデバイス接続とMQTTメッセージングを、Greengrassがエッジモデルの展開・管理を、S3が再学習用画像の保存を担います。
+
+**確認する範囲**: AWS×Edge Impulseの共同パートナー紹介記事です。コードサンプルの場所が原文で明確でないため、公開リポジトリかアカウントチーム経由かは追加確認が必要です。「レイテンシ・帯域幅の削減」はエッジ優先設計の利点の説明であり、数値化されたベンチマークではありません — ベンダーの説明と実測を区別して読みます。
+
+**次のアクション**: P4 エッジ推論展開 · P5 エージェントオーケストレーション（Bedrock AgentCore） — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## Configのロボット学習データ拡張 { #config }
 

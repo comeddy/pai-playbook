@@ -1,5 +1,5 @@
 ---
-ko_hash: 6b769997bb98b4208fbc3c7f93ee6438f7e4d731
+ko_hash: 97764a94d9bc250fc42d34b6187d4215bf85efa7
 ---
 # 新消息
 
@@ -22,6 +22,7 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 | 2026-08-12 | [Luminous Robotics：太阳能板安装 AI](#luminous) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-08-10 | [WIRobotics：人形机器人工具使用学习](#wirobotics) | [P2](pillar-2.md) · [P4](pillar-4.md) |
 | 2026-07-31 | [OpenUSD 与 SDMA 工业数字孪生实现](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
+| 2026-07-17 | [Edge Impulse 与 AWS — 结合边缘推理与云端智能](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config：机器人训练数据增强](#config) | [P1](pillar-1.md) |
 
 ## AWS Physical AI Toolchain 发布 { #toolchain }
@@ -113,6 +114,16 @@ Cosmos 3（2026-05 发布）把此前的 Predict、Transfer、Reason 三个模�
 **阅读范围**: 参考实现。区分合成传感器输入与实际设备集成，从需要的层级开始。
 
 **后续行动**: P3 数字孪生 · OpenUSD 资料 — [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial).
+
+## Edge Impulse 与 AWS — 结合边缘推理与云端智能 { #edge-impulse-aws }
+
+**发布日期: 2026-07-17 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/edge-impulse-and-aws-combining-edge-inference-with-cloud-intelligence-for-physical-ai/) `[4]` · ⏳ 待原文核对 (自动扫描 2026-10-16)**
+
+Edge Impulse（Qualcomm 旗下公司）与 AWS 联合撰写的文章，以仓库设备位置追踪为例介绍混合边缘-云架构。摄像头边缘设备先用 Edge Impulse YOLO Pro 目标检测和 Qwen2-VL 8B 视觉-语言模型做初判，只有确认的检测结果才上传云端，由 Amazon Bedrock AgentCore（Nova Lite）回答"叉车在哪里"之类的自然语言查询。AWS IoT Core 负责设备连接与 MQTT 消息，Greengrass 负责边缘模型部署与管理，S3 存储用于再训练的图像。
+
+**阅读范围**: AWS×Edge Impulse 联合伙伴介绍文章。原文未明确说明代码示例的位置，是公开仓库还是客户团队路径尚需进一步确认。"降低延迟与带宽"描述的是边缘优先设计的优点，不是量化基准测试——需将厂商说法与实测区分开。
+
+**后续行动**: P4 边缘推理部署 · P5 智能体编排（Bedrock AgentCore） — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## Config：机器人训练数据增强 { #config }
 

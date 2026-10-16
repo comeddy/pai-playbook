@@ -19,6 +19,7 @@ _owner: Youngjin · updated: 2026-10 · volatility: 높음_
 | 2026-08-12 | [Luminous Robotics의 태양광 패널 설치 AI](#luminous) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-08-10 | [WIRobotics의 휴머노이드 도구 사용 학습](#wirobotics) | [P2](pillar-2.md) · [P4](pillar-4.md) |
 | 2026-07-31 | [OpenUSD·SDMA 산업용 디지털 트윈 구현](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
+| 2026-07-17 | [Edge Impulse와 AWS — 엣지 추론과 클라우드 지능 결합](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config의 로봇 학습 데이터 증강](#config) | [P1](pillar-1.md) |
 
 ## AWS Physical AI Toolchain 공개 { #toolchain }
@@ -110,6 +111,16 @@ DROID·LIBERO 데이터를 이용한 π0 VLA 학습·평가 과정을 소개한�
 **읽을 때 확인할 범위**: 참조 구현. 가이드의 합성 센서 입력과 실제 설비 연결을 구분하고 필요한 단계부터 검토한다.
 
 **다음 액션**: P3 디지털 트윈 · 워크숍의 OpenUSD 자료 — [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial).
+
+## Edge Impulse와 AWS — 엣지 추론과 클라우드 지능 결합 { #edge-impulse-aws }
+
+**발행일: 2026-07-17 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/edge-impulse-and-aws-combining-edge-inference-with-cloud-intelligence-for-physical-ai/) `[4]` · ⏳ 원문 대조 대기 (자동 스캔 2026-10-16)**
+
+Qualcomm 자회사 Edge Impulse와 AWS가 함께 쓴 글로, 창고 설비 위치 추적을 예시로 한 하이브리드 엣지-클라우드 아키텍처를 소개한다. 카메라 엣지 디바이스에서 Edge Impulse YOLO Pro 객체 탐지와 Qwen2-VL 8B 비전-언어 모델로 1차 판단을 하고, 확정된 감지만 클라우드로 올려 Amazon Bedrock AgentCore(Nova Lite)가 "지게차가 어디 있나" 같은 자연어 질의에 답한다. AWS IoT Core가 디바이스 연결·MQTT 메시징을, Greengrass가 엣지 모델 배포·관리를, S3가 재학습용 이미지 저장을 맡는다.
+
+**읽을 때 확인할 범위**: AWS·Edge Impulse 공동 파트너 소개 글. 공개 저장소 경로가 원문에 명확히 적혀 있지 않아 공개 샘플인지 계정팀 경로인지 추가 확인이 필요하다. "지연시간·대역폭 감소"는 엣지 우선 처리 설계의 이점 서술이며 수치화된 벤치마크가 아니다 — 벤더 설명과 실측을 구분해서 읽는다.
+
+**다음 액션**: P4 엣지 추론 배포 · P5 에이전트 오케스트레이션(Bedrock AgentCore) — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## Config의 로봇 학습 데이터 증강 { #config }
 
