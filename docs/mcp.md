@@ -210,11 +210,7 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
 ## 연결 후 이렇게 요청하세요 { #prompts }
 
 ```text
-Playbook에서 P2 모델 학습 페이지를 읽어줘
-```
-
-```text
-Playbook에서 'Greengrass'를 검색해서 관련 페이지를 알려줘
+Playbook에서 최신 Physical AI 소식 알려줘
 ```
 
 ```text

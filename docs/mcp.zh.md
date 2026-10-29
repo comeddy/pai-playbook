@@ -1,5 +1,5 @@
 ---
-ko_hash: 60b24afbc9edeb9509c8357229ca1bb17b1bce5d
+ko_hash: e5a47528466c3d30a8c3de1bdd158de24c3463e0
 ---
 # 设置 — MCP 连接
 
@@ -213,11 +213,7 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
 ## 连接后可以这样提问 { #prompts }
 
 ```text
-从 Playbook 读取 P2 模型训练页面
-```
-
-```text
-在 Playbook 中搜索 'Greengrass' 并告诉我相关页面
+从 Playbook 告诉我最新的 Physical AI 动态
 ```
 
 ```text

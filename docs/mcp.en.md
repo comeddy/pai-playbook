@@ -1,5 +1,5 @@
 ---
-ko_hash: 60b24afbc9edeb9509c8357229ca1bb17b1bce5d
+ko_hash: e5a47528466c3d30a8c3de1bdd158de24c3463e0
 ---
 # Settings — MCP Connection
 
@@ -213,11 +213,7 @@ Four tools are provided:
 ## After connecting, ask like this { #prompts }
 
 ```text
-Read the P2 model training page from the Playbook
-```
-
-```text
-Search the Playbook for 'Greengrass' and tell me the related pages
+Tell me the latest Physical AI news from the Playbook
 ```
 
 ```text
