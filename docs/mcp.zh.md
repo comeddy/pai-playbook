@@ -1,5 +1,5 @@
 ---
-ko_hash: e5a47528466c3d30a8c3de1bdd158de24c3463e0
+ko_hash: 5cd770168cef890b4bcfde328b4243e46fe661fe
 ---
 # 设置 — MCP 连接
 
@@ -52,7 +52,7 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
     ```
 
     ```text
-    从 Playbook 读取 P2 模型训练页面
+    从 Playbook 告诉我最新的 Physical AI 动态
     ```
 
     ??? info "远程 · HTTP — 地址未配置"

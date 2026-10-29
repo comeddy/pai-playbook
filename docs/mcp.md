@@ -49,7 +49,7 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
     ```
 
     ```text
-    Playbook에서 P2 모델 학습 페이지를 읽어줘
+    Playbook에서 최신 Physical AI 소식 알려줘
     ```
 
     ??? info "원격 · HTTP — 주소 미설정"

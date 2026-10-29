@@ -1,5 +1,5 @@
 ---
-ko_hash: e5a47528466c3d30a8c3de1bdd158de24c3463e0
+ko_hash: 5cd770168cef890b4bcfde328b4243e46fe661fe
 ---
 # Settings — MCP Connection
 
@@ -52,7 +52,7 @@ Four tools are provided:
     ```
 
     ```text
-    Read the P2 model training page from the Playbook
+    Tell me the latest Physical AI news from the Playbook
     ```
 
     ??? info "Remote · HTTP — address not configured"
