@@ -1,5 +1,5 @@
 ---
-ko_hash: 97764a94d9bc250fc42d34b6187d4215bf85efa7
+ko_hash: ec57faa7de254db13339c8025949f86ba97d2633
 ---
 # News
 
@@ -13,6 +13,8 @@ Summaries are based on official articles, not independent reproduction of their 
 
 | Published | Resource | Connects to |
 |---|---|---|
+| 2026-10-28 | [AWS × RLWRLD — Building the Workforce of Tomorrow with Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
+| 2026-10-28 | [Visual Asset Management System 2.6 released](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain released](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
 | 2026-10-06 | [3D Gaussian Splatting industry use cases](#gaussian-splatting) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-02 | [Isaac Lab on AWS — from simulation to registered policy](#isaac-lab-aws) | [P3](pillar-3.md) · [Isaac Lab](workshops.md#isaac-lab) |
@@ -24,6 +26,26 @@ Summaries are based on official articles, not independent reproduction of their 
 | 2026-07-31 | [Industrial digital twins with OpenUSD and SDMA](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge Impulse and AWS — combining edge inference with cloud intelligence](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config: augmenting robot training data](#config) | [P1](pillar-1.md) |
+
+## AWS × RLWRLD — Building the Workforce of Tomorrow with Physical AI { #aws-rlwrld-workforce }
+
+**Published: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/aws-rlwrld-building-the-workforce-of-tomorrow-with-physical-ai/) `[4]` · ⏳ awaiting source check (auto-scan 2026-11-02)**
+
+The second installment in the AWS × RLWRLD Physical AI collaboration series, following the 2026-06-22 first post ("Putting Dexterous Robots to Work"). It introduces RLWRLD as a newly listed AWS Validated Partner with two offerings on AWS Marketplace, and covers planned PoCs for labor-shortage use cases (box picking, product picking, shelf replenishment) plus customer pipeline activity from AWS Physical AI roadshows. It also cites a claim that RLDX-1 reaches comparable performance using roughly 20% of the training compute of leading foundation models.
+
+**Scope to check**: An official AWS×RLWRLD partnership-series article (a customer-collaboration introduction). "AWS Validated Partner" and the Marketplace listing are partner-program status, not a live-deployment result. The box picking/product picking/shelf replenishment PoC is described in the article as "planned," not already operating. The "~20% compute for comparable performance" claim is RLWRLD's own vendor wording, citing its own technical blog — the same category as the self-reported benchmark already noted on the Radar's RLDX-1 item, not an independent measurement. This session could not reach aws.amazon.com directly due to a blanket egress block, so it was cross-checked against multiple independent search results (matching title, date, and key claims) instead — the owner should verify specific figures against the original.
+
+**Next action**: Connects to the existing RLDX-1 Radar item · P2 Training — [Radar](radar.md) · [P2](pillar-2.md).
+
+## Visual Asset Management System 2.6 released { #vams-2-6 }
+
+**Published: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/visual-asset-management-system-2-6-release/) `[4]` · ⏳ awaiting source check (auto-scan 2026-11-02)**
+
+VAMS is an open-source 3D/spatial-asset-management accelerator from the AWS Physical AI and PACE teams; 2.6 is described as the largest update since 2.0 (2024-06). It rebuilds the orchestration layer to add multi-file/multi-asset execution, a global execution view, and upload-triggered automatic workflows, plus an AWS European Sovereign Cloud deployment template, Amazon Cognito OIDC federation, finer-grained IAM role customization, a deny-by-default WAF, and asset provenance tracking (lifecycle and per-version change history). Demos include semantic search, an in-browser SuperSplat (Gaussian splat[^3dgs]) editor, an IFC BIM viewer, geospatial map search, and an NVIDIA Cosmos text-to-world workflow. The code is open source on [GitHub (awslabs/visual-asset-management-system)](https://github.com/awslabs/visual-asset-management-system).
+
+**Scope to check**: An official open-source solution update post. "Largest update since 2.0" is AWS's own description; the post gives no live customer production-adoption results or performance figures. It's a public repository, not an account-team-only path — anyone can get it from GitHub. This session could not reach aws.amazon.com directly due to a blanket egress block, so it was cross-checked against search snippets and GitHub release tags (2.6.0 on 2026-09-11 through 2.6.6 on 2026-10-30) instead — the publication date (2026-10-28) is also based on search snippets and needs the owner's check against the original.
+
+**Next action**: P3 Digital twins and scene reconstruction · P4 real-to-sim candidate — [P3](pillar-3.md) · [P4](pillar-4.md).
 
 ## AWS Physical AI Toolchain released { #toolchain }
 
@@ -39,7 +61,7 @@ A collection of reference architectures, IaC, and deployment automation for runn
 
 **Published: 2026-10-06 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/3d-gaussian-splatting-in-practice-industry-use-cases/) `[3]`**
 
-Introduces a five-stage pipeline (input → pre-processing → reconstruction → training → post-processing) for 3DGS[^3dgs], which builds photorealistic 3D scenes from photos and video, using the open-source Splat Toolbox ([AWS Solutions Library guidance](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws)), plus uses in media, robotics, construction, manufacturing, and real estate. Built on Step Functions, Lambda, AWS Batch/ECS, and EC2 Spot.
+Introduces a five-stage pipeline (input → pre-processing → reconstruction → training → post-processing) for 3DGS, which builds photorealistic 3D scenes from photos and video, using the open-source Splat Toolbox ([AWS Solutions Library guidance](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws)), plus uses in media, robotics, construction, manufacturing, and real estate. Built on Step Functions, Lambda, AWS Batch/ECS, and EC2 Spot.
 
 **Scope to check**: Industry overview. The robotics items (synthetic training data, narrowing the sim-to-real gap, path planning) describe directions, with no measured policy results. Output today is static 3D; 4D (time-axis) assets are on the roadmap. "Up to 50% savings" compares Spot with On-Demand compute pricing.
 

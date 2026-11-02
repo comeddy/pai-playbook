@@ -1,5 +1,5 @@
 ---
-ko_hash: 97764a94d9bc250fc42d34b6187d4215bf85efa7
+ko_hash: ec57faa7de254db13339c8025949f86ba97d2633
 ---
 # 新着情報
 
@@ -13,6 +13,8 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 
 | 公開日 | 資料 | 関連 |
 |---|---|---|
+| 2026-10-28 | [AWS × RLWRLD — 明日の労働力のための Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
+| 2026-10-28 | [Visual Asset Management System 2.6 公開](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain 公開](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
 | 2026-10-06 | [3D Gaussian Splatting の産業活用事例](#gaussian-splatting) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-02 | [Isaac Lab on AWS — シミュレーションからポリシー登録まで](#isaac-lab-aws) | [P3](pillar-3.md) · [Isaac Lab](workshops.md#isaac-lab) |
@@ -24,6 +26,26 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 | 2026-07-31 | [OpenUSD・SDMAによる産業デジタルツイン](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge ImpulseとAWS — エッジ推論とクラウドインテリジェンスの統合](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Configのロボット学習データ拡張](#config) | [P1](pillar-1.md) |
+
+## AWS × RLWRLD — 明日の労働力のための Physical AI { #aws-rlwrld-workforce }
+
+**公開日: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/aws-rlwrld-building-the-workforce-of-tomorrow-with-physical-ai/) `[4]` · ⏳ 原文照合待ち (自動スキャン 2026-11-02)**
+
+AWS と RLWRLD の Physical AI 協業シリーズの第 2 弾で、2026-06-22 の第 1 弾（"Putting Dexterous Robots to Work"）の続編です。RLWRLD が新たに AWS Validated Partner として登録され、AWS Marketplace に 2 種類の製品を掲載したことを紹介し、人手不足対応のユースケース（箱の持ち上げ、商品ピッキング、棚の補充）向けの PoC 計画と、AWS Physical AI ロードショーを通じた顧客パイプラインの形成を扱います。また、RLDX-1 が主要な基盤モデルの約 20% の学習コンピュートで同等の性能に達したという主張も引用しています。
+
+**確認する範囲**: AWS×RLWRLD の公式パートナーシップシリーズ記事（顧客協業の紹介という性質）です。「AWS Validated Partner」と Marketplace への掲載はパートナープログラム上の地位であり、実際のデプロイ成果ではありません。箱の持ち上げ・商品ピッキング・棚の補充の PoC は原文で「計画中」(planned) と記載されており、すでに稼働している事例ではありません。「約 20% のコンピュートで同等の性能」という主張は RLWRLD 自身の技術ブログを引用したベンダー側の表現であり、Radar の RLDX-1 項目に既にある自社公表ベンチマークと同じ性質です — 独立した実測ではありません。今回のセッションは全面的な egress 制限により aws.amazon.com の原文に直接アクセスできず、複数の独立した検索結果（タイトル・日付・主要な記述が一致）で代わりに照合しました — 具体的な数値は owner による原文照合が必要です。
+
+**次のアクション**: 既存の RLDX-1 Radar 項目との連携 · P2 モデル学習 — [Radar](radar.md) · [P2](pillar-2.md).
+
+## Visual Asset Management System 2.6 公開 { #vams-2-6 }
+
+**公開日: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/visual-asset-management-system-2-6-release/) `[4]` · ⏳ 原文照合待ち (自動スキャン 2026-11-02)**
+
+VAMS は AWS Physical AI・PACE チームによるオープンソースの 3D/空間アセット管理アクセラレータで、2.6 は 2.0（2024-06）以降「最大のアップデート」とされています。オーケストレーション層を再設計し、マルチファイル・マルチアセット実行、グローバル実行ビュー、アップロードトリガーによる自動ワークフローを追加したほか、AWS European Sovereign Cloud デプロイテンプレート、Amazon Cognito OIDC 連携、より細かい IAM ロールのカスタマイズ、デフォルトで遮断する WAF、資産のライフサイクル・バージョンごとの変更履歴を追跡する来歴管理機能を加えました。デモにはセマンティック検索、ブラウザ内の SuperSplat（ガウシアンスプラット[^3dgs]）エディタ、IFC BIM ビューア、地理空間マップ検索、NVIDIA Cosmos の text-to-world ワークフローが含まれます。コードは [GitHub awslabs/visual-asset-management-system](https://github.com/awslabs/visual-asset-management-system) でオープンソース公開されています。
+
+**確認する範囲**: 公式のオープンソースソリューション更新記事です。「2.0 以降最大のアップデート」は AWS 側の表現であり、記事内に実顧客のプロダクション採用成果や性能数値は示されていません。公開リポジトリであり、アカウントチーム限定の経路ではありません — 誰でも GitHub から入手できます。今回のセッションは全面的な egress 制限により aws.amazon.com の原文に直接アクセスできず、検索結果のスニペットと GitHub のリリースタグ（2.6.0 が 2026-09-11、2.6.6 が 2026-10-30）で代わりに照合しました — 公開日（2026-10-28）も検索結果のスニペットに基づくもので、owner による原文照合が必要です。
+
+**次のアクション**: P3 デジタルツイン・シーン再構成 · P4 real-to-sim 候補 — [P3](pillar-3.md) · [P4](pillar-4.md).
 
 ## AWS Physical AI Toolchain 公開 { #toolchain }
 
@@ -39,7 +61,7 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 
 **公開日: 2026-10-06 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/3d-gaussian-splatting-in-practice-industry-use-cases/) `[3]`**
 
-写真・映像から実写の 3D シーンを作る 3DGS[^3dgs] をオープンソースの Splat Toolbox（[AWS Solutions Library ガイダンス](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws)）で処理する 5 段階パイプライン（入力→前処理→再構成→学習→後処理）と、メディア・ロボティクス・建設・製造・不動産での活用を紹介します。Step Functions・Lambda・AWS Batch/ECS と EC2 スポットを使います。
+写真・映像から実写の 3D シーンを作る 3DGS をオープンソースの Splat Toolbox（[AWS Solutions Library ガイダンス](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws)）で処理する 5 段階パイプライン（入力→前処理→再構成→学習→後処理）と、メディア・ロボティクス・建設・製造・不動産での活用を紹介します。Step Functions・Lambda・AWS Batch/ECS と EC2 スポットを使います。
 
 **確認する範囲**: 産業活用の概要です。ロボティクスの項目（合成学習データ、sim-to-real ギャップの縮小、経路計画）は活用の方向性の説明で、ポリシー性能の実測はありません。現在の成果物は静的 3D で、4D（時間軸）アセットはロードマップです。「最大 50% 削減」はスポットとオンデマンドのコンピューティング単価の比較です。
 

@@ -1,5 +1,5 @@
 ---
-ko_hash: 97764a94d9bc250fc42d34b6187d4215bf85efa7
+ko_hash: ec57faa7de254db13339c8025949f86ba97d2633
 ---
 # 新消息
 
@@ -13,6 +13,8 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 
 | 发布日期 | 资料 | 关联 |
 |---|---|---|
+| 2026-10-28 | [AWS × RLWRLD —— 为明日的劳动力打造 Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
+| 2026-10-28 | [Visual Asset Management System 2.6 发布](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain 发布](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
 | 2026-10-06 | [3D Gaussian Splatting 行业应用案例](#gaussian-splatting) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-02 | [Isaac Lab on AWS — 从仿真到策略注册](#isaac-lab-aws) | [P3](pillar-3.md) · [Isaac Lab](workshops.md#isaac-lab) |
@@ -24,6 +26,26 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 | 2026-07-31 | [OpenUSD 与 SDMA 工业数字孪生实现](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge Impulse 与 AWS — 结合边缘推理与云端智能](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config：机器人训练数据增强](#config) | [P1](pillar-1.md) |
+
+## AWS × RLWRLD —— 为明日的劳动力打造 Physical AI { #aws-rlwrld-workforce }
+
+**发布日期: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/aws-rlwrld-building-the-workforce-of-tomorrow-with-physical-ai/) `[4]` · ⏳ 待原文核对 (自动扫描 2026-11-02)**
+
+AWS 与 RLWRLD 合作系列的第二篇文章，是 2026-06-22 第一篇（"Putting Dexterous Robots to Work"）的后续。文章介绍 RLWRLD 已成为 AWS Validated Partner，并在 AWS Marketplace 上架两款产品，还涉及针对劳动力短缺场景（搬箱子、商品拣选、货架补货）的 PoC 计划，以及通过 AWS Physical AI 路演形成的客户管道。文章还引用了 RLDX-1 以约 20% 的训练算力达到与领先基础模型相当性能的说法。
+
+**阅读范围**: AWS·RLWRLD 官方合作系列文章（客户合作介绍性质）。"AWS Validated Partner"与 Marketplace 上架是合作伙伴项目身份，不是实际部署成果。搬箱子·商品拣选·货架补货 PoC 在原文中描述为"计划"（planned）阶段，并非已投入实际运行。"约 20% 算力达到相当性能"的说法引用了 RLWRLD 自家技术博客，属于厂商自行表述，与 Radar 中 RLDX-1 条目已有的自行公布基准性质相同——不是独立实测。本次会话因全局 egress 封锁无法直接访问 aws.amazon.com 原文，改用多条独立搜索结果（标题·日期·核心表述一致）交叉核对——具体数字仍需 owner 对照原文确认。
+
+**后续行动**: 连接现有 RLDX-1 Radar 条目 · P2 模型训练 — [Radar](radar.md) · [P2](pillar-2.md).
+
+## Visual Asset Management System 2.6 发布 { #vams-2-6 }
+
+**发布日期: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/visual-asset-management-system-2-6-release/) `[4]` · ⏳ 待原文核对 (自动扫描 2026-11-02)**
+
+VAMS 是 AWS Physical AI·PACE 团队打造的开源 3D/空间资产管理加速器，2.6 被称为自 2.0（2024-06）以来"最大的一次更新"。本次重新设计了编排层，新增多文件·多资产执行、全局执行视图、上传触发自动工作流，并加入 AWS European Sovereign Cloud 部署模板、Amazon Cognito OIDC 联合登录、更细粒度的 IAM 角色定制、默认拦截型 WAF，以及资产生命周期·逐版本变更历史等溯源追踪功能。演示内容包括语义搜索、浏览器内 SuperSplat（高斯泼溅[^3dgs]）编辑器、IFC BIM 查看器、地理空间地图搜索，以及 NVIDIA Cosmos text-to-world 工作流。代码在 [GitHub awslabs/visual-asset-management-system](https://github.com/awslabs/visual-asset-management-system) 开源。
+
+**阅读范围**: 官方开源方案更新文章。"自 2.0 以来最大的更新"是 AWS 自己的说法，文章未给出实际客户生产环境采用成果或性能数字。这是公开仓库，不是客户团队专属路径——任何人都能从 GitHub 获取。本次会话因全局 egress 封锁无法直接访问 aws.amazon.com 原文，改用搜索结果片段与 GitHub 发布标签（2.6.0 于 2026-09-11 至 2.6.6 于 2026-10-30）交叉核对——发布日期（2026-10-28）同样以搜索结果片段为准，需 owner 对照原文确认。
+
+**后续行动**: P3 数字孪生与场景重建 · P4 real-to-sim 候选 — [P3](pillar-3.md) · [P4](pillar-4.md).
 
 ## AWS Physical AI Toolchain 发布 { #toolchain }
 
@@ -39,7 +61,7 @@ _owner: Youngjin · updated: 2026-10 · volatility: 高_
 
 **发布日期: 2026-10-06 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/3d-gaussian-splatting-in-practice-industry-use-cases/) `[3]`**
 
-介绍用开源 Splat Toolbox（[AWS Solutions Library 指导方案](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws)）处理 3DGS[^3dgs]（由照片和视频生成写实 3D 场景）的五阶段流水线（输入→预处理→重建→训练→后处理），以及在媒体、机器人、建筑、制造、房地产中的应用。使用 Step Functions、Lambda、AWS Batch/ECS 与 EC2 Spot。
+介绍用开源 Splat Toolbox（[AWS Solutions Library 指导方案](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws)）处理 3DGS（由照片和视频生成写实 3D 场景）的五阶段流水线（输入→预处理→重建→训练→后处理），以及在媒体、机器人、建筑、制造、房地产中的应用。使用 Step Functions、Lambda、AWS Batch/ECS 与 EC2 Spot。
 
 **阅读范围**: 行业应用概述。机器人部分（合成训练数据、缩小 sim-to-real 差距、路径规划）是应用方向说明，没有策略性能实测。目前产出为静态 3D，4D（时间轴）资产在路线图上。"最高节省 50%"是 Spot 与按需计算价格的比较。
 

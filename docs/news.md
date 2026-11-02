@@ -10,6 +10,8 @@ _owner: Youngjin · updated: 2026-10 · volatility: 높음_
 
 | 발행일 | 자료 | 연결 |
 |---|---|---|
+| 2026-10-28 | [AWS × RLWRLD — 내일의 인력을 위한 Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
+| 2026-10-28 | [Visual Asset Management System 2.6 공개](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain 공개](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
 | 2026-10-06 | [3D Gaussian Splatting 산업 활용 사례](#gaussian-splatting) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-02 | [Isaac Lab on AWS — 시뮬레이션에서 정책 등록까지](#isaac-lab-aws) | [P3](pillar-3.md) · [Isaac Lab](workshops.md#isaac-lab) |
@@ -21,6 +23,26 @@ _owner: Youngjin · updated: 2026-10 · volatility: 높음_
 | 2026-07-31 | [OpenUSD·SDMA 산업용 디지털 트윈 구현](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge Impulse와 AWS — 엣지 추론과 클라우드 지능 결합](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config의 로봇 학습 데이터 증강](#config) | [P1](pillar-1.md) |
+
+## AWS × RLWRLD — 내일의 인력을 위한 Physical AI { #aws-rlwrld-workforce }
+
+**발행일: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/aws-rlwrld-building-the-workforce-of-tomorrow-with-physical-ai/) `[4]` · ⏳ 원문 대조 대기 (자동 스캔 2026-11-02)**
+
+AWS와 RLWRLD의 Physical AI 협업을 다루는 시리즈 2편으로, 2026-06-22 1편("Putting Dexterous Robots to Work")의 후속이다. RLWRLD가 AWS Validated Partner로 등재되고 AWS Marketplace에 제품 2종을 올렸다고 소개하며, 박스 집기·상품 피킹·진열 보충 같은 인력난 대응 PoC 계획과 AWS Physical AI 로드쇼를 통한 고객 파이프라인 형성을 다룬다. RLDX-1이 선두 파운데이션 모델 대비 약 20%의 학습 컴퓨트로 비슷한 성능에 도달했다는 주장도 인용한다.
+
+**읽을 때 확인할 범위**: AWS·RLWRLD 공식 파트너십 시리즈 글(고객 협업 소개 성격). "AWS Validated Partner"·Marketplace 등재는 파트너 프로그램 지위이지 실배포 성과가 아니다. 박스 집기·피킹·진열 보충 PoC는 원문에서 계획(planned) 단계로 서술되며 실가동 사례가 아니다. "약 20% 컴퓨트로 동급 성능" 주장은 RLWRLD 자체 기술 블로그를 인용한 벤더 자체 표현이며, 기존 [Radar](radar.md)의 RLDX-1 항목에 있는 자체 공표 벤치마크와 같은 성격 — 독립 실측이 아니다. 이번 세션은 전역 egress 차단으로 aws.amazon.com 원문에 직접 접속하지 못해 복수의 독립 검색 결과(제목·날짜·핵심 서술 일치)로 교차 확인했다 — 세부 수치는 owner의 원문 대조가 필요하다.
+
+**다음 액션**: 기존 RLDX-1 Radar 항목과 연결 · P2 모델 학습 — [Radar](radar.md) · [P2](pillar-2.md).
+
+## Visual Asset Management System 2.6 공개 { #vams-2-6 }
+
+**발행일: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/visual-asset-management-system-2-6-release/) `[4]` · ⏳ 원문 대조 대기 (자동 스캔 2026-11-02)**
+
+VAMS는 AWS Physical AI·PACE 팀이 만든 오픈소스 3D/공간 자산 관리 액셀러레이터로, 2.6은 2.0(2024-06) 이후 "가장 큰 업데이트"라고 소개한다. 오케스트레이션 레이어를 다시 설계해 멀티파일·멀티에셋 실행, 전역 실행 뷰, 업로드 트리거 자동 워크플로를 추가했고, AWS European Sovereign Cloud 배포 템플릿, Amazon Cognito OIDC 연동, 세분화된 IAM 역할 커스터마이징, 기본 차단형 WAF, 자산 생애주기·버전별 변경 이력 추적 기능을 더했다. 데모로는 시맨틱 검색, 브라우저 내 SuperSplat(가우시안 스플랫[^3dgs]) 편집기, IFC BIM 뷰어, 지리공간 지도 검색, NVIDIA Cosmos text-to-world 워크플로를 소개한다. 코드는 [GitHub awslabs/visual-asset-management-system](https://github.com/awslabs/visual-asset-management-system)에 공개된 오픈소스다.
+
+**읽을 때 확인할 범위**: 공식 오픈소스 솔루션 업데이트 글. "2.0 이후 가장 큰 업데이트"는 AWS 측 자체 표현이며, 실제 고객 프로덕션 도입 성과나 성능 수치는 글에서 제시되지 않는다. 공개 저장소이지 계정팀 전용 경로가 아니다 — 누구나 GitHub에서 받아 쓸 수 있다. 이번 세션은 전역 egress 차단으로 aws.amazon.com 원문에 직접 접속하지 못해 검색 스니펫과 GitHub 릴리스 태그(2.6.0 2026-09-11 ~ 2.6.6 2026-10-30)로 교차 확인했다 — 발행일(2026-10-28)도 검색 스니펫 기준이며 owner의 원문 대조가 필요하다.
+
+**다음 액션**: P3 디지털 트윈·씬 재구성 · P4 real-to-sim 후보 — [P3](pillar-3.md) · [P4](pillar-4.md).
 
 ## AWS Physical AI Toolchain 공개 { #toolchain }
 
@@ -36,7 +58,7 @@ _owner: Youngjin · updated: 2026-10 · volatility: 높음_
 
 **발행일: 2026-10-06 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/3d-gaussian-splatting-in-practice-industry-use-cases/) `[3]`**
 
-사진·영상으로 실사 3D 장면을 만드는 3DGS[^3dgs]를 오픈소스 Splat Toolbox([AWS Solutions Library 가이던스](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws))로 처리하는 5단계 파이프라인(입력→전처리→재구성→학습→후처리)과 미디어·로보틱스·건설·제조·부동산 활용을 소개한다. Step Functions·Lambda·AWS Batch/ECS와 EC2 Spot을 쓴다.
+사진·영상으로 실사 3D 장면을 만드는 3DGS를 오픈소스 Splat Toolbox([AWS Solutions Library 가이던스](https://github.com/aws-solutions-library-samples/guidance-for-open-source-3d-reconstruction-toolbox-for-gaussian-splats-on-aws))로 처리하는 5단계 파이프라인(입력→전처리→재구성→학습→후처리)과 미디어·로보틱스·건설·제조·부동산 활용을 소개한다. Step Functions·Lambda·AWS Batch/ECS와 EC2 Spot을 쓴다.
 
 **읽을 때 확인할 범위**: 산업 활용 개요. 로보틱스 항목(합성 학습 데이터, sim-to-real 격차 축소, 경로 계획)은 활용 방향 설명이며 정책 성능 실측은 없다. 현재 결과물은 정적 3D이고 4D(시간축) 자산은 로드맵이다. "최대 50% 절감"은 Spot과 온디맨드의 컴퓨팅 단가 비교다.
 
