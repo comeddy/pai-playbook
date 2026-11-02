@@ -1,13 +1,15 @@
 ---
-ko_hash: ec57faa7de254db13339c8025949f86ba97d2633
+ko_hash: 6d385b283f526caca083d3149b2aa9ee357e351f
 ---
 # News
 
-_owner: Youngjin · updated: 2026-10 · volatility: high_
+_owner: Youngjin · updated: 2026-11 · volatility: high_
 
 > **L0 TL;DR**: Selected new AWS Physical AI articles, linked to the existing pillars. Dates below are **publication dates**; this list was checked on **2026-10-14**. Follow [Workshops & Resources](workshops.md) for learning paths.
 
 Summaries are based on official articles, not independent reproduction of their performance claims. Unverified technology candidates remain in [Radar](radar.md).
+
+> **re:Invent 2026 (Nov 30–Dec 4, Las Vegas)**: 45 Physical AI, simulation, model training, data, edge and AgentCore sessions [picked from the full session catalog](#reinvent-2026).
 
 ## Recent resources at a glance
 
@@ -156,6 +158,96 @@ Expands visual diversity in existing demonstrations with S3, Bedrock captioning,
 **Scope to check**: Joint customer technical article. Useful for separately evaluating augmented-video quality and actual policy improvement.
 
 **Next action**: P1 Data Collection and Processing — [P1](pillar-1.md).
+
+## re:Invent 2026 — Physical AI sessions { #reinvent-2026 }
+
+**Event: 2026-11-30 to 12-04 · [re:Invent 2026 event catalog](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog) `[3]` · catalog checked: 2026-11-02**
+
+We pulled all 2,415 sessions in the catalog (repeats included), filtered titles and abstracts for Physical AI, robotics, world models, simulation, digital twins, model training (HyperPod, Trainium), training data, edge and AgentCore, then kept the 45 that connect directly to the pillars. AgentCore alone has more than 60 sessions with it in the title, so we kept production-operations patterns and manufacturing/field cases. Each session code opens the catalog search result. Times are local (PT); other runs of the same session are listed as "repeat". Formats: Workshop 120-min hands-on · Builders' session 60-min small-group hands-on · Chalk talk 60-min whiteboard discussion · Code talk 60-min live coding · Lightning talk 20 min.
+
+**Keynotes and panels**
+
+| When (PT) | Session | Format | What to look for |
+|---|---|---|---|
+| Tue 12/1 08:30 | [KEY002](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY002) CEO Keynote | Keynote | New announcements on AI infrastructure, inference and agent platforms — check for Physical AI-related launches |
+| Wed 12/2 08:30 | [KEY003](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY003) Data & AI Keynote | Keynote | How agents reach data, measure value and set limits — P1 data and P5 agent angle |
+| Wed 12/2 14:00 | [SUP201](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SUP201) Training and simulation turn robot capabilities into useful products | Breakout session | NEURA Robotics, 1X and Highlanders panel — turning training, simulation and data pipelines into products |
+| Thu 12/3 08:30 | [KEY005](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY005) Technical Innovations Keynote | Keynote | Inside Graviton, Trainium, networking and storage — background for training-infrastructure choices |
+| Thu 12/3 10:00 | [AIM2215](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM2215) World Models & Physical AI: The next frontier in intelligent systems | Breakout session | World-model panel — researchers and customers on production deployment and open technical problems |
+| Thu 12/3 13:30 | [AIM2213](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM2213) How leading AI builders push the frontier with AWS Trainium | Breakout session | Panel of four customers using Trainium, including world models and Physical AI |
+
+**Physical AI pipeline — P1·P2·P3·P5**
+
+| When (PT) | Session | Format | What to look for |
+|---|---|---|---|
+| Mon 11/30 10:00 | [IND3338-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND3338-R) Accelerate Physical AI development with NVIDIA on AWS | Chalk talk | Full lifecycle with the AWS Physical AI Toolchain: synthetic data → training → sim-to-real → hardware-in-the-loop |
+| Mon 11/30 12:00 | [AIM449](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM449) One agent, any robot: building physical AI with Strands Robots | Chalk talk | Strands Robots SDK — switch between MuJoCo sim and real hardware with one parameter; GR00T, Cosmos 3, LeRobot policies; IoT-bridged fleet |
+| Mon 11/30 15:00 | [IND389](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND389) Physical AI for MedTech: From Intelligent Devices to Business Impact | Chalk talk | Physical AI stack for medical devices — SageMaker training, Greengrass edge inference, regulated OTA |
+| Tue 12/1 13:30<br>repeat Tue 12/1 15:00 | [IND322-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND322-R) Physical AI in Telecom: A Framework for Workload Placement | Chalk talk | Placement framework for Physical AI workloads — Region, Local Zones, Outposts or cell site |
+| Tue 12/1 16:30 | [AIM413](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM413) Build a Physical AI Model Factory on SageMaker HyperPod | Chalk talk | Run the synthetic-scenario → post-training → evaluation data flywheel on heterogeneous GPU pools in HyperPod EKS |
+| Wed 12/2 08:30<br>repeat Thu 12/3 14:30 | [CMP407-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CMP407-R) Orchestrating Physical AI workloads on AWS: Compute and pipeline patterns | Chalk talk | Batch (parallel simulation) vs EKS + Karpenter (training) vs HyperPod; Capacity Blocks and Spot cost strategy |
+| Wed 12/2 12:30 | [AIM458-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM458-S) The Physical AI Blueprint: A Full-Stack Solution with AWS and NVIDIA (sponsored by NVIDIA) | Workshop | Hands-on: Isaac Sim synthetic data, GR00T/Cosmos training, Omniverse twin, Greengrass deployment, AgentCore multi-robot orchestration |
+
+**Simulation and digital twins — P3**
+
+| When (PT) | Session | Format | What to look for |
+|---|---|---|---|
+| Mon 11/30 13:30 | [CMP408](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CMP408) The cloud holodeck: Stream NVIDIA Omniverse, scale headless sim on AWS | Chalk talk | Stream Omniverse/Isaac Sim workstations over DCV + headless rendering at scale on Batch, managed by VAMS |
+| Tue 12/1 15:00 | [IND102-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND102-S) Accelerating with NVIDIA Omniverse: VW’s Battery Manufacturing Digital Twin (sponsored by NVIDIA) | Breakout session | Volkswagen battery plant OpenUSD digital twin — virtual commissioning and synthetic inspection data |
+| Tue 12/1 16:00<br>repeat Wed 12/2 09:00 | [IND401-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND401-R) Build, simulate, and validate physical AI-driven robotic systems | Builders' session | Hands-on: build a multi-robot cell digital twin with virtual PLCs, fieldbus and Omniverse physics |
+| Wed 12/2 16:30 | [CON409](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CON409) ML, automotive, and robotics simulations at scale on AWS Batch | Breakout session | Orchestrate the automotive/robotics simulation → data lake → GPU training loop with Batch |
+| Thu 12/3 16:30 | [IND3355](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND3355) Building Worlds for Machines: VAMS and 3DGS for Autonomy | Lightning talk | Field sensor capture → 3DGS reconstruction → simulation-ready environments (20-min lightning talk) |
+
+**World models and robot learning research — P2**
+
+| When (PT) | Session | Format | What to look for |
+|---|---|---|---|
+| Mon 11/30 13:00<br>repeat Wed 12/2 12:00 | [AIM305-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM305-R) Hands-on training world models and deploying agents for Physical AI | Builders' session | Hands-on: fine-tune a transformer world model on Trainium/Neuron (PEFT), then deploy agents |
+| Mon 11/30 16:00 | [AIM323](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM323) Serving world models on AWS Trainium with native PyTorch | Code talk | Serve world-model inference on Trainium with torch.compile and custom kernels |
+| Mon 11/30 16:30 | [INV531](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV531) Visual reasoning will be bigger than language reasoning | Chalk talk | UW's Ranjay Krishna — robot foundation models that reason through points, trajectories and depth |
+| Tue 12/1 11:30<br>repeat Thu 12/3 13:30 | [AIM304-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM304-R) Deploy and optimize world models with agentic AI workflows | Builders' session | Hands-on: deploy a real-time video world model on Trainium and optimize kernels with Neuron agent skills |
+| Wed 12/2 10:30 | [INV527](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV527) World models for indoor robots: what breaks and why | Chalk talk | Lidar world model for Diligent Robotics' hospital robots — where transformer geometric reasoning breaks |
+| Wed 12/2 13:30 | [INV537](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV537) No torque sensors, no problem: learning safe physical interaction for humanoids | Chalk talk | Fauna Robotics — learning compliant control for a humanoid without torque sensors |
+
+**Model training and data infrastructure — P1·P2**
+
+| When (PT) | Session | Format | What to look for |
+|---|---|---|---|
+| Mon 11/30 08:30 | [AIM406](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM406) End-to-end foundation model pipelines on SageMaker HyperPod with EKS | Workshop | Hands-on: data prep → distributed fine-tuning → inference on the same HyperPod EKS cluster |
+| Mon 11/30 15:00 | [AIM318](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM318) Resilient VLM Training at Scale on Amazon SageMaker HyperPod | Workshop | Hands-on: inject node failures during VLM training and recover with auto-healing and checkpoints |
+| Mon 11/30 15:00 | [AIM433](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM433) Maximize GPU utilization across training and inference on HyperPod | Chalk talk | HyperPod as a shared GPU pool for data processing, training and inference — cross-team scheduling |
+| Tue 12/1 12:00<br>repeat Thu 12/3 08:00 | [AIM334-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM334-R) Hands-on distributed training with AWS Trainium and PyTorch | Workshop | Hands-on: distributed training on Trainium with TorchTitan — parallelism strategy and tuning |
+| Tue 12/1 14:30 | [AIM362](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM362) Which customization compute? A decision approach for model fine-tuning | Chalk talk | Choosing fine-tuning compute — serverless customization, training jobs or HyperPod |
+| Wed 12/2 15:00 | [AIM3308](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM3308) What's new: SageMaker HyperPod, with learnings from Multiverse | Breakout session | What's new in SageMaker HyperPod (EKS and Slurm) — large-scale training and serving including world models |
+| Wed 12/2 15:30<br>repeat Thu 12/3 08:00 | [AIM434-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM434-R) From raw data to custom model: Dataset prep with Amazon SageMaker AI | Workshop | Hands-on: prepare training data with profiling, auto-labeling, human review and synthetic data |
+
+**Field operations and edge — P4**
+
+| When (PT) | Session | Format | What to look for |
+|---|---|---|---|
+| Mon 11/30 10:00 | [DVT210-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=DVT210-S) When Telemetry Steers the Robot: Observability for Physical AI (sponsored by groundcover) | Breakout session | Observability for Path Robotics' welding and quadruped robots (sponsored session) |
+| Mon 11/30 15:00<br>repeat Tue 12/1 12:30 | [IND402-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND402-R) Agentic AI for manufacturing: Build a cross-domain digital thread | Workshop | Hands-on: manufacturing digital thread joining OT and IT data with Neptune, AgentCore and IoT SiteWise |
+| Tue 12/1 12:30<br>repeat Thu 12/3 08:30 | [HMC403-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=HMC403-R) Self-managed agentic AI at the hybrid edge | Workshop | Hands-on: run self-managed agentic AI on Local Zones and Outposts (data residency, low latency) |
+| Wed 12/2 16:30 | [IND378](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND378) How Mercedes-Benz accelerates engineering and production with AI | Breakout session | Mercedes-Benz — AgentCore engineering agents plus a cloud-native MES and digital twins |
+| Thu 12/3 08:30 | [HMC406](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=HMC406) How Amazon Robotics runs AWS Outposts across hundreds of fulfillment centers | Code talk | How Amazon Robotics runs Outposts across hundreds of fulfillment centers — isolation and failover |
+| Thu 12/3 09:00 | [IND384](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND384) Inside T-Mobile's Kinetic Edge: Real-Time Physical AI at Scale | Breakout session | T-Mobile Kinetic Edge — real-time Physical AI at the network edge with Outposts, SageMaker and AgentCore |
+| Fri 12/4 08:30 | [IND345](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND345) Human+AI Collaboration: How Amazon Deploys Autonomous Operations on AWS | Breakout session | Amazon's fulfillment floor — orchestrating a mixed fleet of humanoids, quadrupeds, AMRs and drones |
+
+**AgentCore — P5**
+
+| When (PT) | Session | Format | What to look for |
+|---|---|---|---|
+| Mon 11/30 08:30<br>repeat Wed 12/2 08:00 | [AIM439-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM439-R) Getting Started with AgentCore: ship an agent to production in 2 hours | Workshop | 2-hour hands-on: add runtime, memory, gateway, identity, policy, observability and evaluation step by step with the AgentCore CLI |
+| Mon 11/30 10:00<br>repeat Wed 12/2 15:00 | [AIM436-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM436-R) Scale production agents reliably with AgentCore | Chalk talk | Scaling from 10 to 10,000 sessions — microVM isolation, handling tool-call failures and timeouts |
+| Mon 11/30 14:00<br>repeat Thu 12/3 08:00 | [TNC331-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=TNC331-R) Ship AI Agents Faster with AgentCore Harness | Lab | Lab: AgentCore Harness — declare the agent loop in config, add tools and skills, publish versioned endpoints |
+| Mon 11/30 14:30 | [AIM370](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM370) Trusting agents in production: end-to-end security with AgentCore | Breakout session | End-to-end AgentCore security — microVM isolation, identity propagation, Gateway policies, Cedar least privilege |
+| Wed 12/2 11:30 | [AIM450-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM450-R) Context engineering for production agents on AgentCore | Chalk talk | Context engineering — budgeting system prompts, skills, tool definitions and memory |
+| Wed 12/2 15:00 | [AIM212](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM212) Best practices for production agents on AgentCore, with Nasdaq | Breakout session | AgentCore production best practices + Nasdaq on multi-account isolation and agent identity |
+| Thu 12/3 14:30 | [AIM452](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM452) Build long-running agents that persist for days on AgentCore | Chalk talk | Agents that persist for days — durable Runtime execution, Memory, human-in-the-loop pause/resume |
+
+**Scope to check when reading**: These are session abstracts (advance notices), not the talks themselves. Schedules and rooms can change — re-check in the event app. Figures such as "35 weeks → 3.5" (IND378) and "weeks → hours" (IND401) are the presenters' claims. AIM305 and AIM304 announce hands-on training and serving of world models on Trainium — the [P2](pillar-2.md) call "no public case of training VLA on Trainium" will be revisited once session materials are public and reproduced.
+
+**Next action**: Pick sessions by the pillar you own — [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P4](pillar-4.md) · [P5](pillar-5.md). After the event, replace rows with links to recordings and slides once published, and route new services or features through [Radar](radar.md).
 
 ## Keep following
 

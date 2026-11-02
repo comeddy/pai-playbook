@@ -1,13 +1,15 @@
 ---
-ko_hash: ec57faa7de254db13339c8025949f86ba97d2633
+ko_hash: 6d385b283f526caca083d3149b2aa9ee357e351f
 ---
 # 新着情報
 
-_owner: Youngjin · updated: 2026-10 · volatility: 高_
+_owner: Youngjin · updated: 2026-11 · volatility: 高_
 
 > **L0 TL;DR**: AWS Physical AIの新記事を選び既存ピラーにつなぎます。以下は**原文公開日**、一覧確認日は**2026-10-14**です。[ワークショップ・資料](workshops.md)で学習経路を選べます。
 
 公式原文に基づく要約であり性能数値の独立再現ではありません。未検証候補は既存の[Radar](radar.md)で管理します。
+
+> **re:Invent 2026（11/30–12/4、ラスベガス）**：全セッションカタログから Physical AI・シミュレーション・モデル学習・データ・エッジ・AgentCore のセッション 45 件を[選んでおきました](#reinvent-2026)。
 
 ## 最近の資料一覧
 
@@ -156,6 +158,96 @@ Edge Impulse（Qualcomm傘下）とAWSの共同記事で、倉庫設備の位置
 **確認する範囲**: 顧客共同技術記事です。拡張映像品質と実ポリシー改善を個別評価する際の参考です。
 
 **次のアクション**: P1データ収集・処理 — [P1](pillar-1.md).
+
+## re:Invent 2026 — Physical AI 関連セッション { #reinvent-2026 }
+
+**開催：2026-11-30 〜 12-04 · [re:Invent 2026 イベントカタログ](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog) `[3]` · カタログ確認日：2026-11-02**
+
+カタログの全 2,415 セッション（再演回を含む）を取得し、タイトル・概要の Physical AI・ロボティクス・ワールドモデル・シミュレーション・デジタルツイン・モデル学習（HyperPod・Trainium）・学習データ・エッジ・AgentCore のキーワードで一次抽出したうえで、ピラーに直接つながる 45 件を選びました。タイトルに AgentCore を含むセッションだけで 60 件を超えるため、本番運用パターンと製造・現場事例を中心に残しています。セッションコードを押すとカタログの検索結果が開きます。時刻は現地（PT）、同じセッションの別の回は「再演」と記載しています。形式：Workshop 120 分ハンズオン · Builders' session 60 分少人数ハンズオン · Chalk talk 60 分ホワイトボード討論 · Code talk 60 分ライブコーディング · Lightning talk 20 分。
+
+**キーノート・パネル**
+
+| 日時 (PT) | セッション | 形式 | 見どころ |
+|---|---|---|---|
+| 12/1(火) 08:30 | [KEY002](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY002) CEO Keynote | Keynote | AI インフラ・推論・エージェント基盤の新発表 —— Physical AI 関連の発表有無を確認 |
+| 12/2(水) 08:30 | [KEY003](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY003) Data & AI Keynote | Keynote | エージェントのデータ到達・価値測定・制約設定 —— P1 データと P5 エージェントの観点 |
+| 12/2(水) 14:00 | [SUP201](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SUP201) Training and simulation turn robot capabilities into useful products | Breakout session | NEURA Robotics・1X・Highlanders のパネル —— 学習・シミュレーション・データパイプラインを製品へ |
+| 12/3(木) 08:30 | [KEY005](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY005) Technical Innovations Keynote | Keynote | Graviton・Trainium・ネットワーク・ストレージの内部 —— 学習インフラ選定の背景 |
+| 12/3(木) 10:00 | [AIM2215](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM2215) World Models & Physical AI: The next frontier in intelligent systems | Breakout session | ワールドモデルのパネル —— 研究者・顧客の本番展開経験と技術課題 |
+| 12/3(木) 13:30 | [AIM2213](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM2213) How leading AI builders push the frontier with AWS Trainium | Breakout session | ワールドモデル・Physical AI を含む 4 社の Trainium 活用パネル |
+
+**Physical AI パイプライン — P1·P2·P3·P5**
+
+| 日時 (PT) | セッション | 形式 | 見どころ |
+|---|---|---|---|
+| 11/30(月) 10:00 | [IND3338-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND3338-R) Accelerate Physical AI development with NVIDIA on AWS | Chalk talk | AWS Physical AI Toolchain で合成データ→学習→sim-to-real→HIL 検証の全周期 |
+| 11/30(月) 12:00 | [AIM449](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM449) One agent, any robot: building physical AI with Strands Robots | Chalk talk | Strands Robots SDK —— パラメータ 1 つで MuJoCo シミュレーションと実機を切替、GR00T・Cosmos 3・LeRobot ポリシー、IoT ブリッジのフリート |
+| 11/30(月) 15:00 | [IND389](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND389) Physical AI for MedTech: From Intelligent Devices to Business Impact | Chalk talk | 医療機器の Physical AI スタック —— SageMaker 学習、Greengrass エッジ推論、規制対応 OTA |
+| 12/1(火) 13:30<br>再演 12/1(火) 15:00 | [IND322-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND322-R) Physical AI in Telecom: A Framework for Workload Placement | Chalk talk | Physical AI ワークロードの配置基準 —— リージョン・Local Zones・Outposts・セルサイト |
+| 12/1(火) 16:30 | [AIM413](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM413) Build a Physical AI Model Factory on SageMaker HyperPod | Chalk talk | 合成シナリオ→事後学習→評価のデータフライホイールを HyperPod EKS の異種 GPU プールで運用 |
+| 12/2(水) 08:30<br>再演 12/3(木) 14:30 | [CMP407-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CMP407-R) Orchestrating Physical AI workloads on AWS: Compute and pipeline patterns | Chalk talk | Batch（並列シミュレーション）・EKS+Karpenter（学習）・HyperPod の比較、Capacity Blocks・Spot のコスト戦略 |
+| 12/2(水) 12:30 | [AIM458-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM458-S) The Physical AI Blueprint: A Full-Stack Solution with AWS and NVIDIA (sponsored by NVIDIA) | Workshop | ハンズオン：Isaac Sim 合成データ、GR00T・Cosmos 学習、Omniverse ツイン、Greengrass 配備、AgentCore マルチロボット連携 |
+
+**シミュレーション・デジタルツイン — P3**
+
+| 日時 (PT) | セッション | 形式 | 見どころ |
+|---|---|---|---|
+| 11/30(月) 13:30 | [CMP408](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CMP408) The cloud holodeck: Stream NVIDIA Omniverse, scale headless sim on AWS | Chalk talk | DCV で Omniverse・Isaac Sim ワークステーションを配信 + Batch でヘッドレス大量レンダリング、VAMS で管理 |
+| 12/1(火) 15:00 | [IND102-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND102-S) Accelerating with NVIDIA Omniverse: VW’s Battery Manufacturing Digital Twin (sponsored by NVIDIA) | Breakout session | フォルクスワーゲン電池工場の OpenUSD デジタルツイン —— 仮想立ち上げ・合成検査データ |
+| 12/1(火) 16:00<br>再演 12/2(水) 09:00 | [IND401-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND401-R) Build, simulate, and validate physical AI-driven robotic systems | Builders' session | ハンズオン：仮想 PLC・フィールドバス・Omniverse 物理シミュレーションでマルチロボットセルのデジタルツイン |
+| 12/2(水) 16:30 | [CON409](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CON409) ML, automotive, and robotics simulations at scale on AWS Batch | Breakout session | 自動車・ロボティクスのシミュレーション→データレイク→GPU 学習ループを Batch で編成 |
+| 12/3(木) 16:30 | [IND3355](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND3355) Building Worlds for Machines: VAMS and 3DGS for Autonomy | Lightning talk | 現場センサーデータ→3DGS 再構成→シミュレーション用環境（20 分ライトニング） |
+
+**ワールドモデル・ロボット学習研究 — P2**
+
+| 日時 (PT) | セッション | 形式 | 見どころ |
+|---|---|---|---|
+| 11/30(月) 13:00<br>再演 12/2(水) 12:00 | [AIM305-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM305-R) Hands-on training world models and deploying agents for Physical AI | Builders' session | ハンズオン：Trainium・Neuron で Transformer ワールドモデルを微調整（PEFT）しエージェントを配備 |
+| 11/30(月) 16:00 | [AIM323](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM323) Serving world models on AWS Trainium with native PyTorch | Code talk | torch.compile・カスタムカーネルでワールドモデル推論を Trainium で提供 |
+| 11/30(月) 16:30 | [INV531](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV531) Visual reasoning will be bigger than language reasoning | Chalk talk | UW の Ranjay Krishna —— 点・軌跡・深度など視覚表現で推論するロボット基盤モデル |
+| 12/1(火) 11:30<br>再演 12/3(木) 13:30 | [AIM304-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM304-R) Deploy and optimize world models with agentic AI workflows | Builders' session | ハンズオン：リアルタイム映像ワールドモデルを Trainium に配備し Neuron エージェントスキルでカーネル最適化 |
+| 12/2(水) 10:30 | [INV527](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV527) World models for indoor robots: what breaks and why | Chalk talk | Diligent Robotics 病院ロボットのライダー世界モデル —— Transformer の幾何推論が破綻する点 |
+| 12/2(水) 13:30 | [INV537](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV537) No torque sensors, no problem: learning safe physical interaction for humanoids | Chalk talk | Fauna Robotics —— トルクセンサーなしのヒューマノイドで柔軟（コンプライアント）制御を学習 |
+
+**モデル学習・データ基盤 — P1·P2**
+
+| 日時 (PT) | セッション | 形式 | 見どころ |
+|---|---|---|---|
+| 11/30(月) 08:30 | [AIM406](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM406) End-to-end foundation model pipelines on SageMaker HyperPod with EKS | Workshop | ハンズオン：HyperPod EKS でデータ準備→分散ファインチューニング→同一クラスターで推論 |
+| 11/30(月) 15:00 | [AIM318](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM318) Resilient VLM Training at Scale on Amazon SageMaker HyperPod | Workshop | ハンズオン：VLM 学習中にノード障害を起こし、自動修復・チェックポイントで継続 |
+| 11/30(月) 15:00 | [AIM433](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM433) Maximize GPU utilization across training and inference on HyperPod | Chalk talk | HyperPod をデータ処理・学習・推論の共用 GPU プールに —— チーム間スケジューリング |
+| 12/1(火) 12:00<br>再演 12/3(木) 08:00 | [AIM334-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM334-R) Hands-on distributed training with AWS Trainium and PyTorch | Workshop | ハンズオン：TorchTitan で Trainium 分散学習 —— 並列化戦略・性能チューニング |
+| 12/1(火) 14:30 | [AIM362](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM362) Which customization compute? A decision approach for model fine-tuning | Chalk talk | ファインチューニングの計算資源選定 —— サーバーレスカスタマイズ・学習ジョブ・HyperPod |
+| 12/2(水) 15:00 | [AIM3308](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM3308) What's new: SageMaker HyperPod, with learnings from Multiverse | Breakout session | SageMaker HyperPod の新機能（EKS・Slurm）—— ワールドモデルを含む大規模学習・サービング |
+| 12/2(水) 15:30<br>再演 12/3(木) 08:00 | [AIM434-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM434-R) From raw data to custom model: Dataset prep with Amazon SageMaker AI | Workshop | ハンズオン：プロファイリング・自動ラベル付け・人手レビュー・合成データで学習データを準備 |
+
+**現場運用・エッジ — P4**
+
+| 日時 (PT) | セッション | 形式 | 見どころ |
+|---|---|---|---|
+| 11/30(月) 10:00 | [DVT210-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=DVT210-S) When Telemetry Steers the Robot: Observability for Physical AI (sponsored by groundcover) | Breakout session | Path Robotics の溶接ロボット・四足ロボットのオブザーバビリティ事例（スポンサーセッション） |
+| 11/30(月) 15:00<br>再演 12/1(火) 12:30 | [IND402-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND402-R) Agentic AI for manufacturing: Build a cross-domain digital thread | Workshop | ハンズオン：Neptune・AgentCore・IoT SiteWise で OT・IT データをつなぐ製造デジタルスレッド |
+| 12/1(火) 12:30<br>再演 12/3(木) 08:30 | [HMC403-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=HMC403-R) Self-managed agentic AI at the hybrid edge | Workshop | ハンズオン：Local Zones・Outposts で自己管理型エージェント AI を実行（データ所在・低遅延） |
+| 12/2(水) 16:30 | [IND378](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND378) How Mercedes-Benz accelerates engineering and production with AI | Breakout session | メルセデス・ベンツ —— AgentCore のエンジニアリングエージェントとクラウドネイティブ MES・デジタルツイン |
+| 12/3(木) 08:30 | [HMC406](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=HMC406) How Amazon Robotics runs AWS Outposts across hundreds of fulfillment centers | Code talk | Amazon Robotics が数百の物流センターで Outposts を運用する方法 —— 分離・フェイルオーバー |
+| 12/3(木) 09:00 | [IND384](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND384) Inside T-Mobile's Kinetic Edge: Real-Time Physical AI at Scale | Breakout session | T-Mobile Kinetic Edge —— Outposts・SageMaker・AgentCore でネットワークエッジのリアルタイム Physical AI |
+| 12/4(金) 08:30 | [IND345](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND345) Human+AI Collaboration: How Amazon Deploys Autonomous Operations on AWS | Breakout session | Amazon 物流現場 —— ヒューマノイド・四足・AMR・ドローン混在フリートの編成アーキテクチャ |
+
+**AgentCore — P5**
+
+| 日時 (PT) | セッション | 形式 | 見どころ |
+|---|---|---|---|
+| 11/30(月) 08:30<br>再演 12/2(水) 08:00 | [AIM439-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM439-R) Getting Started with AgentCore: ship an agent to production in 2 hours | Workshop | 2 時間ハンズオン：AgentCore CLI でランタイム・メモリ・ゲートウェイ・ID・ポリシー・可観測性・評価を順に追加 |
+| 11/30(月) 10:00<br>再演 12/2(水) 15:00 | [AIM436-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM436-R) Scale production agents reliably with AgentCore | Chalk talk | セッション 10→1 万への拡張パターン —— microVM 分離、ツール呼び出し失敗・タイムアウト対応 |
+| 11/30(月) 14:00<br>再演 12/3(木) 08:00 | [TNC331-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=TNC331-R) Ship AI Agents Faster with AgentCore Harness | Lab | ラボ：AgentCore Harness —— 設定だけでエージェントループを実行、ツール・スキル追加、バージョン付きエンドポイント |
+| 11/30(月) 14:30 | [AIM370](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM370) Trusting agents in production: end-to-end security with AgentCore | Breakout session | AgentCore のエンドツーエンドセキュリティ —— microVM 分離・ID 伝播・Gateway ポリシー・Cedar 最小権限 |
+| 12/2(水) 11:30 | [AIM450-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM450-R) Context engineering for production agents on AgentCore | Chalk talk | コンテキストエンジニアリング —— システムプロンプト・スキル・ツール定義・メモリの配分 |
+| 12/2(水) 15:00 | [AIM212](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM212) Best practices for production agents on AgentCore, with Nasdaq | Breakout session | AgentCore 本番ベストプラクティス + Nasdaq のマルチアカウント分離・エージェント ID 運用 |
+| 12/3(木) 14:30 | [AIM452](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM452) Build long-running agents that persist for days on AgentCore | Chalk talk | 数日続くエージェント —— Runtime の耐久実行・Memory・人の承認による一時停止/再開 |
+
+**読むときに確認する範囲**：セッション概要（事前告知）であり、講演内容そのものではありません。日程・会場は変わることがあるため、イベントアプリで再確認してください。「35 週→3.5 週」（IND378）、「数週間→数時間」（IND401）などの数値は登壇者側の主張です。AIM305・AIM304 は Trainium でのワールドモデル学習・サービングのハンズオンを予告しています —— [P2](pillar-2.md) の「Trainium で VLA を学習した公開事例なし」という判断は、セッション資料が公開され再現が確認された後に見直します。
+
+**次のアクション**：担当ピラーごとにセッションを選ぶ —— [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P4](pillar-4.md) · [P5](pillar-5.md)。イベント後、録画・資料が公開されたら該当行を原文リンクに差し替え、新サービス・新機能は [Radar](radar.md) の経路に乗せます。
 
 ## 継続して確認
 

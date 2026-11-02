@@ -1,13 +1,15 @@
 ---
-ko_hash: ec57faa7de254db13339c8025949f86ba97d2633
+ko_hash: 6d385b283f526caca083d3149b2aa9ee357e351f
 ---
 # 新消息
 
-_owner: Youngjin · updated: 2026-10 · volatility: 高_
+_owner: Youngjin · updated: 2026-11 · volatility: 高_
 
 > **L0 TL;DR**: 精选 AWS Physical AI 新文章并连接现有支柱。以下为**原文发布日期**，列表确认日为 **2026-10-14**。实习路径见[工作坊与资料](workshops.md)。
 
 按官方原文摘要，不代表独立复现性能数字。未验证技术候选继续由 [Radar](radar.md)管理。
+
+> **re:Invent 2026（11/30–12/4，拉斯维加斯）**：已从完整场次目录中[挑选](#reinvent-2026) 45 个 Physical AI、仿真、模型训练、数据、边缘、AgentCore 相关场次。
 
 ## 近期资料一览
 
@@ -156,6 +158,96 @@ Edge Impulse（Qualcomm 旗下公司）与 AWS 联合撰写的文章，以仓库
 **阅读范围**: 客户联合技术文章。可用于分别评估增强视频质量与实际策略改善。
 
 **后续行动**: P1 数据采集处理 — [P1](pillar-1.md).
+
+## re:Invent 2026 — Physical AI 相关场次 { #reinvent-2026 }
+
+**活动：2026-11-30 至 12-04 · [re:Invent 2026 活动目录](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog) `[3]` · 目录确认日：2026-11-02**
+
+获取目录中全部 2,415 个场次（含重复场），按标题与摘要中的 Physical AI、机器人、世界模型、仿真、数字孪生、模型训练（HyperPod、Trainium）、训练数据、边缘、AgentCore 关键词初筛，再保留与支柱直接相关的 45 个。仅标题含 AgentCore 的场次就超过 60 个，因此以生产运维模式和制造/现场案例为主保留。点击场次代码会打开目录搜索结果。时间为当地时间（PT），同一场次的其他场次标为"重复"。形式：Workshop 120 分钟动手 · Builders' session 60 分钟小组动手 · Chalk talk 60 分钟白板讨论 · Code talk 60 分钟现场编码 · Lightning talk 20 分钟。
+
+**主题演讲与座谈**
+
+| 时间 (PT) | 场次 | 形式 | 关注点 |
+|---|---|---|---|
+| 12/1(周二) 08:30 | [KEY002](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY002) CEO Keynote | Keynote | AI 基础设施、推理、智能体平台的新发布 —— 用于确认是否有 Physical AI 相关发布 |
+| 12/2(周三) 08:30 | [KEY003](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY003) Data & AI Keynote | Keynote | 智能体如何触达数据、衡量价值、设定边界 —— P1 数据与 P5 智能体视角 |
+| 12/2(周三) 14:00 | [SUP201](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=SUP201) Training and simulation turn robot capabilities into useful products | Breakout session | NEURA Robotics、1X、Highlanders 座谈 —— 把训练、仿真、数据管线变成产品 |
+| 12/3(周四) 08:30 | [KEY005](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=KEY005) Technical Innovations Keynote | Keynote | Graviton、Trainium、网络、存储的内部结构 —— 训练基础设施选型的背景 |
+| 12/3(周四) 10:00 | [AIM2215](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM2215) World Models & Physical AI: The next frontier in intelligent systems | Breakout session | 世界模型座谈 —— 研究者与客户的生产部署经验与技术难题 |
+| 12/3(周四) 13:30 | [AIM2213](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM2213) How leading AI builders push the frontier with AWS Trainium | Breakout session | 四家客户使用 Trainium 的座谈，涵盖世界模型与 Physical AI |
+
+**Physical AI 管线 — P1·P2·P3·P5**
+
+| 时间 (PT) | 场次 | 形式 | 关注点 |
+|---|---|---|---|
+| 11/30(周一) 10:00 | [IND3338-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND3338-R) Accelerate Physical AI development with NVIDIA on AWS | Chalk talk | 用 AWS Physical AI Toolchain 走完合成数据→训练→sim-to-real→硬件在环验证全周期 |
+| 11/30(周一) 12:00 | [AIM449](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM449) One agent, any robot: building physical AI with Strands Robots | Chalk talk | Strands Robots SDK —— 一个参数切换 MuJoCo 仿真与实机；GR00T、Cosmos 3、LeRobot 策略；IoT 桥接机队 |
+| 11/30(周一) 15:00 | [IND389](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND389) Physical AI for MedTech: From Intelligent Devices to Business Impact | Chalk talk | 医疗器械 Physical AI 栈 —— SageMaker 训练、Greengrass 边缘推理、合规 OTA |
+| 12/1(周二) 13:30<br>重复 12/1(周二) 15:00 | [IND322-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND322-R) Physical AI in Telecom: A Framework for Workload Placement | Chalk talk | Physical AI 工作负载部署框架 —— Region、Local Zones、Outposts 或基站侧 |
+| 12/1(周二) 16:30 | [AIM413](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM413) Build a Physical AI Model Factory on SageMaker HyperPod | Chalk talk | 在 HyperPod EKS 异构 GPU 池上运行合成场景→后训练→评估的数据飞轮 |
+| 12/2(周三) 08:30<br>重复 12/3(周四) 14:30 | [CMP407-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CMP407-R) Orchestrating Physical AI workloads on AWS: Compute and pipeline patterns | Chalk talk | Batch（并行仿真）、EKS+Karpenter（训练）、HyperPod 对比；Capacity Blocks 与 Spot 成本策略 |
+| 12/2(周三) 12:30 | [AIM458-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM458-S) The Physical AI Blueprint: A Full-Stack Solution with AWS and NVIDIA (sponsored by NVIDIA) | Workshop | 动手：Isaac Sim 合成数据、GR00T/Cosmos 训练、Omniverse 孪生、Greengrass 部署、AgentCore 多机器人编排 |
+
+**仿真与数字孪生 — P3**
+
+| 时间 (PT) | 场次 | 形式 | 关注点 |
+|---|---|---|---|
+| 11/30(周一) 13:30 | [CMP408](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CMP408) The cloud holodeck: Stream NVIDIA Omniverse, scale headless sim on AWS | Chalk talk | 通过 DCV 流式传输 Omniverse/Isaac Sim 工作站 + Batch 无头批量渲染，由 VAMS 管理 |
+| 12/1(周二) 15:00 | [IND102-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND102-S) Accelerating with NVIDIA Omniverse: VW’s Battery Manufacturing Digital Twin (sponsored by NVIDIA) | Breakout session | 大众电池工厂 OpenUSD 数字孪生 —— 虚拟调试与合成检测数据 |
+| 12/1(周二) 16:00<br>重复 12/2(周三) 09:00 | [IND401-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND401-R) Build, simulate, and validate physical AI-driven robotic systems | Builders' session | 动手：用虚拟 PLC、现场总线、Omniverse 物理仿真构建多机器人单元数字孪生 |
+| 12/2(周三) 16:30 | [CON409](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=CON409) ML, automotive, and robotics simulations at scale on AWS Batch | Breakout session | 用 Batch 编排汽车/机器人仿真→数据湖→GPU 训练闭环 |
+| 12/3(周四) 16:30 | [IND3355](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND3355) Building Worlds for Machines: VAMS and 3DGS for Autonomy | Lightning talk | 现场传感器采集→3DGS 重建→可用于仿真的环境（20 分钟闪电演讲） |
+
+**世界模型与机器人学习研究 — P2**
+
+| 时间 (PT) | 场次 | 形式 | 关注点 |
+|---|---|---|---|
+| 11/30(周一) 13:00<br>重复 12/2(周三) 12:00 | [AIM305-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM305-R) Hands-on training world models and deploying agents for Physical AI | Builders' session | 动手：在 Trainium/Neuron 上微调 Transformer 世界模型（PEFT）并部署智能体 |
+| 11/30(周一) 16:00 | [AIM323](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM323) Serving world models on AWS Trainium with native PyTorch | Code talk | 用 torch.compile 与自定义内核在 Trainium 上提供世界模型推理 |
+| 11/30(周一) 16:30 | [INV531](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV531) Visual reasoning will be bigger than language reasoning | Chalk talk | 华盛顿大学 Ranjay Krishna —— 用点、轨迹、深度等视觉表示推理的机器人基础模型 |
+| 12/1(周二) 11:30<br>重复 12/3(周四) 13:30 | [AIM304-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM304-R) Deploy and optimize world models with agentic AI workflows | Builders' session | 动手：在 Trainium 上部署实时视频世界模型，用 Neuron 智能体技能优化内核 |
+| 12/2(周三) 10:30 | [INV527](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV527) World models for indoor robots: what breaks and why | Chalk talk | Diligent Robotics 医院机器人的激光雷达世界模型 —— Transformer 几何推理在哪里失效 |
+| 12/2(周三) 13:30 | [INV537](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=INV537) No torque sensors, no problem: learning safe physical interaction for humanoids | Chalk talk | Fauna Robotics —— 无力矩传感器人形机器人的柔顺控制学习 |
+
+**模型训练与数据基础设施 — P1·P2**
+
+| 时间 (PT) | 场次 | 形式 | 关注点 |
+|---|---|---|---|
+| 11/30(周一) 08:30 | [AIM406](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM406) End-to-end foundation model pipelines on SageMaker HyperPod with EKS | Workshop | 动手：在 HyperPod EKS 上完成数据准备→分布式微调→同集群推理 |
+| 11/30(周一) 15:00 | [AIM318](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM318) Resilient VLM Training at Scale on Amazon SageMaker HyperPod | Workshop | 动手：在 VLM 训练中注入节点故障，并通过自动修复与检查点继续训练 |
+| 11/30(周一) 15:00 | [AIM433](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM433) Maximize GPU utilization across training and inference on HyperPod | Chalk talk | 把 HyperPod 用作数据处理、训练、推理共享 GPU 池 —— 跨团队调度 |
+| 12/1(周二) 12:00<br>重复 12/3(周四) 08:00 | [AIM334-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM334-R) Hands-on distributed training with AWS Trainium and PyTorch | Workshop | 动手：用 TorchTitan 在 Trainium 上分布式训练 —— 并行策略与性能调优 |
+| 12/1(周二) 14:30 | [AIM362](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM362) Which customization compute? A decision approach for model fine-tuning | Chalk talk | 微调计算选型 —— 无服务器定制、训练作业或 HyperPod |
+| 12/2(周三) 15:00 | [AIM3308](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM3308) What's new: SageMaker HyperPod, with learnings from Multiverse | Breakout session | SageMaker HyperPod 新功能（EKS 与 Slurm）—— 包括世界模型在内的大规模训练与服务 |
+| 12/2(周三) 15:30<br>重复 12/3(周四) 08:00 | [AIM434-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM434-R) From raw data to custom model: Dataset prep with Amazon SageMaker AI | Workshop | 动手：通过数据画像、自动标注、人工审核与合成数据准备训练数据 |
+
+**现场运营与边缘 — P4**
+
+| 时间 (PT) | 场次 | 形式 | 关注点 |
+|---|---|---|---|
+| 11/30(周一) 10:00 | [DVT210-S](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=DVT210-S) When Telemetry Steers the Robot: Observability for Physical AI (sponsored by groundcover) | Breakout session | Path Robotics 焊接机器人与四足机器人的可观测性案例（赞助场次） |
+| 11/30(周一) 15:00<br>重复 12/1(周二) 12:30 | [IND402-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND402-R) Agentic AI for manufacturing: Build a cross-domain digital thread | Workshop | 动手：用 Neptune、AgentCore、IoT SiteWise 打通 OT 与 IT 数据的制造数字主线 |
+| 12/1(周二) 12:30<br>重复 12/3(周四) 08:30 | [HMC403-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=HMC403-R) Self-managed agentic AI at the hybrid edge | Workshop | 动手：在 Local Zones 与 Outposts 上运行自管智能体 AI（数据驻留、低延迟） |
+| 12/2(周三) 16:30 | [IND378](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND378) How Mercedes-Benz accelerates engineering and production with AI | Breakout session | 梅赛德斯-奔驰 —— AgentCore 工程智能体与云原生 MES、数字孪生 |
+| 12/3(周四) 08:30 | [HMC406](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=HMC406) How Amazon Robotics runs AWS Outposts across hundreds of fulfillment centers | Code talk | Amazon Robotics 如何在数百个仓储中心运行 Outposts —— 隔离与故障切换 |
+| 12/3(周四) 09:00 | [IND384](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND384) Inside T-Mobile's Kinetic Edge: Real-Time Physical AI at Scale | Breakout session | T-Mobile Kinetic Edge —— 用 Outposts、SageMaker、AgentCore 在网络边缘做实时 Physical AI |
+| 12/4(周五) 08:30 | [IND345](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=IND345) Human+AI Collaboration: How Amazon Deploys Autonomous Operations on AWS | Breakout session | Amazon 仓储现场 —— 人形、四足、AMR、无人机混合机队编排架构 |
+
+**AgentCore — P5**
+
+| 时间 (PT) | 场次 | 形式 | 关注点 |
+|---|---|---|---|
+| 11/30(周一) 08:30<br>重复 12/2(周三) 08:00 | [AIM439-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM439-R) Getting Started with AgentCore: ship an agent to production in 2 hours | Workshop | 2 小时动手：用 AgentCore CLI 逐步加入运行时、记忆、网关、身份、策略、可观测性、评估 |
+| 11/30(周一) 10:00<br>重复 12/2(周三) 15:00 | [AIM436-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM436-R) Scale production agents reliably with AgentCore | Chalk talk | 从 10 个到 1 万个会话的扩展模式 —— microVM 隔离、工具调用失败与超时处理 |
+| 11/30(周一) 14:00<br>重复 12/3(周四) 08:00 | [TNC331-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=TNC331-R) Ship AI Agents Faster with AgentCore Harness | Lab | 实验：AgentCore Harness —— 用配置声明智能体循环，添加工具与技能，发布版本化端点 |
+| 11/30(周一) 14:30 | [AIM370](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM370) Trusting agents in production: end-to-end security with AgentCore | Breakout session | AgentCore 端到端安全 —— microVM 隔离、身份传递、Gateway 策略、Cedar 最小权限 |
+| 12/2(周三) 11:30 | [AIM450-R](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM450-R) Context engineering for production agents on AgentCore | Chalk talk | 上下文工程 —— 系统提示、技能、工具定义与记忆的分配 |
+| 12/2(周三) 15:00 | [AIM212](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM212) Best practices for production agents on AgentCore, with Nasdaq | Breakout session | AgentCore 生产最佳实践 + Nasdaq 的多账户隔离与智能体身份运维 |
+| 12/3(周四) 14:30 | [AIM452](https://registration.awsevents.com/flow/awsevents/reinvent2026/eventcatalog/page/eventcatalog?search=AIM452) Build long-running agents that persist for days on AgentCore | Chalk talk | 持续数天的智能体 —— Runtime 持久执行、Memory、人工审批暂停/恢复 |
+
+**阅读时确认范围**：这些是场次摘要（预告），不是演讲内容本身。日程与会场可能变更，请在活动 App 中再次确认。"35 周→3.5 周"（IND378）、"数周→数小时"（IND401）等数字为演讲方说法。AIM305、AIM304 预告在 Trainium 上训练与服务世界模型的动手内容 —— [P2](pillar-2.md) 中"没有用 Trainium 训练 VLA 的公开案例"的判断，将在场次资料公开并确认可复现后重新评估。
+
+**下一步**：按负责的支柱挑选场次 —— [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P4](pillar-4.md) · [P5](pillar-5.md)。活动结束后，录像与讲义公开时把对应行替换为原文链接，新服务与新功能走 [Radar](radar.md) 流程。
 
 ## 持续关注
 
