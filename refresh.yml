@@ -15,6 +15,8 @@
 #   source   외부 소스를 미러링하는 페이지만 — rss(피드 URL) · since(이 날짜 이후 글만 대상) · grace_days(발행 후 반영 유예)
 #            exclude: 의도적으로 수록하지 않는 글 [{url, reason}] — 이유 없는 제외는 게이트가 거부, 루틴도 이 목록을 건너뛴다
 #   max_silence_days  routine 페이지가 이 일수 넘게 커밋이 없으면 감시가 경고 (루틴 정지 탐지)
+#   review_alert      owner 페이지의 메타 updated가 volatility 기한(높음 1·중간 3·낮음 6개월)을 넘으면
+#                     배지에 그치지 않고 source-drift 이슈로 알린다 (2026-11 필러 2개월 무검토가 계기)
 
 pages:
   index.md:
@@ -37,6 +39,7 @@ pages:
     mode: owner
     by: Youngjin
     trigger: volatility 주기 검토 + Radar 항목 승격 시 (승격은 사람 owner — maintenance.md 승격 파이프라인)
+    review_alert: true
   pillar-2.md: *pillar
   pillar-3.md: *pillar
   pillar-4.md: *pillar

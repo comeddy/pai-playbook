@@ -1,5 +1,5 @@
 ---
-ko_hash: 68bae8819be1a40b87dcb9f8e0f7cb5744b428ea
+ko_hash: 28b903f4a7035f8aa86e52cf8d7ae4f9df9532a2
 ---
 # メンテナンス — 掲載・根拠・更新ルール
 
@@ -30,7 +30,7 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 中_
 
 ページに`_owner: 名前 · updated: YYYY-MM · volatility: 高/中/低_`を保持します。日付は**ページ編集・確認範囲**であり、部分修正で別主張の日付を更新しません。ページバッジは高1・中3・低6か月超過を通知します。
 
-**更新経路の宣言。** メタ行は責任者しか示しません。nav のすべてのページは、リポジトリ直下の `refresh.yml` に**何が更新を引き起こし、誰が行うか**を宣言します — `mode`（routine: スケジュール自動化 / owner: 人による定期確認 / event: 特定の変更時）、`by`、`trigger`。外部ソースを追うページ（例：[新着情報](news.md) ← AWS Physical AI ブログ RSS）は `source` を宣言し、意図的に載せない記事は理由とともに `exclude` に残します。宣言漏れは配備を止め（`check_refresh_paths.py`）、GitHub Actions が毎日実際のソースと照合して、公開 3 日後も未反映の記事やルーチン停止を `source-drift` Issue で知らせます（`check_source_drift.py`）。バッジは日付を、監視はソースを見ます — 2026-10 の新着情報 3 週間漏れがこのルールのきっかけです。
+**更新経路の宣言。** メタ行は責任者しか示しません。nav のすべてのページは、リポジトリ直下の `refresh.yml` に**何が更新を引き起こし、誰が行うか**を宣言します — `mode`（routine: スケジュール自動化 / owner: 人による定期確認 / event: 特定の変更時）、`by`、`trigger`。外部ソースを追うページ（例：[新着情報](news.md) ← AWS Physical AI ブログ RSS）は `source` を宣言し、意図的に載せない記事は理由とともに `exclude` に残します。宣言漏れは配備を止め（`check_refresh_paths.py`）、GitHub Actions が毎日実際のソースと照合して、公開 3 日後も未反映の記事やルーチン停止を `source-drift` Issue で知らせます（`check_source_drift.py`）。バッジは日付を、監視はソースを見ます — 2026-10 の新着情報 3 週間漏れがこのルールのきっかけです。技術ピラーのように人が確認する owner ページは `review_alert: true` を宣言し、メタ `updated` が volatility の期限を超えるとバッジにとどめず同じ `source-drift` Issue に上げます。コミット日ではなく owner が書いた確認月を見るため、構成変更・翻訳コミットは確認とみなしません — 2026-11 のピラー 2 か月未確認がきっかけです。
 
 判断に影響する主張を[根拠記録](evidence.md)へ追加します。`checked_on`は原文照合日、`review_after_days`は主張別周期、`pages`は影響する要約・ピラーです。未移行の既存主張は記録外と明示します。
 

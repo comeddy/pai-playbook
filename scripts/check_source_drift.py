@@ -8,6 +8,8 @@ GitHub Actions(.github/workflows/source-drift.yml)에서 독립적으로 실행�
 검사:
   - source.rss: 피드 글 중 since 이후 발행 + grace_days 경과 + 페이지에 링크가 없고 exclude에도 없는 글 = 드리프트
   - max_silence_days: 페이지 마지막 커밋이 이 일수를 넘으면 = 루틴 정지 의심
+  - review_alert: owner 페이지의 메타 `updated`가 volatility 기한(check_staleness 기준)을 넘으면 = 검토 정지.
+    커밋 날짜가 아니라 owner가 적은 검토월을 본다 — 구조 변경·번역 커밋이 검토로 오인되지 않게.
 
 사용:
   python3 scripts/check_source_drift.py            # 리포트, 드리프트 시 exit 1, 소스 접속 실패 시 exit 2
@@ -27,6 +29,7 @@ import urllib.request
 import xml.etree.ElementTree as ET
 
 from check_refresh_paths import REGISTRY, load_registry
+from check_staleness import THRESHOLD_MONTHS, months_elapsed, parse_page
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ISSUE_TITLE = "[source-drift] 외부 소스 대비 미반영·정지 페이지"
@@ -76,6 +79,15 @@ def last_commit_date(page: str):
     return datetime.date.fromisoformat(s) if s else None
 
 
+def review_overdue(updated, volatility, today: datetime.date):
+    """(경과 개월, 기한 개월) — volatility 기한을 넘겼을 때만. 메타가 없으면 None(빌드 게이트 몫)."""
+    thr = THRESHOLD_MONTHS.get(volatility)
+    if not updated or thr is None:
+        return None
+    elapsed = months_elapsed(updated, (today.year, today.month))
+    return (elapsed, thr) if elapsed > thr else None
+
+
 def fetch(url: str) -> str:
     req = urllib.request.Request(url, headers={"User-Agent": "pai-playbook-source-drift/1.0"})
     with urllib.request.urlopen(req, timeout=30) as resp:
@@ -106,6 +118,13 @@ def run_checks(pages: dict, today: datetime.date):
             if last and (today - last).days > msd:
                 findings.append(f"- `docs/{page}` 커밋 정지: 마지막 커밋 {last} ({(today - last).days}일 전, "
                                 f"기준 {msd}일) — 루틴 실행 로그 확인 필요 ({e.get('by')})")
+        if e.get("review_alert"):
+            updated, vol, _ = parse_page(ROOT / "docs" / page)
+            od = review_overdue(updated, vol, today)
+            if od:
+                findings.append(f"- `docs/{page}` 검토 기한 초과: updated {updated[0]}-{updated[1]:02d} "
+                                f"({od[0]}개월 경과, volatility {vol} 기준 {od[1]}개월) — "
+                                f"owner 검토 후 메타 updated 갱신 필요 ({e.get('by')})")
     return findings, errors
 
 

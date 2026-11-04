@@ -86,6 +86,9 @@ def validate(nav: list, pages: dict, root: pathlib.Path = ROOT) -> list:
         msd = e.get("max_silence_days")
         if msd is not None and (not isinstance(msd, int) or isinstance(msd, bool) or msd <= 0):
             errors.append(f"{page}: max_silence_days는 양의 정수여야 함")
+        ra = e.get("review_alert")
+        if ra is not None and (not isinstance(ra, bool) or e.get("mode") != "owner"):
+            errors.append(f"{page}: review_alert는 mode owner 페이지에만 true/false로 선언")
     return errors
 
 

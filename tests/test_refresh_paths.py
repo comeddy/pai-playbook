@@ -61,3 +61,32 @@ def test_feed_with_dtd_rejected():
     import pytest
     with pytest.raises(ValueError):
         sd.parse_feed('<?xml version="1.0"?><!DOCTYPE r [<!ENTITY a "x">]><rss></rss>')
+
+
+def test_review_alert_must_be_bool_on_owner_page():
+    assert rp.validate(["a.md"], {"a.md": dict(OK, review_alert=True)}) == []
+    assert any("review_alert" in m for m in rp.validate(["a.md"], {"a.md": dict(OK, review_alert="yes")}))
+    e = {"mode": "event", "by": "x", "trigger": "y", "review_alert": True}
+    assert any("review_alert" in m for m in rp.validate(["a.md"], {"a.md": e}))
+
+
+def test_review_overdue_uses_volatility_threshold():
+    # 높음 1개월: 2026-09 → 2026-11 은 2개월 경과 → 초과
+    assert sd.review_overdue((2026, 9), "높음", datetime.date(2026, 11, 4)) == (2, 1)
+    assert sd.review_overdue((2026, 10), "높음", datetime.date(2026, 11, 4)) is None
+    # 중간 3개월: 2개월 경과는 기한 내
+    assert sd.review_overdue((2026, 9), "중간", datetime.date(2026, 11, 4)) is None
+    # 메타가 없으면 판단하지 않는다(메타 누락은 빌드 게이트가 잡음)
+    assert sd.review_overdue(None, "높음", datetime.date(2026, 11, 4)) is None
+
+
+def test_run_checks_reports_overdue_owner_page(tmp_path, monkeypatch):
+    (tmp_path / "docs").mkdir()
+    (tmp_path / "docs" / "p.md").write_text(
+        "# P\n_최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음_\n", encoding="utf-8")
+    monkeypatch.setattr(sd, "ROOT", tmp_path)
+    findings, errors = sd.run_checks({"p.md": dict(OK, review_alert=True)}, datetime.date(2026, 11, 4))
+    assert errors == []
+    assert len(findings) == 1 and "검토 기한 초과" in findings[0] and "2026-09" in findings[0]
+    findings, _ = sd.run_checks({"p.md": OK}, datetime.date(2026, 11, 4))  # 필드 없으면 감시 안 함
+    assert findings == []

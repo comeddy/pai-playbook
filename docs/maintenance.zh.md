@@ -1,5 +1,5 @@
 ---
-ko_hash: 68bae8819be1a40b87dcb9f8e0f7cb5744b428ea
+ko_hash: 28b903f4a7035f8aa86e52cf8d7ae4f9df9532a2
 ---
 # 维护 — 收录、证据与更新规则
 
@@ -30,7 +30,7 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 中_
 
 保留页面 `_owner: 姓名 · updated: YYYY-MM · volatility: 高/中/低_`。日期描述**页面修改/复核范围**，局部修改不刷新其他主张日期。页面徽章按高1/中3/低6个月超期提醒。
 
-**声明更新路径。** 元数据行只说明负责人。nav 中的每个页面都要在仓库根目录 `refresh.yml` 中声明**由什么触发更新、由谁执行** — `mode`（routine 定时自动化 / owner 人工定期复核 / event 特定变更时）、`by`、`trigger`。跟随外部来源的页面（例如 [新消息](news.md) ← AWS Physical AI 博客 RSS）声明 `source`，有意不收录的文章连同理由写入 `exclude`。缺少声明会阻断部署（`check_refresh_paths.py`）；GitHub Actions 每天与实际来源比对，对发布 3 天后仍未收录的文章或停止运行的例程开启 `source-drift` 议题（`check_source_drift.py`）。徽章看日期，监视看来源 — 2026-10 新消息遗漏 3 周是制定此规则的起因。
+**声明更新路径。** 元数据行只说明负责人。nav 中的每个页面都要在仓库根目录 `refresh.yml` 中声明**由什么触发更新、由谁执行** — `mode`（routine 定时自动化 / owner 人工定期复核 / event 特定变更时）、`by`、`trigger`。跟随外部来源的页面（例如 [新消息](news.md) ← AWS Physical AI 博客 RSS）声明 `source`，有意不收录的文章连同理由写入 `exclude`。缺少声明会阻断部署（`check_refresh_paths.py`）；GitHub Actions 每天与实际来源比对，对发布 3 天后仍未收录的文章或停止运行的例程开启 `source-drift` 议题（`check_source_drift.py`）。徽章看日期，监视看来源 — 2026-10 新消息遗漏 3 周是制定此规则的起因。技术支柱这类由人复核的 owner 页面声明 `review_alert: true`，当元数据 `updated` 超过 volatility 期限时，不止于徽章，而是在同一个 `source-drift` 议题中提出。它看的是 owner 填写的复核月份而非提交日期，因此结构调整·翻译提交不算作复核 — 2026-11 支柱 2 个月未复核是起因。
 
 影响决策的主张加入[证据记录](evidence.md)。`checked_on` 是原文对照日，`review_after_days` 是逐项周期，`pages` 列出受影响摘要及支柱。旧有未迁移主张明确留在记录范围之外。
 

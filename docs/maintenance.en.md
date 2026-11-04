@@ -1,5 +1,5 @@
 ---
-ko_hash: 68bae8819be1a40b87dcb9f8e0f7cb5744b428ea
+ko_hash: 28b903f4a7035f8aa86e52cf8d7ae4f9df9532a2
 ---
 # Maintenance — inclusion, evidence, and review
 
@@ -30,7 +30,7 @@ Research can support hypothesis-driven R&D guidance, not operational performance
 
 Keep page `_owner: name · updated: YYYY-MM · volatility: high/medium/low_` metadata. This date describes the **page edit/review scope**; partial edits do not refresh unrelated claim dates. Page badges warn after high 1 / medium 3 / low 6 months.
 
-**Declared refresh paths.** The metadata line names only who is responsible. Every nav page declares in the repository-root `refresh.yml` **what triggers its refresh and who does it** — `mode` (routine: scheduled automation / owner: periodic human review / event: on a specific change), `by`, `trigger`. Pages that follow an external source (e.g. [News](news.md) ← the AWS Physical AI blog RSS) declare `source`, and posts deliberately left out go into `exclude` with a reason. A missing declaration blocks deployment (`check_refresh_paths.py`), and GitHub Actions compares pages with their real sources daily, opening a `source-drift` issue for posts still missing 3 days after publication or for a stalled routine (`check_source_drift.py`). Badges watch dates; the watchdog watches sources — the 3-week News gap in 2026-10 prompted this rule.
+**Declared refresh paths.** The metadata line names only who is responsible. Every nav page declares in the repository-root `refresh.yml` **what triggers its refresh and who does it** — `mode` (routine: scheduled automation / owner: periodic human review / event: on a specific change), `by`, `trigger`. Pages that follow an external source (e.g. [News](news.md) ← the AWS Physical AI blog RSS) declare `source`, and posts deliberately left out go into `exclude` with a reason. A missing declaration blocks deployment (`check_refresh_paths.py`), and GitHub Actions compares pages with their real sources daily, opening a `source-drift` issue for posts still missing 3 days after publication or for a stalled routine (`check_source_drift.py`). Badges watch dates; the watchdog watches sources — the 3-week News gap in 2026-10 prompted this rule. Owner-reviewed pages such as the technology pillars declare `review_alert: true`, so when the metadata `updated` passes its volatility deadline the watchdog raises it on the same `source-drift` issue instead of stopping at a badge. It reads the review month the owner wrote, not commit dates, so restructuring or translation commits do not count as a review — two months without pillar review in 2026-11 prompted this.
 
 Add decision-critical claims to [evidence records](evidence.md). `checked_on` is the source comparison date, `review_after_days` the claim review interval, and `pages` identifies affected summaries/pillars. Unmigrated legacy claims remain explicitly outside the register.
 
