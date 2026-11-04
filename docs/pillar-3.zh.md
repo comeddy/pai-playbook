@@ -1,9 +1,9 @@
 ---
-ko_hash: 6f49bfdbc4288a4875710d9996607b54c913c45f
+ko_hash: 00007e203ad0d0babbfaea50509f2f9bd8d63db9
 ---
 # Pillar 3 — 仿真 (Simulation)
 
-_最终更新: 2026-09 · owner: Youngjin · volatility: 高（版本·实例经常变动）_
+_最终更新: 2026-11 · owner: Youngjin · volatility: 高（版本·实例经常变动）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -33,9 +33,9 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **解决方案概览** `[1]`:
 
-- **版本**: Isaac Sim 最新 **GA = 5.1.0(2025-10-30)**。**6.0 为 Preview**（"Early Developer Release", GTC'26）—— 即便 GitHub 补丁标签被错误标为 "GA"，也**不要把 6.0 说成 GA**。Isaac Lab 稳定版 2.3.x，3.0 为 beta（引入 Newton 物理引擎）。
+- **版本**（2026-11-04 对照 GitHub 发布）: Isaac Sim 最新 **GA = [6.2.0](https://github.com/isaac-sim/IsaacSim/releases/tag/v6.2.0)(2026-10-14)**。6.x 世代凭 [6.0 GA 公告](https://github.com/isaac-sim/IsaacSim/discussions/655)（2026-06-08，6.0.0 发布为 06-04）转为正式版，**7.0.0a1 为 Alpha**(2026-09-18) —— 不要把 7.0 说成 GA。**[Isaac Lab 3.0.0 GA](https://github.com/isaac-sim/IsaacLab/releases/tag/v3.0.0)(2026-10-20)** 是新项目的推荐基线: 在同一任务 API 上选择物理后端的结构，**[Newton](https://github.com/newton-physics/newton)**（Linux Foundation, Apache-2.0, 1.0 GA 2026-04 → 1.7.0）为默认安装，PhysX·RTX 以 OV 库提供，只有需要 ROS 桥接·XR·Kit 工具时才选装 Isaac Sim 6.2 `[1]`。Isaac Lab 2.3.x（最新 2.3.2, 2026-02）用于基于 Isaac Sim 5.1 的既有项目。
 - **许可证**: Isaac Sim **源码为 Apache 2.0**（商用免费）。但若将 **Omniverse Kit 运行时**做第三方再分发/SaaS 提供/交钥匙安装，则**需要 NVIDIA AI Enterprise 许可证**。内部 R&D 或仅销售产出物则无需。[Isaac Lab](https://github.com/isaac-sim/IsaacLab) 为 BSD-3。
-- **GPU 需求**: **必须 RTX(RT Core)**。最低 RTX 4080(16GB)，理想为 RTX PRO 6000 Blackwell(48GB)。**不支持 A100/H100**（无 RT Core）。
+- **GPU 需求** —— 因路径而异 `[1]`: **Isaac Sim（RTX 渲染）** 必须 RTX(RT Core)，最低 RTX 4080(16GB)、理想 RTX PRO 6000 Blackwell(48GB)，**不支持 A100/H100**（[系统要求](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/requirements.html) "GPUs without RT Cores (A100, H100) are not supported"）。**Isaac Lab 3.0 仅 Newton 安装**无需 Isaac Sim 即可运行，要求为“CUDA GPU，Turing 及以上（compute capability 7.5+）”，因此计算 GPU 也满足文档要求（[安装文档](https://isaac-sim.github.io/IsaacLab/v3.0.0/source/setup/installation/index.html)）—— 但尚无 AWS P4/P5 实测 `[4]`。一旦涉及相机渲染，就回到 RTX 路径。
 
 **栈中各组件实际提供的能力** `[1]`（docs 2026-07 核实）:
 
@@ -46,11 +46,11 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 | **Marketplace AMI** | Isaac Sim 预配置镜像（免费）—— 无需安装驱动·依赖，开机即用 | 消除门槛，让"初始实操"成为可能 |
 | **NICE DCV** | AWS 远程显示协议 —— 高画质·低延迟流传输，在 EC2 上无额外许可费用 | 像本地一样操作云 GPU 上的 Isaac Sim GUI |
 | **AWS Batch MNP** | 多节点并行[^mnp]批处理作业 —— 将容器作业跨多节点排队·调度 | 无 GUI 的大规模 headless RL 作业并行化（第 2 节） |
-| **G6e / G7e** | 搭载 RT Core 的可渲染 GPU 实例 | 满足不变约束（A100/H100 不可用）的唯一系列 |
+| **G6e / G7e** | 搭载 RT Core 的可渲染 GPU 实例 | 在 Isaac Sim·RTX 渲染路径上满足不变约束（A100/H100 不可用）的系列 |
 
 **AWS 映射** `[1]`:
 
-- **实例**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**。官方 **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)**(build 2026.1.1, Ubuntu 24.04, 免费) 支持 G6e·G7e，推荐 `g6e.4xlarge`。
+- **实例**: G6e(L40S 48GB) / **G7e(RTX PRO 6000 Blackwell 96GB, 2026-01 GA)**。官方 **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)**(2026.3.0 "2026 Q3 Refresh", 2026-09-29, Ubuntu 24.04, 软件免费·基础设施另计) 支持 G6e·G7e（Marketplace 价格表也列出 G7 系列），首尔区域可用，推荐 `g6e.4xlarge`。
 - **接入**: 用 [NICE DCV](https://aws.amazon.com/hpc/dcv/)(=Amazon DCV) 客户端/网页进行远程 GUI 流传输。
 - **参考架构**: **AWS Solutions Guidance "Physical AI for Robotics on AWS"**(Isaac Sim on GPU EC2 + Isaac Lab + SageMaker + IoT Greengrass 边缘)。AWS 上存在 **Physical AI 专属博客频道**(aws.amazon.com/blogs/physical-ai/)。
 
@@ -84,15 +84,18 @@ graph LR
 - [VLA Simulator — 1-Click VLA 仿真 on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) —— aws-samples。通过 CDK 一键部署到 EC2 GPU（g5/g6/g6e），在 LIBERO/RoboCasa/SimplerEnv/Isaac Lab 上演示·基准测试 GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1。结果以 MP4→S3+SNS 自动送达并自动终止 EC2，逐策略实测成功率·验证日期均有记录
 - [robotic-cellsim-tools — 多机器人工业单元仿真工具](https://github.com/aws-samples/sample-robotic-cellsim-tools) —— aws-samples。接收现成 URDF，装配·验证·驱动 Isaac Sim 5.1+ USDA 场景（PhysX 关节·ROS 2 话题·逐链接接触遥测）的 Rust CLI 工具集。确定性（相同输入=相同输出）·带版本化 REST API —— 为智能体/MCP 可组合的仿真原语而设计
 
-<details markdown="1"><summary>🔄 易变数据（版本 —— 2026-07 确认，部分年份需在 GitHub 再确认）</summary>
+<details markdown="1"><summary>🔄 易变数据（版本 —— 2026-11-04 对照 GitHub 发布·Marketplace）</summary>
 
 | 组件 | 状态 | 备注 |
 |---|---|---|
-| Isaac Sim 5.1.0 | 🟢 GA (2025-10-30) | 最新 GA |
-| Isaac Sim 6.0 | 🟡 Preview | Early Dev Release, PhysX+Newton 多后端 |
-| Isaac Lab 2.3.x | 🟢 GA | 兼容 Isaac Sim 5.1 |
-| Isaac Lab 3.0 | 🟡 beta | Newton 物理引擎 |
-| Isaac Sim AMI | 🟢 GA | build 2026.1.1, G6e/G7e |
+| Isaac Sim 6.2.0 | 🟢 GA (2026-10-14) | 最新 GA —— Kit SDK 110.4，内置 Newton 1.6.1，Ubuntu 22.04 支持计划移除 |
+| Isaac Sim 6.0.x / 6.1.0 | 🟢 GA (2026-06 / 2026-09) | 6.0 GA 公告 2026-06-08 |
+| Isaac Sim 7.0.0a1 | 🔵 Alpha (2026-09-18) | 非 GA |
+| Isaac Sim 5.1.0 | 🟢 GA (2025-10-30) | 上一代 —— 许多既有示例·研讨会仍基于 5.1 |
+| Isaac Lab 3.0.0 | 🟢 GA (2026-10-20) | 面向 Isaac Sim 6.2·Python 3.12·PyTorch 2.11/CUDA 13.0·Newton 1.6.1，Newton 默认·Isaac Sim 可选 |
+| Isaac Lab 2.3.2 | 🟢 GA (2026-02-02) | 兼容 Isaac Sim 5.1，2.x 最新 |
+| Newton | 🟢 GA (1.0.0 2026-04-13, 最新 1.7.0 2026-10-14) | 1.8.0rc1 进行中 |
+| Isaac Sim AMI | 🟢 GA | 2026.3.0 (2026 Q3 Refresh), G6e/G7e |
 </details>
 
 ---
@@ -154,7 +157,7 @@ _来源: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **解决方案概览** `[1]`:
 
-- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** —— C 引擎 GA(v3.10)，**MJX-JAX** 是成熟的 RL 主力（可微分、跨厂商），**MuJoCo Warp 为 Alpha**（非生产）。**Unitree 为 Go2/G1/H1 的 RL 维护自有 MuJoCo 仓库 = 实际厂商采用**。[MuJoCo Playground](https://playground.mujoco.org/) 经 RSS 2025 验证，6 个平台 sim-to-real。
+- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** —— C 引擎 GA（最新 3.17.0, 2026-10-22, PyPI "Production/Stable"），**MJX-JAX** 是成熟的 RL 主力（可微分、跨厂商），**MuJoCo Warp 仍为 Alpha**（PyPI "3 - Alpha", 3.17.0 —— 非生产）。不过 MuJoCo Warp 是 Newton 的主求解器、Isaac Lab 3.0 的默认物理路径（`newton_mjwarp`），因此包含在 GA 发布的默认配置中 `[1]` —— 独立包的 Alpha 标注不变，不要把单独采用 MuJoCo Warp 说成 GA。**Unitree 为 Go2/G1/H1 的 RL 维护自有 MuJoCo 仓库 = 实际厂商采用**。[MuJoCo Playground](https://playground.mujoco.org/) 经 RSS 2025 验证，6 个平台 sim-to-real。
 - **[Gazebo](https://gazebosim.org/)** —— 最新 LTS **Jetty**(2025-09)，**Harmonic** 部署最广。ROS 2 原生。⚠️ **Gazebo Classic 11 于 2025-01 EOL** —— 新项目禁用 Classic。基于 CPU，不适合 GPU 并行 RL（是 Isaac 的补充）。
 - **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** —— Apache 2.0，活跃但**"43M FPS/430,000 倍"主张在现实工作负载中被反驳**（在接触多的操作中反而比 ManiSkill 慢 3~10 倍）。作为 Isaac 替代未获验证 → **⚪ 注意夸大**。
 
@@ -177,29 +180,31 @@ graph TD
 
 **客户案例**: **Unitree**（MuJoCo，训练生产 HW）。
 
+> ⚠️ **采购风险备注**: 美国 FCC 于 2026-07-28 禁止外国制造的**新**人形·四足机器人进口美国（AP 报道 `[3]`，[PBS 转载](https://www.pbs.org/newshour/world/u-s-bans-foreign-made-humanoid-robots-targeting-china-over-national-security) —— FCC 原文 2026-11-04 确认时返回 403，未确认）。上文提到 Unitree 是**仿真器采用的依据**，不是硬件采购建议。客户若涉及美国市场出货，请另行确认硬件原产地与认证状态。对韩国国内采购的直接影响尚未确认。
+
 **➡️ 后续行动**: 对担心"NVIDIA 依赖"的客户提出**"AWS 对 Isaac、MuJoCo/Gazebo 都能跑好 —— 按工作负载选即可"**的中立立场。若用 MuJoCo，强调可复用计算 GPU(P5) 的成本优势。
 
 **🔗 相关资产**: [decisions: NVIDIA vs 开源](decisions.md)
 
 ---
 
-## 4. NVIDIA Cosmos 3（世界基础模型）  🟢 GA · ⚠️ AWS 未托管
+## 4. NVIDIA Cosmos 3（世界基础模型）  🟢 GA · SageMaker JumpStart
 
-**L0 TL;DR**: 生成·推理·仿真物理世界的基础模型。**可商用(OpenMDW-1.1)**。⚠️ 但 **AWS 未被列为官方 Cosmos 3 云托管方**（Azure/CoreWeave/Baseten 等为托管方）—— 这是 SA 应了解的竞争现实。
+**L0 TL;DR**: 生成·推理·仿真物理世界的基础模型。**可商用(OpenMDW-1.1)**。**自 2026-08-27 起，Amazon SageMaker JumpStart 提供 Edge·Nano·Super 三款**（[What's New](https://aws.amazon.com/about-aws/whats-new/2026/01/cosmos3-edge-cosmos3-nano-cosmos3-super-on-sagemaker-jumpstart/) `[1]`）—— 此前"AWS 未托管"的说法随此次发布作废。
 
 **客户需求/问题**: "想生成多样的现实场景用于训练/评估。"（数据生成视角见 [pillar-1](pillar-1.md)）
 
-**解决方案概览** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)**(2026-05-31 GTC Taipei GA) 是当前旗舰 —— Reasoner(VLM) + Generator(diffusion)，MoT 架构。**Super 64B**（数据中心）、**Nano 16B**（RTX PRO 6000，实时机器人，含 Nano-Policy-DROID）、**Edge**（Jetson，计划中 —— 参数未公开）。许可证 **OpenMDW-1.1（可商用）**。HF/GitHub/NGC 分发。⚠️ 旧的 Predict/Transfer/Reason 系列进入维护模式（建议迁移到 Cosmos 3）。
+**解决方案概览** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)**(2026-05-31 GTC Taipei GA) 是当前旗舰 —— Reasoner(VLM) + Generator(diffusion)，MoT 架构。**Super 64B**（数据中心）、**Nano 16B**（RTX PRO 6000，实时机器人，含 Nano-Policy-DROID）、**Edge**（4B，含基于 2B Nemotron 的 reasoner —— 用于 Jetson Thor 端侧控制）。许可证 **OpenMDW-1.1（可商用）**。HF/GitHub/NGC 分发。⚠️ 旧的 Predict/Transfer/Reason 系列进入维护模式（建议迁移到 Cosmos 3）。
 
 - **划清界线 — 物理仿真是"身体"，WFM 是"眼睛"** `[1]`: WFM 不是物理仿真器的替代品，而是**生成式数据增幅层**。如果说 Isaac 等物理仿真用数值计算刚体·接触·摩擦来驱动机器人的"身体"，那么 WFM 是把仿真产出的灰色（gray）场景转换为 photoreal，或者多样化光照·纹理·视角来扩增训练数据（[Cosmos-Transfer1, arXiv:2503.14492](https://arxiv.org/abs/2503.14492)）。这是对客户提问"Cosmos 会取代 Isaac 吗？"的一句话回答。
 
-**AWS 映射**: **直接映射较弱** —— Cosmos 3 不以 AWS 为指定托管方。但因是开放权重(HF/GitHub)，**可在 EC2 G7e(Nano 16B, RTX PRO 6000) 上自托管**。这就是 AWS 的角度: "即便不是托管主机，也能用最佳 GPU 自行运行"。
+**AWS 映射** `[1]`: ① **SageMaker JumpStart** —— 通过控制台·SageMaker Python SDK 在客户账户中部署端点的路径（2026-08-27）。首尔区域可用性·端点实例请在部署时于控制台确认。② 因是开放权重(HF/GitHub)，也可**在 EC2 G7e(Nano 16B, RTX PRO 6000) 上自托管**。尚无在 JumpStart 上的质量·成本实测 `[4]`。
 
-**决策标准**: 需要托管 Cosmos NIM → 其他云。开放权重自托管·数据主权·整合既有 AWS 栈 → EC2 G7e。
+**决策标准**: 快速评估·托管端点 → SageMaker JumpStart。需直接掌控运行时·容器，或须与 Isaac 管道在同一节点运行 → EC2 G7e 自托管。
 
 **客户案例**（⚠️ 仅为公布，未经生产验证）: 作为 Cosmos 3 采用方，**Doosan Robotics、LG Electronics、Samsung Electronics** 等多家韩国企业已公布 —— 韩国相关性高，但为"已公布的采用"而非经过验证的生产。
 
-**➡️ 后续行动**: 韩国客户对 Cosmos 3 感兴趣 → **以"在 AWS G7e 上自托管 Cosmos 3 Nano" PoC 应对**（把缺乏托管服务转化为自托管+数据主权的优势）。
+**➡️ 后续行动**: 韩国客户对 Cosmos 3 感兴趣 → 先从 **用 SageMaker JumpStart 部署 Cosmos3-Nano 端点、以客户数据评估质量** 的 PoC 入手，若需管道集成再扩展到 G7e 自托管。
 
 **🔗 相关资产**: [pillar-1 Cosmos 数据生成](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 
@@ -263,14 +268,14 @@ graph TD
 ## 本支柱的诚实现实（SA 必读）
 
 - **AWS RoboMaker 已死（2025-09-10 支持终止）。** 绝对禁止作为选项提出。后续栈 = EC2 G6e/G7e + Isaac Sim AMI + AWS Batch MNP。
-- **Isaac Sim 6.0 不是 GA（Preview）。** 最新 GA 是 5.1.0。不要被 GitHub 补丁标签迷惑。
-- **AWS 不是 Cosmos 3 的指定托管方**（Azure/CoreWeave 为托管方）。以自托管(G7e)应对才是诚实的角度。
-- **A100/H100 无法用于 Isaac Sim 渲染**（无 RT Core）。渲染用 G6e/G7e，计算型 RL 也可用 P5（MuJoCo）。
+- **Isaac Sim 最新 GA 为 6.2.0，7.0 为 Alpha。** 旧指引（“6.0 不是 GA”）已因 2026-06 GA 而废止。既有研讨会·示例若基于 5.1，运行时请固定版本。
+- **Cosmos 3 现已上架 SageMaker JumpStart（2026-08-27）。** 不要再按旧的"AWS 未托管"指引向客户推荐其他云。但尚无在 JumpStart 上的质量·成本实测。
+- **A100/H100 无法用于 Isaac Sim 渲染**（无 RT Core）。渲染用 G6e/G7e。计算型 RL 可用 MuJoCo/MJX，Isaac Lab 3.0 仅 Newton 安装也满足文档的计算 GPU 要求 —— 尚无在 P5 上的 AWS 实测，所以应说“按要求可行，用 PoC 确认”，而不是“能跑”。
 - **TwinMaker 废弃说是传闻** —— 更正的同时诚实承认"低速度"。
 - **Genesis "430,000 倍"已被反驳**，**MuJoCo Warp 为 Alpha**，**Unity Robotics Hub 实际处于放置状态（2022 年以后）**，**Habitat 在 v0.3.4 之后停止维护** —— 禁止夸大开源成熟度。
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 高（版本·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证。建议再确认部分 GitHub 发布年份。_
+_owner: Youngjin · updated: 2026-11 · volatility: 高（版本·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商/报道, [4] 未经验证。版本·发布日期已于 2026-11-04 对照 GitHub 发布。_
 
 <!-- 용어 각주 -->
 

@@ -1,9 +1,9 @@
 ---
-ko_hash: 6f49bfdbc4288a4875710d9996607b54c913c45f
+ko_hash: 00007e203ad0d0babbfaea50509f2f9bd8d63db9
 ---
 # Pillar 3 — Simulation
 
-_Last updated: 2026-09 · owner: Youngjin · volatility: high (versions/instances change often)_
+_Last updated: 2026-11 · owner: Youngjin · volatility: high (versions/instances change often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -33,9 +33,9 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **Solution overview** `[1]`:
 
-- **Versions**: latest Isaac Sim **GA = 5.1.0 (2025-10-30)**. **6.0 is Preview** ("Early Developer Release," GTC'26) — even if the GitHub patch tag is mislabeled "GA," **do not call 6.0 GA**. Isaac Lab stable is 2.3.x; 3.0 is beta (introduces the Newton physics engine).
+- **Versions** (checked against GitHub releases 2026-11-04): latest Isaac Sim **GA = [6.2.0](https://github.com/isaac-sim/IsaacSim/releases/tag/v6.2.0) (2026-10-14)**. The 6.x generation became GA with the [6.0 GA announcement](https://github.com/isaac-sim/IsaacSim/discussions/655) (2026-06-08; the 6.0.0 release is dated 06-04), and **7.0.0a1 is Alpha** (2026-09-18) — do not call 7.0 GA. **[Isaac Lab 3.0.0 GA](https://github.com/isaac-sim/IsaacLab/releases/tag/v3.0.0) (2026-10-20)** is the recommended baseline for new projects: one task API on top of selectable physics backends — **[Newton](https://github.com/newton-physics/newton)** (Linux Foundation, Apache-2.0, 1.0 GA 2026-04 → 1.7.0) is the default install, PhysX·RTX come as OV libraries, and Isaac Sim 6.2 is an optional install only when you need the ROS bridge, XR, or Kit tooling `[1]`. Isaac Lab 2.3.x (latest 2.3.2, 2026-02) is for existing projects on Isaac Sim 5.1.
 - **License**: Isaac Sim **source is Apache 2.0** (free for commercial). But redistributing/offering-as-SaaS/turnkey-installing the **Omniverse Kit runtime** to third parties requires an **NVIDIA AI Enterprise license**. Not needed for internal R&D or selling only the output. [Isaac Lab](https://github.com/isaac-sim/IsaacLab) is BSD-3.
-- **GPU requirement**: **RTX (RT Core) required**. Minimum RTX 4080 (16GB), ideal RTX PRO 6000 Blackwell (48GB). **A100/H100 not supported** (no RT Core).
+- **GPU requirement** — differs by path `[1]`: **Isaac Sim (RTX rendering)** requires RTX (RT Core), minimum RTX 4080 (16GB), ideal RTX PRO 6000 Blackwell (48GB), **A100/H100 not supported** ([requirements](https://docs.isaacsim.omniverse.nvidia.com/latest/installation/requirements.html): "GPUs without RT Cores (A100, H100) are not supported"). A **Newton-only Isaac Lab 3.0 install** runs without Isaac Sim and requires "a CUDA GPU, Turing or newer (compute capability 7.5+)", so compute GPUs meet the documented requirement too ([installation docs](https://isaac-sim.github.io/IsaacLab/v3.0.0/source/setup/installation/index.html)) — but there is no AWS P4/P5 measurement yet `[4]`. Once camera rendering is involved, you are back on the RTX path.
 
 **What each stack component actually does** `[1]` (docs verified 2026-07):
 
@@ -46,11 +46,11 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 | **Marketplace AMI** | A pre-configured Isaac Sim image (free) — boots ready to use, no driver/dependency installs | Removes the entry barrier that makes the "initial hands-on" possible |
 | **NICE DCV** | AWS's remote display protocol — high-quality, low-latency streaming with no extra license cost on EC2 | Operate the cloud GPU's Isaac Sim GUI as if local |
 | **AWS Batch MNP** | Multi-node parallel[^mnp] batch jobs — queues and schedules container jobs across nodes | Parallelizes large headless RL jobs without a GUI (item 2) |
-| **G6e / G7e** | Render-capable GPU instances with RT Cores | The only families satisfying the invariant constraint (no A100/H100) |
+| **G6e / G7e** | Render-capable GPU instances with RT Cores | The families satisfying the invariant constraint (no A100/H100) on the Isaac Sim / RTX rendering path |
 
 **AWS mapping** `[1]`:
 
-- **Instances**: G6e (L40S 48GB) / **G7e (RTX PRO 6000 Blackwell 96GB, GA 2026-01)**. The official **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)** (build 2026.1.1, Ubuntu 24.04, free) supports G6e/G7e, with `g6e.4xlarge` recommended.
+- **Instances**: G6e (L40S 48GB) / **G7e (RTX PRO 6000 Blackwell 96GB, GA 2026-01)**. The official **[Isaac Sim Development Workstation AMI](https://aws.amazon.com/marketplace/pp/prodview-bl35herdyozhw)** (2026.3.0 "2026 Q3 Refresh", 2026-09-29, Ubuntu 24.04, software free, infrastructure billed separately) supports G6e/G7e (the Marketplace pricing table also lists the G7 family), is available in the Seoul Region, with `g6e.4xlarge` recommended.
 - **Access**: remote GUI streaming via [NICE DCV](https://aws.amazon.com/hpc/dcv/) (= Amazon DCV) client/web.
 - **Reference architecture**: the **AWS Solutions Guidance "Physical AI for Robotics on AWS"** (Isaac Sim on GPU EC2 + Isaac Lab + SageMaker + IoT Greengrass edge). AWS has a **dedicated Physical AI blog channel** (aws.amazon.com/blogs/physical-ai/).
 
@@ -84,15 +84,18 @@ graph LR
 - [VLA Simulator — 1-Click VLA simulation on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples. Demo/benchmark GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1 on LIBERO/RoboCasa/SimplerEnv/Isaac Lab via one-command CDK deploy to EC2 GPU (g5/g6/g6e); results as MP4→S3+SNS, auto-terminating EC2. Measured per-policy success rates and validation dates documented
 - [robotic-cellsim-tools — multi-robot industrial cell simulation tools](https://github.com/aws-samples/sample-robotic-cellsim-tools) — aws-samples. Rust CLI toolset that takes off-the-shelf URDFs and assembles, validates, and drives Isaac Sim 5.1+ USDA stages (PhysX articulations, ROS 2 topics, per-link contact telemetry). Deterministic (same inputs = same outputs) with a versioned REST API — designed as simulation primitives for agents/MCP to compose
 
-<details markdown="1"><summary>🔄 Volatile data (versions — checked 2026-07, some years to be re-confirmed on GitHub)</summary>
+<details markdown="1"><summary>🔄 Volatile data (versions — checked against GitHub releases and Marketplace 2026-11-04)</summary>
 
 | Component | Status | Note |
 |---|---|---|
-| Isaac Sim 5.1.0 | 🟢 GA (2025-10-30) | latest GA |
-| Isaac Sim 6.0 | 🟡 Preview | Early Dev Release, PhysX+Newton multi-backend |
-| Isaac Lab 2.3.x | 🟢 GA | compatible with Isaac Sim 5.1 |
-| Isaac Lab 3.0 | 🟡 beta | Newton physics engine |
-| Isaac Sim AMI | 🟢 GA | build 2026.1.1, G6e/G7e |
+| Isaac Sim 6.2.0 | 🟢 GA (2026-10-14) | latest GA — Kit SDK 110.4, bundles Newton 1.6.1, Ubuntu 22.04 support planned for removal |
+| Isaac Sim 6.0.x / 6.1.0 | 🟢 GA (2026-06 / 2026-09) | 6.0 GA announced 2026-06-08 |
+| Isaac Sim 7.0.0a1 | 🔵 Alpha (2026-09-18) | not GA |
+| Isaac Sim 5.1.0 | 🟢 GA (2025-10-30) | previous generation — many existing samples and workshops still target 5.1 |
+| Isaac Lab 3.0.0 | 🟢 GA (2026-10-20) | targets Isaac Sim 6.2 · Python 3.12 · PyTorch 2.11/CUDA 13.0 · Newton 1.6.1; Newton default, Isaac Sim optional |
+| Isaac Lab 2.3.2 | 🟢 GA (2026-02-02) | compatible with Isaac Sim 5.1, latest 2.x |
+| Newton | 🟢 GA (1.0.0 2026-04-13, latest 1.7.0 2026-10-14) | 1.8.0rc1 in progress |
+| Isaac Sim AMI | 🟢 GA | 2026.3.0 (2026 Q3 Refresh), G6e/G7e |
 </details>
 
 ---
@@ -154,7 +157,7 @@ _Source: isaac-sim.github.io/IsaacLab performance benchmarks `[1]`_
 
 **Solution overview** `[1]`:
 
-- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** — the C engine is GA (v3.10), **MJX-JAX** is a mature RL workhorse (differentiable, cross-vendor), and **MuJoCo Warp is Alpha** (not production). **Unitree maintains its own MuJoCo repo for Go2/G1/H1 RL = real vendor adoption**. [MuJoCo Playground](https://playground.mujoco.org/) is RSS 2025 validated, sim-to-real on 6 platforms.
+- **[MuJoCo / MJX](https://github.com/google-deepmind/mujoco)** — the C engine is GA (latest 3.17.0, 2026-10-22, PyPI "Production/Stable"), **MJX-JAX** is a mature RL workhorse (differentiable, cross-vendor), and **MuJoCo Warp is still Alpha** (PyPI "3 - Alpha", 3.17.0 — not production). That said, MuJoCo Warp is Newton's primary solver and Isaac Lab 3.0's default physics path (`newton_mjwarp`), so it ships in the default configuration of GA releases `[1]` — the standalone package keeps its Alpha label, so do not call standalone MuJoCo Warp adoption GA. **Unitree maintains its own MuJoCo repo for Go2/G1/H1 RL = real vendor adoption**. [MuJoCo Playground](https://playground.mujoco.org/) is RSS 2025 validated, sim-to-real on 6 platforms.
 - **[Gazebo](https://gazebosim.org/)** — latest LTS **Jetty** (2025-09), **Harmonic** is the most widely deployed. ROS 2 native. ⚠️ **Gazebo Classic 11 is EOL as of 2025-01** — no Classic for new projects. CPU-based, so unsuited for GPU parallel RL (an Isaac complement).
 - **[Genesis](https://github.com/Genesis-Embodied-AI/Genesis)** — Apache 2.0, active, but the **"43M FPS / 430,000×" claim is refuted on realistic workloads** (actually 3~10× slower than ManiSkill on contact-rich manipulation). Not validated as an Isaac replacement → **⚪ hype caution**.
 
@@ -177,29 +180,31 @@ graph TD
 
 **Customer case**: **Unitree** (MuJoCo, training on production HW).
 
+> ⚠️ **Procurement risk note**: on 2026-07-28 the US FCC banned imports of **new** foreign-made humanoid and quadruped robots into the US (AP report `[3]`, [published by PBS](https://www.pbs.org/newshour/world/u-s-bans-foreign-made-humanoid-robots-targeting-china-over-national-security) — the FCC original returned 403 when checked on 2026-11-04 and is unconfirmed). The Unitree mention above is **evidence of simulator adoption**, not a hardware procurement recommendation. For customers whose shipments depend on the US market, check hardware origin and certification status separately. No direct impact on procurement within Korea has been confirmed.
+
 **➡️ Next action**: for customers worried about "NVIDIA lock-in," present the **neutral position "AWS runs Isaac, MuJoCo, and Gazebo all well — just choose by workload."** With MuJoCo, emphasize the cost benefit of being able to reuse compute GPUs (P5).
 
 **🔗 Related assets**: [decisions: NVIDIA vs open source](decisions.md)
 
 ---
 
-## 4. NVIDIA Cosmos 3 (world foundation model)  🟢 GA · ⚠️ not hosted on AWS
+## 4. NVIDIA Cosmos 3 (world foundation model)  🟢 GA · SageMaker JumpStart
 
-**L0 TL;DR**: A foundation model that generates, reasons about, and simulates the physical world. **Commercially usable (OpenMDW-1.1)**. ⚠️ But **AWS did not make the list as an official Cosmos 3 cloud host** (Azure/CoreWeave/Baseten and others host it) — a competitive reality an SA should know.
+**L0 TL;DR**: A foundation model that generates, reasons about, and simulates the physical world. **Commercially usable (OpenMDW-1.1)**. **Since 2026-08-27, Amazon SageMaker JumpStart offers all three variants — Edge, Nano and Super** ([What's New](https://aws.amazon.com/about-aws/whats-new/2026/01/cosmos3-edge-cosmos3-nano-cosmos3-super-on-sagemaker-jumpstart/) `[1]`) — this launch retires the earlier "not hosted on AWS" statement.
 
 **Customer need/problem**: "We want to generate diverse real-world scenarios for training/evaluation." (For the data-generation angle, see [pillar-1](pillar-1.md).)
 
-**Solution overview** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)** (GA at GTC Taipei 2026-05-31) is the current flagship — Reasoner (VLM) + Generator (diffusion), MoT architecture. **Super 64B** (data center), **Nano 16B** (RTX PRO 6000, real-time robotics, includes Nano-Policy-DROID), **Edge** (Jetson, planned — parameters undisclosed). License **OpenMDW-1.1 (commercial OK)**. Distributed on HF/GitHub/NGC. ⚠️ The old Predict/Transfer/Reason lineup is in maintenance mode (advised to migrate to Cosmos 3).
+**Solution overview** `[1]`: **[Cosmos 3](https://www.nvidia.com/en-us/ai/cosmos/)** (GA at GTC Taipei 2026-05-31) is the current flagship — Reasoner (VLM) + Generator (diffusion), MoT architecture. **Super 64B** (data center), **Nano 16B** (RTX PRO 6000, real-time robotics, includes Nano-Policy-DROID), **Edge** (4B, includes a 2B Nemotron-based reasoner — for on-device control on Jetson Thor). License **OpenMDW-1.1 (commercial OK)**. Distributed on HF/GitHub/NGC. ⚠️ The old Predict/Transfer/Reason lineup is in maintenance mode (advised to migrate to Cosmos 3).
 
 - **Drawing the line — the physics sim is the "body," the WFM is the "eyes"** `[1]`: a WFM is not a replacement for a physics simulator but a **generative data-amplification layer**. Where a physics sim like Isaac numerically computes rigid bodies, contact, and friction to drive the robot's "body," a WFM converts the sim's gray scenes into photoreal ones or diversifies lighting/textures/viewpoints to multiply data ([Cosmos-Transfer1, arXiv:2503.14492](https://arxiv.org/abs/2503.14492)). The one-line answer to the customer question "does Cosmos replace Isaac?"
 
-**AWS mapping**: **weak direct mapping** — Cosmos 3 does not have AWS as a named host. But because the weights are open (HF/GitHub), it **can be self-hosted on EC2 G7e (Nano 16B, RTX PRO 6000)**. That's AWS's angle: "not a managed host, but you can run it directly on the optimal GPU."
+**AWS mapping** `[1]`: ① **SageMaker JumpStart** — deploy an endpoint into the customer account from the console or the SageMaker Python SDK (2026-08-27). Check Seoul Region availability and endpoint instances in the console at deployment time. ② Because the weights are open (HF/GitHub), **self-hosting on EC2 G7e (Nano 16B, RTX PRO 6000)** is also possible. There are no quality or cost measurements on JumpStart yet `[4]`.
 
-**Decision criteria**: need managed Cosmos NIM → another cloud. Open-weight self-hosting · data sovereignty · integration with an existing AWS stack → EC2 G7e.
+**Decision criteria**: fast evaluation · managed endpoint → SageMaker JumpStart. Need direct control of the runtime/container, or must run on the same node as the Isaac pipeline → EC2 G7e self-hosting.
 
 **Customer case** (⚠️ announced only, not production-validated): many Korean companies announced as Cosmos 3 adopters, including **Doosan Robotics, LG Electronics, Samsung Electronics** — high Korean relevance, but "announced adoption," not validated production.
 
-**➡️ Next action**: when a Korean customer is interested in Cosmos 3 → respond with a **"self-host Cosmos 3 Nano on AWS G7e" PoC** (turning the absence of managed hosting into a self-hosting + data-sovereignty strength).
+**➡️ Next action**: when a Korean customer is interested in Cosmos 3 → start with a PoC that **launches a Cosmos3-Nano endpoint on SageMaker JumpStart and evaluates quality on the customer's data**; if pipeline integration is needed, extend to G7e self-hosting.
 
 **🔗 Related assets**: [pillar-1 Cosmos data generation](pillar-1.md) · [pillar-4 sim-to-real](pillar-4.md)
 
@@ -263,14 +268,14 @@ graph TD
 ## The honest reality of this pillar (SA must-read)
 
 - **AWS RoboMaker is dead (support ended 2025-09-10).** Never present it as an option. The successor stack = EC2 G6e/G7e + Isaac Sim AMI + AWS Batch MNP.
-- **Isaac Sim 6.0 is not GA (Preview).** The latest GA is 5.1.0. Don't be fooled by the GitHub patch-tag label.
-- **AWS is not a named Cosmos 3 host** (Azure/CoreWeave host it). Responding with self-hosting (G7e) is the honest angle.
-- **A100/H100 cannot render in Isaac Sim** (no RT Core). Rendering is G6e/G7e; compute RL can also use P5 (MuJoCo).
+- **The latest Isaac Sim GA is 6.2.0; 7.0 is Alpha.** The old guidance ("6.0 is not GA") was retired by the 2026-06 GA. If an existing workshop or sample targets 5.1, pin the version when running it.
+- **Cosmos 3 is now on SageMaker JumpStart (2026-08-27).** Do not steer customers to another cloud based on the old "not hosted on AWS" guidance. That said, there are no quality or cost measurements on JumpStart yet.
+- **A100/H100 cannot render in Isaac Sim** (no RT Core). Rendering is G6e/G7e. Compute RL works with MuJoCo/MJX, and a Newton-only Isaac Lab 3.0 install also meets the documented compute-GPU requirement — there is no AWS measurement on P5, so say "possible per requirements, confirm with a PoC," not "it works."
 - **The TwinMaker discontinuation story is a rumor** — correct it, but honestly acknowledge "low velocity."
 - **Genesis "430,000×" is refuted**, **MuJoCo Warp is Alpha**, **Unity Robotics Hub is effectively abandoned (since 2022)**, **Habitat has been unmaintained since v0.3.4** — do not exaggerate open-source maturity.
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: high (versions · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified. Some GitHub release years advised to re-confirm._
+_owner: Youngjin · updated: 2026-11 · volatility: high (versions · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor/press, [4] unverified. Versions and release dates checked against GitHub releases 2026-11-04._
 
 <!-- 용어 각주 -->
 
