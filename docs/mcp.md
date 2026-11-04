@@ -1,6 +1,6 @@
 # 설정 — MCP 연결
 
-_최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
+_최종 갱신: 2026-11 · owner: Youngjin · volatility: 낮음_
 
 **L0 TL;DR**: 사용하는 AI 도구(Claude Code, Codex, Kiro, Amazon Quick)에서 Playbook 페이지·Radar·근거 기록을 도구 호출로 읽게 하는 설정이다. MCP[^mcp] 서버 파일 1개를 내려받아 등록하면 끝난다. 공개 콘텐츠이므로 로그인·API 키는 없다.
 
@@ -98,7 +98,7 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
 
 === "Kiro Crew"
 
-    Crew가 실행되는 컴퓨터에 서버 파일이 있어야 한다. 절차는 공식 문서 기준이며 실기기 검증은 하지 않았다(`[4]`).
+    Crew가 실행되는 컴퓨터에 서버 파일이 있어야 한다. 절차는 공식 문서 기준이다(`[4]`). 단 ②의 node 절대경로 요건은 2026-11-04 실기기 등록에서 확인했다.
 
     **① 서버 파일 다운로드**
 
@@ -107,9 +107,10 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Crew에 로컬 서버 추가** — Agent Capabilities → Integrations (MCP)에서 명령 기반 서버를 추가하거나, Crew가 읽는 MCP 설정에 아래 항목을 병합한다. 경로 자리표시는 실제 절대경로로 바꾼다.
+    **② Crew에 로컬 서버 추가** — Agent Capabilities → Integrations (MCP)에서 명령 기반 서버를 추가하거나, Crew가 읽는 MCP 설정에 아래 항목을 병합한다. **`command`는 `node`가 아니라 node의 절대경로로 적는다** — Crew의 MCP 실행 환경은 셸(Homebrew 등)의 PATH를 물려받지 않아 `node`만 적으면 서버가 기동하지 못한다. 두 경로를 확인해 자리표시를 바꾼다.
 
     ```bash
+    command -v node                               # 예: /opt/homebrew/bin/node
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"
     ```
 
@@ -117,12 +118,14 @@ _최종 갱신: 2026-09 · owner: Youngjin · volatility: 낮음_
     {
       "mcpServers": {
         "pai-playbook": {
-          "command": "node",
+          "command": "/opt/homebrew/bin/node",
           "args": ["ABSOLUTE_PATH_TO_SERVER_MJS"]
         }
       }
     }
     ```
+
+    `/opt/homebrew/bin/node`는 Apple Silicon Mac의 Homebrew 기본 경로다. Intel Mac Homebrew(`/usr/local/bin/node`)·nvm·Volta 등은 위 `command -v node` 출력값을 그대로 쓴다. nvm 경로는 Node 버전을 바꾸면 달라지므로 업그레이드 후 다시 확인한다.
 
     **③ 검색·연결 확인** — Discover & Sync로 설정을 반영하고 Probe All로 연결을 확인한 뒤 조회를 요청한다.
 
@@ -223,7 +226,7 @@ Playbook 의사결정 트리에서 Build vs Buy 판단 기준을 표로 정리�
 
 ## 검증 범위와 한계 { #scope }
 
-- Claude Code 절차는 2026-09-26에 이 리포의 서버 파일을 사용자 범위에 등록해 `/mcp` connected와 페이지 목록 조회를 확인했다. Codex·Kiro Crew·Amazon Quick·Kiro CLI의 명령은 각 공식 문서 기준이며 미검증(`[4]`)이다.
+- Claude Code 절차는 2026-09-26에 이 리포의 서버 파일을 사용자 범위에 등록해 `/mcp` connected와 페이지 목록 조회를 확인했다. Kiro Crew는 2026-11-04 owner의 실기기 등록에서 `command: "node"`가 기동 실패하고 node 절대경로로 바꿔야 함을 확인해 카드에 반영했다(나머지 단계는 공식 문서 기준). Codex·Amazon Quick·Kiro CLI의 명령은 각 공식 문서 기준이며 미검증(`[4]`)이다.
 - 서버는 `main` 브랜치의 마크다운을 읽는다. 사이트 반영 전 커밋 내용이 보일 수 있고, 캐시는 10분이다.
 - 근거 기록(`assets/claims.json`)이 사이트에 게시되기 전에는 `playbook_evidence`가 "아직 게시되지 않았습니다" 안내를 돌려준다.
 - 서버 파일은 쓰기 도구가 없고 자격증명을 다루지 않는다. 오프라인 사용은 리포를 클론한 뒤 `PAI_PLAYBOOK_DOCS_DIR=<클론>/docs` 환경변수로 가능하다.
@@ -235,4 +238,4 @@ Playbook 의사결정 트리에서 Build vs Buy 판단 기준을 표로 정리�
 [^mcp]: **MCP (Model Context Protocol)** — AI 도구가 외부 데이터·기능을 표준 방식으로 호출하게 하는 개방 프로토콜. 서버가 "도구"를 제공하고 Claude Code 같은 클라이언트가 그 도구를 호출한다.
 [^stdio]: **stdio 전송** — 클라이언트가 서버 프로그램을 자기 컴퓨터에서 직접 실행해 표준 입출력으로 통신하는 MCP 연결 방식. 네트워크 주소·로그인이 필요 없다.
 
-_owner: Youngjin · updated: 2026-09 · volatility: 낮음_
+_owner: Youngjin · updated: 2026-11 · volatility: 낮음_

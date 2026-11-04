@@ -1,9 +1,9 @@
 ---
-ko_hash: 5cd770168cef890b4bcfde328b4243e46fe661fe
+ko_hash: 522926e807099972847e8eefb613993d3bd147ce
 ---
 # Settings — MCP Connection
 
-_Last updated: 2026-09 · owner: Youngjin · volatility: low_
+_Last updated: 2026-11 · owner: Youngjin · volatility: low_
 
 **L0 TL;DR**: This setup lets your AI tool (Claude Code, Codex, Kiro, Amazon Quick) read Playbook pages, the Radar, and evidence records through tool calls. Download one MCP[^mcp] server file and register it; that is all. The content is public, so there is no login or API key.
 
@@ -101,7 +101,7 @@ Four tools are provided:
 
 === "Kiro Crew"
 
-    The server file must be on the machine where Crew runs. The steps follow the official docs and have not been verified on a real device (`[4]`).
+    The server file must be on the machine where Crew runs. The procedure follows the official docs (`[4]`); the node absolute-path requirement in ② was confirmed by a real-device registration on 2026-11-04.
 
     **① Download the server file**
 
@@ -110,9 +110,10 @@ Four tools are provided:
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Add a local server in Crew** — in Agent Capabilities → Integrations (MCP), add a command-based server, or merge the entry below into the MCP config Crew reads. Replace the path placeholder with the real absolute path.
+    **② Add a local server in Crew** — in Agent Capabilities → Integrations (MCP), add a command-based server, or merge the entry below into the MCP config Crew reads. **Write `command` as node's absolute path, not `node`** — Crew's MCP runtime does not inherit your shell's PATH (Homebrew etc.), so with just `node` the server fails to start. Check both paths and replace the placeholders.
 
     ```bash
+    command -v node                               # e.g. /opt/homebrew/bin/node
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"
     ```
 
@@ -120,12 +121,14 @@ Four tools are provided:
     {
       "mcpServers": {
         "pai-playbook": {
-          "command": "node",
+          "command": "/opt/homebrew/bin/node",
           "args": ["ABSOLUTE_PATH_TO_SERVER_MJS"]
         }
       }
     }
     ```
+
+    `/opt/homebrew/bin/node` is the default Homebrew path on Apple Silicon Macs. For Intel Mac Homebrew (`/usr/local/bin/node`), nvm, Volta, etc., use the `command -v node` output above as-is. nvm paths change when you switch Node versions, so re-check after upgrading.
 
     **③ Discover and verify** — apply the config with Discover & Sync, confirm the connection with Probe All, then ask for a lookup.
 
@@ -226,7 +229,7 @@ Put the Build vs Buy decision criteria from the Playbook decision trees into a t
 
 ## Verification scope and limits { #scope }
 
-- The Claude Code procedure was confirmed on 2026-09-26 by registering this repo's server file at user scope and checking `/mcp` connected plus a page-list lookup. The Codex, Kiro Crew, Amazon Quick, and Kiro CLI commands follow their official docs and are unverified (`[4]`).
+- The Claude Code procedure was confirmed on 2026-09-26 by registering this repo's server file at user scope and checking `/mcp` connected plus a page-list lookup. For Kiro Crew, the owner's real-device registration on 2026-11-04 confirmed that `command: "node"` fails to start and must be changed to node's absolute path; this is reflected in the card (the remaining steps follow the official docs). The Codex, Amazon Quick, and Kiro CLI commands follow their official docs and are unverified (`[4]`).
 - The server reads markdown from the `main` branch. Committed content may appear before the site reflects it; the cache lasts 10 minutes.
 - Until the evidence records (`assets/claims.json`) are published on the site, `playbook_evidence` returns a "not published yet" notice.
 - The server file has no write tools and handles no credentials. For offline use, clone the repo and set the `PAI_PLAYBOOK_DOCS_DIR=<clone>/docs` environment variable.
@@ -238,4 +241,4 @@ Put the Build vs Buy decision criteria from the Playbook decision trees into a t
 [^mcp]: **MCP (Model Context Protocol)** — An open protocol that lets AI tools call external data and functions in a standard way. A server exposes "tools" and a client such as Claude Code invokes them.
 [^stdio]: **stdio transport** — An MCP connection mode in which the client runs the server program on the same machine and talks to it over standard input/output. No network address or login is needed.
 
-_owner: Youngjin · updated: 2026-09 · volatility: low_
+_owner: Youngjin · updated: 2026-11 · volatility: low_

@@ -1,9 +1,9 @@
 ---
-ko_hash: 5cd770168cef890b4bcfde328b4243e46fe661fe
+ko_hash: 522926e807099972847e8eefb613993d3bd147ce
 ---
 # 设置 — MCP 连接
 
-_最后更新: 2026-09 · owner: Youngjin · volatility: 低_
+_最后更新: 2026-11 · owner: Youngjin · volatility: 低_
 
 **L0 TL;DR**: 让你使用的 AI 工具（Claude Code、Codex、Kiro、Amazon Quick）通过工具调用读取 Playbook 页面、Radar 与证据记录。只需下载并注册一个 MCP[^mcp] 服务器文件。内容公开，因此不需要登录或 API 密钥。
 
@@ -101,7 +101,7 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
 
 === "Kiro Crew"
 
-    运行 Crew 的电脑上必须有服务器文件。步骤以官方文档为准，未在真机上验证（`[4]`）。
+    运行 Crew 的电脑上必须有服务器文件。步骤以官方文档为准（`[4]`）；其中 ② 的 node 绝对路径要求已于 2026-11-04 通过实机注册确认。
 
     **① 下载服务器文件**
 
@@ -110,9 +110,10 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② 在 Crew 中添加本地服务器** — 在 Agent Capabilities → Integrations (MCP) 中添加基于命令的服务器，或将下面的条目合并到 Crew 读取的 MCP 配置中。把路径占位符替换为实际绝对路径。
+    **② 在 Crew 中添加本地服务器** — 在 Agent Capabilities → Integrations (MCP) 中添加基于命令的服务器，或将下面的条目合并到 Crew 读取的 MCP 配置中。**`command` 请写 node 的绝对路径，而不是 `node`** —— Crew 的 MCP 运行环境不继承 shell（Homebrew 等）的 PATH，只写 `node` 时服务器无法启动。确认两个路径后替换占位符。
 
     ```bash
+    command -v node                               # 例: /opt/homebrew/bin/node
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"
     ```
 
@@ -120,12 +121,14 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
     {
       "mcpServers": {
         "pai-playbook": {
-          "command": "node",
+          "command": "/opt/homebrew/bin/node",
           "args": ["ABSOLUTE_PATH_TO_SERVER_MJS"]
         }
       }
     }
     ```
+
+    `/opt/homebrew/bin/node` 是 Apple Silicon Mac 上 Homebrew 的默认路径。Intel Mac Homebrew（`/usr/local/bin/node`）、nvm、Volta 等请直接使用上面 `command -v node` 的输出。nvm 路径会随 Node 版本切换而变化，升级后请重新确认。
 
     **③ 发现·确认连接** — 用 Discover & Sync 应用配置，用 Probe All 确认连接，然后发起查询。
 
@@ -226,7 +229,7 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
 
 ## 验证范围与限制 { #scope }
 
-- Claude Code 的步骤已于 2026-09-26 通过在用户范围注册本仓库的服务器文件并确认 `/mcp` connected 与页面列表查询完成验证。Codex、Kiro Crew、Amazon Quick、Kiro CLI 的命令以各自官方文档为准，未验证（`[4]`）。
+- Claude Code 的步骤已于 2026-09-26 通过在用户范围注册本仓库的服务器文件并确认 `/mcp` connected 与页面列表查询完成验证。Kiro Crew 已于 2026-11-04 在 owner 的实机注册中确认 `command: "node"` 无法启动、必须改为 node 绝对路径，并已反映到卡片中（其余步骤以官方文档为准）。Codex、Amazon Quick、Kiro CLI 的命令以各自官方文档为准，未验证（`[4]`）。
 - 服务器读取 `main` 分支的 Markdown。网站更新前的已提交内容可能先出现；缓存为 10 分钟。
 - 在证据记录（`assets/claims.json`）发布到网站之前，`playbook_evidence` 会返回"尚未发布"的提示。
 - 服务器文件没有写入工具，也不处理凭证。离线使用可克隆仓库后设置环境变量 `PAI_PLAYBOOK_DOCS_DIR=<克隆目录>/docs`。
@@ -238,4 +241,4 @@ _最后更新: 2026-09 · owner: Youngjin · volatility: 低_
 [^mcp]: **MCP (Model Context Protocol)** — 让 AI 工具以标准方式调用外部数据与功能的开放协议。服务器提供"工具"，Claude Code 等客户端调用这些工具。
 [^stdio]: **stdio 传输** — 客户端在本机直接运行服务器程序并通过标准输入输出通信的 MCP 连接方式。不需要网络地址或登录。
 
-_owner: Youngjin · updated: 2026-09 · volatility: 低_
+_owner: Youngjin · updated: 2026-11 · volatility: 低_

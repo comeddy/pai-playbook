@@ -1,9 +1,9 @@
 ---
-ko_hash: 5cd770168cef890b4bcfde328b4243e46fe661fe
+ko_hash: 522926e807099972847e8eefb613993d3bd147ce
 ---
 # 設定 — MCP 接続
 
-_最終更新: 2026-09 · owner: Youngjin · volatility: 低_
+_最終更新: 2026-11 · owner: Youngjin · volatility: 低_
 
 **L0 TL;DR**: 使っている AI ツール（Claude Code、Codex、Kiro、Amazon Quick）から Playbook のページ・Radar・根拠記録をツール呼び出しで読めるようにする設定。MCP[^mcp] サーバーファイル 1 つをダウンロードして登録すれば完了する。公開コンテンツなのでログインや API キーは不要。
 
@@ -101,7 +101,7 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 低_
 
 === "Kiro Crew"
 
-    Crew を実行するマシンにサーバーファイルが必要。手順は公式ドキュメントに基づき、実機検証はしていない（`[4]`）。
+    Crew を実行するマシンにサーバーファイルが必要。手順は公式ドキュメントに基づく（`[4]`）。ただし ② の node 絶対パス要件は 2026-11-04 の実機登録で確認した。
 
     **① サーバーファイルのダウンロード**
 
@@ -110,9 +110,10 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Crew にローカルサーバーを追加** — Agent Capabilities → Integrations (MCP) でコマンド型サーバーを追加するか、Crew が読む MCP 設定に以下の項目をマージする。パスのプレースホルダーは実際の絶対パスに置き換える。
+    **② Crew にローカルサーバーを追加** — Agent Capabilities → Integrations (MCP) でコマンド型サーバーを追加するか、Crew が読む MCP 設定に以下の項目をマージする。**`command` には `node` ではなく node の絶対パスを書く** —— Crew の MCP 実行環境はシェル（Homebrew など）の PATH を引き継がないため、`node` だけではサーバーが起動しない。2 つのパスを確認してプレースホルダーを置き換える。
 
     ```bash
+    command -v node                               # 例: /opt/homebrew/bin/node
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"
     ```
 
@@ -120,12 +121,14 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 低_
     {
       "mcpServers": {
         "pai-playbook": {
-          "command": "node",
+          "command": "/opt/homebrew/bin/node",
           "args": ["ABSOLUTE_PATH_TO_SERVER_MJS"]
         }
       }
     }
     ```
+
+    `/opt/homebrew/bin/node` は Apple Silicon Mac の Homebrew の既定パス。Intel Mac の Homebrew（`/usr/local/bin/node`）・nvm・Volta などは上の `command -v node` の出力をそのまま使う。nvm のパスは Node のバージョンを切り替えると変わるため、アップグレード後に再確認する。
 
     **③ 検出・接続確認** — Discover & Sync で設定を反映し、Probe All で接続を確認してから照会を依頼する。
 
@@ -226,7 +229,7 @@ Playbook の意思決定ツリーから Build vs Buy の判断基準を表に整
 
 ## 検証範囲と制限 { #scope }
 
-- Claude Code の手順は 2026-09-26 に本リポジトリのサーバーファイルをユーザースコープに登録し、`/mcp` connected とページ一覧の照会で確認した。Codex・Kiro Crew・Amazon Quick・Kiro CLI のコマンドは各公式ドキュメントに基づき、未検証（`[4]`）。
+- Claude Code の手順は 2026-09-26 に本リポジトリのサーバーファイルをユーザースコープに登録し、`/mcp` connected とページ一覧の照会で確認した。Kiro Crew は 2026-11-04 の owner による実機登録で `command: "node"` が起動に失敗し、node の絶対パスに変える必要があることを確認し、カードに反映した（残りの手順は公式ドキュメントに基づく）。Codex・Amazon Quick・Kiro CLI のコマンドは各公式ドキュメントに基づき、未検証（`[4]`）。
 - サーバーは `main` ブランチの Markdown を読む。サイト反映前のコミット内容が見えることがあり、キャッシュは 10 分。
 - 根拠記録（`assets/claims.json`）がサイトに公開されるまでは、`playbook_evidence` は「まだ公開されていません」という案内を返す。
 - サーバーファイルには書き込みツールがなく、資格情報も扱わない。オフライン利用はリポジトリをクローンし、環境変数 `PAI_PLAYBOOK_DOCS_DIR=<クローン>/docs` を設定すれば可能。
@@ -238,4 +241,4 @@ Playbook の意思決定ツリーから Build vs Buy の判断基準を表に整
 [^mcp]: **MCP (Model Context Protocol)** — AI ツールが外部データ・機能を標準的な方法で呼び出せるようにするオープンプロトコル。サーバーが「ツール」を提供し、Claude Code などのクライアントがそれを呼び出す。
 [^stdio]: **stdio トランスポート** — クライアントがサーバープログラムを自分のマシンで直接実行し、標準入出力で通信する MCP 接続方式。ネットワークアドレスやログインは不要。
 
-_owner: Youngjin · updated: 2026-09 · volatility: 低_
+_owner: Youngjin · updated: 2026-11 · volatility: 低_

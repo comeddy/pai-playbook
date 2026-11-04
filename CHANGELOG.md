@@ -34,6 +34,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Settings · MCP Connection, Kiro Crew card: `command` now uses node's absolute path (`/opt/homebrew/bin/node`, with `command -v node` to find yours) because Crew's MCP runtime does not inherit the shell PATH and a bare `node` fails to start — found in the owner's real-device registration on 2026-11-04, in all four languages
+
 - Owner review of the two pages flagged high-volatility · ⏳ review needed (Simulation pillar, Radar), checked against primary sources on 2026-11-04: Isaac Sim latest GA is now 6.2.0 (6.0 GA 2026-06, 7.0 is Alpha) and Isaac Lab 3.0.0 is GA with Newton as the default backend — GPU requirements now split between the Isaac Sim/RTX path (RT Cores, no A100/H100) and the Newton-only Isaac Lab path (CUDA 7.5+, no AWS measurement yet); Isaac Sim AMI 2026.3.0; Cosmos 3 corrected from "not hosted on AWS" to SageMaker JumpStart (2026-08-27); Newton and Isaac Sim 6.x promoted from Radar to P3; Radar rows updated (Genie 4, GR00T N2 still unreleased, LingBot/UnifoLM licenses, Tesla Optimus, Atlas, 1X NEO, Figure, AgentCore Payments/Registry GA but not in Seoul, Greengrass V1 end of support 2026-10-07, ros-mcp-server link) and all intake links re-checked (HTTP 200); FCC procurement-risk note added next to the Unitree mention, in all four languages
 
 - Radar intake (2026-10-14 to 10-24): the daily scan runs could not curl-verify new item links (egress blocked); re-checked all 7 affected items (PRISM, LG×NVIDIA MOU, Physical AI Toolchain incl. the official AWS blog post, FIBER, SimVLA, Agentic Robots survey, EgoVerse) from a networked environment on 2026-10-24 — all HTTP 200 with matching page titles; replaced the ⚠️ unverified notes with dated link-check notes. Link liveness only — no source-content comparison, grades stay [4]; EgoVerse's secondary funding coverage remains unlinked/unverified, in all four languages
@@ -197,6 +199,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - 학습 운영·체크포인트·RFT 연구 안내, 시뮬레이션 총비용 프레임, 설치별 안전 참조, MHS/Strands Robots 연구 프리뷰 논의를 4개 언어로 추가.
 
 ### Changed
+
+- 설정 · MCP 연결의 Kiro Crew 카드: Crew의 MCP 실행 환경이 셸 PATH를 물려받지 않아 `node`만으로는 기동 실패 → `command`를 node 절대경로(`/opt/homebrew/bin/node`, `command -v node`로 확인)로 변경 — 2026-11-04 owner 실기기 등록에서 확인, 4개 언어
 
 - volatility 높음 · ⏳ 검토 필요로 표시된 두 페이지(시뮬레이션 필러, Radar)의 owner 검토 — 2026-11-04 1차 출처 대조: Isaac Sim 최신 GA 6.2.0(6.0 GA 2026-06, 7.0은 Alpha), Isaac Lab 3.0.0 GA(Newton 기본 백엔드) — GPU 요건을 Isaac Sim/RTX 경로(RT Core 필수, A100/H100 불가)와 Isaac Lab Newton 전용 경로(CUDA 7.5+, AWS 실측 없음)로 분리, Isaac Sim AMI 2026.3.0, Cosmos 3 "AWS 미호스팅"을 SageMaker JumpStart 제공(2026-08-27)으로 정정, Newton·Isaac Sim 6.x를 Radar에서 P3로 승격, Radar 행 갱신(Genie 4, GR00T N2 미출시, LingBot/UnifoLM 라이선스, Tesla Optimus, Atlas, 1X NEO, Figure, AgentCore Payments/Registry GA·서울 미제공, Greengrass V1 지원 종료 2026-10-07, ros-mcp-server 링크) 및 유입 링크 전수 재확인(HTTP 200), Unitree 언급 옆에 FCC 조달 리스크 메모 추가, 4개 언어
 
@@ -362,6 +366,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- 设置 · MCP 连接的 Kiro Crew 卡片: Crew 的 MCP 运行环境不继承 shell PATH，只写 `node` 会启动失败 → `command` 改为 node 绝对路径（`/opt/homebrew/bin/node`，用 `command -v node` 确认）—— 2026-11-04 owner 实机注册中确认，4 种语言
+
 - 对标记为 volatility 高 · ⏳ 需要复核 的两个页面（仿真支柱、Radar）进行 owner 复核 —— 2026-11-04 对照一手来源: Isaac Sim 最新 GA 为 6.2.0（6.0 于 2026-06 GA，7.0 为 Alpha），Isaac Lab 3.0.0 GA（Newton 为默认后端）—— GPU 要求拆分为 Isaac Sim/RTX 路径（必须 RT Core，不支持 A100/H100）与 Isaac Lab 仅 Newton 路径（CUDA 7.5+，尚无 AWS 实测）；Isaac Sim AMI 2026.3.0；Cosmos 3 由“AWS 未托管”更正为 SageMaker JumpStart 提供（2026-08-27）；Newton·Isaac Sim 6.x 从 Radar 升格至 P3；更新 Radar 各行（Genie 4、GR00T N2 尚未发布、LingBot/UnifoLM 许可、Tesla Optimus、Atlas、1X NEO、Figure、AgentCore Payments/Registry GA 但首尔未提供、Greengrass V1 于 2026-10-07 终止支持、ros-mcp-server 链接）并全面复查流入链接（HTTP 200）；在 Unitree 提及处补充 FCC 采购风险备注，4 种语言
 
 - Radar 流入（2026-10-14〜10-24）：每日扫描会话因 egress 封锁无法对新项目链接做 curl 验证的 7 项（PRISM、LG×NVIDIA MOU、Physical AI Toolchain（含 AWS 官方博客原文）、FIBER、SimVLA、Agentic Robots 综述、EgoVerse）于 2026-10-24 在可联网环境中复查 —— 全部 HTTP 200 且页面标题一致，将 ⚠️ 未验证说明替换为带确认日期的链接确认说明。仅确认链接可用，未做原文内容核对，等级保持 [4]；EgoVerse 的融资二手报道仍未附链接、未验证，四种语言同步
@@ -525,6 +531,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - 学習運用・チェックポイント・RFT研究案内、シミュレーション総費用、設置別安全参照、MHS/Strands Robots研究プレビューを4言語で追加。
 
 ### Changed
+
+- 設定 · MCP 接続の Kiro Crew カード: Crew の MCP 実行環境はシェルの PATH を引き継がず `node` だけでは起動に失敗するため、`command` を node の絶対パス（`/opt/homebrew/bin/node`、`command -v node` で確認）に変更 —— 2026-11-04 owner の実機登録で確認、4 言語
 
 - volatility 高 · ⏳ 要レビュー と表示された 2 ページ（シミュレーション柱、Radar）の owner レビュー —— 2026-11-04 一次情報と照合: Isaac Sim 最新 GA は 6.2.0（6.0 は 2026-06 GA、7.0 は Alpha）、Isaac Lab 3.0.0 GA（Newton がデフォルトバックエンド）—— GPU 要件を Isaac Sim/RTX 経路（RT Core 必須、A100/H100 不可）と Isaac Lab の Newton のみの経路（CUDA 7.5+、AWS 実測なし）に分離、Isaac Sim AMI 2026.3.0、Cosmos 3 の「AWS 非ホスト」を SageMaker JumpStart 提供（2026-08-27）に訂正、Newton・Isaac Sim 6.x を Radar から P3 へ昇格、Radar 各行を更新（Genie 4、GR00T N2 未リリース、LingBot/UnifoLM ライセンス、Tesla Optimus、Atlas、1X NEO、Figure、AgentCore Payments/Registry は GA だがソウル未提供、Greengrass V1 サポート終了 2026-10-07、ros-mcp-server リンク）、流入リンクを全件再確認（HTTP 200）、Unitree への言及の横に FCC 調達リスクメモを追加、4 言語
 
