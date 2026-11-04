@@ -1,11 +1,11 @@
 ---
-ko_hash: 6d385b283f526caca083d3149b2aa9ee357e351f
+ko_hash: 52dcd5923b7070599439d837777f9d94048d8ad9
 ---
 # News
 
 _owner: Youngjin · updated: 2026-11 · volatility: high_
 
-> **L0 TL;DR**: Selected new AWS Physical AI articles, linked to the existing pillars. Dates below are **publication dates**; this list was checked on **2026-10-14**. Follow [Workshops & Resources](workshops.md) for learning paths.
+> **L0 TL;DR**: Selected new AWS Physical AI articles, linked to the existing pillars. Dates below are **publication dates**; this list was checked on **2026-11-04**. Follow [Workshops & Resources](workshops.md) for learning paths.
 
 Summaries are based on official articles, not independent reproduction of their performance claims. Unverified technology candidates remain in [Radar](radar.md).
 
@@ -15,6 +15,8 @@ Summaries are based on official articles, not independent reproduction of their 
 
 | Published | Resource | Connects to |
 |---|---|---|
+| 2026-11-03 | [NVIDIA CloudXR 6 on AWS — streaming digital twins to XR headsets](#cloudxr-6) | [P1](pillar-1.md) · [P3](pillar-3.md) |
+| 2026-10-28 | [Archetype AI Newton — from industrial sensor data to operational intelligence](#archetype-newton) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-10-28 | [AWS × RLWRLD — Building the Workforce of Tomorrow with Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
 | 2026-10-28 | [Visual Asset Management System 2.6 released](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain released](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
@@ -28,6 +30,26 @@ Summaries are based on official articles, not independent reproduction of their 
 | 2026-07-31 | [Industrial digital twins with OpenUSD and SDMA](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge Impulse and AWS — combining edge inference with cloud intelligence](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config: augmenting robot training data](#config) | [P1](pillar-1.md) |
+
+## NVIDIA CloudXR 6 on AWS — streaming digital twins to XR headsets { #cloudxr-6 }
+
+**Published: 2026-11-03 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/streaming-physical-ai-digital-twins-and-immersive-experiences-to-xr-headsets-with-nvidia-cloudxr-6-on-aws/) `[4]` · ⏳ awaiting owner source check (local session 2026-11-04 read the RSS full text)**
+
+Introduces an AWS sample ([aws-samples/sample-cloudxr6-on-aws](https://github.com/aws-samples/sample-cloudxr6-on-aws)) for running NVIDIA CloudXR 6 — which streams GPU-rendered OpenXR content to lightweight XR headsets — on Amazon EC2 GPU instances. Physical AI uses are digital twin[^dtwin] reviews, validating simulated scenes, and teleoperation inside simulation to collect demonstrations for policy training; the post also points to Isaac Sim XR teleoperation in NVIDIA's Isaac GR00T end-to-end workflow. The architecture is CloudFront (entry point and CloudXR.js web client) → an ECS Fargate signaling proxy (Cognito auth, DynamoDB instance registry) → EC2 GPU pools in a Local Zone or Region, with media flowing directly over UDP between headset and GPU instance. Two client paths are supported: Apple Vision Pro (native) and Meta Quest/Pico (in-browser WebRTC).
+
+**Scope to check**: An AWS sample announcement (architecture and deployment guide). The latency figure comes from a single AWS test — a g7e instance in the Los Angeles Local Zone streaming to a Meta Quest 3 in LA at about 90 FPS with ~35 ms pose-to-render latency[^p2r] (~8–9 ms network round trip). That is above NVIDIA's 20–30 ms target and below its 100 ms upper bound. Reproducing it from Korea requires separately checking GPU instance availability in the Seoul Region or a nearby Local Zone and measuring latency. The post includes no customer production case.
+
+**Next action**: P1 teleoperation data collection · P3 digital twin review — [P1](pillar-1.md) · [P3](pillar-3.md).
+
+## Archetype AI Newton — from industrial sensor data to operational intelligence { #archetype-newton }
+
+**Published: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/industrial-sensor-data-to-operational-intelligence-with-archetype-ai-on-aws/) `[4]` · ⏳ awaiting owner source check (local session 2026-11-04 read the RSS full text)**
+
+A partner post about deploying Archetype AI's physical world model Newton on AWS for anomaly detection, operating-state monitoring, and task verification from multimodal sensor signals (vibration, pressure, temperature, electrical current, radar, video). Newton is described as an 8B-parameter model that can be distilled into an 85M-parameter model for the edge. The platform deploys from [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-pjqoobj6vnbhm) into a dedicated VPC in the customer's account and runs on Amazon EKS (CPU and GPU node groups) with S3, Aurora PostgreSQL, and ElastiCache. Edge agents deploy to on-premises and industrial edge hardware, optionally with AWS IoT Greengrass or Outposts; cloud ingestion uses IoT Core, Kinesis Data Streams, or MSK.
+
+**Scope to check**: A partner (Archetype AI) solution post. All performance figures are vendor-reported, not independently measured — "up to 90% accuracy" on pump conditions from a few labeled examples, "99% accuracy and 80% faster deployment than traditional approaches" for gearbox fault detection, and a 12,000-hour construction-site video analysis, all presented without customer names. "Works out of the box without task-specific training (zero-shot)" is also a vendor claim. It is an industrial-equipment sensor-interpretation model rather than a robot policy, so it fits the playbook's edge operations/monitoring axis more than its robot-training axis.
+
+**Next action**: P4 edge deployment (Greengrass, Outposts) · P5 operations monitoring — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## AWS × RLWRLD — Building the Workforce of Tomorrow with Physical AI { #aws-rlwrld-workforce }
 
@@ -260,3 +282,5 @@ Follow the official [Physical AI blog](https://aws.amazon.com/blogs/physical-ai/
 [^3dgs]: **3D Gaussian Splatting (3DGS)** — A 3D reconstruction technique that fits many 3D Gaussians (ellipsoidal points) to a set of photos or video and renders photorealistic scenes in real time. Used for real-to-sim: bringing a real site into simulation as the background.
 [^wfm]: **World Foundation Model (WFM)** — a large model trained to predict/generate the next scenes of the physical world. From text/video prompts it creates physically plausible video and scenarios to augment robot training data. 🎥 [NVIDIA Cosmos introduction](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^wam]: **World Action Model (WAM)** — A model that predicts future scenes and generates robot actions together. Unlike a world model that only produces video, it outputs executable actions such as joint angles and gripper commands.
+[^dtwin]: **Digital twin** — A physically faithful virtual replica of a real factory, warehouse, or robot. Enables policy training, validation, and scenario experiments without touching the real environment.
+[^p2r]: **Pose-to-render latency** — The time from a user's head movement to the matching frame appearing in the headset. When it grows, what the user sees diverges from what their body senses and causes motion sickness, making it the key quality metric for XR streaming.

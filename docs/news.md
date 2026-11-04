@@ -2,7 +2,7 @@
 
 _owner: Youngjin · updated: 2026-11 · volatility: 높음_
 
-> **L0 TL;DR**: AWS Physical AI 공식 글에서 새로 읽을 자료를 골라 기존 필러와 연결한다. 아래 날짜는 **원문 발행일**, 목록 확인일은 **2026-10-14**다. 새로운 발표를 찾은 뒤 [워크숍·자료](workshops.md)에서 실습 경로를 고를 수 있다.
+> **L0 TL;DR**: AWS Physical AI 공식 글에서 새로 읽을 자료를 골라 기존 필러와 연결한다. 아래 날짜는 **원문 발행일**, 목록 확인일은 **2026-11-04**다. 새로운 발표를 찾은 뒤 [워크숍·자료](workshops.md)에서 실습 경로를 고를 수 있다.
 
 공식 원문을 읽어 요약했으며 성능 수치를 독립 재현한 목록은 아니다. 미검증 기술 후보는 기존 [Radar](radar.md)에서 계속 관리한다.
 
@@ -12,6 +12,8 @@ _owner: Youngjin · updated: 2026-11 · volatility: 높음_
 
 | 발행일 | 자료 | 연결 |
 |---|---|---|
+| 2026-11-03 | [NVIDIA CloudXR 6 on AWS — 디지털 트윈을 XR 헤드셋으로 스트리밍](#cloudxr-6) | [P1](pillar-1.md) · [P3](pillar-3.md) |
+| 2026-10-28 | [Archetype AI Newton — 산업 센서 데이터를 운영 인텔리전스로](#archetype-newton) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-10-28 | [AWS × RLWRLD — 내일의 인력을 위한 Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
 | 2026-10-28 | [Visual Asset Management System 2.6 공개](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain 공개](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
@@ -25,6 +27,26 @@ _owner: Youngjin · updated: 2026-11 · volatility: 높음_
 | 2026-07-31 | [OpenUSD·SDMA 산업용 디지털 트윈 구현](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge Impulse와 AWS — 엣지 추론과 클라우드 지능 결합](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config의 로봇 학습 데이터 증강](#config) | [P1](pillar-1.md) |
+
+## NVIDIA CloudXR 6 on AWS — 디지털 트윈을 XR 헤드셋으로 스트리밍 { #cloudxr-6 }
+
+**발행일: 2026-11-03 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/streaming-physical-ai-digital-twins-and-immersive-experiences-to-xr-headsets-with-nvidia-cloudxr-6-on-aws/) `[4]` · ⏳ owner 원문 대조 대기 (로컬 세션 2026-11-04 RSS 본문 확인)**
+
+GPU 렌더링한 OpenXR 콘텐츠를 경량 XR 헤드셋으로 스트리밍하는 NVIDIA CloudXR 6를 Amazon EC2 GPU 인스턴스에서 돌리는 AWS 샘플([aws-samples/sample-cloudxr6-on-aws](https://github.com/aws-samples/sample-cloudxr6-on-aws))을 소개한다. Physical AI 쪽 용도는 디지털 트윈[^dtwin] 리뷰, 시뮬레이션 장면 검증, 시뮬레이션 속 텔레옵으로 정책 학습용 시연 데이터 수집이며, NVIDIA Isaac GR00T 엔드투엔드 워크플로의 Isaac Sim XR 텔레옵 예시를 함께 언급한다. 구성은 CloudFront(진입점·CloudXR.js 웹 클라이언트) → ECS Fargate 시그널링 프록시(Cognito 인증, DynamoDB 인스턴스 레지스트리) → Local Zone 또는 리전의 EC2 GPU 풀이고, 미디어는 헤드셋과 GPU 인스턴스 사이를 UDP로 직접 흐른다. 클라이언트는 Apple Vision Pro(네이티브)와 Meta Quest·Pico(브라우저 WebRTC) 두 경로를 지원한다.
+
+**읽을 때 확인할 범위**: AWS 샘플 공개 글(아키텍처·배포 가이드). 지연 수치는 AWS 자체 테스트 1건 — 로스앤젤레스 Local Zone의 g7e 인스턴스에서 같은 LA 지역 Meta Quest 3로 약 90 FPS, pose-to-render 지연[^p2r] 약 35 ms(네트워크 왕복 약 8–9 ms)였다. NVIDIA 목표치(20–30 ms)보다는 높고 상한(100 ms)보다는 낮다. 한국에서 재현하려면 서울 리전 또는 가까운 Local Zone의 GPU 인스턴스 가용성과 실측 지연을 따로 확인해야 한다. 고객 프로덕션 사례는 글에 없다.
+
+**다음 액션**: P1 텔레옵 데이터 수집 · P3 디지털 트윈 리뷰 — [P1](pillar-1.md) · [P3](pillar-3.md).
+
+## Archetype AI Newton — 산업 센서 데이터를 운영 인텔리전스로 { #archetype-newton }
+
+**발행일: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/industrial-sensor-data-to-operational-intelligence-with-archetype-ai-on-aws/) `[4]` · ⏳ owner 원문 대조 대기 (로컬 세션 2026-11-04 RSS 본문 확인)**
+
+Archetype AI의 물리 월드 모델 Newton을 AWS에 배포해 진동·압력·온도·전류·레이더·영상 같은 멀티모달 센서 신호에서 이상 탐지·상태 모니터링·작업 검증을 하는 파트너 소개 글이다. Newton은 80억(8B) 파라미터 모델이며, 엣지용으로 8,500만(85M) 파라미터 모델로 증류할 수 있다고 설명한다. 플랫폼은 [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-pjqoobj6vnbhm)에서 고객 계정의 전용 VPC로 배포되고 Amazon EKS(CPU·GPU 노드 그룹), S3·Aurora PostgreSQL·ElastiCache 위에서 돈다. 엣지 에이전트는 온프레미스·산업용 엣지 하드웨어에 배포하며 AWS IoT Greengrass·Outposts를 선택적으로 쓴다. 클라우드 수집 경로는 IoT Core·Kinesis Data Streams·MSK다.
+
+**읽을 때 확인할 범위**: 파트너(Archetype AI) 솔루션 소개 글. 성능 수치는 모두 벤더 자체 발표로 독립 실측이 아니다 — 펌프 상태 탐지 "최대 90% 정확도(소수 라벨 예시)", 기어박스 결함 탐지 "99% 정확도·기존 방식 대비 80% 빠른 배포", 건설 현장 영상 12,000시간 분석 사례가 모두 고객명 없이 제시된다. "과업별 학습 없이 바로 동작(zero-shot)"도 벤더 주장이다. 로봇 정책이 아니라 산업 설비 센서 해석 모델이라 플레이북의 로봇 학습 축보다는 엣지 운영·모니터링 축에 가깝다.
+
+**다음 액션**: P4 엣지 배포(Greengrass·Outposts) · P5 운영 모니터링 — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## AWS × RLWRLD — 내일의 인력을 위한 Physical AI { #aws-rlwrld-workforce }
 
@@ -257,3 +279,5 @@ Qualcomm 자회사 Edge Impulse와 AWS가 함께 쓴 글로, 창고 설비 위�
 [^3dgs]: **3D Gaussian Splatting (3DGS)** — 여러 장의 사진·영상에서 수많은 3D 가우시안(타원형 점)을 맞춰 실사 장면을 실시간 렌더링하는 3D 재구성 기법. 실제 현장을 시뮬레이션 배경으로 옮기는 real-to-sim에 쓰인다.
 [^wfm]: **월드 파운데이션 모델(WFM, World Foundation Model)** — 물리 세계의 다음 장면을 예측·생성하도록 학습된 대형 모델. 텍스트·영상 프롬프트로 물리적으로 그럴듯한 영상·시나리오를 만들어 로봇 학습 데이터를 증강한다. 🎥 [NVIDIA Cosmos 소개](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^wam]: **월드-액션 모델(WAM, World Action Model)** — 미래 장면 예측과 로봇 동작 생성을 한 모델에서 함께 수행하는 모델. 영상만 만드는 월드 모델과 달리 관절 각도·그리퍼 명령 같은 실행 가능한 동작을 출력한다.
+[^dtwin]: **디지털 트윈(digital twin)** — 실제 공장·창고·로봇을 물리적으로 충실하게 본뜬 가상 복제본. 실환경을 건드리지 않고 정책 학습·검증·시나리오 실험을 할 수 있게 한다.
+[^p2r]: **pose-to-render 지연** — 사용자가 머리를 움직인 순간부터 그에 맞는 프레임이 헤드셋에 표시될 때까지의 시간. 길어지면 보이는 화면과 몸의 감각이 어긋나 멀미가 생기므로 XR 스트리밍 품질의 핵심 지표다.

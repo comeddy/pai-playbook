@@ -1,11 +1,11 @@
 ---
-ko_hash: 6d385b283f526caca083d3149b2aa9ee357e351f
+ko_hash: 52dcd5923b7070599439d837777f9d94048d8ad9
 ---
 # 新着情報
 
 _owner: Youngjin · updated: 2026-11 · volatility: 高_
 
-> **L0 TL;DR**: AWS Physical AIの新記事を選び既存ピラーにつなぎます。以下は**原文公開日**、一覧確認日は**2026-10-14**です。[ワークショップ・資料](workshops.md)で学習経路を選べます。
+> **L0 TL;DR**: AWS Physical AIの新記事を選び既存ピラーにつなぎます。以下は**原文公開日**、一覧確認日は**2026-11-04**です。[ワークショップ・資料](workshops.md)で学習経路を選べます。
 
 公式原文に基づく要約であり性能数値の独立再現ではありません。未検証候補は既存の[Radar](radar.md)で管理します。
 
@@ -15,6 +15,8 @@ _owner: Youngjin · updated: 2026-11 · volatility: 高_
 
 | 公開日 | 資料 | 関連 |
 |---|---|---|
+| 2026-11-03 | [NVIDIA CloudXR 6 on AWS — デジタルツインを XR ヘッドセットへストリーミング](#cloudxr-6) | [P1](pillar-1.md) · [P3](pillar-3.md) |
+| 2026-10-28 | [Archetype AI Newton — 産業センサーデータを運用インテリジェンスへ](#archetype-newton) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-10-28 | [AWS × RLWRLD — 明日の労働力のための Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
 | 2026-10-28 | [Visual Asset Management System 2.6 公開](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain 公開](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
@@ -28,6 +30,26 @@ _owner: Youngjin · updated: 2026-11 · volatility: 高_
 | 2026-07-31 | [OpenUSD・SDMAによる産業デジタルツイン](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge ImpulseとAWS — エッジ推論とクラウドインテリジェンスの統合](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Configのロボット学習データ拡張](#config) | [P1](pillar-1.md) |
+
+## NVIDIA CloudXR 6 on AWS — デジタルツインを XR ヘッドセットへストリーミング { #cloudxr-6 }
+
+**公開日: 2026-11-03 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/streaming-physical-ai-digital-twins-and-immersive-experiences-to-xr-headsets-with-nvidia-cloudxr-6-on-aws/) `[4]` · ⏳ owner の原文照合待ち (ローカルセッション 2026-11-04 で RSS 本文を確認)**
+
+GPU でレンダリングした OpenXR コンテンツを軽量 XR ヘッドセットへストリーミングする NVIDIA CloudXR 6 を、Amazon EC2 GPU インスタンスで動かす AWS サンプル（[aws-samples/sample-cloudxr6-on-aws](https://github.com/aws-samples/sample-cloudxr6-on-aws)）を紹介しています。Physical AI での用途は、デジタルツイン[^dtwin]のレビュー、シミュレーションシーンの検証、シミュレーション内テレオペレーションによるポリシー学習用デモデータ収集で、NVIDIA Isaac GR00T エンドツーエンドワークフローにおける Isaac Sim の XR テレオペレーション例にも触れています。構成は CloudFront（入口・CloudXR.js Web クライアント）→ ECS Fargate のシグナリングプロキシ（Cognito 認証、DynamoDB インスタンスレジストリ）→ Local Zone またはリージョンの EC2 GPU プールで、メディアはヘッドセットと GPU インスタンスの間を UDP で直接流れます。クライアントは Apple Vision Pro（ネイティブ）と Meta Quest・Pico（ブラウザ WebRTC）の 2 経路に対応します。
+
+**読む際に確認する範囲**: AWS サンプルの公開記事（アーキテクチャ・デプロイガイド）です。レイテンシ値は AWS 自身のテスト 1 件によるもので、ロサンゼルス Local Zone の g7e インスタンスから同じ LA 地域の Meta Quest 3 へ約 90 FPS、pose-to-render レイテンシ[^p2r]約 35 ms（ネットワーク往復約 8–9 ms）でした。NVIDIA の目標値（20–30 ms）よりは高く、上限（100 ms）よりは低い値です。韓国で再現するには、ソウルリージョンまたは近隣 Local Zone の GPU インスタンス提供状況と実測レイテンシを別途確認する必要があります。記事に顧客の本番事例はありません。
+
+**次のアクション**: P1 テレオペレーションによるデータ収集 · P3 デジタルツインレビュー — [P1](pillar-1.md) · [P3](pillar-3.md).
+
+## Archetype AI Newton — 産業センサーデータを運用インテリジェンスへ { #archetype-newton }
+
+**公開日: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/industrial-sensor-data-to-operational-intelligence-with-archetype-ai-on-aws/) `[4]` · ⏳ owner の原文照合待ち (ローカルセッション 2026-11-04 で RSS 本文を確認)**
+
+Archetype AI の物理ワールドモデル Newton を AWS にデプロイし、振動・圧力・温度・電流・レーダー・映像などのマルチモーダルセンサー信号から異常検知・稼働状態モニタリング・作業検証を行うパートナー紹介記事です。Newton は 80 億（8B）パラメータのモデルで、エッジ向けに 8,500 万（85M）パラメータのモデルへ蒸留できると説明しています。プラットフォームは [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-pjqoobj6vnbhm) から顧客アカウントの専用 VPC にデプロイされ、Amazon EKS（CPU・GPU ノードグループ）と S3・Aurora PostgreSQL・ElastiCache 上で動作します。エッジエージェントはオンプレミス・産業用エッジハードウェアにデプロイし、AWS IoT Greengrass・Outposts を任意で使います。クラウドの取り込み経路は IoT Core・Kinesis Data Streams・MSK です。
+
+**読む際に確認する範囲**: パートナー（Archetype AI）のソリューション紹介記事です。性能値はすべてベンダー自身の発表で、独立した実測ではありません。ポンプ状態検知の「最大 90% の精度（少数のラベル付き例）」、ギアボックス故障検知の「99% の精度・従来方式より 80% 速いデプロイ」、建設現場映像 12,000 時間の分析事例は、いずれも顧客名なしで示されています。「タスク別の学習なしですぐ動作（zero-shot）」もベンダーの主張です。ロボットポリシーではなく産業設備のセンサー解釈モデルなので、本プレイブックのロボット学習軸よりもエッジ運用・モニタリング軸に近い内容です。
+
+**次のアクション**: P4 エッジデプロイ（Greengrass・Outposts） · P5 運用モニタリング — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## AWS × RLWRLD — 明日の労働力のための Physical AI { #aws-rlwrld-workforce }
 
@@ -260,3 +282,5 @@ Edge Impulse（Qualcomm傘下）とAWSの共同記事で、倉庫設備の位置
 [^3dgs]: **3D Gaussian Splatting（3DGS）** — 複数の写真・映像に多数の 3D ガウシアン（楕円体の点）を当てはめ、実写シーンをリアルタイムにレンダリングする 3D 再構成手法です。実際の現場をシミュレーションの背景に移す real-to-sim に使われます。
 [^wfm]: **ワールド基盤モデル（WFM, World Foundation Model）** — 物理世界の次のシーンを予測・生成するよう学習された大型モデルです。テキスト・映像プロンプトから物理的にもっともらしい映像・シナリオを作り、ロボット学習データを拡張します。🎥 [NVIDIA Cosmos 紹介](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^wam]: **ワールド・アクションモデル（WAM, World Action Model）** — 未来シーンの予測とロボット動作の生成を一つのモデルで同時に行うモデルです。映像だけを作るワールドモデルと異なり、関節角度やグリッパー指令など実行可能な動作を出力します。
+[^dtwin]: **デジタルツイン（digital twin）** — 実際の工場・倉庫・ロボットを物理的に忠実に模した仮想レプリカです。実環境に触れずにポリシー学習・検証・シナリオ実験を可能にします。
+[^p2r]: **pose-to-render レイテンシ** — ユーザーが頭を動かしてから、それに対応するフレームがヘッドセットに表示されるまでの時間です。長くなると見える映像と身体感覚がずれて酔いを引き起こすため、XR ストリーミング品質の中核指標です。

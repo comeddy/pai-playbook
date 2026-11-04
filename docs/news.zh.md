@@ -1,11 +1,11 @@
 ---
-ko_hash: 6d385b283f526caca083d3149b2aa9ee357e351f
+ko_hash: 52dcd5923b7070599439d837777f9d94048d8ad9
 ---
 # 新消息
 
 _owner: Youngjin · updated: 2026-11 · volatility: 高_
 
-> **L0 TL;DR**: 精选 AWS Physical AI 新文章并连接现有支柱。以下为**原文发布日期**，列表确认日为 **2026-10-14**。实习路径见[工作坊与资料](workshops.md)。
+> **L0 TL;DR**: 精选 AWS Physical AI 新文章并连接现有支柱。以下为**原文发布日期**，列表确认日为 **2026-11-04**。实习路径见[工作坊与资料](workshops.md)。
 
 按官方原文摘要，不代表独立复现性能数字。未验证技术候选继续由 [Radar](radar.md)管理。
 
@@ -15,6 +15,8 @@ _owner: Youngjin · updated: 2026-11 · volatility: 高_
 
 | 发布日期 | 资料 | 关联 |
 |---|---|---|
+| 2026-11-03 | [NVIDIA CloudXR 6 on AWS —— 将数字孪生流式传输到 XR 头显](#cloudxr-6) | [P1](pillar-1.md) · [P3](pillar-3.md) |
+| 2026-10-28 | [Archetype AI Newton —— 将工业传感器数据转化为运营智能](#archetype-newton) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-10-28 | [AWS × RLWRLD —— 为明日的劳动力打造 Physical AI](#aws-rlwrld-workforce) | [Radar](radar.md) · [P2](pillar-2.md) |
 | 2026-10-28 | [Visual Asset Management System 2.6 发布](#vams-2-6) | [P3](pillar-3.md) · [P4](pillar-4.md) |
 | 2026-10-07 | [AWS Physical AI Toolchain 发布](#toolchain) | [P1](pillar-1.md) · [P2](pillar-2.md) · [P3](pillar-3.md) · [P5](pillar-5.md) · [Radar](radar.md) |
@@ -28,6 +30,26 @@ _owner: Youngjin · updated: 2026-11 · volatility: 高_
 | 2026-07-31 | [OpenUSD 与 SDMA 工业数字孪生实现](#openusd) | [P3](pillar-3.md) · [OpenUSD](workshops.md#spatial) |
 | 2026-07-17 | [Edge Impulse 与 AWS — 结合边缘推理与云端智能](#edge-impulse-aws) | [P4](pillar-4.md) · [P5](pillar-5.md) |
 | 2026-07-15 | [Config：机器人训练数据增强](#config) | [P1](pillar-1.md) |
+
+## NVIDIA CloudXR 6 on AWS —— 将数字孪生流式传输到 XR 头显 { #cloudxr-6 }
+
+**发布日期: 2026-11-03 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/streaming-physical-ai-digital-twins-and-immersive-experiences-to-xr-headsets-with-nvidia-cloudxr-6-on-aws/) `[4]` · ⏳ 待 owner 原文核对 (本地会话 2026-11-04 已读 RSS 全文)**
+
+介绍在 Amazon EC2 GPU 实例上运行 NVIDIA CloudXR 6 的 AWS 示例（[aws-samples/sample-cloudxr6-on-aws](https://github.com/aws-samples/sample-cloudxr6-on-aws)）。CloudXR 6 可将 GPU 渲染的 OpenXR 内容流式传输到轻量 XR 头显。Physical AI 方面的用途包括数字孪生[^dtwin]评审、仿真场景验证，以及在仿真中通过遥操作采集策略训练用演示数据；文中还提到 NVIDIA Isaac GR00T 端到端工作流中的 Isaac Sim XR 遥操作示例。架构为 CloudFront（入口与 CloudXR.js Web 客户端）→ ECS Fargate 信令代理（Cognito 认证、DynamoDB 实例注册表）→ Local Zone 或区域中的 EC2 GPU 池，媒体流在头显与 GPU 实例之间通过 UDP 直接传输。客户端支持 Apple Vision Pro（原生）和 Meta Quest·Pico（浏览器 WebRTC）两条路径。
+
+**阅读时需确认的范围**: AWS 示例发布文章（架构与部署指南）。延迟数据来自 AWS 自身的一次测试 —— 洛杉矶 Local Zone 的 g7e 实例向同在洛杉矶的 Meta Quest 3 推流，约 90 FPS，pose-to-render 延迟[^p2r]约 35 ms（网络往返约 8–9 ms），高于 NVIDIA 目标值（20–30 ms）、低于上限（100 ms）。若要在韩国复现，需另行确认首尔区域或邻近 Local Zone 的 GPU 实例可用性并实测延迟。文中没有客户生产案例。
+
+**下一步**: P1 遥操作数据采集 · P3 数字孪生评审 — [P1](pillar-1.md) · [P3](pillar-3.md).
+
+## Archetype AI Newton —— 将工业传感器数据转化为运营智能 { #archetype-newton }
+
+**发布日期: 2026-10-28 · [AWS Physical AI](https://aws.amazon.com/blogs/physical-ai/industrial-sensor-data-to-operational-intelligence-with-archetype-ai-on-aws/) `[4]` · ⏳ 待 owner 原文核对 (本地会话 2026-11-04 已读 RSS 全文)**
+
+介绍将 Archetype AI 的物理世界模型 Newton 部署到 AWS，从振动·压力·温度·电流·雷达·视频等多模态传感器信号中进行异常检测、运行状态监控和作业验证的合作伙伴文章。Newton 为 80 亿（8B）参数模型，可蒸馏为面向边缘的 8,500 万（85M）参数模型。平台从 [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-pjqoobj6vnbhm) 部署到客户账户中的专用 VPC，运行在 Amazon EKS（CPU·GPU 节点组）以及 S3·Aurora PostgreSQL·ElastiCache 之上。边缘代理部署到本地和工业边缘硬件，可选用 AWS IoT Greengrass·Outposts；云端采集路径为 IoT Core·Kinesis Data Streams·MSK。
+
+**阅读时需确认的范围**: 合作伙伴（Archetype AI）解决方案介绍文章。所有性能数据均为厂商自报，并非独立实测 —— 泵状态检测"最高 90% 准确率（少量标注样本）"、齿轮箱故障检测"99% 准确率·比传统方式部署快 80%"、施工现场 12,000 小时视频分析案例，均未给出客户名称。"无需针对任务训练即可使用（zero-shot）"同样是厂商说法。它是工业设备传感器解读模型而非机器人策略，因此更贴近本手册的边缘运维·监控方向，而非机器人训练方向。
+
+**下一步**: P4 边缘部署（Greengrass·Outposts）· P5 运维监控 — [P4](pillar-4.md) · [P5](pillar-5.md).
 
 ## AWS × RLWRLD —— 为明日的劳动力打造 Physical AI { #aws-rlwrld-workforce }
 
@@ -260,3 +282,5 @@ Edge Impulse（Qualcomm 旗下公司）与 AWS 联合撰写的文章，以仓库
 [^3dgs]: **3D Gaussian Splatting（3DGS）** — 用大量 3D 高斯（椭球形点）拟合多张照片或视频，实时渲染写实场景的 3D 重建技术。用于 real-to-sim，即把真实现场搬进仿真作为背景。
 [^wfm]: **世界基础模型（WFM, World Foundation Model）** — 为预测·生成物理世界的下一场景而训练的大型模型。通过文本·视频提示生成物理上合理的视频·场景，用于增强机器人学习数据。🎥 [NVIDIA Cosmos 介绍](https://www.youtube.com/watch?v=9Uch931cDx8)
 [^wam]: **世界-动作模型（WAM, World Action Model）** — 在一个模型中同时进行未来场景预测与机器人动作生成。与只生成视频的世界模型不同，它输出关节角度、夹爪指令等可执行动作。
+[^dtwin]: **数字孪生（digital twin）** — 对真实工厂·仓库·机器人进行物理上忠实复刻的虚拟副本。无需触碰真实环境即可进行策略训练·验证·场景实验。
+[^p2r]: **pose-to-render 延迟** — 从用户转动头部到对应画面显示在头显上的时间。延迟变长时，眼睛所见与身体感知不一致会引起晕动症，因此是 XR 流式传输质量的核心指标。
