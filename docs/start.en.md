@@ -1,11 +1,11 @@
 ---
-ko_hash: 8850c6eff8460d92dd3fc2fb71eb3a37937d3f70
+ko_hash: 18e4590ec3958811640154f1c470c823a8bd3799
 ---
 # Start — business fit, ROI, and pilot approval
 
 _Last updated: 2026-09 · owner: Youngjin · volatility: medium_
 
-**L0 TL;DR**: Define the business task and current performance first. Compare existing automation, commercial solutions, and a system integrator (SI)[^si]; choose data, simulation, or VLA only when learning is needed. Customers and AWS staff complete this worksheet together.
+**L0 TL;DR**: Start with the work, not the technology. Write down which task you want to improve and how well it runs today. Then check whether existing automation, a commercial product, or a system integrator (SI)[^si] can already solve it. Only when something is left that the robot has to learn do you look at data, simulation, or a VLA. Customers and AWS staff fill in this worksheet together.
 
 ## Paths by role { #roles }
 
