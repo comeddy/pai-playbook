@@ -1,5 +1,5 @@
 ---
-ko_hash: a0c8b967694d5e99f60a5e0081e791e83f66457d
+ko_hash: 8d72cdedfd354e502caf9590586598250e273a65
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
@@ -50,6 +50,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 - プレイブック: [pillar-4 エッジ](pillar-4.md)
 - [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- [Robot Atlas Physical AIロボットワークショップ](https://robot-atlas.whchoi.net/workshop/) — コミュニティ制作、4言語。**計画（System 2）と制御（System 1）の分離**の実習：AgentCore Runtime作業プランナーは高レベル計画のみを作り、逆運動学・関節コントローラがMuJoCoロボットを動かし、モデル出力は許可作業の検証後に実行します。[ライブデモ](https://robot-atlas.whchoi.net/) · [Playbook要約](workshops.md#robot-atlas)。ポリシー学習と実機は範囲外（原文に明記）
 - [AgentCore リテールエージェントワークショップ「Build! Deploy! Observe!」](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) — 韓国語。リテール事例ながら AgentCore の 7 サービス（Gateway・Runtime・Observability・Code Interpreter・Memory・Policy・Browser）すべてを 3 フェーズのハンズオンでカバー — Policy ガードレール・エスカレーション実習は第 5 項（安全 & ガードレール）との接点。ガイド: [ワークショップサイト](https://dxdbmmdwak6t8.cloudfront.net/)（イベント向け CloudFront 配信 — リンクの持続性は要確認 ⚠️）
 - （社内 AgentCore ワークショップ — 要確認 ⚠️）
 - [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) — aws-samples。4 ピラー・フライホイールのリファレンスアーキテクチャ。README 基準（2026-11-04 確認）**Available**: Foundation・Cosmos（Predict・Transfer）・Isaac Lab RL・GR00T N1.6 ファインチューニング・DreamZero・Isaac Sim ワークステーション・OSMO 6.3 on EKS・Strands Agents / **Preview**: Isaac Lab Arena 評価 / **Planned**: エッジデプロイ（Jetson・Greengrass）・AgentCore ホステッドランタイム。⚠️ Available はサンプル公開の状態であって AWS の運用保証ではない

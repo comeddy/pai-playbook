@@ -46,6 +46,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 - 플레이북: [pillar-4 엣지](pillar-4.md)
 - [AgentCore 시작 워크숍](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 워크숍](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- [Robot Atlas Physical AI 로봇 워크숍](https://robot-atlas.whchoi.net/workshop/) — 커뮤니티 제작, 4개 언어. AgentCore Runtime 작업 플래너가 고수준 계획만 만들고 역기구학·관절 제어기가 MuJoCo 로봇을 움직이는 **계획(System 2)·제어(System 1) 분리** 실습, 모델 출력은 허용 작업 검증 후 실행. [라이브 데모](https://robot-atlas.whchoi.net/) · [플레이북 요약](workshops.md#robot-atlas). 정책 학습·실물 로봇은 범위 밖(원문 명시)
 - [AgentCore 리테일 에이전트 워크숍 "Build! Deploy! Observe!"](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) — 한국어. 리테일 도메인 예제지만 AgentCore 7개 서비스(Gateway·Runtime·Observability·Code Interpreter·Memory·Policy·Browser) 전부를 3단계 핸즈온으로 커버 — Policy 가드레일·에스컬레이션 실습은 5번(안전 & 가드레일)의 접점. 가이드: [워크숍 사이트](https://dxdbmmdwak6t8.cloudfront.net/) (이벤트용 CloudFront 배포 — 링크 지속성 확인 필요 ⚠️)
 - (사내 AgentCore 워크숍 — 확인 필요 ⚠️)
 - [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) — aws-samples. 4-필러 플라이휠 참조 아키텍처. README 기준(2026-11-04 확인) **Available**: Foundation·Cosmos(Predict·Transfer)·Isaac Lab RL·GR00T N1.6 파인튜닝·DreamZero·Isaac Sim 워크스테이션·OSMO 6.3 on EKS·Strands Agents / **Preview**: Isaac Lab Arena 평가 / **Planned**: 엣지 배포(Jetson·Greengrass)·AgentCore 호스팅 런타임. ⚠️ Available은 샘플 공개 상태이지 AWS 운영 보증이 아니다

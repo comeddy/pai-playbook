@@ -1,5 +1,5 @@
 ---
-ko_hash: a0c8b967694d5e99f60a5e0081e791e83f66457d
+ko_hash: 8d72cdedfd354e502caf9590586598250e273a65
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
@@ -49,6 +49,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 - Playbook: [pillar-4 边缘](pillar-4.md)
 - [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- [Robot Atlas Physical AI 机器人工作坊](https://robot-atlas.whchoi.net/workshop/) — 社区制作，四种语言。**规划（System 2）与控制（System 1）分离**实践：AgentCore Runtime 任务规划器只生成高层计划，由逆运动学·关节控制器驱动 MuJoCo 机器人，模型输出经允许任务校验后执行。[在线演示](https://robot-atlas.whchoi.net/) · [Playbook 摘要](workshops.md#robot-atlas)。策略训练与实体机器人不在范围内（原文说明）
 - [AgentCore 零售智能体研讨会 "Build! Deploy! Observe!"](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) —— 韩语。虽以零售场景为例，但以三阶段动手实验覆盖 AgentCore 全部 7 个服务（Gateway·Runtime·Observability·Code Interpreter·Memory·Policy·Browser）—— Policy 护栏·升级规则实验与第 5 项（安全 & 护栏）相衔接。指南: [研讨会站点](https://dxdbmmdwak6t8.cloudfront.net/)（面向活动的 CloudFront 部署 —— 链接持久性待确认 ⚠️）
 - （内部 AgentCore 研讨会 —— 需确认 ⚠️）
 - [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) —— aws-samples。4 支柱飞轮参考架构。依 README（2026-11-04 确认）**Available**：Foundation·Cosmos（Predict·Transfer）·Isaac Lab RL·GR00T N1.6 微调·DreamZero·Isaac Sim 工作站·OSMO 6.3 on EKS·Strands Agents / **Preview**：Isaac Lab Arena 评估 / **Planned**：边缘部署（Jetson·Greengrass）·AgentCore 托管运行时。⚠️ Available 表示示例已公开，并非 AWS 运营保证

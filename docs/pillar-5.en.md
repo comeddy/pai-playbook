@@ -1,5 +1,5 @@
 ---
-ko_hash: a0c8b967694d5e99f60a5e0081e791e83f66457d
+ko_hash: 8d72cdedfd354e502caf9590586598250e273a65
 ---
 # Pillar 5 — Agentic Orchestration
 
@@ -49,6 +49,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 - Playbook: [pillar-4 edge](pillar-4.md)
 - [Getting started with AgentCore workshop](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
+- [Robot Atlas Physical AI robot workshop](https://robot-atlas.whchoi.net/workshop/) — community-built, four languages. Hands-on **planning (System 2) / control (System 1) separation**: an AgentCore Runtime task planner produces only high-level plans, inverse kinematics and joint controllers move the MuJoCo robot, and model output is checked against allowed tasks before execution. [Live demo](https://robot-atlas.whchoi.net/) · [Playbook summary](workshops.md#robot-atlas). Policy training and physical robots are out of scope (stated in the source)
 - [AgentCore retail agent workshop "Build! Deploy! Observe!"](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) — Korean. Retail-domain examples, but covers all seven AgentCore services (Gateway · Runtime · Observability · Code Interpreter · Memory · Policy · Browser) in a three-phase hands-on — the Policy guardrail/escalation lab connects to item 5 (Safety & guardrails). Guide: [workshop site](https://dxdbmmdwak6t8.cloudfront.net/) (event-scoped CloudFront deployment — link persistence unconfirmed ⚠️)
 - (internal AgentCore workshop — confirm needed ⚠️)
 - [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) — aws-samples. 4-pillar flywheel reference architecture. Per the README (checked 2026-11-04) **Available**: Foundation · Cosmos (Predict, Transfer) · Isaac Lab RL · GR00T N1.6 fine-tuning · DreamZero · Isaac Sim workstation · OSMO 6.3 on EKS · Strands Agents / **Preview**: Isaac Lab Arena evaluation / **Planned**: edge deployment (Jetson, Greengrass) · AgentCore hosted runtime. ⚠️ Available means the sample is published, not an AWS operational guarantee
