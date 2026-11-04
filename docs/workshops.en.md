@@ -1,11 +1,11 @@
 ---
-ko_hash: 227d863a1332653377eef63e6626faac6b80d97e
+ko_hash: 6cf05e14af012d3be0a4976f990bab5cc6bf2d36
 ---
 # Workshops & Resources
 
-_owner: Youngjin · updated: 2026-09 · volatility: medium_
+_owner: Youngjin · updated: 2026-11 · volatility: medium_
 
-> **L0 TL;DR**: Public self-paced workshops, implementation guides, and samples in one place. **Last checked: 2026-09-19**. Open each title for the source and use the related pillar for architecture context.
+> **L0 TL;DR**: Public self-paced workshops, implementation guides, and samples in one place. **Last checked: 2026-11-04**. Open each title for the source and use the related pillar for architecture context.
 
 Duration and cost depend on modules, account readiness, and GPU availability. Check source Prerequisites/Cleanup, permissions, and model terms before starting. This list records source inspection, not a full rerun of every lab.
 
@@ -21,6 +21,7 @@ Duration and cost depend on modules, account readiness, and GPU availability. Ch
 | Connect 3D assets, sensors, and prediction | [OpenUSD industrial digital-twin sample](#spatial) | [P3](pillar-3.md) |
 | Inspect simulation results without a robot | [VLA Simulator on AWS](#vla-simulator) | [P4](pillar-4.md) |
 | Collect physical robot demonstrations | [LeRobot data collection on Greengrass](#lerobot-collection) | [P1](pillar-1.md) |
+| Plan in natural language, verify in physics simulation | [Robot Atlas Physical AI robot workshop](#robot-atlas) | [P5](pillar-5.md) |
 
 ## NVIDIA Isaac Lab on AWS { #isaac-lab }
 
@@ -102,9 +103,19 @@ Duration and cost depend on modules, account readiness, and GPU availability. Ch
 
 **Related pillar**: [P1](pillar-1.md).
 
+## Robot Atlas Physical AI robot workshop { #robot-atlas }
+
+**[Robot Atlas Physical AI robot workshop](https://robot-atlas.whchoi.net/workshop/) · Community-built workshop · Korean/English/Japanese/Chinese** · [Live demo](https://robot-atlas.whchoi.net/)
+
+**What it covers**: 3 tracks, 19 chapters. The participant basics track (00–04, about 110 min) replays pick-and-stack runs in MuJoCo[^mujoco] and runs new layouts from Bedrock task plans. The participant AWS deployment track (05–13, about 280 min) builds an AgentCore Runtime task planner, a private Fargate physics engine, and the CloudFront·WAF path. The facilitator track (14–18, about 195 min) covers Isaac Sim RTX cameras and checkpoint resume on g6e·g7e Spot in EKS Auto Mode. The live demo shows a robot arm, a five-finger hand, and bimanual shirt folding.
+
+**Before you start**: The material assumes a prepared EC2 VSCode Server and account (material dated 2026-09-13). As the source states, the AI produces only high-level plans while inverse kinematics and joint controllers move the robot; motion-policy training and physical-robot experiments are not included. Isaac Sim cloth folding is marked "under validation" in the source. For the GPU track, check Spot cost and cleanup steps first.
+
+**Related pillars**: [P5](pillar-5.md) — separating planning (System 2) from control (System 1), [P3](pillar-3.md) — simulation operations.
+
 ## Suggested learning order
 
-For simulation, start with **Isaac Lab → the relevant E2E track → VLA Simulator**. For agents, follow **AgentCore Getting Started → Deep Dive**. For digital twins, start with **local OpenUSD execution → the AWS levels you need**.
+For simulation, start with **Isaac Lab → the relevant E2E track → VLA Simulator**. For agents, follow **AgentCore Getting Started → Deep Dive**, then try the **Robot Atlas basics track** to connect agent planning to robot simulation. For digital twins, start with **local OpenUSD execution → the AWS levels you need**.
 
 ## Maintaining this list
 
@@ -113,3 +124,4 @@ Record provider, language, goal, prerequisites, related pillar, and check date f
 <!-- 용어 각주 -->
 
 [^vla]: **VLA (Vision-Language-Action)** — A model that turns visual observations and language instructions into robot actions.
+[^mujoco]: **MuJoCo** — An open-source physics simulator with fast contact and friction computation, widely used in robot-manipulation research and RL benchmarks.

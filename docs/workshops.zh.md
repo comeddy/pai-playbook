@@ -1,11 +1,11 @@
 ---
-ko_hash: 227d863a1332653377eef63e6626faac6b80d97e
+ko_hash: 6cf05e14af012d3be0a4976f990bab5cc6bf2d36
 ---
 # 工作坊与资料
 
-_owner: Youngjin · updated: 2026-09 · volatility: 中_
+_owner: Youngjin · updated: 2026-11 · volatility: 中_
 
-> **L0 TL;DR**: 集中公开自学工作坊、实现指南和样本。**最后确认：2026-09-19**。点击标题访问原文，通过相关支柱了解架构。
+> **L0 TL;DR**: 集中公开自学工作坊、实现指南和样本。**最后确认：2026-11-04**。点击标题访问原文，通过相关支柱了解架构。
 
 时间和费用取决于模块、账户准备及 GPU 可用性。开始前确认原文 Prerequisites/Cleanup、权限和模型条件。本列表记录原文核对，不代表重跑全部实验。
 
@@ -21,6 +21,7 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中_
 | 连接 3D 资产、传感器、预测 | [OpenUSD 工业数字孪生样本](#spatial) | [P3](pillar-3.md) |
 | 无实机查看仿真结果 | [VLA Simulator on AWS](#vla-simulator) | [P4](pillar-4.md) |
 | 采集实机演示数据 | [Greengrass 上的 LeRobot 数据采集](#lerobot-collection) | [P1](pillar-1.md) |
+| 用自然语言规划、用物理仿真验证 | [Robot Atlas Physical AI 机器人工作坊](#robot-atlas) | [P5](pillar-5.md) |
 
 ## NVIDIA Isaac Lab on AWS { #isaac-lab }
 
@@ -102,9 +103,19 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中_
 
 **相关支柱**: [P1](pillar-1.md).
 
+## Robot Atlas Physical AI 机器人工作坊 { #robot-atlas }
+
+**[Robot Atlas Physical AI 机器人工作坊](https://robot-atlas.whchoi.net/workshop/) · 社区制作工作坊 · 韩语/英语/日语/中文** · [在线演示](https://robot-atlas.whchoi.net/)
+
+**内容**：3 条路线，共 19 章。参与者基础路线（00~04，约 110 分钟）在 MuJoCo[^mujoco] 中回放抓取·堆叠，并用 Bedrock 任务规划执行新布局。参与者 AWS 部署路线（05~13，约 280 分钟）构建 AgentCore Runtime 任务规划器、Private Fargate 物理引擎和 CloudFront·WAF 路径。讲师路线（14~18，约 195 分钟）在 EKS Auto Mode 的 g6e·g7e Spot 上处理 Isaac Sim RTX 相机与检查点恢复。在线演示可查看机械臂、五指手和双臂叠衣。
+
+**开始前确认**：教材以准备好的 EC2 VSCode Server 和账户为前提（教材基准日 2026-09-13）。按原文说明，AI 只生成高层计划，由逆运动学·关节控制器驱动机器人，不包含运动策略训练和实体机器人实验。原文将 Isaac Sim 叠衣标为"验证中"。GPU 路线请先确认 Spot 费用和清理步骤。
+
+**相关支柱**：[P5](pillar-5.md) — 规划（System 2）与控制（System 1）的分离，[P3](pillar-3.md) — 仿真运营。
+
 ## 建议学习顺序
 
-仿真学习可按 **Isaac Lab → E2E 所需路径 → VLA Simulator**。智能体按 **AgentCore Getting Started → Deep Dive**。数字孪生先 **OpenUSD 本地运行 → 所需 AWS 层级**。
+仿真学习可按 **Isaac Lab → E2E 所需路径 → VLA Simulator**。智能体按 **AgentCore Getting Started → Deep Dive**，若要把智能体规划连接到机器人仿真，再看 **Robot Atlas 基础路线**。数字孪生先 **OpenUSD 本地运行 → 所需 AWS 层级**。
 
 ## 资料更新
 
@@ -113,3 +124,4 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中_
 <!-- 용어 각주 -->
 
 [^vla]: **VLA（Vision-Language-Action）** — 将视觉观测和语言指令转换为机器人动作的模型。
+[^mujoco]: **MuJoCo** — 接触·摩擦计算快速的开源物理仿真器，广泛用于机器人操作研究和强化学习基准。

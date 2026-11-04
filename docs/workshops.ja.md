@@ -1,11 +1,11 @@
 ---
-ko_hash: 227d863a1332653377eef63e6626faac6b80d97e
+ko_hash: 6cf05e14af012d3be0a4976f990bab5cc6bf2d36
 ---
 # ワークショップ・資料
 
-_owner: Youngjin · updated: 2026-09 · volatility: 中_
+_owner: Youngjin · updated: 2026-11 · volatility: 中_
 
-> **L0 TL;DR**: 公開の自習ワークショップ・実装ガイド・サンプルを集めました。**最終確認：2026-09-19**。題名から原文へ、関連ピラーから構成の背景へ進めます。
+> **L0 TL;DR**: 公開の自習ワークショップ・実装ガイド・サンプルを集めました。**最終確認：2026-11-04**。題名から原文へ、関連ピラーから構成の背景へ進めます。
 
 時間と費用はモジュール・アカウント準備・GPU可用性で変わります。Prerequisites・Cleanup、権限、モデル条件を先に確認します。原文閲覧の記録であり全実習の再実行ではありません。
 
@@ -21,6 +21,7 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中_
 | 3D資産・センサー・予測の接続 | [OpenUSD産業デジタルツインサンプル](#spatial) | [P3](pillar-3.md) |
 | 実機なしでシミュレーション結果を見る | [VLA Simulator on AWS](#vla-simulator) | [P4](pillar-4.md) |
 | 実ロボットの実演データ収集 | [GreengrassでLeRobotデータ収集](#lerobot-collection) | [P1](pillar-1.md) |
+| 言葉で計画し物理シミュレーションで検証 | [Robot Atlas Physical AIロボットワークショップ](#robot-atlas) | [P5](pillar-5.md) |
 
 ## NVIDIA Isaac Lab on AWS { #isaac-lab }
 
@@ -102,9 +103,19 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中_
 
 **関連ピラー**: [P1](pillar-1.md).
 
+## Robot Atlas Physical AIロボットワークショップ { #robot-atlas }
+
+**[Robot Atlas Physical AIロボットワークショップ](https://robot-atlas.whchoi.net/workshop/) · コミュニティ制作ワークショップ · 韓国語/英語/日本語/中国語** · [ライブデモ](https://robot-atlas.whchoi.net/)
+
+**内容**：3トラック・19章です。参加者基本（00〜04、約110分）はMuJoCo[^mujoco]で把持・積み上げを再生し、Bedrockの作業計画で新しい配置を実行します。参加者AWSデプロイ（05〜13、約280分）はAgentCore Runtime作業プランナー、Private Fargate物理エンジン、CloudFront·WAF経路を構成します。進行者トラック（14〜18、約195分）はEKS Auto Modeのg6e·g7e SpotでIsaac Sim RTXカメラとチェックポイント再開を扱います。ライブデモではロボットアーム・五指ハンド・双腕のTシャツ畳みを見られます。
+
+**開始前の確認**：教材は準備済みのEC2 VSCode Serverとアカウントを前提とします（教材基準日 2026-09-13）。原文のとおり、AIは高レベル計画のみを作り、逆運動学・関節コントローラがロボットを動かします。運動ポリシー学習と実機実験は含みません。Isaac Simの衣類畳みは原文で「検証中」です。GPUトラックはSpot費用とクリーンアップ手順を先に確認します。
+
+**関連ピラー**：[P5](pillar-5.md) — 計画（System 2）と制御（System 1）の分離、[P3](pillar-3.md) — シミュレーション運用。
+
 ## 学習順序
 
-シミュレーションは**Isaac Lab → 必要なE2Eトラック → VLA Simulator**、エージェントは**AgentCore Getting Started → Deep Dive**がおすすめです。デジタルツインは**OpenUSDローカル実行 → 必要なAWS段階**を選びます。
+シミュレーションは**Isaac Lab → 必要なE2Eトラック → VLA Simulator**、エージェントは**AgentCore Getting Started → Deep Dive**がおすすめで、エージェント計画をロボットシミュレーションにつなぐなら**Robot Atlas基本トラック**に進みます。デジタルツインは**OpenUSDローカル実行 → 必要なAWS段階**を選びます。
 
 ## 資料の更新
 
@@ -113,3 +124,4 @@ _owner: Youngjin · updated: 2026-09 · volatility: 中_
 <!-- 용어 각주 -->
 
 [^vla]: **VLA（Vision-Language-Action）** — 映像観測と言語指示からロボット動作を出力するモデルです。
+[^mujoco]: **MuJoCo** — 接触・摩擦の計算が速いオープンソース物理シミュレータです。ロボット操作研究や強化学習ベンチマークで広く使われます。

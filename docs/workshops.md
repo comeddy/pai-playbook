@@ -1,8 +1,8 @@
 # 워크숍·자료
 
-_owner: Youngjin · updated: 2026-09 · volatility: 중간_
+_owner: Youngjin · updated: 2026-11 · volatility: 중간_
 
-> **L0 TL;DR**: 상시 열람할 수 있는 공개 워크숍·구현 가이드·샘플을 한 곳에 모았다. **마지막 확인: 2026-09-19**. 자료 제목에서 원문으로 이동하고, 관련 필러에서 아키텍처 배경을 확인한다.
+> **L0 TL;DR**: 상시 열람할 수 있는 공개 워크숍·구현 가이드·샘플을 한 곳에 모았다. **마지막 확인: 2026-11-04**. 자료 제목에서 원문으로 이동하고, 관련 필러에서 아키텍처 배경을 확인한다.
 
 워크숍 완료 시간과 비용은 선택 모듈·계정 준비·GPU 가용성에 따라 달라진다. 시작 전 원문의 Prerequisites·Cleanup, 계정 권한과 모델 사용 조건을 확인한다. 이 목록은 원문 열람 확인이며 실습 전체 재실행 기록은 아니다.
 
@@ -18,6 +18,7 @@ _owner: Youngjin · updated: 2026-09 · volatility: 중간_
 | 3D 자산·센서·예측 연결 | [OpenUSD 산업용 디지털 트윈 샘플](#spatial) | [P3](pillar-3.md) |
 | 로봇 없이 시뮬레이션 결과 보기 | [VLA Simulator on AWS](#vla-simulator) | [P4](pillar-4.md) |
 | 실로봇 시연 데이터 수집 | [LeRobot 데이터 수집 on Greengrass](#lerobot-collection) | [P1](pillar-1.md) |
+| 말로 계획하고 물리 시뮬레이션으로 검증 | [Robot Atlas Physical AI 로봇 워크숍](#robot-atlas) | [P5](pillar-5.md) |
 
 ## NVIDIA Isaac Lab on AWS { #isaac-lab }
 
@@ -99,9 +100,19 @@ _owner: Youngjin · updated: 2026-09 · volatility: 중간_
 
 **관련 필러**: [P1](pillar-1.md).
 
+## Robot Atlas Physical AI 로봇 워크숍 { #robot-atlas }
+
+**[Robot Atlas Physical AI 로봇 워크숍](https://robot-atlas.whchoi.net/workshop/) · 커뮤니티 제작 워크숍 · 한국어/English/日本語/中文** · [라이브 데모](https://robot-atlas.whchoi.net/)
+
+**내용**: 3개 트랙, 19개 장이다. 참가자 기본(00~04, 약 110분)은 MuJoCo[^mujoco]에서 집기·쌓기를 재생하고 Bedrock 작업 계획으로 새 배치를 실행한다. 참가자 AWS 배포(05~13, 약 280분)는 AgentCore Runtime 작업 플래너, Private Fargate 물리 엔진, CloudFront·WAF 경로를 구성한다. 진행자 트랙(14~18, 약 195분)은 EKS Auto Mode의 g6e·g7e Spot에서 Isaac Sim RTX 카메라·체크포인트 재개를 다룬다. 라이브 데모에서 로봇 팔·다섯 손가락 손·양팔 옷 접기 시연을 볼 수 있다.
+
+**시작 전 확인**: 교재는 준비된 EC2 VSCode Server와 계정을 전제한다(교재 기준일 2026-09-13). 원문이 밝힌 범위대로 AI는 고수준 계획만 만들고 역기구학·관절 제어기가 로봇을 움직이며, 운동 정책 학습과 실물 로봇 실험은 포함하지 않는다. Isaac Sim 옷 접기는 원문에서 "검증 중"이다. GPU 트랙은 Spot 비용과 정리 절차를 먼저 확인한다.
+
+**관련 필러**: [P5](pillar-5.md) — 계획(System 2)과 제어(System 1)의 분리, [P3](pillar-3.md) — 시뮬레이션 운영.
+
 ## 추천 학습 순서
 
-처음 시뮬레이션을 다루면 **Isaac Lab → 한국어 E2E의 필요한 트랙 → VLA Simulator** 순으로 본다. 에이전트는 **AgentCore Getting Started → Deep Dive**로 이어간다. 디지털 트윈은 **OpenUSD 샘플의 로컬 실행 → 필요한 AWS 단계**를 선택한다.
+처음 시뮬레이션을 다루면 **Isaac Lab → 한국어 E2E의 필요한 트랙 → VLA Simulator** 순으로 본다. 에이전트는 **AgentCore Getting Started → Deep Dive**로 이어가고, 에이전트 계획을 로봇 시뮬레이션에 연결해 보려면 **Robot Atlas 기본 트랙**을 이어서 본다. 디지털 트윈은 **OpenUSD 샘플의 로컬 실행 → 필요한 AWS 단계**를 선택한다.
 
 ## 자료 갱신
 
@@ -110,3 +121,4 @@ _owner: Youngjin · updated: 2026-09 · volatility: 중간_
 <!-- 용어 각주 -->
 
 [^vla]: **VLA (Vision-Language-Action)** — 영상과 언어 지시를 입력받아 로봇 동작을 출력하는 모델.
+[^mujoco]: **MuJoCo** — 접촉·마찰 계산이 빠른 오픈소스 물리 시뮬레이터. 로봇 조작 연구와 강화학습 벤치마크에서 널리 쓰인다.
