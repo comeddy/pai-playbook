@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- Workshops & Resources: added the community-built Robot Atlas Physical AI robot workshop (3 tracks, 19 chapters — MuJoCo + Bedrock task planning, AgentCore Runtime·private Fargate·CloudFront deployment, Isaac Sim on EKS Auto Mode GPU Spot) with its live demo, source-stated scope (AI plans only; no policy training or physical robots) and a new MuJoCo term footnote, checked 2026-11-04, in all four languages
 - Add a re:Invent 2026 section to News, in all four languages: 45 sessions picked from the full 2,415-session event catalog (checked 2026-11-02) across keynotes/panels, Physical AI pipeline, simulation and digital twins, world-model research, model training and data, field operations and edge, and AgentCore — each with PT time, repeat runs, format, a catalog deep link and a one-line focus, plus a scope note that abstracts are advance notices
 - Refresh-path registry and source-drift watchdog: every nav page now declares in `refresh.yml` what triggers its refresh and who does it (`routine`/`owner`/`event`), enforced as a deploy gate (`check_refresh_paths.py`); pages mirroring an external source declare it (News ← AWS Physical AI blog RSS, with reasoned `exclude`), and a daily GitHub Actions job (`source-drift.yml`, `check_source_drift.py`) compares them with the real source and opens/closes a `source-drift` issue for posts missing 3+ days after publication or a stalled routine; rule documented in Maintenance Rules, in all four languages
 - News: added 4 AWS Physical AI blog posts missing since 2026-09-19 (Physical AI Toolchain 10-07, 3D Gaussian Splatting use cases 10-06, Isaac Lab on AWS 10-02, NVIDIA Cosmos 3 on AWS 09-28) — read against the originals with links checked (HTTP 200), each with scope notes (vendor claims vs. measurements, Isaac Lab on AWS available via account team), new term footnotes 3DGS/WFM/WAM; the daily scan runbook now also adds missing blog posts to News marked `[4]` · ⏳ awaiting source check, in all four languages
@@ -179,6 +180,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 워크숍·자료: 커뮤니티 제작 Robot Atlas Physical AI 로봇 워크숍 추가(3개 트랙·19개 장 — MuJoCo + Bedrock 작업 계획, AgentCore Runtime·Private Fargate·CloudFront 배포, EKS Auto Mode GPU Spot의 Isaac Sim) — 라이브 데모 링크, 원문이 밝힌 범위(AI는 계획만, 정책 학습·실물 로봇 미포함), MuJoCo 용어 각주 신설, 2026-11-04 확인(4개 언어)
 - 새 소식에 re:Invent 2026 절 추가(4개 언어): 전체 이벤트 카탈로그 2,415개 세션(2026-11-02 확인)에서 키노트·패널, Physical AI 파이프라인, 시뮬레이션·디지털 트윈, 월드 모델 연구, 모델 학습·데이터, 현장 운영·엣지, AgentCore 세션 45개를 골라 PT 일시·반복 회차·형식·카탈로그 바로가기·볼 포인트를 정리하고, 초록은 사전 공지라는 확인 범위를 명시
 - 갱신 경로 등록부와 소스 드리프트 감시: nav 모든 페이지가 `refresh.yml`에 갱신을 촉발하는 것과 주체(`routine`/`owner`/`event`)를 선언, 배포 게이트로 강제(`check_refresh_paths.py`); 외부 소스를 따르는 페이지는 소스를 선언(새 소식 ← AWS Physical AI 블로그 RSS, 사유 있는 `exclude`)하고 GitHub Actions 일간 작업(`source-drift.yml`, `check_source_drift.py`)이 실제 소스와 대조해 발행 3일 넘은 미반영 글·루틴 정지를 `source-drift` 이슈로 열고 해소 시 닫음; 유지보수 규칙에 명문화(4개 언어)
 - 새 소식: 2026-09-19 이후 누락된 AWS Physical AI 블로그 글 4건 추가(Physical AI Toolchain 10-07, 3D Gaussian Splatting 활용 사례 10-06, Isaac Lab on AWS 10-02, NVIDIA Cosmos 3 on AWS 09-28) — 원문 대조·링크 200 확인, 항목별 확인 범위(벤더 표현과 실측 구분, Isaac Lab on AWS는 계정팀 제공) 명시, 용어 각주 3DGS/WFM/WAM 신설; 일간 스캔 런북에 블로그 미반영 글을 `[4]` · ⏳ 원문 대조 대기로 새 소식에 추가하는 단계 신설(4개 언어)
@@ -340,6 +342,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- 工作坊与资料：新增社区制作的 Robot Atlas Physical AI 机器人工作坊（3 条路线·19 章——MuJoCo + Bedrock 任务规划、AgentCore Runtime·Private Fargate·CloudFront 部署、EKS Auto Mode GPU Spot 上的 Isaac Sim），附在线演示链接、原文说明的范围（AI 仅做规划，不含策略训练与实体机器人）、新增 MuJoCo 术语脚注，2026-11-04 确认（四种语言）
 - 在新消息中新增 re:Invent 2026 一节（四种语言）：从完整活动目录 2,415 个场次（2026-11-02 确认）中挑选主题演讲与座谈、Physical AI 管线、仿真与数字孪生、世界模型研究、模型训练与数据、现场运营与边缘、AgentCore 共 45 个场次，列出 PT 时间、重复场、形式、目录直达链接与关注点，并注明摘要仅为预告
 - 更新路径登记表与来源漂移监视：nav 所有页面在 `refresh.yml` 中声明触发更新的因素与执行者（`routine`/`owner`/`event`），作为部署门禁强制执行（`check_refresh_paths.py`）；跟随外部来源的页面声明来源（新消息 ← AWS Physical AI 博客 RSS，附理由的 `exclude`），GitHub Actions 每日任务（`source-drift.yml`、`check_source_drift.py`）与实际来源比对，对发布 3 天以上仍未收录的文章或停止的例程开启 `source-drift` 议题并在解决后关闭；写入维护规则（四种语言）
 - 新消息：补充 2026-09-19 以来遗漏的 4 篇 AWS Physical AI 博客文章（Physical AI Toolchain 10-07、3D Gaussian Splatting 应用案例 10-06、Isaac Lab on AWS 10-02、NVIDIA Cosmos 3 on AWS 09-28）——已核对原文、链接 200，逐条注明阅读范围（区分厂商表述与实测，Isaac Lab on AWS 通过客户团队提供），新增术语脚注 3DGS/WFM/WAM；每日扫描运行手册新增将博客遗漏文章以 `[4]` · ⏳ 待原文核对 标记加入新消息的步骤（四种语言）
@@ -501,6 +504,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- ワークショップ・資料：コミュニティ制作の Robot Atlas Physical AI ロボットワークショップを追加（3 トラック・19 章 — MuJoCo + Bedrock 作業計画、AgentCore Runtime・Private Fargate・CloudFront デプロイ、EKS Auto Mode GPU Spot の Isaac Sim）— ライブデモリンク、原文が示す範囲（AI は計画のみ、ポリシー学習・実機は含まない）、MuJoCo 用語脚注を新設、2026-11-04 確認（4 言語）
 - 新着情報に re:Invent 2026 の節を追加（4 言語）：全イベントカタログ 2,415 セッション（2026-11-02 確認）からキーノート・パネル、Physical AI パイプライン、シミュレーション・デジタルツイン、ワールドモデル研究、モデル学習・データ、現場運用・エッジ、AgentCore の 45 セッションを選び、PT 日時・再演回・形式・カタログ直リンク・見どころを整理し、概要は事前告知である旨の確認範囲を明記
 - 更新経路の登録簿とソースドリフト監視：nav の全ページが `refresh.yml` に更新のきっかけと担い手（`routine`/`owner`/`event`）を宣言し、配備ゲートで強制（`check_refresh_paths.py`）；外部ソースを追うページはソースを宣言（新着情報 ← AWS Physical AI ブログ RSS、理由付きの `exclude`）し、GitHub Actions の日次ジョブ（`source-drift.yml`、`check_source_drift.py`）が実際のソースと照合して、公開 3 日超の未反映記事やルーチン停止を `source-drift` Issue で開き、解消時に閉じる；メンテナンスルールに明文化（4 言語）
 - 新着情報：2026-09-19 以降に漏れていた AWS Physical AI ブログ記事 4 件を追加（Physical AI Toolchain 10-07、3D Gaussian Splatting 活用事例 10-06、Isaac Lab on AWS 10-02、NVIDIA Cosmos 3 on AWS 09-28）— 原文照合・リンク 200 確認、項目ごとの確認範囲（ベンダー表現と実測の区別、Isaac Lab on AWS はアカウントチーム経由で提供）を明記、用語脚注 3DGS/WFM/WAM を新設；日次スキャンのランブックにブログ未反映記事を `[4]` · ⏳ 原文照合待ち で新着情報に追加する手順を新設（4 言語）
