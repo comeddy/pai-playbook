@@ -1,6 +1,6 @@
 # Pillar 5 — 에이전트 오케스트레이션 (Agentic Orchestration)
 
-_최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음(AgentCore 기능·리전 자주 확장)_
+_최종 갱신: 2026-11 · owner: Youngjin · volatility: 높음(AgentCore 기능·리전 자주 확장)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -48,7 +48,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - [AgentCore 시작 워크숍](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 워크숍](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
 - [AgentCore 리테일 에이전트 워크숍 "Build! Deploy! Observe!"](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) — 한국어. 리테일 도메인 예제지만 AgentCore 7개 서비스(Gateway·Runtime·Observability·Code Interpreter·Memory·Policy·Browser) 전부를 3단계 핸즈온으로 커버 — Policy 가드레일·에스컬레이션 실습은 5번(안전 & 가드레일)의 접점. 가이드: [워크숍 사이트](https://dxdbmmdwak6t8.cloudfront.net/) (이벤트용 CloudFront 배포 — 링크 지속성 확인 필요 ⚠️)
 - (사내 AgentCore 워크숍 — 확인 필요 ⚠️)
-- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) — aws-samples. 4-필러 플라이휠 참조 아키텍처. ⚠️ 현재 NVIDIA OSMO 6.3 on EKS 오케스트레이션만 Available, Cosmos·Isaac Lab·GR00T·Strands+AgentCore 에이전틱 레이어는 Planned
+- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) — aws-samples. 4-필러 플라이휠 참조 아키텍처. README 기준(2026-11-04 확인) **Available**: Foundation·Cosmos(Predict·Transfer)·Isaac Lab RL·GR00T N1.6 파인튜닝·DreamZero·Isaac Sim 워크스테이션·OSMO 6.3 on EKS·Strands Agents / **Preview**: Isaac Lab Arena 평가 / **Planned**: 엣지 배포(Jetson·Greengrass)·AgentCore 호스팅 런타임. ⚠️ Available은 샘플 공개 상태이지 AWS 운영 보증이 아니다
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples. Bedrock 에이전트가 Isaac Sim·실기 SO-ARM101/XGO2/Zumi를 IoT로 제어, 에이전트 메모리로 sim-to-real 반복 학습
 - [Agentic AI Robot — 산업 안전 모니터링](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples. AgentCore+IoT+로봇 자율 순찰·엣지 추론 데모, AWS AI x Industry Week 2025 시연, 한국어 README. ⚠️ 실험·교육용 명시 — 프로덕션 아님
 - [Smart Machines — 산업 장비 하이브리드 Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples. 에이전트가 플릿 텔레메트리 이상 감지→원인 진단→티켓 생성·파라미터 조정까지 수행하는 풀스택 데모(멀티에이전트 챗·자연어 시나리오 빌더·KVS 영상→Bedrock 분석·Jetson YOLOWorld+VLM 엣지 모니터링). ⚠️ README 명시 데모 — 현재 굴착기(시뮬 텔레메트리)만 완동, 로봇 암은 WIP
@@ -103,7 +103,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 **➡️ 다음 액션**: 기존 플릿 솔루션과의 기능 경계, 작업 완료·단절·사람 개입·복구 요구를 [파일럿 카드](start.md#pilot)에 적고 [운영 시험](operations.md#failure)을 수행한다.
 
-**🔗 관련 자산**: [pillar-2 학습](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
+**🔗 관련 자산**: [pillar-2 학습](pillar-2.md) · [pillar-3 OSMO](pillar-3.md) · [Archetype AI Newton on AWS](news.md#archetype-newton) — 파트너. 산업 설비 센서(진동·전류 등) 상태 모니터링 에이전트를 고객 계정 EKS·엣지(Greengrass)로 배포. 정확도 수치는 벤더 자체 발표
 
 ---
 
@@ -166,6 +166,6 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 - **Lotte 30% 등 국내 수치는 단일 출처** — 하드 인용 전 재확인.
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 높음 (AgentCore 기능·리전은 접힌 블록에서 관리) · sources: [1] 공식, [3] 벤더/press, [4] 연구/커뮤니티_
+_owner: Youngjin · updated: 2026-11 · volatility: 높음 (AgentCore 기능·리전은 접힌 블록에서 관리) · sources: [1] 공식, [3] 벤더/press, [4] 연구/커뮤니티_
 
 <!-- 용어 각주 -->

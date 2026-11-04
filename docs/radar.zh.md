@@ -1,5 +1,5 @@
 ---
-ko_hash: ea4a4e9ab760a9da1d2c7a90684dcb88831b2562
+ko_hash: 78eb04b3b1a634ccbd7422c223064ad766eb3ccc
 ---
 # Radar — 队列 / 观察列表
 
@@ -18,8 +18,7 @@ _最终更新: 2026-09 · owner: Youngjin · volatility: 高_
 
 | 条目 | 标签 | 要点 | 晋升条件 |
 |---|---|---|---|
-| Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | ✨ **关注**：以 π0/π0.5 领跑 VLA 的 PI 已于 2026-04 正式展示组合泛化研究演示（完成未训练过的任务，例如用空气炸锅烹饪）—— 若开放权重或 GA 可能再次刷新行业基准<br>⏳ **待定**：PI 官方发布（2026-04-16，多家媒体引用 PI 官方博客与 Sergey Levine）`[4]` —— 仅为研究演示，权重未公开（openpi 公开范围仅到 π0/π0.5），PI 自身也承认在复杂多步指令上的局限。2026-10-24：此前"下一代旗舰传闻"的表述不准确，已更正为"官方研究演示已确认"（本次会话因 physicalintelligence.company DNS 被阻无法直接核对一手页面 —— 已通过多家独立媒体交叉核实） | 开放权重或 GA + 独立性能验证 |
-| **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) 商业许可证** | 🟡→ | ✨ **关注**：若允许商用属实，将成为可用于客户提案的罕见开放 VLA（N1.5 为非商业，无法用于提案）<br>⏳ **待定**：官方 GitHub README（一手来源，2026-10-24 核对）注明代码为 Apache-2.0、权重为 NVIDIA Open Model License —— README 开头"fully commercially licensable under Apache 2.0"的措辞与其许可证章节（权重使用另一许可证）不一致，README 本身存在矛盾 `[4]`。NVIDIA Open Model License 原文中允许商用的具体范围，以及与 Hugging Face 模型卡的直接对照，本次会话因 nvidia.com、huggingface.co 的 DNS 被阻未能确认。N1.5 在模型卡上仍明确为非商业 `[1]` | 直接核对许可证原文与模型卡以确定商用许可范围 |
+| Physical Intelligence **[π0.7](https://www.pi.website/blog/pi07)** | 🔵 Research | ✨ **关注**：以 π0/π0.5 领跑 VLA 的 PI 已于 2026-04 正式展示组合泛化研究演示（完成未训练过的任务，例如用空气炸锅烹饪）—— 若开放权重或 GA 可能再次刷新行业基准<br>⏳ **待定**：PI 官方发布（2026-04-16，多家媒体引用 PI 官方博客与 Sergey Levine）`[4]` —— 仅为研究演示，权重未公开（openpi 公开范围仅到 π0/π0.5），PI 自身也承认在复杂多步指令上的局限。2026-10-24：此前"下一代旗舰传闻"的表述不准确，已更正为"官方研究演示已确认"（本次会话因 physicalintelligence.company DNS 被阻无法直接核对一手页面 —— 已通过多家独立媒体交叉核实） 2026-11-04：已直接核对一手页面（[pi.website/blog/pi07](https://www.pi.website/blog/pi07)，"Published April 16, 2026"）与 openpi README（公开至 π0.5）—— 官方发布事实为 `[1]`，性能主张仍未验证 | 开放权重或 GA + 独立性能验证 |
 | **[World-action models](https://developer.nvidia.com/isaac/gr00t)**（DreamZero → GR00T N2） | 🟡 Preview | ✨ **关注**：被视为 VLA 之后一代的"同时生成动作的世界模型"方向 —— NVIDIA 路线图的方向指标<br>⏳ **待定**：GR00T N2 "计划年底"，DreamZero 为研究 | GA + 实际部署案例 |
 | Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)**（用于机器人学习的世界模型[^wfm]） | 🟡 Preview | ✨ **关注**：尝试把前沿级世界模型用作机器人策略学习的数据源 —— 若成立可绕过真实数据瓶颈<br>⏳ **待定**：世界模型本身为预览，用于机器人学习为研究 | 机器人策略学习验证案例 |
 | **基于 VLM 的 SysID[^sysid]**（[Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)） | 🔵 Research | ✨ **关注**：仅凭视频估计物理参数、自动完成仿真器校准 —— 有望消除 sim-to-real 的手工校准<br>⏳ **待定**：2026 预印本，单一实验室 | peer-review + 复现 |

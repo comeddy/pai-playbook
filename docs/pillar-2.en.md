@@ -1,9 +1,9 @@
 ---
-ko_hash: 63e5a3e8cb3004a7dc553bf04fe7c4d473451f3a
+ko_hash: 409512ce529dc2df01d89e5ce6fd711dcca22a95
 ---
 # Pillar 2 — Model Training (VLA)
 
-_Last updated: 2026-09 · owner: Youngjin · volatility: high (model versions/licenses/instances change often)_
+_Last updated: 2026-11 · owner: Youngjin · volatility: high (model versions/licenses/instances change often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -33,7 +33,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 | Candidate | Primary source to inspect | Scope |
 |---|---|---|
-| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | Selected version's model card, weight terms, code LICENSE | Do not assign one license to every generation |
+| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | Selected version's model card, weight terms, code LICENSE | Do not assign one license to every generation. **N1.7 (GA)**: code Apache-2.0, weights [NVIDIA Open Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/) — the license text states "Models are commercially usable" `[1]` (checked 2026-11-04). The README intro's "fully commercially licensable under Apache 2.0" differs from the weight terms, so do not quote it. N1.5 is non-commercial per its model card |
 | [Physical Intelligence openpi](https://github.com/Physical-Intelligence/openpi) | Code LICENSE, checkpoint, base-model access/use terms | Apache-2.0 code does not decide every weight/data right |
 | [OpenVLA](https://github.com/openvla/openvla#pretrained-vlas) | README: Model Licensing & Commercial Use | **MIT code / Llama Community License for Llama-2-derived weights** `[1]` |
 
@@ -164,23 +164,23 @@ graph TD
 
 ---
 
-## 5. (Competing stack) Google Gemini Robotics  🟡 Preview
+## 5. (Competing stack) Google Gemini Robotics 2  🟡 Preview
 
-**L0 TL;DR**: Google's robot VLA family. **Gemini Robotics-ER 1.6 is in preview (Gemini API/AI Studio)** as an embodied-reasoning (high-level reasoning · tool-calling) layer, while the low-level motor-control VLA is partner-only. It is a competing stack, but customers ask about it often, so we treat it honestly.
+**L0 TL;DR**: Google's robot model family. It moved to **Gemini Robotics 2** on 2026-07-30, highlighting whole-body control (walking, posture changes, bimanual manipulation) and multi-robot collaboration. The only part developers can use directly is the **ER 2 reasoning layer (Gemini API/AI Studio, Preview)**; the low-level control VLA and On-Device 2 are limited to early-access partners. It is a competing stack, but customers ask about it often, so we treat it honestly.
 
 **Customer need/problem**: "Can't we just use Gemini Robotics? How does it relate to AWS?"
 
-**Solution overview** `[1]`:
+**Solution overview** `[1]` ([announcement](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/) · [developer docs](https://ai.google.dev/gemini-api/docs/robotics-overview), checked 2026-11-04):
 
-- **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) — agentic embodied reasoning: task decomposition, tool-calling (including Search), VLA invocation, reading analog gauges. **A reasoning/VLM layer, not low-level control**. Google's official docs state it is "currently in preview" `[1]`.
-- **Gemini Robotics On-Device** (2025-06) — the first locally deployable VLA, supports fine-tuning (50~100 demos). **waitlist/trusted-tester (Preview)**.
-- **Gemini Robotics 1.5 VLA** — partner-only.
+- **Gemini Robotics ER 2** (2026-07 **Preview**, model id: `gemini-robotics-er-2-preview`, plus `gemini-robotics-er-2-streaming-preview` for real-time streaming via the Live API) — embodied reasoning built on Gemini 3.5 Flash: spatial reasoning, video moment finding and progress classification, multi-robot orchestration, multi-step tool use. **A reasoning/VLM layer, not low-level control**. Available in AI Studio; private preview on Gemini Enterprise Agent Platform. Google's docs state it is "in preview" `[1]`.
+- **ER 1.6 was deprecated on 2026-08-31** — Google's docs direct users to switch to the ER 2 model ids `[1]`. Any existing material or demo still showing `gemini-robotics-er-1.6-preview` needs updating.
+- **Gemini Robotics 2 VLA · On-Device 2** — the whole-body control VLA and the locally deployable model. **Early-access partners only** (Trusted Tester sign-up). Google itself says multi-finger dexterous manipulation remains challenging.
 
-**AWS mapping (competing stack → complemented by AWS)**: Gemini Robotics-ER plays the **planner (System 2) role** — even if a customer uses it, **robot fleet orchestration, tool gateway, and policy guardrails can be wrapped with Bedrock AgentCore** (→ [pillar-5](pillar-5.md)). For low-level control VLA, offer the alternative of fine-tuning open models (π/OpenVLA/GR00T) on AWS.
+**AWS mapping (competing stack → complemented by AWS)**: Gemini Robotics ER plays the **planner (System 2) role** — even if a customer uses it, **robot fleet orchestration, tool gateway, and policy guardrails can be wrapped with Bedrock AgentCore** (→ [pillar-5](pillar-5.md)). For low-level control VLA, offer the alternative of fine-tuning open models (π/OpenVLA/GR00T) on AWS.
 
 **Decision criteria**:
 
-- Need fast high-level reasoning and can accept the Google ecosystem / preview risk → trying the ER 1.6 API is fine (but it is Preview — no production commitment).
+- Need fast high-level reasoning and can accept the Google ecosystem / preview risk → trying the ER 2 API is fine (but it is Preview — no production commitment).
 - Commercial / on-prem / data sovereignty / low-level control customization → **fine-tuning open VLAs on AWS** is more flexible.
 
 **Customer case**: partner deployments (many undisclosed).
@@ -251,7 +251,7 @@ graph TD
 - **Trainium-for-VLA is unverified.** The whole VLA toolchain is CUDA. State the risk when proposing.
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: high (model versions · licenses · GPU requirements · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified_
+_owner: Youngjin · updated: 2026-11 · volatility: high (model versions · licenses · GPU requirements · instances are managed in the collapsed block) · sources: [1] official/paper, [3] vendor, [4] unverified_
 
 <!-- 용어 각주 -->
 

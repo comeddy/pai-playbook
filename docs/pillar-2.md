@@ -1,6 +1,6 @@
 # Pillar 2 — 모델 학습 (Model Training · VLA)
 
-_최종 갱신: 2026-09 · owner: Youngjin · volatility: 높음(모델 버전·라이선스·인스턴스가 자주 바뀜)_
+_최종 갱신: 2026-11 · owner: Youngjin · volatility: 높음(모델 버전·라이선스·인스턴스가 자주 바뀜)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -30,7 +30,7 @@ _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/up
 
 | 후보 | 확인할 1차 출처 | 판단 범위 |
 |---|---|---|
-| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 선택한 버전의 모델 카드·가중치 약관·코드 LICENSE | 모델 세대 전체를 동일 라이선스로 묶지 않음 |
+| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 선택한 버전의 모델 카드·가중치 약관·코드 LICENSE | 모델 세대 전체를 동일 라이선스로 묶지 않음. **N1.7(GA)**: 코드 Apache-2.0, 가중치 [NVIDIA Open Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/) — 약관 원문이 "Models are commercially usable"을 명시 `[1]`(2026-11-04 확인). README 서두의 "Apache 2.0으로 완전 상업 라이선스" 문구는 가중치 약관과 달라 인용하지 않는다. N1.5는 모델 카드상 비상업 |
 | [Physical Intelligence openpi](https://github.com/Physical-Intelligence/openpi) | 코드 LICENSE·체크포인트·기반 모델 접근/사용 조건 | 코드의 Apache-2.0 표기만으로 모든 가중치·데이터 권리를 판단하지 않음 |
 | [OpenVLA](https://github.com/openvla/openvla#pretrained-vlas) | README의 Model Licensing & Commercial Use | **코드 MIT / Llama-2 파생 가중치 Llama Community License** `[1]` |
 
@@ -162,23 +162,23 @@ graph TD
 
 ---
 
-## 5. (경쟁 스택) Google Gemini Robotics  🟡 Preview
+## 5. (경쟁 스택) Google Gemini Robotics 2  🟡 Preview
 
-**L0 TL;DR**: 구글의 로봇 VLA 패밀리. **Gemini Robotics-ER 1.6은 프리뷰(Gemini API/AI Studio)** 로 공개된 embodied reasoning(고수준 추론·툴콜) 레이어이고, 저수준 모터 제어 VLA는 파트너 한정. 경쟁 스택이지만 고객이 자주 물으므로 정직하게 다룬다.
+**L0 TL;DR**: 구글의 로봇 모델 패밀리. 2026-07-30 **Gemini Robotics 2**로 세대가 바뀌며 전신 제어(보행·자세 전환·양손 조작)와 다중 로봇 협업을 내세웠다. 개발자가 바로 쓸 수 있는 것은 **추론 레이어 ER 2(Gemini API/AI Studio, Preview)** 뿐이고, 저수준 제어 VLA와 On-Device 2는 얼리액세스 파트너 한정이다. 경쟁 스택이지만 고객이 자주 물으므로 정직하게 다룬다.
 
 **고객 니즈/문제**: "Gemini Robotics 쓰면 되는 거 아닌가요? AWS랑 어떻게 관계되죠?"
 
-**솔루션 개요** `[1]`:
+**솔루션 개요** `[1]` ([발표](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/) · [개발자 문서](https://ai.google.dev/gemini-api/docs/robotics-overview), 2026-11-04 확인):
 
-- **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) — 에이전틱 embodied reasoning: 태스크 분해, 툴콜(Search 포함), VLA 호출, 아날로그 게이지 판독. **추론/VLM 레이어이지 저수준 제어 아님**. Google 공식 문서가 "currently in preview" 명시 `[1]`.
-- **Gemini Robotics On-Device** (2025-06) — 로컬 배포 가능한 첫 VLA, 파인튜닝 지원(50~100 데모). **waitlist/trusted-tester(Preview)**.
-- **Gemini Robotics 1.5 VLA** — 파트너 한정.
+- **Gemini Robotics ER 2** (2026-07 **Preview**, model id: `gemini-robotics-er-2-preview`, 실시간 스트리밍용 `gemini-robotics-er-2-streaming-preview`(Live API)) — Gemini 3.5 Flash 기반 embodied reasoning: 공간 추론, 영상 구간 찾기·진행도 판정, 다중 로봇 오케스트레이션, 다단계 툴 사용. **추론/VLM 레이어이지 저수준 제어 아님**. AI Studio에 공개, Gemini Enterprise Agent Platform은 private preview. Google 문서가 "in preview"를 명시 `[1]`.
+- **ER 1.6은 2026-08-31 지원 중단(deprecated)** — Google 문서가 ER 2 model id로 교체를 안내한다 `[1]`. 기존 자료·데모에 `gemini-robotics-er-1.6-preview`가 보이면 갱신 대상이다.
+- **Gemini Robotics 2 VLA · On-Device 2** — 전신 제어 VLA와 로컬 배포 모델. **얼리액세스 파트너 한정**(Trusted Tester 신청). 다지(multi-finger) 정밀 조작은 Google도 아직 어렵다고 인정한다.
 
-**AWS 매핑 (경쟁 스택 → AWS 보완)**: Gemini Robotics-ER는 **플래너(System 2) 역할** — 고객이 이를 쓰더라도 **로봇 플릿 오케스트레이션·툴 게이트웨이·정책 가드레일은 Bedrock AgentCore로 감쌀 수 있다**(→ [pillar-5](pillar-5.md)). 저수준 제어 VLA는 오픈 모델(π/OpenVLA/GR00T)을 AWS에서 파인튜닝하는 대안 제시.
+**AWS 매핑 (경쟁 스택 → AWS 보완)**: Gemini Robotics ER은 **플래너(System 2) 역할** — 고객이 이를 쓰더라도 **로봇 플릿 오케스트레이션·툴 게이트웨이·정책 가드레일은 Bedrock AgentCore로 감쌀 수 있다**(→ [pillar-5](pillar-5.md)). 저수준 제어 VLA는 오픈 모델(π/OpenVLA/GR00T)을 AWS에서 파인튜닝하는 대안 제시.
 
 **의사결정 기준**:
 
-- 빠른 고수준 추론이 필요하고 구글 생태계·프리뷰 리스크 수용 가능 → ER 1.6 API 시도 가능(단 Preview — 프로덕션 약정 금지).
+- 빠른 고수준 추론이 필요하고 구글 생태계·프리뷰 리스크 수용 가능 → ER 2 API 시도 가능(단 Preview — 프로덕션 약정 금지).
 - 상용·온프렘·데이터 주권·저수준 제어 커스터마이즈 → **오픈 VLA를 AWS에서 파인튜닝**이 더 유연.
 
 **고객 사례**: 파트너 배포(비공개 다수).
@@ -249,7 +249,7 @@ graph TD
 - **Trainium-for-VLA는 미검증.** 전체 VLA 툴체인이 CUDA. 제안 시 리스크 명시.
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 높음 (모델 버전·라이선스·GPU 요구·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증_
+_owner: Youngjin · updated: 2026-11 · volatility: 높음 (모델 버전·라이선스·GPU 요구·인스턴스는 접힌 블록에서 관리) · sources: [1] 공식/논문, [3] 벤더, [4] 미검증_
 
 <!-- 용어 각주 -->
 

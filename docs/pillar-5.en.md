@@ -1,9 +1,9 @@
 ---
-ko_hash: 301fcc497bdcab115a9021056c5f9f79cba38358
+ko_hash: a0c8b967694d5e99f60a5e0081e791e83f66457d
 ---
 # Pillar 5 — Agentic Orchestration
 
-_Last updated: 2026-09 · owner: Youngjin · volatility: high (AgentCore features/regions expand often)_
+_Last updated: 2026-11 · owner: Youngjin · volatility: high (AgentCore features/regions expand often)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -51,7 +51,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 - [Getting started with AgentCore workshop](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive workshop](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
 - [AgentCore retail agent workshop "Build! Deploy! Observe!"](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) — Korean. Retail-domain examples, but covers all seven AgentCore services (Gateway · Runtime · Observability · Code Interpreter · Memory · Policy · Browser) in a three-phase hands-on — the Policy guardrail/escalation lab connects to item 5 (Safety & guardrails). Guide: [workshop site](https://dxdbmmdwak6t8.cloudfront.net/) (event-scoped CloudFront deployment — link persistence unconfirmed ⚠️)
 - (internal AgentCore workshop — confirm needed ⚠️)
-- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) — aws-samples. 4-pillar flywheel reference architecture. ⚠️ Only NVIDIA OSMO 6.3 on EKS orchestration is Available; Cosmos·Isaac Lab·GR00T·Strands+AgentCore agentic layer are Planned
+- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) — aws-samples. 4-pillar flywheel reference architecture. Per the README (checked 2026-11-04) **Available**: Foundation · Cosmos (Predict, Transfer) · Isaac Lab RL · GR00T N1.6 fine-tuning · DreamZero · Isaac Sim workstation · OSMO 6.3 on EKS · Strands Agents / **Preview**: Isaac Lab Arena evaluation / **Planned**: edge deployment (Jetson, Greengrass) · AgentCore hosted runtime. ⚠️ Available means the sample is published, not an AWS operational guarantee
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples. Bedrock agents control Isaac Sim and real robots SO-ARM101/XGO2/Zumi via IoT, iterative sim-to-real learning with agent memory
 - [Agentic AI Robot — industrial safety monitoring](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples. AgentCore+IoT+robot autonomous patrol and edge inference demo, shown at AWS AI x Industry Week 2025, Korean README. ⚠️ Explicitly experimental/educational — not for production
 - [Smart Machines — hybrid Physical AI for industrial equipment](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples. Full-stack demo where agents detect fleet telemetry anomalies → diagnose root causes → create tickets and adjust machine parameters (multi-agent chat, natural-language scenario builder, KVS video → Bedrock analysis, Jetson YOLOWorld+VLM edge monitoring). ⚠️ README-stated demo — only excavators (simulated telemetry) fully work today; robot arms are WIP
@@ -106,7 +106,7 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 
 **➡️ Next action**: record product boundaries, completion, outages, intervention, and recovery in the [pilot card](start.md#pilot); perform [failure tests](operations.md#failure).
 
-**🔗 Related assets**: [pillar-2 training](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
+**🔗 Related assets**: [pillar-2 training](pillar-2.md) · [pillar-3 OSMO](pillar-3.md) · [Archetype AI Newton on AWS](news.md#archetype-newton) — partner. Deploys condition-monitoring agents for industrial equipment sensors (vibration, current, etc.) on EKS in the customer account and at the edge (Greengrass). Accuracy figures are vendor-reported
 
 ---
 
@@ -169,6 +169,6 @@ _Unless separately noted, each item inherits the page metadata (owner/updated/vo
 - **Korean figures like Lotte 30% are single-source** — re-confirm before hard citation.
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_
+_owner: Youngjin · updated: 2026-11 · volatility: high (AgentCore features · regions are managed in the collapsed block) · sources: [1] official, [3] vendor/press, [4] research/community_
 
 <!-- 용어 각주 -->

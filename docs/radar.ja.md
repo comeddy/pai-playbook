@@ -1,5 +1,5 @@
 ---
-ko_hash: ea4a4e9ab760a9da1d2c7a90684dcb88831b2562
+ko_hash: 78eb04b3b1a634ccbd7422c223064ad766eb3ccc
 ---
 # Radar — キュー / ウォッチリスト
 
@@ -19,8 +19,7 @@ _最終更新: 2026-09 · owner: Youngjin · volatility: 高_
 
 | 項目 | ラベル | 要点 | 昇格条件 |
 |---|---|---|---|
-| Physical Intelligence **[π0.7](https://www.physicalintelligence.company/)** | 🔵 Research | ✨ **注目**: π0/π0.5 で VLA をリードする PI が 2026-04 に組み合わせ的汎化(未学習タスクの遂行、例: エアフライヤーでの調理)の研究デモを公式発表 — 重み公開・GA になれば業界基準を再び塗り替える可能性<br>⏳ **待機**: PI 公式発表(2026-04-16、複数メディアが PI の公式ブログと Sergey Levine を引用) `[4]` — あくまで研究デモで重みは非公開(openpi の公開範囲は π0/π0.5 まで)、複雑な複数ステップの指示遂行は PI 自身も限界を認める。2026-10-24: 従来の「次期フラッグシップの噂」という表現が不正確だったため「公式研究デモを確認」に訂正(今回のセッションは physicalintelligence.company の DNS ブロックで一次ページを直接確認できず — 複数の独立メディアで裏付け) | 重み公開または GA + 独立した性能検証 |
-| **[GR00T N1.6 / N1.7](https://github.com/NVIDIA/Isaac-GR00T) 商用ライセンス** | 🟡→ | ✨ **注目**: 商用許可が事実なら、顧客提案に使える希少なオープン VLA になる（N1.5 は非商用のため提案不可）<br>⏳ **待機**: 公式 GitHub README(一次情報源、2026-10-24 確認)はコードが Apache-2.0、重みが NVIDIA Open Model License であると明記 — README 冒頭の「fully commercially licensable under Apache 2.0」という文言がライセンスセクション(重みは別ライセンス)と矛盾しており、README 自体に矛盾がある `[4]`。NVIDIA Open Model License 原文が許可する商用利用の範囲や Hugging Face モデルカードとの直接照合は、今回のセッションで nvidia.com・huggingface.co の DNS がブロックされ確認できなかった。N1.5 は依然としてモデルカード上で明確に非商用 `[1]` | ライセンス原文・モデルカードの直接照合で商用許可範囲を確定 |
+| Physical Intelligence **[π0.7](https://www.pi.website/blog/pi07)** | 🔵 Research | ✨ **注目**: π0/π0.5 で VLA をリードする PI が 2026-04 に組み合わせ的汎化(未学習タスクの遂行、例: エアフライヤーでの調理)の研究デモを公式発表 — 重み公開・GA になれば業界基準を再び塗り替える可能性<br>⏳ **待機**: PI 公式発表(2026-04-16、複数メディアが PI の公式ブログと Sergey Levine を引用) `[4]` — あくまで研究デモで重みは非公開(openpi の公開範囲は π0/π0.5 まで)、複雑な複数ステップの指示遂行は PI 自身も限界を認める。2026-10-24: 従来の「次期フラッグシップの噂」という表現が不正確だったため「公式研究デモを確認」に訂正(今回のセッションは physicalintelligence.company の DNS ブロックで一次ページを直接確認できず — 複数の独立メディアで裏付け) 2026-11-04: 一次ページ（[pi.website/blog/pi07](https://www.pi.website/blog/pi07)、"Published April 16, 2026"）と openpi README（π0.5 まで公開）を直接確認 — 公式発表の事実は `[1]`、性能主張は引き続き未検証 | 重み公開または GA + 独立した性能検証 |
 | **[World-action models](https://developer.nvidia.com/isaac/gr00t)**（DreamZero → GR00T N2） | 🟡 Preview | ✨ **注目**: VLA の次世代と目される「行動まで生成するワールドモデル」軸 — NVIDIA ロードマップの方向性指標<br>⏳ **待機**: GR00T N2「年末予定」、DreamZero は研究 | GA + 実デプロイ事例 |
 | Google DeepMind **[Genie 3](https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/)**（ロボット学習用ワールドモデル[^wfm]） | 🟡 Preview | ✨ **注目**: フロンティア級ワールドモデルをロボット学習のデータ源に使う試み — 成立すれば実データのボトルネックを迂回<br>⏳ **待機**: ワールドモデル自体はプレビュー、ロボット学習への適用は研究 | ロボットポリシー学習の検証事例 |
 | **VLM ベースの SysID[^sysid]**（[Vid2Sid](https://arxiv.org/abs/2602.19359), [Swim2Real](https://arxiv.org/abs/2603.20827)） | 🔵 Research | ✨ **注目**: 映像のみから物理パラメータを推定しシミュレーター校正を自動化 — sim-to-real の手作業キャリブレーションを不要にできる可能性<br>⏳ **待機**: 2026 プレプリント、単一ラボ | peer-review + 再現 |

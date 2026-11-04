@@ -1,9 +1,9 @@
 ---
-ko_hash: ce0d72925b235ddb25e456a8d86a06c28bfb81ae
+ko_hash: 442836fd3ba4a4e51bad0e6910c1e50c43dcee85
 ---
 # Pillar 1 — Data Collection & Processing
 
-_Last updated: 2026-09 · owner: Youngjin · volatility: medium (dataset versions/sizes are high)_
+_Last updated: 2026-11 · owner: Youngjin · volatility: medium (dataset versions/sizes are high)_
 _Unless separately noted, each item inherits the page metadata (owner/updated/volatility). When an item has its own owner, add an item footer._
 [← back to index](index.md)
 
@@ -112,7 +112,7 @@ _Note: some aggregators list DROID as "92,233 ep / Apache-2.0," but this is pres
 
 - Playbook: [pillar-3 Simulation](pillar-3.md)
 - (internal Isaac-on-AWS workshop deck — confirm needed ⚠️)
-- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs. Centralized management of visual assets such as USD scenes, point clouds, and CAD (versioning, lineage, viewers), for simulation environments and training data. Serverless CDK, near-production-grade
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs. Centralized management of visual assets such as USD scenes, point clouds, and CAD (versioning, lineage, viewers), for simulation environments and training data. Serverless CDK, near-production-grade · Since 2026-01 an Isaac Lab integration also trains and evaluates RL policies on AWS Batch GPUs ([official blog](https://aws.amazon.com/blogs/physical-ai/gpu-accelerated-robotic-simulation-training-with-nvidia-isaac-lab-in-vams/)); 2.6 (2026-10) redesigned workflow orchestration ([News](news.md#vams-2-6))
 
 ---
 
@@ -246,6 +246,7 @@ graph LR
 - Playbook: [pillar-4 edge deployment](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
 - [LeRobot teleop data collection on Greengrass sample](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. Greengrass v2 custom component that records SO-ARM101 (leader/follower) + dual-camera teleoperation in LeRobot v3 format → auto-upload to S3. MQTT remote control from a web console + KVS live (WebRTC/HLS) and episode playback, validated on Jetson AGX Thor. Prime candidate for a "collection→S3" standardization demo. ⚠️ README states educational/demo only — not for production use (MIT-0)
 - [Android PAI data collection app](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples. Field smartphone video+IMU→S3 offline-queue upload. ⚠️ Early-stage sample
+- [NVIDIA CloudXR 6 on AWS](https://github.com/aws-samples/sample-cloudxr6-on-aws) — aws-samples. Streams GPU-rendered OpenXR scenes to Quest and Vision Pro headsets — a path for collecting demonstrations via XR teleoperation inside simulation. Latency evidence is a single AWS test (LA Local Zone, ~35 ms pose-to-render), so latency from Korean Regions/Local Zones must be measured separately ([News](news.md#cloudxr-6))
 
 ---
 
@@ -256,7 +257,7 @@ graph LR
 - **The license is the first risk.** Just pointing out that AgiBot World (the largest) is non-commercial earns customer trust.
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: medium (dataset versions/sizes are high in the collapsed block) · sources: [1] official/paper, [3] vendor blog, [4] unverified_
+_owner: Youngjin · updated: 2026-11 · volatility: medium (dataset versions/sizes are high in the collapsed block) · sources: [1] official/paper, [3] vendor blog, [4] unverified_
 
 <!-- 용어 각주 -->
 

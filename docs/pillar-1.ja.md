@@ -1,10 +1,10 @@
 ---
-ko_hash: ce0d72925b235ddb25e456a8d86a06c28bfb81ae
+ko_hash: 442836fd3ba4a4e51bad0e6910c1e50c43dcee85
 ---
 # Pillar 1 — データ収集 & 処理 (Data Collection & Processing)
 
 
-_最終更新: 2026-09 · owner: Youngjin · volatility: 中（データセットのバージョン・サイズは高）_
+_最終更新: 2026-11 · owner: Youngjin · volatility: 中（データセットのバージョン・サイズは高）_
 _個別項目は別途表記が無い限りページメタデータ（owner/updated/volatility）を継承。項目別に owner を指定する場合は項目フッターを追加。_
 [← index へ](index.md)
 
@@ -113,7 +113,7 @@ _注意: 一部のアグリゲーターが DROID を「92,233 ep/Apache-2.0」�
 
 - プレイブック: [pillar-3 シミュレーション](pillar-3.md)
 - （社内 Isaac-on-AWS ワークショップ deck — 確認が必要 ⚠️）
-- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs。USD シーン·点群·CAD などビジュアルアセットの一元管理（バージョン·リネージ·ビューア）、シミュレーション環境·学習データ管理向け。CDK サーバーレス、near-production-grade
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs。USD シーン·点群·CAD などビジュアルアセットの一元管理（バージョン·リネージ·ビューア）、シミュレーション環境·学習データ管理向け。CDK サーバーレス、near-production-grade · 2026-01 からは Isaac Lab 統合により AWS Batch GPU で RL ポリシーの学習・評価まで対応（[公式ブログ](https://aws.amazon.com/blogs/physical-ai/gpu-accelerated-robotic-simulation-training-with-nvidia-isaac-lab-in-vams/)）、2.6（2026-10）でワークフローオーケストレーションを再設計（[新着情報](news.md#vams-2-6)）
 
 ---
 
@@ -247,6 +247,7 @@ graph LR
 - プレイブック: [pillar-4 エッジデプロイ](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
 - [LeRobot テレオペ収集 on Greengrass サンプル](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples。Greengrass v2 カスタムコンポーネントで SO-ARM101（リーダー/フォロワー）+デュアルカメラのテレオペレーションを LeRobot v3 形式で記録→S3 へ自動アップロード。Web コンソールから MQTT リモート制御 + KVS ライブ（WebRTC/HLS）・エピソード再生、Jetson AGX Thor で検証済み。「収集→S3」標準化デモの第一候補。⚠️ README 明記の教育・デモ用 — 本番環境での使用禁止（MIT-0）
 - [Android PAI データ収集アプリ](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples。現場スマートフォン映像+IMU→S3 オフラインキューアップロード。⚠️ 初期サンプル
+- [NVIDIA CloudXR 6 on AWS](https://github.com/aws-samples/sample-cloudxr6-on-aws) — aws-samples。GPU でレンダリングした OpenXR シーンを Quest・Vision Pro ヘッドセットへストリーミング — シミュレーション内の XR テレオペレーションでデモデータを集める経路。レイテンシの根拠は AWS 自身のテスト 1 件（LA Local Zone、pose-to-render 約 35 ms）のみで、韓国のリージョン・Local Zone からのレイテンシは別途実測が必要（[新着情報](news.md#cloudxr-6)）
 
 ---
 
@@ -257,7 +258,7 @@ graph LR
 - **ライセンスが最初のリスク。** AgiBot World（最大規模）が非商業だという事実一つを指摘するだけで顧客の信頼を得られます。
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 中（データセットのバージョン・サイズは折りたたみブロックで高）· sources: [1] 公式/論文, [3] ベンダーブログ, [4] 未検証_
+_owner: Youngjin · updated: 2026-11 · volatility: 中（データセットのバージョン・サイズは折りたたみブロックで高）· sources: [1] 公式/論文, [3] ベンダーブログ, [4] 未検証_
 
 <!-- 용어 각주 -->
 

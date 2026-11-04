@@ -1,9 +1,9 @@
 ---
-ko_hash: 301fcc497bdcab115a9021056c5f9f79cba38358
+ko_hash: a0c8b967694d5e99f60a5e0081e791e83f66457d
 ---
 # Pillar 5 — 智能体编排 (Agentic Orchestration)
 
-_最终更新: 2026-09 · owner: Youngjin · volatility: 高（AgentCore 功能·区域经常扩展）_
+_最终更新: 2026-11 · owner: Youngjin · volatility: 高（AgentCore 功能·区域经常扩展）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -51,7 +51,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - [AgentCore 入门研讨会](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive 研讨会](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
 - [AgentCore 零售智能体研讨会 "Build! Deploy! Observe!"](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) —— 韩语。虽以零售场景为例，但以三阶段动手实验覆盖 AgentCore 全部 7 个服务（Gateway·Runtime·Observability·Code Interpreter·Memory·Policy·Browser）—— Policy 护栏·升级规则实验与第 5 项（安全 & 护栏）相衔接。指南: [研讨会站点](https://dxdbmmdwak6t8.cloudfront.net/)（面向活动的 CloudFront 部署 —— 链接持久性待确认 ⚠️）
 - （内部 AgentCore 研讨会 —— 需确认 ⚠️）
-- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) —— aws-samples。4 支柱飞轮参考架构。⚠️ 目前仅 NVIDIA OSMO 6.3 on EKS 编排为 Available，Cosmos·Isaac Lab·GR00T·Strands+AgentCore 智能体层均为 Planned
+- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) —— aws-samples。4 支柱飞轮参考架构。依 README（2026-11-04 确认）**Available**：Foundation·Cosmos（Predict·Transfer）·Isaac Lab RL·GR00T N1.6 微调·DreamZero·Isaac Sim 工作站·OSMO 6.3 on EKS·Strands Agents / **Preview**：Isaac Lab Arena 评估 / **Planned**：边缘部署（Jetson·Greengrass）·AgentCore 托管运行时。⚠️ Available 表示示例已公开，并非 AWS 运营保证
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) —— aws-samples。Bedrock 智能体通过 IoT 控制 Isaac Sim 与实体机器人 SO-ARM101/XGO2/Zumi，借助智能体记忆进行 sim-to-real 迭代学习
 - [Agentic AI Robot — 工业安全监控](https://github.com/aws-samples/sample-agentic-ai-robot) —— aws-samples。AgentCore+IoT+机器人自主巡逻·边缘推理演示，曾在 AWS AI x Industry Week 2025 展示，含韩语 README。⚠️ 明确标注为实验·教育用途 —— 非生产环境
 - [Smart Machines — 工业设备混合 Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) —— aws-samples。智能体完成机群遥测异常检测→根因诊断→建单·调整设备参数的全栈演示（多智能体对话·自然语言场景构建器·KVS 视频→Bedrock 分析·Jetson YOLOWorld+VLM 边缘监控）。⚠️ README 明示为演示 —— 目前仅挖掘机（模拟遥测）完整可用，机械臂为 WIP
@@ -106,7 +106,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 **➡️ 后续行动**：在[试点卡](start.md#pilot)记录产品边界、完成、断网、介入、恢复要求，执行[故障测试](operations.md#failure)。
 
-**🔗 相关资产**: [pillar-2 训练](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
+**🔗 相关资产**: [pillar-2 训练](pillar-2.md) · [pillar-3 OSMO](pillar-3.md) · [Archetype AI Newton on AWS](news.md#archetype-newton) —— 合作伙伴。将工业设备传感器（振动·电流等）状态监控代理部署到客户账户的 EKS 与边缘（Greengrass）。准确率数据为厂商自报
 
 ---
 
@@ -169,6 +169,6 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 - **Lotte 30% 等韩国数值为单一来源** —— 硬引用前需再确认。
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
+_owner: Youngjin · updated: 2026-11 · volatility: 高（AgentCore 功能·区域在折叠块中管理）· sources: [1] 官方, [3] 厂商/press, [4] 研究/社区_
 
 <!-- 용어 각주 -->

@@ -1,10 +1,10 @@
 ---
-ko_hash: 63e5a3e8cb3004a7dc553bf04fe7c4d473451f3a
+ko_hash: 409512ce529dc2df01d89e5ce6fd711dcca22a95
 ---
 # Pillar 2 — モデル学習 (Model Training · VLA)
 
 
-_最終更新: 2026-09 · owner: Youngjin · volatility: 高（モデルバージョン・ライセンス・インスタンスが頻繁に変わる）_
+_最終更新: 2026-11 · owner: Youngjin · volatility: 高（モデルバージョン・ライセンス・インスタンスが頻繁に変わる）_
 _個別項目は別途表記がない限りページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターを追加します。_
 [← index へ](index.md)
 
@@ -34,7 +34,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 | 候補 | 確認する一次資料 | 判断範囲 |
 |---|---|---|
-| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 対象版モデルカード・重み規約・コードLICENSE | 全世代を同一ライセンスにまとめません |
+| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 対象版モデルカード・重み規約・コードLICENSE | 全世代を同一ライセンスにまとめません。**N1.7（GA）**: コードは Apache-2.0、重みは [NVIDIA Open Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/) — 規約原文が "Models are commercially usable" と明示 `[1]`（2026-11-04 確認）。README 冒頭の "fully commercially licensable under Apache 2.0" は重みの規約と異なるため引用しません。N1.5 はモデルカード上非商用 |
 | [Physical Intelligence openpi](https://github.com/Physical-Intelligence/openpi) | コードLICENSE・チェックポイント・基盤モデル条件 | コードのApache-2.0だけで全重み・データの権利を判断しません |
 | [OpenVLA](https://github.com/openvla/openvla#pretrained-vlas) | READMEのModel Licensing & Commercial Use | **コードMIT / Llama-2派生重みはLlama Community License** `[1]` |
 
@@ -165,23 +165,23 @@ graph TD
 
 ---
 
-## 5. （競合スタック）Google Gemini Robotics  🟡 Preview
+## 5. （競合スタック）Google Gemini Robotics 2  🟡 Preview
 
-**L0 TL;DR**: Google のロボット VLA ファミリー。**Gemini Robotics-ER 1.6 はプレビュー（Gemini API/AI Studio）** として公開された embodied reasoning（高レベル推論・ツールコール）レイヤーで、低レベルのモーター制御 VLA はパートナー限定です。競合スタックですが顧客がよく尋ねるので正直に扱います。
+**L0 TL;DR**: Google のロボットモデルファミリー。2026-07-30 に **Gemini Robotics 2** へ世代交代し、全身制御（歩行・姿勢変換・両手操作）とマルチロボット協調を打ち出しました。開発者がすぐ使えるのは**推論レイヤー ER 2（Gemini API/AI Studio、Preview）**だけで、低レベル制御 VLA と On-Device 2 はアーリーアクセスのパートナー限定です。競合スタックですが顧客がよく尋ねるので正直に扱います。
 
 **顧客ニーズ/課題**: 「Gemini Robotics を使えばいいのでは？AWS とどう関係する？」
 
-**ソリューション概要** `[1]`:
+**ソリューション概要** `[1]`（[発表](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/) · [開発者ドキュメント](https://ai.google.dev/gemini-api/docs/robotics-overview)、2026-11-04 確認）:
 
-- **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) —— エージェンティックな embodied reasoning: タスク分解、ツールコール（Search 含む）、VLA 呼び出し、アナログゲージ読み取り。**推論/VLM レイヤーであって低レベル制御ではない**。Google 公式ドキュメントが "currently in preview" と明示 `[1]`。
-- **Gemini Robotics On-Device** (2025-06) —— ローカルデプロイ可能な最初の VLA、ファインチューニング対応（50~100 デモ）。**waitlist/trusted-tester(Preview)**。
-- **Gemini Robotics 1.5 VLA** —— パートナー限定。
+- **Gemini Robotics ER 2** (2026-07 **Preview**, model id: `gemini-robotics-er-2-preview`、リアルタイムストリーミング用 `gemini-robotics-er-2-streaming-preview`（Live API）) —— Gemini 3.5 Flash ベースの embodied reasoning: 空間推論、映像区間の検出・進捗判定、マルチロボットオーケストレーション、複数ステップのツール使用。**推論/VLM レイヤーであって低レベル制御ではない**。AI Studio で公開、Gemini Enterprise Agent Platform は private preview。Google のドキュメントが "in preview" と明示 `[1]`。
+- **ER 1.6 は 2026-08-31 に非推奨（deprecated）** —— Google のドキュメントが ER 2 の model id への置き換えを案内 `[1]`。既存資料・デモに `gemini-robotics-er-1.6-preview` があれば更新対象です。
+- **Gemini Robotics 2 VLA · On-Device 2** —— 全身制御 VLA とローカルデプロイ用モデル。**アーリーアクセスのパートナー限定**（Trusted Tester 申請）。多指（multi-finger）の精密操作は Google 自身もまだ難しいと認めています。
 
-**AWS マッピング（競合スタック → AWS 補完）**: Gemini Robotics-ER は **プランナー（System 2）の役割** —— 顧客がこれを使うとしても、**ロボットフリートのオーケストレーション・ツールゲートウェイ・ポリシーガードレールは Bedrock AgentCore で包める**（→ [pillar-5](pillar-5.md)）。低レベル制御 VLA はオープンモデル（π/OpenVLA/GR00T）を AWS でファインチューニングする代替を提示。
+**AWS マッピング（競合スタック → AWS 補完）**: Gemini Robotics ER は **プランナー（System 2）の役割** —— 顧客がこれを使うとしても、**ロボットフリートのオーケストレーション・ツールゲートウェイ・ポリシーガードレールは Bedrock AgentCore で包める**（→ [pillar-5](pillar-5.md)）。低レベル制御 VLA はオープンモデル（π/OpenVLA/GR00T）を AWS でファインチューニングする代替を提示。
 
 **意思決定基準**:
 
-- 速い高レベル推論が必要で Google エコシステム・プレビューリスクを受容可能 → ER 1.6 API を試せる（ただし Preview —— 本番コミット禁止）。
+- 速い高レベル推論が必要で Google エコシステム・プレビューリスクを受容可能 → ER 2 API を試せる（ただし Preview —— 本番コミット禁止）。
 - 商用・オンプレ・データ主権・低レベル制御のカスタマイズ → **オープン VLA を AWS でファインチューニング** の方が柔軟。
 
 **顧客事例**: パートナーデプロイ（非公開が多数）。
@@ -252,7 +252,7 @@ graph TD
 - **Trainium-for-VLA は未検証。** VLA ツールチェーン全体が CUDA。提案時はリスクを明示。
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 高（モデルバージョン・ライセンス・GPU 要件・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証_
+_owner: Youngjin · updated: 2026-11 · volatility: 高（モデルバージョン・ライセンス・GPU 要件・インスタンスは折りたたみブロックで管理）· sources: [1] 公式/論文, [3] ベンダー, [4] 未検証_
 
 <!-- 용어 각주 -->
 

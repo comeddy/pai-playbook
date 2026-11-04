@@ -1,6 +1,6 @@
 # Pillar 1 — 데이터 수집 & 처리 (Data Collection & Processing)
 
-_최종 갱신: 2026-09 · owner: Youngjin · volatility: 중간(데이터셋 버전·크기는 높음)_
+_최종 갱신: 2026-11 · owner: Youngjin · volatility: 중간(데이터셋 버전·크기는 높음)_
 _개별 항목은 별도 표기가 없는 한 페이지 메타데이터(owner/updated/volatility)를 상속. 항목별 owner 지정 시 항목 푸터 추가._
 [← index로](index.md)
 
@@ -109,7 +109,7 @@ _주의: 일부 애그리게이터가 DROID를 "92,233 ep/Apache-2.0"로 표기�
 
 - 플레이북: [pillar-3 시뮬레이션](pillar-3.md)
 - (사내 Isaac-on-AWS 워크숍 deck — 확인 필요 ⚠️)
-- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs. USD 씬·포인트클라우드·CAD 등 시각 자산 중앙 관리(버전·계보·뷰어), 시뮬레이션 환경·학습 데이터 관리용. CDK 서버리스, near-production-grade
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) — awslabs. USD 씬·포인트클라우드·CAD 등 시각 자산 중앙 관리(버전·계보·뷰어), 시뮬레이션 환경·학습 데이터 관리용. CDK 서버리스, near-production-grade · 2026-01 Isaac Lab 통합으로 AWS Batch GPU에서 RL 정책 학습·평가까지 지원([공식 블로그](https://aws.amazon.com/blogs/physical-ai/gpu-accelerated-robotic-simulation-training-with-nvidia-isaac-lab-in-vams/)), 2.6(2026-10)에서 워크플로 오케스트레이션 재설계([새 소식](news.md#vams-2-6))
 
 ---
 
@@ -243,6 +243,7 @@ graph LR
 - 플레이북: [pillar-4 엣지 배포](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
 - [LeRobot 텔레옵 수집 on Greengrass 샘플](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) — aws-samples. Greengrass v2 커스텀 컴포넌트로 SO-ARM101(리더/팔로워)+듀얼 카메라 텔레옵을 LeRobot v3 포맷 기록→S3 자동 업로드. 웹 콘솔에서 MQTT 원격 제어 + KVS 라이브(WebRTC/HLS)·에피소드 재생, Jetson AGX Thor 검증. "수집→S3" 표준화 데모의 1차 후보. ⚠️ README 명시 교육·데모용 — production 사용 금지(MIT-0)
 - [Android PAI 데이터 수집 앱](https://github.com/aws-samples/sample-physical-ai-data-collector-app) — aws-samples. 현장 스마트폰 영상+IMU→S3 오프라인 큐 업로드. ⚠️ 초기 샘플
+- [NVIDIA CloudXR 6 on AWS](https://github.com/aws-samples/sample-cloudxr6-on-aws) — aws-samples. GPU로 렌더링한 OpenXR 장면을 Quest·Vision Pro 헤드셋으로 스트리밍 — 시뮬레이션 안 XR 텔레옵으로 시연 데이터를 모으는 경로. 지연 근거는 AWS 자체 테스트 1건(LA Local Zone, pose-to-render 약 35 ms)뿐이라 한국 리전·Local Zone 지연은 별도 실측 필요([새 소식](news.md#cloudxr-6))
 
 ---
 
@@ -253,7 +254,7 @@ graph LR
 - **라이선스가 첫 리스크.** AgiBot World(최대 규모)가 비상업이라는 사실 하나만 짚어도 고객 신뢰를 얻는다.
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
+_owner: Youngjin · updated: 2026-11 · volatility: 중간 (데이터셋 버전·크기는 접힌 블록에서 높음) · sources: [1] 공식/논문, [3] 벤더 블로그, [4] 미검증_
 
 <!-- 용어 각주 -->
 

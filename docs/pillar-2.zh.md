@@ -1,9 +1,9 @@
 ---
-ko_hash: 63e5a3e8cb3004a7dc553bf04fe7c4d473451f3a
+ko_hash: 409512ce529dc2df01d89e5ce6fd711dcca22a95
 ---
 # Pillar 2 — 模型训练 (Model Training · VLA)
 
-_最终更新: 2026-09 · owner: Youngjin · volatility: 高（模型版本·许可证·实例经常变动）_
+_最终更新: 2026-11 · owner: Youngjin · volatility: 高（模型版本·许可证·实例经常变动）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -33,7 +33,7 @@ _除非另有标注，各条目继承页面元数据（owner/updated/volatility�
 
 | 候选 | 要核对的一手来源 | 判断范围 |
 |---|---|---|
-| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 所选版本模型卡、权重条款、代码 LICENSE | 不将所有代际归为同一许可证 |
+| [NVIDIA Isaac GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 所选版本模型卡、权重条款、代码 LICENSE | 不将所有代际归为同一许可证。**N1.7（GA）**：代码 Apache-2.0，权重 [NVIDIA Open Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-open-model-license/) —— 条款原文明示 "Models are commercially usable" `[1]`（2026-11-04 确认）。README 开头的 "fully commercially licensable under Apache 2.0" 表述与权重条款不同，不予引用。N1.5 依模型卡为非商用 |
 | [Physical Intelligence openpi](https://github.com/Physical-Intelligence/openpi) | 代码 LICENSE、checkpoint、基础模型访问/使用条件 | 代码 Apache-2.0 不决定所有权重/数据权利 |
 | [OpenVLA](https://github.com/openvla/openvla#pretrained-vlas) | README 的 Model Licensing & Commercial Use | **代码 MIT / Llama-2 派生权重 Llama Community License** `[1]` |
 
@@ -164,23 +164,23 @@ graph TD
 
 ---
 
-## 5. （竞品栈）Google Gemini Robotics  🟡 Preview
+## 5. （竞品栈）Google Gemini Robotics 2  🟡 Preview
 
-**L0 TL;DR**: 谷歌的机器人 VLA 家族。**Gemini Robotics-ER 1.6 以预览形式（Gemini API/AI Studio）公开**，是 embodied reasoning（高层推理·工具调用）层，而低层电机控制 VLA 仅限合作伙伴。虽是竞品栈，但客户常问，故诚实对待。
+**L0 TL;DR**: 谷歌的机器人模型家族。2026-07-30 换代为 **Gemini Robotics 2**，主打全身控制（行走·姿态转换·双手操作）与多机器人协作。开发者能直接使用的只有**推理层 ER 2（Gemini API/AI Studio，Preview）**，低层控制 VLA 与 On-Device 2 仅限早期访问合作伙伴。虽是竞品栈，但客户常问，故诚实对待。
 
 **客户需求/问题**: "用 Gemini Robotics 不就行了吗？它和 AWS 怎么关联？"
 
-**解决方案概览** `[1]`:
+**解决方案概览** `[1]`（[发布](https://deepmind.google/blog/gemini-robotics-2-brings-whole-body-intelligence-to-robots/) · [开发者文档](https://ai.google.dev/gemini-api/docs/robotics-overview)，2026-11-04 确认）:
 
-- **Gemini Robotics-ER 1.6** (2026-04 **Preview**, model id: `gemini-robotics-er-1.6-preview`, AI Studio + Gemini API) —— 智能体式 embodied reasoning: 任务分解、工具调用（含 Search）、VLA 调用、模拟仪表读数。**是推理/VLM 层而非低层控制**。谷歌官方文档明示 "currently in preview" `[1]`。
-- **Gemini Robotics On-Device** (2025-06) —— 首个可本地部署的 VLA，支持微调（50~100 个演示）。**waitlist/trusted-tester(Preview)**。
-- **Gemini Robotics 1.5 VLA** —— 仅限合作伙伴。
+- **Gemini Robotics ER 2** (2026-07 **Preview**, model id: `gemini-robotics-er-2-preview`，实时流式用 `gemini-robotics-er-2-streaming-preview`（Live API）) —— 基于 Gemini 3.5 Flash 的 embodied reasoning：空间推理、视频片段定位·进度判定、多机器人编排、多步工具使用。**是推理/VLM 层而非低层控制**。已在 AI Studio 公开，Gemini Enterprise Agent Platform 为 private preview。谷歌文档明示 "in preview" `[1]`。
+- **ER 1.6 已于 2026-08-31 弃用（deprecated）** —— 谷歌文档指引改用 ER 2 的 model id `[1]`。现有资料·演示中若出现 `gemini-robotics-er-1.6-preview`，需要更新。
+- **Gemini Robotics 2 VLA · On-Device 2** —— 全身控制 VLA 与本地部署模型。**仅限早期访问合作伙伴**（Trusted Tester 申请）。谷歌自身也承认多指（multi-finger）精细操作仍有难度。
 
-**AWS 映射（竞品栈 → AWS 补充）**: Gemini Robotics-ER 承担 **规划器（System 2）角色** —— 即使客户使用它，**机器人机群编排·工具网关·策略护栏也可以用 Bedrock AgentCore 包裹**（→ [pillar-5](pillar-5.md)）。低层控制 VLA 则提议在 AWS 上微调开放模型（π/OpenVLA/GR00T）作为替代。
+**AWS 映射（竞品栈 → AWS 补充）**: Gemini Robotics ER 承担 **规划器（System 2）角色** —— 即使客户使用它，**机器人机群编排·工具网关·策略护栏也可以用 Bedrock AgentCore 包裹**（→ [pillar-5](pillar-5.md)）。低层控制 VLA 则提议在 AWS 上微调开放模型（π/OpenVLA/GR00T）作为替代。
 
 **决策标准**:
 
-- 需要快速的高层推理且能接受谷歌生态·预览风险 → 可尝试 ER 1.6 API（但为 Preview —— 禁止生产承诺）。
+- 需要快速的高层推理且能接受谷歌生态·预览风险 → 可尝试 ER 2 API（但为 Preview —— 禁止生产承诺）。
 - 商用·本地部署·数据主权·低层控制定制 → **在 AWS 上微调开放 VLA** 更灵活。
 
 **客户案例**: 合作伙伴部署（多为非公开）。
@@ -251,7 +251,7 @@ graph TD
 - **Trainium-for-VLA 未经验证。** 整个 VLA 工具链是 CUDA。提议时明示风险。
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 高（模型版本·许可证·GPU 需求·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证_
+_owner: Youngjin · updated: 2026-11 · volatility: 高（模型版本·许可证·GPU 需求·实例在折叠块中管理）· sources: [1] 官方/论文, [3] 厂商, [4] 未经验证_
 
 <!-- 용어 각주 -->
 

@@ -1,10 +1,10 @@
 ---
-ko_hash: 301fcc497bdcab115a9021056c5f9f79cba38358
+ko_hash: a0c8b967694d5e99f60a5e0081e791e83f66457d
 ---
 # Pillar 5 — エージェントオーケストレーション (Agentic Orchestration)
 
 
-_最終更新: 2026-09 · owner: Youngjin · volatility: 高（AgentCore の機能・リージョンが頻繁に拡張）_
+_最終更新: 2026-11 · owner: Youngjin · volatility: 高（AgentCore の機能・リージョンが頻繁に拡張）_
 _個別項目は別途表記がない限りページメタデータ（owner/updated/volatility）を継承します。項目ごとに owner を指定する場合は項目フッターを追加します。_
 [← index へ](index.md)
 
@@ -52,7 +52,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 - [AgentCore 入門ワークショップ](https://catalog.workshops.aws/agentcore-getting-started/en-US) · [AgentCore Deep Dive ワークショップ](https://catalog.workshops.aws/agentcore-deep-dive/en-US)
 - [AgentCore リテールエージェントワークショップ「Build! Deploy! Observe!」](https://catalog.us-east-1.prod.workshops.aws/workshops/3cab1e1f-1dfa-42e0-959c-6e2e0a072ea3/ko-KR) — 韓国語。リテール事例ながら AgentCore の 7 サービス（Gateway・Runtime・Observability・Code Interpreter・Memory・Policy・Browser）すべてを 3 フェーズのハンズオンでカバー — Policy ガードレール・エスカレーション実習は第 5 項（安全 & ガードレール）との接点。ガイド: [ワークショップサイト](https://dxdbmmdwak6t8.cloudfront.net/)（イベント向け CloudFront 配信 — リンクの持続性は要確認 ⚠️）
 - （社内 AgentCore ワークショップ — 要確認 ⚠️）
-- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-aws-physical-ai-toolchain) — aws-samples。4 ピラー・フライホイールのリファレンスアーキテクチャ。⚠️ 現在 Available なのは NVIDIA OSMO 6.3 on EKS オーケストレーションのみ、Cosmos·Isaac Lab·GR00T·Strands+AgentCore エージェンティックレイヤーは Planned
+- [AWS Physical AI Toolchain](https://github.com/aws-samples/sample-the-physical-ai-toolchain-on-aws) — aws-samples。4 ピラー・フライホイールのリファレンスアーキテクチャ。README 基準（2026-11-04 確認）**Available**: Foundation・Cosmos（Predict・Transfer）・Isaac Lab RL・GR00T N1.6 ファインチューニング・DreamZero・Isaac Sim ワークステーション・OSMO 6.3 on EKS・Strands Agents / **Preview**: Isaac Lab Arena 評価 / **Planned**: エッジデプロイ（Jetson・Greengrass）・AgentCore ホステッドランタイム。⚠️ Available はサンプル公開の状態であって AWS の運用保証ではない
 - [Self-improving Physical AI](https://github.com/aws-samples/sample-self-improving-physical-AI) — aws-samples。Bedrock エージェントが Isaac Sim と実機 SO-ARM101/XGO2/Zumi を IoT 経由で制御、エージェントメモリで sim-to-real 反復学習
 - [Agentic AI Robot — 産業安全モニタリング](https://github.com/aws-samples/sample-agentic-ai-robot) — aws-samples。AgentCore+IoT+ロボットの自律パトロール·エッジ推論デモ、AWS AI x Industry Week 2025 で展示、韓国語 README あり。⚠️ 実験·教育用と明記 — 本番環境向けではありません
 - [Smart Machines — 産業設備ハイブリッド Physical AI](https://github.com/aws-samples/sample-smart-machines-physical-hybrid-ai) — aws-samples。エージェントがフリートテレメトリの異常検知→原因診断→チケット作成・パラメータ調整まで行うフルスタックデモ（マルチエージェントチャット・自然言語シナリオビルダー・KVS 映像→Bedrock 分析・Jetson YOLOWorld+VLM エッジモニタリング）。⚠️ README 明記のデモ — 現在ショベル（シミュレーションテレメトリ）のみ完動、ロボットアームは WIP
@@ -107,7 +107,7 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 
 **➡️ 次のアクション**：製品境界、完了、通信断、介入、復旧を[カード](start.md#pilot)に記載し、[障害試験](operations.md#failure)を行います。
 
-**🔗 関連アセット**: [pillar-2 学習](pillar-2.md) · [pillar-3 OSMO](pillar-3.md)
+**🔗 関連アセット**: [pillar-2 学習](pillar-2.md) · [pillar-3 OSMO](pillar-3.md) · [Archetype AI Newton on AWS](news.md#archetype-newton) — パートナー。産業設備センサー（振動・電流など）の状態監視エージェントを顧客アカウントの EKS とエッジ（Greengrass）にデプロイ。精度の数値はベンダー自身の発表
 
 ---
 
@@ -170,6 +170,6 @@ _個別項目は別途表記がない限りページメタデータ（owner/upda
 - **Lotte 30% など韓国数値は単一出典** — ハード引用の前に要再確認。
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 高（AgentCore の機能・リージョンは折りたたみブロックで管理）· sources: [1] 公式, [3] ベンダー/press, [4] 研究/コミュニティ_
+_owner: Youngjin · updated: 2026-11 · volatility: 高（AgentCore の機能・リージョンは折りたたみブロックで管理）· sources: [1] 公式, [3] ベンダー/press, [4] 研究/コミュニティ_
 
 <!-- 용어 각주 -->

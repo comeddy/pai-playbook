@@ -1,9 +1,9 @@
 ---
-ko_hash: ce0d72925b235ddb25e456a8d86a06c28bfb81ae
+ko_hash: 442836fd3ba4a4e51bad0e6910c1e50c43dcee85
 ---
 # Pillar 1 — 数据采集 & 处理 (Data Collection & Processing)
 
-_最终更新: 2026-09 · owner: Youngjin · volatility: 中（数据集版本·大小为高）_
+_最终更新: 2026-11 · owner: Youngjin · volatility: 中（数据集版本·大小为高）_
 _除非另有标注，各条目继承页面元数据（owner/updated/volatility）。按条目指定 owner 时在条目页脚补充。_
 [← 返回 index](index.md)
 
@@ -112,7 +112,7 @@ _注意: 部分聚合方将 DROID 标为"92,233 ep/Apache-2.0"，但这被推测
 
 - Playbook: [pillar-3 仿真](pillar-3.md)
 - （内部 Isaac-on-AWS 研讨会 deck —— 需确认 ⚠️）
-- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) —— awslabs。集中管理 USD 场景·点云·CAD 等视觉资产（版本·血缘·查看器），用于仿真环境与训练数据管理。CDK 无服务器，near-production-grade
+- [VAMS — Visual Asset Management System](https://github.com/awslabs/visual-asset-management-system) —— awslabs。集中管理 USD 场景·点云·CAD 等视觉资产（版本·血缘·查看器），用于仿真环境与训练数据管理。CDK 无服务器，near-production-grade · 2026-01 起通过 Isaac Lab 集成，可在 AWS Batch GPU 上进行 RL 策略训练·评估（[官方博客](https://aws.amazon.com/blogs/physical-ai/gpu-accelerated-robotic-simulation-training-with-nvidia-isaac-lab-in-vams/)），2.6（2026-10）重新设计了工作流编排（[新消息](news.md#vams-2-6)）
 
 ---
 
@@ -246,6 +246,7 @@ graph LR
 - Playbook: [pillar-4 边缘部署](pillar-4.md) · [radar: ALOHA/GELLO](radar.md)
 - [LeRobot 遥操作数据采集 on Greengrass 示例](https://github.com/aws-samples/sample-lerobot-data-collection-on-aws-iot-greengrass) —— aws-samples。以 Greengrass v2 自定义组件将 SO-ARM101（Leader/Follower）+ 双摄像头遥操作按 LeRobot v3 格式记录→自动上传 S3。可在 Web 控制台通过 MQTT 远程控制 + KVS 直播（WebRTC/HLS）·回合(episode)回放，已在 Jetson AGX Thor 上验证。"采集→S3"标准化演示的首选候选。⚠️ README 明示仅供教学·演示 —— 禁止用于生产环境（MIT-0）
 - [Android PAI 数据采集应用](https://github.com/aws-samples/sample-physical-ai-data-collector-app) —— aws-samples。现场智能手机视频+IMU→S3 离线队列上传。⚠️ 早期示例
+- [NVIDIA CloudXR 6 on AWS](https://github.com/aws-samples/sample-cloudxr6-on-aws) —— aws-samples。将 GPU 渲染的 OpenXR 场景流式传输到 Quest·Vision Pro 头显 —— 在仿真中通过 XR 遥操作采集演示数据的路径。延迟依据仅为 AWS 自身的一次测试（LA Local Zone，pose-to-render 约 35 ms），韩国区域·Local Zone 的延迟需另行实测（[新消息](news.md#cloudxr-6)）
 
 ---
 
@@ -256,7 +257,7 @@ graph LR
 - **许可证是首要风险。** 仅点出 AgiBot World（规模最大）为非商业这一事实，就能赢得客户信任。
 
 ---
-_owner: Youngjin · updated: 2026-09 · volatility: 中（数据集版本·大小在折叠块中为高）· sources: [1] 官方/论文, [3] 厂商博客, [4] 未经验证_
+_owner: Youngjin · updated: 2026-11 · volatility: 中（数据集版本·大小在折叠块中为高）· sources: [1] 官方/论文, [3] 厂商博客, [4] 未经验证_
 
 <!-- 용어 각주 -->
 
