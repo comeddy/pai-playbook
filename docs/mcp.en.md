@@ -1,5 +1,5 @@
 ---
-ko_hash: 522926e807099972847e8eefb613993d3bd147ce
+ko_hash: 84ede806c97904ebe74888203959e65190696780
 ---
 # Settings — MCP Connection
 
@@ -31,21 +31,23 @@ Four tools are provided:
 
     Claude Code runs the local MCP server. If a registration already exists, only update its connection details.
 
-    **① Download the server file**
+    **Where to run each step** — type ① and ② in a **terminal (shell)**. For ③, start a **new** `claude` session from the terminal and type into the Claude Code chat. A session that was already open does not pick up the new registration.
+
+    **① Download the server file · 🖥️ Terminal**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Register in Claude Code** — registers `pai-playbook` at user scope. Model and tool-approval settings are not changed.
+    **② Register in Claude Code · 🖥️ Terminal** — registers `pai-playbook` at user scope. Model and tool-approval settings are not changed.
 
     ```bash
     claude mcp add pai-playbook --transport stdio --scope user \
       -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
-    **③ Verify the connection** — check in `/mcp` that `pai-playbook` is connected, then ask for a real lookup.
+    **③ Verify the connection · 💬 Claude Code chat** — check in `/mcp` that `pai-playbook` is connected, then ask for a real lookup.
 
     ```text
     /mcp
@@ -70,20 +72,22 @@ Four tools are provided:
 
     How to register a local MCP server in the Codex CLI. Commands follow the official docs and have not been verified on a real device in this repo (`[4]`).
 
-    **① Download the server file**
+    **Where to run each step** — type ① and ② in a **terminal (shell)**. For ③, start a **new** `codex` session from the terminal and type into the Codex chat.
+
+    **① Download the server file · 🖥️ Terminal**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Register in Codex**
+    **② Register in Codex · 🖥️ Terminal**
 
     ```bash
     codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
-    **③ Verify the connection** — reopen Codex and ask for a lookup.
+    **③ Verify the connection · 💬 Codex chat** — reopen Codex and ask for a lookup.
 
     ```text
     Search the Playbook for 'HyperPod'

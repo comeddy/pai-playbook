@@ -1,5 +1,5 @@
 ---
-ko_hash: 522926e807099972847e8eefb613993d3bd147ce
+ko_hash: 84ede806c97904ebe74888203959e65190696780
 ---
 # 設定 — MCP 接続
 
@@ -31,21 +31,23 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     Claude Code がローカル MCP サーバーを実行する。既存の登録がある場合は接続情報のみ修正する。
 
-    **① サーバーファイルのダウンロード**
+    **どこで実行するか** —— ①・② は**ターミナル（シェル）**に入力する。③ はターミナルで `claude` を**新しく**起動し、Claude Code のチャットに入力する。すでに開いていたセッションは新しい登録を読み込まない。
+
+    **① サーバーファイルのダウンロード · 🖥️ ターミナル**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Claude Code に登録** — ユーザースコープに `pai-playbook` を登録する。モデルやツール承認の設定は変更しない。
+    **② Claude Code に登録 · 🖥️ ターミナル** — ユーザースコープに `pai-playbook` を登録する。モデルやツール承認の設定は変更しない。
 
     ```bash
     claude mcp add pai-playbook --transport stdio --scope user \
       -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
-    **③ 接続確認** — `/mcp` で `pai-playbook` が connected になっていることを確認してから実際の照会を依頼する。
+    **③ 接続確認 · 💬 Claude Code のチャット** — `/mcp` で `pai-playbook` が connected になっていることを確認してから実際の照会を依頼する。
 
     ```text
     /mcp
@@ -70,20 +72,22 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     Codex CLI にローカル MCP サーバーを登録する方法。コマンドは公式ドキュメントに基づき、本リポジトリでは実機検証していない（`[4]`）。
 
-    **① サーバーファイルのダウンロード**
+    **どこで実行するか** —— ①・② は**ターミナル（シェル）**に入力する。③ はターミナルで `codex` を**新しく**起動し、Codex のチャットに入力する。
+
+    **① サーバーファイルのダウンロード · 🖥️ ターミナル**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Codex に登録**
+    **② Codex に登録 · 🖥️ ターミナル**
 
     ```bash
     codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
-    **③ 接続確認** — Codex を再度開いて照会を依頼する。
+    **③ 接続確認 · 💬 Codex のチャット** — Codex を再度開いて照会を依頼する。
 
     ```text
     Playbook で 'HyperPod' を検索して

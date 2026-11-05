@@ -28,21 +28,23 @@ _최종 갱신: 2026-11 · owner: Youngjin · volatility: 낮음_
 
     Claude Code가 로컬 MCP 서버를 실행한다. 기존 등록이 있다면 연결 정보만 수정한다.
 
-    **① 서버 파일 다운로드**
+    **어디서 실행하나** — ①·②는 **터미널(셸)**에 입력한다. ③은 터미널에서 `claude`를 **새로** 실행한 뒤 Claude Code 대화창에 입력한다. 이미 열려 있던 세션은 새 등록을 읽지 않는다.
+
+    **① 서버 파일 다운로드 · 🖥️ 터미널**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Claude Code에 등록** — 사용자 범위에 `pai-playbook`을 등록한다. 모델·도구 승인 설정은 바꾸지 않는다.
+    **② Claude Code에 등록 · 🖥️ 터미널** — 사용자 범위에 `pai-playbook`을 등록한다. 모델·도구 승인 설정은 바꾸지 않는다.
 
     ```bash
     claude mcp add pai-playbook --transport stdio --scope user \
       -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
-    **③ 연결 확인** — `/mcp`에서 `pai-playbook`이 connected인지 확인한 뒤 실제 조회를 요청한다.
+    **③ 연결 확인 · 💬 Claude Code 대화창** — `/mcp`에서 `pai-playbook`이 connected인지 확인한 뒤 실제 조회를 요청한다.
 
     ```text
     /mcp
@@ -67,20 +69,22 @@ _최종 갱신: 2026-11 · owner: Youngjin · volatility: 낮음_
 
     Codex CLI에 로컬 MCP 서버를 등록하는 방법이다. 명령은 공식 문서 기준이며 이 리포에서 실기기 검증은 하지 않았다(`[4]`).
 
-    **① 서버 파일 다운로드**
+    **어디서 실행하나** — ①·②는 **터미널(셸)**에 입력한다. ③은 터미널에서 `codex`를 **새로** 실행한 뒤 Codex 대화창에 입력한다.
+
+    **① 서버 파일 다운로드 · 🖥️ 터미널**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Codex에 등록**
+    **② Codex에 등록 · 🖥️ 터미널**
 
     ```bash
     codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
-    **③ 연결 확인** — Codex를 다시 열고 조회를 요청한다.
+    **③ 연결 확인 · 💬 Codex 대화창** — Codex를 다시 열고 조회를 요청한다.
 
     ```text
     Playbook에서 'HyperPod'를 검색해줘
