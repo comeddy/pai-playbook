@@ -1,5 +1,5 @@
 ---
-ko_hash: 805cf1c42baf939e1f6c26ea942af4a233a1e2b3
+ko_hash: fa6f0f0ab5037dcafdb2785f7a84ff6964682b69
 ---
 # 設定 — MCP 接続
 
@@ -169,7 +169,7 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Kiro CLI 設定に追加** — `~/.kiro/settings/mcp.json` の `mcpServers` に以下の項目をマージする。既存のサーバーと承認設定は維持し、パスのプレースホルダーは実際の絶対パスに置き換える。
+    **② Kiro CLI 設定に追加 · 🖥️ ターミナル** — `~/.kiro/settings/mcp.json` の `mcpServers` に以下の項目をマージする。既存のサーバーと承認設定は維持し、パスのプレースホルダーは実際の絶対パスに置き換える。
 
     ```bash
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"

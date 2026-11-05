@@ -166,7 +166,7 @@ _최종 갱신: 2026-11 · owner: Youngjin · volatility: 낮음_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Kiro CLI 설정에 추가** — `~/.kiro/settings/mcp.json`의 `mcpServers`에 아래 항목을 병합한다. 기존 서버와 승인 설정은 유지하고, 경로 자리표시는 실제 절대경로로 바꾼다.
+    **② Kiro CLI 설정에 추가 · 🖥️ 터미널** — `~/.kiro/settings/mcp.json`의 `mcpServers`에 아래 항목을 병합한다. 기존 서버와 승인 설정은 유지하고, 경로 자리표시는 실제 절대경로로 바꾼다.
 
     ```bash
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"

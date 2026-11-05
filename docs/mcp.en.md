@@ -1,5 +1,5 @@
 ---
-ko_hash: 805cf1c42baf939e1f6c26ea942af4a233a1e2b3
+ko_hash: fa6f0f0ab5037dcafdb2785f7a84ff6964682b69
 ---
 # Settings — MCP Connection
 
@@ -169,7 +169,7 @@ Four tools are provided:
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Add to the Kiro CLI settings** — merge the entry below into `mcpServers` in `~/.kiro/settings/mcp.json`. Keep existing servers and approval settings, and replace the path placeholder with the real absolute path.
+    **② Add to the Kiro CLI settings · 🖥️ Terminal** — merge the entry below into `mcpServers` in `~/.kiro/settings/mcp.json`. Keep existing servers and approval settings, and replace the path placeholder with the real absolute path.
 
     ```bash
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"

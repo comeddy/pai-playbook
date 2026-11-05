@@ -1,5 +1,5 @@
 ---
-ko_hash: 805cf1c42baf939e1f6c26ea942af4a233a1e2b3
+ko_hash: fa6f0f0ab5037dcafdb2785f7a84ff6964682b69
 ---
 # 设置 — MCP 连接
 
@@ -169,7 +169,7 @@ _最后更新: 2026-11 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② 添加到 Kiro CLI 设置** — 将下面的条目合并到 `~/.kiro/settings/mcp.json` 的 `mcpServers` 中。保留现有服务器与审批设置，把路径占位符替换为实际绝对路径。
+    **② 添加到 Kiro CLI 设置 · 🖥️ 终端** — 将下面的条目合并到 `~/.kiro/settings/mcp.json` 的 `mcpServers` 中。保留现有服务器与审批设置，把路径占位符替换为实际绝对路径。
 
     ```bash
     printf '%s\n' "$HOME/.pai-playbook/server.mjs"
