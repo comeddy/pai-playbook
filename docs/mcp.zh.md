@@ -1,5 +1,5 @@
 ---
-ko_hash: 84ede806c97904ebe74888203959e65190696780
+ko_hash: 06fffc78355d236d7d59f90602f9d91cff4d1343
 ---
 # 设置 — MCP 连接
 
@@ -31,7 +31,7 @@ _最后更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     由 Claude Code 运行本地 MCP 服务器。如已有注册，只需修改连接信息。
 
-    **在哪里执行** —— ①·② 在**终端（shell）**中输入。③ 需在终端中**重新**启动 `claude`，再在 Claude Code 对话框中输入。已打开的会话不会读取新注册。
+    **在哪里执行** —— ① 在**终端（shell）**中输入。②·③ 需在终端中启动 `claude`，再在 **Claude Code 对话框**中输入。② 开头的 `!` 让对话框把这一行作为 shell 命令执行。注册后用 `/exit` 退出并重新启动 `claude`，③ 中才会出现新服务器。
 
     **① 下载服务器文件 · 🖥️ 终端**
 
@@ -40,11 +40,10 @@ _最后更新: 2026-11 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② 在 Claude Code 中注册 · 🖥️ 终端** — 在用户范围注册 `pai-playbook`。不会更改模型或工具审批设置。
+    **② 在 Claude Code 中注册 · 💬 Claude Code 对话框** — 在用户范围注册 `pai-playbook`。不会更改模型或工具审批设置。
 
-    ```bash
-    claude mcp add pai-playbook --transport stdio --scope user \
-      -- node "$HOME/.pai-playbook/server.mjs"
+    ```text
+    ! claude mcp add pai-playbook --transport stdio --scope user -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
     **③ 确认连接 · 💬 Claude Code 对话框** — 在 `/mcp` 中确认 `pai-playbook` 为 connected，然后发起实际查询。
@@ -72,7 +71,7 @@ _最后更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     在 Codex CLI 中注册本地 MCP 服务器的方法。命令以官方文档为准，本仓库未在真机上验证（`[4]`）。
 
-    **在哪里执行** —— ①·② 在**终端（shell）**中输入。③ 需在终端中**重新**启动 `codex`，再在 Codex 对话框中输入。
+    **在哪里执行** —— ① 在**终端（shell）**中输入。②·③ 需在终端中启动 `codex`，再在 **Codex 对话框**中输入。② 开头的 `!` 让对话框把这一行作为 shell 命令执行。注册后退出 Codex 并重新启动，③ 中才会出现新服务器。
 
     **① 下载服务器文件 · 🖥️ 终端**
 
@@ -81,10 +80,10 @@ _最后更新: 2026-11 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② 在 Codex 中注册 · 🖥️ 终端**
+    **② 在 Codex 中注册 · 💬 Codex 对话框**
 
-    ```bash
-    codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
+    ```text
+    ! codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
     **③ 确认连接 · 💬 Codex 对话框** — 重新打开 Codex 并发起查询。

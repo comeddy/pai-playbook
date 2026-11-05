@@ -1,5 +1,5 @@
 ---
-ko_hash: 84ede806c97904ebe74888203959e65190696780
+ko_hash: 06fffc78355d236d7d59f90602f9d91cff4d1343
 ---
 # Settings — MCP Connection
 
@@ -31,7 +31,7 @@ Four tools are provided:
 
     Claude Code runs the local MCP server. If a registration already exists, only update its connection details.
 
-    **Where to run each step** — type ① and ② in a **terminal (shell)**. For ③, start a **new** `claude` session from the terminal and type into the Claude Code chat. A session that was already open does not pick up the new registration.
+    **Where to run each step** — type ① in a **terminal (shell)**. For ② and ③, start `claude` from the terminal and type into the **Claude Code chat**. In ②, the leading `!` runs the line as a shell command from the chat. After registering, leave with `/exit` and start `claude` again — only then does the new server appear in ③.
 
     **① Download the server file · 🖥️ Terminal**
 
@@ -40,11 +40,10 @@ Four tools are provided:
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Register in Claude Code · 🖥️ Terminal** — registers `pai-playbook` at user scope. Model and tool-approval settings are not changed.
+    **② Register in Claude Code · 💬 Claude Code chat** — registers `pai-playbook` at user scope. Model and tool-approval settings are not changed.
 
-    ```bash
-    claude mcp add pai-playbook --transport stdio --scope user \
-      -- node "$HOME/.pai-playbook/server.mjs"
+    ```text
+    ! claude mcp add pai-playbook --transport stdio --scope user -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
     **③ Verify the connection · 💬 Claude Code chat** — check in `/mcp` that `pai-playbook` is connected, then ask for a real lookup.
@@ -72,7 +71,7 @@ Four tools are provided:
 
     How to register a local MCP server in the Codex CLI. Commands follow the official docs and have not been verified on a real device in this repo (`[4]`).
 
-    **Where to run each step** — type ① and ② in a **terminal (shell)**. For ③, start a **new** `codex` session from the terminal and type into the Codex chat.
+    **Where to run each step** — type ① in a **terminal (shell)**. For ② and ③, start `codex` from the terminal and type into the **Codex chat**. In ②, the leading `!` runs the line as a shell command from the chat. After registering, quit Codex and start it again — only then does the new server appear in ③.
 
     **① Download the server file · 🖥️ Terminal**
 
@@ -81,10 +80,10 @@ Four tools are provided:
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Register in Codex · 🖥️ Terminal**
+    **② Register in Codex · 💬 Codex chat**
 
-    ```bash
-    codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
+    ```text
+    ! codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
     **③ Verify the connection · 💬 Codex chat** — reopen Codex and ask for a lookup.

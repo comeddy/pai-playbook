@@ -1,5 +1,5 @@
 ---
-ko_hash: 84ede806c97904ebe74888203959e65190696780
+ko_hash: 06fffc78355d236d7d59f90602f9d91cff4d1343
 ---
 # 設定 — MCP 接続
 
@@ -31,7 +31,7 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     Claude Code がローカル MCP サーバーを実行する。既存の登録がある場合は接続情報のみ修正する。
 
-    **どこで実行するか** —— ①・② は**ターミナル（シェル）**に入力する。③ はターミナルで `claude` を**新しく**起動し、Claude Code のチャットに入力する。すでに開いていたセッションは新しい登録を読み込まない。
+    **どこで実行するか** —— ① は**ターミナル（シェル）**に入力する。②・③ はターミナルで `claude` を起動し、**Claude Code のチャット**に入力する。② の先頭の `!` はチャットからその行をシェルコマンドとして実行させる。登録後に `/exit` で終了し `claude` を再起動すると、③ で新しいサーバーが表示される。
 
     **① サーバーファイルのダウンロード · 🖥️ ターミナル**
 
@@ -40,11 +40,10 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Claude Code に登録 · 🖥️ ターミナル** — ユーザースコープに `pai-playbook` を登録する。モデルやツール承認の設定は変更しない。
+    **② Claude Code に登録 · 💬 Claude Code のチャット** — ユーザースコープに `pai-playbook` を登録する。モデルやツール承認の設定は変更しない。
 
-    ```bash
-    claude mcp add pai-playbook --transport stdio --scope user \
-      -- node "$HOME/.pai-playbook/server.mjs"
+    ```text
+    ! claude mcp add pai-playbook --transport stdio --scope user -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
     **③ 接続確認 · 💬 Claude Code のチャット** — `/mcp` で `pai-playbook` が connected になっていることを確認してから実際の照会を依頼する。
@@ -72,7 +71,7 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     Codex CLI にローカル MCP サーバーを登録する方法。コマンドは公式ドキュメントに基づき、本リポジトリでは実機検証していない（`[4]`）。
 
-    **どこで実行するか** —— ①・② は**ターミナル（シェル）**に入力する。③ はターミナルで `codex` を**新しく**起動し、Codex のチャットに入力する。
+    **どこで実行するか** —— ① は**ターミナル（シェル）**に入力する。②・③ はターミナルで `codex` を起動し、**Codex のチャット**に入力する。② の先頭の `!` はチャットからその行をシェルコマンドとして実行させる。登録後に Codex を終了して再起動すると、③ で新しいサーバーが表示される。
 
     **① サーバーファイルのダウンロード · 🖥️ ターミナル**
 
@@ -81,10 +80,10 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
       --output "$HOME/.pai-playbook/server.mjs" 'https://comeddy.github.io/pai-playbook/mcp/pai-playbook-mcp.mjs'
     ```
 
-    **② Codex に登録 · 🖥️ ターミナル**
+    **② Codex に登録 · 💬 Codex のチャット**
 
-    ```bash
-    codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
+    ```text
+    ! codex mcp add pai-playbook -- node "$HOME/.pai-playbook/server.mjs"
     ```
 
     **③ 接続確認 · 💬 Codex のチャット** — Codex を再度開いて照会を依頼する。
