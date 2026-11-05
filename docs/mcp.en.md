@@ -1,5 +1,5 @@
 ---
-ko_hash: 06fffc78355d236d7d59f90602f9d91cff4d1343
+ko_hash: 805cf1c42baf939e1f6c26ea942af4a233a1e2b3
 ---
 # Settings — MCP Connection
 
@@ -162,7 +162,7 @@ Four tools are provided:
 
     Registers a local MCP server on the machine where the Kiro CLI runs. The configuration follows the official docs and has not been verified on a real device (`[4]`).
 
-    **① Download the server file**
+    **① Download the server file · 🖥️ Terminal**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \

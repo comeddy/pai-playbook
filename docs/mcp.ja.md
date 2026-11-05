@@ -1,5 +1,5 @@
 ---
-ko_hash: 06fffc78355d236d7d59f90602f9d91cff4d1343
+ko_hash: 805cf1c42baf939e1f6c26ea942af4a233a1e2b3
 ---
 # 設定 — MCP 接続
 
@@ -162,7 +162,7 @@ _最終更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     Kiro CLI を実行するマシンにローカル MCP サーバーを登録する。設定は公式ドキュメントに基づき、実機検証はしていない（`[4]`）。
 
-    **① サーバーファイルのダウンロード**
+    **① サーバーファイルのダウンロード · 🖥️ ターミナル**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \

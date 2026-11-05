@@ -159,7 +159,7 @@ _최종 갱신: 2026-11 · owner: Youngjin · volatility: 낮음_
 
     Kiro CLI가 실행되는 컴퓨터에 로컬 MCP 서버를 등록한다. 설정은 공식 문서 기준이며 실기기 검증은 하지 않았다(`[4]`).
 
-    **① 서버 파일 다운로드**
+    **① 서버 파일 다운로드 · 🖥️ 터미널**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \

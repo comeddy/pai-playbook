@@ -1,5 +1,5 @@
 ---
-ko_hash: 06fffc78355d236d7d59f90602f9d91cff4d1343
+ko_hash: 805cf1c42baf939e1f6c26ea942af4a233a1e2b3
 ---
 # 设置 — MCP 连接
 
@@ -162,7 +162,7 @@ _最后更新: 2026-11 · owner: Youngjin · volatility: 低_
 
     在运行 Kiro CLI 的电脑上注册本地 MCP 服务器。配置以官方文档为准，未在真机上验证（`[4]`）。
 
-    **① 下载服务器文件**
+    **① 下载服务器文件 · 🖥️ 终端**
 
     ```bash
     mkdir -p "$HOME/.pai-playbook" && curl --fail --location --show-error \
