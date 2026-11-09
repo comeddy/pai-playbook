@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- Start, Total cost and ROI: the formula lines are now a Metric / How to calculate / How to read it table, adding the missing period-benefit definition (monthly benefit × months) the calculator already uses, in all four languages
 - Start, Total cost and ROI: replaced the budget CSV template with an in-page calculator (low/base/high unit costs, monthly benefit, period) that computes initial investment, period operating cost, net benefit, payback and period ROI — plus a conservative high-cost × low-benefit mix — keeps blanks as ‘quote pending’ instead of zero, and downloads inputs and results as CSV; `assets/pilot-budget.csv` removed, in all four languages
 
 - Settings · MCP Connection, Kiro Crew card: `command` now uses node's absolute path (`/opt/homebrew/bin/node`, with `command -v node` to find yours) because Crew's MCP runtime does not inherit the shell PATH and a bare `node` fails to start — found in the owner's real-device registration on 2026-11-04, in all four languages
@@ -203,6 +204,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- 시작 · 총비용과 ROI: 수식 나열을 지표 / 계산 방법 / 읽는 법 표로 바꾸고, 계산기가 이미 쓰던 기간 효과 정의(월 기대 효과 × 기간)를 추가, 4개 언어
 - 시작 · 총비용과 ROI: 예산 CSV 양식을 페이지 내 계산기로 교체 — 낮음/기준/높음 단가·월 기대 효과·기간을 입력하면 초기 투자·기간 운영비·순편익·회수 기간·기간 ROI(높은 비용 × 낮은 효과 보수적 조합 포함)를 즉시 계산하고, 빈칸은 0이 아닌 ‘견적 대기’로 유지하며, 입력값과 결과를 CSV로 다운로드한다. `assets/pilot-budget.csv` 삭제, 4개 언어
 
 - 설정 · MCP 연결의 Kiro Crew 카드: Crew의 MCP 실행 환경이 셸 PATH를 물려받지 않아 `node`만으로는 기동 실패 → `command`를 node 절대경로(`/opt/homebrew/bin/node`, `command -v node`로 확인)로 변경 — 2026-11-04 owner 실기기 등록에서 확인, 4개 언어
@@ -372,6 +374,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- 开始 · 总成本与 ROI：将公式列表改为“指标 / 计算方法 / 如何解读”表格，并补充计算器已使用的期间收益定义（月预期收益 × 期间），四种语言
 - 开始 · 总成本与 ROI：以页面内计算器替换预算 CSV 模板 — 输入低/基准/高单价、月预期收益与期间后即时计算初始投资、期间运营费用、净收益、回收期与期间 ROI（含高费用 × 低收益的保守组合），空白保持为“待报价”而非零，并可将输入值与结果下载为 CSV；删除 `assets/pilot-budget.csv`，四种语言
 
 - 设置 · MCP 连接的 Kiro Crew 卡片: Crew 的 MCP 运行环境不继承 shell PATH，只写 `node` 会启动失败 → `command` 改为 node 绝对路径（`/opt/homebrew/bin/node`，用 `command -v node` 确认）—— 2026-11-04 owner 实机注册中确认，4 种语言
@@ -541,6 +544,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Changed
 
+- 開始 · 総費用とROI：数式の列挙を「指標 / 計算方法 / 読み方」の表に変更し、計算機が既に使っていた期間効果の定義（月間期待効果 × 期間）を追加、4言語
 - 開始 · 総費用とROI：予算CSVテンプレートをページ内計算機に置き換え — 低・基準・高の単価、月間期待効果、期間を入力すると初期投資・期間運用費・純便益・回収期間・期間ROI（高費用 × 低効果の保守的な組合せを含む）を即時計算し、空欄はゼロではなく「見積待ち」のまま扱い、入力値と結果をCSVでダウンロードできる。`assets/pilot-budget.csv` を削除、4言語
 
 - 設定 · MCP 接続の Kiro Crew カード: Crew の MCP 実行環境はシェルの PATH を引き継がず `node` だけでは起動に失敗するため、`command` を node の絶対パス（`/opt/homebrew/bin/node`、`command -v node` で確認）に変更 —— 2026-11-04 owner の実機登録で確認、4 言語

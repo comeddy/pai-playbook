@@ -1,5 +1,5 @@
 ---
-ko_hash: df4450147aec2ee062cf66f2fa3b48c191b30a6a
+ko_hash: 445c03453543105e049a872bd347a312022be139
 ---
 # Start — business fit, ROI, and pilot approval
 
@@ -43,15 +43,16 @@ Model **low/base/high scenarios**. Mark unknown costs as ‘quote pending’, no
 | Recurring operations | Maintenance, parts, supervision, interventions, inference/connectivity, retraining/site revalidation |
 | Expected benefit | Actual reductions in rework/downtime, realizable throughput value, staff time that can be reassigned |
 
-`Initial investment = initial fixed + experiment variable` · `Period operating cost = monthly recurring ops × period (months)`
+| Metric | How to calculate | How to read it |
+|---|---|---|
+| **Initial investment** | Initial fixed + experiment variable | One-time spend from pilot start until validation is done |
+| **Period operating cost** | Monthly recurring ops × period (months) | Ongoing spend over the analysis period |
+| **Period benefit** | Monthly expected benefit × period (months) | Value actually realized over the analysis period |
+| **Period net benefit** | Period benefit − period operating cost | What operations leave over — before subtracting the initial investment |
+| **Payback period** | Initial investment ÷ monthly net benefit | Months needed to earn back the initial investment. If monthly net benefit (monthly benefit − monthly ops) is zero or less: ‘no payback’ |
+| **Period ROI** | (Period benefit − initial investment − period operating cost) ÷ (initial investment + period operating cost) | Return on everything spent. Below 0% means a loss within the analysis period |
 
-`Period net benefit = period benefit − period operating cost`
-
-`Payback period = initial investment / monthly net benefit` (only when monthly net benefit is positive)
-
-`Period ROI = (period benefit − initial investment − period operating cost) / (initial investment + period operating cost)`
-
-<div class="pai-roi-calc"><noscript><p>The calculator needs JavaScript. Without it, calculate with the formulas above.</p></noscript></div>
+<div class="pai-roi-calc"><noscript><p>The calculator needs JavaScript. Without it, calculate with the table above.</p></noscript></div>
 
 Simulation can reduce experimentation costs, but does not eliminate environment creation, calibration, or physical validation. Do not count productivity and labor savings twice for the same benefit. Record sources and check dates for estimates and benefit assumptions.
 
