@@ -1,5 +1,5 @@
 ---
-ko_hash: 00007e203ad0d0babbfaea50509f2f9bd8d63db9
+ko_hash: 09b68a75fff5e0f674c8f75d23e0bce56571403e
 ---
 # Pillar 3 — Simulation
 
@@ -79,7 +79,7 @@ graph LR
 - [NVIDIA Isaac Lab on AWS workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/075ce3fe-6888-4ea9-986e-5bdd1b767ef7/en-US) — Batch MNP headless RL
 - [Physical AI E2E workshop](https://hi-space.gitbook.io/physical-ai-on-aws/guide/e2e-workshop) — Korean. Isaac Lab RL + Batch track
 - [AWS Physical AI Recipes — multi-user Isaac Lab GPU environment](https://github.com/hi-space/aws-physical-ai-recipes) — Korean, MIT. Code repository behind the E2E workshop above: one-click CDK deployment of a multi-user Isaac Lab GPU environment (DCV·EFS·Batch), plus an NVIDIA OSMO[^osmo] on EKS orchestration recipe
-- [(internal) AWS·NVIDIA robotics reference architecture](https://gitlab.aws.dev/yhyoo/aws-nvidia-robotics-reference-architecture) — AWS internal network required
+- (internal) AWS·NVIDIA robotics reference architecture — internal material (no public link); ask your AWS SA if needed
 - [Physical AI Scaffolding Kit — Isaac Sim workstation](https://github.com/aws-samples/sample-physical-ai-scaffolding-kit) — aws-samples. Isaac Sim/Lab dev environment on EC2
 - [VLA Simulator — 1-Click VLA simulation on AWS](https://github.com/aws-samples/sample-vla-simulator-on-aws) — aws-samples. Demo/benchmark GR00T N1.7/N1.6·π0.5·OpenVLA-OFT·LAP-3B·MolmoAct2·RLDX-1 on LIBERO/RoboCasa/SimplerEnv/Isaac Lab via one-command CDK deploy to EC2 GPU (g5/g6/g6e); results as MP4→S3+SNS, auto-terminating EC2. Measured per-policy success rates and validation dates documented
 - [robotic-cellsim-tools — multi-robot industrial cell simulation tools](https://github.com/aws-samples/sample-robotic-cellsim-tools) — aws-samples. Rust CLI toolset that takes off-the-shelf URDFs and assembles, validates, and drives Isaac Sim 5.1+ USDA stages (PhysX articulations, ROS 2 topics, per-link contact telemetry). Deterministic (same inputs = same outputs) with a versioned REST API — designed as simulation primitives for agents/MCP to compose
