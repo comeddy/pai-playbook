@@ -1,9 +1,9 @@
 ---
-ko_hash: 18e4590ec3958811640154f1c470c823a8bd3799
+ko_hash: df4450147aec2ee062cf66f2fa3b48c191b30a6a
 ---
 # Start — business fit, ROI, and pilot approval
 
-_Last updated: 2026-09 · owner: Youngjin · volatility: medium_
+_Last updated: 2026-11 · owner: Youngjin · volatility: medium_
 
 **L0 TL;DR**: Start with the work, not the technology. Write down which task you want to improve and how well it runs today. Then check whether existing automation, a commercial product, or a system integrator (SI)[^si] can already solve it. Only when something is left that the robot has to learn do you look at data, simulation, or a VLA. Customers and AWS staff fill in this worksheet together.
 
@@ -34,7 +34,7 @@ Staff guidance is also public. Do not record internal contacts or confidential c
 
 ## Total cost and ROI — beyond the GPU quote { #roi }
 
-Model **low/base/high scenarios**. Mark unknown costs as ‘quote pending’, not zero. Copy the [budget CSV](assets/pilot-budget.csv) and fill quantities, rates, and periods (USD worksheet, not a price list).
+Model **low/base/high scenarios**. Mark unknown costs as ‘quote pending’, not zero. Enter quantities, rates, and the period in the calculator below; results update instantly, and you can download the inputs and results as CSV to attach to project documents (USD worksheet, not a price list).
 
 | Cost group | Include |
 |---|---|
@@ -43,11 +43,15 @@ Model **low/base/high scenarios**. Mark unknown costs as ‘quote pending’, no
 | Recurring operations | Maintenance, parts, supervision, interventions, inference/connectivity, retraining/site revalidation |
 | Expected benefit | Actual reductions in rework/downtime, realizable throughput value, staff time that can be reassigned |
 
+`Initial investment = initial fixed + experiment variable` · `Period operating cost = monthly recurring ops × period (months)`
+
 `Period net benefit = period benefit − period operating cost`
 
 `Payback period = initial investment / monthly net benefit` (only when monthly net benefit is positive)
 
 `Period ROI = (period benefit − initial investment − period operating cost) / (initial investment + period operating cost)`
+
+<div class="pai-roi-calc"><noscript><p>The calculator needs JavaScript. Without it, calculate with the formulas above.</p></noscript></div>
 
 Simulation can reduce experimentation costs, but does not eliminate environment creation, calibration, or physical validation. Do not count productivity and labor savings twice for the same benefit. Record sources and check dates for estimates and benefit assumptions.
 
@@ -75,4 +79,4 @@ Evidence and approver required for the next stage:
 <!-- 용어 각주 -->
 [^si]: **SI (System Integrator)** — A provider integrating robots, equipment, controls, and software at the customer's site. Cloud service support and responsibility for cell integration/safety must be assigned separately.
 
-_owner: Youngjin · updated: 2026-09 · volatility: medium_
+_owner: Youngjin · updated: 2026-11 · volatility: medium_

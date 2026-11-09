@@ -195,8 +195,10 @@ validation:
 
 extra_css:
   - stylesheets/font-size.css      # 글자 크기 조절 버튼 (font-size.js와 쌍)
+  - stylesheets/roi-calc.css       # 시작 페이지 총비용·ROI 계산기 (roi-calc.js와 쌍)
 extra_javascript:
   - javascripts/font-size.js
+  - javascripts/roi-calc.js        # .pai-roi-calc 요소가 있는 페이지에서만 동작
 
 extra:
   generator: false        # 푸터 'Made with Material for MkDocs' 표기 숨김 (공식 옵션)

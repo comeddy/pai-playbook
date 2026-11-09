@@ -1,0 +1,43 @@
+/* 총비용·ROI 계산기 (javascripts/roi-calc.js 와 쌍) — Material 테마 변수만 사용해 라이트/다크 자동 대응 */
+.pai-roi-calc {
+  margin: 1em 0 1.5em;
+  padding: .8em 1em;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+}
+.pai-roi-top label { font-weight: 700; }
+.pai-roi-top .pai-roi-num { width: 5em; }
+.pai-roi-hint { font-size: .85em; color: var(--md-default-fg-color--light); margin: .4em 0; }
+.pai-roi-scroll { overflow-x: auto; margin: .6em 0; }
+.md-typeset table.pai-roi-table { display: table; font-size: .78em; margin: 0; min-width: 100%; }
+.md-typeset .pai-roi-table th,
+.md-typeset .pai-roi-table td { padding: .35em .5em; vertical-align: middle; }
+.pai-roi-table input,
+.pai-roi-table select,
+.pai-roi-top input {
+  font: inherit;
+  color: var(--md-default-fg-color);
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: .2rem;
+  padding: .25em .4em;
+  min-height: 2.2em;
+}
+.pai-roi-table .pai-roi-num { width: 6.5em; text-align: right; }
+.pai-roi-table .pai-roi-txt { width: 10em; }
+.pai-roi-table input:focus,
+.pai-roi-top input:focus { outline: 2px solid var(--md-accent-fg-color); outline-offset: 1px; }
+.pai-roi-sub, .pai-roi-out td { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pai-roi-pending { color: var(--md-default-fg-color--light); font-style: italic; }
+.pai-roi-neg { color: #c62828; }
+[data-md-color-scheme="slate"] .pai-roi-neg { color: #ef9a9a; }
+.pai-roi-del {
+  min-width: 2.2em; min-height: 2.2em;
+  border: none; border-radius: .2rem; cursor: pointer;
+  background: var(--md-default-fg-color--lightest); color: var(--md-default-fg-color);
+}
+.pai-roi-actions { display: flex; flex-wrap: wrap; gap: .5em; margin: .8em 0; }
+.md-typeset .pai-roi-actions .md-button { margin: 0; font-size: .75em; padding: .5em 1.2em; }
+.pai-roi-table select { min-width: 9em; }
+.md-typeset .pai-roi-table thead th { white-space: nowrap; }
+.md-typeset .pai-roi-table tbody th[scope="row"] { min-width: 9em; text-align: left; }
