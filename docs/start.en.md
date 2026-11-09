@@ -1,5 +1,5 @@
 ---
-ko_hash: 445c03453543105e049a872bd347a312022be139
+ko_hash: 248931244fee0386e2cf7fac8c357a66618fa72c
 ---
 # Start — business fit, ROI, and pilot approval
 
@@ -58,19 +58,34 @@ Simulation can reduce experimentation costs, but does not eliminate environment 
 
 ## Pilot approval card { #pilot }
 
-Copy this block into the project document. Duration, demonstration counts, and success rates are customer-specific agreements, not universal promises.
+Before the pilot starts, answer the 10 questions below together with the customer. **If any field is still empty, it is not yet time to start.** The examples are hypothetical values for illustration. Duration, demonstration counts, and success rates are customer-specific agreements, not universal promises.
+
+| # | Field | In plain words | Example (hypothetical) |
+|---|---|---|---|
+| 1 | Task / exclusions | What exactly will the robot do? What will it **not** do this time? | Pick parts from mixed bins into trays. Damaged-part handling and night shifts excluded |
+| 2 | Current approach / alternatives / baseline measurement period | How is it done today, and how well? Will you also compare non-robot options (existing automation, off-the-shelf products)? How many days will you measure today's performance as the baseline? | 2 operators, 300 parts/hour, 2% errors. Compared with a quote for a commercial picking cell. Measured for 2 weeks |
+| 3 | Target metric / minimum improvement / measurement conditions | What defines success? What is the smallest improvement that matters? Under which conditions is it measured? | Success rate and hourly throughput. At least 20% more throughput than the baseline. Measured at real line speed and lighting |
+| 4 | Evaluation sample size / repeated runs / unseen environments | How many trials? Are results similar when repeated? Does it work on objects and layouts not seen in training? | 200 attempts, repeated over 3 days, including 5 part types absent from training |
+| 5 | Data, code, and weight usage rights | Who owns the collected data, the code, and the trained model files (weights), and can they be used commercially? | Data owned by the customer. Confirm the open model's license allows commercial use |
+| 6 | Owners | Is there one named owner per area? | One each for site operations, robotics/SI, ML, cloud, and safety |
+| 7 | Cost | What is the upfront cost, the experiment-period cost, and the monthly cost once running? Give low, base, and high values | Initial / experiment / monthly operations, each as low-base-high |
+| 8 | Limits | How much can be spent, and until when? Who approves an extension? | Spending cap, end date, extension approved by the business-unit head |
+| 9 | Stop conditions | When will you stop? Decide before starting | Minimum improvement missed by the end date, spending cap exceeded, or emergency-stop/recovery test failed |
+| 10 | Next-stage evidence / approver | What must be shown to move to the next stage, and who approves it? | Evaluation report, actual costs, safety checklist → plant manager approval |
+
+Copy the block below into the project document and fill it in.
 
 ```text
-Task / exclusions:
-Current approach / alternatives / baseline measurement period:
-Target metric / minimum improvement / measurement conditions:
-Evaluation sample size / repeated runs / unseen environments:
-Data, code, and weight usage rights:
-Owners: site / robotics-SI / ML / cloud / safety:
-Cost: initial / experiment / monthly operations / low-base-high:
-Limits: maximum spend / end date / extension approver:
-Stop: target missed / budget exceeded / safety-recovery test failed:
-Evidence and approver required for the next stage:
+1. Task: what the robot will do / what is excluded this time:
+2. Baseline: current approach and performance / alternatives to compare / measurement period:
+3. Target: success metric / minimum improvement / measurement conditions:
+4. Evaluation: number of trials / repetitions / environments unseen in training:
+5. Rights: ownership and permitted use of data, code, and model (weights):
+6. Owners: site / robotics-SI / ML / cloud / safety:
+7. Cost (low-base-high): initial / experiment / monthly operations:
+8. Limits: maximum spend / end date / extension approver:
+9. Stop conditions: target missed / budget exceeded / safety-recovery test failed:
+10. Next stage: evidence to show / approver:
 ```
 
 **Stage gates**: establish a baseline → [isolated experiment](execution.md) → [limited site validation](operations.md) → expand operations. Review metrics, cost, interventions, and recovery at every gate. A technology's GA status or a generic ‘12–24 months’ forecast does not approve the next stage.
